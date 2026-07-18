@@ -33,6 +33,11 @@ yarn-error.log*
 # env files — never commit real secrets (spec §46)
 .env*
 !.env.example
+!.env.production
+
+# cloudflare / opennext build output
+.open-next/
+.wrangler/
 
 # vercel
 .vercel
