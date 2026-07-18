@@ -23,6 +23,39 @@ const ACTION_BY_DECISION = {
   request_info: "info_requested",
 } as const;
 
+export async function reviewSocialLink(formData: FormData) {
+  const supabase = await createClient();
+  const { data: isAdmin } = await supabase.rpc("is_platform_admin");
+  if (!isAdmin) redirect("/dashboard");
+
+  const parsed = z
+    .object({
+      linkId: z.string().uuid(),
+      userId: z.string().uuid(),
+      decision: z.enum(["verified", "rejected", "hidden"]),
+    })
+    .safeParse({
+      linkId: formData.get("linkId"),
+      userId: formData.get("userId"),
+      decision: formData.get("decision"),
+    });
+  if (!parsed.success) redirect("/admin/agents");
+  const d = parsed.data;
+
+  const { error } = await supabase
+    .from("agent_social_links")
+    .update({ verification_status: d.decision })
+    .eq("id", d.linkId);
+  if (error) redirect(`/admin/agents/${d.userId}?error=save_failed`);
+
+  await logAudit({
+    action: `trust_profile.link_${d.decision}`,
+    entityType: "agent_social_link",
+    entityId: d.linkId,
+  });
+  redirect(`/admin/agents/${d.userId}?done=link_${d.decision}`);
+}
+
 export async function reviewAgent(formData: FormData) {
   // Admin gate: RLS policies additionally enforce is_platform_admin() on
   // every write below, so a non-admin session fails at the database too.

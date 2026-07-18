@@ -35,7 +35,7 @@ async function signedIn(email: string, password: string): Promise<SupabaseClient
   return c;
 }
 
-let cache: { ra?: SupabaseClient; sa?: SupabaseClient; admin?: SupabaseClient } = {};
+const cache: { ra?: SupabaseClient; sa?: SupabaseClient; admin?: SupabaseClient } = {};
 
 export async function raClient(): Promise<SupabaseClient> {
   cache.ra ??= await signedIn(process.env.TEST_RA_EMAIL!, process.env.TEST_RA_PASSWORD!);

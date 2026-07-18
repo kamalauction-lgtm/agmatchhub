@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/authz";
-import { reviewAgent } from "../actions";
+import { reviewAgent, reviewSocialLink } from "../actions";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 outline-none focus:border-crimson";
@@ -48,11 +48,19 @@ export default async function AgentDetailPage({
     ]);
   if (!profile) notFound();
 
-  const [licenceUrl, identityUrl, agencyUrl] = await Promise.all([
+  const [licenceUrl, identityUrl, agencyUrl, cardFrontUrl, cardBackUrl] = await Promise.all([
     signedUrl(supabase, ap?.licence_document_path ?? null),
     signedUrl(supabase, ap?.identity_document_path ?? null),
     signedUrl(supabase, ap?.agency_document_path ?? null),
+    signedUrl(supabase, ap?.name_card_front_path ?? null),
+    signedUrl(supabase, ap?.name_card_back_path ?? null),
   ]);
+
+  const { data: socialLinks } = await supabase
+    .from("agent_social_links")
+    .select("id, platform, url, display_label, verification_status, visibility")
+    .eq("user_id", id)
+    .order("created_at");
 
   const fields: [string, string | null | undefined][] = [
     [t("detail.fullLegalName"), ap?.full_legal_name],
@@ -125,6 +133,51 @@ export default async function AgentDetailPage({
                 </li>
               ))}
             </ul>
+          </section>
+
+          <section className="rounded-xl border border-line p-6">
+            <h2 className="mb-4 font-semibold">{t("detail.socialLinksTitle")}</h2>
+            {!socialLinks?.length ? (
+              <p className="text-sm text-muted">—</p>
+            ) : (
+              <ul className="space-y-2 text-sm">
+                {socialLinks.map((l) => (
+                  <li key={l.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-surface px-4 py-2.5">
+                    <span>
+                      <span className="font-medium">{l.platform}</span>
+                      <a href={l.url} target="_blank" rel="noreferrer nofollow"
+                        className="ml-2 text-xs break-all text-crimson hover:underline">{l.url}</a>
+                      <span className="ml-2 text-xs text-muted">({l.verification_status} · {l.visibility})</span>
+                    </span>
+                    <span className="flex gap-2">
+                      {(["verified", "rejected", "hidden"] as const).map((decision) => (
+                        <form key={decision} action={reviewSocialLink}>
+                          <input type="hidden" name="linkId" value={l.id} />
+                          <input type="hidden" name="userId" value={id} />
+                          <input type="hidden" name="decision" value={decision} />
+                          <button type="submit"
+                            className={`rounded px-2 py-1 text-xs font-semibold ${
+                              decision === "verified"
+                                ? "bg-success/10 text-success hover:bg-success/20"
+                                : "border border-line text-muted hover:text-foreground"
+                            }`}>
+                            {t(`detail.link_${decision}`)}
+                          </button>
+                        </form>
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {(cardFrontUrl || cardBackUrl) && (
+              <p className="mt-3 text-sm">
+                {t("detail.nameCards")}:{" "}
+                {cardFrontUrl && <a href={cardFrontUrl} target="_blank" rel="noreferrer" className="font-medium text-crimson hover:underline">{t("detail.front")}</a>}
+                {cardFrontUrl && cardBackUrl && " · "}
+                {cardBackUrl && <a href={cardBackUrl} target="_blank" rel="noreferrer" className="font-medium text-crimson hover:underline">{t("detail.back")}</a>}
+              </p>
+            )}
           </section>
 
           <section className="rounded-xl border border-line p-6">

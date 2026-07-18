@@ -43,12 +43,25 @@ export default async function SubmissionReviewPage({
   const tcollab = await getTranslations("collab");
 
   const [{ data: s }, { data: media }, { data: history }] = await Promise.all([
-    supabase.from("property_submissions").select("*, profiles(display_name)").eq("id", sid).maybeSingle(),
+    supabase.from("property_submissions").select("*, profiles(display_name, avatar_url, agent_status)").eq("id", sid).maybeSingle(),
     supabase.from("property_submission_media").select("storage_path, is_cover, position").eq("submission_id", sid).order("position"),
     supabase.from("submission_status_history").select("previous_status, new_status, actor_role, reason, created_at").eq("submission_id", sid).order("created_at", { ascending: false }).limit(10),
   ]);
   if (!s || s.request_id !== id) notFound();
   const sa = Array.isArray(s.profiles) ? s.profiles[0] : s.profiles;
+
+  // §71 restricted trust profile of the collaborating Supply Agent
+  const [{ data: saProfile }, { data: saLinks }] = await Promise.all([
+    supabase.from("agent_profiles")
+      .select("agency_name, licence_type, licence_number, country_code, biography")
+      .eq("user_id", s.supply_agent_id).maybeSingle(),
+    supabase.from("agent_social_links")
+      .select("platform, url, display_label")
+      .eq("user_id", s.supply_agent_id),
+  ]);
+  const saPhotoUrl = sa?.avatar_url
+    ? supabase.storage.from("agent-profile-public").getPublicUrl(sa.avatar_url).data.publicUrl
+    : null;
   const { data: reqRow } = await supabase
     .from("property_requests").select("transaction_type").eq("id", id).single();
   const offerType = reqRow?.transaction_type === "rent" ? "rental" : "purchase";
@@ -210,6 +223,44 @@ export default async function SubmissionReviewPage({
           )}
         </aside>
       </div>
+
+      <section className="mt-10 rounded-xl border border-line p-6">
+        <h2 className="mb-3 font-semibold">{t("trustCardTitle")}</h2>
+        <div className="flex items-start gap-4">
+          {saPhotoUrl ? (
+            <Image src={saPhotoUrl} alt="" width={64} height={64} unoptimized
+              className="h-16 w-16 rounded-full border border-line object-cover" />
+          ) : (
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface text-xl">👤</div>
+          )}
+          <div className="text-sm">
+            <p className="font-semibold">
+              {sa?.display_name}
+              {sa?.agent_status === "verified" && (
+                <span className="ml-2 rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-bold text-success uppercase">
+                  {t("verifiedBadge")}
+                </span>
+              )}
+            </p>
+            <p className="text-muted">
+              {[saProfile?.agency_name,
+                saProfile?.licence_number ? `${saProfile.licence_type} ${saProfile.licence_number}` : null,
+                saProfile?.country_code].filter(Boolean).join(" · ") || "—"}
+            </p>
+            {saProfile?.biography && <p className="mt-1 text-xs text-muted">{saProfile.biography}</p>}
+            {!!saLinks?.length && (
+              <p className="mt-2 flex flex-wrap gap-3 text-xs">
+                {saLinks.map((l, i) => (
+                  <a key={i} href={l.url} target="_blank" rel="noreferrer nofollow"
+                    className="font-medium text-crimson hover:underline">
+                    {l.display_label || l.platform}
+                  </a>
+                ))}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
 
       <div className="mt-10">
         <CollabPanels

@@ -146,7 +146,14 @@
       "historyTitle": "Sejarah",
       "view": "Lihat",
       "fullLegalName": "Nama penuh (sah)",
-      "email": "E-mel"
+      "email": "E-mel",
+      "socialLinksTitle": "Pautan sosial & kad nama",
+      "link_verified": "Sahkan",
+      "link_rejected": "Tolak",
+      "link_hidden": "Sembunyi",
+      "nameCards": "Kad nama",
+      "front": "Depan",
+      "back": "Belakang"
     },
     "history": {
       "submitted": "Dihantar",
@@ -214,7 +221,8 @@
     "dashboard": "Papan pemuka",
     "requests": "Keperluan saya",
     "submissions": "Penyerahan saya",
-    "notifications": "Notifikasi"
+    "notifications": "Notifikasi",
+    "profile": "Profil saya"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -617,7 +625,9 @@
     "errors": {
       "reason_required": "Sila pilih sebab untuk menolak.",
       "save_failed": "Keputusan tidak dapat disimpan."
-    }
+    },
+    "trustCardTitle": "Profil amanah Supply Agent",
+    "verifiedBadge": "Ejen disahkan"
   },
   "presentation": {
     "createCta": "Cipta pembentangan pelanggan",
@@ -1080,6 +1090,65 @@
     "errors": {
       "disclosure_declaration_required": "Anda mesti mengesahkan deklarasi pendedahan.",
       "disclosure_summary_required": "Ringkasan selamat-pelanggan diperlukan untuk Sedia untuk pelanggan."
+    }
+  },
+  "trustProfile": {
+    "title": "Profil amanah saya",
+    "intro": "Identiti profesional anda yang dipaparkan kepada ejen kerjasama. Pelanggan hanya melihat apa yang anda luluskan pada pembentangan anda sendiri.",
+    "savedNotice": "Profil disimpan.",
+    "photo": "Foto profesional",
+    "photoHint": "JPG/PNG/WebP, maksimum 3 MB. Dipaparkan kepada ejen kerjasama.",
+    "displayName": "Nama paparan",
+    "agency": "Agensi & lesen (daripada pengesahan)",
+    "mobile": "Telefon",
+    "biography": "Biografi profesional",
+    "biographyHint": "Pengalaman, pengkhususan, bahasa dituturkan…",
+    "nameCardFront": "Kad nama (depan)",
+    "nameCardBack": "Kad nama (belakang)",
+    "nameCardHint": "Disimpan secara peribadi; hanya untuk admin dan, jika polisi membenarkan, ejen kerjasama. Tidak sekali-kali kepada pelanggan.",
+    "uploaded": "dimuat naik",
+    "save": "Simpan profil",
+    "linksTitle": "Pautan sosial & profesional",
+    "linksIntro": "Pautan dipaparkan kepada ejen kerjasama hanya selepas pengesahan admin, mengikut keterlihatan pilihan anda. Pautan tidak muncul pada pembentangan pelanggan.",
+    "noLinks": "Tiada pautan ditambah.",
+    "addLink": "Tambah pautan…",
+    "platform": "Platform",
+    "label": "Label paparan",
+    "visibility": "Dilihat oleh",
+    "visibilities": {
+      "admin_only": "Admin sahaja",
+      "collaborators": "Ejen kerjasama",
+      "after_contact_release": "Selepas pelepasan hubungan",
+      "public_profile": "Profil awam"
+    },
+    "verifStatus": {
+      "unverified": "Menunggu pengesahan",
+      "verified": "Disahkan",
+      "rejected": "Ditolak",
+      "hidden": "Disembunyikan"
+    },
+    "verifyNote": "Pautan baharu bermula sebagai Menunggu pengesahan; pentadbir menyemaknya sebelum ejen lain boleh melihat.",
+    "addLinkSubmit": "Tambah pautan",
+    "remove": "Buang",
+    "platforms": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp Business",
+      "telegram": "Telegram",
+      "website": "Laman web",
+      "agency_profile": "Profil agensi",
+      "other": "Lain-lain"
+    },
+    "errors": {
+      "invalid_fields": "Sila semak medan dan cuba lagi.",
+      "invalid_file_type": "Jenis fail tidak dibenarkan.",
+      "file_too_large": "Fail melebihi had saiz.",
+      "upload_failed": "Muat naik gagal. Sila cuba lagi.",
+      "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
+      "invalid_url": "Masukkan pautan http(s) yang sah."
     }
   }
 }

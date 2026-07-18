@@ -146,7 +146,14 @@
       "historyTitle": "History",
       "view": "View",
       "fullLegalName": "Full legal name",
-      "email": "Email"
+      "email": "Email",
+      "socialLinksTitle": "Social links & name card",
+      "link_verified": "Verify",
+      "link_rejected": "Reject",
+      "link_hidden": "Hide",
+      "nameCards": "Name card",
+      "front": "Front",
+      "back": "Back"
     },
     "history": {
       "submitted": "Submitted",
@@ -214,7 +221,8 @@
     "dashboard": "Dashboard",
     "requests": "My requests",
     "submissions": "My submissions",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "profile": "My profile"
   },
   "requests": {
     "title": "My requests",
@@ -617,7 +625,9 @@
     "errors": {
       "reason_required": "Please choose a reason to reject.",
       "save_failed": "Could not save the decision."
-    }
+    },
+    "trustCardTitle": "Supply Agent trust profile",
+    "verifiedBadge": "Verified agent"
   },
   "presentation": {
     "createCta": "Create client presentation",
@@ -1080,6 +1090,65 @@
     "errors": {
       "disclosure_declaration_required": "You must confirm the disclosure declaration.",
       "disclosure_summary_required": "A client-safe summary is required for Ready for client."
+    }
+  },
+  "trustProfile": {
+    "title": "My trust profile",
+    "intro": "Your professional identity shown to collaborating agents. Clients only ever see what you approve on your own presentations.",
+    "savedNotice": "Profile saved.",
+    "photo": "Professional photo",
+    "photoHint": "JPG/PNG/WebP, max 3 MB. Visible to collaborating agents.",
+    "displayName": "Display name",
+    "agency": "Agency & licence (from verification)",
+    "mobile": "Mobile",
+    "biography": "Professional biography",
+    "biographyHint": "Experience, specialisations, languages spoken…",
+    "nameCardFront": "Name card (front)",
+    "nameCardBack": "Name card (back)",
+    "nameCardHint": "Stored privately; shown only to admins and, where policy allows, collaborating agents. Never to clients.",
+    "uploaded": "uploaded",
+    "save": "Save profile",
+    "linksTitle": "Social & professional links",
+    "linksIntro": "Links appear to collaborating agents only after admin verification, at the visibility you choose. Links never appear on client presentations.",
+    "noLinks": "No links added.",
+    "addLink": "Add a link…",
+    "platform": "Platform",
+    "label": "Display label",
+    "visibility": "Visible to",
+    "visibilities": {
+      "admin_only": "Admin only",
+      "collaborators": "Collaborating agents",
+      "after_contact_release": "After contact release",
+      "public_profile": "Public profile"
+    },
+    "verifStatus": {
+      "unverified": "Pending verification",
+      "verified": "Verified",
+      "rejected": "Rejected",
+      "hidden": "Hidden"
+    },
+    "verifyNote": "New links start as Pending verification; an administrator reviews them before other agents can see them.",
+    "addLinkSubmit": "Add link",
+    "remove": "Remove",
+    "platforms": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp Business",
+      "telegram": "Telegram",
+      "website": "Website",
+      "agency_profile": "Agency profile",
+      "other": "Other"
+    },
+    "errors": {
+      "invalid_fields": "Please check the fields and try again.",
+      "invalid_file_type": "File type not allowed.",
+      "file_too_large": "File exceeds the size limit.",
+      "upload_failed": "Upload failed. Please try again.",
+      "save_failed": "Could not save. Please try again.",
+      "invalid_url": "Enter a valid http(s) link."
     }
   }
 }

@@ -146,7 +146,14 @@
       "historyTitle": "Riwayat",
       "view": "Lihat",
       "fullLegalName": "Nama lengkap (sah)",
-      "email": "Email"
+      "email": "Email",
+      "socialLinksTitle": "Tautan sosial & kartu nama",
+      "link_verified": "Verifikasi",
+      "link_rejected": "Tolak",
+      "link_hidden": "Sembunyikan",
+      "nameCards": "Kartu nama",
+      "front": "Depan",
+      "back": "Belakang"
     },
     "history": {
       "submitted": "Diajukan",
@@ -214,7 +221,8 @@
     "dashboard": "Dasbor",
     "requests": "Kebutuhan saya",
     "submissions": "Pengajuan saya",
-    "notifications": "Notifikasi"
+    "notifications": "Notifikasi",
+    "profile": "Profil saya"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -617,7 +625,9 @@
     "errors": {
       "reason_required": "Pilih alasan untuk menolak.",
       "save_failed": "Keputusan tidak dapat disimpan."
-    }
+    },
+    "trustCardTitle": "Profil kepercayaan Supply Agent",
+    "verifiedBadge": "Agen terverifikasi"
   },
   "presentation": {
     "createCta": "Buat presentasi klien",
@@ -1080,6 +1090,65 @@
     "errors": {
       "disclosure_declaration_required": "Anda harus mengonfirmasi pernyataan pengungkapan.",
       "disclosure_summary_required": "Ringkasan aman-klien wajib untuk Siap untuk klien."
+    }
+  },
+  "trustProfile": {
+    "title": "Profil kepercayaan saya",
+    "intro": "Identitas profesional Anda yang ditampilkan ke agen mitra. Klien hanya melihat apa yang Anda setujui pada presentasi Anda sendiri.",
+    "savedNotice": "Profil disimpan.",
+    "photo": "Foto profesional",
+    "photoHint": "JPG/PNG/WebP, maksimal 3 MB. Terlihat oleh agen mitra.",
+    "displayName": "Nama tampilan",
+    "agency": "Agensi & lisensi (dari verifikasi)",
+    "mobile": "Ponsel",
+    "biography": "Biografi profesional",
+    "biographyHint": "Pengalaman, spesialisasi, bahasa yang dikuasai…",
+    "nameCardFront": "Kartu nama (depan)",
+    "nameCardBack": "Kartu nama (belakang)",
+    "nameCardHint": "Disimpan privat; hanya untuk admin dan, bila kebijakan mengizinkan, agen mitra. Tidak pernah untuk klien.",
+    "uploaded": "terunggah",
+    "save": "Simpan profil",
+    "linksTitle": "Tautan sosial & profesional",
+    "linksIntro": "Tautan tampil ke agen mitra hanya setelah verifikasi admin, sesuai visibilitas pilihan Anda. Tautan tidak pernah muncul di presentasi klien.",
+    "noLinks": "Belum ada tautan.",
+    "addLink": "Tambah tautan…",
+    "platform": "Platform",
+    "label": "Label tampilan",
+    "visibility": "Terlihat oleh",
+    "visibilities": {
+      "admin_only": "Hanya admin",
+      "collaborators": "Agen mitra",
+      "after_contact_release": "Setelah pelepasan kontak",
+      "public_profile": "Profil publik"
+    },
+    "verifStatus": {
+      "unverified": "Menunggu verifikasi",
+      "verified": "Terverifikasi",
+      "rejected": "Ditolak",
+      "hidden": "Disembunyikan"
+    },
+    "verifyNote": "Tautan baru berstatus Menunggu verifikasi; administrator meninjaunya sebelum agen lain dapat melihat.",
+    "addLinkSubmit": "Tambah tautan",
+    "remove": "Hapus",
+    "platforms": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp Business",
+      "telegram": "Telegram",
+      "website": "Situs web",
+      "agency_profile": "Profil agensi",
+      "other": "Lainnya"
+    },
+    "errors": {
+      "invalid_fields": "Periksa kolom lalu coba lagi.",
+      "invalid_file_type": "Jenis file tidak diizinkan.",
+      "file_too_large": "File melebihi batas ukuran.",
+      "upload_failed": "Unggahan gagal. Silakan coba lagi.",
+      "save_failed": "Tidak dapat menyimpan. Silakan coba lagi.",
+      "invalid_url": "Masukkan tautan http(s) yang valid."
     }
   }
 }
