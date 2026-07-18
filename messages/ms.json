@@ -65,6 +65,108 @@
       "banned": "Diharamkan",
       "expired_licence": "Lesen tamat tempoh",
       "archived": "Diarkibkan"
+    },
+    "startVerification": "Lengkapkan pengesahan",
+    "adminConsole": "Konsol admin"
+  },
+  "verification": {
+    "title": "Pengesahan ejen",
+    "intro": "Berikan maklumat profesional dan dokumen anda. Pentadbir akan menyemak penyerahan anda sebelum anda boleh mencipta keperluan atau menghantar hartanah.",
+    "submittedNotice": "Dihantar. Pengesahan anda kini dalam semakan.",
+    "adminNotes": "Nota admin",
+    "currentStatus": "Status semasa",
+    "lockedNotice": "Penyerahan anda sedang diproses. Anda akan dimaklumkan setelah semakan selesai.",
+    "fullLegalName": "Nama penuh (sah)",
+    "agencyName": "Nama agensi",
+    "agencyRegistrationNumber": "No. pendaftaran agensi",
+    "licenceType": "Jenis lesen",
+    "licenceNumber": "Nombor lesen",
+    "licenceExpiry": "Tarikh tamat lesen",
+    "country": "Negara",
+    "stateRegion": "Negeri / wilayah",
+    "city": "Bandar",
+    "categories": "Kategori hartanah",
+    "categoryNames": {
+      "residential": "Kediaman",
+      "commercial": "Komersial",
+      "industrial": "Perindustrian",
+      "land": "Tanah"
+    },
+    "licenceTypes": {
+      "REN": "REN (Malaysia)",
+      "REA": "REA (Malaysia)",
+      "PEA": "PEA (Malaysia)",
+      "AGEN_PROPERTI": "Agen Properti (Indonesia)",
+      "BROKER": "Broker",
+      "OTHER": "Lain-lain"
+    },
+    "documentsTitle": "Dokumen pengesahan",
+    "documentsHint": "JPG, PNG, WebP atau PDF, maksimum 5 MB setiap satu. Disimpan secara peribadi; hanya pentadbir boleh melihat.",
+    "licenceDocument": "Dokumen lesen",
+    "identityDocument": "Dokumen pengenalan",
+    "agencyDocument": "Pengesahan agensi (pilihan)",
+    "alreadyUploaded": "telah dimuat naik",
+    "submit": "Hantar untuk semakan",
+    "errors": {
+      "invalid_fields": "Sila semak medan yang ditanda dan cuba lagi.",
+      "missing_documents": "Dokumen lesen dan pengenalan diperlukan.",
+      "invalid_file_type": "Jenis fail tidak dibenarkan. Guna JPG, PNG, WebP atau PDF.",
+      "file_too_large": "Fail melebihi had 5 MB.",
+      "upload_failed": "Muat naik gagal. Sila cuba lagi.",
+      "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
+      "not_allowed": "Status semasa anda tidak membenarkan penyerahan."
+    }
+  },
+  "admin": {
+    "badge": "Admin",
+    "nav": {
+      "agents": "Pengesahan ejen",
+      "agentView": "Paparan ejen"
+    },
+    "agentsTitle": "Pengesahan ejen",
+    "filterAll": "Semua",
+    "emptyQueue": "Tiada ejen dalam status ini.",
+    "cols": {
+      "agent": "Ejen",
+      "agency": "Agensi",
+      "licence": "Lesen",
+      "country": "Negara",
+      "status": "Status"
+    },
+    "review": "Semak",
+    "detail": {
+      "profileTitle": "Maklumat dihantar",
+      "documentsTitle": "Dokumen",
+      "historyTitle": "Sejarah",
+      "view": "Lihat",
+      "fullLegalName": "Nama penuh (sah)",
+      "email": "E-mel"
+    },
+    "history": {
+      "submitted": "Dihantar",
+      "resubmitted": "Dihantar semula",
+      "approved": "Diluluskan",
+      "rejected": "Ditolak",
+      "info_requested": "Maklumat diminta",
+      "suspended": "Digantung",
+      "restored": "Dipulihkan"
+    },
+    "decision": {
+      "title": "Keputusan",
+      "notes": "Nota kepada ejen",
+      "notesHint": "Wajib untuk tolak / minta maklumat",
+      "approve": "Luluskan sebagai ejen disahkan",
+      "requestInfo": "Minta maklumat tambahan",
+      "reject": "Tolak"
+    },
+    "doneNotice": {
+      "approve": "Ejen diluluskan dan disahkan.",
+      "reject": "Ejen ditolak.",
+      "request_info": "Maklumat diminta daripada ejen."
+    },
+    "errors": {
+      "notes_required": "Nota diperlukan untuk keputusan ini.",
+      "save_failed": "Keputusan tidak dapat disimpan."
     }
   }
 }

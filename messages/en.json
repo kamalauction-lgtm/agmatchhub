@@ -65,6 +65,108 @@
       "banned": "Banned",
       "expired_licence": "Licence expired",
       "archived": "Archived"
+    },
+    "startVerification": "Complete verification",
+    "adminConsole": "Admin console"
+  },
+  "verification": {
+    "title": "Agent verification",
+    "intro": "Provide your professional details and documents. An administrator will review your submission before you can create requirements or submit properties.",
+    "submittedNotice": "Submitted. Your verification is now under review.",
+    "adminNotes": "Admin notes",
+    "currentStatus": "Current status",
+    "lockedNotice": "Your submission is being processed. You will be notified when the review is complete.",
+    "fullLegalName": "Full legal name",
+    "agencyName": "Agency name",
+    "agencyRegistrationNumber": "Agency registration no.",
+    "licenceType": "Licence type",
+    "licenceNumber": "Licence number",
+    "licenceExpiry": "Licence expiry",
+    "country": "Country",
+    "stateRegion": "State / region",
+    "city": "City",
+    "categories": "Property categories served",
+    "categoryNames": {
+      "residential": "Residential",
+      "commercial": "Commercial",
+      "industrial": "Industrial",
+      "land": "Land"
+    },
+    "licenceTypes": {
+      "REN": "REN (Malaysia)",
+      "REA": "REA (Malaysia)",
+      "PEA": "PEA (Malaysia)",
+      "AGEN_PROPERTI": "Agen Properti (Indonesia)",
+      "BROKER": "Broker",
+      "OTHER": "Other"
+    },
+    "documentsTitle": "Verification documents",
+    "documentsHint": "JPG, PNG, WebP or PDF, max 5 MB each. Stored privately; visible only to administrators.",
+    "licenceDocument": "Licence document",
+    "identityDocument": "Identity document",
+    "agencyDocument": "Agency confirmation (optional)",
+    "alreadyUploaded": "already uploaded",
+    "submit": "Submit for review",
+    "errors": {
+      "invalid_fields": "Please check the highlighted fields and try again.",
+      "missing_documents": "Licence and identity documents are required.",
+      "invalid_file_type": "File type not allowed. Use JPG, PNG, WebP or PDF.",
+      "file_too_large": "A file exceeds the 5 MB limit.",
+      "upload_failed": "Upload failed. Please try again.",
+      "save_failed": "Could not save. Please try again.",
+      "not_allowed": "Your current status does not allow submission."
+    }
+  },
+  "admin": {
+    "badge": "Admin",
+    "nav": {
+      "agents": "Agent verification",
+      "agentView": "Agent view"
+    },
+    "agentsTitle": "Agent verification",
+    "filterAll": "All",
+    "emptyQueue": "No agents in this status.",
+    "cols": {
+      "agent": "Agent",
+      "agency": "Agency",
+      "licence": "Licence",
+      "country": "Country",
+      "status": "Status"
+    },
+    "review": "Review",
+    "detail": {
+      "profileTitle": "Submitted details",
+      "documentsTitle": "Documents",
+      "historyTitle": "History",
+      "view": "View",
+      "fullLegalName": "Full legal name",
+      "email": "Email"
+    },
+    "history": {
+      "submitted": "Submitted",
+      "resubmitted": "Resubmitted",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "info_requested": "Information requested",
+      "suspended": "Suspended",
+      "restored": "Restored"
+    },
+    "decision": {
+      "title": "Decision",
+      "notes": "Notes to the agent",
+      "notesHint": "Required for reject / request info",
+      "approve": "Approve as verified agent",
+      "requestInfo": "Request more information",
+      "reject": "Reject"
+    },
+    "doneNotice": {
+      "approve": "Agent approved and verified.",
+      "reject": "Agent rejected.",
+      "request_info": "Information requested from the agent."
+    },
+    "errors": {
+      "notes_required": "Notes are required for this decision.",
+      "save_failed": "Could not save the decision."
     }
   }
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
@@ -19,11 +20,10 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, agent_status")
-    .eq("id", user.id)
-    .single();
+  const [{ data: profile }, { data: isAdmin }] = await Promise.all([
+    supabase.from("profiles").select("display_name, agent_status").eq("id", user.id).single(),
+    supabase.rpc("is_platform_admin"),
+  ]);
 
   const t = await getTranslations("dashboard");
   const tc = await getTranslations("common");
@@ -68,9 +68,26 @@ export default async function DashboardPage() {
             {t(`status.${status}`)}
           </span>
           {!isVerified && (
-            <p className="mt-3 text-sm leading-6 text-muted">{t("statusNote")}</p>
+            <>
+              <p className="mt-3 text-sm leading-6 text-muted">{t("statusNote")}</p>
+              <Link
+                href="/verification"
+                className="mt-4 inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+              >
+                {t("startVerification")}
+              </Link>
+            </>
           )}
         </section>
+
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="mt-6 inline-block rounded-lg border border-line px-5 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+          >
+            {t("adminConsole")}
+          </Link>
+        )}
       </main>
     </div>
   );

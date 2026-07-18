@@ -65,6 +65,108 @@
       "banned": "Diblokir",
       "expired_licence": "Lisensi kedaluwarsa",
       "archived": "Diarsipkan"
+    },
+    "startVerification": "Lengkapi verifikasi",
+    "adminConsole": "Konsol admin"
+  },
+  "verification": {
+    "title": "Verifikasi agen",
+    "intro": "Berikan detail profesional dan dokumen Anda. Administrator akan meninjau pengajuan Anda sebelum Anda dapat membuat kebutuhan atau mengajukan properti.",
+    "submittedNotice": "Terkirim. Verifikasi Anda sedang ditinjau.",
+    "adminNotes": "Catatan admin",
+    "currentStatus": "Status saat ini",
+    "lockedNotice": "Pengajuan Anda sedang diproses. Anda akan diberi tahu setelah peninjauan selesai.",
+    "fullLegalName": "Nama lengkap (sah)",
+    "agencyName": "Nama agensi",
+    "agencyRegistrationNumber": "No. registrasi agensi",
+    "licenceType": "Jenis lisensi",
+    "licenceNumber": "Nomor lisensi",
+    "licenceExpiry": "Masa berlaku lisensi",
+    "country": "Negara",
+    "stateRegion": "Provinsi / wilayah",
+    "city": "Kota",
+    "categories": "Kategori properti",
+    "categoryNames": {
+      "residential": "Residensial",
+      "commercial": "Komersial",
+      "industrial": "Industri",
+      "land": "Tanah"
+    },
+    "licenceTypes": {
+      "REN": "REN (Malaysia)",
+      "REA": "REA (Malaysia)",
+      "PEA": "PEA (Malaysia)",
+      "AGEN_PROPERTI": "Agen Properti (Indonesia)",
+      "BROKER": "Broker",
+      "OTHER": "Lainnya"
+    },
+    "documentsTitle": "Dokumen verifikasi",
+    "documentsHint": "JPG, PNG, WebP atau PDF, maksimal 5 MB per file. Disimpan privat; hanya administrator yang dapat melihat.",
+    "licenceDocument": "Dokumen lisensi",
+    "identityDocument": "Dokumen identitas",
+    "agencyDocument": "Konfirmasi agensi (opsional)",
+    "alreadyUploaded": "sudah diunggah",
+    "submit": "Kirim untuk ditinjau",
+    "errors": {
+      "invalid_fields": "Periksa kolom yang ditandai lalu coba lagi.",
+      "missing_documents": "Dokumen lisensi dan identitas wajib diunggah.",
+      "invalid_file_type": "Jenis file tidak diizinkan. Gunakan JPG, PNG, WebP atau PDF.",
+      "file_too_large": "Ada file yang melebihi batas 5 MB.",
+      "upload_failed": "Unggahan gagal. Silakan coba lagi.",
+      "save_failed": "Tidak dapat menyimpan. Silakan coba lagi.",
+      "not_allowed": "Status Anda saat ini tidak mengizinkan pengajuan."
+    }
+  },
+  "admin": {
+    "badge": "Admin",
+    "nav": {
+      "agents": "Verifikasi agen",
+      "agentView": "Tampilan agen"
+    },
+    "agentsTitle": "Verifikasi agen",
+    "filterAll": "Semua",
+    "emptyQueue": "Tidak ada agen dengan status ini.",
+    "cols": {
+      "agent": "Agen",
+      "agency": "Agensi",
+      "licence": "Lisensi",
+      "country": "Negara",
+      "status": "Status"
+    },
+    "review": "Tinjau",
+    "detail": {
+      "profileTitle": "Detail yang diajukan",
+      "documentsTitle": "Dokumen",
+      "historyTitle": "Riwayat",
+      "view": "Lihat",
+      "fullLegalName": "Nama lengkap (sah)",
+      "email": "Email"
+    },
+    "history": {
+      "submitted": "Diajukan",
+      "resubmitted": "Diajukan ulang",
+      "approved": "Disetujui",
+      "rejected": "Ditolak",
+      "info_requested": "Informasi diminta",
+      "suspended": "Ditangguhkan",
+      "restored": "Dipulihkan"
+    },
+    "decision": {
+      "title": "Keputusan",
+      "notes": "Catatan untuk agen",
+      "notesHint": "Wajib untuk tolak / minta info",
+      "approve": "Setujui sebagai agen terverifikasi",
+      "requestInfo": "Minta informasi tambahan",
+      "reject": "Tolak"
+    },
+    "doneNotice": {
+      "approve": "Agen disetujui dan terverifikasi.",
+      "reject": "Agen ditolak.",
+      "request_info": "Informasi diminta dari agen."
+    },
+    "errors": {
+      "notes_required": "Catatan wajib untuk keputusan ini.",
+      "save_failed": "Keputusan tidak dapat disimpan."
     }
   }
 }
