@@ -211,7 +211,8 @@
   "nav": {
     "dashboard": "Dashboard",
     "requests": "My requests",
-    "submissions": "My submissions"
+    "submissions": "My submissions",
+    "notifications": "Notifications"
   },
   "requests": {
     "title": "My requests",
@@ -536,7 +537,8 @@
       "forRequest": "For request",
       "price": "Price",
       "status": "Status"
-    }
+    },
+    "forRequest": "for"
   },
   "submissionStatus": {
     "draft": "Draft",
@@ -731,6 +733,113 @@
         "subject_to_offer": "Subject to offer"
       },
       "missingNote": "— means the information was not provided. Nothing is estimated on your behalf."
+    }
+  },
+  "collab": {
+    "errors": {
+      "collab_failed": "Action failed. Please try again.",
+      "counter_amount_required": "A counter amount is required."
+    },
+    "messages": {
+      "title": "Messages",
+      "empty": "No messages yet. Start the conversation.",
+      "placeholder": "Write a message…",
+      "send": "Send",
+      "flagged": "Possible contact details detected — platform policy applies",
+      "policyHint": "Keep negotiation on the platform. Direct contact details are flagged until contact release is approved."
+    },
+    "offers": {
+      "title": "Offers",
+      "empty": "No offers yet.",
+      "status": {
+        "submitted": "Submitted",
+        "countered": "Countered",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn",
+        "expired": "Expired"
+      },
+      "counterLabel": "Counter-offer",
+      "accept": "Accept offer",
+      "reject": "Reject",
+      "counter": "Counter…",
+      "counterAmount": "Counter amount",
+      "counterTerms": "Terms (optional)",
+      "sendCounter": "Send counter",
+      "withdraw": "Withdraw",
+      "acceptCounter": "Accept counter-offer",
+      "rejectCounter": "Reject counter-offer",
+      "newOffer": "Submit an offer",
+      "amount": "Offer amount ({currency})",
+      "validUntil": "Valid until",
+      "conditions": "Conditions",
+      "notBinding": "Platform offers are not legally binding unless formal documents are executed.",
+      "submit": "Submit offer"
+    },
+    "viewings": {
+      "title": "Viewings",
+      "empty": "No viewings yet.",
+      "status": {
+        "requested": "Requested",
+        "confirmed": "Confirmed",
+        "reschedule_requested": "Reschedule requested",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "type": {
+        "physical": "Physical",
+        "virtual": "Virtual"
+      },
+      "typeLabel": "Type",
+      "confirm": "Confirm",
+      "reschedule": "Request reschedule",
+      "markCompleted": "Mark completed",
+      "cancel": "Cancel",
+      "propose": "Propose a viewing",
+      "date": "Date",
+      "time": "Time",
+      "notes": "Notes",
+      "submit": "Propose viewing"
+    },
+    "release": {
+      "title": "Contact release",
+      "intro": "Request to exchange direct contact details. Both agents must agree; the exchange is recorded.",
+      "request": "Request direct contact",
+      "otherRequested": "The other agent requested direct contact. Accept to exchange details.",
+      "waitingOther": "Waiting for the other agent to accept.",
+      "accept": "Accept and share my contact",
+      "approved": "Contact released — both agents agreed.",
+      "mobile": "Mobile",
+      "email": "Email"
+    }
+  },
+  "notificationsPage": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No notifications.",
+    "open": "Open",
+    "kinds": {
+      "message_new": "New message on a submission",
+      "offer_received": "New offer received",
+      "offer_accept": "Your offer was accepted",
+      "offer_reject": "Your offer was rejected",
+      "offer_counter": "You received a counter-offer",
+      "offer_withdraw": "An offer was withdrawn",
+      "offer_accept_counter": "Your counter-offer was accepted",
+      "offer_reject_counter": "Your counter-offer was rejected",
+      "viewing_requested": "Viewing proposed",
+      "viewing_confirmed": "Viewing confirmed",
+      "viewing_reschedule_requested": "Viewing reschedule requested",
+      "viewing_completed": "Viewing completed",
+      "viewing_cancelled": "Viewing cancelled",
+      "contact_release_requested": "Direct contact requested",
+      "client_shortlist": "Your client shortlisted a property",
+      "client_not_interested": "Your client marked a property not interested",
+      "client_rank": "Your client ranked a property",
+      "client_question": "Your client asked a question",
+      "client_offer_suggestion": "Your client suggested an offer",
+      "client_viewing_request": "Your client requested a viewing",
+      "client_comment": "Your client left a comment"
     }
   }
 }

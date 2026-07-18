@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
@@ -53,7 +54,11 @@ export default async function MySubmissionsPage({
                 return (
                   <tr key={s.id} className="border-t border-line">
                     <td className="px-4 py-3 font-mono text-xs">{s.human_readable_id}</td>
-                    <td className="px-4 py-3 font-medium">{s.title}</td>
+                    <td className="px-4 py-3">
+                      <Link href={`/submissions/${s.id}`} className="font-medium text-crimson hover:underline">
+                        {s.title}
+                      </Link>
+                    </td>
                     <td className="px-4 py-3 text-xs">{req?.human_readable_id}</td>
                     <td className="px-4 py-3">
                       {price != null ? `${s.currency} ${Number(price).toLocaleString()}` : "—"}

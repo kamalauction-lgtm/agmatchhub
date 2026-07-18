@@ -211,7 +211,8 @@
   "nav": {
     "dashboard": "Papan pemuka",
     "requests": "Keperluan saya",
-    "submissions": "Penyerahan saya"
+    "submissions": "Penyerahan saya",
+    "notifications": "Notifikasi"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -536,7 +537,8 @@
       "forRequest": "Untuk permintaan",
       "price": "Harga",
       "status": "Status"
-    }
+    },
+    "forRequest": "untuk"
   },
   "submissionStatus": {
     "draft": "Draf",
@@ -731,6 +733,113 @@
         "subject_to_offer": "Tertakluk kepada tawaran"
       },
       "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda."
+    }
+  },
+  "collab": {
+    "errors": {
+      "collab_failed": "Tindakan gagal. Sila cuba lagi.",
+      "counter_amount_required": "Jumlah tawaran balas diperlukan."
+    },
+    "messages": {
+      "title": "Mesej",
+      "empty": "Belum ada mesej. Mulakan perbualan.",
+      "placeholder": "Tulis mesej…",
+      "send": "Hantar",
+      "flagged": "Kemungkinan butiran hubungan dikesan — polisi platform terpakai",
+      "policyHint": "Kekalkan rundingan di platform. Butiran hubungan terus ditanda sehingga pelepasan hubungan diluluskan."
+    },
+    "offers": {
+      "title": "Tawaran",
+      "empty": "Belum ada tawaran.",
+      "status": {
+        "submitted": "Dihantar",
+        "countered": "Dibalas",
+        "accepted": "Diterima",
+        "rejected": "Ditolak",
+        "withdrawn": "Ditarik balik",
+        "expired": "Luput"
+      },
+      "counterLabel": "Tawaran balas",
+      "accept": "Terima tawaran",
+      "reject": "Tolak",
+      "counter": "Balas…",
+      "counterAmount": "Jumlah tawaran balas",
+      "counterTerms": "Syarat (pilihan)",
+      "sendCounter": "Hantar tawaran balas",
+      "withdraw": "Tarik balik",
+      "acceptCounter": "Terima tawaran balas",
+      "rejectCounter": "Tolak tawaran balas",
+      "newOffer": "Hantar tawaran",
+      "amount": "Jumlah tawaran ({currency})",
+      "validUntil": "Sah sehingga",
+      "conditions": "Syarat",
+      "notBinding": "Tawaran platform tidak mengikat di sisi undang-undang kecuali dokumen rasmi dimeterai.",
+      "submit": "Hantar tawaran"
+    },
+    "viewings": {
+      "title": "Lawatan",
+      "empty": "Belum ada lawatan.",
+      "status": {
+        "requested": "Diminta",
+        "confirmed": "Disahkan",
+        "reschedule_requested": "Jadual semula diminta",
+        "completed": "Selesai",
+        "cancelled": "Dibatalkan"
+      },
+      "type": {
+        "physical": "Fizikal",
+        "virtual": "Maya"
+      },
+      "typeLabel": "Jenis",
+      "confirm": "Sahkan",
+      "reschedule": "Minta jadual semula",
+      "markCompleted": "Tanda selesai",
+      "cancel": "Batal",
+      "propose": "Cadangkan lawatan",
+      "date": "Tarikh",
+      "time": "Masa",
+      "notes": "Nota",
+      "submit": "Cadang lawatan"
+    },
+    "release": {
+      "title": "Pelepasan hubungan",
+      "intro": "Minta untuk bertukar butiran hubungan terus. Kedua-dua ejen mesti bersetuju; pertukaran direkodkan.",
+      "request": "Minta hubungan terus",
+      "otherRequested": "Ejen satu lagi meminta hubungan terus. Terima untuk bertukar butiran.",
+      "waitingOther": "Menunggu ejen satu lagi menerima.",
+      "accept": "Terima dan kongsi hubungan saya",
+      "approved": "Hubungan dilepaskan — kedua-dua ejen bersetuju.",
+      "mobile": "Telefon",
+      "email": "E-mel"
+    }
+  },
+  "notificationsPage": {
+    "title": "Notifikasi",
+    "markAllRead": "Tanda semua dibaca",
+    "empty": "Tiada notifikasi.",
+    "open": "Buka",
+    "kinds": {
+      "message_new": "Mesej baharu pada penyerahan",
+      "offer_received": "Tawaran baharu diterima",
+      "offer_accept": "Tawaran anda diterima",
+      "offer_reject": "Tawaran anda ditolak",
+      "offer_counter": "Anda menerima tawaran balas",
+      "offer_withdraw": "Tawaran ditarik balik",
+      "offer_accept_counter": "Tawaran balas anda diterima",
+      "offer_reject_counter": "Tawaran balas anda ditolak",
+      "viewing_requested": "Lawatan dicadangkan",
+      "viewing_confirmed": "Lawatan disahkan",
+      "viewing_reschedule_requested": "Jadual semula lawatan diminta",
+      "viewing_completed": "Lawatan selesai",
+      "viewing_cancelled": "Lawatan dibatalkan",
+      "contact_release_requested": "Hubungan terus diminta",
+      "client_shortlist": "Pelanggan anda menyenarai pendek hartanah",
+      "client_not_interested": "Pelanggan anda menanda tidak berminat",
+      "client_rank": "Pelanggan anda menyusun hartanah",
+      "client_question": "Pelanggan anda bertanya soalan",
+      "client_offer_suggestion": "Pelanggan anda mencadangkan tawaran",
+      "client_viewing_request": "Pelanggan anda meminta lawatan",
+      "client_comment": "Pelanggan anda meninggalkan komen"
     }
   }
 }

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CollabPanels } from "@/components/collab/collab-panels";
 import { reviewSubmission } from "../actions";
 
 const inputCls =
@@ -47,6 +48,9 @@ export default async function SubmissionReviewPage({
   ]);
   if (!s || s.request_id !== id) notFound();
   const sa = Array.isArray(s.profiles) ? s.profiles[0] : s.profiles;
+  const { data: reqRow } = await supabase
+    .from("property_requests").select("transaction_type").eq("id", id).single();
+  const offerType = reqRow?.transaction_type === "rent" ? "rental" : "purchase";
 
   const urls = await Promise.all(
     (media ?? []).map(async (m) => {
@@ -202,6 +206,15 @@ export default async function SubmissionReviewPage({
             </div>
           )}
         </aside>
+      </div>
+
+      <div className="mt-10">
+        <CollabPanels
+          submissionId={sid}
+          role="ra"
+          currency={s.currency}
+          offerType={offerType}
+        />
       </div>
     </AgentShell>
   );

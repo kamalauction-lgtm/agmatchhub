@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { createServiceClient } from "@/lib/supabase/service";
+import { notify } from "@/lib/notifications";
 import { signLinkSession, verifyLinkSession, linkCookieName } from "@/lib/request-links";
 
 const FAIL_WINDOW_MIN = 10;
@@ -14,7 +15,7 @@ async function loadPresentation(token: string) {
   const service = createServiceClient();
   const { data } = await service
     .from("client_presentations")
-    .select("id, active, expires_at, password, allow_feedback, allow_offer, allow_viewing_request")
+    .select("id, active, expires_at, password, allow_feedback, allow_offer, allow_viewing_request, requesting_agent_id, request_id")
     .eq("token", token)
     .maybeSingle();
   return data;
@@ -127,6 +128,13 @@ export async function submitClientFeedback(formData: FormData) {
     message: d.message || null,
     offer_amount: offerAmount,
     preferred_date: d.preferredDate || null,
+  });
+
+  // §40: tell the RA immediately; no confidential values in the payload
+  await notify({
+    userId: p.requesting_agent_id,
+    kind: `client.${d.kind}`,
+    href: `/requests/${p.request_id}`,
   });
 
   redirect(`/p/${d.token}?done=${d.kind}`);

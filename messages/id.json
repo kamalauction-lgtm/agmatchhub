@@ -211,7 +211,8 @@
   "nav": {
     "dashboard": "Dasbor",
     "requests": "Kebutuhan saya",
-    "submissions": "Pengajuan saya"
+    "submissions": "Pengajuan saya",
+    "notifications": "Notifikasi"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -536,7 +537,8 @@
       "forRequest": "Untuk permintaan",
       "price": "Harga",
       "status": "Status"
-    }
+    },
+    "forRequest": "untuk"
   },
   "submissionStatus": {
     "draft": "Draf",
@@ -731,6 +733,113 @@
         "subject_to_offer": "Tergantung penawaran"
       },
       "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda."
+    }
+  },
+  "collab": {
+    "errors": {
+      "collab_failed": "Tindakan gagal. Silakan coba lagi.",
+      "counter_amount_required": "Jumlah penawaran balasan wajib diisi."
+    },
+    "messages": {
+      "title": "Pesan",
+      "empty": "Belum ada pesan. Mulai percakapan.",
+      "placeholder": "Tulis pesan…",
+      "send": "Kirim",
+      "flagged": "Kemungkinan detail kontak terdeteksi — kebijakan platform berlaku",
+      "policyHint": "Jaga negosiasi tetap di platform. Detail kontak langsung ditandai sampai pelepasan kontak disetujui."
+    },
+    "offers": {
+      "title": "Penawaran",
+      "empty": "Belum ada penawaran.",
+      "status": {
+        "submitted": "Diajukan",
+        "countered": "Dibalas",
+        "accepted": "Diterima",
+        "rejected": "Ditolak",
+        "withdrawn": "Ditarik",
+        "expired": "Kedaluwarsa"
+      },
+      "counterLabel": "Penawaran balasan",
+      "accept": "Terima penawaran",
+      "reject": "Tolak",
+      "counter": "Balas…",
+      "counterAmount": "Jumlah balasan",
+      "counterTerms": "Syarat (opsional)",
+      "sendCounter": "Kirim balasan",
+      "withdraw": "Tarik penawaran",
+      "acceptCounter": "Terima penawaran balasan",
+      "rejectCounter": "Tolak penawaran balasan",
+      "newOffer": "Ajukan penawaran",
+      "amount": "Jumlah penawaran ({currency})",
+      "validUntil": "Berlaku sampai",
+      "conditions": "Syarat",
+      "notBinding": "Penawaran platform tidak mengikat secara hukum kecuali dokumen resmi ditandatangani.",
+      "submit": "Ajukan penawaran"
+    },
+    "viewings": {
+      "title": "Kunjungan",
+      "empty": "Belum ada kunjungan.",
+      "status": {
+        "requested": "Diminta",
+        "confirmed": "Dikonfirmasi",
+        "reschedule_requested": "Penjadwalan ulang diminta",
+        "completed": "Selesai",
+        "cancelled": "Dibatalkan"
+      },
+      "type": {
+        "physical": "Fisik",
+        "virtual": "Virtual"
+      },
+      "typeLabel": "Jenis",
+      "confirm": "Konfirmasi",
+      "reschedule": "Minta jadwal ulang",
+      "markCompleted": "Tandai selesai",
+      "cancel": "Batalkan",
+      "propose": "Usulkan kunjungan",
+      "date": "Tanggal",
+      "time": "Waktu",
+      "notes": "Catatan",
+      "submit": "Usulkan kunjungan"
+    },
+    "release": {
+      "title": "Pelepasan kontak",
+      "intro": "Minta bertukar detail kontak langsung. Kedua agen harus setuju; pertukaran dicatat.",
+      "request": "Minta kontak langsung",
+      "otherRequested": "Agen lain meminta kontak langsung. Terima untuk bertukar detail.",
+      "waitingOther": "Menunggu agen lain menerima.",
+      "accept": "Terima dan bagikan kontak saya",
+      "approved": "Kontak dilepaskan — kedua agen setuju.",
+      "mobile": "Ponsel",
+      "email": "Email"
+    }
+  },
+  "notificationsPage": {
+    "title": "Notifikasi",
+    "markAllRead": "Tandai semua dibaca",
+    "empty": "Tidak ada notifikasi.",
+    "open": "Buka",
+    "kinds": {
+      "message_new": "Pesan baru pada pengajuan",
+      "offer_received": "Penawaran baru diterima",
+      "offer_accept": "Penawaran Anda diterima",
+      "offer_reject": "Penawaran Anda ditolak",
+      "offer_counter": "Anda menerima penawaran balasan",
+      "offer_withdraw": "Penawaran ditarik",
+      "offer_accept_counter": "Penawaran balasan Anda diterima",
+      "offer_reject_counter": "Penawaran balasan Anda ditolak",
+      "viewing_requested": "Kunjungan diusulkan",
+      "viewing_confirmed": "Kunjungan dikonfirmasi",
+      "viewing_reschedule_requested": "Penjadwalan ulang kunjungan diminta",
+      "viewing_completed": "Kunjungan selesai",
+      "viewing_cancelled": "Kunjungan dibatalkan",
+      "contact_release_requested": "Kontak langsung diminta",
+      "client_shortlist": "Klien Anda memasukkan properti ke shortlist",
+      "client_not_interested": "Klien Anda menandai tidak berminat",
+      "client_rank": "Klien Anda memberi peringkat properti",
+      "client_question": "Klien Anda mengajukan pertanyaan",
+      "client_offer_suggestion": "Klien Anda mengusulkan penawaran",
+      "client_viewing_request": "Klien Anda meminta kunjungan",
+      "client_comment": "Klien Anda meninggalkan komentar"
     }
   }
 }
