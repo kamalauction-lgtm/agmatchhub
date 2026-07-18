@@ -35,9 +35,11 @@ export const brand = {
 
   logos: {
     iqi: {
-      src: "/brand/placeholder-iqi.svg",
-      alt: "IQI logo (placeholder — awaiting official asset)",
-      isPlaceholder: true,
+      // Stylised IQI sphere supplied by the owner (18 Jul 2026), extracted
+      // from the approved MatchHub banner set with transparency.
+      src: "/brand/iqi-mark.png",
+      alt: "IQI logo",
+      isPlaceholder: false,
     },
     agTeam: {
       src: "/brand/ag-mark.png",

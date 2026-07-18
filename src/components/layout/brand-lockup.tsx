@@ -13,7 +13,7 @@ export function BrandLockup({ size = 36 }: { size?: number }) {
       <Image
         src={brand.logos.iqi.src}
         alt={brand.logos.iqi.alt}
-        width={size * 2.5}
+        width={size}
         height={size}
         className="h-auto"
         priority
