@@ -210,7 +210,8 @@
   },
   "nav": {
     "dashboard": "Dasbor",
-    "requests": "Kebutuhan saya"
+    "requests": "Kebutuhan saya",
+    "submissions": "Pengajuan saya"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -346,8 +347,10 @@
         "fully": "Full furnished"
       },
       "saveDraft": "Simpan draf",
-      "submitForApproval": "Kirim untuk persetujuan"
-    }
+      "submitForApproval": "Kirim untuk persetujuan",
+      "askingPrice": "Harga penawaran"
+    },
+    "submissionsTitle": "Properti yang diajukan"
   },
   "adminRequests": {
     "title": "Persetujuan kebutuhan",
@@ -396,6 +399,220 @@
     "register": "Buat akun agen",
     "verifyToSubmit": "Akun agen Anda harus terverifikasi sebelum dapat mengajukan properti.",
     "verifyLink": "Lengkapi verifikasi",
-    "submitComingSoon": "Pengajuan properti dibuka pada rilis berikutnya. Anda akan dapat mengajukan properti yang cocok untuk kebutuhan ini di sini."
+    "submitComingSoon": "Pengajuan properti dibuka pada rilis berikutnya. Anda akan dapat mengajukan properti yang cocok untuk kebutuhan ini di sini.",
+    "submitCta": "Anda sekarang dapat mengajukan properti yang cocok untuk kebutuhan ini.",
+    "submitButton": "Ajukan properti"
+  },
+  "submit": {
+    "title": "Ajukan properti",
+    "backToRequirement": "Kembali ke kebutuhan",
+    "sectionProperty": "Properti",
+    "sectionPricing": "Harga",
+    "sectionSpecs": "Spesifikasi",
+    "sectionMarketing": "Deskripsi",
+    "sectionSource": "Sumber listing & kewenangan",
+    "sectionCobroke": "Ketentuan co-broke",
+    "sectionMedia": "Foto",
+    "cobrokeHint": "Antar-agen saja. Tidak pernah ditampilkan ke pembeli atau penyewa.",
+    "mediaHint": "JPG, PNG atau WebP, maksimal 10 MB per file. Foto sampul wajib, hingga 5 tambahan.",
+    "declarationTitle": "Pernyataan Supply Agent",
+    "declarationAccept": "Saya telah membaca dan menyetujui pernyataan di atas.",
+    "submitButton": "Ajukan properti",
+    "agentOnly": "Antar-agen saja",
+    "yes": "Ya",
+    "no": "Tidak",
+    "categories": {
+      "residential": "Residensial",
+      "commercial": "Komersial",
+      "industrial": "Industri",
+      "land": "Tanah",
+      "other": "Lainnya"
+    },
+    "furn": {
+      "unfurnished": "Tanpa furnitur",
+      "partially": "Semi furnished",
+      "fully": "Full furnished"
+    },
+    "appt": {
+      "written_appointment": "Surat penunjukan",
+      "appointment_pending": "Penunjukan tertunda",
+      "verbal_authorisation": "Izin lisan",
+      "none": "Tidak ada"
+    },
+    "owner": {
+      "confirmed": "Pemilik konfirmasi",
+      "pending": "Tertunda",
+      "not_obtained": "Belum diperoleh"
+    },
+    "comm": {
+      "percentage": "Persentase",
+      "fixed": "Jumlah tetap",
+      "rental_months": "Bulan sewa"
+    },
+    "sources": {
+      "direct_written_appointment": "Langsung — surat penunjukan",
+      "direct_appointment_pending": "Langsung — penunjukan tertunda",
+      "direct_verbal_authorisation": "Langsung — izin lisan",
+      "direct_no_appointment": "Langsung — tanpa penunjukan",
+      "indirect_other_agent": "Tidak langsung — dari agen lain",
+      "co_agent": "Listing co-agent",
+      "agency_shared": "Listing bersama agensi",
+      "developer": "Listing developer",
+      "landlord_referral": "Rujukan langsung pemilik",
+      "open_market": "Informasi pasar terbuka",
+      "other": "Lainnya"
+    },
+    "f": {
+      "title": "Judul properti",
+      "category": "Kategori",
+      "propertyType": "Jenis properti",
+      "buildingName": "Gedung / proyek",
+      "city": "Kota",
+      "district": "Kecamatan",
+      "stateRegion": "Provinsi / wilayah",
+      "generalAddress": "Lokasi umum (aman untuk klien)",
+      "generalAddressHint": "mis. Kemang, dekat sekolah internasional",
+      "fullAddress": "Alamat lengkap",
+      "unitNumber": "Nomor unit",
+      "currency": "Mata uang",
+      "askingPrice": "Harga penawaran",
+      "monthlyRental": "Sewa bulanan",
+      "negotiable": "Bisa nego",
+      "negYes": "Ya",
+      "negNo": "Tidak",
+      "negSubject": "Tergantung penawaran",
+      "minAcceptablePrice": "Harga minimum diterima (rahasia)",
+      "minPriceHint": "Hanya Anda dan admin platform yang dapat melihat. Tidak pernah ditampilkan ke agen lain atau klien.",
+      "builtUp": "Luas bangunan",
+      "unit": "Satuan",
+      "bedrooms": "Kamar tidur",
+      "bathrooms": "Kamar mandi",
+      "carParks": "Parkir",
+      "floorLevel": "Lantai",
+      "furnishing": "Furnitur",
+      "vacant": "Kosong",
+      "tenure": "Status kepemilikan",
+      "completionYear": "Tahun selesai",
+      "availabilityDate": "Tersedia mulai",
+      "facilities": "Fasilitas",
+      "facilitiesHint": "Dipisah koma, mis. Kolam, Gym, Keamanan 24 jam",
+      "description": "Deskripsi",
+      "keySellingPoints": "Keunggulan utama",
+      "internalRemarks": "Catatan internal (rahasia)",
+      "internalRemarksHint": "Hanya Anda dan admin platform yang dapat melihat.",
+      "sourceType": "Sumber listing",
+      "appointmentStatus": "Status penunjukan",
+      "ownerConfirmation": "Konfirmasi pemilik",
+      "sourcePermission": "Izin berbagi (jika tidak langsung)",
+      "sourceAgentName": "Nama agen sumber",
+      "sourceAgency": "Agensi sumber",
+      "chainAgentCount": "Jumlah agen dalam rantai",
+      "ifIndirect": "Jika tidak langsung",
+      "commissionType": "Jenis komisi",
+      "commissionPercentage": "Komisi %",
+      "commissionAmount": "Jumlah tetap",
+      "commissionMonths": "Bulan sewa",
+      "commissionConditions": "Syarat komisi",
+      "coverImage": "Foto sampul (wajib)",
+      "galleryImages": "Foto tambahan (hingga 5)"
+    },
+    "errors": {
+      "invalid_fields": "Periksa kolom lalu coba lagi.",
+      "declaration_required": "Anda harus menerima pernyataan untuk mengajukan.",
+      "price_required": "Berikan harga penawaran atau sewa bulanan.",
+      "cover_required": "Foto sampul wajib.",
+      "invalid_file_type": "Jenis foto tidak diizinkan. Gunakan JPG, PNG atau WebP.",
+      "file_too_large": "Ada foto yang melebihi batas 10 MB.",
+      "upload_failed": "Unggah foto gagal. Silakan coba lagi.",
+      "save_failed": "Tidak dapat menyimpan. Silakan coba lagi."
+    }
+  },
+  "submissions": {
+    "title": "Pengajuan saya",
+    "submittedNotice": "{id} diajukan. Requesting agent telah diberi tahu.",
+    "empty": "Belum ada pengajuan. Buka tautan permintaan yang dibagikan kepada Anda untuk mengajukan properti.",
+    "cols": {
+      "property": "Properti",
+      "forRequest": "Untuk permintaan",
+      "price": "Harga",
+      "status": "Status"
+    }
+  },
+  "submissionStatus": {
+    "draft": "Draf",
+    "submitted": "Diajukan",
+    "declaration_pending": "Pernyataan tertunda",
+    "under_review": "Sedang ditinjau",
+    "more_information_required": "Perlu info tambahan",
+    "verification_pending": "Verifikasi tertunda",
+    "suitable": "Sesuai",
+    "rejected": "Ditolak",
+    "shortlisted": "Masuk daftar pendek",
+    "approved_for_client": "Disetujui untuk klien",
+    "shared_with_client": "Dibagikan ke klien",
+    "client_viewed": "Dilihat klien",
+    "client_interested": "Klien berminat",
+    "client_not_interested": "Klien tidak berminat",
+    "viewing_requested": "Kunjungan diminta",
+    "viewing_proposed": "Kunjungan diusulkan",
+    "viewing_confirmed": "Kunjungan dikonfirmasi",
+    "viewing_completed": "Kunjungan selesai",
+    "negotiation": "Negosiasi",
+    "offer_submitted": "Penawaran diajukan",
+    "counter_offer": "Penawaran balik",
+    "offer_accepted": "Penawaran diterima",
+    "offer_rejected": "Penawaran ditolak",
+    "transaction_in_progress": "Transaksi berjalan",
+    "closed": "Selesai",
+    "withdrawn": "Ditarik",
+    "no_longer_available": "Tidak tersedia lagi",
+    "expired": "Kedaluwarsa",
+    "frozen": "Dibekukan",
+    "archived": "Diarsipkan"
+  },
+  "review": {
+    "backToRequest": "Kembali ke permintaan",
+    "supplyAgent": "Supply Agent",
+    "detailsTitle": "Detail properti",
+    "historyTitle": "Riwayat status",
+    "decisionTitle": "Keputusan tinjauan",
+    "riskLabel": "Sumber / risiko",
+    "commission": "Komisi co-broke",
+    "months": "bulan",
+    "open": "Tinjau",
+    "risk": {
+      "verified_direct": "Langsung terverifikasi",
+      "direct_document_pending": "Langsung — dokumen tertunda",
+      "indirect_verified_source": "Tidak langsung — sumber terverifikasi",
+      "indirect_limited_verification": "Tidak langsung — verifikasi terbatas",
+      "open_market_confirmation_required": "Pasar terbuka — perlu konfirmasi",
+      "high_risk": "Pengajuan berisiko tinggi"
+    },
+    "rejectReason": "Alasan (wajib untuk menolak)",
+    "rejectReasons": {
+      "over_budget": "Melebihi anggaran",
+      "below_required_size": "Di bawah ukuran yang dibutuhkan",
+      "wrong_location": "Lokasi salah",
+      "wrong_property_type": "Jenis properti salah",
+      "insufficient_information": "Informasi kurang",
+      "property_not_available": "Properti tidak tersedia",
+      "no_appointment": "Tanpa penunjukan",
+      "client_not_interested": "Klien tidak berminat",
+      "duplicate_submission": "Pengajuan ganda",
+      "other": "Lainnya"
+    },
+    "shortlist": "Daftar pendek",
+    "requestInfo": "Minta info tambahan",
+    "reject": "Tolak",
+    "doneNotice": {
+      "shortlisted": "Properti masuk daftar pendek.",
+      "rejected": "Properti ditolak.",
+      "more_information_required": "Info tambahan diminta.",
+      "under_review": "Ditandai sedang ditinjau."
+    },
+    "errors": {
+      "reason_required": "Pilih alasan untuk menolak.",
+      "save_failed": "Keputusan tidak dapat disimpan."
+    }
   }
 }

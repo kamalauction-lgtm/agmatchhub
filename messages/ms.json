@@ -210,7 +210,8 @@
   },
   "nav": {
     "dashboard": "Papan pemuka",
-    "requests": "Keperluan saya"
+    "requests": "Keperluan saya",
+    "submissions": "Penyerahan saya"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -346,8 +347,10 @@
         "fully": "Perabot penuh"
       },
       "saveDraft": "Simpan draf",
-      "submitForApproval": "Hantar untuk kelulusan"
-    }
+      "submitForApproval": "Hantar untuk kelulusan",
+      "askingPrice": "Harga tawaran"
+    },
+    "submissionsTitle": "Hartanah yang diserahkan"
   },
   "adminRequests": {
     "title": "Kelulusan keperluan",
@@ -396,6 +399,220 @@
     "register": "Buka akaun ejen",
     "verifyToSubmit": "Akaun ejen anda mesti disahkan sebelum boleh menghantar hartanah.",
     "verifyLink": "Lengkapkan pengesahan",
-    "submitComingSoon": "Penyerahan hartanah dibuka dalam keluaran seterusnya. Anda akan dapat menghantar hartanah yang sepadan untuk keperluan ini di sini."
+    "submitComingSoon": "Penyerahan hartanah dibuka dalam keluaran seterusnya. Anda akan dapat menghantar hartanah yang sepadan untuk keperluan ini di sini.",
+    "submitCta": "Anda kini boleh menghantar hartanah yang sepadan untuk keperluan ini.",
+    "submitButton": "Hantar hartanah"
+  },
+  "submit": {
+    "title": "Hantar hartanah",
+    "backToRequirement": "Kembali ke keperluan",
+    "sectionProperty": "Hartanah",
+    "sectionPricing": "Harga",
+    "sectionSpecs": "Spesifikasi",
+    "sectionMarketing": "Keterangan",
+    "sectionSource": "Sumber penyenaraian & kuasa",
+    "sectionCobroke": "Terma co-broke",
+    "sectionMedia": "Gambar",
+    "cobrokeHint": "Antara ejen sahaja. Tidak akan dipaparkan kepada pembeli atau penyewa.",
+    "mediaHint": "JPG, PNG atau WebP, maksimum 10 MB setiap satu. Gambar utama wajib, sehingga 5 lagi.",
+    "declarationTitle": "Deklarasi Supply Agent",
+    "declarationAccept": "Saya telah membaca dan bersetuju dengan deklarasi di atas.",
+    "submitButton": "Hantar hartanah",
+    "agentOnly": "Antara ejen sahaja",
+    "yes": "Ya",
+    "no": "Tidak",
+    "categories": {
+      "residential": "Kediaman",
+      "commercial": "Komersial",
+      "industrial": "Perindustrian",
+      "land": "Tanah",
+      "other": "Lain-lain"
+    },
+    "furn": {
+      "unfurnished": "Tanpa perabot",
+      "partially": "Separa perabot",
+      "fully": "Perabot penuh"
+    },
+    "appt": {
+      "written_appointment": "Pelantikan bertulis",
+      "appointment_pending": "Pelantikan belum selesai",
+      "verbal_authorisation": "Kebenaran lisan",
+      "none": "Tiada"
+    },
+    "owner": {
+      "confirmed": "Pemilik sahkan",
+      "pending": "Belum selesai",
+      "not_obtained": "Tidak diperoleh"
+    },
+    "comm": {
+      "percentage": "Peratusan",
+      "fixed": "Jumlah tetap",
+      "rental_months": "Bulan sewa"
+    },
+    "sources": {
+      "direct_written_appointment": "Langsung — pelantikan bertulis",
+      "direct_appointment_pending": "Langsung — pelantikan belum selesai",
+      "direct_verbal_authorisation": "Langsung — kebenaran lisan",
+      "direct_no_appointment": "Langsung — tiada pelantikan",
+      "indirect_other_agent": "Tidak langsung — daripada ejen lain",
+      "co_agent": "Penyenaraian ko-ejen",
+      "agency_shared": "Penyenaraian kongsi agensi",
+      "developer": "Penyenaraian pemaju",
+      "landlord_referral": "Rujukan terus tuan rumah",
+      "open_market": "Maklumat pasaran terbuka",
+      "other": "Lain-lain"
+    },
+    "f": {
+      "title": "Tajuk hartanah",
+      "category": "Kategori",
+      "propertyType": "Jenis hartanah",
+      "buildingName": "Bangunan / projek",
+      "city": "Bandar",
+      "district": "Daerah",
+      "stateRegion": "Negeri / wilayah",
+      "generalAddress": "Lokasi umum (selamat untuk pelanggan)",
+      "generalAddressHint": "cth. Mont Kiara, berhampiran sekolah antarabangsa",
+      "fullAddress": "Alamat penuh",
+      "unitNumber": "Nombor unit",
+      "currency": "Mata wang",
+      "askingPrice": "Harga permintaan",
+      "monthlyRental": "Sewa bulanan",
+      "negotiable": "Boleh runding",
+      "negYes": "Ya",
+      "negNo": "Tidak",
+      "negSubject": "Tertakluk kepada tawaran",
+      "minAcceptablePrice": "Harga minimum diterima (sulit)",
+      "minPriceHint": "Hanya anda dan admin platform boleh lihat. Tidak dipaparkan kepada ejen lain atau pelanggan.",
+      "builtUp": "Keluasan binaan",
+      "unit": "Unit",
+      "bedrooms": "Bilik tidur",
+      "bathrooms": "Bilik air",
+      "carParks": "Parkir",
+      "floorLevel": "Tingkat",
+      "furnishing": "Perabot",
+      "vacant": "Kosong",
+      "tenure": "Pegangan",
+      "completionYear": "Tahun siap",
+      "availabilityDate": "Tersedia mulai",
+      "facilities": "Kemudahan",
+      "facilitiesHint": "Dipisah koma, cth. Kolam, Gim, Keselamatan 24 jam",
+      "description": "Keterangan",
+      "keySellingPoints": "Kelebihan utama",
+      "internalRemarks": "Catatan dalaman (sulit)",
+      "internalRemarksHint": "Hanya anda dan admin platform boleh lihat.",
+      "sourceType": "Sumber penyenaraian",
+      "appointmentStatus": "Status pelantikan",
+      "ownerConfirmation": "Pengesahan pemilik",
+      "sourcePermission": "Kebenaran berkongsi (jika tidak langsung)",
+      "sourceAgentName": "Nama ejen sumber",
+      "sourceAgency": "Agensi sumber",
+      "chainAgentCount": "Bilangan ejen dalam rantaian",
+      "ifIndirect": "Jika tidak langsung",
+      "commissionType": "Jenis komisen",
+      "commissionPercentage": "Komisen %",
+      "commissionAmount": "Jumlah tetap",
+      "commissionMonths": "Bulan sewa",
+      "commissionConditions": "Syarat komisen",
+      "coverImage": "Gambar utama (wajib)",
+      "galleryImages": "Gambar tambahan (sehingga 5)"
+    },
+    "errors": {
+      "invalid_fields": "Sila semak medan dan cuba lagi.",
+      "declaration_required": "Anda mesti menerima deklarasi untuk menghantar.",
+      "price_required": "Berikan harga permintaan atau sewa bulanan.",
+      "cover_required": "Gambar utama diperlukan.",
+      "invalid_file_type": "Jenis gambar tidak dibenarkan. Guna JPG, PNG atau WebP.",
+      "file_too_large": "Gambar melebihi had 10 MB.",
+      "upload_failed": "Muat naik gambar gagal. Sila cuba lagi.",
+      "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
+    }
+  },
+  "submissions": {
+    "title": "Penyerahan saya",
+    "submittedNotice": "{id} dihantar. Requesting agent telah dimaklumkan.",
+    "empty": "Belum ada penyerahan. Buka pautan permintaan yang dikongsi dengan anda untuk menghantar hartanah.",
+    "cols": {
+      "property": "Hartanah",
+      "forRequest": "Untuk permintaan",
+      "price": "Harga",
+      "status": "Status"
+    }
+  },
+  "submissionStatus": {
+    "draft": "Draf",
+    "submitted": "Dihantar",
+    "declaration_pending": "Deklarasi belum selesai",
+    "under_review": "Dalam semakan",
+    "more_information_required": "Maklumat lanjut diperlukan",
+    "verification_pending": "Pengesahan belum selesai",
+    "suitable": "Sesuai",
+    "rejected": "Ditolak",
+    "shortlisted": "Disenarai pendek",
+    "approved_for_client": "Diluluskan untuk pelanggan",
+    "shared_with_client": "Dikongsi dengan pelanggan",
+    "client_viewed": "Dilihat pelanggan",
+    "client_interested": "Pelanggan berminat",
+    "client_not_interested": "Pelanggan tidak berminat",
+    "viewing_requested": "Lawatan diminta",
+    "viewing_proposed": "Lawatan dicadangkan",
+    "viewing_confirmed": "Lawatan disahkan",
+    "viewing_completed": "Lawatan selesai",
+    "negotiation": "Rundingan",
+    "offer_submitted": "Tawaran dihantar",
+    "counter_offer": "Tawaran balas",
+    "offer_accepted": "Tawaran diterima",
+    "offer_rejected": "Tawaran ditolak",
+    "transaction_in_progress": "Urus niaga berjalan",
+    "closed": "Ditutup",
+    "withdrawn": "Ditarik balik",
+    "no_longer_available": "Tidak lagi tersedia",
+    "expired": "Tamat tempoh",
+    "frozen": "Dibekukan",
+    "archived": "Diarkibkan"
+  },
+  "review": {
+    "backToRequest": "Kembali ke permintaan",
+    "supplyAgent": "Supply Agent",
+    "detailsTitle": "Butiran hartanah",
+    "historyTitle": "Sejarah status",
+    "decisionTitle": "Keputusan semakan",
+    "riskLabel": "Sumber / risiko",
+    "commission": "Komisen co-broke",
+    "months": "bulan",
+    "open": "Semak",
+    "risk": {
+      "verified_direct": "Langsung disahkan",
+      "direct_document_pending": "Langsung — dokumen belum lengkap",
+      "indirect_verified_source": "Tidak langsung — sumber disahkan",
+      "indirect_limited_verification": "Tidak langsung — pengesahan terhad",
+      "open_market_confirmation_required": "Pasaran terbuka — pengesahan diperlukan",
+      "high_risk": "Penyerahan berisiko tinggi"
+    },
+    "rejectReason": "Sebab (wajib untuk tolak)",
+    "rejectReasons": {
+      "over_budget": "Melebihi bajet",
+      "below_required_size": "Kurang daripada saiz diperlukan",
+      "wrong_location": "Lokasi salah",
+      "wrong_property_type": "Jenis hartanah salah",
+      "insufficient_information": "Maklumat tidak mencukupi",
+      "property_not_available": "Hartanah tidak tersedia",
+      "no_appointment": "Tiada pelantikan",
+      "client_not_interested": "Pelanggan tidak berminat",
+      "duplicate_submission": "Penyerahan berganda",
+      "other": "Lain-lain"
+    },
+    "shortlist": "Senarai pendek",
+    "requestInfo": "Minta maklumat lanjut",
+    "reject": "Tolak",
+    "doneNotice": {
+      "shortlisted": "Hartanah disenarai pendek.",
+      "rejected": "Hartanah ditolak.",
+      "more_information_required": "Maklumat lanjut diminta.",
+      "under_review": "Ditanda dalam semakan."
+    },
+    "errors": {
+      "reason_required": "Sila pilih sebab untuk menolak.",
+      "save_failed": "Keputusan tidak dapat disimpan."
+    }
   }
 }

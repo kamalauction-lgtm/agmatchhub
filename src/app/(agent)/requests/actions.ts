@@ -125,7 +125,6 @@ export async function saveRequest(formData: FormData) {
     other_requirements: d.otherRequirements,
     client_profile_anonymised: d.clientProfileAnonymised,
     expected_move_in: d.expectedMoveIn,
-    internal_notes: d.internalNotes,
   };
 
   let requestId = d.id || null;
@@ -166,6 +165,13 @@ export async function saveRequest(formData: FormData) {
       if (subErr) redirect(`/requests/${requestId}?error=save_failed`);
     }
   }
+
+  // Confidential RA notes live in the private companion table (§13),
+  // invisible to Supply Agents who can read the request row.
+  await supabase
+    .from("property_request_private")
+    .upsert({ request_id: requestId!, internal_notes: d.internalNotes },
+      { onConflict: "request_id" });
 
   await logAudit({
     action: d.intent === "submit" ? "request.submitted" : "request.draft_saved",

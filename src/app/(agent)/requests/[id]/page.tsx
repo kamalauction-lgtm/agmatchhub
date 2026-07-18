@@ -20,7 +20,7 @@ export default async function RequestDetailPage({
   const supabase = await createClient();
   const t = await getTranslations("requests");
 
-  const [{ data: r }, { data: link }] = await Promise.all([
+  const [{ data: r }, { data: link }, { data: submissions }] = await Promise.all([
     supabase.from("property_requests").select("*").eq("id", id).maybeSingle(),
     supabase
       .from("request_links")
@@ -29,8 +29,15 @@ export default async function RequestDetailPage({
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle(),
+    supabase
+      .from("property_submissions")
+      .select("id, human_readable_id, title, city, asking_price, monthly_rental, currency, status, risk_indicator, created_at")
+      .eq("request_id", id)
+      .order("created_at", { ascending: false }),
   ]);
   if (!r) notFound();
+  const ts = await getTranslations("submissionStatus");
+  const trv = await getTranslations("review");
 
   const editable = ["draft", "amendment_required"].includes(r.status);
   const base = process.env.REQUEST_LINK_BASE_URL ?? "";
@@ -78,6 +85,57 @@ export default async function RequestDetailPage({
           <span className="font-semibold">{t("amendmentRequired")}: </span>
           {r.amendment_reason}
         </div>
+      )}
+
+      {(submissions?.length ?? 0) > 0 && (
+        <section className="mb-8 rounded-xl border border-line p-6">
+          <h2 className="mb-4 font-semibold">
+            {t("submissionsTitle")} ({submissions!.length})
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="text-xs text-muted uppercase">
+                <tr>
+                  <th className="py-2 pr-4">ID</th>
+                  <th className="py-2 pr-4">{t("cols.title")}</th>
+                  <th className="py-2 pr-4">{t("form.askingPrice")}</th>
+                  <th className="py-2 pr-4">{trv("riskLabel")}</th>
+                  <th className="py-2 pr-4">{t("cols.status")}</th>
+                  <th className="py-2" />
+                </tr>
+              </thead>
+              <tbody>
+                {submissions!.map((s) => {
+                  const price = s.asking_price ?? s.monthly_rental;
+                  return (
+                    <tr key={s.id} className="border-t border-line">
+                      <td className="py-2.5 pr-4 font-mono text-xs">{s.human_readable_id}</td>
+                      <td className="py-2.5 pr-4 font-medium">{s.title}</td>
+                      <td className="py-2.5 pr-4">
+                        {price != null ? `${s.currency} ${Number(price).toLocaleString()}` : "—"}
+                      </td>
+                      <td className="py-2.5 pr-4">
+                        <span className="rounded-full bg-surface px-2 py-0.5 text-xs">
+                          {trv(`risk.${s.risk_indicator}`)}
+                        </span>
+                      </td>
+                      <td className="py-2.5 pr-4">
+                        <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-medium">
+                          {ts(s.status)}
+                        </span>
+                      </td>
+                      <td className="py-2.5 text-right">
+                        <Link href={`/requests/${id}/s/${s.id}`} className="font-medium text-crimson hover:underline">
+                          {trv("open")}
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
       )}
 
       <div className="grid gap-8 lg:grid-cols-[1fr_360px]">

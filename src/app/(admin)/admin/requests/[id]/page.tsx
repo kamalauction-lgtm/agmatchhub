@@ -22,7 +22,7 @@ export default async function AdminRequestDetail({
   const t = await getTranslations("adminRequests");
   const tr = await getTranslations("requests");
 
-  const [{ data: r }, { data: link }] = await Promise.all([
+  const [{ data: r }, { data: link }, { data: priv }] = await Promise.all([
     supabase
       .from("property_requests")
       .select("*, profiles(display_name)")
@@ -31,6 +31,11 @@ export default async function AdminRequestDetail({
     supabase
       .from("request_links")
       .select("token, password, active, expires_at, access_count")
+      .eq("request_id", id)
+      .maybeSingle(),
+    supabase
+      .from("property_request_private")
+      .select("internal_notes, admin_notes")
       .eq("request_id", id)
       .maybeSingle(),
   ]);
@@ -55,7 +60,7 @@ export default async function AdminRequestDetail({
     [tr("form.submissionDeadline"), r.submission_deadline],
     [tr("form.expiryDate"), r.expiry_date],
     [tr("form.clientProfile"), r.client_profile_anonymised],
-    [tr("form.internalNotes"), r.internal_notes],
+    [tr("form.internalNotes"), priv?.internal_notes ?? null],
   ];
 
   return (

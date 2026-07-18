@@ -210,7 +210,8 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "requests": "My requests"
+    "requests": "My requests",
+    "submissions": "My submissions"
   },
   "requests": {
     "title": "My requests",
@@ -346,8 +347,10 @@
         "fully": "Fully furnished"
       },
       "saveDraft": "Save draft",
-      "submitForApproval": "Submit for approval"
-    }
+      "submitForApproval": "Submit for approval",
+      "askingPrice": "Asking price"
+    },
+    "submissionsTitle": "Submitted properties"
   },
   "adminRequests": {
     "title": "Request approval",
@@ -396,6 +399,220 @@
     "register": "Create agent account",
     "verifyToSubmit": "Your agent account must be verified before you can submit a property.",
     "verifyLink": "Complete verification",
-    "submitComingSoon": "Property submission opens in the next release. You will be able to submit matching properties for this requirement here."
+    "submitComingSoon": "Property submission opens in the next release. You will be able to submit matching properties for this requirement here.",
+    "submitCta": "You can now submit a matching property for this requirement.",
+    "submitButton": "Submit a property"
+  },
+  "submit": {
+    "title": "Submit a property",
+    "backToRequirement": "Back to requirement",
+    "sectionProperty": "Property",
+    "sectionPricing": "Pricing",
+    "sectionSpecs": "Specifications",
+    "sectionMarketing": "Description",
+    "sectionSource": "Listing source & authority",
+    "sectionCobroke": "Co-broke terms",
+    "sectionMedia": "Photos",
+    "cobrokeHint": "Agent-to-agent only. Never shown to the buyer or tenant.",
+    "mediaHint": "JPG, PNG or WebP, max 10 MB each. Cover photo required, up to 5 more.",
+    "declarationTitle": "Supply Agent declaration",
+    "declarationAccept": "I have read and agree to the declaration above.",
+    "submitButton": "Submit property",
+    "agentOnly": "Agent-to-agent only",
+    "yes": "Yes",
+    "no": "No",
+    "categories": {
+      "residential": "Residential",
+      "commercial": "Commercial",
+      "industrial": "Industrial",
+      "land": "Land",
+      "other": "Other"
+    },
+    "furn": {
+      "unfurnished": "Unfurnished",
+      "partially": "Partially furnished",
+      "fully": "Fully furnished"
+    },
+    "appt": {
+      "written_appointment": "Written appointment",
+      "appointment_pending": "Appointment pending",
+      "verbal_authorisation": "Verbal authorisation",
+      "none": "None"
+    },
+    "owner": {
+      "confirmed": "Owner confirmed",
+      "pending": "Pending",
+      "not_obtained": "Not obtained"
+    },
+    "comm": {
+      "percentage": "Percentage",
+      "fixed": "Fixed amount",
+      "rental_months": "Rental months"
+    },
+    "sources": {
+      "direct_written_appointment": "Direct — written appointment",
+      "direct_appointment_pending": "Direct — appointment pending",
+      "direct_verbal_authorisation": "Direct — verbal authorisation",
+      "direct_no_appointment": "Direct — no appointment",
+      "indirect_other_agent": "Indirect — from another agent",
+      "co_agent": "Co-agent listing",
+      "agency_shared": "Agency shared listing",
+      "developer": "Developer listing",
+      "landlord_referral": "Landlord direct referral",
+      "open_market": "Open market information",
+      "other": "Other"
+    },
+    "f": {
+      "title": "Property title",
+      "category": "Category",
+      "propertyType": "Property type",
+      "buildingName": "Building / project",
+      "city": "City",
+      "district": "District",
+      "stateRegion": "State / region",
+      "generalAddress": "General location (client-safe)",
+      "generalAddressHint": "e.g. Mont Kiara, near international schools",
+      "fullAddress": "Full address",
+      "unitNumber": "Unit number",
+      "currency": "Currency",
+      "askingPrice": "Asking price",
+      "monthlyRental": "Monthly rental",
+      "negotiable": "Negotiable",
+      "negYes": "Yes",
+      "negNo": "No",
+      "negSubject": "Subject to offer",
+      "minAcceptablePrice": "Minimum acceptable price (confidential)",
+      "minPriceHint": "Visible only to you and platform admin. Never shown to the other agent or client.",
+      "builtUp": "Built-up",
+      "unit": "Unit",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "carParks": "Car parks",
+      "floorLevel": "Floor",
+      "furnishing": "Furnishing",
+      "vacant": "Vacant",
+      "tenure": "Tenure",
+      "completionYear": "Completion year",
+      "availabilityDate": "Available from",
+      "facilities": "Facilities",
+      "facilitiesHint": "Comma-separated, e.g. Pool, Gym, 24h security",
+      "description": "Description",
+      "keySellingPoints": "Key selling points",
+      "internalRemarks": "Internal remarks (confidential)",
+      "internalRemarksHint": "Visible only to you and platform admin.",
+      "sourceType": "Listing source",
+      "appointmentStatus": "Appointment status",
+      "ownerConfirmation": "Owner confirmation",
+      "sourcePermission": "Permission to share (if indirect)",
+      "sourceAgentName": "Source agent name",
+      "sourceAgency": "Source agency",
+      "chainAgentCount": "Agents in chain",
+      "ifIndirect": "If indirect",
+      "commissionType": "Commission type",
+      "commissionPercentage": "Commission %",
+      "commissionAmount": "Fixed amount",
+      "commissionMonths": "Rental months",
+      "commissionConditions": "Commission conditions",
+      "coverImage": "Cover photo (required)",
+      "galleryImages": "More photos (up to 5)"
+    },
+    "errors": {
+      "invalid_fields": "Please check the fields and try again.",
+      "declaration_required": "You must accept the declaration to submit.",
+      "price_required": "Provide an asking price or monthly rental.",
+      "cover_required": "A cover photo is required.",
+      "invalid_file_type": "Photo type not allowed. Use JPG, PNG or WebP.",
+      "file_too_large": "A photo exceeds the 10 MB limit.",
+      "upload_failed": "Photo upload failed. Please try again.",
+      "save_failed": "Could not save. Please try again."
+    }
+  },
+  "submissions": {
+    "title": "My submissions",
+    "submittedNotice": "{id} submitted. The requesting agent has been notified.",
+    "empty": "No submissions yet. Open a request link shared with you to submit a property.",
+    "cols": {
+      "property": "Property",
+      "forRequest": "For request",
+      "price": "Price",
+      "status": "Status"
+    }
+  },
+  "submissionStatus": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "declaration_pending": "Declaration pending",
+    "under_review": "Under review",
+    "more_information_required": "More info required",
+    "verification_pending": "Verification pending",
+    "suitable": "Suitable",
+    "rejected": "Rejected",
+    "shortlisted": "Shortlisted",
+    "approved_for_client": "Approved for client",
+    "shared_with_client": "Shared with client",
+    "client_viewed": "Client viewed",
+    "client_interested": "Client interested",
+    "client_not_interested": "Client not interested",
+    "viewing_requested": "Viewing requested",
+    "viewing_proposed": "Viewing proposed",
+    "viewing_confirmed": "Viewing confirmed",
+    "viewing_completed": "Viewing completed",
+    "negotiation": "Negotiation",
+    "offer_submitted": "Offer submitted",
+    "counter_offer": "Counter offer",
+    "offer_accepted": "Offer accepted",
+    "offer_rejected": "Offer rejected",
+    "transaction_in_progress": "Transaction in progress",
+    "closed": "Closed",
+    "withdrawn": "Withdrawn",
+    "no_longer_available": "No longer available",
+    "expired": "Expired",
+    "frozen": "Frozen",
+    "archived": "Archived"
+  },
+  "review": {
+    "backToRequest": "Back to request",
+    "supplyAgent": "Supply Agent",
+    "detailsTitle": "Property details",
+    "historyTitle": "Status history",
+    "decisionTitle": "Review decision",
+    "riskLabel": "Source / risk",
+    "commission": "Co-broke commission",
+    "months": "months",
+    "open": "Review",
+    "risk": {
+      "verified_direct": "Verified direct",
+      "direct_document_pending": "Direct — document pending",
+      "indirect_verified_source": "Indirect — verified source",
+      "indirect_limited_verification": "Indirect — limited verification",
+      "open_market_confirmation_required": "Open market — confirmation required",
+      "high_risk": "High-risk submission"
+    },
+    "rejectReason": "Reason (required for reject)",
+    "rejectReasons": {
+      "over_budget": "Over budget",
+      "below_required_size": "Below required size",
+      "wrong_location": "Wrong location",
+      "wrong_property_type": "Wrong property type",
+      "insufficient_information": "Insufficient information",
+      "property_not_available": "Property not available",
+      "no_appointment": "No appointment",
+      "client_not_interested": "Client not interested",
+      "duplicate_submission": "Duplicate submission",
+      "other": "Other"
+    },
+    "shortlist": "Shortlist",
+    "requestInfo": "Request more information",
+    "reject": "Reject",
+    "doneNotice": {
+      "shortlisted": "Property shortlisted.",
+      "rejected": "Property rejected.",
+      "more_information_required": "More information requested.",
+      "under_review": "Marked under review."
+    },
+    "errors": {
+      "reason_required": "Please choose a reason to reject.",
+      "save_failed": "Could not save the decision."
+    }
   }
 }

@@ -16,9 +16,12 @@ export default async function EditRequestPage({
   const { error } = await searchParams;
   await requireUser();
   const supabase = await createClient();
-  const { data: request } = await supabase
-    .from("property_requests").select("*").eq("id", id).maybeSingle();
+  const [{ data: request }, { data: priv }] = await Promise.all([
+    supabase.from("property_requests").select("*").eq("id", id).maybeSingle(),
+    supabase.from("property_request_private").select("internal_notes").eq("request_id", id).maybeSingle(),
+  ]);
   if (!request) notFound();
+  Object.assign(request, { internal_notes: priv?.internal_notes ?? null });
   if (!["draft", "amendment_required"].includes(request.status)) redirect(`/requests/${id}`);
 
   const t = await getTranslations("requests");

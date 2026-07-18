@@ -176,7 +176,15 @@ export default async function RequestLinkPage({
               <Link href="/verification" className="font-medium text-crimson">{t("verifyLink")}</Link>
             </p>
           ) : (
-            <p className="font-medium">{t("submitComingSoon")}</p>
+            <>
+              <p className="mb-3 font-medium">{t("submitCta")}</p>
+              <Link
+                href={`/r/${token}/submit`}
+                className="inline-block rounded-lg bg-crimson px-5 py-2.5 font-semibold text-white hover:bg-crimson-strong"
+              >
+                {t("submitButton")}
+              </Link>
+            </>
           )}
         </div>
       </div>
