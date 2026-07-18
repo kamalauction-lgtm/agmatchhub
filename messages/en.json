@@ -121,7 +121,9 @@
     "badge": "Admin",
     "nav": {
       "agents": "Agent verification",
-      "agentView": "Agent view"
+      "agentView": "Agent view",
+      "countries": "Countries",
+      "legal": "Legal content"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -168,5 +170,40 @@
       "notes_required": "Notes are required for this decision.",
       "save_failed": "Could not save the decision."
     }
+  },
+  "adminLegal": {
+    "title": "Legal content",
+    "intro": "Versioned declarations and disclaimers. Publishing a new version keeps all previous versions and their consent records intact; future acceptances use the new wording. Final wording requires legal review per country before launch.",
+    "publishedNotice": "New version published.",
+    "types": {
+      "supply_agent_submission": "Supply Agent submission declaration",
+      "requesting_agent_presentation": "Requesting Agent presentation declaration",
+      "client_disclaimer": "Client disclaimer"
+    },
+    "noVersion": "none",
+    "viewText": "View text",
+    "publishNew": "Publish a new version",
+    "locale": "Language",
+    "body": "Wording",
+    "publishHint": "This replaces the active version for the selected language. Previous versions are preserved and remain linked to their consent records.",
+    "publish": "Publish version",
+    "errors": {
+      "invalid": "Please provide at least 50 characters of wording.",
+      "save_failed": "Could not publish. Please try again."
+    }
+  },
+  "adminCountries": {
+    "title": "Countries & markets",
+    "intro": "Activate markets and set their defaults. Terminology and licence fields per country are configured in the database and applied across forms.",
+    "savedNotice": "{code} saved.",
+    "saveFailed": "Could not save. Please try again.",
+    "cols": {
+      "country": "Country",
+      "active": "Active",
+      "language": "Default language",
+      "currency": "Currency",
+      "unit": "Unit"
+    },
+    "save": "Save"
   }
 }

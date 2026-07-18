@@ -121,7 +121,9 @@
     "badge": "Admin",
     "nav": {
       "agents": "Pengesahan ejen",
-      "agentView": "Paparan ejen"
+      "agentView": "Paparan ejen",
+      "countries": "Negara",
+      "legal": "Kandungan undang-undang"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -168,5 +170,40 @@
       "notes_required": "Nota diperlukan untuk keputusan ini.",
       "save_failed": "Keputusan tidak dapat disimpan."
     }
+  },
+  "adminLegal": {
+    "title": "Kandungan undang-undang",
+    "intro": "Deklarasi dan penafian berversi. Menerbitkan versi baharu mengekalkan semua versi terdahulu dan rekod persetujuannya; penerimaan akan datang menggunakan teks baharu. Teks akhir memerlukan semakan undang-undang mengikut negara sebelum pelancaran.",
+    "publishedNotice": "Versi baharu diterbitkan.",
+    "types": {
+      "supply_agent_submission": "Deklarasi penyerahan Supply Agent",
+      "requesting_agent_presentation": "Deklarasi pembentangan Requesting Agent",
+      "client_disclaimer": "Penafian pelanggan"
+    },
+    "noVersion": "tiada",
+    "viewText": "Lihat teks",
+    "publishNew": "Terbitkan versi baharu",
+    "locale": "Bahasa",
+    "body": "Teks",
+    "publishHint": "Ini menggantikan versi aktif bagi bahasa yang dipilih. Versi terdahulu dikekalkan dan terus dipautkan kepada rekod persetujuan.",
+    "publish": "Terbitkan versi",
+    "errors": {
+      "invalid": "Sila berikan sekurang-kurangnya 50 aksara.",
+      "save_failed": "Tidak dapat diterbitkan. Sila cuba lagi."
+    }
+  },
+  "adminCountries": {
+    "title": "Negara & pasaran",
+    "intro": "Aktifkan pasaran dan tetapkan lalai. Terminologi dan medan lesen mengikut negara dikonfigurasi dalam pangkalan data dan digunakan pada semua borang.",
+    "savedNotice": "{code} disimpan.",
+    "saveFailed": "Tidak dapat disimpan. Sila cuba lagi.",
+    "cols": {
+      "country": "Negara",
+      "active": "Aktif",
+      "language": "Bahasa lalai",
+      "currency": "Mata wang",
+      "unit": "Unit"
+    },
+    "save": "Simpan"
   }
 }

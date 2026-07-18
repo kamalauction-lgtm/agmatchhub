@@ -121,7 +121,9 @@
     "badge": "Admin",
     "nav": {
       "agents": "Verifikasi agen",
-      "agentView": "Tampilan agen"
+      "agentView": "Tampilan agen",
+      "countries": "Negara",
+      "legal": "Konten hukum"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -168,5 +170,40 @@
       "notes_required": "Catatan wajib untuk keputusan ini.",
       "save_failed": "Keputusan tidak dapat disimpan."
     }
+  },
+  "adminLegal": {
+    "title": "Konten hukum",
+    "intro": "Pernyataan dan disclaimer berversi. Menerbitkan versi baru mempertahankan semua versi sebelumnya beserta catatan persetujuannya; penerimaan berikutnya memakai teks baru. Teks final memerlukan tinjauan hukum per negara sebelum peluncuran.",
+    "publishedNotice": "Versi baru diterbitkan.",
+    "types": {
+      "supply_agent_submission": "Pernyataan pengajuan Supply Agent",
+      "requesting_agent_presentation": "Pernyataan presentasi Requesting Agent",
+      "client_disclaimer": "Disclaimer klien"
+    },
+    "noVersion": "tidak ada",
+    "viewText": "Lihat teks",
+    "publishNew": "Terbitkan versi baru",
+    "locale": "Bahasa",
+    "body": "Teks",
+    "publishHint": "Ini menggantikan versi aktif untuk bahasa yang dipilih. Versi sebelumnya dipertahankan dan tetap terhubung dengan catatan persetujuan.",
+    "publish": "Terbitkan versi",
+    "errors": {
+      "invalid": "Berikan minimal 50 karakter.",
+      "save_failed": "Tidak dapat diterbitkan. Silakan coba lagi."
+    }
+  },
+  "adminCountries": {
+    "title": "Negara & pasar",
+    "intro": "Aktifkan pasar dan atur default-nya. Terminologi dan kolom lisensi per negara dikonfigurasi dalam basis data dan diterapkan di semua formulir.",
+    "savedNotice": "{code} disimpan.",
+    "saveFailed": "Tidak dapat menyimpan. Silakan coba lagi.",
+    "cols": {
+      "country": "Negara",
+      "active": "Aktif",
+      "language": "Bahasa default",
+      "currency": "Mata uang",
+      "unit": "Satuan"
+    },
+    "save": "Simpan"
   }
 }
