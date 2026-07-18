@@ -20,7 +20,7 @@ export default async function RequestDetailPage({
   const supabase = await createClient();
   const t = await getTranslations("requests");
 
-  const [{ data: r }, { data: link }, { data: submissions }] = await Promise.all([
+  const [{ data: r }, { data: link }, { data: submissions }, { data: presentation }] = await Promise.all([
     supabase.from("property_requests").select("*").eq("id", id).maybeSingle(),
     supabase
       .from("request_links")
@@ -34,8 +34,25 @@ export default async function RequestDetailPage({
       .select("id, human_readable_id, title, city, asking_price, monthly_rental, currency, status, risk_indicator, created_at")
       .eq("request_id", id)
       .order("created_at", { ascending: false }),
+    supabase
+      .from("client_presentations")
+      .select("id, human_readable_id, token, password, active, expires_at, view_count")
+      .eq("request_id", id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ]);
   if (!r) notFound();
+
+  const { data: feedback } = presentation
+    ? await supabase
+        .from("client_feedback")
+        .select("kind, rank_value, message, offer_amount, preferred_date, created_at, client_presentation_properties(submission_id)")
+        .eq("presentation_id", presentation.id)
+        .order("created_at", { ascending: false })
+        .limit(20)
+    : { data: null };
+  const tp = await getTranslations("presentation");
   const ts = await getTranslations("submissionStatus");
   const trv = await getTranslations("review");
 
@@ -89,9 +106,17 @@ export default async function RequestDetailPage({
 
       {(submissions?.length ?? 0) > 0 && (
         <section className="mb-8 rounded-xl border border-line p-6">
-          <h2 className="mb-4 font-semibold">
-            {t("submissionsTitle")} ({submissions!.length})
-          </h2>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-semibold">
+              {t("submissionsTitle")} ({submissions!.length})
+            </h2>
+            {submissions!.some((s) => ["shortlisted", "suitable", "approved_for_client"].includes(s.status)) && (
+              <Link href={`/requests/${id}/presentation`}
+                className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">
+                {tp("createCta")}
+              </Link>
+            )}
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="text-xs text-muted uppercase">
@@ -192,6 +217,47 @@ export default async function RequestDetailPage({
           ) : (
             <div className="rounded-xl border border-line bg-surface p-6 text-sm text-muted">
               {t("link.pending")}
+            </div>
+          )}
+
+          {presentation && (
+            <div className="rounded-xl border border-crimson/30 bg-crimson-soft/30 p-6">
+              <h2 className="mb-1 font-semibold">{tp("panel.title")}</h2>
+              <p className="mb-3 font-mono text-xs text-muted">{presentation.human_readable_id}</p>
+              <p className="mb-1 text-xs text-muted uppercase">{tp("panel.url")}</p>
+              <p className="mb-3 rounded-lg bg-background p-2 font-mono text-xs break-all select-all">
+                {`${process.env.CLIENT_PRESENTATION_BASE_URL ?? ""}/${presentation.token}`}
+              </p>
+              <p className="mb-1 text-xs text-muted uppercase">{tp("panel.code")}</p>
+              <p className="mb-3 rounded-lg bg-background p-2 text-center font-mono text-lg font-bold tracking-widest select-all">
+                {presentation.password}
+              </p>
+              <p className="text-xs text-muted">
+                {tp("panel.expires")}: {new Date(presentation.expires_at).toLocaleDateString()} ·{" "}
+                {tp("panel.views")}: {presentation.view_count}
+              </p>
+            </div>
+          )}
+
+          {(feedback?.length ?? 0) > 0 && (
+            <div className="rounded-xl border border-line bg-surface p-6">
+              <h2 className="mb-3 font-semibold">{tp("feedback.title")} ({feedback!.length})</h2>
+              <ul className="space-y-2 text-sm">
+                {feedback!.map((f, i) => (
+                  <li key={i} className="rounded-lg bg-background px-3 py-2">
+                    <span className="font-medium">{tp(`feedback.kinds.${f.kind}`)}</span>
+                    {f.rank_value && <span> · {tp(`feedback.ranks.${f.rank_value}`)}</span>}
+                    {f.offer_amount != null && (
+                      <span> · {r.currency} {Number(f.offer_amount).toLocaleString()}</span>
+                    )}
+                    {f.preferred_date && <span> · {f.preferred_date}</span>}
+                    {f.message && <p className="mt-1 text-xs text-muted">{f.message}</p>}
+                    <p className="mt-1 text-[10px] text-muted">
+                      {new Date(f.created_at).toLocaleString()}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </aside>

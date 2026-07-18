@@ -36,7 +36,11 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        {/* Empty client bundle: all translation happens server-side. This keeps
+            the full message dictionary (incl. agent/commission vocabulary) out
+            of client-page HTML (§78). Scope a provider per-route if a client
+            component ever needs useTranslations. */}
+        <NextIntlClientProvider messages={{}}>{children}</NextIntlClientProvider>
       </body>
     </html>
   );

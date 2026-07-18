@@ -614,5 +614,123 @@
       "reason_required": "Pilih alasan untuk menolak.",
       "save_failed": "Keputusan tidak dapat disimpan."
     }
+  },
+  "presentation": {
+    "createCta": "Buat presentasi klien",
+    "builderTitle": "Presentasi klien",
+    "builderIntro": "Pilih properti yang akan dilihat klien Anda, tambahkan catatan Anda, dan buat tautan presentasi privat. Klien hanya akan melihat Anda.",
+    "sectionDetails": "Detail presentasi",
+    "title": "Judul presentasi",
+    "clientName": "Nama atau referensi klien",
+    "clientNameHint": "Ditampilkan pada presentasi, mis. Bpk. T.",
+    "expiry": "Masa berlaku tautan",
+    "expiryDays": "{days} hari",
+    "intro": "Pesan pembuka",
+    "introHint": "Catatan personal singkat di bagian atas presentasi.",
+    "sectionProperties": "Properti yang disertakan",
+    "propertiesHint": "Hanya properti yang Anda shortlist atau setujui yang ditampilkan. Tambahkan catatan opsional untuk klien per properti.",
+    "noteHint": "Catatan Anda untuk klien tentang properti ini (opsional)",
+    "declarationTitle": "Pernyataan Requesting Agent",
+    "declarationAccept": "Saya menyetujui pernyataan Requesting Agent di atas",
+    "create": "Buat tautan presentasi",
+    "errors": {
+      "declaration_required": "Anda harus menerima pernyataan untuk membuat presentasi klien.",
+      "invalid_fields": "Periksa kolom dan pilih minimal satu properti.",
+      "save_failed": "Presentasi tidak dapat dibuat. Silakan coba lagi."
+    },
+    "panel": {
+      "title": "Presentasi klien",
+      "url": "URL klien",
+      "code": "Kode akses",
+      "expires": "Kedaluwarsa",
+      "views": "Dilihat"
+    },
+    "feedback": {
+      "title": "Umpan balik klien",
+      "kinds": {
+        "shortlist": "Masuk shortlist",
+        "not_interested": "Tidak berminat",
+        "rank": "Diberi peringkat",
+        "question": "Pertanyaan",
+        "offer_suggestion": "Penawaran diusulkan",
+        "viewing_request": "Kunjungan diminta",
+        "comment": "Komentar"
+      },
+      "ranks": {
+        "first": "Pilihan pertama",
+        "second": "Pilihan kedua",
+        "third": "Pilihan ketiga",
+        "maybe": "Mungkin"
+      }
+    }
+  },
+  "clientView": {
+    "unavailableTitle": "Presentasi tidak tersedia",
+    "unavailableBody": "Tautan presentasi ini tidak valid, kedaluwarsa, atau telah dinonaktifkan. Silakan hubungi agen Anda.",
+    "presentedBy": "Dipersembahkan oleh {name}",
+    "preparedFor": "Disiapkan untuk {name}",
+    "accessCode": "Kode akses",
+    "unlock": "Lihat properti",
+    "wrongPassword": "Kode akses salah. Silakan coba lagi.",
+    "locked": "Terlalu banyak percobaan. Silakan coba lagi nanti.",
+    "compareAll": "Bandingkan semua {count} properti",
+    "perMonth": "/bulan",
+    "beds": "{n} kamar tidur",
+    "baths": "{n} kamar mandi",
+    "parks": "{n} parkir",
+    "furnishing": {
+      "unfurnished": "Tanpa furnitur",
+      "partially": "Semi furnished",
+      "fully": "Full furnished"
+    },
+    "highlights": "Keunggulan",
+    "agentNote": "Catatan dari {name}",
+    "footer": "Presentasi ini dikelola oleh {name}. Silakan hubungi agen Anda untuk kunjungan, penawaran, dan informasi lebih lanjut.",
+    "done": {
+      "shortlist": "Ditambahkan ke shortlist Anda. Agen Anda telah diberi tahu.",
+      "not_interested": "Dicatat. Agen Anda telah diberi tahu.",
+      "rank": "Peringkat disimpan. Agen Anda telah diberi tahu.",
+      "question": "Pertanyaan terkirim ke agen Anda.",
+      "offer_suggestion": "Usulan penawaran terkirim ke agen Anda.",
+      "viewing_request": "Permintaan kunjungan terkirim ke agen Anda.",
+      "comment": "Komentar terkirim ke agen Anda."
+    },
+    "actions": {
+      "shortlist": "Shortlist",
+      "notInterested": "Tidak berminat",
+      "first": "Pilihan pertama",
+      "second": "Pilihan kedua",
+      "third": "Pilihan ketiga",
+      "more": "Ajukan pertanyaan · usulkan penawaran · minta kunjungan",
+      "questionHint": "Ketik pertanyaan Anda tentang properti ini…",
+      "ask": "Kirim pertanyaan",
+      "offerHint": "Penawaran Anda dalam {currency}",
+      "suggestOffer": "Usulkan penawaran",
+      "requestViewing": "Minta kunjungan"
+    },
+    "compare": {
+      "title": "Bandingkan properti",
+      "price": "Harga penawaran",
+      "monthlyRent": "Sewa bulanan",
+      "location": "Lokasi",
+      "type": "Jenis properti",
+      "builtUp": "Luas bangunan",
+      "pricePerArea": "Harga per luas",
+      "bedrooms": "Kamar tidur",
+      "bathrooms": "Kamar mandi",
+      "carParks": "Parkir",
+      "furnishing": "Furnitur",
+      "condition": "Kondisi",
+      "floor": "Lantai",
+      "facilities": "Fasilitas",
+      "negotiable": "Bisa nego",
+      "agentNotes": "Catatan agen",
+      "negotiableValues": {
+        "yes": "Ya",
+        "no": "Tidak",
+        "subject_to_offer": "Tergantung penawaran"
+      },
+      "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda."
+    }
   }
 }

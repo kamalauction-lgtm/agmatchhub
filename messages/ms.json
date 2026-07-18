@@ -614,5 +614,123 @@
       "reason_required": "Sila pilih sebab untuk menolak.",
       "save_failed": "Keputusan tidak dapat disimpan."
     }
+  },
+  "presentation": {
+    "createCta": "Cipta pembentangan pelanggan",
+    "builderTitle": "Pembentangan pelanggan",
+    "builderIntro": "Pilih hartanah yang akan dilihat pelanggan anda, tambah nota anda, dan jana pautan pembentangan peribadi. Pelanggan hanya akan melihat anda.",
+    "sectionDetails": "Butiran pembentangan",
+    "title": "Tajuk pembentangan",
+    "clientName": "Nama atau rujukan pelanggan",
+    "clientNameHint": "Dipaparkan pada pembentangan, cth. En. T.",
+    "expiry": "Tempoh sah pautan",
+    "expiryDays": "{days} hari",
+    "intro": "Mesej pengenalan",
+    "introHint": "Nota peribadi ringkas di bahagian atas pembentangan.",
+    "sectionProperties": "Hartanah untuk disertakan",
+    "propertiesHint": "Hanya hartanah yang anda senarai pendek atau luluskan disenaraikan. Tambah nota pilihan untuk pelanggan bagi setiap hartanah.",
+    "noteHint": "Nota anda kepada pelanggan tentang hartanah ini (pilihan)",
+    "declarationTitle": "Deklarasi Requesting Agent",
+    "declarationAccept": "Saya bersetuju dengan deklarasi Requesting Agent di atas",
+    "create": "Cipta pautan pembentangan",
+    "errors": {
+      "declaration_required": "Anda mesti menerima deklarasi untuk mencipta pembentangan pelanggan.",
+      "invalid_fields": "Sila semak medan dan pilih sekurang-kurangnya satu hartanah.",
+      "save_failed": "Pembentangan tidak dapat dicipta. Sila cuba lagi."
+    },
+    "panel": {
+      "title": "Pembentangan pelanggan",
+      "url": "URL pelanggan",
+      "code": "Kod akses",
+      "expires": "Luput",
+      "views": "Tontonan"
+    },
+    "feedback": {
+      "title": "Maklum balas pelanggan",
+      "kinds": {
+        "shortlist": "Disenarai pendek",
+        "not_interested": "Tidak berminat",
+        "rank": "Disusun",
+        "question": "Soalan",
+        "offer_suggestion": "Tawaran dicadangkan",
+        "viewing_request": "Lawatan diminta",
+        "comment": "Komen"
+      },
+      "ranks": {
+        "first": "Pilihan pertama",
+        "second": "Pilihan kedua",
+        "third": "Pilihan ketiga",
+        "maybe": "Mungkin"
+      }
+    }
+  },
+  "clientView": {
+    "unavailableTitle": "Pembentangan tidak tersedia",
+    "unavailableBody": "Pautan pembentangan ini tidak sah, telah luput atau dinyahaktifkan. Sila hubungi ejen anda.",
+    "presentedBy": "Dipersembahkan oleh {name}",
+    "preparedFor": "Disediakan untuk {name}",
+    "accessCode": "Kod akses",
+    "unlock": "Lihat hartanah",
+    "wrongPassword": "Kod akses salah. Sila cuba lagi.",
+    "locked": "Terlalu banyak percubaan. Sila cuba sebentar lagi.",
+    "compareAll": "Bandingkan semua {count} hartanah",
+    "perMonth": "/bulan",
+    "beds": "{n} bilik tidur",
+    "baths": "{n} bilik air",
+    "parks": "{n} parkir",
+    "furnishing": {
+      "unfurnished": "Tanpa perabot",
+      "partially": "Separa berperabot",
+      "fully": "Berperabot penuh"
+    },
+    "highlights": "Kelebihan",
+    "agentNote": "Nota daripada {name}",
+    "footer": "Pembentangan ini diuruskan oleh {name}. Sila hubungi ejen anda untuk lawatan, tawaran dan maklumat lanjut.",
+    "done": {
+      "shortlist": "Ditambah ke senarai pendek anda. Ejen anda telah dimaklumkan.",
+      "not_interested": "Dicatat. Ejen anda telah dimaklumkan.",
+      "rank": "Susunan disimpan. Ejen anda telah dimaklumkan.",
+      "question": "Soalan dihantar kepada ejen anda.",
+      "offer_suggestion": "Cadangan tawaran dihantar kepada ejen anda.",
+      "viewing_request": "Permintaan lawatan dihantar kepada ejen anda.",
+      "comment": "Komen dihantar kepada ejen anda."
+    },
+    "actions": {
+      "shortlist": "Senarai pendek",
+      "notInterested": "Tidak berminat",
+      "first": "Pilihan pertama",
+      "second": "Pilihan kedua",
+      "third": "Pilihan ketiga",
+      "more": "Tanya soalan · cadang tawaran · minta lawatan",
+      "questionHint": "Taip soalan anda tentang hartanah ini…",
+      "ask": "Hantar soalan",
+      "offerHint": "Tawaran anda dalam {currency}",
+      "suggestOffer": "Cadang tawaran",
+      "requestViewing": "Minta lawatan"
+    },
+    "compare": {
+      "title": "Bandingkan hartanah",
+      "price": "Harga tawaran",
+      "monthlyRent": "Sewa bulanan",
+      "location": "Lokasi",
+      "type": "Jenis hartanah",
+      "builtUp": "Keluasan binaan",
+      "pricePerArea": "Harga per keluasan",
+      "bedrooms": "Bilik tidur",
+      "bathrooms": "Bilik air",
+      "carParks": "Parkir",
+      "furnishing": "Perabot",
+      "condition": "Keadaan",
+      "floor": "Tingkat",
+      "facilities": "Kemudahan",
+      "negotiable": "Boleh runding",
+      "agentNotes": "Nota ejen",
+      "negotiableValues": {
+        "yes": "Ya",
+        "no": "Tidak",
+        "subject_to_offer": "Tertakluk kepada tawaran"
+      },
+      "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda."
+    }
   }
 }

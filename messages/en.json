@@ -614,5 +614,123 @@
       "reason_required": "Please choose a reason to reject.",
       "save_failed": "Could not save the decision."
     }
+  },
+  "presentation": {
+    "createCta": "Create client presentation",
+    "builderTitle": "Client presentation",
+    "builderIntro": "Choose which properties your client will see, add your notes, and generate a private presentation link. The client will only ever see you.",
+    "sectionDetails": "Presentation details",
+    "title": "Presentation title",
+    "clientName": "Client name or reference",
+    "clientNameHint": "Shown on the presentation, e.g. Mr. T.",
+    "expiry": "Link validity",
+    "expiryDays": "{days} days",
+    "intro": "Introduction message",
+    "introHint": "A short personal note shown at the top of the presentation.",
+    "sectionProperties": "Properties to include",
+    "propertiesHint": "Only properties you have shortlisted or approved are listed. Add an optional client-facing note per property.",
+    "noteHint": "Your note to the client about this property (optional)",
+    "declarationTitle": "Requesting Agent declaration",
+    "declarationAccept": "I agree to the Requesting Agent declaration above",
+    "create": "Create presentation link",
+    "errors": {
+      "declaration_required": "You must accept the declaration to create a client presentation.",
+      "invalid_fields": "Please check the fields and select at least one property.",
+      "save_failed": "Could not create the presentation. Please try again."
+    },
+    "panel": {
+      "title": "Client presentation",
+      "url": "Client URL",
+      "code": "Access code",
+      "expires": "Expires",
+      "views": "Views"
+    },
+    "feedback": {
+      "title": "Client feedback",
+      "kinds": {
+        "shortlist": "Shortlisted",
+        "not_interested": "Not interested",
+        "rank": "Ranked",
+        "question": "Question",
+        "offer_suggestion": "Offer suggested",
+        "viewing_request": "Viewing requested",
+        "comment": "Comment"
+      },
+      "ranks": {
+        "first": "1st choice",
+        "second": "2nd choice",
+        "third": "3rd choice",
+        "maybe": "Maybe"
+      }
+    }
+  },
+  "clientView": {
+    "unavailableTitle": "Presentation unavailable",
+    "unavailableBody": "This presentation link is invalid, expired or has been disabled. Please contact your agent.",
+    "presentedBy": "Presented by {name}",
+    "preparedFor": "Prepared for {name}",
+    "accessCode": "Access code",
+    "unlock": "View properties",
+    "wrongPassword": "Incorrect access code. Please try again.",
+    "locked": "Too many attempts. Please try again later.",
+    "compareAll": "Compare all {count} properties",
+    "perMonth": "/month",
+    "beds": "{n} bed",
+    "baths": "{n} bath",
+    "parks": "{n} parking",
+    "furnishing": {
+      "unfurnished": "Unfurnished",
+      "partially": "Partially furnished",
+      "fully": "Fully furnished"
+    },
+    "highlights": "Highlights",
+    "agentNote": "Note from {name}",
+    "footer": "This presentation is managed by {name}. Please contact your agent for viewings, offers and further information.",
+    "done": {
+      "shortlist": "Added to your shortlist. Your agent has been notified.",
+      "not_interested": "Noted. Your agent has been notified.",
+      "rank": "Ranking saved. Your agent has been notified.",
+      "question": "Question sent to your agent.",
+      "offer_suggestion": "Offer suggestion sent to your agent.",
+      "viewing_request": "Viewing request sent to your agent.",
+      "comment": "Comment sent to your agent."
+    },
+    "actions": {
+      "shortlist": "Shortlist",
+      "notInterested": "Not interested",
+      "first": "1st choice",
+      "second": "2nd choice",
+      "third": "3rd choice",
+      "more": "Ask a question · suggest an offer · request a viewing",
+      "questionHint": "Type your question about this property…",
+      "ask": "Send question",
+      "offerHint": "Your offer in {currency}",
+      "suggestOffer": "Suggest offer",
+      "requestViewing": "Request viewing"
+    },
+    "compare": {
+      "title": "Compare properties",
+      "price": "Asking price",
+      "monthlyRent": "Monthly rent",
+      "location": "Location",
+      "type": "Property type",
+      "builtUp": "Built-up",
+      "pricePerArea": "Price per area",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "carParks": "Car parks",
+      "furnishing": "Furnishing",
+      "condition": "Condition",
+      "floor": "Floor",
+      "facilities": "Facilities",
+      "negotiable": "Negotiable",
+      "agentNotes": "Agent notes",
+      "negotiableValues": {
+        "yes": "Yes",
+        "no": "No",
+        "subject_to_offer": "Subject to offer"
+      },
+      "missingNote": "— means the information was not provided. Nothing is estimated on your behalf."
+    }
   }
 }
