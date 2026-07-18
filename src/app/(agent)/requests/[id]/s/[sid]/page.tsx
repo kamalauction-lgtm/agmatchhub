@@ -40,6 +40,7 @@ export default async function SubmissionReviewPage({
   const t = await getTranslations("review");
   const ts = await getTranslations("submissionStatus");
   const tsub = await getTranslations("submit");
+  const tcollab = await getTranslations("collab");
 
   const [{ data: s }, { data: media }, { data: history }] = await Promise.all([
     supabase.from("property_submissions").select("*, profiles(display_name)").eq("id", sid).maybeSingle(),
@@ -121,7 +122,9 @@ export default async function SubmissionReviewPage({
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {t(`errors.${error === "reason_required" ? "reason_required" : "save_failed"}`)}
+          {error.startsWith("commission_") || error === "collab_failed" || error === "counter_amount_required"
+            ? tcollab(`errors.${error}`)
+            : t(`errors.${error === "reason_required" ? "reason_required" : "save_failed"}`)}
         </p>
       )}
 

@@ -738,7 +738,11 @@
   "collab": {
     "errors": {
       "collab_failed": "Action failed. Please try again.",
-      "counter_amount_required": "A counter amount is required."
+      "counter_amount_required": "A counter amount is required.",
+      "commission_pct_total": "Listing and buyer percentages must total exactly 100%.",
+      "commission_amounts_required": "Both fixed amounts are required.",
+      "commission_reason_required": "An amendment reason is required to change an accepted agreement.",
+      "commission_over_allocated": "The allocation exceeds the declared total commission. Add an explanation in the terms."
     },
     "messages": {
       "title": "Messages",
@@ -839,7 +843,89 @@
       "client_question": "Your client asked a question",
       "client_offer_suggestion": "Your client suggested an offer",
       "client_viewing_request": "Your client requested a viewing",
-      "client_comment": "Your client left a comment"
+      "client_comment": "Your client left a comment",
+      "commission_proposed": "Commission arrangement proposed",
+      "commission_accepted": "Commission arrangement accepted"
+    }
+  },
+  "commission": {
+    "title": "Commission & co-broke agreement",
+    "privacyNote": "Confidential between the two agents and platform administrators. Never visible to the buyer or tenant.",
+    "totalDeclared": "Total commission",
+    "payer": "Paid by",
+    "basis": "Calculation basis",
+    "toBeConfirmed": "To be confirmed",
+    "currentVersion": "Version {n}",
+    "amendmentReason": "Amendment reason",
+    "acceptedBy": "Accepted by",
+    "agreeButton": "I Agree to the Commission Sharing Arrangement",
+    "agreeHint": "Active acceptance is recorded with the exact terms, your identity, and the time.",
+    "lockedNote": "Accepted by both agents. Changes require a new version with a stated reason and re-acceptance.",
+    "history": "Version history",
+    "proposedBy": "proposed by",
+    "proposeFirst": "Propose commission sharing",
+    "proposeCounter": "Counter-propose different terms",
+    "proposeAmendment": "Propose an amendment (new version)",
+    "totalTypeLabel": "Total commission type",
+    "totalTypes": {
+      "percentage": "Percentage of price",
+      "fixed": "Fixed amount",
+      "to_be_confirmed": "To be confirmed"
+    },
+    "totalValueLabel": "Total commission %",
+    "methodLabel": "Sharing method",
+    "methods": {
+      "fifty_fifty": "Standard 50:50",
+      "custom_percentage": "Custom percentage",
+      "custom_fixed": "Custom fixed amounts"
+    },
+    "methodHint": "50:50 needs no numbers. Custom percentage must total exactly 100%. Fixed amounts are in the property currency.",
+    "listingSide": "Listing side",
+    "buyerSide": "Buyer side",
+    "listingPctLabel": "Listing side % (custom %)",
+    "buyerPctLabel": "Buyer side % (custom %)",
+    "listingAmtLabel": "Listing side amount ({currency})",
+    "buyerAmtLabel": "Buyer side amount ({currency})",
+    "customTerms": "Remarks / terms (optional)",
+    "amendmentReasonLabel": "Reason for amendment (required)",
+    "amendmentReasonHint": "e.g. Final transaction price changed",
+    "proposeSubmit": "Propose arrangement",
+    "sides": {
+      "listing_side": "Listing side",
+      "buyer_side": "Buyer side"
+    },
+    "status": {
+      "draft": "Draft",
+      "proposed": "Proposed",
+      "counter_proposed": "Counter-proposed",
+      "accepted": "Accepted by both agents",
+      "revised": "Revised — awaiting re-acceptance",
+      "disputed": "Disputed",
+      "cancelled": "Cancelled"
+    },
+    "payers": {
+      "seller": "Seller",
+      "owner": "Owner",
+      "landlord": "Landlord",
+      "developer": "Developer",
+      "listing_agency": "Listing agency",
+      "supply_agent": "Supply Agent",
+      "other": "Other"
+    },
+    "bases": {
+      "final_sale_price": "Final sale price",
+      "asking_price": "Asking price",
+      "accepted_offer_price": "Accepted offer price",
+      "monthly_rental": "Monthly rental",
+      "annual_rental": "Annual rental",
+      "total_lease_value": "Total lease value",
+      "other": "Other"
+    },
+    "errors": {
+      "commission_pct_total": "Listing and buyer percentages must total exactly 100%.",
+      "commission_amounts_required": "Both fixed amounts are required.",
+      "commission_reason_required": "An amendment reason is required to change an accepted agreement.",
+      "commission_over_allocated": "The allocation exceeds the declared total commission. Add an explanation in the terms."
     }
   }
 }

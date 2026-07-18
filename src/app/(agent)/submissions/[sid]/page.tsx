@@ -49,7 +49,7 @@ export default async function SASubmissionPage({
 
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {tc(`errors.${error === "counter_amount_required" ? "counter_amount_required" : "collab_failed"}`)}
+          {tc(`errors.${error.startsWith("commission_") || error === "counter_amount_required" ? error : "collab_failed"}`)}
         </p>
       )}
 

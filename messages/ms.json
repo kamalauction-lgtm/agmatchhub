@@ -738,7 +738,11 @@
   "collab": {
     "errors": {
       "collab_failed": "Tindakan gagal. Sila cuba lagi.",
-      "counter_amount_required": "Jumlah tawaran balas diperlukan."
+      "counter_amount_required": "Jumlah tawaran balas diperlukan.",
+      "commission_pct_total": "Peratusan pihak penyenaraian dan pembeli mesti berjumlah tepat 100%.",
+      "commission_amounts_required": "Kedua-dua jumlah tetap diperlukan.",
+      "commission_reason_required": "Sebab pindaan diperlukan untuk mengubah perjanjian yang telah diterima.",
+      "commission_over_allocated": "Peruntukan melebihi jumlah komisen yang diisytiharkan. Tambah penjelasan dalam terma."
     },
     "messages": {
       "title": "Mesej",
@@ -839,7 +843,89 @@
       "client_question": "Pelanggan anda bertanya soalan",
       "client_offer_suggestion": "Pelanggan anda mencadangkan tawaran",
       "client_viewing_request": "Pelanggan anda meminta lawatan",
-      "client_comment": "Pelanggan anda meninggalkan komen"
+      "client_comment": "Pelanggan anda meninggalkan komen",
+      "commission_proposed": "Susunan komisen dicadangkan",
+      "commission_accepted": "Susunan komisen diterima"
+    }
+  },
+  "commission": {
+    "title": "Perjanjian komisen & co-broke",
+    "privacyNote": "Sulit antara kedua-dua ejen dan pentadbir platform. Tidak sekali-kali dipaparkan kepada pembeli atau penyewa.",
+    "totalDeclared": "Jumlah komisen",
+    "payer": "Dibayar oleh",
+    "basis": "Asas pengiraan",
+    "toBeConfirmed": "Akan disahkan",
+    "currentVersion": "Versi {n}",
+    "amendmentReason": "Sebab pindaan",
+    "acceptedBy": "Diterima oleh",
+    "agreeButton": "Saya Bersetuju dengan Susunan Perkongsian Komisen",
+    "agreeHint": "Penerimaan aktif direkodkan bersama terma tepat, identiti anda dan masa.",
+    "lockedNote": "Diterima oleh kedua-dua ejen. Perubahan memerlukan versi baharu dengan sebab dinyatakan dan penerimaan semula.",
+    "history": "Sejarah versi",
+    "proposedBy": "dicadangkan oleh",
+    "proposeFirst": "Cadangkan perkongsian komisen",
+    "proposeCounter": "Cadang balas terma berbeza",
+    "proposeAmendment": "Cadangkan pindaan (versi baharu)",
+    "totalTypeLabel": "Jenis jumlah komisen",
+    "totalTypes": {
+      "percentage": "Peratusan harga",
+      "fixed": "Jumlah tetap",
+      "to_be_confirmed": "Akan disahkan"
+    },
+    "totalValueLabel": "Jumlah komisen %",
+    "methodLabel": "Kaedah perkongsian",
+    "methods": {
+      "fifty_fifty": "Standard 50:50",
+      "custom_percentage": "Peratusan tersuai",
+      "custom_fixed": "Jumlah tetap tersuai"
+    },
+    "methodHint": "50:50 tidak perlu nombor. Peratusan tersuai mesti berjumlah tepat 100%. Jumlah tetap dalam mata wang hartanah.",
+    "listingSide": "Pihak penyenaraian",
+    "buyerSide": "Pihak pembeli",
+    "listingPctLabel": "% pihak penyenaraian (peratusan tersuai)",
+    "buyerPctLabel": "% pihak pembeli (peratusan tersuai)",
+    "listingAmtLabel": "Jumlah pihak penyenaraian ({currency})",
+    "buyerAmtLabel": "Jumlah pihak pembeli ({currency})",
+    "customTerms": "Catatan / terma (pilihan)",
+    "amendmentReasonLabel": "Sebab pindaan (wajib)",
+    "amendmentReasonHint": "cth. Harga transaksi akhir berubah",
+    "proposeSubmit": "Cadangkan susunan",
+    "sides": {
+      "listing_side": "Pihak penyenaraian",
+      "buyer_side": "Pihak pembeli"
+    },
+    "status": {
+      "draft": "Draf",
+      "proposed": "Dicadangkan",
+      "counter_proposed": "Cadangan balas",
+      "accepted": "Diterima oleh kedua-dua ejen",
+      "revised": "Dipinda — menunggu penerimaan semula",
+      "disputed": "Dipertikaikan",
+      "cancelled": "Dibatalkan"
+    },
+    "payers": {
+      "seller": "Penjual",
+      "owner": "Pemilik",
+      "landlord": "Tuan rumah",
+      "developer": "Pemaju",
+      "listing_agency": "Agensi penyenaraian",
+      "supply_agent": "Supply Agent",
+      "other": "Lain-lain"
+    },
+    "bases": {
+      "final_sale_price": "Harga jualan akhir",
+      "asking_price": "Harga tawaran",
+      "accepted_offer_price": "Harga tawaran diterima",
+      "monthly_rental": "Sewa bulanan",
+      "annual_rental": "Sewa tahunan",
+      "total_lease_value": "Nilai pajakan keseluruhan",
+      "other": "Lain-lain"
+    },
+    "errors": {
+      "commission_pct_total": "Peratusan pihak penyenaraian dan pembeli mesti berjumlah tepat 100%.",
+      "commission_amounts_required": "Kedua-dua jumlah tetap diperlukan.",
+      "commission_reason_required": "Sebab pindaan diperlukan untuk mengubah perjanjian yang telah diterima.",
+      "commission_over_allocated": "Peruntukan melebihi jumlah komisen yang diisytiharkan. Tambah penjelasan dalam terma."
     }
   }
 }

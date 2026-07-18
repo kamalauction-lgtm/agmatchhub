@@ -738,7 +738,11 @@
   "collab": {
     "errors": {
       "collab_failed": "Tindakan gagal. Silakan coba lagi.",
-      "counter_amount_required": "Jumlah penawaran balasan wajib diisi."
+      "counter_amount_required": "Jumlah penawaran balasan wajib diisi.",
+      "commission_pct_total": "Persentase pihak listing dan pembeli harus berjumlah tepat 100%.",
+      "commission_amounts_required": "Kedua jumlah tetap wajib diisi.",
+      "commission_reason_required": "Alasan perubahan wajib untuk mengubah perjanjian yang sudah diterima.",
+      "commission_over_allocated": "Alokasi melebihi total komisi yang dideklarasikan. Tambahkan penjelasan pada ketentuan."
     },
     "messages": {
       "title": "Pesan",
@@ -839,7 +843,89 @@
       "client_question": "Klien Anda mengajukan pertanyaan",
       "client_offer_suggestion": "Klien Anda mengusulkan penawaran",
       "client_viewing_request": "Klien Anda meminta kunjungan",
-      "client_comment": "Klien Anda meninggalkan komentar"
+      "client_comment": "Klien Anda meninggalkan komentar",
+      "commission_proposed": "Pengaturan komisi diusulkan",
+      "commission_accepted": "Pengaturan komisi diterima"
+    }
+  },
+  "commission": {
+    "title": "Perjanjian komisi & co-broke",
+    "privacyNote": "Rahasia antara kedua agen dan administrator platform. Tidak pernah ditampilkan kepada pembeli atau penyewa.",
+    "totalDeclared": "Total komisi",
+    "payer": "Dibayar oleh",
+    "basis": "Dasar perhitungan",
+    "toBeConfirmed": "Akan dikonfirmasi",
+    "currentVersion": "Versi {n}",
+    "amendmentReason": "Alasan perubahan",
+    "acceptedBy": "Diterima oleh",
+    "agreeButton": "Saya Setuju dengan Pengaturan Pembagian Komisi",
+    "agreeHint": "Persetujuan aktif dicatat beserta ketentuan persis, identitas Anda, dan waktunya.",
+    "lockedNote": "Diterima kedua agen. Perubahan memerlukan versi baru dengan alasan dan persetujuan ulang.",
+    "history": "Riwayat versi",
+    "proposedBy": "diusulkan oleh",
+    "proposeFirst": "Usulkan pembagian komisi",
+    "proposeCounter": "Usulkan ketentuan berbeda",
+    "proposeAmendment": "Usulkan perubahan (versi baru)",
+    "totalTypeLabel": "Jenis total komisi",
+    "totalTypes": {
+      "percentage": "Persentase harga",
+      "fixed": "Jumlah tetap",
+      "to_be_confirmed": "Akan dikonfirmasi"
+    },
+    "totalValueLabel": "Total komisi %",
+    "methodLabel": "Metode pembagian",
+    "methods": {
+      "fifty_fifty": "Standar 50:50",
+      "custom_percentage": "Persentase kustom",
+      "custom_fixed": "Jumlah tetap kustom"
+    },
+    "methodHint": "50:50 tanpa angka. Persentase kustom harus berjumlah tepat 100%. Jumlah tetap dalam mata uang properti.",
+    "listingSide": "Pihak listing",
+    "buyerSide": "Pihak pembeli",
+    "listingPctLabel": "% pihak listing (persentase kustom)",
+    "buyerPctLabel": "% pihak pembeli (persentase kustom)",
+    "listingAmtLabel": "Jumlah pihak listing ({currency})",
+    "buyerAmtLabel": "Jumlah pihak pembeli ({currency})",
+    "customTerms": "Catatan / ketentuan (opsional)",
+    "amendmentReasonLabel": "Alasan perubahan (wajib)",
+    "amendmentReasonHint": "mis. Harga transaksi final berubah",
+    "proposeSubmit": "Usulkan pengaturan",
+    "sides": {
+      "listing_side": "Pihak listing",
+      "buyer_side": "Pihak pembeli"
+    },
+    "status": {
+      "draft": "Draf",
+      "proposed": "Diusulkan",
+      "counter_proposed": "Usulan balasan",
+      "accepted": "Diterima kedua agen",
+      "revised": "Direvisi — menunggu persetujuan ulang",
+      "disputed": "Disengketakan",
+      "cancelled": "Dibatalkan"
+    },
+    "payers": {
+      "seller": "Penjual",
+      "owner": "Pemilik",
+      "landlord": "Pemilik sewa",
+      "developer": "Developer",
+      "listing_agency": "Agensi listing",
+      "supply_agent": "Supply Agent",
+      "other": "Lainnya"
+    },
+    "bases": {
+      "final_sale_price": "Harga jual final",
+      "asking_price": "Harga penawaran",
+      "accepted_offer_price": "Harga penawaran diterima",
+      "monthly_rental": "Sewa bulanan",
+      "annual_rental": "Sewa tahunan",
+      "total_lease_value": "Total nilai sewa",
+      "other": "Lainnya"
+    },
+    "errors": {
+      "commission_pct_total": "Persentase pihak listing dan pembeli harus berjumlah tepat 100%.",
+      "commission_amounts_required": "Kedua jumlah tetap wajib diisi.",
+      "commission_reason_required": "Alasan perubahan wajib untuk mengubah perjanjian yang sudah diterima.",
+      "commission_over_allocated": "Alokasi melebihi total komisi yang dideklarasikan. Tambahkan penjelasan pada ketentuan."
     }
   }
 }
