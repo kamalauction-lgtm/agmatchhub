@@ -71,8 +71,10 @@ export async function forgotPassword(formData: FormData) {
   const email = z.string().trim().email().safeParse(formData.get("email"));
   if (email.success) {
     const supabase = await createClient();
+    // Route through /auth/callback so the recovery code is exchanged for a
+    // session before the user lands on the reset form.
     await supabase.auth.resetPasswordForEmail(email.data, {
-      redirectTo: `${process.env.APP_BASE_URL}/reset-password`,
+      redirectTo: `${process.env.APP_BASE_URL}/auth/callback?next=/reset-password`,
     });
   }
   // Same response whether or not the account exists (no enumeration).
