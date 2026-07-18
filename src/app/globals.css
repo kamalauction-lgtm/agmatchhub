@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
+/* Design tokens (spec §37). Brand palette: crimson accent — never large red
+   backgrounds. Light/dark via system preference. */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1f1f1f;
+  --surface: #f7f7f8;
+  --line: #e4e4e7;
+  --muted: #6b7280;
+  --crimson: #b11226;
+  --crimson-strong: #8e0e1f;
+  --crimson-soft: #fdf2f4;
+  --silver: #c0c0c0;
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #141416;
+    --foreground: #f4f4f5;
+    --surface: #1f1f23;
+    --line: #33333a;
+    --muted: #9ca3af;
+    --crimson: #d94356;
+    --crimson-strong: #b11226;
+    --crimson-soft: #2a1518;
+    --silver: #8f8f94;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-crimson: var(--crimson);
+  --color-crimson-strong: var(--crimson-strong);
+  --color-crimson-soft: var(--crimson-soft);
+  --color-silver: var(--silver);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }

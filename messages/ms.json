@@ -1,0 +1,70 @@
+{
+  "common": {
+    "signIn": "Log masuk",
+    "signOut": "Log keluar",
+    "register": "Daftar",
+    "email": "Alamat e-mel",
+    "password": "Kata laluan",
+    "submit": "Hantar",
+    "back": "Kembali",
+    "language": "Bahasa"
+  },
+  "landing": {
+    "heroTitle": "Kerjasama hartanah terkawal untuk ejen profesional",
+    "heroBody": "Hantar keperluan pelanggan yang disahkan, terima hartanah yang sepadan daripada ejen yang dipercayai, dan tunjukkan hanya yang terbaik kepada pelanggan anda — setiap langkah dilindungi, dikawal kebenaran dan diaudit.",
+    "ctaSignIn": "Log masuk ejen",
+    "ctaRegister": "Buka akaun ejen",
+    "pillars": {
+      "protect": "Pelanggan anda kekal milik anda",
+      "protectBody": "Pembeli dan penyewa tidak akan melihat ejen pembekal. Rakan co-broke tidak akan melihat pelanggan anda.",
+      "control": "Anda kawal apa yang dikongsi",
+      "controlBody": "Hanya hartanah yang anda luluskan sampai kepada pelanggan anda, melalui pautan pembentangan peribadi yang selamat.",
+      "audit": "Setiap langkah direkodkan",
+      "auditBody": "Deklarasi, perjanjian komisen dan rundingan diversikan dan diaudit."
+    }
+  },
+  "auth": {
+    "loginTitle": "Log masuk ejen",
+    "registerTitle": "Buka akaun ejen anda",
+    "displayName": "Nama paparan",
+    "confirmPassword": "Sahkan kata laluan",
+    "forgotPassword": "Lupa kata laluan?",
+    "sendReset": "Hantar pautan set semula",
+    "resetTitle": "Set semula kata laluan",
+    "newPassword": "Kata laluan baharu",
+    "resetSubmit": "Tetapkan kata laluan baharu",
+    "resetSent": "Jika akaun wujud untuk e-mel tersebut, pautan set semula telah dihantar.",
+    "verifyTitle": "Sahkan e-mel anda",
+    "verifyBody": "Kami telah menghantar pautan pengesahan ke alamat e-mel anda. Klik pautan dalam e-mel untuk mengaktifkan akaun anda, kemudian log masuk.",
+    "noAccount": "Belum ada akaun?",
+    "haveAccount": "Sudah ada akaun?",
+    "errors": {
+      "invalid_credentials": "E-mel atau kata laluan tidak sah.",
+      "password_mismatch": "Kata laluan tidak sepadan.",
+      "weak_password": "Kata laluan mestilah sekurang-kurangnya 8 aksara.",
+      "email_in_use": "Akaun dengan e-mel ini mungkin sudah wujud.",
+      "generic": "Berlaku ralat. Sila cuba lagi."
+    }
+  },
+  "dashboard": {
+    "title": "Papan pemuka ejen",
+    "welcome": "Selamat datang, {name}",
+    "statusLabel": "Status pengesahan",
+    "statusNote": "Lengkapkan pengesahan ejen anda untuk mencipta keperluan dan menghantar hartanah.",
+    "status": {
+      "draft": "Profil belum lengkap",
+      "email_verification_pending": "Pengesahan e-mel belum selesai",
+      "mobile_verification_pending": "Pengesahan telefon belum selesai",
+      "documents_pending": "Dokumen belum lengkap",
+      "under_review": "Dalam semakan",
+      "additional_information_required": "Maklumat tambahan diperlukan",
+      "verified": "Ejen disahkan",
+      "rejected": "Ditolak",
+      "suspended": "Digantung",
+      "temporarily_restricted": "Dihadkan sementara",
+      "banned": "Diharamkan",
+      "expired_licence": "Lesen tamat tempoh",
+      "archived": "Diarkibkan"
+    }
+  }
+}

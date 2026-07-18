@@ -1,0 +1,70 @@
+{
+  "common": {
+    "signIn": "Masuk",
+    "signOut": "Keluar",
+    "register": "Daftar",
+    "email": "Alamat email",
+    "password": "Kata sandi",
+    "submit": "Kirim",
+    "back": "Kembali",
+    "language": "Bahasa"
+  },
+  "landing": {
+    "heroTitle": "Kolaborasi properti terkendali untuk agen profesional",
+    "heroBody": "Ajukan kebutuhan klien yang terverifikasi, terima properti yang sesuai dari agen tepercaya, dan tampilkan hanya yang terbaik kepada klien Anda — setiap langkah dilindungi, dikontrol izinnya, dan diaudit.",
+    "ctaSignIn": "Masuk agen",
+    "ctaRegister": "Buat akun agen",
+    "pillars": {
+      "protect": "Klien Anda tetap milik Anda",
+      "protectBody": "Pembeli dan penyewa tidak pernah melihat agen pemasok. Mitra co-broke tidak pernah melihat klien Anda.",
+      "control": "Anda mengontrol apa yang dibagikan",
+      "controlBody": "Hanya properti yang Anda setujui yang sampai ke klien Anda, melalui tautan presentasi privat yang aman.",
+      "audit": "Setiap langkah tercatat",
+      "auditBody": "Pernyataan, perjanjian komisi, dan negosiasi diberi versi dan diaudit."
+    }
+  },
+  "auth": {
+    "loginTitle": "Masuk agen",
+    "registerTitle": "Buat akun agen Anda",
+    "displayName": "Nama tampilan",
+    "confirmPassword": "Konfirmasi kata sandi",
+    "forgotPassword": "Lupa kata sandi?",
+    "sendReset": "Kirim tautan reset",
+    "resetTitle": "Reset kata sandi",
+    "newPassword": "Kata sandi baru",
+    "resetSubmit": "Setel kata sandi baru",
+    "resetSent": "Jika akun dengan email tersebut ada, tautan reset telah dikirim.",
+    "verifyTitle": "Verifikasi email Anda",
+    "verifyBody": "Kami telah mengirim tautan konfirmasi ke alamat email Anda. Klik tautan dalam email untuk mengaktifkan akun Anda, lalu masuk.",
+    "noAccount": "Belum punya akun?",
+    "haveAccount": "Sudah punya akun?",
+    "errors": {
+      "invalid_credentials": "Email atau kata sandi tidak valid.",
+      "password_mismatch": "Kata sandi tidak cocok.",
+      "weak_password": "Kata sandi minimal 8 karakter.",
+      "email_in_use": "Akun dengan email ini mungkin sudah ada.",
+      "generic": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
+  "dashboard": {
+    "title": "Dasbor agen",
+    "welcome": "Selamat datang, {name}",
+    "statusLabel": "Status verifikasi",
+    "statusNote": "Lengkapi verifikasi agen Anda untuk membuat kebutuhan dan mengajukan properti.",
+    "status": {
+      "draft": "Profil belum lengkap",
+      "email_verification_pending": "Verifikasi email tertunda",
+      "mobile_verification_pending": "Verifikasi ponsel tertunda",
+      "documents_pending": "Dokumen belum lengkap",
+      "under_review": "Sedang ditinjau",
+      "additional_information_required": "Informasi tambahan diperlukan",
+      "verified": "Agen terverifikasi",
+      "rejected": "Ditolak",
+      "suspended": "Ditangguhkan",
+      "temporarily_restricted": "Dibatasi sementara",
+      "banned": "Diblokir",
+      "expired_licence": "Lisensi kedaluwarsa",
+      "archived": "Diarsipkan"
+    }
+  }
+}

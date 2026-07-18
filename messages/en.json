@@ -1,0 +1,70 @@
+{
+  "common": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "register": "Register",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Submit",
+    "back": "Back",
+    "language": "Language"
+  },
+  "landing": {
+    "heroTitle": "Controlled property collaboration for professional agents",
+    "heroBody": "Post a verified client requirement, receive matching properties from trusted agents, and present only the best to your client — with every step protected, permission-controlled and audited.",
+    "ctaSignIn": "Agent sign in",
+    "ctaRegister": "Create agent account",
+    "pillars": {
+      "protect": "Your client stays yours",
+      "protectBody": "Buyers and tenants never see the supplying agent. Co-broke partners never see your client.",
+      "control": "You control what is shared",
+      "controlBody": "Only properties you approve reach your client, through a secure private presentation link.",
+      "audit": "Every step on the record",
+      "auditBody": "Declarations, commission agreements and negotiations are versioned and audited."
+    }
+  },
+  "auth": {
+    "loginTitle": "Agent sign in",
+    "registerTitle": "Create your agent account",
+    "displayName": "Display name",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "sendReset": "Send reset link",
+    "resetTitle": "Reset password",
+    "newPassword": "New password",
+    "resetSubmit": "Set new password",
+    "resetSent": "If an account exists for that email, a reset link has been sent.",
+    "verifyTitle": "Verify your email",
+    "verifyBody": "We have sent a confirmation link to your email address. Click the link in the email to activate your account, then sign in.",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "errors": {
+      "invalid_credentials": "Invalid email or password.",
+      "password_mismatch": "Passwords do not match.",
+      "weak_password": "Password must be at least 8 characters.",
+      "email_in_use": "An account with this email may already exist.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "dashboard": {
+    "title": "Agent dashboard",
+    "welcome": "Welcome, {name}",
+    "statusLabel": "Verification status",
+    "statusNote": "Complete your agent verification to create requirements and submit properties.",
+    "status": {
+      "draft": "Profile incomplete",
+      "email_verification_pending": "Email verification pending",
+      "mobile_verification_pending": "Mobile verification pending",
+      "documents_pending": "Documents pending",
+      "under_review": "Under review",
+      "additional_information_required": "Additional information required",
+      "verified": "Verified agent",
+      "rejected": "Rejected",
+      "suspended": "Suspended",
+      "temporarily_restricted": "Temporarily restricted",
+      "banned": "Banned",
+      "expired_licence": "Licence expired",
+      "archived": "Archived"
+    }
+  }
+}
