@@ -125,7 +125,9 @@
       "agentView": "Tampilan agen",
       "countries": "Negara",
       "legal": "Konten hukum",
-      "requests": "Kebutuhan"
+      "requests": "Kebutuhan",
+      "reports": "Laporan",
+      "audit": "Audit"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -815,6 +817,41 @@
       "approved": "Kontak dilepaskan — kedua agen setuju.",
       "mobile": "Ponsel",
       "email": "Email"
+    },
+    "report": {
+      "title": "Laporkan pelanggaran",
+      "open": "Laporkan pihak atau pengajuan ini…",
+      "category": "Kategori",
+      "description": "Apa yang terjadi?",
+      "submit": "Kirim laporan ke admin",
+      "categories": {
+        "client_bypass": "Melewati klien",
+        "agent_bypass": "Melewati agen",
+        "false_information": "Informasi palsu",
+        "unauthorised_listing": "Listing tanpa izin",
+        "incorrect_price": "Harga tidak tepat",
+        "property_unavailable": "Properti tidak tersedia",
+        "misleading_images": "Gambar menyesatkan",
+        "fraud_suspicion": "Dugaan penipuan",
+        "confidentiality_breach": "Pelanggaran kerahasiaan",
+        "harassment": "Pelecehan",
+        "commission_dispute": "Sengketa komisi",
+        "appointment_dispute": "Sengketa penunjukan",
+        "duplicate_listing": "Listing duplikat",
+        "inappropriate_content": "Konten tidak pantas",
+        "other": "Lainnya"
+      },
+      "status": {
+        "submitted": "Diajukan",
+        "under_review": "Sedang ditinjau",
+        "additional_evidence_required": "Bukti diperlukan",
+        "user_contacted": "Pengguna dihubungi",
+        "account_restricted": "Akun dibatasi",
+        "resolved": "Selesai",
+        "rejected": "Ditolak",
+        "escalated": "Dieskalasi",
+        "archived": "Diarsipkan"
+      }
     }
   },
   "notificationsPage": {
@@ -845,7 +882,8 @@
       "client_viewing_request": "Klien Anda meminta kunjungan",
       "client_comment": "Klien Anda meninggalkan komentar",
       "commission_proposed": "Pengaturan komisi diusulkan",
-      "commission_accepted": "Pengaturan komisi diterima"
+      "commission_accepted": "Pengaturan komisi diterima",
+      "violation_reported": "Laporan pelanggaran diajukan"
     }
   },
   "commission": {
@@ -927,5 +965,43 @@
       "commission_reason_required": "Alasan perubahan wajib untuk mengubah perjanjian yang sudah diterima.",
       "commission_over_allocated": "Alokasi melebihi total komisi yang dideklarasikan. Tambahkan penjelasan pada ketentuan."
     }
+  },
+  "adminReports": {
+    "title": "Laporan pelanggaran",
+    "filterAll": "Semua",
+    "empty": "Tidak ada laporan dengan status ini.",
+    "cols": {
+      "category": "Kategori",
+      "reporter": "Pelapor",
+      "reported": "Dilaporkan",
+      "status": "Status"
+    },
+    "review": "Tinjau",
+    "savedNotice": "Laporan diperbarui.",
+    "saveFailed": "Tidak dapat menyimpan. Silakan coba lagi.",
+    "submission": "Pengajuan",
+    "description": "Deskripsi",
+    "resolution": "Resolusi (terlihat oleh pelapor)",
+    "decisionTitle": "Tangani laporan",
+    "newStatus": "Status baru",
+    "resolutionLabel": "Resolusi (terlihat oleh pelapor)",
+    "resolutionHint": "Hasil yang disampaikan ke agen pelapor",
+    "internalNotes": "Catatan internal kepatuhan (khusus admin)",
+    "save": "Simpan"
+  },
+  "adminAudit": {
+    "title": "Jejak audit",
+    "search": "Cari",
+    "searchHint": "Filter berdasarkan aksi, mis. commission",
+    "filtered": "Difilter: {q}",
+    "clear": "hapus",
+    "cols": {
+      "time": "Waktu",
+      "actor": "Pelaku",
+      "action": "Aksi",
+      "entity": "Entitas",
+      "result": "Hasil"
+    },
+    "appendOnlyNote": "Hanya-tambah: catatan audit tidak dapat diedit atau dihapus, termasuk oleh administrator."
   }
 }

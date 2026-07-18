@@ -5,6 +5,14 @@ import {
   sendMessage, submitOffer, respondOffer, requestViewing,
   respondViewing, requestContactRelease,
 } from "@/app/(agent)/collab/actions";
+import { reportViolation } from "@/app/(agent)/collab/report-actions";
+
+const REPORT_CATEGORIES = [
+  "client_bypass", "agent_bypass", "false_information", "unauthorised_listing",
+  "incorrect_price", "property_unavailable", "misleading_images", "fraud_suspicion",
+  "confidentiality_breach", "harassment", "commission_dispute", "appointment_dispute",
+  "duplicate_listing", "inappropriate_content", "other",
+] as const;
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -58,6 +66,15 @@ export async function CollabPanels({
         .eq("submission_id", submissionId)
         .maybeSingle(),
     ]);
+
+  const { data: myReport } = await supabase
+    .from("violation_reports")
+    .select("human_readable_id, status, category")
+    .eq("submission_id", submissionId)
+    .eq("reporter_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   const messages = (conv?.messages ?? []).sort(
     (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
@@ -317,6 +334,42 @@ export async function CollabPanels({
               <button type="submit" className={btnSec}>{t("release.request")}</button>
             </form>
           </div>
+        )}
+      </section>
+
+      {/* --------------------------------------- report violation (§32–33) */}
+      <section className="rounded-xl border border-line p-6">
+        <h2 className="mb-2 font-semibold">{t("report.title")}</h2>
+        {myReport ? (
+          <p className="text-sm">
+            <span className="font-mono text-xs text-muted">{myReport.human_readable_id}</span>{" "}
+            · {t(`report.categories.${myReport.category}`)} ·{" "}
+            <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-semibold">
+              {t(`report.status.${myReport.status}`)}
+            </span>
+          </p>
+        ) : (
+          <details className="text-sm">
+            <summary className="cursor-pointer font-medium text-muted">{t("report.open")}</summary>
+            <form action={reportViolation} className="mt-3 space-y-3">
+              <input type="hidden" name="submissionId" value={submissionId} />
+              <label className="block">
+                <span className="mb-1 block font-medium">{t("report.category")}</span>
+                <select name="category" className={inputCls}>
+                  {REPORT_CATEGORIES.map((c) => (
+                    <option key={c} value={c}>{t(`report.categories.${c}`)}</option>
+                  ))}
+                </select>
+              </label>
+              <label className="block">
+                <span className="mb-1 block font-medium">{t("report.description")}</span>
+                <textarea name="description" rows={3} required minLength={10} maxLength={4000} className={inputCls} />
+              </label>
+              <button type="submit" className="rounded-lg border border-danger px-4 py-2 text-sm font-semibold text-danger hover:bg-danger/10">
+                {t("report.submit")}
+              </button>
+            </form>
+          </details>
         )}
       </section>
     </div>

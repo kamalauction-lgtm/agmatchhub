@@ -125,7 +125,9 @@
       "agentView": "Paparan ejen",
       "countries": "Negara",
       "legal": "Kandungan undang-undang",
-      "requests": "Keperluan"
+      "requests": "Keperluan",
+      "reports": "Laporan",
+      "audit": "Audit"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -815,6 +817,41 @@
       "approved": "Hubungan dilepaskan — kedua-dua ejen bersetuju.",
       "mobile": "Telefon",
       "email": "E-mel"
+    },
+    "report": {
+      "title": "Laporkan pelanggaran",
+      "open": "Laporkan pihak atau penyerahan ini…",
+      "category": "Kategori",
+      "description": "Apa yang berlaku?",
+      "submit": "Hantar laporan kepada admin",
+      "categories": {
+        "client_bypass": "Pintasan pelanggan",
+        "agent_bypass": "Pintasan ejen",
+        "false_information": "Maklumat palsu",
+        "unauthorised_listing": "Penyenaraian tanpa kebenaran",
+        "incorrect_price": "Harga tidak tepat",
+        "property_unavailable": "Hartanah tidak tersedia",
+        "misleading_images": "Gambar mengelirukan",
+        "fraud_suspicion": "Syak penipuan",
+        "confidentiality_breach": "Pelanggaran kerahsiaan",
+        "harassment": "Gangguan",
+        "commission_dispute": "Pertikaian komisen",
+        "appointment_dispute": "Pertikaian perlantikan",
+        "duplicate_listing": "Penyenaraian pendua",
+        "inappropriate_content": "Kandungan tidak sesuai",
+        "other": "Lain-lain"
+      },
+      "status": {
+        "submitted": "Dihantar",
+        "under_review": "Dalam semakan",
+        "additional_evidence_required": "Bukti diperlukan",
+        "user_contacted": "Pengguna dihubungi",
+        "account_restricted": "Akaun dihadkan",
+        "resolved": "Selesai",
+        "rejected": "Ditolak",
+        "escalated": "Dinaikkan",
+        "archived": "Diarkibkan"
+      }
     }
   },
   "notificationsPage": {
@@ -845,7 +882,8 @@
       "client_viewing_request": "Pelanggan anda meminta lawatan",
       "client_comment": "Pelanggan anda meninggalkan komen",
       "commission_proposed": "Susunan komisen dicadangkan",
-      "commission_accepted": "Susunan komisen diterima"
+      "commission_accepted": "Susunan komisen diterima",
+      "violation_reported": "Laporan pelanggaran difailkan"
     }
   },
   "commission": {
@@ -927,5 +965,43 @@
       "commission_reason_required": "Sebab pindaan diperlukan untuk mengubah perjanjian yang telah diterima.",
       "commission_over_allocated": "Peruntukan melebihi jumlah komisen yang diisytiharkan. Tambah penjelasan dalam terma."
     }
+  },
+  "adminReports": {
+    "title": "Laporan pelanggaran",
+    "filterAll": "Semua",
+    "empty": "Tiada laporan dalam status ini.",
+    "cols": {
+      "category": "Kategori",
+      "reporter": "Pelapor",
+      "reported": "Dilaporkan",
+      "status": "Status"
+    },
+    "review": "Semak",
+    "savedNotice": "Laporan dikemas kini.",
+    "saveFailed": "Tidak dapat disimpan. Sila cuba lagi.",
+    "submission": "Penyerahan",
+    "description": "Keterangan",
+    "resolution": "Resolusi (dipaparkan kepada pelapor)",
+    "decisionTitle": "Uruskan laporan",
+    "newStatus": "Status baharu",
+    "resolutionLabel": "Resolusi (dipaparkan kepada pelapor)",
+    "resolutionHint": "Keputusan yang dimaklumkan kepada ejen pelapor",
+    "internalNotes": "Nota dalaman pematuhan (admin sahaja)",
+    "save": "Simpan"
+  },
+  "adminAudit": {
+    "title": "Jejak audit",
+    "search": "Cari",
+    "searchHint": "Tapis mengikut tindakan, cth. commission",
+    "filtered": "Ditapis: {q}",
+    "clear": "kosongkan",
+    "cols": {
+      "time": "Masa",
+      "actor": "Pelaku",
+      "action": "Tindakan",
+      "entity": "Entiti",
+      "result": "Keputusan"
+    },
+    "appendOnlyNote": "Tambah sahaja: rekod audit tidak boleh diedit atau dipadam, termasuk oleh pentadbir."
   }
 }

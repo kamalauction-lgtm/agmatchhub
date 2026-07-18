@@ -125,7 +125,9 @@
       "agentView": "Agent view",
       "countries": "Countries",
       "legal": "Legal content",
-      "requests": "Requests"
+      "requests": "Requests",
+      "reports": "Reports",
+      "audit": "Audit"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -815,6 +817,41 @@
       "approved": "Contact released — both agents agreed.",
       "mobile": "Mobile",
       "email": "Email"
+    },
+    "report": {
+      "title": "Report a violation",
+      "open": "Report this counterparty or submission…",
+      "category": "Category",
+      "description": "What happened?",
+      "submit": "Submit report to admin",
+      "categories": {
+        "client_bypass": "Client bypass",
+        "agent_bypass": "Agent bypass",
+        "false_information": "False information",
+        "unauthorised_listing": "Unauthorised listing",
+        "incorrect_price": "Incorrect price",
+        "property_unavailable": "Property unavailable",
+        "misleading_images": "Misleading images",
+        "fraud_suspicion": "Fraud suspicion",
+        "confidentiality_breach": "Confidentiality breach",
+        "harassment": "Harassment",
+        "commission_dispute": "Commission dispute",
+        "appointment_dispute": "Appointment dispute",
+        "duplicate_listing": "Duplicate listing",
+        "inappropriate_content": "Inappropriate content",
+        "other": "Other"
+      },
+      "status": {
+        "submitted": "Submitted",
+        "under_review": "Under review",
+        "additional_evidence_required": "Evidence required",
+        "user_contacted": "User contacted",
+        "account_restricted": "Account restricted",
+        "resolved": "Resolved",
+        "rejected": "Rejected",
+        "escalated": "Escalated",
+        "archived": "Archived"
+      }
     }
   },
   "notificationsPage": {
@@ -845,7 +882,8 @@
       "client_viewing_request": "Your client requested a viewing",
       "client_comment": "Your client left a comment",
       "commission_proposed": "Commission arrangement proposed",
-      "commission_accepted": "Commission arrangement accepted"
+      "commission_accepted": "Commission arrangement accepted",
+      "violation_reported": "A violation report was filed"
     }
   },
   "commission": {
@@ -927,5 +965,43 @@
       "commission_reason_required": "An amendment reason is required to change an accepted agreement.",
       "commission_over_allocated": "The allocation exceeds the declared total commission. Add an explanation in the terms."
     }
+  },
+  "adminReports": {
+    "title": "Violation reports",
+    "filterAll": "All",
+    "empty": "No reports in this status.",
+    "cols": {
+      "category": "Category",
+      "reporter": "Reporter",
+      "reported": "Reported",
+      "status": "Status"
+    },
+    "review": "Review",
+    "savedNotice": "Report updated.",
+    "saveFailed": "Could not save. Please try again.",
+    "submission": "Submission",
+    "description": "Description",
+    "resolution": "Resolution (visible to reporter)",
+    "decisionTitle": "Handle report",
+    "newStatus": "New status",
+    "resolutionLabel": "Resolution (visible to reporter)",
+    "resolutionHint": "Outcome communicated to the reporting agent",
+    "internalNotes": "Internal compliance notes (admin only)",
+    "save": "Save"
+  },
+  "adminAudit": {
+    "title": "Audit trail",
+    "search": "Search",
+    "searchHint": "Filter by action, e.g. commission",
+    "filtered": "Filtered by: {q}",
+    "clear": "clear",
+    "cols": {
+      "time": "Time",
+      "actor": "Actor",
+      "action": "Action",
+      "entity": "Entity",
+      "result": "Result"
+    },
+    "appendOnlyNote": "Append-only: audit records cannot be edited or deleted, including by administrators."
   }
 }
