@@ -67,7 +67,8 @@
       "archived": "Diarkibkan"
     },
     "startVerification": "Lengkapkan pengesahan",
-    "adminConsole": "Konsol admin"
+    "adminConsole": "Konsol admin",
+    "myRequests": "Keperluan saya"
   },
   "verification": {
     "title": "Pengesahan ejen",
@@ -123,7 +124,8 @@
       "agents": "Pengesahan ejen",
       "agentView": "Paparan ejen",
       "countries": "Negara",
-      "legal": "Kandungan undang-undang"
+      "legal": "Kandungan undang-undang",
+      "requests": "Keperluan"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -205,5 +207,195 @@
       "unit": "Unit"
     },
     "save": "Simpan"
+  },
+  "nav": {
+    "dashboard": "Papan pemuka",
+    "requests": "Keperluan saya"
+  },
+  "requests": {
+    "title": "Keperluan saya",
+    "newRequest": "Keperluan baharu",
+    "newTitle": "Keperluan hartanah baharu",
+    "editTitle": "Sunting keperluan",
+    "detailTitle": "Butiran keperluan",
+    "edit": "Sunting",
+    "empty": "Belum ada keperluan. Cipta yang pertama.",
+    "verifyFirst": "Hanya ejen disahkan boleh mencipta keperluan.",
+    "verifyLink": "Lengkapkan pengesahan",
+    "submittedNotice": "Dihantar untuk kelulusan admin. Pautan kongsi selamat akan dipaparkan di sini selepas diluluskan.",
+    "amendmentRequired": "Pindaan diperlukan",
+    "cols": {
+      "title": "Tajuk",
+      "location": "Lokasi",
+      "type": "Jenis",
+      "status": "Status"
+    },
+    "transaction": {
+      "buy": "Beli",
+      "rent": "Sewa"
+    },
+    "status": {
+      "draft": "Draf",
+      "pending_admin_approval": "Menunggu kelulusan",
+      "under_admin_review": "Dalam semakan",
+      "amendment_required": "Pindaan diperlukan",
+      "resubmitted": "Dihantar semula",
+      "approved": "Diluluskan",
+      "link_ready": "Pautan sedia",
+      "link_active": "Pautan aktif",
+      "receiving_submissions": "Menerima penyerahan",
+      "reviewing_submissions": "Menyemak penyerahan",
+      "client_presentation_preparation": "Menyediakan pembentangan",
+      "client_review": "Semakan pelanggan",
+      "viewing_stage": "Peringkat lawatan",
+      "negotiation_stage": "Rundingan",
+      "offer_stage": "Peringkat tawaran",
+      "transaction_in_progress": "Urus niaga berjalan",
+      "successfully_closed": "Ditutup (berjaya)",
+      "unsuccessful": "Tidak berjaya",
+      "expired": "Tamat tempoh",
+      "cancelled": "Dibatalkan",
+      "frozen": "Dibekukan",
+      "archived": "Diarkibkan"
+    },
+    "errors": {
+      "invalid_fields": "Sila semak medan dan cuba lagi.",
+      "budget_range": "Bajet minimum tidak boleh melebihi bajet maksimum.",
+      "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
+    },
+    "link": {
+      "title": "Pautan permintaan selamat",
+      "url": "URL kongsi",
+      "password": "Kod akses",
+      "expires": "Tamat",
+      "visits": "Lawatan",
+      "disabled": "dinyahaktifkan",
+      "pending": "Pautan kongsi selamat akan dipaparkan di sini selepas kelulusan admin.",
+      "shareHint": "Kongsi URL, kod akses dan QR dengan ejen yang dipercayai. Mereka juga mesti log masuk sebagai ejen disahkan sebelum menghantar hartanah."
+    },
+    "form": {
+      "sectionGeneral": "Umum",
+      "sectionLocation": "Lokasi",
+      "sectionFinancial": "Bajet",
+      "sectionProperty": "Keperluan hartanah",
+      "sectionClient": "Pelanggan & dalaman",
+      "title": "Tajuk permintaan",
+      "description": "Keterangan",
+      "transactionType": "Transaksi",
+      "propertyCategory": "Kategori",
+      "clientType": "Jenis pelanggan",
+      "priority": "Keutamaan",
+      "submissionDeadline": "Tarikh akhir penyerahan",
+      "expiryDate": "Tamat tempoh permintaan",
+      "country": "Negara",
+      "stateRegion": "Negeri / wilayah",
+      "city": "Bandar",
+      "district": "Daerah",
+      "preferredAreas": "Kawasan pilihan",
+      "preferredAreasHint": "Dipisah koma, cth. Mont Kiara, Sri Hartamas",
+      "currency": "Mata wang",
+      "budgetMin": "Bajet minimum",
+      "budgetMax": "Bajet maksimum",
+      "financing": "Pembiayaan",
+      "maxMonthlyRent": "Sewa bulanan maksimum",
+      "leaseTermMonths": "Tempoh sewa (bulan)",
+      "propertyType": "Jenis hartanah",
+      "propertyTypeHint": "cth. Kondominium, Lot kedai",
+      "unit": "Unit",
+      "minBuiltUp": "Keluasan minimum",
+      "maxBuiltUp": "Keluasan maksimum",
+      "bedroomsMin": "Bilik tidur (min)",
+      "bathroomsMin": "Bilik air (min)",
+      "carParksMin": "Parkir (min)",
+      "furnishing": "Perabot",
+      "otherRequirements": "Keperluan lain",
+      "clientProfile": "Profil pelanggan tanpa nama",
+      "clientProfileHint": "Dipaparkan kepada ejen pembekal. Tiada nama atau kenalan.",
+      "expectedMoveIn": "Jangkaan masuk",
+      "internalNotes": "Nota dalaman",
+      "internalNotesHint": "Peribadi. Tidak akan dipaparkan kepada ejen pembekal.",
+      "buy": "Beli",
+      "rent": "Sewa",
+      "categories": {
+        "residential": "Kediaman",
+        "commercial": "Komersial",
+        "industrial": "Perindustrian",
+        "land": "Tanah",
+        "other": "Lain-lain"
+      },
+      "clientTypes": {
+        "individual": "Individu",
+        "company": "Syarikat",
+        "organisation": "Organisasi"
+      },
+      "priorities": {
+        "normal": "Biasa",
+        "high": "Tinggi",
+        "urgent": "Segera"
+      },
+      "financingOptions": {
+        "cash": "Tunai",
+        "financing": "Pembiayaan",
+        "pre_approved": "Pinjaman pra-lulus",
+        "undecided": "Belum pasti"
+      },
+      "furnishingOptions": {
+        "any": "Mana-mana",
+        "unfurnished": "Tanpa perabot",
+        "partially": "Separa perabot",
+        "fully": "Perabot penuh"
+      },
+      "saveDraft": "Simpan draf",
+      "submitForApproval": "Hantar untuk kelulusan"
+    }
+  },
+  "adminRequests": {
+    "title": "Kelulusan keperluan",
+    "filterAll": "Semua",
+    "empty": "Tiada permintaan dalam status ini.",
+    "review": "Semak",
+    "detailTitle": "Butiran keperluan",
+    "cols": {
+      "title": "Tajuk",
+      "agent": "Requesting Agent",
+      "location": "Lokasi",
+      "status": "Status"
+    },
+    "decision": {
+      "title": "Keputusan",
+      "notes": "Nota kepada ejen",
+      "notesHint": "Wajib untuk pindaan / batal",
+      "expiryDays": "Tempoh sah pautan (hari, jika tiada tarikh tamat)",
+      "approve": "Luluskan & jana pautan selamat",
+      "amendment": "Minta pindaan",
+      "cancel": "Batalkan permintaan"
+    },
+    "doneNotice": {
+      "approve": "Diluluskan. Pautan selamat dijana dan aktif.",
+      "amendment": "Pindaan diminta daripada ejen.",
+      "cancel": "Permintaan dibatalkan."
+    },
+    "errors": {
+      "notes_required": "Nota diperlukan untuk keputusan ini.",
+      "wrong_status": "Permintaan ini tidak menunggu semakan.",
+      "save_failed": "Keputusan tidak dapat disimpan."
+    }
+  },
+  "requestLink": {
+    "invalidTitle": "Pautan tidak tersedia",
+    "invalidBody": "Pautan permintaan ini tidak sah, dinyahaktifkan atau telah tamat tempoh. Sila hubungi ejen yang berkongsi pautan ini.",
+    "gateTitle": "Keperluan hartanah peribadi",
+    "gateBody": "Masukkan kod akses yang anda terima bersama pautan ini.",
+    "wrongPassword": "Kod akses salah. Sila semak dan cuba lagi.",
+    "lockedNotice": "Terlalu banyak percubaan. Sila tunggu beberapa minit dan cuba lagi.",
+    "unlock": "Lihat keperluan",
+    "presentedBy": "Keperluan oleh {name}",
+    "clientProfile": "Profil pelanggan",
+    "loginToSubmit": "Untuk menghantar hartanah yang sepadan, log masuk sebagai ejen disahkan.",
+    "signIn": "Log masuk ejen",
+    "register": "Buka akaun ejen",
+    "verifyToSubmit": "Akaun ejen anda mesti disahkan sebelum boleh menghantar hartanah.",
+    "verifyLink": "Lengkapkan pengesahan",
+    "submitComingSoon": "Penyerahan hartanah dibuka dalam keluaran seterusnya. Anda akan dapat menghantar hartanah yang sepadan untuk keperluan ini di sini."
   }
 }

@@ -80,6 +80,15 @@ export default async function DashboardPage() {
           )}
         </section>
 
+        {isVerified && (
+          <Link
+            href="/requests"
+            className="mt-6 mr-3 inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+          >
+            {t("myRequests")}
+          </Link>
+        )}
+
         {isAdmin && (
           <Link
             href="/admin"

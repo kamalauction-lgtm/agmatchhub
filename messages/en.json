@@ -67,7 +67,8 @@
       "archived": "Archived"
     },
     "startVerification": "Complete verification",
-    "adminConsole": "Admin console"
+    "adminConsole": "Admin console",
+    "myRequests": "My requests"
   },
   "verification": {
     "title": "Agent verification",
@@ -123,7 +124,8 @@
       "agents": "Agent verification",
       "agentView": "Agent view",
       "countries": "Countries",
-      "legal": "Legal content"
+      "legal": "Legal content",
+      "requests": "Requests"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -205,5 +207,195 @@
       "unit": "Unit"
     },
     "save": "Save"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "requests": "My requests"
+  },
+  "requests": {
+    "title": "My requests",
+    "newRequest": "New requirement",
+    "newTitle": "New property requirement",
+    "editTitle": "Edit requirement",
+    "detailTitle": "Requirement details",
+    "edit": "Edit",
+    "empty": "No requirements yet. Create your first one.",
+    "verifyFirst": "Only verified agents can create requirements.",
+    "verifyLink": "Complete verification",
+    "submittedNotice": "Submitted for admin approval. You will see the secure share link here once approved.",
+    "amendmentRequired": "Amendment required",
+    "cols": {
+      "title": "Title",
+      "location": "Location",
+      "type": "Type",
+      "status": "Status"
+    },
+    "transaction": {
+      "buy": "Buy",
+      "rent": "Rent"
+    },
+    "status": {
+      "draft": "Draft",
+      "pending_admin_approval": "Pending approval",
+      "under_admin_review": "Under review",
+      "amendment_required": "Amendment required",
+      "resubmitted": "Resubmitted",
+      "approved": "Approved",
+      "link_ready": "Link ready",
+      "link_active": "Link active",
+      "receiving_submissions": "Receiving submissions",
+      "reviewing_submissions": "Reviewing submissions",
+      "client_presentation_preparation": "Preparing presentation",
+      "client_review": "Client review",
+      "viewing_stage": "Viewing stage",
+      "negotiation_stage": "Negotiation",
+      "offer_stage": "Offer stage",
+      "transaction_in_progress": "Transaction in progress",
+      "successfully_closed": "Closed (success)",
+      "unsuccessful": "Unsuccessful",
+      "expired": "Expired",
+      "cancelled": "Cancelled",
+      "frozen": "Frozen",
+      "archived": "Archived"
+    },
+    "errors": {
+      "invalid_fields": "Please check the fields and try again.",
+      "budget_range": "Minimum budget cannot exceed maximum budget.",
+      "save_failed": "Could not save. Please try again."
+    },
+    "link": {
+      "title": "Secure request link",
+      "url": "Share URL",
+      "password": "Access code",
+      "expires": "Expires",
+      "visits": "Visits",
+      "disabled": "disabled",
+      "pending": "The secure share link appears here after admin approval.",
+      "shareHint": "Share the URL, access code and QR with trusted agents. They must also sign in as verified agents before submitting a property."
+    },
+    "form": {
+      "sectionGeneral": "General",
+      "sectionLocation": "Location",
+      "sectionFinancial": "Budget",
+      "sectionProperty": "Property requirements",
+      "sectionClient": "Client & internal",
+      "title": "Request title",
+      "description": "Description",
+      "transactionType": "Transaction",
+      "propertyCategory": "Category",
+      "clientType": "Client type",
+      "priority": "Priority",
+      "submissionDeadline": "Submission deadline",
+      "expiryDate": "Request expiry",
+      "country": "Country",
+      "stateRegion": "State / region",
+      "city": "City",
+      "district": "District",
+      "preferredAreas": "Preferred areas",
+      "preferredAreasHint": "Comma-separated, e.g. Mont Kiara, Sri Hartamas",
+      "currency": "Currency",
+      "budgetMin": "Budget min",
+      "budgetMax": "Budget max",
+      "financing": "Financing",
+      "maxMonthlyRent": "Max monthly rent",
+      "leaseTermMonths": "Lease term (months)",
+      "propertyType": "Property type",
+      "propertyTypeHint": "e.g. Condominium, Shoplot",
+      "unit": "Unit",
+      "minBuiltUp": "Min built-up",
+      "maxBuiltUp": "Max built-up",
+      "bedroomsMin": "Bedrooms (min)",
+      "bathroomsMin": "Bathrooms (min)",
+      "carParksMin": "Car parks (min)",
+      "furnishing": "Furnishing",
+      "otherRequirements": "Other requirements",
+      "clientProfile": "Anonymised client profile",
+      "clientProfileHint": "Shown to supplying agents. No names or contacts, e.g. “Malaysian retail operator expanding to Jakarta”",
+      "expectedMoveIn": "Expected move-in",
+      "internalNotes": "Internal notes",
+      "internalNotesHint": "Private. Never shown to supplying agents.",
+      "buy": "Buy",
+      "rent": "Rent",
+      "categories": {
+        "residential": "Residential",
+        "commercial": "Commercial",
+        "industrial": "Industrial",
+        "land": "Land",
+        "other": "Other"
+      },
+      "clientTypes": {
+        "individual": "Individual",
+        "company": "Company",
+        "organisation": "Organisation"
+      },
+      "priorities": {
+        "normal": "Normal",
+        "high": "High",
+        "urgent": "Urgent"
+      },
+      "financingOptions": {
+        "cash": "Cash",
+        "financing": "Financing",
+        "pre_approved": "Loan pre-approved",
+        "undecided": "Undecided"
+      },
+      "furnishingOptions": {
+        "any": "Any",
+        "unfurnished": "Unfurnished",
+        "partially": "Partially furnished",
+        "fully": "Fully furnished"
+      },
+      "saveDraft": "Save draft",
+      "submitForApproval": "Submit for approval"
+    }
+  },
+  "adminRequests": {
+    "title": "Request approval",
+    "filterAll": "All",
+    "empty": "No requests in this status.",
+    "review": "Review",
+    "detailTitle": "Requirement details",
+    "cols": {
+      "title": "Title",
+      "agent": "Requesting Agent",
+      "location": "Location",
+      "status": "Status"
+    },
+    "decision": {
+      "title": "Decision",
+      "notes": "Notes to the agent",
+      "notesHint": "Required for amendment / cancel",
+      "expiryDays": "Link validity (days, if no expiry set)",
+      "approve": "Approve & generate secure link",
+      "amendment": "Request amendment",
+      "cancel": "Cancel request"
+    },
+    "doneNotice": {
+      "approve": "Approved. Secure link generated and active.",
+      "amendment": "Amendment requested from the agent.",
+      "cancel": "Request cancelled."
+    },
+    "errors": {
+      "notes_required": "Notes are required for this decision.",
+      "wrong_status": "This request is not awaiting review.",
+      "save_failed": "Could not save the decision."
+    }
+  },
+  "requestLink": {
+    "invalidTitle": "Link unavailable",
+    "invalidBody": "This request link is invalid, disabled or has expired. Please contact the agent who shared it with you.",
+    "gateTitle": "Private property requirement",
+    "gateBody": "Enter the access code you received together with this link.",
+    "wrongPassword": "Incorrect access code. Please check and try again.",
+    "lockedNotice": "Too many attempts. Please wait a few minutes and try again.",
+    "unlock": "View requirement",
+    "presentedBy": "Requirement by {name}",
+    "clientProfile": "Client profile",
+    "loginToSubmit": "To submit a matching property, sign in as a verified agent.",
+    "signIn": "Agent sign in",
+    "register": "Create agent account",
+    "verifyToSubmit": "Your agent account must be verified before you can submit a property.",
+    "verifyLink": "Complete verification",
+    "submitComingSoon": "Property submission opens in the next release. You will be able to submit matching properties for this requirement here."
   }
 }

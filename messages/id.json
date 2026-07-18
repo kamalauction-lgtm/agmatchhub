@@ -67,7 +67,8 @@
       "archived": "Diarsipkan"
     },
     "startVerification": "Lengkapi verifikasi",
-    "adminConsole": "Konsol admin"
+    "adminConsole": "Konsol admin",
+    "myRequests": "Kebutuhan saya"
   },
   "verification": {
     "title": "Verifikasi agen",
@@ -123,7 +124,8 @@
       "agents": "Verifikasi agen",
       "agentView": "Tampilan agen",
       "countries": "Negara",
-      "legal": "Konten hukum"
+      "legal": "Konten hukum",
+      "requests": "Kebutuhan"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -205,5 +207,195 @@
       "unit": "Satuan"
     },
     "save": "Simpan"
+  },
+  "nav": {
+    "dashboard": "Dasbor",
+    "requests": "Kebutuhan saya"
+  },
+  "requests": {
+    "title": "Kebutuhan saya",
+    "newRequest": "Kebutuhan baru",
+    "newTitle": "Kebutuhan properti baru",
+    "editTitle": "Edit kebutuhan",
+    "detailTitle": "Detail kebutuhan",
+    "edit": "Edit",
+    "empty": "Belum ada kebutuhan. Buat yang pertama.",
+    "verifyFirst": "Hanya agen terverifikasi yang dapat membuat kebutuhan.",
+    "verifyLink": "Lengkapi verifikasi",
+    "submittedNotice": "Dikirim untuk persetujuan admin. Tautan berbagi aman akan muncul di sini setelah disetujui.",
+    "amendmentRequired": "Perlu perbaikan",
+    "cols": {
+      "title": "Judul",
+      "location": "Lokasi",
+      "type": "Jenis",
+      "status": "Status"
+    },
+    "transaction": {
+      "buy": "Beli",
+      "rent": "Sewa"
+    },
+    "status": {
+      "draft": "Draf",
+      "pending_admin_approval": "Menunggu persetujuan",
+      "under_admin_review": "Sedang ditinjau",
+      "amendment_required": "Perlu perbaikan",
+      "resubmitted": "Diajukan ulang",
+      "approved": "Disetujui",
+      "link_ready": "Tautan siap",
+      "link_active": "Tautan aktif",
+      "receiving_submissions": "Menerima pengajuan",
+      "reviewing_submissions": "Meninjau pengajuan",
+      "client_presentation_preparation": "Menyiapkan presentasi",
+      "client_review": "Tinjauan klien",
+      "viewing_stage": "Tahap kunjungan",
+      "negotiation_stage": "Negosiasi",
+      "offer_stage": "Tahap penawaran",
+      "transaction_in_progress": "Transaksi berjalan",
+      "successfully_closed": "Selesai (berhasil)",
+      "unsuccessful": "Tidak berhasil",
+      "expired": "Kedaluwarsa",
+      "cancelled": "Dibatalkan",
+      "frozen": "Dibekukan",
+      "archived": "Diarsipkan"
+    },
+    "errors": {
+      "invalid_fields": "Periksa kolom lalu coba lagi.",
+      "budget_range": "Anggaran minimum tidak boleh melebihi maksimum.",
+      "save_failed": "Tidak dapat menyimpan. Silakan coba lagi."
+    },
+    "link": {
+      "title": "Tautan permintaan aman",
+      "url": "URL berbagi",
+      "password": "Kode akses",
+      "expires": "Berakhir",
+      "visits": "Kunjungan",
+      "disabled": "dinonaktifkan",
+      "pending": "Tautan berbagi aman muncul di sini setelah persetujuan admin.",
+      "shareHint": "Bagikan URL, kode akses dan QR kepada agen tepercaya. Mereka juga harus masuk sebagai agen terverifikasi sebelum mengajukan properti."
+    },
+    "form": {
+      "sectionGeneral": "Umum",
+      "sectionLocation": "Lokasi",
+      "sectionFinancial": "Anggaran",
+      "sectionProperty": "Kebutuhan properti",
+      "sectionClient": "Klien & internal",
+      "title": "Judul permintaan",
+      "description": "Deskripsi",
+      "transactionType": "Transaksi",
+      "propertyCategory": "Kategori",
+      "clientType": "Jenis klien",
+      "priority": "Prioritas",
+      "submissionDeadline": "Batas pengajuan",
+      "expiryDate": "Kedaluwarsa permintaan",
+      "country": "Negara",
+      "stateRegion": "Provinsi / wilayah",
+      "city": "Kota",
+      "district": "Kecamatan",
+      "preferredAreas": "Area pilihan",
+      "preferredAreasHint": "Dipisah koma, mis. Kemang, SCBD",
+      "currency": "Mata uang",
+      "budgetMin": "Anggaran min",
+      "budgetMax": "Anggaran maks",
+      "financing": "Pembiayaan",
+      "maxMonthlyRent": "Sewa bulanan maks",
+      "leaseTermMonths": "Masa sewa (bulan)",
+      "propertyType": "Jenis properti",
+      "propertyTypeHint": "mis. Apartemen, Ruko",
+      "unit": "Satuan",
+      "minBuiltUp": "Luas bangunan min",
+      "maxBuiltUp": "Luas bangunan maks",
+      "bedroomsMin": "Kamar tidur (min)",
+      "bathroomsMin": "Kamar mandi (min)",
+      "carParksMin": "Parkir (min)",
+      "furnishing": "Furnitur",
+      "otherRequirements": "Kebutuhan lain",
+      "clientProfile": "Profil klien anonim",
+      "clientProfileHint": "Ditampilkan ke agen pemasok. Tanpa nama atau kontak.",
+      "expectedMoveIn": "Perkiraan pindah",
+      "internalNotes": "Catatan internal",
+      "internalNotesHint": "Privat. Tidak pernah ditampilkan ke agen pemasok.",
+      "buy": "Beli",
+      "rent": "Sewa",
+      "categories": {
+        "residential": "Residensial",
+        "commercial": "Komersial",
+        "industrial": "Industri",
+        "land": "Tanah",
+        "other": "Lainnya"
+      },
+      "clientTypes": {
+        "individual": "Perorangan",
+        "company": "Perusahaan",
+        "organisation": "Organisasi"
+      },
+      "priorities": {
+        "normal": "Normal",
+        "high": "Tinggi",
+        "urgent": "Mendesak"
+      },
+      "financingOptions": {
+        "cash": "Tunai",
+        "financing": "Pembiayaan",
+        "pre_approved": "KPR pra-setuju",
+        "undecided": "Belum pasti"
+      },
+      "furnishingOptions": {
+        "any": "Apa saja",
+        "unfurnished": "Tanpa furnitur",
+        "partially": "Semi furnished",
+        "fully": "Full furnished"
+      },
+      "saveDraft": "Simpan draf",
+      "submitForApproval": "Kirim untuk persetujuan"
+    }
+  },
+  "adminRequests": {
+    "title": "Persetujuan kebutuhan",
+    "filterAll": "Semua",
+    "empty": "Tidak ada permintaan dengan status ini.",
+    "review": "Tinjau",
+    "detailTitle": "Detail kebutuhan",
+    "cols": {
+      "title": "Judul",
+      "agent": "Requesting Agent",
+      "location": "Lokasi",
+      "status": "Status"
+    },
+    "decision": {
+      "title": "Keputusan",
+      "notes": "Catatan untuk agen",
+      "notesHint": "Wajib untuk perbaikan / batal",
+      "expiryDays": "Masa berlaku tautan (hari, jika tanpa tanggal kedaluwarsa)",
+      "approve": "Setujui & buat tautan aman",
+      "amendment": "Minta perbaikan",
+      "cancel": "Batalkan permintaan"
+    },
+    "doneNotice": {
+      "approve": "Disetujui. Tautan aman dibuat dan aktif.",
+      "amendment": "Perbaikan diminta dari agen.",
+      "cancel": "Permintaan dibatalkan."
+    },
+    "errors": {
+      "notes_required": "Catatan wajib untuk keputusan ini.",
+      "wrong_status": "Permintaan ini tidak sedang menunggu tinjauan.",
+      "save_failed": "Keputusan tidak dapat disimpan."
+    }
+  },
+  "requestLink": {
+    "invalidTitle": "Tautan tidak tersedia",
+    "invalidBody": "Tautan permintaan ini tidak valid, dinonaktifkan, atau sudah kedaluwarsa. Silakan hubungi agen yang membagikannya.",
+    "gateTitle": "Kebutuhan properti privat",
+    "gateBody": "Masukkan kode akses yang Anda terima bersama tautan ini.",
+    "wrongPassword": "Kode akses salah. Periksa lalu coba lagi.",
+    "lockedNotice": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+    "unlock": "Lihat kebutuhan",
+    "presentedBy": "Kebutuhan oleh {name}",
+    "clientProfile": "Profil klien",
+    "loginToSubmit": "Untuk mengajukan properti yang cocok, masuk sebagai agen terverifikasi.",
+    "signIn": "Masuk agen",
+    "register": "Buat akun agen",
+    "verifyToSubmit": "Akun agen Anda harus terverifikasi sebelum dapat mengajukan properti.",
+    "verifyLink": "Lengkapi verifikasi",
+    "submitComingSoon": "Pengajuan properti dibuka pada rilis berikutnya. Anda akan dapat mengajukan properti yang cocok untuk kebutuhan ini di sini."
   }
 }
