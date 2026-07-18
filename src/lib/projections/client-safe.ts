@@ -40,6 +40,8 @@ export type ClientSafeProperty = {
   clientRemarks: string | null;
   availability: string;
   images: { url: string; isCover: boolean }[];
+  /** RA-authored client-safe disclosure summaries (§81) — never SA raw text. */
+  disclosureSummaries: string[];
 };
 
 const SIGNED_URL_TTL = 60 * 30; // 30 min
@@ -54,7 +56,7 @@ export async function getClientSafeProperties(
     .select(
       `id, position, custom_note,
        property_submissions (
-         title, property_category, property_type, city, district, state_region,
+         id, title, property_category, property_type, city, district, state_region,
          general_address, currency, asking_price, monthly_rental, negotiable,
          measurement_unit, built_up, land_area, bedrooms, bathrooms, car_parks,
          floor_level, furnishing, property_condition, facilities, description,
@@ -87,6 +89,19 @@ export async function getClientSafeProperties(
       if (data?.signedUrl) images.push({ url: data.signedUrl, isCover: m.is_cover });
     }
 
+    // §81: only RA-authored ready_for_client summaries; SA raw disclosures,
+    // sources and internal notes never cross this boundary.
+    const { data: ackRows } = await service
+      .from("legal_disclosure_acknowledgements")
+      .select("client_safe_summary, action, created_at, legal_disclosures!inner(submission_id)")
+      .eq("legal_disclosures.submission_id", s.id)
+      .eq("action", "ready_for_client")
+      .not("client_safe_summary", "is", null)
+      .order("created_at", { ascending: false });
+    const disclosureSummaries = [
+      ...new Set((ackRows ?? []).map((a) => a.client_safe_summary as string)),
+    ];
+
     out.push({
       ppid: row.id,
       position: row.position,
@@ -117,6 +132,7 @@ export async function getClientSafeProperties(
       clientRemarks: s.client_safe_remarks,
       availability: s.availability_status,
       images,
+      disclosureSummaries,
     });
   }
   return out;

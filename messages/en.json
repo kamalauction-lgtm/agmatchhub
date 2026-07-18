@@ -735,7 +735,9 @@
         "subject_to_offer": "Subject to offer"
       },
       "missingNote": "— means the information was not provided. Nothing is estimated on your behalf."
-    }
+    },
+    "disclosuresTitle": "Disclosures from your agent",
+    "disclosuresNote": "These matters are stated for your awareness. Where legal aspects are involved, independent legal advice is recommended before committing."
   },
   "collab": {
     "errors": {
@@ -744,7 +746,9 @@
       "commission_pct_total": "Listing and buyer percentages must total exactly 100%.",
       "commission_amounts_required": "Both fixed amounts are required.",
       "commission_reason_required": "An amendment reason is required to change an accepted agreement.",
-      "commission_over_allocated": "The allocation exceeds the declared total commission. Add an explanation in the terms."
+      "commission_over_allocated": "The allocation exceeds the declared total commission. Add an explanation in the terms.",
+      "disclosure_declaration_required": "You must confirm the disclosure declaration.",
+      "disclosure_summary_required": "A client-safe summary is required for Ready for client."
     },
     "messages": {
       "title": "Messages",
@@ -883,7 +887,9 @@
       "client_comment": "Your client left a comment",
       "commission_proposed": "Commission arrangement proposed",
       "commission_accepted": "Commission arrangement accepted",
-      "violation_reported": "A violation report was filed"
+      "violation_reported": "A violation report was filed",
+      "disclosure_declared": "New legal disclosure declared",
+      "disclosure_acknowledged": "Disclosure acknowledged by the Requesting Agent"
     }
   },
   "commission": {
@@ -1003,5 +1009,77 @@
       "result": "Result"
     },
     "appendOnlyNote": "Append-only: audit records cannot be edited or deleted, including by administrators."
+  },
+  "disclosures": {
+    "title": "Legal & material disclosures",
+    "intro": "Agent-to-agent information. Nothing here reaches the client unless the Requesting Agent writes a client-safe summary.",
+    "empty": "No disclosures declared yet.",
+    "mandatory": "Mandatory",
+    "legalVerification": "Legal check",
+    "source": "Source",
+    "raStatus": "Requesting Agent",
+    "acknowledge": "Acknowledge / respond…",
+    "ackNotesHint": "Notes to the Supply Agent (optional)",
+    "clientSummaryLabel": "Client-safe summary",
+    "clientSummaryHint": "Client-safe wording (required for Ready for client): plain, accurate, no internal or commission info",
+    "ackSubmit": "Record acknowledgement",
+    "addNew": "Declare a disclosure…",
+    "category": "Category",
+    "sourceLabel": "Source of information",
+    "sourceHint": "e.g. Owner, title search, management office",
+    "description": "Details",
+    "mandatoryLabel": "Mandatory disclosure",
+    "clientShareableLabel": "May be shared with client",
+    "requiresLegalLabel": "Requires independent legal verification",
+    "declarationAccept": "I confirm the disclosure declaration above",
+    "submit": "Declare disclosure",
+    "categories": {
+      "ownership_status": "Ownership status",
+      "authority_to_sell": "Authority to sell / rent",
+      "title_status": "Title status",
+      "tenure": "Tenure",
+      "encumbrances": "Encumbrances / charges",
+      "caveats": "Caveats",
+      "existing_tenancy": "Existing tenancy",
+      "vacant_possession": "Vacant possession",
+      "outstanding_charges": "Outstanding charges / fees",
+      "litigation": "Litigation / disputes",
+      "auction_foreclosure": "Auction / foreclosure",
+      "developer_restrictions": "Developer restrictions",
+      "renovation_restrictions": "Renovation restrictions",
+      "usage_restrictions": "Usage restrictions",
+      "zoning": "Zoning",
+      "structural_defects": "Structural defects",
+      "known_material_defects": "Known material defects",
+      "flood_history": "Flood history",
+      "foreign_purchaser_restrictions": "Foreign purchaser restrictions",
+      "financing_limitations": "Financing limitations",
+      "service_charges": "Service charges / sinking fund",
+      "other": "Other material information"
+    },
+    "status": {
+      "declared": "Declared",
+      "evidence_pending": "Evidence pending",
+      "under_review": "Under review",
+      "confirmed": "Confirmed",
+      "requires_legal_verification": "Requires legal verification",
+      "disputed": "Disputed",
+      "updated": "Updated",
+      "withdrawn": "Withdrawn"
+    },
+    "ackActions": {
+      "received": "Received",
+      "reviewed": "Reviewed",
+      "clarification_required": "Clarification required",
+      "document_required": "Supporting document required",
+      "legal_review_required": "Legal review required",
+      "ready_for_client": "Ready for client (with summary)",
+      "not_applicable": "Not applicable",
+      "disputed": "Disputed"
+    },
+    "errors": {
+      "disclosure_declaration_required": "You must confirm the disclosure declaration.",
+      "disclosure_summary_required": "A client-safe summary is required for Ready for client."
+    }
   }
 }

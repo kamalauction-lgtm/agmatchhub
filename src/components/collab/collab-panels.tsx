@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { CommissionPanel } from "@/components/collab/commission-panel";
+import { DisclosurePanel } from "@/components/collab/disclosure-panel";
 import {
   sendMessage, submitOffer, respondOffer, requestViewing,
   respondViewing, requestContactRelease,
@@ -116,6 +117,9 @@ export async function CollabPanels({
     <div className="space-y-8">
       {/* --------------------------------------- commission (§72–78) ----- */}
       <CommissionPanel submissionId={submissionId} role={role} currency={currency} />
+
+      {/* --------------------------------------- disclosures (§79–81) ---- */}
+      <DisclosurePanel submissionId={submissionId} role={role} />
 
       {/* ------------------------------------------------ messages ------- */}
       <section className="rounded-xl border border-line p-6">

@@ -181,6 +181,18 @@ export default async function ClientPresentationPage({
                   </p>
                 )}
 
+                {prop.disclosureSummaries.length > 0 && (
+                  <div className="mb-4 rounded-lg border border-warning/40 bg-warning/5 px-4 py-3 text-sm">
+                    <p className="mb-1 font-semibold">{t("disclosuresTitle")}</p>
+                    <ul className="list-disc space-y-1 pl-5">
+                      {prop.disclosureSummaries.map((s, k) => (
+                        <li key={k}>{s}</li>
+                      ))}
+                    </ul>
+                    <p className="mt-2 text-xs text-muted">{t("disclosuresNote")}</p>
+                  </div>
+                )}
+
                 {p.allow_feedback && (
                   <div className="mt-5 border-t border-line pt-5">
                     <div className="mb-4 flex flex-wrap gap-2">

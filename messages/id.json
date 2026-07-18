@@ -735,7 +735,9 @@
         "subject_to_offer": "Tergantung penawaran"
       },
       "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda."
-    }
+    },
+    "disclosuresTitle": "Pengungkapan dari agen Anda",
+    "disclosuresNote": "Hal-hal ini disampaikan untuk diketahui. Bila menyangkut aspek hukum, disarankan meminta nasihat hukum independen sebelum berkomitmen."
   },
   "collab": {
     "errors": {
@@ -744,7 +746,9 @@
       "commission_pct_total": "Persentase pihak listing dan pembeli harus berjumlah tepat 100%.",
       "commission_amounts_required": "Kedua jumlah tetap wajib diisi.",
       "commission_reason_required": "Alasan perubahan wajib untuk mengubah perjanjian yang sudah diterima.",
-      "commission_over_allocated": "Alokasi melebihi total komisi yang dideklarasikan. Tambahkan penjelasan pada ketentuan."
+      "commission_over_allocated": "Alokasi melebihi total komisi yang dideklarasikan. Tambahkan penjelasan pada ketentuan.",
+      "disclosure_declaration_required": "Anda harus mengonfirmasi pernyataan pengungkapan.",
+      "disclosure_summary_required": "Ringkasan aman-klien wajib untuk Siap untuk klien."
     },
     "messages": {
       "title": "Pesan",
@@ -883,7 +887,9 @@
       "client_comment": "Klien Anda meninggalkan komentar",
       "commission_proposed": "Pengaturan komisi diusulkan",
       "commission_accepted": "Pengaturan komisi diterima",
-      "violation_reported": "Laporan pelanggaran diajukan"
+      "violation_reported": "Laporan pelanggaran diajukan",
+      "disclosure_declared": "Pengungkapan hukum baru dinyatakan",
+      "disclosure_acknowledged": "Pengungkapan diakui oleh Requesting Agent"
     }
   },
   "commission": {
@@ -1003,5 +1009,77 @@
       "result": "Hasil"
     },
     "appendOnlyNote": "Hanya-tambah: catatan audit tidak dapat diedit atau dihapus, termasuk oleh administrator."
+  },
+  "disclosures": {
+    "title": "Pengungkapan hukum & material",
+    "intro": "Informasi antar-agen. Tidak ada yang sampai ke klien kecuali Requesting Agent menulis ringkasan aman-klien.",
+    "empty": "Belum ada pengungkapan.",
+    "mandatory": "Wajib",
+    "legalVerification": "Cek hukum",
+    "source": "Sumber",
+    "raStatus": "Requesting Agent",
+    "acknowledge": "Akui / tanggapi…",
+    "ackNotesHint": "Catatan untuk Supply Agent (opsional)",
+    "clientSummaryLabel": "Ringkasan aman-klien",
+    "clientSummaryHint": "Kalimat aman-klien (wajib untuk Siap untuk klien): jelas, akurat, tanpa info internal atau komisi",
+    "ackSubmit": "Catat pengakuan",
+    "addNew": "Nyatakan pengungkapan…",
+    "category": "Kategori",
+    "sourceLabel": "Sumber informasi",
+    "sourceHint": "mis. Pemilik, pengecekan sertifikat, kantor pengelola",
+    "description": "Detail",
+    "mandatoryLabel": "Pengungkapan wajib",
+    "clientShareableLabel": "Boleh dibagikan ke klien",
+    "requiresLegalLabel": "Perlu verifikasi hukum independen",
+    "declarationAccept": "Saya mengonfirmasi pernyataan pengungkapan di atas",
+    "submit": "Nyatakan pengungkapan",
+    "categories": {
+      "ownership_status": "Status kepemilikan",
+      "authority_to_sell": "Kewenangan menjual / menyewakan",
+      "title_status": "Status sertifikat",
+      "tenure": "Status kepemilikan tanah",
+      "encumbrances": "Beban / tanggungan",
+      "caveats": "Kaveat",
+      "existing_tenancy": "Sewa berjalan",
+      "vacant_possession": "Kepemilikan kosong",
+      "outstanding_charges": "Tunggakan biaya",
+      "litigation": "Litigasi / sengketa",
+      "auction_foreclosure": "Lelang / sita",
+      "developer_restrictions": "Pembatasan developer",
+      "renovation_restrictions": "Pembatasan renovasi",
+      "usage_restrictions": "Pembatasan penggunaan",
+      "zoning": "Zonasi",
+      "structural_defects": "Cacat struktur",
+      "known_material_defects": "Cacat material diketahui",
+      "flood_history": "Riwayat banjir",
+      "foreign_purchaser_restrictions": "Pembatasan pembeli asing",
+      "financing_limitations": "Batasan pembiayaan",
+      "service_charges": "Biaya layanan / dana perbaikan",
+      "other": "Informasi material lainnya"
+    },
+    "status": {
+      "declared": "Dinyatakan",
+      "evidence_pending": "Menunggu bukti",
+      "under_review": "Sedang ditinjau",
+      "confirmed": "Dikonfirmasi",
+      "requires_legal_verification": "Perlu verifikasi hukum",
+      "disputed": "Disengketakan",
+      "updated": "Diperbarui",
+      "withdrawn": "Ditarik"
+    },
+    "ackActions": {
+      "received": "Diterima",
+      "reviewed": "Ditinjau",
+      "clarification_required": "Perlu klarifikasi",
+      "document_required": "Perlu dokumen pendukung",
+      "legal_review_required": "Perlu tinjauan hukum",
+      "ready_for_client": "Siap untuk klien (dengan ringkasan)",
+      "not_applicable": "Tidak berlaku",
+      "disputed": "Disengketakan"
+    },
+    "errors": {
+      "disclosure_declaration_required": "Anda harus mengonfirmasi pernyataan pengungkapan.",
+      "disclosure_summary_required": "Ringkasan aman-klien wajib untuk Siap untuk klien."
+    }
   }
 }

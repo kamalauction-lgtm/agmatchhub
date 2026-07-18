@@ -122,7 +122,7 @@ export default async function SubmissionReviewPage({
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {error.startsWith("commission_") || error === "collab_failed" || error === "counter_amount_required"
+          {error.startsWith("commission_") || error.startsWith("disclosure_") || error === "collab_failed" || error === "counter_amount_required"
             ? tcollab(`errors.${error}`)
             : t(`errors.${error === "reason_required" ? "reason_required" : "save_failed"}`)}
         </p>

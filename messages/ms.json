@@ -735,7 +735,9 @@
         "subject_to_offer": "Tertakluk kepada tawaran"
       },
       "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda."
-    }
+    },
+    "disclosuresTitle": "Pendedahan daripada ejen anda",
+    "disclosuresNote": "Perkara ini dinyatakan untuk makluman anda. Jika melibatkan aspek undang-undang, nasihat undang-undang bebas disyorkan sebelum membuat komitmen."
   },
   "collab": {
     "errors": {
@@ -744,7 +746,9 @@
       "commission_pct_total": "Peratusan pihak penyenaraian dan pembeli mesti berjumlah tepat 100%.",
       "commission_amounts_required": "Kedua-dua jumlah tetap diperlukan.",
       "commission_reason_required": "Sebab pindaan diperlukan untuk mengubah perjanjian yang telah diterima.",
-      "commission_over_allocated": "Peruntukan melebihi jumlah komisen yang diisytiharkan. Tambah penjelasan dalam terma."
+      "commission_over_allocated": "Peruntukan melebihi jumlah komisen yang diisytiharkan. Tambah penjelasan dalam terma.",
+      "disclosure_declaration_required": "Anda mesti mengesahkan deklarasi pendedahan.",
+      "disclosure_summary_required": "Ringkasan selamat-pelanggan diperlukan untuk Sedia untuk pelanggan."
     },
     "messages": {
       "title": "Mesej",
@@ -883,7 +887,9 @@
       "client_comment": "Pelanggan anda meninggalkan komen",
       "commission_proposed": "Susunan komisen dicadangkan",
       "commission_accepted": "Susunan komisen diterima",
-      "violation_reported": "Laporan pelanggaran difailkan"
+      "violation_reported": "Laporan pelanggaran difailkan",
+      "disclosure_declared": "Pendedahan undang-undang baharu diisytiharkan",
+      "disclosure_acknowledged": "Pendedahan diakui oleh Requesting Agent"
     }
   },
   "commission": {
@@ -1003,5 +1009,77 @@
       "result": "Keputusan"
     },
     "appendOnlyNote": "Tambah sahaja: rekod audit tidak boleh diedit atau dipadam, termasuk oleh pentadbir."
+  },
+  "disclosures": {
+    "title": "Pendedahan undang-undang & material",
+    "intro": "Maklumat antara ejen. Tiada apa-apa di sini sampai kepada pelanggan kecuali Requesting Agent menulis ringkasan selamat-pelanggan.",
+    "empty": "Belum ada pendedahan diisytiharkan.",
+    "mandatory": "Wajib",
+    "legalVerification": "Semakan undang-undang",
+    "source": "Sumber",
+    "raStatus": "Requesting Agent",
+    "acknowledge": "Akui / balas…",
+    "ackNotesHint": "Nota kepada Supply Agent (pilihan)",
+    "clientSummaryLabel": "Ringkasan selamat-pelanggan",
+    "clientSummaryHint": "Ayat selamat-pelanggan (wajib untuk Sedia untuk pelanggan): jelas, tepat, tiada maklumat dalaman atau komisen",
+    "ackSubmit": "Rekod pengakuan",
+    "addNew": "Isytiharkan pendedahan…",
+    "category": "Kategori",
+    "sourceLabel": "Sumber maklumat",
+    "sourceHint": "cth. Pemilik, carian hakmilik, pejabat pengurusan",
+    "description": "Butiran",
+    "mandatoryLabel": "Pendedahan wajib",
+    "clientShareableLabel": "Boleh dikongsi dengan pelanggan",
+    "requiresLegalLabel": "Perlu verifikasi undang-undang bebas",
+    "declarationAccept": "Saya mengesahkan deklarasi pendedahan di atas",
+    "submit": "Isytiharkan pendedahan",
+    "categories": {
+      "ownership_status": "Status pemilikan",
+      "authority_to_sell": "Kuasa menjual / menyewa",
+      "title_status": "Status hakmilik",
+      "tenure": "Pegangan",
+      "encumbrances": "Bebanan / gadaian",
+      "caveats": "Kaveat",
+      "existing_tenancy": "Penyewaan sedia ada",
+      "vacant_possession": "Milikan kosong",
+      "outstanding_charges": "Caj / yuran tertunggak",
+      "litigation": "Litigasi / pertikaian",
+      "auction_foreclosure": "Lelongan / rampasan",
+      "developer_restrictions": "Sekatan pemaju",
+      "renovation_restrictions": "Sekatan pengubahsuaian",
+      "usage_restrictions": "Sekatan penggunaan",
+      "zoning": "Pengezonan",
+      "structural_defects": "Kecacatan struktur",
+      "known_material_defects": "Kecacatan material diketahui",
+      "flood_history": "Sejarah banjir",
+      "foreign_purchaser_restrictions": "Sekatan pembeli asing",
+      "financing_limitations": "Had pembiayaan",
+      "service_charges": "Caj perkhidmatan / kumpulan wang penjelas",
+      "other": "Maklumat material lain"
+    },
+    "status": {
+      "declared": "Diisytiharkan",
+      "evidence_pending": "Menunggu bukti",
+      "under_review": "Dalam semakan",
+      "confirmed": "Disahkan",
+      "requires_legal_verification": "Perlu verifikasi undang-undang",
+      "disputed": "Dipertikaikan",
+      "updated": "Dikemas kini",
+      "withdrawn": "Ditarik balik"
+    },
+    "ackActions": {
+      "received": "Diterima",
+      "reviewed": "Disemak",
+      "clarification_required": "Penjelasan diperlukan",
+      "document_required": "Dokumen sokongan diperlukan",
+      "legal_review_required": "Semakan undang-undang diperlukan",
+      "ready_for_client": "Sedia untuk pelanggan (dengan ringkasan)",
+      "not_applicable": "Tidak berkenaan",
+      "disputed": "Dipertikaikan"
+    },
+    "errors": {
+      "disclosure_declaration_required": "Anda mesti mengesahkan deklarasi pendedahan.",
+      "disclosure_summary_required": "Ringkasan selamat-pelanggan diperlukan untuk Sedia untuk pelanggan."
+    }
   }
 }

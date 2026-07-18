@@ -4,7 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 export type DeclarationKey =
   | "supply_agent_submission"
   | "requesting_agent_presentation"
-  | "client_disclaimer";
+  | "client_disclaimer"
+  | "supply_agent_disclosure";
 
 export type ActiveDeclaration = {
   declarationId: string;
