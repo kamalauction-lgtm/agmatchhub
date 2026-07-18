@@ -23,6 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit
+      - run: npm run test  # RLS suite runs when test env secrets are configured; skips otherwise
       - run: npm run build
       - name: Check no secrets committed
         run: |
