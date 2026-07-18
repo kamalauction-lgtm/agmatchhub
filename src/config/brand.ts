@@ -40,11 +40,30 @@ export const brand = {
       isPlaceholder: true,
     },
     agTeam: {
-      src: "/brand/placeholder-ag-team.svg",
-      alt: "AG Team logo (placeholder — awaiting official asset)",
-      isPlaceholder: true,
+      src: "/brand/ag-mark.png",
+      alt: "AG Team logo",
+      isPlaceholder: false,
+    },
+    /** Same mark with a charcoal halo so the silver G reads on light bg. */
+    agTeamLight: {
+      src: "/brand/ag-mark-light.png",
+      alt: "AG Team logo",
+      isPlaceholder: false,
+    },
+    wordmarkDark: {
+      src: "/brand/wordmark-dark.svg",
+      alt: "IQI AG MatchHub",
+      isPlaceholder: false,
+    },
+    wordmarkLight: {
+      src: "/brand/wordmark-light.svg",
+      alt: "IQI AG MatchHub",
+      isPlaceholder: false,
     },
   } satisfies Record<string, BrandLogo>,
+
+  /** Full marketing banner (dark). Login hero, email headers, covers. */
+  bannerDark: "/brand/banner-dark-v1.webp",
 
   socialLinks: [] as { platform: string; url: string; label: string }[],
 } as const;

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 84" role="img" aria-label="IQI AG MatchHub">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2D57E"/>
+      <stop offset="0.55" stop-color="#D4AF37"/>
+      <stop offset="1" stop-color="#A8791A"/>
+    </linearGradient>
+  </defs>
+  <text x="0" y="62" font-family="Arial, 'Helvetica Neue', Helvetica, sans-serif" font-size="60" font-weight="800" letter-spacing="0.5">
+    <tspan fill="#FFFFFF">IQI </tspan><tspan fill="url(#gold)">AG </tspan><tspan fill="#FFFFFF">Match</tspan><tspan fill="#D01F2E">Hub</tspan>
+  </text>
+</svg>

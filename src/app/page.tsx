@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { brand } from "@/config/brand";
-import { BrandLockup } from "@/components/layout/brand-lockup";
+import { BrandLockup, BrandWordmark } from "@/components/layout/brand-lockup";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 export default async function LandingPage() {
@@ -27,9 +27,9 @@ export default async function LandingPage() {
 
       <main className="flex-1">
         <section className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
-          <p className="mb-4 text-sm font-semibold tracking-widest text-crimson uppercase">
-            {brand.appName}
-          </p>
+          <div className="mb-6 flex justify-center">
+            <BrandWordmark height={34} />
+          </div>
           <h1 className="mx-auto mb-6 max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
             {t("heroTitle")}
           </h1>
