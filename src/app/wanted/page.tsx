@@ -176,8 +176,18 @@ export default async function WantedBoardPage({
                   <h3 className="mb-1 line-clamp-2 text-base leading-snug font-semibold">
                     {r.title}
                   </h3>
-                  <p className="mb-3 text-sm text-muted">
-                    📍 {[r.city, r.state_region].filter(Boolean).join(", ")} · {countryName(r.country_code)}
+                  <p className="mb-3 flex items-center gap-1.5 text-sm text-muted">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- tiny CDN flag, no optimizer on Workers */}
+                    <img
+                      src={`https://flagcdn.com/24x18/${r.country_code.toLowerCase()}.png`}
+                      alt={countryName(r.country_code)}
+                      width={20}
+                      height={15}
+                      className="rounded-[2px] border border-line"
+                    />
+                    <span>
+                      {[r.city, r.state_region].filter(Boolean).join(", ")} · {countryName(r.country_code)}
+                    </span>
                   </p>
 
                   {budget && (
