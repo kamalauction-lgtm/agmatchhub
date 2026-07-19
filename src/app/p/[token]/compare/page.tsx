@@ -63,7 +63,16 @@ export default async function ComparePage({
         <Link href={`/p/${token}`} className="text-sm text-muted hover:text-foreground">
           ← {p.title}
         </Link>
-        <h1 className="mt-2 mb-6 text-2xl font-bold">{tc("title")}</h1>
+        <div className="mt-2 mb-6 flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-2xl font-bold">{tc("title")}</h1>
+          <a
+            href={`/p/${token}/compare/export`}
+            download
+            className="rounded-lg border border-crimson px-4 py-2 text-sm font-semibold text-crimson hover:bg-crimson-soft"
+          >
+            ⬇ {tc("downloadExcel")}
+          </a>
+        </div>
 
         <div className="overflow-x-auto rounded-2xl border border-line bg-background">
           <table className="w-full text-left text-sm">

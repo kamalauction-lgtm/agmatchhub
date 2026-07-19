@@ -753,10 +753,13 @@
         "no": "No",
         "subject_to_offer": "Subject to offer"
       },
-      "missingNote": "— means the information was not provided. Nothing is estimated on your behalf."
+      "missingNote": "— means the information was not provided. Nothing is estimated on your behalf.",
+      "propertyName": "Property",
+      "downloadExcel": "Download Excel"
     },
     "disclosuresTitle": "Disclosures from your agent",
-    "disclosuresNote": "These matters are stated for your awareness. Where legal aspects are involved, independent legal advice is recommended before committing."
+    "disclosuresNote": "These matters are stated for your awareness. Where legal aspects are involved, independent legal advice is recommended before committing.",
+    "disclaimerShort": "Information subject to confirmation. For preliminary comparison only — not a binding offer, valuation or advice."
   },
   "collab": {
     "errors": {

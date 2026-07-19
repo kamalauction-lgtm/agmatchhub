@@ -753,10 +753,13 @@
         "no": "Tidak",
         "subject_to_offer": "Tergantung penawaran"
       },
-      "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda."
+      "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda.",
+      "propertyName": "Properti",
+      "downloadExcel": "Unduh Excel"
     },
     "disclosuresTitle": "Pengungkapan dari agen Anda",
-    "disclosuresNote": "Hal-hal ini disampaikan untuk diketahui. Bila menyangkut aspek hukum, disarankan meminta nasihat hukum independen sebelum berkomitmen."
+    "disclosuresNote": "Hal-hal ini disampaikan untuk diketahui. Bila menyangkut aspek hukum, disarankan meminta nasihat hukum independen sebelum berkomitmen.",
+    "disclaimerShort": "Informasi tunduk pada konfirmasi. Hanya untuk perbandingan awal — bukan penawaran mengikat, penilaian atau nasihat."
   },
   "collab": {
     "errors": {

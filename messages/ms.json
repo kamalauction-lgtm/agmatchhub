@@ -753,10 +753,13 @@
         "no": "Tidak",
         "subject_to_offer": "Tertakluk kepada tawaran"
       },
-      "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda."
+      "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda.",
+      "propertyName": "Hartanah",
+      "downloadExcel": "Muat turun Excel"
     },
     "disclosuresTitle": "Pendedahan daripada ejen anda",
-    "disclosuresNote": "Perkara ini dinyatakan untuk makluman anda. Jika melibatkan aspek undang-undang, nasihat undang-undang bebas disyorkan sebelum membuat komitmen."
+    "disclosuresNote": "Perkara ini dinyatakan untuk makluman anda. Jika melibatkan aspek undang-undang, nasihat undang-undang bebas disyorkan sebelum membuat komitmen.",
+    "disclaimerShort": "Maklumat tertakluk kepada pengesahan. Untuk perbandingan awal sahaja — bukan tawaran mengikat, penilaian atau nasihat."
   },
   "collab": {
     "errors": {
