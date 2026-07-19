@@ -25,6 +25,15 @@ const optDate = z
 
 const optText = z.string().trim().max(5000).transform((v) => (v === "" ? null : v));
 
+/** Draft-mode variants: a draft save must (almost) never be rejected. */
+const laxNum = z.string().transform((v) => {
+  const n = Number(String(v).trim());
+  return Number.isFinite(n) && n >= 0 ? n : null;
+});
+const laxDate = z.string().transform((v) =>
+  /^\d{4}-\d{2}-\d{2}$/.test(String(v).trim()) ? String(v).trim() : null,
+);
+
 const schema = z.object({
   id: z.string().uuid().optional().or(z.literal("")),
   intent: z.enum(["draft", "submit"]),
@@ -59,6 +68,31 @@ const schema = z.object({
   clientProfileAnonymised: optText,
   expectedMoveIn: optDate,
   internalNotes: optText,
+  alternativeAreas: optText,
+});
+
+const laxInt = laxNum.transform((n) => (n == null ? null : Math.trunc(n)));
+
+/**
+ * Draft saves accept whatever the agent has typed so far — a half-finished
+ * form must never be rejected and lost. Only submit-for-approval validates
+ * strictly.
+ */
+const draftSchema = schema.extend({
+  title: z.string().trim().max(200).transform((v) => v || "Untitled requirement"),
+  city: z.string().trim().max(120),
+  budgetMin: laxNum,
+  budgetMax: laxNum,
+  maxMonthlyRent: laxNum,
+  minBuiltUp: laxNum,
+  maxBuiltUp: laxNum,
+  leaseTermMonths: laxInt,
+  bedroomsMin: laxInt,
+  bathroomsMin: laxInt,
+  carParksMin: laxInt,
+  submissionDeadline: laxDate,
+  expiryDate: laxDate,
+  expectedMoveIn: laxDate,
 });
 
 export async function saveRequest(formData: FormData) {
@@ -76,19 +110,23 @@ export async function saveRequest(formData: FormData) {
       "budgetMax", "maxMonthlyRent", "leaseTermMonths", "financing", "propertyType",
       "measurementUnit", "minBuiltUp", "maxBuiltUp", "bedroomsMin", "bathroomsMin",
       "carParksMin", "furnishing", "otherRequirements", "clientProfileAnonymised",
-      "expectedMoveIn", "internalNotes",
+      "expectedMoveIn", "internalNotes", "alternativeAreas",
     ].map((k) => [k, String(formData.get(k) ?? "")]),
   );
-  const parsed = schema.safeParse(raw);
+  const back = raw.id ? `/requests/${raw.id}/edit` : "/requests/new";
+  const isDraft = raw.intent !== "submit";
+
+  const parsed = (isDraft ? draftSchema : schema).safeParse(raw);
   if (!parsed.success) {
-    const back = raw.id ? `/requests/${raw.id}/edit` : "/requests/new";
-    redirect(`${back}?error=invalid_fields`);
+    const fields = [...new Set(parsed.error.issues.map((i) => String(i.path[0])))]
+      .slice(0, 6)
+      .join(",");
+    redirect(`${back}?error=invalid_fields&fields=${encodeURIComponent(fields)}`);
   }
   const d = parsed.data;
 
-  if (d.budgetMin != null && d.budgetMax != null && d.budgetMin > d.budgetMax) {
-    const back = d.id ? `/requests/${d.id}/edit` : "/requests/new";
-    redirect(`${back}?error=budget_range`);
+  if (!isDraft && d.budgetMin != null && d.budgetMax != null && d.budgetMin > d.budgetMax) {
+    redirect(`${back}?error=budget_range&fields=budgetMin,budgetMax`);
   }
 
   const row = {
@@ -125,6 +163,9 @@ export async function saveRequest(formData: FormData) {
     other_requirements: d.otherRequirements,
     client_profile_anonymised: d.clientProfileAnonymised,
     expected_move_in: d.expectedMoveIn,
+    alternative_areas: d.alternativeAreas
+      ? d.alternativeAreas.split(",").map((s) => s.trim()).filter(Boolean)
+      : [],
   };
 
   let requestId = d.id || null;
@@ -144,25 +185,36 @@ export async function saveRequest(formData: FormData) {
       .from("property_requests")
       .update({ ...row, status: newStatus })
       .eq("id", requestId);
-    if (error) redirect(`/requests/${requestId}/edit?error=save_failed`);
+    if (error) {
+      console.error("[request.save] update failed:", error.code, error.message);
+      redirect(`/requests/${requestId}/edit?error=save_failed&code=${error.code ?? "unknown"}`);
+    }
   } else {
     const { data: humanId, error: idErr } = await supabase.rpc("next_human_id", {
       p_prefix: "REQ",
     });
-    if (idErr) redirect("/requests/new?error=save_failed");
+    if (idErr) {
+      console.error("[request.save] id generation failed:", idErr.code, idErr.message);
+      redirect(`${back}?error=save_failed&code=${idErr.code ?? "id"}`);
+    }
     const { data: inserted, error } = await supabase
       .from("property_requests")
       .insert({ ...row, human_readable_id: humanId, status: "draft" })
       .select("id")
       .single();
-    if (error || !inserted) redirect("/requests/new?error=save_failed");
+    if (error || !inserted) {
+      console.error("[request.save] insert failed:", error?.code, error?.message);
+      redirect(`${back}?error=save_failed&code=${error?.code ?? "insert"}`);
+    }
     requestId = inserted.id;
     if (d.intent === "submit") {
       const { error: subErr } = await supabase
         .from("property_requests")
         .update({ status: "pending_admin_approval" })
         .eq("id", requestId);
-      if (subErr) redirect(`/requests/${requestId}?error=save_failed`);
+      // Draft is already safely stored at this point; worst case the agent
+      // submits again from the detail page.
+      if (subErr) redirect(`/requests/${requestId}?error=save_failed&code=${subErr.code ?? "submit"}`);
     }
   }
 

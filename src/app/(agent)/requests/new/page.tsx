@@ -8,9 +8,9 @@ import { RequestForm } from "@/components/requests/request-form";
 export default async function NewRequestPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; fields?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, fields } = await searchParams;
   const user = await requireUser();
   const supabase = await createClient();
   const { data: profile } = await supabase
@@ -25,6 +25,8 @@ export default async function NewRequestPage({
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
           {t(`errors.${["invalid_fields", "budget_range", "save_failed"].includes(error) ? error : "save_failed"}`)}
+          {fields && <span className="mt-1 block text-xs">{t("checkFields")}: {fields}</span>}
+          <span className="mt-1 block text-xs">{t("dataKeptNote")}</span>
         </p>
       )}
       <RequestForm />

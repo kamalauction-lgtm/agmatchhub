@@ -359,9 +359,18 @@
       },
       "saveDraft": "Simpan draf",
       "submitForApproval": "Hantar untuk kelulusan",
-      "askingPrice": "Harga tawaran"
+      "askingPrice": "Harga tawaran",
+      "draftRestored": "Kerja anda yang belum disimpan telah dipulihkan secara automatik.",
+      "additionalAreas": "Negeri / kawasan tambahan",
+      "additionalAreasHint": "Keperluan boleh meliputi beberapa negeri. Tambah satu lokasi setiap baris.",
+      "additionalAreaPlaceholder": "cth. Selangor — Petaling Jaya",
+      "addLocation": "Tambah lokasi lain",
+      "removeLocation": "Buang lokasi",
+      "draftSafetyNote": "Semua yang anda taip disimpan dengan selamat pada peranti ini sehingga disimpan — jika berlaku masalah, buka semula halaman ini dan ia akan dipulihkan."
     },
-    "submissionsTitle": "Hartanah yang diserahkan"
+    "submissionsTitle": "Hartanah yang diserahkan",
+    "checkFields": "Sila semak",
+    "dataKeptNote": "Data yang anda masukkan masih ada — tiada yang hilang."
   },
   "adminRequests": {
     "title": "Kelulusan keperluan",

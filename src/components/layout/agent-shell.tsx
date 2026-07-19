@@ -60,9 +60,31 @@ export async function AgentShell({
           </form>
         </div>
       </header>
-      <main className={`mx-auto w-full ${wide ? "max-w-6xl" : "max-w-3xl"} flex-1 px-6 py-10`}>
+      <main className={`mx-auto w-full ${wide ? "max-w-6xl" : "max-w-3xl"} flex-1 px-4 py-6 pb-24 sm:px-6 sm:py-10 sm:pb-10`}>
         {children}
       </main>
+
+      {/* App-style bottom navigation on phones (§37 mobile-first) */}
+      <nav className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden">
+        {[
+          { href: "/dashboard", icon: "🏠", label: t("dashboard") },
+          { href: "/requests", icon: "📋", label: t("requests") },
+          { href: "/submissions", icon: "🏢", label: t("submissions") },
+          { href: "/notifications", icon: "🔔", label: t("notifications"), badge: unread ?? 0 },
+          { href: "/profile", icon: "👤", label: t("profile") },
+        ].map((item) => (
+          <Link key={item.href} href={item.href}
+            className="relative flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium text-muted active:text-crimson">
+            <span className="text-xl leading-none">{item.icon}</span>
+            {item.label}
+            {!!item.badge && (
+              <span className="absolute top-1 right-1/4 flex h-4 min-w-4 items-center justify-center rounded-full bg-crimson px-1 text-[9px] font-bold text-white">
+                {item.badge}
+              </span>
+            )}
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

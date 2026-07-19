@@ -9,6 +9,7 @@ import { getActiveDeclaration } from "@/lib/consents";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { submitProperty } from "./actions";
+import { FormDraftGuard } from "@/components/forms/draft-guard";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -99,6 +100,7 @@ export default async function SubmitPropertyPage({
 
         <form action={submitProperty} className="space-y-6">
           <input type="hidden" name="token" value={token} />
+          <FormDraftGuard storageKey={`draft:sub:${token}`} />
 
           <section className="space-y-4 rounded-xl border border-line bg-background p-5">
             <h2 className="font-semibold">{t("sectionProperty")}</h2>

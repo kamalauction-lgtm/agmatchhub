@@ -10,10 +10,10 @@ export default async function EditRequestPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; fields?: string }>;
 }) {
   const { id } = await params;
-  const { error } = await searchParams;
+  const { error, fields } = await searchParams;
   await requireUser();
   const supabase = await createClient();
   const [{ data: request }, { data: priv }] = await Promise.all([
@@ -39,6 +39,8 @@ export default async function EditRequestPage({
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
           {t(`errors.${["invalid_fields", "budget_range", "save_failed"].includes(error) ? error : "save_failed"}`)}
+          {fields && <span className="mt-1 block text-xs">{t("checkFields")}: {fields}</span>}
+          <span className="mt-1 block text-xs">{t("dataKeptNote")}</span>
         </p>
       )}
       <RequestForm existing={request} />

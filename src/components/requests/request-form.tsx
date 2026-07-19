@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { saveRequest } from "@/app/(agent)/requests/actions";
+import { FormDraftGuard } from "@/components/forms/draft-guard";
+import { LocationList } from "@/components/forms/location-list";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -28,6 +30,10 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
   return (
     <form action={saveRequest} className="space-y-6">
       {existing?.id && <input type="hidden" name="id" value={existing.id} />}
+      <FormDraftGuard
+        storageKey={existing?.id ? `draft:req:${existing.id}` : "draft:req:new"}
+        notice={t("draftRestored")}
+      />
 
       <section className="space-y-4 rounded-xl border border-line p-5">
         <h2 className="font-semibold">{t("sectionGeneral")}</h2>
@@ -88,6 +94,17 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
           <input name="preferredAreas" placeholder={t("preferredAreasHint")}
             defaultValue={Array.isArray(existing?.preferred_areas) ? (existing.preferred_areas as string[]).join(", ") : ""}
             className={inputCls} />)}
+        <div className="text-sm">
+          <span className="mb-1 block font-medium">{t("additionalAreas")}</span>
+          <p className="mb-2 text-xs text-muted">{t("additionalAreasHint")}</p>
+          <LocationList
+            name="alternativeAreas"
+            initial={Array.isArray(existing?.alternative_areas) ? (existing.alternative_areas as string[]) : []}
+            placeholder={t("additionalAreaPlaceholder")}
+            addLabel={t("addLocation")}
+            removeLabel={t("removeLocation")}
+          />
+        </div>
       </section>
 
       <section className="space-y-4 rounded-xl border border-line p-5">
@@ -167,16 +184,17 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
             defaultValue={v("internal_notes")} className={inputCls} />)}
       </section>
 
-      <div className="flex gap-3">
+      <div className="sticky bottom-16 z-10 -mx-2 flex gap-3 rounded-xl border border-line bg-background/95 p-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
         <button name="intent" value="draft" type="submit"
-          className="rounded-lg border border-line px-5 py-2.5 font-semibold hover:border-crimson hover:text-crimson">
+          className="flex-1 rounded-lg border border-line px-5 py-3 font-semibold hover:border-crimson hover:text-crimson sm:flex-none">
           {t("saveDraft")}
         </button>
         <button name="intent" value="submit" type="submit"
-          className="rounded-lg bg-crimson px-5 py-2.5 font-semibold text-white hover:bg-crimson-strong">
+          className="flex-1 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong sm:flex-none">
           {t("submitForApproval")}
         </button>
       </div>
+      <p className="text-xs text-muted">{t("draftSafetyNote")}</p>
     </form>
   );
 }

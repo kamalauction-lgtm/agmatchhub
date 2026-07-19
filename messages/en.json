@@ -359,9 +359,18 @@
       },
       "saveDraft": "Save draft",
       "submitForApproval": "Submit for approval",
-      "askingPrice": "Asking price"
+      "askingPrice": "Asking price",
+      "draftRestored": "Your unsaved work was restored automatically.",
+      "additionalAreas": "Additional states / areas",
+      "additionalAreasHint": "The requirement can cover several states. Add one location per row.",
+      "additionalAreaPlaceholder": "e.g. Selangor — Petaling Jaya",
+      "addLocation": "Add another location",
+      "removeLocation": "Remove location",
+      "draftSafetyNote": "Everything you type is kept safely on this device until saved — even if something goes wrong, reopen this page and it will be restored."
     },
-    "submissionsTitle": "Submitted properties"
+    "submissionsTitle": "Submitted properties",
+    "checkFields": "Please check",
+    "dataKeptNote": "Your entered data is still here — nothing was lost."
   },
   "adminRequests": {
     "title": "Request approval",

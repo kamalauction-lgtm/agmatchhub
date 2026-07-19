@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { ClearFormDraft } from "@/components/forms/draft-guard";
 
 export default async function RequestDetailPage({
   params,
@@ -81,6 +82,7 @@ export default async function RequestDetailPage({
 
   return (
     <AgentShell wide>
+      <ClearFormDraft storageKeys={["draft:req:new", `draft:req:${id}`]} />
       <Link href="/requests" className="text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>

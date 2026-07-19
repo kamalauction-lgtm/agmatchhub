@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { brand } from "@/config/brand";
+import { PwaRegister } from "@/components/pwa-register";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default async function RootLayout({
             of client-page HTML (§78). Scope a provider per-route if a client
             component ever needs useTranslations. */}
         <NextIntlClientProvider messages={{}}>{children}</NextIntlClientProvider>
+        <PwaRegister />
       </body>
     </html>
   );

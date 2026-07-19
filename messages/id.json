@@ -359,9 +359,18 @@
       },
       "saveDraft": "Simpan draf",
       "submitForApproval": "Kirim untuk persetujuan",
-      "askingPrice": "Harga penawaran"
+      "askingPrice": "Harga penawaran",
+      "draftRestored": "Pekerjaan Anda yang belum tersimpan dipulihkan otomatis.",
+      "additionalAreas": "Provinsi / area tambahan",
+      "additionalAreasHint": "Kebutuhan bisa mencakup beberapa provinsi. Tambahkan satu lokasi per baris.",
+      "additionalAreaPlaceholder": "mis. Jawa Barat — Bandung",
+      "addLocation": "Tambah lokasi lain",
+      "removeLocation": "Hapus lokasi",
+      "draftSafetyNote": "Semua yang Anda ketik disimpan aman di perangkat ini sampai tersimpan — jika terjadi masalah, buka lagi halaman ini dan akan dipulihkan."
     },
-    "submissionsTitle": "Properti yang diajukan"
+    "submissionsTitle": "Properti yang diajukan",
+    "checkFields": "Silakan periksa",
+    "dataKeptNote": "Data yang Anda masukkan masih ada — tidak ada yang hilang."
   },
   "adminRequests": {
     "title": "Persetujuan kebutuhan",
