@@ -23,11 +23,13 @@ const SOURCE_TYPES = [
 ] as const;
 
 const schema = z.object({
-  title: z.string().trim().min(5).max(200),
+  // Only the title is compulsory — agents fill what they have (owner request).
+  title: z.string().trim().min(3).max(200),
   propertyCategory: z.enum(["residential", "commercial", "industrial", "land", "other"]),
   propertyType: optText,
+  countrySearch: z.string().trim().max(80),
   stateRegion: optText,
-  city: z.string().trim().min(2).max(120),
+  city: z.string().trim().max(120),
   district: optText,
   fullAddress: optText,
   generalAddress: optText,
@@ -68,6 +70,9 @@ const schema = z.object({
   commissionAmount: optNum,
   commissionMonths: optNum,
   commissionConditions: optText,
+  // §73: proposed sharing of the received commission, default 50:50
+  listingSplit: optNum,
+  buyerSplit: optNum,
   declarationAccepted: z.literal("on"),          // must be actively ticked (§28)
 });
 
@@ -136,15 +141,26 @@ export async function submitProperty(formData: FormData) {
   }
   const d = parsed.data;
 
-  if (d.askingPrice == null && d.monthlyRental == null) {
-    redirect(`${back}?error=price_required`);
-  }
-
-  // Cover image required (§58); up to 5 extra gallery images
+  // All media optional (owner request): cover if provided, up to 5 gallery
   const cover = formData.get("coverImage") as File | null;
-  if (!cover || cover.size === 0) redirect(`${back}?error=cover_required`);
+  const hasCover = !!cover && cover.size > 0;
   const gallery = (formData.getAll("galleryImages") as File[])
     .filter((f) => f && f.size > 0).slice(0, 5);
+
+  // Resolve country from the search box (name or code, any case);
+  // falls back to the requirement's country when blank or unmatched.
+  let countryCode: string | null = null;
+  if (d.countrySearch) {
+    const q = d.countrySearch.trim();
+    const { data: byCode } = await service
+      .from("countries").select("code").ilike("code", q).maybeSingle();
+    if (byCode) countryCode = byCode.code;
+    else {
+      const { data: byName } = await service
+        .from("countries").select("code").ilike("name", `%${q}%`).limit(1).maybeSingle();
+      if (byName) countryCode = byName.code;
+    }
+  }
 
   const uploadImage = async (file: File, label: string): Promise<string> => {
     const ext = IMG_MIMES[file.type];
@@ -158,10 +174,10 @@ export async function submitProperty(formData: FormData) {
     return path;
   };
 
-  let coverPath: string;
+  let coverPath: string | null = null;
   const galleryPaths: string[] = [];
   try {
-    coverPath = await uploadImage(cover, "cover");
+    if (hasCover) coverPath = await uploadImage(cover!, "cover");
     for (const g of gallery) galleryPaths.push(await uploadImage(g, "gallery"));
   } catch (e) {
     redirect(`${back}?error=${e instanceof Error ? e.message : "upload_failed"}`);
@@ -187,7 +203,9 @@ export async function submitProperty(formData: FormData) {
       title: d.title,
       property_category: d.propertyCategory,
       property_type: d.propertyType,
-      country_code: (await service.from("property_requests").select("country_code").eq("id", link.request_id).single()).data?.country_code ?? "MY",
+      country_code: countryCode
+        ?? (await service.from("property_requests").select("country_code").eq("id", link.request_id).single()).data?.country_code
+        ?? "MY",
       state_region: d.stateRegion,
       city: d.city,
       district: d.district,
@@ -249,12 +267,18 @@ export async function submitProperty(formData: FormData) {
       chain_agent_count: d.chainAgentCount,
     });
   }
-  await supabase.from("property_submission_media").insert([
-    { submission_id: submissionId, storage_path: coverPath, kind: "image", is_cover: true, position: 0 },
+  const mediaRows = [
+    ...(coverPath
+      ? [{ submission_id: submissionId, storage_path: coverPath, kind: "image" as const, is_cover: true, position: 0 }]
+      : []),
     ...galleryPaths.map((p, i) => ({
-      submission_id: submissionId, storage_path: p, kind: "image" as const, is_cover: false, position: i + 1,
+      submission_id: submissionId, storage_path: p, kind: "image" as const,
+      is_cover: !coverPath && i === 0, position: i + 1,
     })),
-  ]);
+  ];
+  if (mediaRows.length) {
+    await supabase.from("property_submission_media").insert(mediaRows);
+  }
   await supabase.from("submission_status_history").insert({
     submission_id: submissionId,
     previous_status: null,
@@ -270,6 +294,33 @@ export async function submitProperty(formData: FormData) {
     entityId: submissionId,
     next: { human_id: humanId, request_id: link.request_id, risk },
   });
+
+  // §73: open the commission-sharing proposal immediately when commission was
+  // declared. Default 50:50; SA may adjust the split. Never blocks submission.
+  if (d.commissionType) {
+    try {
+      const listing = d.listingSplit ?? 50;
+      const buyer = d.buyerSplit ?? 50;
+      const isFifty = Math.round(listing * 100) === 5000 && Math.round(buyer * 100) === 5000;
+      const pctOk = Math.round((listing + buyer) * 100) === 10000;
+      await supabase.rpc("propose_commission_version", {
+        p_submission_id: submissionId,
+        p_method: isFifty || !pctOk ? "fifty_fifty" : "custom_percentage",
+        p_listing_pct: isFifty || !pctOk ? null : listing,
+        p_buyer_pct: isFifty || !pctOk ? null : buyer,
+        p_total_type: d.commissionType,
+        p_total_percentage: d.commissionType === "percentage" ? d.commissionPercentage : null,
+        p_total_amount: d.commissionType === "fixed" ? d.commissionAmount : null,
+        p_calculation_basis: d.monthlyRental != null && d.askingPrice == null
+          ? "monthly_rental" : "asking_price",
+        p_payer_type: "owner",
+        p_custom_terms: d.commissionConditions,
+      });
+    } catch (e) {
+      console.error("[submission] commission proposal failed:",
+        e instanceof Error ? e.message : e);
+    }
+  }
 
   redirect(`/submissions?submitted=${humanId}`);
 }

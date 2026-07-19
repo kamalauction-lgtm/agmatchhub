@@ -534,7 +534,11 @@
       "commissionMonths": "Bulan sewa",
       "commissionConditions": "Syarat komisen",
       "coverImage": "Gambar utama (wajib)",
-      "galleryImages": "Gambar tambahan (sehingga 5)"
+      "galleryImages": "Gambar tambahan (sehingga 5)",
+      "country": "Negara",
+      "countryHint": "Taip untuk cari mana-mana negara. Biar kosong untuk guna negara keperluan.",
+      "listingSplit": "% pihak penyenaraian (anda)",
+      "buyerSplit": "% pihak pembeli (requesting agent)"
     },
     "errors": {
       "invalid_fields": "Sila semak medan dan cuba lagi.",
@@ -545,7 +549,10 @@
       "file_too_large": "Gambar melebihi had 10 MB.",
       "upload_failed": "Muat naik gambar gagal. Sila cuba lagi.",
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
-    }
+    },
+    "optionalHint": "Hanya tajuk hartanah yang wajib — isi apa yang ada dan hantar. Anda boleh tambah kemudian.",
+    "splitTitle": "Cadangan pembahagian komisen",
+    "splitHint": "Lalai 50:50. Ubah jika terma anda berbeza — ini menjadi cadangan pembukaan yang boleh diterima atau dibalas oleh requesting agent selepas penghantaran."
   },
   "submissions": {
     "title": "Penyerahan saya",

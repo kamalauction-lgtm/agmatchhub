@@ -25,6 +25,23 @@ const KNOWN_ERRORS = [
   "invalid_file_type", "file_too_large", "upload_failed", "save_failed",
 ];
 
+/** Collapsible form section — long form, app-style (owner request #2). */
+function Section({
+  title, open = false, children,
+}: {
+  title: string; open?: boolean; children: React.ReactNode;
+}) {
+  return (
+    <details open={open} className="group rounded-xl border border-line bg-background">
+      <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
+        {title}
+        <span className="text-muted transition-transform group-open:rotate-180">▾</span>
+      </summary>
+      <div className="space-y-4 px-5 pb-5">{children}</div>
+    </details>
+  );
+}
+
 export default async function SubmitPropertyPage({
   params,
   searchParams,
@@ -60,7 +77,7 @@ export default async function SubmitPropertyPage({
 
   const { data: request } = await service
     .from("property_requests")
-    .select("human_readable_id, title, transaction_type, currency")
+    .select("human_readable_id, title, transaction_type, currency, country_code")
     .eq("id", link.request_id)
     .single();
 
@@ -69,6 +86,12 @@ export default async function SubmitPropertyPage({
   const t = await getTranslations("submit");
   const { data: currencies } = await supabase
     .from("currencies").select("code").eq("active", true).order("code");
+
+  const { data: allCountries } = await service
+    .from("countries").select("code, name").order("name");
+  const requestCountry = allCountries?.find(
+    (c) => c.code === (request as { country_code?: string } | null)?.country_code,
+  );
 
   const field = (name: string, label: string, node: React.ReactNode) => (
     <label className="block text-sm" key={name}>
@@ -91,6 +114,7 @@ export default async function SubmitPropertyPage({
         <p className="mb-6 text-sm text-muted">
           {request?.human_readable_id} — {request?.title}
         </p>
+        <p className="mb-6 rounded-lg bg-surface px-4 py-2.5 text-xs text-muted">{t("optionalHint")}</p>
 
         {error && (
           <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
@@ -102,8 +126,7 @@ export default async function SubmitPropertyPage({
           <input type="hidden" name="token" value={token} />
           <FormDraftGuard storageKey={`draft:sub:${token}`} />
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionProperty")}</h2>
+          <Section title={t("sectionProperty")} open>
             {field("title", t("f.title"),
               <input name="title" required minLength={5} maxLength={200} className={inputCls} />)}
             <div className="grid gap-4 sm:grid-cols-3">
@@ -118,9 +141,17 @@ export default async function SubmitPropertyPage({
               {field("buildingName", t("f.buildingName"),
                 <input name="buildingName" className={inputCls} />)}
             </div>
+            {field("countrySearch", t("f.country"),
+              <>
+                <input name="countrySearch" list="country-list" placeholder={requestCountry?.name ?? ""} className={inputCls} />
+                <datalist id="country-list">
+                  {(allCountries ?? []).map((c) => <option key={c.code} value={c.name} />)}
+                </datalist>
+                <span className="mt-1 block text-xs text-muted">{t("f.countryHint")}</span>
+              </>)}
             <div className="grid gap-4 sm:grid-cols-3">
               {field("city", t("f.city"),
-                <input name="city" required minLength={2} className={inputCls} />)}
+                <input name="city" className={inputCls} />)}
               {field("district", t("f.district"),
                 <input name="district" className={inputCls} />)}
               {field("stateRegion", t("f.stateRegion"),
@@ -134,10 +165,9 @@ export default async function SubmitPropertyPage({
               {field("unitNumber", t("f.unitNumber"),
                 <input name="unitNumber" placeholder={t("agentOnly")} className={inputCls} />)}
             </div>
-          </section>
+          </Section>
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionPricing")}</h2>
+          <Section title={t("sectionPricing")}>
             <div className="grid gap-4 sm:grid-cols-4">
               {field("currency", t("f.currency"),
                 <select name="currency" defaultValue={request?.currency ?? "MYR"} className={inputCls}>
@@ -157,10 +187,9 @@ export default async function SubmitPropertyPage({
             {field("minAcceptablePrice", t("f.minAcceptablePrice"),
               <input type="number" min="0" step="0.01" name="minAcceptablePrice"
                 placeholder={t("f.minPriceHint")} className={inputCls} />)}
-          </section>
+          </Section>
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionSpecs")}</h2>
+          <Section title={t("sectionSpecs")}>
             <div className="grid gap-4 sm:grid-cols-4">
               {field("builtUp", t("f.builtUp"),
                 <input type="number" min="0" step="0.01" name="builtUp" className={inputCls} />)}
@@ -202,20 +231,18 @@ export default async function SubmitPropertyPage({
             </div>
             {field("facilities", t("f.facilities"),
               <input name="facilities" placeholder={t("f.facilitiesHint")} className={inputCls} />)}
-          </section>
+          </Section>
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionMarketing")}</h2>
+          <Section title={t("sectionMarketing")}>
             {field("description", t("f.description"),
               <textarea name="description" rows={3} className={inputCls} />)}
             {field("keySellingPoints", t("f.keySellingPoints"),
               <textarea name="keySellingPoints" rows={2} className={inputCls} />)}
             {field("internalRemarks", t("f.internalRemarks"),
               <textarea name="internalRemarks" rows={2} placeholder={t("f.internalRemarksHint")} className={inputCls} />)}
-          </section>
+          </Section>
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionSource")}</h2>
+          <Section title={t("sectionSource")}>
             <div className="grid gap-4 sm:grid-cols-2">
               {field("sourceType", t("f.sourceType"),
                 <select name="sourceType" defaultValue="direct_written_appointment" className={inputCls}>
@@ -255,10 +282,9 @@ export default async function SubmitPropertyPage({
               {field("chainAgentCount", t("f.chainAgentCount"),
                 <input type="number" min="0" step="1" name="chainAgentCount" className={inputCls} />)}
             </div>
-          </section>
+          </Section>
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionCobroke")}</h2>
+          <Section title={t("sectionCobroke")}>
             <p className="text-xs text-muted">{t("cobrokeHint")}</p>
             <div className="grid gap-4 sm:grid-cols-4">
               {field("commissionType", t("f.commissionType"),
@@ -277,16 +303,25 @@ export default async function SubmitPropertyPage({
             </div>
             {field("commissionConditions", t("f.commissionConditions"),
               <input name="commissionConditions" className={inputCls} />)}
-          </section>
+            <div className="rounded-lg bg-surface p-4">
+              <p className="mb-2 text-sm font-medium">{t("splitTitle")}</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {field("listingSplit", t("f.listingSplit"),
+                  <input type="number" min="0" max="100" step="0.5" name="listingSplit" defaultValue="50" className={inputCls} />)}
+                {field("buyerSplit", t("f.buyerSplit"),
+                  <input type="number" min="0" max="100" step="0.5" name="buyerSplit" defaultValue="50" className={inputCls} />)}
+              </div>
+              <p className="mt-2 text-xs text-muted">{t("splitHint")}</p>
+            </div>
+          </Section>
 
-          <section className="space-y-4 rounded-xl border border-line bg-background p-5">
-            <h2 className="font-semibold">{t("sectionMedia")}</h2>
+          <Section title={t("sectionMedia")}>
             <p className="text-xs text-muted">{t("mediaHint")}</p>
             {field("coverImage", t("f.coverImage"),
-              <input type="file" name="coverImage" required accept=".jpg,.jpeg,.png,.webp" className="block w-full text-sm" />)}
+              <input type="file" name="coverImage" accept=".jpg,.jpeg,.png,.webp" className="block w-full text-sm" />)}
             {field("galleryImages", t("f.galleryImages"),
               <input type="file" name="galleryImages" multiple accept=".jpg,.jpeg,.png,.webp" className="block w-full text-sm" />)}
-          </section>
+          </Section>
 
           <section className="rounded-xl border border-crimson/30 bg-background p-5">
             <h2 className="mb-3 font-semibold">{t("declarationTitle")}</h2>

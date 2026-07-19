@@ -534,7 +534,11 @@
       "commissionMonths": "Rental months",
       "commissionConditions": "Commission conditions",
       "coverImage": "Cover photo (required)",
-      "galleryImages": "More photos (up to 5)"
+      "galleryImages": "More photos (up to 5)",
+      "country": "Country",
+      "countryHint": "Type to search any country. Leave blank to use the requirement country.",
+      "listingSplit": "Listing side % (you)",
+      "buyerSplit": "Buyer side % (requesting agent)"
     },
     "errors": {
       "invalid_fields": "Please check the fields and try again.",
@@ -545,7 +549,10 @@
       "file_too_large": "A photo exceeds the 10 MB limit.",
       "upload_failed": "Photo upload failed. Please try again.",
       "save_failed": "Could not save. Please try again."
-    }
+    },
+    "optionalHint": "Only the property title is required — fill in what you have and submit. You can add more later.",
+    "splitTitle": "Proposed commission split",
+    "splitHint": "Default 50:50. Adjust if your terms differ — this becomes the opening proposal the requesting agent can accept or counter after submission."
   },
   "submissions": {
     "title": "My submissions",

@@ -534,7 +534,11 @@
       "commissionMonths": "Bulan sewa",
       "commissionConditions": "Syarat komisi",
       "coverImage": "Foto sampul (wajib)",
-      "galleryImages": "Foto tambahan (hingga 5)"
+      "galleryImages": "Foto tambahan (hingga 5)",
+      "country": "Negara",
+      "countryHint": "Ketik untuk mencari negara mana pun. Kosongkan untuk memakai negara kebutuhan.",
+      "listingSplit": "% pihak listing (Anda)",
+      "buyerSplit": "% pihak pembeli (requesting agent)"
     },
     "errors": {
       "invalid_fields": "Periksa kolom lalu coba lagi.",
@@ -545,7 +549,10 @@
       "file_too_large": "Ada foto yang melebihi batas 10 MB.",
       "upload_failed": "Unggah foto gagal. Silakan coba lagi.",
       "save_failed": "Tidak dapat menyimpan. Silakan coba lagi."
-    }
+    },
+    "optionalHint": "Hanya judul properti yang wajib — isi yang ada lalu kirim. Bisa ditambah nanti.",
+    "splitTitle": "Usulan pembagian komisi",
+    "splitHint": "Default 50:50. Ubah jika ketentuan Anda berbeda — ini menjadi usulan pembuka yang dapat diterima atau dibalas requesting agent setelah pengajuan."
   },
   "submissions": {
     "title": "Pengajuan saya",
