@@ -908,8 +908,14 @@
       "commission_accepted": "Pengaturan komisi diterima",
       "violation_reported": "Laporan pelanggaran diajukan",
       "disclosure_declared": "Pengungkapan hukum baru dinyatakan",
-      "disclosure_acknowledged": "Pengungkapan diakui oleh Requesting Agent"
-    }
+      "disclosure_acknowledged": "Pengungkapan diakui oleh Requesting Agent",
+      "admin_agent_submitted": "Agen baru menunggu verifikasi",
+      "admin_request_submitted": "Kebutuhan baru menunggu persetujuan",
+      "admin_violation_reported": "Laporan pelanggaran baru diajukan"
+    },
+    "pushEnable": "Aktifkan notifikasi ponsel",
+    "pushEnabled": "Notifikasi ponsel aktif",
+    "pushDenied": "Notifikasi diblokir di pengaturan browser"
   },
   "commission": {
     "title": "Perjanjian komisi & co-broke",

@@ -908,8 +908,14 @@
       "commission_accepted": "Commission arrangement accepted",
       "violation_reported": "A violation report was filed",
       "disclosure_declared": "New legal disclosure declared",
-      "disclosure_acknowledged": "Disclosure acknowledged by the Requesting Agent"
-    }
+      "disclosure_acknowledged": "Disclosure acknowledged by the Requesting Agent",
+      "admin_agent_submitted": "New agent awaiting verification",
+      "admin_request_submitted": "New requirement awaiting approval",
+      "admin_violation_reported": "New violation report filed"
+    },
+    "pushEnable": "Enable phone notifications",
+    "pushEnabled": "Phone notifications on",
+    "pushDenied": "Notifications blocked in browser settings"
   },
   "commission": {
     "title": "Commission & co-broke agreement",

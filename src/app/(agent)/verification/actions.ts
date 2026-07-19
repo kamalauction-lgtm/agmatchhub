@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { logAudit } from "@/lib/audit";
+import { notifyAdmins } from "@/lib/notifications";
 
 const fieldsSchema = z.object({
   fullLegalName: z.string().trim().min(3).max(160),
@@ -155,6 +156,7 @@ export async function submitVerification(formData: FormData) {
     entityType: "agent_profile",
     entityId: user.id,
   });
+  await notifyAdmins({ kind: "admin.agent_submitted", href: "/admin/agents" });
 
   redirect("/verification?submitted=1");
 }

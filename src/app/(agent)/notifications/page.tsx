@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { PushSubscribe } from "@/components/push-subscribe";
+import { savePushSubscription } from "./actions";
 
 export default async function NotificationsPage() {
   const user = await requireUser();
@@ -34,8 +36,17 @@ export default async function NotificationsPage() {
 
   return (
     <AgentShell>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>
+        <PushSubscribe
+          vapidPublicKey={process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""}
+          labels={{
+            enable: t("pushEnable"),
+            enabled: t("pushEnabled"),
+            denied: t("pushDenied"),
+          }}
+          saveAction={savePushSubscription}
+        />
         {rows?.some((r) => !r.read_at) && (
           <form action={markAllRead}>
             <button type="submit"

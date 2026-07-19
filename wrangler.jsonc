@@ -24,6 +24,7 @@
     "CLIENT_PRESENTATION_BASE_URL": "https://hub.propertiguru.id/p",
     "NEXT_PUBLIC_SUPABASE_URL": "https://jtruwmwinymflkrvuuwd.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_qoUdeoGQVbm9uE9Om4Yhjg_AMtLVjzK",
+    "NEXT_PUBLIC_VAPID_PUBLIC_KEY": "BAD35F_p_FfT7Mk7hI-1D6bCKStkk_75sMVPAEDGdBeywwuXpBGLhGSPDLm0k-5SNxHWfi1hXpVdsyxDb04OJJE",
     "NEXT_PUBLIC_APP_NAME": "IQI AG MatchHub",
     "NEXT_PUBLIC_APP_SHORT_NAME": "MatchHub",
     "NEXT_PUBLIC_APP_TAGLINE": "One Requirement. Multiple Opportunities. Controlled Collaboration."

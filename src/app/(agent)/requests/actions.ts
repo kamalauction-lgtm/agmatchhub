@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { notifyAdmins } from "@/lib/notifications";
 
 const optNum = z
   .string()
@@ -230,6 +231,9 @@ export async function saveRequest(formData: FormData) {
     entityType: "property_request",
     entityId: requestId!,
   });
+  if (d.intent === "submit") {
+    await notifyAdmins({ kind: "admin.request_submitted", href: "/admin/requests" });
+  }
 
   redirect(`/requests/${requestId}${d.intent === "submit" ? "?submitted=1" : ""}`);
 }

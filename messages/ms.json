@@ -908,8 +908,14 @@
       "commission_accepted": "Susunan komisen diterima",
       "violation_reported": "Laporan pelanggaran difailkan",
       "disclosure_declared": "Pendedahan undang-undang baharu diisytiharkan",
-      "disclosure_acknowledged": "Pendedahan diakui oleh Requesting Agent"
-    }
+      "disclosure_acknowledged": "Pendedahan diakui oleh Requesting Agent",
+      "admin_agent_submitted": "Ejen baharu menunggu pengesahan",
+      "admin_request_submitted": "Keperluan baharu menunggu kelulusan",
+      "admin_violation_reported": "Laporan pelanggaran baharu difailkan"
+    },
+    "pushEnable": "Aktifkan notifikasi telefon",
+    "pushEnabled": "Notifikasi telefon aktif",
+    "pushDenied": "Notifikasi disekat dalam tetapan pelayar"
   },
   "commission": {
     "title": "Perjanjian komisen & co-broke",

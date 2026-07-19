@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { getSubmissionParties } from "@/lib/notifications";
+import { getSubmissionParties, notifyAdmins } from "@/lib/notifications";
 import { logAudit } from "@/lib/audit";
 
 const CATEGORIES = [
@@ -64,6 +64,11 @@ export async function reportViolation(formData: FormData) {
     entityType: "violation_report",
     entityId: humanId as string,
     reason: d.category,
+  });
+  await notifyAdmins({
+    kind: "admin.violation_reported",
+    payload: { ref: humanId as string },
+    href: "/admin/reports",
   });
 
   redirect(`${back}?reported=1`);
