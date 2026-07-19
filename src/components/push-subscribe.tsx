@@ -23,15 +23,24 @@ export function PushSubscribe({
   );
 
   useEffect(() => {
-    if (!("serviceWorker" in navigator) || !("PushManager" in window) || !vapidPublicKey) return;
-    if (Notification.permission === "denied") {
-      setState("denied");
-      return;
-    }
-    navigator.serviceWorker.ready.then(async (reg) => {
+    let cancelled = false;
+    (async () => {
+      // Defer a microtask so state updates never run synchronously inside
+      // the effect body (react-hooks/set-state-in-effect).
+      await Promise.resolve();
+      if (cancelled) return;
+      if (!("serviceWorker" in navigator) || !("PushManager" in window) || !vapidPublicKey) return;
+      if (Notification.permission === "denied") {
+        setState("denied");
+        return;
+      }
+      const reg = await navigator.serviceWorker.ready;
       const sub = await reg.pushManager.getSubscription();
-      setState(sub ? "subscribed" : "idle");
-    });
+      if (!cancelled) setState(sub ? "subscribed" : "idle");
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [vapidPublicKey]);
 
   if (state === "unsupported") return null;
