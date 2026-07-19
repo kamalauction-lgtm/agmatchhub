@@ -182,6 +182,18 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
         {field("internalNotes", t("internalNotes"),
           <textarea name="internalNotes" rows={2} placeholder={t("internalNotesHint")}
             defaultValue={v("internal_notes")} className={inputCls} />)}
+        <label className="flex items-start gap-3 rounded-lg bg-surface p-4 text-sm">
+          <input
+            type="checkbox"
+            name="publicListing"
+            defaultChecked={existing ? existing.public_listing !== false : true}
+            className="mt-0.5 h-4 w-4 accent-crimson"
+          />
+          <span>
+            <span className="block font-medium">{t("publicListing")}</span>
+            <span className="text-xs text-muted">{t("publicListingHint")}</span>
+          </span>
+        </label>
       </section>
 
       <div className="sticky bottom-16 z-10 -mx-2 flex gap-3 rounded-xl border border-line bg-background/95 p-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">

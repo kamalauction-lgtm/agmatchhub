@@ -40,6 +40,7 @@ export async function AgentShell({
             <Link href="/requests" className="hover:text-crimson">{t("requests")}</Link>
             <Link href="/submissions" className="hover:text-crimson">{t("submissions")}</Link>
             <Link href="/profile" className="hover:text-crimson">{t("profile")}</Link>
+            <Link href="/wanted" className="text-crimson hover:underline">{t("wanted")}</Link>
           </nav>
         </div>
         <div className="flex items-center gap-4">

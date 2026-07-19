@@ -21,7 +21,8 @@
       "controlBody": "Only properties you approve reach your client, through a secure private presentation link.",
       "audit": "Every step on the record",
       "auditBody": "Declarations, commission agreements and negotiations are versioned and audited."
-    }
+    },
+    "browseWanted": "Browse wanted properties"
   },
   "auth": {
     "loginTitle": "Agent sign in",
@@ -222,7 +223,8 @@
     "requests": "My requests",
     "submissions": "My submissions",
     "notifications": "Notifications",
-    "profile": "My profile"
+    "profile": "My profile",
+    "wanted": "Wanted board"
   },
   "requests": {
     "title": "My requests",
@@ -366,7 +368,9 @@
       "additionalAreaPlaceholder": "e.g. Selangor — Petaling Jaya",
       "addLocation": "Add another location",
       "removeLocation": "Remove location",
-      "draftSafetyNote": "Everything you type is kept safely on this device until saved — even if something goes wrong, reopen this page and it will be restored."
+      "draftSafetyNote": "Everything you type is kept safely on this device until saved — even if something goes wrong, reopen this page and it will be restored.",
+      "publicListing": "Show on the public Wanted board",
+      "publicListingHint": "Any agent can discover this requirement and submit properties without your access code. Untick to keep it link-and-password only."
     },
     "submissionsTitle": "Submitted properties",
     "checkFields": "Please check",
@@ -1176,5 +1180,26 @@
       "save_failed": "Could not save. Please try again.",
       "invalid_url": "Enter a valid http(s) link."
     }
+  },
+  "wanted": {
+    "agentSignIn": "Agent sign in",
+    "heroTitle": "Wanted: properties for real, verified buyers & tenants",
+    "heroBody": "Every card below is a live client requirement from a verified IQI AG agent. Have a matching property? Submit it and co-broke — protected, tracked and audited.",
+    "searchHint": "Search title or city…",
+    "anyCountry": "All countries",
+    "buyOrRent": "Buy or Rent",
+    "anyType": "All types",
+    "maxBudget": "Max budget",
+    "search": "Search",
+    "resultsTitle": "{count} wanted properties",
+    "emptyTitle": "No requirements match your filters",
+    "emptyBody": "Try widening the search — new requirements are posted continuously.",
+    "wantedBadge": "Wanted",
+    "upTo": "Up to",
+    "perMonth": "/month",
+    "deadline": "by",
+    "offerCta": "Offer your property",
+    "qrHint": "Scan to open this requirement on your phone",
+    "footerNote": "A private co-broke platform by IQI AG. Agents only."
   }
 }

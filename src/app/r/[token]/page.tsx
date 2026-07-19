@@ -37,7 +37,7 @@ export default async function RequestLinkPage({
 
   const { data: link } = await service
     .from("request_links")
-    .select("id, active, expires_at, request_id")
+    .select("id, active, expires_at, request_id, property_requests(public_listing)")
     .eq("token", token)
     .maybeSingle();
 
@@ -52,11 +52,17 @@ export default async function RequestLinkPage({
     );
   }
 
+  // Public-board requirements (§13 visibility) skip the access code; the
+  // full detail and submission still require a verified agent login.
+  const reqMeta = Array.isArray(link.property_requests)
+    ? link.property_requests[0]
+    : link.property_requests;
+  const isPublic = !!reqMeta?.public_listing;
+
   const cookieStore = await cookies();
-  const unlocked = verifyLinkSession(
-    cookieStore.get(linkCookieName(link.id))?.value,
-    link.id,
-  );
+  const unlocked =
+    isPublic ||
+    verifyLinkSession(cookieStore.get(linkCookieName(link.id))?.value, link.id);
 
   if (!unlocked) {
     return (

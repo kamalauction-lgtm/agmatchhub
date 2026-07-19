@@ -21,7 +21,8 @@
       "controlBody": "Hanya properti yang Anda setujui yang sampai ke klien Anda, melalui tautan presentasi privat yang aman.",
       "audit": "Setiap langkah tercatat",
       "auditBody": "Pernyataan, perjanjian komisi, dan negosiasi diberi versi dan diaudit."
-    }
+    },
+    "browseWanted": "Lihat properti dicari"
   },
   "auth": {
     "loginTitle": "Masuk agen",
@@ -222,7 +223,8 @@
     "requests": "Kebutuhan saya",
     "submissions": "Pengajuan saya",
     "notifications": "Notifikasi",
-    "profile": "Profil saya"
+    "profile": "Profil saya",
+    "wanted": "Papan Dicari"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -366,7 +368,9 @@
       "additionalAreaPlaceholder": "mis. Jawa Barat — Bandung",
       "addLocation": "Tambah lokasi lain",
       "removeLocation": "Hapus lokasi",
-      "draftSafetyNote": "Semua yang Anda ketik disimpan aman di perangkat ini sampai tersimpan — jika terjadi masalah, buka lagi halaman ini dan akan dipulihkan."
+      "draftSafetyNote": "Semua yang Anda ketik disimpan aman di perangkat ini sampai tersimpan — jika terjadi masalah, buka lagi halaman ini dan akan dipulihkan.",
+      "publicListing": "Tampilkan di papan Dicari publik",
+      "publicListingHint": "Agen mana pun dapat menemukan kebutuhan ini dan mengajukan properti tanpa kode akses Anda. Hapus centang agar tetap tautan-dan-kata-sandi saja."
     },
     "submissionsTitle": "Properti yang diajukan",
     "checkFields": "Silakan periksa",
@@ -1176,5 +1180,26 @@
       "save_failed": "Tidak dapat menyimpan. Silakan coba lagi.",
       "invalid_url": "Masukkan tautan http(s) yang valid."
     }
+  },
+  "wanted": {
+    "agentSignIn": "Masuk agen",
+    "heroTitle": "Dicari: properti untuk pembeli & penyewa nyata terverifikasi",
+    "heroBody": "Setiap kartu di bawah adalah kebutuhan klien nyata dari agen IQI AG terverifikasi. Punya properti yang cocok? Ajukan dan co-broke — terlindungi, terlacak, teraudit.",
+    "searchHint": "Cari judul atau kota…",
+    "anyCountry": "Semua negara",
+    "buyOrRent": "Beli atau Sewa",
+    "anyType": "Semua jenis",
+    "maxBudget": "Budget maksimal",
+    "search": "Cari",
+    "resultsTitle": "{count} properti dicari",
+    "emptyTitle": "Tidak ada kebutuhan yang cocok dengan filter",
+    "emptyBody": "Coba perluas pencarian — kebutuhan baru terus dipublikasikan.",
+    "wantedBadge": "Dicari",
+    "upTo": "Hingga",
+    "perMonth": "/bulan",
+    "deadline": "sebelum",
+    "offerCta": "Tawarkan properti Anda",
+    "qrHint": "Pindai untuk membuka kebutuhan ini di ponsel Anda",
+    "footerNote": "Platform co-broke privat oleh IQI AG. Khusus agen."
   }
 }

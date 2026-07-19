@@ -121,15 +121,18 @@ export async function submitProperty(formData: FormData) {
   const service = createServiceClient();
   const { data: link } = await service
     .from("request_links")
-    .select("id, request_id, active, expires_at")
+    .select("id, request_id, active, expires_at, property_requests(public_listing)")
     .eq("token", token)
     .maybeSingle();
   if (!link || !link.active || new Date(link.expires_at) < new Date()) {
     redirect(`/r/${encodeURIComponent(token)}`);
   }
-  const unlocked = verifyLinkSession(
-    (await cookies()).get(linkCookieName(link.id))?.value, link.id,
-  );
+  const reqMetaGate = Array.isArray(link.property_requests)
+    ? link.property_requests[0]
+    : link.property_requests;
+  const unlocked =
+    !!(reqMetaGate as { public_listing?: boolean } | null)?.public_listing ||
+    verifyLinkSession((await cookies()).get(linkCookieName(link.id))?.value, link.id);
   if (!unlocked) redirect(`/r/${encodeURIComponent(token)}`);
 
   const raw: Record<string, string> = {};

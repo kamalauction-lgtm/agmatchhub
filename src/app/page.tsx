@@ -36,6 +36,14 @@ export default async function LandingPage() {
           <p className="mx-auto mb-10 max-w-2xl text-lg leading-8 text-muted">
             {t("heroBody")}
           </p>
+          <div className="mb-4 flex justify-center">
+            <Link
+              href="/wanted"
+              className="rounded-lg border-2 border-crimson px-6 py-3 font-semibold text-crimson transition-colors hover:bg-crimson hover:text-white"
+            >
+              {t("browseWanted")} →
+            </Link>
+          </div>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/register"

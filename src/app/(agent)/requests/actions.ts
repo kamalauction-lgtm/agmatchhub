@@ -70,6 +70,7 @@ const schema = z.object({
   expectedMoveIn: optDate,
   internalNotes: optText,
   alternativeAreas: optText,
+  publicListing: z.literal("on").optional(),
 });
 
 const laxInt = laxNum.transform((n) => (n == null ? null : Math.trunc(n)));
@@ -114,6 +115,7 @@ export async function saveRequest(formData: FormData) {
       "expectedMoveIn", "internalNotes", "alternativeAreas",
     ].map((k) => [k, String(formData.get(k) ?? "")]),
   );
+  if (formData.get("publicListing") === "on") raw.publicListing = "on";
   const back = raw.id ? `/requests/${raw.id}/edit` : "/requests/new";
   const isDraft = raw.intent !== "submit";
 
@@ -167,6 +169,7 @@ export async function saveRequest(formData: FormData) {
     alternative_areas: d.alternativeAreas
       ? d.alternativeAreas.split(",").map((s) => s.trim()).filter(Boolean)
       : [],
+    public_listing: d.publicListing === "on",
   };
 
   let requestId = d.id || null;

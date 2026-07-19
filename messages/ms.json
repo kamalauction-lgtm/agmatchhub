@@ -21,7 +21,8 @@
       "controlBody": "Hanya hartanah yang anda luluskan sampai kepada pelanggan anda, melalui pautan pembentangan peribadi yang selamat.",
       "audit": "Setiap langkah direkodkan",
       "auditBody": "Deklarasi, perjanjian komisen dan rundingan diversikan dan diaudit."
-    }
+    },
+    "browseWanted": "Lihat hartanah dicari"
   },
   "auth": {
     "loginTitle": "Log masuk ejen",
@@ -222,7 +223,8 @@
     "requests": "Keperluan saya",
     "submissions": "Penyerahan saya",
     "notifications": "Notifikasi",
-    "profile": "Profil saya"
+    "profile": "Profil saya",
+    "wanted": "Papan Dicari"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -366,7 +368,9 @@
       "additionalAreaPlaceholder": "cth. Selangor — Petaling Jaya",
       "addLocation": "Tambah lokasi lain",
       "removeLocation": "Buang lokasi",
-      "draftSafetyNote": "Semua yang anda taip disimpan dengan selamat pada peranti ini sehingga disimpan — jika berlaku masalah, buka semula halaman ini dan ia akan dipulihkan."
+      "draftSafetyNote": "Semua yang anda taip disimpan dengan selamat pada peranti ini sehingga disimpan — jika berlaku masalah, buka semula halaman ini dan ia akan dipulihkan.",
+      "publicListing": "Papar pada papan Dicari awam",
+      "publicListingHint": "Mana-mana ejen boleh menemui keperluan ini dan menghantar hartanah tanpa kod akses anda. Nyahtanda untuk kekal pautan-dan-kata-laluan sahaja."
     },
     "submissionsTitle": "Hartanah yang diserahkan",
     "checkFields": "Sila semak",
@@ -1176,5 +1180,26 @@
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
       "invalid_url": "Masukkan pautan http(s) yang sah."
     }
+  },
+  "wanted": {
+    "agentSignIn": "Log masuk ejen",
+    "heroTitle": "Dicari: hartanah untuk pembeli & penyewa sebenar yang disahkan",
+    "heroBody": "Setiap kad di bawah ialah keperluan pelanggan sebenar daripada ejen IQI AG yang disahkan. Ada hartanah yang sepadan? Hantar dan co-broke — dilindungi, dijejak dan diaudit.",
+    "searchHint": "Cari tajuk atau bandar…",
+    "anyCountry": "Semua negara",
+    "buyOrRent": "Beli atau Sewa",
+    "anyType": "Semua jenis",
+    "maxBudget": "Bajet maksimum",
+    "search": "Cari",
+    "resultsTitle": "{count} hartanah dicari",
+    "emptyTitle": "Tiada keperluan sepadan dengan tapisan anda",
+    "emptyBody": "Cuba luaskan carian — keperluan baharu disiarkan dari semasa ke semasa.",
+    "wantedBadge": "Dicari",
+    "upTo": "Sehingga",
+    "perMonth": "/bulan",
+    "deadline": "sebelum",
+    "offerCta": "Tawarkan hartanah anda",
+    "qrHint": "Imbas untuk buka keperluan ini di telefon anda",
+    "footerNote": "Platform co-broke persendirian oleh IQI AG. Ejen sahaja."
   }
 }
