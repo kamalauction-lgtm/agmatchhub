@@ -755,7 +755,8 @@
       },
       "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda.",
       "propertyName": "Hartanah",
-      "downloadExcel": "Muat turun Excel"
+      "downloadExcel": "Muat turun Excel",
+      "preparedBy": "Disediakan oleh"
     },
     "disclosuresTitle": "Pendedahan daripada ejen anda",
     "disclosuresNote": "Perkara ini dinyatakan untuk makluman anda. Jika melibatkan aspek undang-undang, nasihat undang-undang bebas disyorkan sebelum membuat komitmen.",

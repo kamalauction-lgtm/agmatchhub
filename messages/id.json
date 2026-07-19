@@ -755,7 +755,8 @@
       },
       "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda.",
       "propertyName": "Properti",
-      "downloadExcel": "Unduh Excel"
+      "downloadExcel": "Unduh Excel",
+      "preparedBy": "Disiapkan oleh"
     },
     "disclosuresTitle": "Pengungkapan dari agen Anda",
     "disclosuresNote": "Hal-hal ini disampaikan untuk diketahui. Bila menyangkut aspek hukum, disarankan meminta nasihat hukum independen sebelum berkomitmen.",

@@ -3,11 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getClientSafeProperties } from "@/lib/projections/client-safe";
+import { buildComparisonXlsx } from "@/lib/xlsx-lite";
 
 /**
- * Excel-compatible comparison export (§23 + §11 download permission).
+ * Styled Excel comparison export (§23 + §11 download permission).
  * Same client-safe projection as the page — nothing extra can leak.
- * CSV with UTF-8 BOM: opens directly in Excel with proper columns.
  */
 export async function GET(
   _request: Request,
@@ -18,7 +18,7 @@ export async function GET(
   const service = createServiceClient();
   const { data: p } = await service
     .from("client_presentations")
-    .select("id, title, active, expires_at, allow_comparison")
+    .select("id, title, active, expires_at, allow_comparison, profiles(display_name)")
     .eq("token", token)
     .maybeSingle();
   if (!p || !p.active || !p.allow_comparison || new Date(p.expires_at) < new Date()) {
@@ -32,56 +32,60 @@ export async function GET(
   const t = await getTranslations("clientView");
   const tc = await getTranslations("clientView.compare");
   const properties = (await getClientSafeProperties(p.id)).slice(0, 5);
+  const ra = Array.isArray(p.profiles) ? p.profiles[0] : p.profiles;
 
   const money = (cur: string, n: number | null) =>
-    n == null ? "" : `${cur} ${n.toLocaleString("en-US")}`;
+    n == null ? "—" : `${cur} ${n.toLocaleString("en-US")}`;
 
-  const header = [
-    "#", tc("propertyName"), tc("price"), tc("monthlyRent"), tc("location"),
-    tc("type"), tc("builtUp"), tc("pricePerArea"), tc("bedrooms"), tc("bathrooms"),
-    tc("carParks"), tc("furnishing"), tc("condition"), tc("floor"),
-    tc("facilities"), tc("negotiable"), tc("agentNotes"),
+  const rows = [
+    { label: tc("price"), values: properties.map((pr) => money(pr.currency, pr.price)), emphasis: true },
+    { label: tc("monthlyRent"), values: properties.map((pr) => money(pr.currency, pr.monthlyRental)) },
+    { label: tc("location"), values: properties.map((pr) => pr.generalLocation) },
+    { label: tc("type"), values: properties.map((pr) => pr.propertyType ?? "—") },
+    {
+      label: tc("builtUp"),
+      values: properties.map((pr) =>
+        pr.builtUp != null ? `${pr.builtUp.toLocaleString("en-US")} ${pr.measurementUnit}` : "—",
+      ),
+    },
+    {
+      label: tc("pricePerArea"),
+      values: properties.map((pr) =>
+        pr.price != null && pr.builtUp
+          ? `${pr.currency} ${(pr.price / pr.builtUp).toFixed(0)}/${pr.measurementUnit}`
+          : "—",
+      ),
+    },
+    { label: tc("bedrooms"), values: properties.map((pr) => pr.bedrooms?.toString() ?? "—") },
+    { label: tc("bathrooms"), values: properties.map((pr) => pr.bathrooms?.toString() ?? "—") },
+    { label: tc("carParks"), values: properties.map((pr) => pr.carParks?.toString() ?? "—") },
+    {
+      label: tc("furnishing"),
+      values: properties.map((pr) => (pr.furnishing ? t(`furnishing.${pr.furnishing}`) : "—")),
+    },
+    { label: tc("condition"), values: properties.map((pr) => pr.condition ?? "—") },
+    { label: tc("floor"), values: properties.map((pr) => pr.floorLevel ?? "—") },
+    {
+      label: tc("facilities"),
+      values: properties.map((pr) => (pr.facilities.length ? pr.facilities.join(", ") : "—")),
+    },
+    { label: tc("negotiable"), values: properties.map((pr) => tc(`negotiableValues.${pr.negotiable}`)) },
+    { label: tc("agentNotes"), values: properties.map((pr) => pr.agentNote ?? "—") },
   ];
 
-  const dataRows = properties.map((pr, i) => [
-    String(i + 1),
-    pr.title,
-    money(pr.currency, pr.price),
-    money(pr.currency, pr.monthlyRental),
-    pr.generalLocation,
-    pr.propertyType ?? "",
-    pr.builtUp != null ? `${pr.builtUp} ${pr.measurementUnit}` : "",
-    pr.price != null && pr.builtUp
-      ? `${pr.currency} ${(pr.price / pr.builtUp).toFixed(0)}/${pr.measurementUnit}`
-      : "",
-    pr.bedrooms?.toString() ?? "",
-    pr.bathrooms?.toString() ?? "",
-    pr.carParks?.toString() ?? "",
-    pr.furnishing ? t(`furnishing.${pr.furnishing}`) : "",
-    pr.condition ?? "",
-    pr.floorLevel ?? "",
-    pr.facilities.join("; "),
-    tc(`negotiableValues.${pr.negotiable}`),
-    pr.agentNote ?? "",
-  ]);
+  const xlsx = buildComparisonXlsx({
+    title: p.title,
+    subtitle: `${tc("preparedBy")} ${ra?.display_name ?? ""} · IQI AG MatchHub`,
+    properties: properties.map((pr, i) => `${i + 1}. ${pr.title}`),
+    rows,
+    footers: [tc("missingNote"), t("disclaimerShort")],
+  });
 
-  const esc = (v: string) => `"${v.replaceAll('"', '""')}"`;
-  const lines = [
-    [p.title],
-    [],
-    header,
-    ...dataRows,
-    [],
-    [tc("missingNote")],
-    [t("disclaimerShort")],
-  ].map((row) => row.map((c) => esc(String(c ?? ""))).join(","));
-
-  const csv = "﻿" + lines.join("\r\n");
-
-  return new Response(csv, {
+  return new Response(new Uint8Array(xlsx), {
     headers: {
-      "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename="matchhub-comparison.csv"`,
+      "Content-Type":
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "Content-Disposition": `attachment; filename="matchhub-comparison.xlsx"`,
       "Cache-Control": "no-store",
     },
   });

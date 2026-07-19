@@ -755,7 +755,8 @@
       },
       "missingNote": "— means the information was not provided. Nothing is estimated on your behalf.",
       "propertyName": "Property",
-      "downloadExcel": "Download Excel"
+      "downloadExcel": "Download Excel",
+      "preparedBy": "Prepared by"
     },
     "disclosuresTitle": "Disclosures from your agent",
     "disclosuresNote": "These matters are stated for your awareness. Where legal aspects are involved, independent legal advice is recommended before committing.",
