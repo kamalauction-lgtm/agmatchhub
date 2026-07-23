@@ -28,7 +28,9 @@ const optText = z.string().trim().max(5000).transform((v) => (v === "" ? null : 
 
 /** Draft-mode variants: a draft save must (almost) never be rejected. */
 const laxNum = z.string().transform((v) => {
-  const n = Number(String(v).trim());
+  const s = String(v).trim();
+  if (s === "") return null; // Number("") is 0 — an empty field must stay null
+  const n = Number(s);
   return Number.isFinite(n) && n >= 0 ? n : null;
 });
 const laxDate = z.string().transform((v) =>
@@ -55,6 +57,7 @@ const schema = z.object({
   budgetMin: optNum,
   budgetMax: optNum,
   maxMonthlyRent: optNum,
+  rentPeriod: z.enum(["monthly", "yearly"]).catch("monthly"),
   leaseTermMonths: optInt,
   financing: z.enum(["", "cash", "financing", "pre_approved", "undecided"]),
   propertyType: optText,
@@ -109,7 +112,7 @@ export async function saveRequest(formData: FormData) {
       "id", "intent", "title", "description", "transactionType", "propertyCategory",
       "clientType", "priority", "submissionDeadline", "expiryDate", "countryCode",
       "stateRegion", "city", "district", "preferredAreas", "currency", "budgetMin",
-      "budgetMax", "maxMonthlyRent", "leaseTermMonths", "financing", "propertyType",
+      "budgetMax", "maxMonthlyRent", "rentPeriod", "leaseTermMonths", "financing", "propertyType",
       "measurementUnit", "minBuiltUp", "maxBuiltUp", "bedroomsMin", "bathroomsMin",
       "carParksMin", "furnishing", "otherRequirements", "clientProfileAnonymised",
       "expectedMoveIn", "internalNotes", "alternativeAreas",
@@ -153,6 +156,7 @@ export async function saveRequest(formData: FormData) {
     budget_min: d.budgetMin,
     budget_max: d.budgetMax,
     max_monthly_rent: d.maxMonthlyRent,
+    rent_period: d.rentPeriod,
     lease_term_months: d.leaseTermMonths,
     financing: d.financing || null,
     property_type: d.propertyType,
@@ -173,18 +177,20 @@ export async function saveRequest(formData: FormData) {
   };
 
   let requestId = d.id || null;
+  let editedLive = false;
 
   if (requestId) {
+    const trackedCols = Object.keys(row).filter((k) => k !== "requesting_agent_id");
     const { data: existing } = await supabase
       .from("property_requests")
-      .select("status")
+      .select(`status, ${trackedCols.join(", ")}`)
       .eq("id", requestId)
-      .single();
+      .single<Record<string, unknown> & { status: string }>();
     if (!existing) redirect("/requests?error=not_found");
     const newStatus =
       d.intent === "submit"
         ? existing.status === "amendment_required" ? "resubmitted" : "pending_admin_approval"
-        : existing.status; // keep draft/amendment_required while saving
+        : existing.status; // plain saves never move the workflow status
     const { error } = await supabase
       .from("property_requests")
       .update({ ...row, status: newStatus })
@@ -192,6 +198,26 @@ export async function saveRequest(formData: FormData) {
     if (error) {
       console.error("[request.save] update failed:", error.code, error.message);
       redirect(`/requests/${requestId}/edit?error=save_failed&code=${error.code ?? "unknown"}`);
+    }
+
+    // §9 full edit history: record what actually changed, field by field.
+    const norm = (v: unknown) =>
+      Array.isArray(v) ? v.join(", ") : v == null ? "" : String(v);
+    const changes: Record<string, { from: string; to: string }> = {};
+    for (const col of trackedCols) {
+      const before = norm(existing[col]);
+      const after = norm((row as Record<string, unknown>)[col]);
+      if (before !== after) {
+        changes[col] = { from: before.slice(0, 200), to: after.slice(0, 200) };
+      }
+    }
+    if (Object.keys(changes).length) {
+      await supabase.from("request_edit_log").insert({
+        request_id: requestId,
+        edited_by: user.id,
+        changes,
+      });
+      editedLive = !["draft", "amendment_required", "pending_admin_approval"].includes(existing.status);
     }
   } else {
     const { data: humanId, error: idErr } = await supabase.rpc("next_human_id", {
@@ -236,6 +262,21 @@ export async function saveRequest(formData: FormData) {
   });
   if (d.intent === "submit") {
     await notifyAdmins({ kind: "admin.request_submitted", href: "/admin/requests" });
+  }
+
+  // Tell agents who already submitted that the live requirement changed.
+  if (editedLive) {
+    const { notify } = await import("@/lib/notifications");
+    const { createServiceClient } = await import("@/lib/supabase/service");
+    const service = createServiceClient();
+    const { data: subs } = await service
+      .from("property_submissions")
+      .select("supply_agent_id")
+      .eq("request_id", requestId!);
+    const saIds = [...new Set((subs ?? []).map((s) => s.supply_agent_id))];
+    for (const saId of saIds) {
+      await notify({ userId: saId, kind: "requirement.updated", href: "/submissions" });
+    }
   }
 
   redirect(`/requests/${requestId}${d.intent === "submit" ? "?submitted=1" : ""}`);

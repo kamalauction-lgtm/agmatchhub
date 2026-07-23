@@ -128,9 +128,14 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
               ))}
             </select>)}
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {field("maxMonthlyRent", t("maxMonthlyRent"),
+        <div className="grid gap-4 sm:grid-cols-3">
+          {field("maxMonthlyRent", t("maxRent"),
             <input type="number" min="0" step="0.01" name="maxMonthlyRent" defaultValue={v("max_monthly_rent")} className={inputCls} />)}
+          {field("rentPeriod", t("rentPeriod"),
+            <select name="rentPeriod" defaultValue={v("rent_period") || "monthly"} className={inputCls}>
+              <option value="monthly">{t("periods.monthly")}</option>
+              <option value="yearly">{t("periods.yearly")}</option>
+            </select>)}
           {field("leaseTermMonths", t("leaseTermMonths"),
             <input type="number" min="0" step="1" name="leaseTermMonths" defaultValue={v("lease_term_months")} className={inputCls} />)}
         </div>
@@ -197,14 +202,25 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
       </section>
 
       <div className="sticky bottom-16 z-10 -mx-2 flex gap-3 rounded-xl border border-line bg-background/95 p-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-        <button name="intent" value="draft" type="submit"
-          className="flex-1 rounded-lg border border-line px-5 py-3 font-semibold hover:border-crimson hover:text-crimson sm:flex-none">
-          {t("saveDraft")}
-        </button>
-        <button name="intent" value="submit" type="submit"
-          className="flex-1 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong sm:flex-none">
-          {t("submitForApproval")}
-        </button>
+        {existing && !["draft", "amendment_required", undefined].includes(existing.status as string) ? (
+          // Live requirement (§9 edit-anytime): plain save, status unchanged,
+          // every change lands in the edit log.
+          <button name="intent" value="draft" type="submit"
+            className="flex-1 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong sm:flex-none">
+            {t("saveChanges")}
+          </button>
+        ) : (
+          <>
+            <button name="intent" value="draft" type="submit"
+              className="flex-1 rounded-lg border border-line px-5 py-3 font-semibold hover:border-crimson hover:text-crimson sm:flex-none">
+              {t("saveDraft")}
+            </button>
+            <button name="intent" value="submit" type="submit"
+              className="flex-1 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong sm:flex-none">
+              {t("submitForApproval")}
+            </button>
+          </>
+        )}
       </div>
       <p className="text-xs text-muted">{t("draftSafetyNote")}</p>
     </form>

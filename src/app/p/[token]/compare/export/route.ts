@@ -39,7 +39,8 @@ export async function GET(
 
   const rows = [
     { label: tc("price"), values: properties.map((pr) => money(pr.currency, pr.price)), emphasis: true },
-    { label: tc("monthlyRent"), values: properties.map((pr) => money(pr.currency, pr.monthlyRental)) },
+    { label: tc("rent"), values: properties.map((pr) => pr.monthlyRental == null ? "—"
+      : `${money(pr.currency, pr.monthlyRental)} ${pr.rentPeriod === "yearly" ? t("perYear") : t("perMonth")}`) },
     { label: tc("location"), values: properties.map((pr) => pr.generalLocation) },
     { label: tc("type"), values: properties.map((pr) => pr.propertyType ?? "—") },
     {

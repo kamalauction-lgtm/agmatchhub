@@ -37,7 +37,7 @@ export default async function WantedBoardPage({
     .select(
       `id, human_readable_id, title, transaction_type, property_category,
        property_type, city, state_region, country_code, currency, budget_min,
-       budget_max, max_monthly_rent, bedrooms_min, min_built_up,
+       budget_max, max_monthly_rent, rent_period, bedrooms_min, min_built_up,
        measurement_unit, submission_deadline, preferred_areas,
        client_profile_anonymised, created_at,
        request_links ( token, active, expires_at )`,
@@ -194,7 +194,7 @@ export default async function WantedBoardPage({
                     <p className="mb-3 text-lg font-bold text-crimson">
                       {t("upTo")} {budget}
                       {r.transaction_type === "rent" && (
-                        <span className="text-xs font-medium text-muted"> {t("perMonth")}</span>
+                        <span className="text-xs font-medium text-muted"> {r.rent_period === "yearly" ? t("perYear") : t("perMonth")}</span>
                       )}
                     </p>
                   )}

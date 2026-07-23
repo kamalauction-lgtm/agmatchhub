@@ -370,11 +370,21 @@
       "removeLocation": "Hapus lokasi",
       "draftSafetyNote": "Semua yang Anda ketik disimpan aman di perangkat ini sampai tersimpan — jika terjadi masalah, buka lagi halaman ini dan akan dipulihkan.",
       "publicListing": "Tampilkan di papan Dicari publik",
-      "publicListingHint": "Agen mana pun dapat menemukan kebutuhan ini dan mengajukan properti tanpa kode akses Anda. Hapus centang agar tetap tautan-dan-kata-sandi saja."
+      "publicListingHint": "Agen mana pun dapat menemukan kebutuhan ini dan mengajukan properti tanpa kode akses Anda. Hapus centang agar tetap tautan-dan-kata-sandi saja.",
+      "maxRent": "Sewa maksimum",
+      "rentPeriod": "Periode sewa",
+      "periods": {
+        "monthly": "Bulanan",
+        "yearly": "Tahunan"
+      },
+      "saveChanges": "Simpan perubahan"
     },
     "submissionsTitle": "Properti yang diajukan",
     "checkFields": "Silakan periksa",
-    "dataKeptNote": "Data yang Anda masukkan masih ada — tidak ada yang hilang."
+    "dataKeptNote": "Data yang Anda masukkan masih ada — tidak ada yang hilang.",
+    "editLog": {
+      "title": "Riwayat perubahan"
+    }
   },
   "adminRequests": {
     "title": "Persetujuan kebutuhan",
@@ -542,7 +552,9 @@
       "country": "Negara",
       "countryHint": "Ketik untuk mencari negara mana pun. Kosongkan untuk memakai negara kebutuhan.",
       "listingSplit": "% pihak listing (Anda)",
-      "buyerSplit": "% pihak pembeli (requesting agent)"
+      "buyerSplit": "% pihak pembeli (requesting agent)",
+      "rentAmount": "Jumlah sewa",
+      "rentPeriod": "Periode sewa"
     },
     "errors": {
       "invalid_fields": "Periksa kolom lalu coba lagi.",
@@ -556,7 +568,11 @@
     },
     "optionalHint": "Hanya judul properti yang wajib — isi yang ada lalu kirim. Bisa ditambah nanti.",
     "splitTitle": "Usulan pembagian komisi",
-    "splitHint": "Default 50:50. Ubah jika ketentuan Anda berbeda — ini menjadi usulan pembuka yang dapat diterima atau dibalas requesting agent setelah pengajuan."
+    "splitHint": "Default 50:50. Ubah jika ketentuan Anda berbeda — ini menjadi usulan pembuka yang dapat diterima atau dibalas requesting agent setelah pengajuan.",
+    "periods": {
+      "monthly": "Bulanan",
+      "yearly": "Tahunan"
+    }
   },
   "submissions": {
     "title": "Pengajuan saya",
@@ -767,11 +783,13 @@
       "missingNote": "— berarti informasi tidak diberikan. Tidak ada yang diperkirakan atas nama Anda.",
       "propertyName": "Properti",
       "downloadExcel": "Unduh Excel",
-      "preparedBy": "Disiapkan oleh"
+      "preparedBy": "Disiapkan oleh",
+      "rent": "Sewa"
     },
     "disclosuresTitle": "Pengungkapan dari agen Anda",
     "disclosuresNote": "Hal-hal ini disampaikan untuk diketahui. Bila menyangkut aspek hukum, disarankan meminta nasihat hukum independen sebelum berkomitmen.",
-    "disclaimerShort": "Informasi tunduk pada konfirmasi. Hanya untuk perbandingan awal — bukan penawaran mengikat, penilaian atau nasihat."
+    "disclaimerShort": "Informasi tunduk pada konfirmasi. Hanya untuk perbandingan awal — bukan penawaran mengikat, penilaian atau nasihat.",
+    "perYear": "/tahun"
   },
   "collab": {
     "errors": {
@@ -926,7 +944,8 @@
       "disclosure_acknowledged": "Pengungkapan diakui oleh Requesting Agent",
       "admin_agent_submitted": "Agen baru menunggu verifikasi",
       "admin_request_submitted": "Kebutuhan baru menunggu persetujuan",
-      "admin_violation_reported": "Laporan pelanggaran baru diajukan"
+      "admin_violation_reported": "Laporan pelanggaran baru diajukan",
+      "requirement_updated": "Kebutuhan yang Anda kirimkan properti telah diperbarui"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -1200,6 +1219,7 @@
     "deadline": "sebelum",
     "offerCta": "Tawarkan properti Anda",
     "qrHint": "Pindai untuk membuka kebutuhan ini di ponsel Anda",
-    "footerNote": "Platform co-broke privat oleh IQI AG. Khusus agen."
+    "footerNote": "Platform co-broke privat oleh IQI AG. Khusus agen.",
+    "perYear": "/tahun"
   }
 }

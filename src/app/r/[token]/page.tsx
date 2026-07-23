@@ -99,7 +99,7 @@ export default async function RequestLinkPage({
   const { data: r } = await service
     .from("property_requests")
     .select(
-      "human_readable_id, title, description, transaction_type, property_category, priority, submission_deadline, expiry_date, country_code, state_region, city, district, preferred_areas, currency, budget_min, budget_max, max_monthly_rent, lease_term_months, financing, property_type, measurement_unit, min_built_up, max_built_up, bedrooms_min, bathrooms_min, car_parks_min, furnishing, other_requirements, client_profile_anonymised, expected_move_in, status, profiles(display_name)",
+      "human_readable_id, title, description, transaction_type, property_category, priority, submission_deadline, expiry_date, country_code, state_region, city, district, preferred_areas, currency, budget_min, budget_max, max_monthly_rent, rent_period, lease_term_months, financing, property_type, measurement_unit, min_built_up, max_built_up, bedrooms_min, bathrooms_min, car_parks_min, furnishing, other_requirements, client_profile_anonymised, expected_move_in, status, profiles(display_name)",
     )
     .eq("id", link.request_id)
     .single();
@@ -132,7 +132,8 @@ export default async function RequestLinkPage({
     [tr("form.preferredAreas"), r.preferred_areas?.length ? r.preferred_areas.join(", ") : null],
     [tr("form.budgetMin"), money(r.budget_min)],
     [tr("form.budgetMax"), money(r.budget_max)],
-    [tr("form.maxMonthlyRent"), money(r.max_monthly_rent)],
+    [tr("form.maxRent"), r.max_monthly_rent == null ? null
+      : `${money(r.max_monthly_rent)} / ${tr(`form.periods.${r.rent_period ?? "monthly"}`)}`],
     [tr("form.propertyType"), r.property_type],
     [tr("form.bedroomsMin"), r.bedrooms_min?.toString() ?? null],
     [tr("form.minBuiltUp"), r.min_built_up ? `${Number(r.min_built_up).toLocaleString()} ${r.measurement_unit}` : null],

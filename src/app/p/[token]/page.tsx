@@ -145,7 +145,7 @@ export default async function ClientPresentationPage({
                   <p className="text-lg font-bold whitespace-nowrap text-crimson">
                     {money(prop.currency, prop.price) ?? money(prop.currency, prop.monthlyRental)}
                     {prop.monthlyRental != null && prop.price == null && (
-                      <span className="text-xs font-normal text-muted"> {t("perMonth")}</span>
+                      <span className="text-xs font-normal text-muted"> {prop.rentPeriod === "yearly" ? t("perYear") : t("perMonth")}</span>
                     )}
                   </p>
                 </div>

@@ -41,7 +41,8 @@ export default async function ComparePage({
 
   const rows: [string, (prop: (typeof properties)[number]) => string][] = [
     [tc("price"), (pr) => money(pr.currency, pr.price)],
-    [tc("monthlyRent"), (pr) => money(pr.currency, pr.monthlyRental)],
+    [tc("rent"), (pr) => pr.monthlyRental == null ? "—"
+      : `${money(pr.currency, pr.monthlyRental)} ${pr.rentPeriod === "yearly" ? t("perYear") : t("perMonth")}`],
     [tc("location"), (pr) => pr.generalLocation],
     [tc("type"), (pr) => pr.propertyType ?? "—"],
     [tc("builtUp"), (pr) => (pr.builtUp != null ? `${pr.builtUp.toLocaleString()} ${pr.measurementUnit}` : "—")],

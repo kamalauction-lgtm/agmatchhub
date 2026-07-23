@@ -22,6 +22,7 @@ export type ClientSafeProperty = {
   generalLocation: string;
   price: number | null;
   monthlyRental: number | null;
+  rentPeriod: string;
   currency: string;
   negotiable: string;
   builtUp: number | null;
@@ -57,7 +58,7 @@ export async function getClientSafeProperties(
       `id, position, custom_note,
        property_submissions (
          id, title, property_category, property_type, city, district, state_region,
-         general_address, currency, asking_price, monthly_rental, negotiable,
+         general_address, currency, asking_price, monthly_rental, rent_period, negotiable,
          measurement_unit, built_up, land_area, bedrooms, bathrooms, car_parks,
          floor_level, furnishing, property_condition, facilities, description,
          key_selling_points, nearby_amenities, client_safe_remarks,
@@ -114,6 +115,7 @@ export async function getClientSafeProperties(
         [s.district, s.city, s.state_region].filter(Boolean).join(", "),
       price: s.asking_price == null ? null : Number(s.asking_price),
       monthlyRental: s.monthly_rental == null ? null : Number(s.monthly_rental),
+      rentPeriod: s.rent_period ?? "monthly",
       currency: s.currency,
       negotiable: s.negotiable,
       builtUp: s.built_up == null ? null : Number(s.built_up),

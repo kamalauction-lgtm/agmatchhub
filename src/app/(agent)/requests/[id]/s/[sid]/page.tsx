@@ -91,7 +91,8 @@ export default async function SubmissionReviewPage({
     [tsub("f.city"), [s.district, s.city, s.state_region].filter(Boolean).join(", ")],
     [tsub("f.buildingName"), s.building_name],
     [tsub("f.askingPrice"), money(s.asking_price)],
-    [tsub("f.monthlyRental"), money(s.monthly_rental)],
+    [tsub("f.rentAmount"), s.monthly_rental == null ? null
+      : `${money(s.monthly_rental)} / ${tsub(`periods.${s.rent_period ?? "monthly"}`)}`],
     [tsub("f.negotiable"), s.negotiable === "yes" ? tsub("f.negYes") : s.negotiable === "no" ? tsub("f.negNo") : tsub("f.negSubject")],
     [tsub("f.builtUp"), s.built_up ? `${Number(s.built_up).toLocaleString()} ${s.measurement_unit}` : null],
     [tsub("f.bedrooms"), s.bedrooms?.toString() ?? null],

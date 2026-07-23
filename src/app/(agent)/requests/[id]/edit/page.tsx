@@ -22,7 +22,10 @@ export default async function EditRequestPage({
   ]);
   if (!request) notFound();
   Object.assign(request, { internal_notes: priv?.internal_notes ?? null });
-  if (!["draft", "amendment_required"].includes(request.status)) redirect(`/requests/${id}`);
+  // §9: the RA may edit at any live stage; only terminal states are locked.
+  if (["cancelled", "archived", "frozen", "successfully_closed"].includes(request.status)) {
+    redirect(`/requests/${id}`);
+  }
 
   const t = await getTranslations("requests");
 

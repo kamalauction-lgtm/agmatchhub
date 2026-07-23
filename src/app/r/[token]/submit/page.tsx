@@ -171,15 +171,20 @@ export default async function SubmitPropertyPage({
           </Section>
 
           <Section title={t("sectionPricing")}>
-            <div className="grid gap-4 sm:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-5">
               {field("currency", t("f.currency"),
                 <select name="currency" defaultValue={request?.currency ?? "MYR"} className={inputCls}>
                   {(currencies ?? []).map((c) => <option key={c.code} value={c.code}>{c.code}</option>)}
                 </select>)}
               {field("askingPrice", t("f.askingPrice"),
                 <input type="number" min="0" step="0.01" name="askingPrice" className={inputCls} />)}
-              {field("monthlyRental", t("f.monthlyRental"),
+              {field("monthlyRental", t("f.rentAmount"),
                 <input type="number" min="0" step="0.01" name="monthlyRental" className={inputCls} />)}
+              {field("rentPeriod", t("f.rentPeriod"),
+                <select name="rentPeriod" defaultValue="monthly" className={inputCls}>
+                  <option value="monthly">{t("periods.monthly")}</option>
+                  <option value="yearly">{t("periods.yearly")}</option>
+                </select>)}
               {field("negotiable", t("f.negotiable"),
                 <select name="negotiable" defaultValue="subject_to_offer" className={inputCls}>
                   <option value="yes">{t("f.negYes")}</option>

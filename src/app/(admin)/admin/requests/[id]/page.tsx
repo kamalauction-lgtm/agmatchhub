@@ -54,7 +54,8 @@ export default async function AdminRequestDetail({
     [tr("form.preferredAreas"), r.preferred_areas?.length ? r.preferred_areas.join(", ") : null],
     [tr("form.budgetMin"), money(r.budget_min)],
     [tr("form.budgetMax"), money(r.budget_max)],
-    [tr("form.maxMonthlyRent"), money(r.max_monthly_rent)],
+    [tr("form.maxRent"), r.max_monthly_rent == null ? null
+      : `${money(r.max_monthly_rent)} / ${tr(`form.periods.${r.rent_period ?? "monthly"}`)}`],
     [tr("form.propertyType"), r.property_type],
     [tr("form.minBuiltUp"), r.min_built_up ? `${Number(r.min_built_up).toLocaleString()} ${r.measurement_unit}` : null],
     [tr("form.submissionDeadline"), r.submission_deadline],

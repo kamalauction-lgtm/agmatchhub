@@ -370,11 +370,21 @@
       "removeLocation": "Remove location",
       "draftSafetyNote": "Everything you type is kept safely on this device until saved — even if something goes wrong, reopen this page and it will be restored.",
       "publicListing": "Show on the public Wanted board",
-      "publicListingHint": "Any agent can discover this requirement and submit properties without your access code. Untick to keep it link-and-password only."
+      "publicListingHint": "Any agent can discover this requirement and submit properties without your access code. Untick to keep it link-and-password only.",
+      "maxRent": "Max rent",
+      "rentPeriod": "Rent period",
+      "periods": {
+        "monthly": "Monthly",
+        "yearly": "Yearly"
+      },
+      "saveChanges": "Save changes"
     },
     "submissionsTitle": "Submitted properties",
     "checkFields": "Please check",
-    "dataKeptNote": "Your entered data is still here — nothing was lost."
+    "dataKeptNote": "Your entered data is still here — nothing was lost.",
+    "editLog": {
+      "title": "Edit history"
+    }
   },
   "adminRequests": {
     "title": "Request approval",
@@ -542,7 +552,9 @@
       "country": "Country",
       "countryHint": "Type to search any country. Leave blank to use the requirement country.",
       "listingSplit": "Listing side % (you)",
-      "buyerSplit": "Buyer side % (requesting agent)"
+      "buyerSplit": "Buyer side % (requesting agent)",
+      "rentAmount": "Rental amount",
+      "rentPeriod": "Rent period"
     },
     "errors": {
       "invalid_fields": "Please check the fields and try again.",
@@ -556,7 +568,11 @@
     },
     "optionalHint": "Only the property title is required — fill in what you have and submit. You can add more later.",
     "splitTitle": "Proposed commission split",
-    "splitHint": "Default 50:50. Adjust if your terms differ — this becomes the opening proposal the requesting agent can accept or counter after submission."
+    "splitHint": "Default 50:50. Adjust if your terms differ — this becomes the opening proposal the requesting agent can accept or counter after submission.",
+    "periods": {
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    }
   },
   "submissions": {
     "title": "My submissions",
@@ -767,11 +783,13 @@
       "missingNote": "— means the information was not provided. Nothing is estimated on your behalf.",
       "propertyName": "Property",
       "downloadExcel": "Download Excel",
-      "preparedBy": "Prepared by"
+      "preparedBy": "Prepared by",
+      "rent": "Rent"
     },
     "disclosuresTitle": "Disclosures from your agent",
     "disclosuresNote": "These matters are stated for your awareness. Where legal aspects are involved, independent legal advice is recommended before committing.",
-    "disclaimerShort": "Information subject to confirmation. For preliminary comparison only — not a binding offer, valuation or advice."
+    "disclaimerShort": "Information subject to confirmation. For preliminary comparison only — not a binding offer, valuation or advice.",
+    "perYear": "/year"
   },
   "collab": {
     "errors": {
@@ -926,7 +944,8 @@
       "disclosure_acknowledged": "Disclosure acknowledged by the Requesting Agent",
       "admin_agent_submitted": "New agent awaiting verification",
       "admin_request_submitted": "New requirement awaiting approval",
-      "admin_violation_reported": "New violation report filed"
+      "admin_violation_reported": "New violation report filed",
+      "requirement_updated": "The requirement you submitted a property for was updated"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -1200,6 +1219,7 @@
     "deadline": "by",
     "offerCta": "Offer your property",
     "qrHint": "Scan to open this requirement on your phone",
-    "footerNote": "A private co-broke platform by IQI AG. Agents only."
+    "footerNote": "A private co-broke platform by IQI AG. Agents only.",
+    "perYear": "/year"
   }
 }

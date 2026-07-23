@@ -370,11 +370,21 @@
       "removeLocation": "Buang lokasi",
       "draftSafetyNote": "Semua yang anda taip disimpan dengan selamat pada peranti ini sehingga disimpan — jika berlaku masalah, buka semula halaman ini dan ia akan dipulihkan.",
       "publicListing": "Papar pada papan Dicari awam",
-      "publicListingHint": "Mana-mana ejen boleh menemui keperluan ini dan menghantar hartanah tanpa kod akses anda. Nyahtanda untuk kekal pautan-dan-kata-laluan sahaja."
+      "publicListingHint": "Mana-mana ejen boleh menemui keperluan ini dan menghantar hartanah tanpa kod akses anda. Nyahtanda untuk kekal pautan-dan-kata-laluan sahaja.",
+      "maxRent": "Sewa maksimum",
+      "rentPeriod": "Tempoh sewa",
+      "periods": {
+        "monthly": "Bulanan",
+        "yearly": "Tahunan"
+      },
+      "saveChanges": "Simpan perubahan"
     },
     "submissionsTitle": "Hartanah yang diserahkan",
     "checkFields": "Sila semak",
-    "dataKeptNote": "Data yang anda masukkan masih ada — tiada yang hilang."
+    "dataKeptNote": "Data yang anda masukkan masih ada — tiada yang hilang.",
+    "editLog": {
+      "title": "Sejarah suntingan"
+    }
   },
   "adminRequests": {
     "title": "Kelulusan keperluan",
@@ -542,7 +552,9 @@
       "country": "Negara",
       "countryHint": "Taip untuk cari mana-mana negara. Biar kosong untuk guna negara keperluan.",
       "listingSplit": "% pihak penyenaraian (anda)",
-      "buyerSplit": "% pihak pembeli (requesting agent)"
+      "buyerSplit": "% pihak pembeli (requesting agent)",
+      "rentAmount": "Jumlah sewa",
+      "rentPeriod": "Tempoh sewa"
     },
     "errors": {
       "invalid_fields": "Sila semak medan dan cuba lagi.",
@@ -556,7 +568,11 @@
     },
     "optionalHint": "Hanya tajuk hartanah yang wajib — isi apa yang ada dan hantar. Anda boleh tambah kemudian.",
     "splitTitle": "Cadangan pembahagian komisen",
-    "splitHint": "Lalai 50:50. Ubah jika terma anda berbeza — ini menjadi cadangan pembukaan yang boleh diterima atau dibalas oleh requesting agent selepas penghantaran."
+    "splitHint": "Lalai 50:50. Ubah jika terma anda berbeza — ini menjadi cadangan pembukaan yang boleh diterima atau dibalas oleh requesting agent selepas penghantaran.",
+    "periods": {
+      "monthly": "Bulanan",
+      "yearly": "Tahunan"
+    }
   },
   "submissions": {
     "title": "Penyerahan saya",
@@ -767,11 +783,13 @@
       "missingNote": "— bermaksud maklumat tidak diberikan. Tiada anggaran dibuat bagi pihak anda.",
       "propertyName": "Hartanah",
       "downloadExcel": "Muat turun Excel",
-      "preparedBy": "Disediakan oleh"
+      "preparedBy": "Disediakan oleh",
+      "rent": "Sewa"
     },
     "disclosuresTitle": "Pendedahan daripada ejen anda",
     "disclosuresNote": "Perkara ini dinyatakan untuk makluman anda. Jika melibatkan aspek undang-undang, nasihat undang-undang bebas disyorkan sebelum membuat komitmen.",
-    "disclaimerShort": "Maklumat tertakluk kepada pengesahan. Untuk perbandingan awal sahaja — bukan tawaran mengikat, penilaian atau nasihat."
+    "disclaimerShort": "Maklumat tertakluk kepada pengesahan. Untuk perbandingan awal sahaja — bukan tawaran mengikat, penilaian atau nasihat.",
+    "perYear": "/tahun"
   },
   "collab": {
     "errors": {
@@ -926,7 +944,8 @@
       "disclosure_acknowledged": "Pendedahan diakui oleh Requesting Agent",
       "admin_agent_submitted": "Ejen baharu menunggu pengesahan",
       "admin_request_submitted": "Keperluan baharu menunggu kelulusan",
-      "admin_violation_reported": "Laporan pelanggaran baharu difailkan"
+      "admin_violation_reported": "Laporan pelanggaran baharu difailkan",
+      "requirement_updated": "Keperluan yang anda hantar hartanah telah dikemas kini"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -1200,6 +1219,7 @@
     "deadline": "sebelum",
     "offerCta": "Tawarkan hartanah anda",
     "qrHint": "Imbas untuk buka keperluan ini di telefon anda",
-    "footerNote": "Platform co-broke persendirian oleh IQI AG. Ejen sahaja."
+    "footerNote": "Platform co-broke persendirian oleh IQI AG. Ejen sahaja.",
+    "perYear": "/tahun"
   }
 }

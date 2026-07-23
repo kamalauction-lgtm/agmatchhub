@@ -57,7 +57,13 @@ export default async function RequestDetailPage({
   const ts = await getTranslations("submissionStatus");
   const trv = await getTranslations("review");
 
-  const editable = ["draft", "amendment_required"].includes(r.status);
+  const editable = !["cancelled", "archived", "frozen", "successfully_closed"].includes(r.status);
+  const { data: editLog } = await supabase
+    .from("request_edit_log")
+    .select("changes, created_at, profiles(display_name)")
+    .eq("request_id", id)
+    .order("created_at", { ascending: false })
+    .limit(10);
   const base = process.env.REQUEST_LINK_BASE_URL ?? "";
   const shareUrl = link ? `${base}/${link.token}` : null;
   const qr = shareUrl ? await QRCode.toDataURL(shareUrl, { width: 220, margin: 1 }) : null;
@@ -72,7 +78,8 @@ export default async function RequestDetailPage({
     [t("form.preferredAreas"), r.preferred_areas?.length ? r.preferred_areas.join(", ") : null],
     [t("form.budgetMin"), money(r.budget_min)],
     [t("form.budgetMax"), money(r.budget_max)],
-    [t("form.maxMonthlyRent"), money(r.max_monthly_rent)],
+    [t("form.maxRent"), r.max_monthly_rent == null ? null
+      : `${money(r.max_monthly_rent)} / ${t(`form.periods.${r.rent_period ?? "monthly"}`)}`],
     [t("form.propertyType"), r.property_type],
     [t("form.bedroomsMin"), r.bedrooms_min?.toString() ?? null],
     [t("form.minBuiltUp"), r.min_built_up ? `${Number(r.min_built_up).toLocaleString()} ${r.measurement_unit}` : null],
@@ -189,6 +196,39 @@ export default async function RequestDetailPage({
               <span className="font-medium">{t("form.clientProfile")}: </span>
               {r.client_profile_anonymised}
             </div>
+          )}
+
+          {!!editLog?.length && (
+            <details className="mt-4">
+              <summary className="cursor-pointer text-sm font-medium text-muted">
+                {t("editLog.title")} ({editLog.length})
+              </summary>
+              <ul className="mt-3 space-y-3">
+                {editLog.map((e, i) => {
+                  const who = Array.isArray(e.profiles) ? e.profiles[0] : e.profiles;
+                  const entries = Object.entries(
+                    (e.changes ?? {}) as Record<string, { from: string; to: string }>,
+                  );
+                  return (
+                    <li key={i} className="rounded-lg bg-surface p-3 text-xs">
+                      <p className="mb-1.5 font-medium">
+                        {who?.display_name} · {new Date(e.created_at).toLocaleString()}
+                      </p>
+                      <ul className="space-y-1">
+                        {entries.map(([fieldName, c]) => (
+                          <li key={fieldName} className="text-muted">
+                            <span className="font-medium text-foreground capitalize">
+                              {fieldName.replaceAll("_", " ")}
+                            </span>
+                            : <s>{c.from || "—"}</s> → {c.to || "—"}
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
           )}
         </section>
 
