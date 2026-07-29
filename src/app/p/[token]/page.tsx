@@ -6,6 +6,7 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getClientSafeProperties } from "@/lib/projections/client-safe";
 import { getActiveDeclaration } from "@/lib/consents";
+import { BrandLockup } from "@/components/layout/brand-lockup";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { unlockPresentation, submitClientFeedback } from "./actions";
 
@@ -127,14 +128,23 @@ export default async function ClientPresentationPage({
         )}
 
         <div className="space-y-10">
-          {properties.map((prop, i) => (
+          {properties.map((prop, i) => {
+            const cover = prop.images.find((im) => im.isCover) ?? prop.images[0];
+            const rest = prop.images.filter((im) => im !== cover);
+            return (
             <article key={prop.ppid} className="overflow-hidden rounded-2xl border border-line bg-background shadow-sm">
-              {prop.images.length > 0 && (
-                <div className="flex gap-1 overflow-x-auto bg-charcoal">
-                  {prop.images.map((img, j) => (
-                    <img key={j} src={img.url} alt={`${prop.title} ${j + 1}`}
-                      className={`h-64 object-cover ${j === 0 ? "w-full flex-shrink" : "w-64 flex-none"}`} />
-                  ))}
+              {cover && (
+                <div className="bg-charcoal">
+                  <img src={cover.url} alt={prop.title}
+                    className="h-72 w-full object-cover sm:h-[26rem]" />
+                  {rest.length > 0 && (
+                    <div className="flex gap-1.5 overflow-x-auto p-1.5">
+                      {rest.map((img, j) => (
+                        <img key={j} src={img.url} alt={`${prop.title} ${j + 2}`}
+                          className="h-16 w-24 flex-none rounded-md object-cover sm:h-20 sm:w-28" />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
               <div className="p-6">
@@ -252,7 +262,8 @@ export default async function ClientPresentationPage({
                 )}
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
 
         <footer className="mt-12 border-t border-line pt-6">
@@ -269,7 +280,8 @@ export default async function ClientPresentationPage({
 function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-surface">
-      <div className="flex justify-end px-4 pt-3">
+      <div className="flex items-center justify-between border-b border-line bg-background px-4 py-3 sm:px-6">
+        <BrandLockup size={26} />
         <LanguageSwitcher />
       </div>
       {children}

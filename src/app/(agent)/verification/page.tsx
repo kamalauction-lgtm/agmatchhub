@@ -2,11 +2,8 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
-import { BrandLockup } from "@/components/layout/brand-lockup";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
-import { signOut } from "@/app/(auth)/actions";
+import { AgentShell } from "@/components/layout/agent-shell";
 import { submitVerification } from "./actions";
-import Link from "next/link";
 
 const LICENCE_TYPES = ["REN", "REA", "PEA", "AGEN_PROPERTI", "BROKER", "OTHER"] as const;
 const CATEGORIES = ["residential", "commercial", "industrial", "land"] as const;
@@ -35,7 +32,6 @@ export default async function VerificationPage({
   if (!profile) redirect("/login");
 
   const t = await getTranslations("verification");
-  const tc = await getTranslations("common");
   const td = await getTranslations("dashboard");
 
   const status = profile.agent_status;
@@ -45,21 +41,8 @@ export default async function VerificationPage({
   ].includes(status);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between border-b border-line px-6 py-4">
-        <Link href="/dashboard"><BrandLockup size={28} /></Link>
-        <div className="flex items-center gap-4">
-          <LanguageSwitcher />
-          <form action={signOut}>
-            <button type="submit" className="rounded-lg border border-line px-4 py-2 text-sm font-medium hover:border-crimson hover:text-crimson">
-              {tc("signOut")}
-            </button>
-          </form>
-        </div>
-      </header>
-
-      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
-        <h1 className="mb-2 text-2xl font-semibold">{t("title")}</h1>
+    <AgentShell>
+      <h1 className="mb-2 text-2xl font-semibold">{t("title")}</h1>
         <p className="mb-6 text-sm text-muted">{t("intro")}</p>
 
         {submitted && (
@@ -186,7 +169,6 @@ export default async function VerificationPage({
             </button>
           </form>
         )}
-      </main>
-    </div>
+    </AgentShell>
   );
 }
