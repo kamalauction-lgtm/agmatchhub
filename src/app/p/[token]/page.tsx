@@ -118,12 +118,18 @@ export default async function ClientPresentationPage({
           </p>
         )}
 
-        {p.allow_comparison && properties.length >= 2 && (
-          <div className="mb-8 text-center">
-            <Link href={`/p/${token}/compare`}
-              className="inline-block rounded-lg border border-crimson px-5 py-2.5 text-sm font-semibold text-crimson hover:bg-crimson-soft">
-              {t("compareAll", { count: properties.length })}
-            </Link>
+        {p.allow_comparison && properties.length >= 1 && (
+          <div className="mb-8 flex flex-wrap justify-center gap-3">
+            {properties.length >= 2 && (
+              <Link href={`/p/${token}/compare`}
+                className="inline-block rounded-lg border border-crimson px-5 py-2.5 text-sm font-semibold text-crimson hover:bg-crimson-soft">
+                {t("compareAll", { count: properties.length })}
+              </Link>
+            )}
+            <a href={`/p/${token}/compare/export`}
+              className="inline-flex items-center gap-2 rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong">
+              ⬇ {t("compare.downloadExcel")}
+            </a>
           </div>
         )}
 
