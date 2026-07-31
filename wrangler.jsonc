@@ -22,6 +22,7 @@
     "AUTH_CALLBACK_URL": "https://hub.propertiguru.id/auth/callback",
     "REQUEST_LINK_BASE_URL": "https://hub.propertiguru.id/r",
     "CLIENT_PRESENTATION_BASE_URL": "https://hub.propertiguru.id/p",
+    "EMAIL_FROM": "IQI AG MatchHub <noreply@propertiguru.id>",
     "NEXT_PUBLIC_SUPABASE_URL": "https://jtruwmwinymflkrvuuwd.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_qoUdeoGQVbm9uE9Om4Yhjg_AMtLVjzK",
     "NEXT_PUBLIC_VAPID_PUBLIC_KEY": "BAD35F_p_FfT7Mk7hI-1D6bCKStkk_75sMVPAEDGdBeywwuXpBGLhGSPDLm0k-5SNxHWfi1hXpVdsyxDb04OJJE",
