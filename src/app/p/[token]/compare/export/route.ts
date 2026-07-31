@@ -19,7 +19,7 @@ export async function GET(
   const service = createServiceClient();
   const { data: p } = await service
     .from("client_presentations")
-    .select("id, title, active, expires_at, allow_comparison, profiles(display_name)")
+    .select("id, title, active, expires_at, allow_comparison, profiles(display_name), property_requests(transaction_type)")
     .eq("token", token)
     .maybeSingle();
   if (!p || !p.active || !p.allow_comparison || new Date(p.expires_at) < new Date()) {
@@ -36,14 +36,28 @@ export async function GET(
   const allProps = await getClientSafeProperties(p.id);
   const properties = (wanted ? allProps.filter((pr) => wanted.has(pr.ppid)) : allProps).slice(0, 5);
   const ra = Array.isArray(p.profiles) ? p.profiles[0] : p.profiles;
+  const req = Array.isArray(p.property_requests) ? p.property_requests[0] : p.property_requests;
+  const isRent = req?.transaction_type === "rent";
 
   const money = (cur: string, n: number | null) =>
     n == null ? "—" : `${cur} ${n.toLocaleString("en-US")}`;
 
+  // The headline figure follows the deal type: rent for rentals, price for
+  // sales. Emphasised (bold + crimson) and shown first.
+  const priceRow = {
+    label: tc("price"),
+    values: properties.map((pr) => money(pr.currency, pr.price)),
+    emphasis: !isRent,
+  };
+  const rentRow = {
+    label: tc("rent"),
+    values: properties.map((pr) => pr.monthlyRental == null ? "—"
+      : `${money(pr.currency, pr.monthlyRental)} ${pr.rentPeriod === "yearly" ? t("perYear") : t("perMonth")}`),
+    emphasis: isRent,
+  };
+
   const rows = [
-    { label: tc("price"), values: properties.map((pr) => money(pr.currency, pr.price)), emphasis: true },
-    { label: tc("rent"), values: properties.map((pr) => pr.monthlyRental == null ? "—"
-      : `${money(pr.currency, pr.monthlyRental)} ${pr.rentPeriod === "yearly" ? t("perYear") : t("perMonth")}`) },
+    ...(isRent ? [rentRow, priceRow] : [priceRow, rentRow]),
     { label: tc("location"), values: properties.map((pr) => pr.generalLocation) },
     { label: tc("type"), values: properties.map((pr) => pr.propertyType ?? "—") },
     {
