@@ -8,6 +8,7 @@ import { getClientSafeProperties } from "@/lib/projections/client-safe";
 import { getActiveDeclaration } from "@/lib/consents";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { LinkedText } from "@/components/client-view/linked-text";
 import { unlockPresentation, submitClientFeedback } from "./actions";
 
 const inputCls =
@@ -165,7 +166,9 @@ export default async function ClientPresentationPage({
                     )}
                   </p>
                 </div>
-                <p className="mb-4 text-sm text-muted">{prop.generalLocation}</p>
+                <p className="mb-4 text-sm text-muted">
+                  <LinkedText text={prop.generalLocation} googleLabel={t("checkInGoogle")} linkLabel={t("openLink")} />
+                </p>
 
                 <div className="mb-4 flex flex-wrap gap-2 text-xs">
                   {prop.builtUp != null && (
@@ -187,13 +190,21 @@ export default async function ClientPresentationPage({
                   )}
                 </div>
 
-                {prop.description && <p className="mb-3 text-sm leading-6">{prop.description}</p>}
+                {prop.description && (
+                  <p className="mb-3 text-sm leading-6">
+                    <LinkedText text={prop.description} googleLabel={t("checkInGoogle")} linkLabel={t("openLink")} />
+                  </p>
+                )}
                 {prop.keySellingPoints && (
-                  <p className="mb-3 text-sm leading-6"><span className="font-medium">{t("highlights")}: </span>{prop.keySellingPoints}</p>
+                  <p className="mb-3 text-sm leading-6">
+                    <span className="font-medium">{t("highlights")}: </span>
+                    <LinkedText text={prop.keySellingPoints} googleLabel={t("checkInGoogle")} linkLabel={t("openLink")} />
+                  </p>
                 )}
                 {prop.agentNote && (
                   <p className="mb-4 rounded-lg bg-crimson-soft/50 px-4 py-3 text-sm">
-                    <span className="font-medium">{t("agentNote", { name: raName })}: </span>{prop.agentNote}
+                    <span className="font-medium">{t("agentNote", { name: raName })}: </span>
+                    <LinkedText text={prop.agentNote} googleLabel={t("checkInGoogle")} linkLabel={t("openLink")} />
                   </p>
                 )}
 

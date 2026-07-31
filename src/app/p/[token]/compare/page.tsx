@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
@@ -6,6 +7,7 @@ import { redirect } from "next/navigation";
 import { createServiceClient } from "@/lib/supabase/service";
 import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getClientSafeProperties } from "@/lib/projections/client-safe";
+import { LinkedText } from "@/components/client-view/linked-text";
 
 /** §23 comparison — client-safe fields only, 2–5 properties. */
 export default async function ComparePage({
@@ -39,11 +41,11 @@ export default async function ComparePage({
       ? `${prop.currency} ${(prop.price / prop.builtUp).toFixed(0)}/${prop.measurementUnit}`
       : "—";
 
-  const rows: [string, (prop: (typeof properties)[number]) => string][] = [
+  const rows: [string, (prop: (typeof properties)[number]) => ReactNode][] = [
     [tc("price"), (pr) => money(pr.currency, pr.price)],
     [tc("rent"), (pr) => pr.monthlyRental == null ? "—"
       : `${money(pr.currency, pr.monthlyRental)} ${pr.rentPeriod === "yearly" ? t("perYear") : t("perMonth")}`],
-    [tc("location"), (pr) => pr.generalLocation],
+    [tc("location"), (pr) => <LinkedText text={pr.generalLocation} googleLabel={t("checkInGoogle")} linkLabel={t("openLink")} />],
     [tc("type"), (pr) => pr.propertyType ?? "—"],
     [tc("builtUp"), (pr) => (pr.builtUp != null ? `${pr.builtUp.toLocaleString()} ${pr.measurementUnit}` : "—")],
     [tc("pricePerArea"), psf],
@@ -55,7 +57,9 @@ export default async function ComparePage({
     [tc("floor"), (pr) => pr.floorLevel ?? "—"],
     [tc("facilities"), (pr) => (pr.facilities.length ? pr.facilities.join(", ") : "—")],
     [tc("negotiable"), (pr) => tc(`negotiableValues.${pr.negotiable}`)],
-    [tc("agentNotes"), (pr) => pr.agentNote ?? "—"],
+    [tc("agentNotes"), (pr) => pr.agentNote
+      ? <LinkedText text={pr.agentNote} googleLabel={t("checkInGoogle")} linkLabel={t("openLink")} />
+      : "—"],
   ];
 
   return (

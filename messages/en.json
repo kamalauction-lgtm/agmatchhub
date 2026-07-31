@@ -802,7 +802,9 @@
     "disclosuresTitle": "Disclosures from your agent",
     "disclosuresNote": "These matters are stated for your awareness. Where legal aspects are involved, independent legal advice is recommended before committing.",
     "disclaimerShort": "Information subject to confirmation. For preliminary comparison only — not a binding offer, valuation or advice.",
-    "perYear": "/year"
+    "perYear": "/year",
+    "checkInGoogle": "Check in Google",
+    "openLink": "Open link"
   },
   "collab": {
     "errors": {

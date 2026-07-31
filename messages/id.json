@@ -802,7 +802,9 @@
     "disclosuresTitle": "Pengungkapan dari agen Anda",
     "disclosuresNote": "Hal-hal ini disampaikan untuk diketahui. Bila menyangkut aspek hukum, disarankan meminta nasihat hukum independen sebelum berkomitmen.",
     "disclaimerShort": "Informasi tunduk pada konfirmasi. Hanya untuk perbandingan awal — bukan penawaran mengikat, penilaian atau nasihat.",
-    "perYear": "/tahun"
+    "perYear": "/tahun",
+    "checkInGoogle": "Cek di Google",
+    "openLink": "Buka tautan"
   },
   "collab": {
     "errors": {

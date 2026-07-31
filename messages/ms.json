@@ -802,7 +802,9 @@
     "disclosuresTitle": "Pendedahan daripada ejen anda",
     "disclosuresNote": "Perkara ini dinyatakan untuk makluman anda. Jika melibatkan aspek undang-undang, nasihat undang-undang bebas disyorkan sebelum membuat komitmen.",
     "disclaimerShort": "Maklumat tertakluk kepada pengesahan. Untuk perbandingan awal sahaja — bukan tawaran mengikat, penilaian atau nasihat.",
-    "perYear": "/tahun"
+    "perYear": "/tahun",
+    "checkInGoogle": "Semak di Google",
+    "openLink": "Buka pautan"
   },
   "collab": {
     "errors": {
