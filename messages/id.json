@@ -7,7 +7,9 @@
     "password": "Kata sandi",
     "submit": "Kirim",
     "back": "Kembali",
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "show": "Lihat",
+    "hide": "Sembunyikan"
   },
   "landing": {
     "heroTitle": "Kolaborasi properti terkendali untuk agen profesional",
@@ -410,12 +412,23 @@
     "doneNotice": {
       "approve": "Disetujui. Tautan aman dibuat dan aktif.",
       "amendment": "Perbaikan diminta dari agen.",
-      "cancel": "Permintaan dibatalkan."
+      "cancel": "Permintaan dibatalkan.",
+      "added": "Properti ditambahkan atas nama agen.",
+      "added_new_agent": "Akun agen dibuat dan properti ditambahkan."
     },
     "errors": {
       "notes_required": "Catatan wajib untuk keputusan ini.",
       "wrong_status": "Permintaan ini tidak sedang menunggu tinjauan.",
       "save_failed": "Keputusan tidak dapat disimpan."
+    },
+    "addPropertyForAgent": "Tambah properti untuk agen",
+    "cred": {
+      "title": "Akun agen dibuat",
+      "body": "Bagikan detail login ini kepada {name} (mis. via WhatsApp). Mereka bisa masuk sekarang dan verifikasi profil nanti.",
+      "email": "Email",
+      "password": "Kata sandi",
+      "link": "Tautan login",
+      "note": "Ini hanya ditampilkan sekali. Juga dikirim ke email agen."
     }
   },
   "requestLink": {
@@ -945,7 +958,8 @@
       "admin_agent_submitted": "Agen baru menunggu verifikasi",
       "admin_request_submitted": "Kebutuhan baru menunggu persetujuan",
       "admin_violation_reported": "Laporan pelanggaran baru diajukan",
-      "requirement_updated": "Kebutuhan yang Anda kirimkan properti telah diperbarui"
+      "requirement_updated": "Kebutuhan yang Anda kirimkan properti telah diperbarui",
+      "submission_added_for_you": "Sebuah properti ditambahkan untuk Anda"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -1221,5 +1235,33 @@
     "qrHint": "Pindai untuk membuka kebutuhan ini di ponsel Anda",
     "footerNote": "Platform co-broke privat oleh IQI AG. Khusus agen.",
     "perYear": "/tahun"
+  },
+  "adminAddProperty": {
+    "title": "Tambah properti untuk agen",
+    "forRequirement": "Untuk kebutuhan: {title}",
+    "agentSection": "Properti ini dari agen yang mana?",
+    "existingAgent": "Pilih agen yang ada",
+    "chooseAgent": "— pilih agen —",
+    "newAgent": "Buat akun agen baru",
+    "newAgentHint": "Agen mendapat login (ditampilkan ke Anda + email) dan bisa verifikasi profil nanti. Hanya nama dan email yang wajib.",
+    "na_name": "Nama lengkap",
+    "na_email": "Email",
+    "na_phone": "Telepon",
+    "na_whatsapp": "WhatsApp",
+    "na_agency": "Agensi",
+    "na_licenceNumber": "No. lisensi",
+    "declarationNote": "Dengan menambahkan properti ini Anda menerima deklarasi co-broke agen pemasok atas nama agen. Agen diberi tahu dan dapat meninjaunya.",
+    "submit": "Tambah properti untuk agen ini",
+    "errors": {
+      "invalid_fields": "Periksa kolom yang ditandai.",
+      "agent_required": "Silakan pilih agen.",
+      "agent_invalid": "Masukkan nama agen baru dan email yang valid.",
+      "email_in_use": "Email itu sudah punya akun — pilih dari daftar yang ada.",
+      "agent_failed": "Tidak dapat membuat akun agen. Coba lagi.",
+      "invalid_file_type": "Tipe gambar tidak didukung.",
+      "file_too_large": "Gambar terlalu besar (maks 10MB).",
+      "upload_failed": "Unggah gambar gagal. Coba lagi.",
+      "save_failed": "Tidak dapat menyimpan. Coba lagi."
+    }
   }
 }

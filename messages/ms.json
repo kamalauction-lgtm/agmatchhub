@@ -7,7 +7,9 @@
     "password": "Kata laluan",
     "submit": "Hantar",
     "back": "Kembali",
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "show": "Papar",
+    "hide": "Sembunyi"
   },
   "landing": {
     "heroTitle": "Kerjasama hartanah terkawal untuk ejen profesional",
@@ -410,12 +412,23 @@
     "doneNotice": {
       "approve": "Diluluskan. Pautan selamat dijana dan aktif.",
       "amendment": "Pindaan diminta daripada ejen.",
-      "cancel": "Permintaan dibatalkan."
+      "cancel": "Permintaan dibatalkan.",
+      "added": "Hartanah ditambah bagi pihak ejen.",
+      "added_new_agent": "Akaun ejen dicipta dan hartanah ditambah."
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
       "wrong_status": "Permintaan ini tidak menunggu semakan.",
       "save_failed": "Keputusan tidak dapat disimpan."
+    },
+    "addPropertyForAgent": "Tambah hartanah untuk ejen",
+    "cred": {
+      "title": "Akaun ejen dicipta",
+      "body": "Kongsi butiran log masuk ini dengan {name} (cth. melalui WhatsApp). Mereka boleh log masuk sekarang dan sahkan profil kemudian.",
+      "email": "E-mel",
+      "password": "Kata laluan",
+      "link": "Pautan log masuk",
+      "note": "Ini dipaparkan sekali sahaja. Ia juga dihantar ke e-mel ejen."
     }
   },
   "requestLink": {
@@ -945,7 +958,8 @@
       "admin_agent_submitted": "Ejen baharu menunggu pengesahan",
       "admin_request_submitted": "Keperluan baharu menunggu kelulusan",
       "admin_violation_reported": "Laporan pelanggaran baharu difailkan",
-      "requirement_updated": "Keperluan yang anda hantar hartanah telah dikemas kini"
+      "requirement_updated": "Keperluan yang anda hantar hartanah telah dikemas kini",
+      "submission_added_for_you": "Satu hartanah telah ditambah untuk anda"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -1221,5 +1235,33 @@
     "qrHint": "Imbas untuk buka keperluan ini di telefon anda",
     "footerNote": "Platform co-broke persendirian oleh IQI AG. Ejen sahaja.",
     "perYear": "/tahun"
+  },
+  "adminAddProperty": {
+    "title": "Tambah hartanah untuk ejen",
+    "forRequirement": "Untuk keperluan: {title}",
+    "agentSection": "Hartanah ini daripada ejen yang mana?",
+    "existingAgent": "Pilih ejen sedia ada",
+    "chooseAgent": "— pilih ejen —",
+    "newAgent": "Cipta akaun ejen baharu",
+    "newAgentHint": "Ejen mendapat log masuk (dipaparkan kepada anda + e-mel) dan boleh sahkan profil kemudian. Hanya nama dan e-mel diperlukan.",
+    "na_name": "Nama penuh",
+    "na_email": "E-mel",
+    "na_phone": "Telefon",
+    "na_whatsapp": "WhatsApp",
+    "na_agency": "Agensi",
+    "na_licenceNumber": "No. lesen",
+    "declarationNote": "Dengan menambah hartanah ini anda menerima perisytiharan co-broke ejen bekalan bagi pihak ejen. Ejen dimaklumkan dan boleh menyemaknya.",
+    "submit": "Tambah hartanah untuk ejen ini",
+    "errors": {
+      "invalid_fields": "Sila semak medan yang ditanda.",
+      "agent_required": "Sila pilih seorang ejen.",
+      "agent_invalid": "Sila masukkan nama ejen baharu dan e-mel yang sah.",
+      "email_in_use": "E-mel itu sudah mempunyai akaun — pilih mereka dari senarai sedia ada.",
+      "agent_failed": "Tidak dapat mencipta akaun ejen. Sila cuba lagi.",
+      "invalid_file_type": "Jenis imej tidak disokong.",
+      "file_too_large": "Imej terlalu besar (maks 10MB).",
+      "upload_failed": "Muat naik imej gagal. Sila cuba lagi.",
+      "save_failed": "Tidak dapat menyimpan. Sila cuba lagi."
+    }
   }
 }

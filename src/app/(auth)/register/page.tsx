@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { PasswordInput } from "@/components/forms/password-input";
 import { signUp } from "../actions";
 
 const KNOWN_ERRORS = ["password_mismatch", "weak_password", "email_in_use", "generic"];
@@ -46,24 +47,24 @@ export default async function RegisterPage({
         </label>
         <label className="block">
           <span className="mb-1 block text-sm font-medium">{tc("password")}</span>
-          <input
-            type="password"
+          <PasswordInput
             name="password"
             required
             minLength={8}
             autoComplete="new-password"
-            className="w-full rounded-lg border border-line bg-background px-3 py-2.5 outline-none focus:border-crimson"
+            showLabel={tc("show")}
+            hideLabel={tc("hide")}
           />
         </label>
         <label className="block">
           <span className="mb-1 block text-sm font-medium">{t("confirmPassword")}</span>
-          <input
-            type="password"
+          <PasswordInput
             name="confirmPassword"
             required
             minLength={8}
             autoComplete="new-password"
-            className="w-full rounded-lg border border-line bg-background px-3 py-2.5 outline-none focus:border-crimson"
+            showLabel={tc("show")}
+            hideLabel={tc("hide")}
           />
         </label>
         <button

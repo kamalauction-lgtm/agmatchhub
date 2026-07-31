@@ -9,100 +9,15 @@ import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getActiveDeclaration, recordConsent } from "@/lib/consents";
 import { logAudit } from "@/lib/audit";
 import { getLocale } from "next-intl/server";
+import {
+  propertyFieldsSchema, deriveRisk, buildSubmissionRow, hasSourceDetail,
+  IMG_MIMES, MAX_IMG_BYTES,
+} from "@/lib/submissions/core";
 
-const optNum = z.string().trim().transform((v) => (v === "" ? null : Number(v)))
-  .pipe(z.number().nonnegative().nullable());
-const optInt = z.string().trim().transform((v) => (v === "" ? null : Number(v)))
-  .pipe(z.number().int().nonnegative().nullable());
-const optText = z.string().trim().max(5000).transform((v) => (v === "" ? null : v));
-
-const SOURCE_TYPES = [
-  "direct_written_appointment", "direct_appointment_pending",
-  "direct_verbal_authorisation", "direct_no_appointment", "indirect_other_agent",
-  "co_agent", "agency_shared", "developer", "landlord_referral", "open_market", "other",
-] as const;
-
-const schema = z.object({
-  // Only the title is compulsory — agents fill what they have (owner request).
-  title: z.string().trim().min(3).max(200),
-  propertyCategory: z.enum(["residential", "commercial", "industrial", "land", "other"]),
-  propertyType: optText,
-  countrySearch: z.string().trim().max(80),
-  stateRegion: optText,
-  city: z.string().trim().max(120),
-  district: optText,
-  fullAddress: optText,
-  generalAddress: optText,
-  buildingName: optText,
-  unitNumber: optText,
-  currency: z.string().length(3),
-  askingPrice: optNum,
-  monthlyRental: optNum,
-  rentPeriod: z.enum(["monthly", "yearly"]).catch("monthly"),
-  negotiable: z.enum(["yes", "no", "subject_to_offer"]),
-  minAcceptablePrice: optNum,
-  measurementUnit: z.enum(["sqft", "sqm"]),
-  builtUp: optNum,
-  landArea: optNum,
-  bedrooms: optInt,
-  bathrooms: optInt,
-  carParks: optInt,
-  floorLevel: optText,
-  furnishing: z.enum(["", "unfurnished", "partially", "fully"]),
-  tenure: optText,
-  completionYear: optInt,
-  availabilityDate: z.string().trim().transform((v) => (v === "" ? null : v))
-    .pipe(z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable()),
-  vacant: z.enum(["", "yes", "no"]),
-  facilities: optText,
-  description: optText,
-  keySellingPoints: optText,
-  clientSafeRemarks: optText,
-  internalRemarks: optText,
-  ownerConfirmationStatus: z.enum(["", "confirmed", "pending", "not_obtained"]),
-  appointmentStatus: z.enum(["", "written_appointment", "appointment_pending", "verbal_authorisation", "none"]),
-  sourceType: z.enum(SOURCE_TYPES),
-  sourceAgentName: optText,
-  sourceAgency: optText,
-  sourcePermission: z.enum(["", "yes", "no"]),
-  chainAgentCount: optInt,
-  commissionType: z.enum(["", "percentage", "fixed", "rental_months"]),
-  commissionPercentage: optNum,
-  commissionAmount: optNum,
-  commissionMonths: optNum,
-  commissionConditions: optText,
-  // §73: proposed sharing of the received commission, default 50:50
-  listingSplit: optNum,
-  buyerSplit: optNum,
-  declarationAccepted: z.literal("on"),          // must be actively ticked (§28)
+// Agent flow: property fields + the actively-ticked SA declaration (§28).
+const schema = propertyFieldsSchema.extend({
+  declarationAccepted: z.literal("on"),
 });
-
-function deriveRisk(sourceType: string, permission: string): string {
-  switch (sourceType) {
-    case "direct_written_appointment":
-    case "direct_appointment_pending":
-    case "direct_verbal_authorisation":
-    case "developer":
-    case "landlord_referral":
-      return "direct_document_pending";
-    case "direct_no_appointment":
-    case "other":
-      return "high_risk";
-    case "indirect_other_agent":
-    case "co_agent":
-    case "agency_shared":
-      return permission === "yes" ? "indirect_verified_source" : "indirect_limited_verification";
-    case "open_market":
-      return "open_market_confirmation_required";
-    default:
-      return "high_risk";
-  }
-}
-
-const IMG_MIMES: Record<string, string> = {
-  "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp",
-};
-const MAX_IMG_BYTES = 10 * 1024 * 1024;
 
 export async function submitProperty(formData: FormData) {
   const token = String(formData.get("token") ?? "");
@@ -196,60 +111,19 @@ export async function submitProperty(formData: FormData) {
   if (idErr) redirect(`${back}?error=save_failed`);
 
   const risk = deriveRisk(d.sourceType, d.sourcePermission);
+  const resolvedCountry = countryCode
+    ?? (await service.from("property_requests").select("country_code").eq("id", link.request_id).single()).data?.country_code
+    ?? "MY";
 
   const { data: inserted, error: insErr } = await supabase
     .from("property_submissions")
-    .insert({
-      human_readable_id: humanId,
-      request_id: link.request_id,
-      supply_agent_id: user.id,
-      status: "submitted",
-      title: d.title,
-      property_category: d.propertyCategory,
-      property_type: d.propertyType,
-      country_code: countryCode
-        ?? (await service.from("property_requests").select("country_code").eq("id", link.request_id).single()).data?.country_code
-        ?? "MY",
-      state_region: d.stateRegion,
-      city: d.city,
-      district: d.district,
-      full_address: d.fullAddress,
-      general_address: d.generalAddress,
-      building_name: d.buildingName,
-      unit_number: d.unitNumber,
-      currency: d.currency,
-      asking_price: d.askingPrice,
-      monthly_rental: d.monthlyRental,
-      rent_period: d.rentPeriod,
-      negotiable: d.negotiable,
-      measurement_unit: d.measurementUnit,
-      built_up: d.builtUp,
-      land_area: d.landArea,
-      bedrooms: d.bedrooms,
-      bathrooms: d.bathrooms,
-      car_parks: d.carParks,
-      floor_level: d.floorLevel,
-      furnishing: d.furnishing || null,
-      tenure: d.tenure,
-      completion_year: d.completionYear,
-      availability_date: d.availabilityDate,
-      vacant: d.vacant === "" ? null : d.vacant === "yes",
-      facilities: d.facilities ? d.facilities.split(",").map((s) => s.trim()).filter(Boolean) : [],
-      description: d.description,
-      key_selling_points: d.keySellingPoints,
-      client_safe_remarks: d.clientSafeRemarks,
-      owner_confirmation_status: d.ownerConfirmationStatus || null,
-      appointment_status: d.appointmentStatus || null,
-      source_type: d.sourceType,
-      risk_indicator: risk,
-      cobroke_accepted: true,
-      commission_type: d.commissionType || null,
-      commission_percentage: d.commissionPercentage,
-      commission_amount: d.commissionAmount,
-      commission_months: d.commissionMonths,
-      commission_currency: d.commissionType ? d.currency : null,
-      commission_conditions: d.commissionConditions,
-    })
+    .insert(buildSubmissionRow(d, {
+      humanId,
+      requestId: link.request_id,
+      supplyAgentId: user.id,
+      countryCode: resolvedCountry,
+      risk,
+    }))
     .select("id")
     .single();
   if (insErr || !inserted) redirect(`${back}?error=save_failed`);
@@ -263,7 +137,7 @@ export async function submitProperty(formData: FormData) {
       internal_remarks: d.internalRemarks,
     });
   }
-  if (d.sourceType.startsWith("indirect") || ["co_agent", "agency_shared", "other"].includes(d.sourceType)) {
+  if (hasSourceDetail(d.sourceType)) {
     await supabase.from("property_submission_sources").insert({
       submission_id: submissionId,
       source_agent_name: d.sourceAgentName,

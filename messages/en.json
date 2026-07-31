@@ -7,7 +7,9 @@
     "password": "Password",
     "submit": "Submit",
     "back": "Back",
-    "language": "Language"
+    "language": "Language",
+    "show": "Show",
+    "hide": "Hide"
   },
   "landing": {
     "heroTitle": "Controlled property collaboration for professional agents",
@@ -410,12 +412,23 @@
     "doneNotice": {
       "approve": "Approved. Secure link generated and active.",
       "amendment": "Amendment requested from the agent.",
-      "cancel": "Request cancelled."
+      "cancel": "Request cancelled.",
+      "added": "Property added on behalf of the agent.",
+      "added_new_agent": "Agent account created and property added."
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
       "wrong_status": "This request is not awaiting review.",
       "save_failed": "Could not save the decision."
+    },
+    "addPropertyForAgent": "Add property for an agent",
+    "cred": {
+      "title": "Agent account created",
+      "body": "Share these login details with {name} (e.g. via WhatsApp). They can sign in now and complete verification later.",
+      "email": "Email",
+      "password": "Password",
+      "link": "Login link",
+      "note": "This is shown only once. It was also emailed to the agent."
     }
   },
   "requestLink": {
@@ -945,7 +958,8 @@
       "admin_agent_submitted": "New agent awaiting verification",
       "admin_request_submitted": "New requirement awaiting approval",
       "admin_violation_reported": "New violation report filed",
-      "requirement_updated": "The requirement you submitted a property for was updated"
+      "requirement_updated": "The requirement you submitted a property for was updated",
+      "submission_added_for_you": "A property was added for you"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -1221,5 +1235,33 @@
     "qrHint": "Scan to open this requirement on your phone",
     "footerNote": "A private co-broke platform by IQI AG. Agents only.",
     "perYear": "/year"
+  },
+  "adminAddProperty": {
+    "title": "Add property for an agent",
+    "forRequirement": "For requirement: {title}",
+    "agentSection": "Which agent is this property from?",
+    "existingAgent": "Choose an existing agent",
+    "chooseAgent": "— select an agent —",
+    "newAgent": "Create a new agent account",
+    "newAgentHint": "The agent gets a login (shown to you + emailed) and can verify their profile later. Only name and email are required.",
+    "na_name": "Full name",
+    "na_email": "Email",
+    "na_phone": "Phone",
+    "na_whatsapp": "WhatsApp",
+    "na_agency": "Agency",
+    "na_licenceNumber": "Licence no.",
+    "declarationNote": "By adding this property you accept the supply-agent co-broke declaration on the agent's behalf. The agent is notified and can review it.",
+    "submit": "Add property for this agent",
+    "errors": {
+      "invalid_fields": "Please check the highlighted fields.",
+      "agent_required": "Please choose an agent.",
+      "agent_invalid": "Please enter the new agent's name and a valid email.",
+      "email_in_use": "That email already has an account — pick them from the existing list instead.",
+      "agent_failed": "Could not create the agent account. Please try again.",
+      "invalid_file_type": "Unsupported image type.",
+      "file_too_large": "An image is too large (max 10MB).",
+      "upload_failed": "Image upload failed. Please try again.",
+      "save_failed": "Could not save. Please try again."
+    }
   }
 }
