@@ -725,7 +725,13 @@
         "third": "Pilihan ketiga",
         "maybe": "Mungkin"
       }
-    }
+    },
+    "manageCta": "Urus persembahan",
+    "editTitle": "Urus persembahan klien",
+    "editIntro": "Tambah atau buang hartanah — pautan klien kekal sama dan dikemas kini secara langsung.",
+    "update": "Simpan perubahan",
+    "liveLink": "Pautan klien langsung",
+    "liveLinkHint": "Pautan ini kekal sama. Sebarang perubahan yang anda simpan di sini muncul serta-merta untuk klien — tidak perlu hantar semula."
   },
   "clientView": {
     "unavailableTitle": "Pembentangan tidak tersedia",
@@ -804,7 +810,14 @@
     "disclaimerShort": "Maklumat tertakluk kepada pengesahan. Untuk perbandingan awal sahaja — bukan tawaran mengikat, penilaian atau nasihat.",
     "perYear": "/tahun",
     "checkInGoogle": "Semak di Google",
-    "openLink": "Buka pautan"
+    "openLink": "Buka pautan",
+    "select": "Pilih",
+    "hideProp": "Sembunyi",
+    "showProp": "Papar",
+    "hiddenProp": "Disembunyikan",
+    "compareSelected": "Banding pilihan",
+    "downloadSelected": "Muat turun pilihan",
+    "selectHint": "Tandakan hartanah yang anda mahu banding atau muat turun."
   },
   "collab": {
     "errors": {

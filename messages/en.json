@@ -725,7 +725,13 @@
         "third": "3rd choice",
         "maybe": "Maybe"
       }
-    }
+    },
+    "manageCta": "Manage presentation",
+    "editTitle": "Manage client presentation",
+    "editIntro": "Add or remove properties — the client's link stays the same and updates live.",
+    "update": "Save changes",
+    "liveLink": "Live client link",
+    "liveLinkHint": "This link stays the same. Any changes you save here appear instantly for the client — no need to resend."
   },
   "clientView": {
     "unavailableTitle": "Presentation unavailable",
@@ -804,7 +810,14 @@
     "disclaimerShort": "Information subject to confirmation. For preliminary comparison only — not a binding offer, valuation or advice.",
     "perYear": "/year",
     "checkInGoogle": "Check in Google",
-    "openLink": "Open link"
+    "openLink": "Open link",
+    "select": "Select",
+    "hideProp": "Hide",
+    "showProp": "Show",
+    "hiddenProp": "Hidden",
+    "compareSelected": "Compare selected",
+    "downloadSelected": "Download selected",
+    "selectHint": "Tick the properties you want to compare or download."
   },
   "collab": {
     "errors": {

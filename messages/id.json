@@ -725,7 +725,13 @@
         "third": "Pilihan ketiga",
         "maybe": "Mungkin"
       }
-    }
+    },
+    "manageCta": "Kelola presentasi",
+    "editTitle": "Kelola presentasi klien",
+    "editIntro": "Tambah atau hapus properti — tautan klien tetap sama dan diperbarui secara langsung.",
+    "update": "Simpan perubahan",
+    "liveLink": "Tautan klien langsung",
+    "liveLinkHint": "Tautan ini tetap sama. Perubahan yang Anda simpan di sini langsung muncul untuk klien — tidak perlu kirim ulang."
   },
   "clientView": {
     "unavailableTitle": "Presentasi tidak tersedia",
@@ -804,7 +810,14 @@
     "disclaimerShort": "Informasi tunduk pada konfirmasi. Hanya untuk perbandingan awal — bukan penawaran mengikat, penilaian atau nasihat.",
     "perYear": "/tahun",
     "checkInGoogle": "Cek di Google",
-    "openLink": "Buka tautan"
+    "openLink": "Buka tautan",
+    "select": "Pilih",
+    "hideProp": "Sembunyikan",
+    "showProp": "Tampilkan",
+    "hiddenProp": "Disembunyikan",
+    "compareSelected": "Bandingkan pilihan",
+    "downloadSelected": "Unduh pilihan",
+    "selectHint": "Centang properti yang ingin Anda bandingkan atau unduh."
   },
   "collab": {
     "errors": {

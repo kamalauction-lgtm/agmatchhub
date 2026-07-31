@@ -10,10 +10,11 @@ import { buildComparisonXlsx } from "@/lib/xlsx-lite";
  * Same client-safe projection as the page — nothing extra can leak.
  */
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ token: string }> },
 ) {
   const { token } = await params;
+  const idsParam = new URL(request.url).searchParams.get("ids");
 
   const service = createServiceClient();
   const { data: p } = await service
@@ -31,7 +32,9 @@ export async function GET(
 
   const t = await getTranslations("clientView");
   const tc = await getTranslations("clientView.compare");
-  const properties = (await getClientSafeProperties(p.id)).slice(0, 5);
+  const wanted = idsParam ? new Set(idsParam.split(",").filter(Boolean)) : null;
+  const allProps = await getClientSafeProperties(p.id);
+  const properties = (wanted ? allProps.filter((pr) => wanted.has(pr.ppid)) : allProps).slice(0, 5);
   const ra = Array.isArray(p.profiles) ? p.profiles[0] : p.profiles;
 
   const money = (cur: string, n: number | null) =>

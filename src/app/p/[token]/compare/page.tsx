@@ -12,10 +12,13 @@ import { LinkedText } from "@/components/client-view/linked-text";
 /** §23 comparison — client-safe fields only, 2–5 properties. */
 export default async function ComparePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ token: string }>;
+  searchParams: Promise<{ ids?: string }>;
 }) {
   const { token } = await params;
+  const { ids } = await searchParams;
   const t = await getTranslations("clientView");
   const tc = await getTranslations("clientView.compare");
 
@@ -31,7 +34,9 @@ export default async function ComparePage({
   const cookieVal = (await cookies()).get(linkCookieName(p.id))?.value;
   if (!verifyLinkSession(cookieVal, p.id)) redirect(`/p/${token}`);
 
-  const properties = (await getClientSafeProperties(p.id)).slice(0, 5);
+  const wanted = ids ? new Set(ids.split(",").filter(Boolean)) : null;
+  const all = await getClientSafeProperties(p.id);
+  const properties = (wanted ? all.filter((pr) => wanted.has(pr.ppid)) : all).slice(0, 5);
   if (properties.length < 2) redirect(`/p/${token}`);
 
   const money = (cur: string, n: number | null) =>

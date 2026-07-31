@@ -26,7 +26,7 @@ export default async function PresentationBuilderPage({
   const t = await getTranslations("presentation");
   const ts = await getTranslations("submissionStatus");
 
-  const [{ data: request }, { data: subs }, declaration] = await Promise.all([
+  const [{ data: request }, { data: subs }, declaration, { data: existing }] = await Promise.all([
     supabase
       .from("property_requests")
       .select("id, title, human_readable_id, requesting_agent_id")
@@ -39,17 +39,48 @@ export default async function PresentationBuilderPage({
       .in("status", SELECTABLE)
       .order("created_at"),
     getActiveDeclaration("requesting_agent_presentation", await getLocale()),
+    supabase
+      .from("client_presentations")
+      .select("id, title, intro_message, client_display_name, token")
+      .eq("request_id", id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ]);
   if (!request || request.requesting_agent_id !== user.id) notFound();
   if (!subs?.length) redirect(`/requests/${id}?noSelectable=1`);
+
+  // When a presentation already exists, this page edits it in place (same link).
+  const included = new Set<string>();
+  const notesById = new Map<string, string>();
+  if (existing) {
+    const { data: cur } = await supabase
+      .from("client_presentation_properties")
+      .select("submission_id, custom_note")
+      .eq("presentation_id", existing.id);
+    (cur ?? []).forEach((r) => {
+      included.add(r.submission_id);
+      if (r.custom_note) notesById.set(r.submission_id, r.custom_note);
+    });
+  }
+  const isEdit = !!existing;
+  const shareUrl = existing ? `${process.env.CLIENT_PRESENTATION_BASE_URL ?? ""}/${existing.token}` : null;
 
   return (
     <AgentShell>
       <Link href={`/requests/${id}`} className="text-sm text-muted hover:text-foreground">
         ← {request.title}
       </Link>
-      <h1 className="mt-2 mb-2 text-2xl font-semibold">{t("builderTitle")}</h1>
-      <p className="mb-6 text-sm text-muted">{t("builderIntro")}</p>
+      <h1 className="mt-2 mb-2 text-2xl font-semibold">{isEdit ? t("editTitle") : t("builderTitle")}</h1>
+      <p className="mb-6 text-sm text-muted">{isEdit ? t("editIntro") : t("builderIntro")}</p>
+
+      {shareUrl && (
+        <div className="mb-6 rounded-xl border border-line bg-surface p-4 text-sm">
+          <p className="mb-1 font-medium">{t("liveLink")}</p>
+          <p className="font-mono text-xs break-all text-muted">{shareUrl}</p>
+          <p className="mt-2 text-xs text-muted">{t("liveLinkHint")}</p>
+        </div>
+      )}
 
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
@@ -64,12 +95,12 @@ export default async function PresentationBuilderPage({
           <h2 className="font-semibold">{t("sectionDetails")}</h2>
           <label className="block text-sm">
             <span className="mb-1 block font-medium">{t("title")}</span>
-            <input name="title" required minLength={3} defaultValue={request.title} className={inputCls} />
+            <input name="title" required minLength={3} defaultValue={existing?.title ?? request.title} className={inputCls} />
           </label>
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block text-sm">
               <span className="mb-1 block font-medium">{t("clientName")}</span>
-              <input name="clientDisplayName" placeholder={t("clientNameHint")} className={inputCls} />
+              <input name="clientDisplayName" defaultValue={existing?.client_display_name ?? ""} placeholder={t("clientNameHint")} className={inputCls} />
             </label>
             <label className="block text-sm">
               <span className="mb-1 block font-medium">{t("expiry")}</span>
@@ -82,7 +113,7 @@ export default async function PresentationBuilderPage({
           </div>
           <label className="block text-sm">
             <span className="mb-1 block font-medium">{t("intro")}</span>
-            <textarea name="introMessage" rows={3} placeholder={t("introHint")} className={inputCls} />
+            <textarea name="introMessage" rows={3} defaultValue={existing?.intro_message ?? ""} placeholder={t("introHint")} className={inputCls} />
           </label>
         </section>
 
@@ -94,7 +125,7 @@ export default async function PresentationBuilderPage({
             return (
               <div key={s.id} className="rounded-lg border border-line p-4">
                 <label className="flex items-start gap-3 text-sm">
-                  <input type="checkbox" name="submissionIds" value={s.id} defaultChecked
+                  <input type="checkbox" name="submissionIds" value={s.id} defaultChecked={isEdit ? included.has(s.id) : true}
                     className="mt-0.5 h-4 w-4 accent-crimson" />
                   <span className="flex-1">
                     <span className="font-medium">{s.title}</span>
@@ -103,7 +134,7 @@ export default async function PresentationBuilderPage({
                     </span>
                   </span>
                 </label>
-                <input name={`note_${s.id}`} placeholder={t("noteHint")}
+                <input name={`note_${s.id}`} defaultValue={notesById.get(s.id) ?? ""} placeholder={t("noteHint")}
                   className={`${inputCls} mt-3`} maxLength={500} />
               </div>
             );
@@ -122,7 +153,7 @@ export default async function PresentationBuilderPage({
 
         <button type="submit"
           className="w-full rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong">
-          {t("create")}
+          {isEdit ? t("update") : t("create")}
         </button>
       </form>
     </AgentShell>

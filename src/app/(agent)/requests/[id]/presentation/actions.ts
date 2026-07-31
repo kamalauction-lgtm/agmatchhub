@@ -65,47 +65,110 @@ export async function createPresentation(formData: FormData) {
   const declaration = await getActiveDeclaration("requesting_agent_presentation", locale);
   if (!declaration) redirect(`${back}?error=save_failed`);
 
-  const { data: humanId, error: idErr } = await supabase.rpc("next_human_id", {
-    p_prefix: "PRE",
-  });
-  if (idErr) redirect(`${back}?error=save_failed`);
-
   const expiresAt = new Date(
     Date.now() + Number(d.expiresInDays) * 24 * 60 * 60 * 1000,
   ).toISOString();
 
-  const { data: pres, error: presErr } = await supabase
+  // Reuse the request's existing presentation so the SAME client link stays
+  // live — edits (add/remove properties, details) update it in place. Only the
+  // first time do we mint a new token/link.
+  const { data: existing } = await supabase
     .from("client_presentations")
-    .insert({
-      human_readable_id: humanId,
-      request_id: d.requestId,
-      requesting_agent_id: user.id,
-      title: d.title,
-      client_display_name: d.clientDisplayName,
-      intro_message: d.introMessage,
-      token: generateLinkToken(),
-      password: generateLinkPassword(),
-      expires_at: expiresAt,
-    })
     .select("id")
-    .single();
-  if (presErr || !pres) redirect(`${back}?error=save_failed`);
+    .eq("request_id", d.requestId)
+    .eq("requesting_agent_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
-  const rows = d.submissionIds.map((sid, i) => ({
-    presentation_id: pres.id,
-    submission_id: sid,
-    position: i,
-    custom_note: (String(formData.get(`note_${sid}`) ?? "").trim() || null),
-  }));
-  const { error: propsErr } = await supabase
-    .from("client_presentation_properties")
-    .insert(rows);
-  if (propsErr) redirect(`${back}?error=save_failed`);
+  let presId: string;
+  const isUpdate = !!existing;
+
+  if (existing) {
+    presId = existing.id;
+    const { error: upErr } = await supabase
+      .from("client_presentations")
+      .update({
+        title: d.title,
+        client_display_name: d.clientDisplayName,
+        intro_message: d.introMessage,
+        expires_at: expiresAt,
+        active: true,
+      })
+      .eq("id", presId);
+    if (upErr) redirect(`${back}?error=save_failed`);
+
+    // Sync the property set: drop unticked (feedback cascades), add newly
+    // ticked, and reposition everything to the chosen order.
+    const { data: cur } = await supabase
+      .from("client_presentation_properties")
+      .select("submission_id")
+      .eq("presentation_id", presId);
+    const curIds = new Set((cur ?? []).map((r) => r.submission_id));
+    const wantIds = new Set(d.submissionIds);
+    const toRemove = [...curIds].filter((x) => !wantIds.has(x));
+    if (toRemove.length) {
+      await supabase
+        .from("client_presentation_properties")
+        .delete()
+        .eq("presentation_id", presId)
+        .in("submission_id", toRemove);
+    }
+    for (let i = 0; i < d.submissionIds.length; i += 1) {
+      const sid = d.submissionIds[i];
+      const note = String(formData.get(`note_${sid}`) ?? "").trim() || null;
+      if (curIds.has(sid)) {
+        await supabase
+          .from("client_presentation_properties")
+          .update({ position: i, custom_note: note })
+          .eq("presentation_id", presId)
+          .eq("submission_id", sid);
+      } else {
+        await supabase
+          .from("client_presentation_properties")
+          .insert({ presentation_id: presId, submission_id: sid, position: i, custom_note: note });
+      }
+    }
+  } else {
+    const { data: humanId, error: idErr } = await supabase.rpc("next_human_id", {
+      p_prefix: "PRE",
+    });
+    if (idErr) redirect(`${back}?error=save_failed`);
+
+    const { data: pres, error: presErr } = await supabase
+      .from("client_presentations")
+      .insert({
+        human_readable_id: humanId,
+        request_id: d.requestId,
+        requesting_agent_id: user.id,
+        title: d.title,
+        client_display_name: d.clientDisplayName,
+        intro_message: d.introMessage,
+        token: generateLinkToken(),
+        password: generateLinkPassword(),
+        expires_at: expiresAt,
+      })
+      .select("id")
+      .single();
+    if (presErr || !pres) redirect(`${back}?error=save_failed`);
+    presId = pres.id;
+
+    const rows = d.submissionIds.map((sid, i) => ({
+      presentation_id: presId,
+      submission_id: sid,
+      position: i,
+      custom_note: (String(formData.get(`note_${sid}`) ?? "").trim() || null),
+    }));
+    const { error: propsErr } = await supabase
+      .from("client_presentation_properties")
+      .insert(rows);
+    if (propsErr) redirect(`${back}?error=save_failed`);
+  }
 
   const consentOk = await recordConsent({
     declaration,
     requestRef: d.requestId,
-    presentationRef: pres.id,
+    presentationRef: presId,
     countryCode: request.country_code,
   });
   if (!consentOk) redirect(`${back}?error=save_failed`);
@@ -122,11 +185,11 @@ export async function createPresentation(formData: FormData) {
   }
 
   await logAudit({
-    action: "presentation.created",
+    action: isUpdate ? "presentation.updated" : "presentation.created",
     entityType: "client_presentation",
-    entityId: pres.id,
+    entityId: presId,
     next: { properties: d.submissionIds.length },
   });
 
-  redirect(`/requests/${d.requestId}?presentation=1`);
+  redirect(`/requests/${d.requestId}?presentation=${isUpdate ? "updated" : "1"}`);
 }

@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import { cookies } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
@@ -9,6 +8,7 @@ import { getActiveDeclaration } from "@/lib/consents";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { LinkedText } from "@/components/client-view/linked-text";
+import { PresentationBoard } from "@/components/client-view/presentation-board";
 import { unlockPresentation, submitClientFeedback } from "./actions";
 
 const inputCls =
@@ -119,23 +119,20 @@ export default async function ClientPresentationPage({
           </p>
         )}
 
-        {p.allow_comparison && properties.length >= 1 && (
-          <div className="mb-8 flex flex-wrap justify-center gap-3">
-            {properties.length >= 2 && (
-              <Link href={`/p/${token}/compare`}
-                className="inline-block rounded-lg border border-crimson px-5 py-2.5 text-sm font-semibold text-crimson hover:bg-crimson-soft">
-                {t("compareAll", { count: properties.length })}
-              </Link>
-            )}
-            <a href={`/p/${token}/compare/export`}
-              className="inline-flex items-center gap-2 rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong">
-              ⬇ {t("compare.downloadExcel")}
-            </a>
-          </div>
-        )}
-
-        <div className="space-y-10">
-          {properties.map((prop, i) => {
+        <PresentationBoard
+          token={token}
+          allowComparison={p.allow_comparison}
+          items={properties.map((prop) => ({ ppid: prop.ppid, title: prop.title }))}
+          labels={{
+            select: t("select"),
+            hide: t("hideProp"),
+            show: t("showProp"),
+            hidden: t("hiddenProp"),
+            compare: t("compareSelected"),
+            download: t("downloadSelected"),
+            hint: t("selectHint"),
+          }}
+          cards={properties.map((prop, i) => {
             const cover = prop.images.find((im) => im.isCover) ?? prop.images[0];
             const rest = prop.images.filter((im) => im !== cover);
             return (
@@ -281,7 +278,7 @@ export default async function ClientPresentationPage({
             </article>
             );
           })}
-        </div>
+        />
 
         <footer className="mt-12 border-t border-line pt-6">
           <p className="text-xs leading-5 whitespace-pre-line text-muted">{disclaimer?.body}</p>
