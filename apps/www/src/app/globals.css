@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* Marketplace design tokens.
+   The brand is an internal working name (risk R1), so the palette lives here
+   and in brand config — never as literals in components. Swapping --brand and
+   --brand-strong is the whole rebrand at the CSS layer.
+
+   Deliberately distinct from the hub's crimson: the marketplace is a consumer
+   surface and should read as trustworthy and calm, not as an internal tool. */
+:root {
+  --background: #ffffff;
+  --foreground: #14181f;
+  --surface: #f6f7f9;
+  --surface-raised: #ffffff;
+  --line: #e3e6ea;
+  --muted: #64707f;
+
+  --brand: #0f766e;
+  --brand-strong: #0b5a54;
+  --brand-soft: #eefaf8;
+  --accent: #c2872a;
+
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+
+  --radius: 0.875rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0e1116;
+    --foreground: #eef1f5;
+    --surface: #161a21;
+    --surface-raised: #1b2029;
+    --line: #2a313c;
+    --muted: #9aa6b4;
+
+    --brand: #2dd4bf;
+    --brand-strong: #14b8a6;
+    --brand-soft: #10231f;
+    --accent: #d9a441;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-plus-jakarta);
+  --radius-card: var(--radius);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 16px controls stop iOS Safari auto-zooming on focus, and 44px is the
+   smallest comfortable touch target. Mobile-first is a requirement here, not
+   a preference (§5). */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
+  }
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+  }
+}
+
+/* Visible focus for keyboard users on every interactive element. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
