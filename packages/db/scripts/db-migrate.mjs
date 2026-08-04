@@ -7,27 +7,15 @@
  *   node scripts/db-migrate.mjs           # apply pending
  *   node scripts/db-migrate.mjs --status  # list applied/pending
  */
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
+import { loadEnv } from "./load-env.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-// Minimal .env.local loader (no dotenv dependency)
-const envFile = join(root, ".env.local");
-if (existsSync(envFile)) {
-  for (const line of readFileSync(envFile, "utf8").split(/\r?\n/)) {
-    const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
-    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^"|"$/g, "");
-  }
-}
-
-const url = process.env.DATABASE_URL;
-if (!url) {
-  console.error("DATABASE_URL not set (add it to .env.local)");
-  process.exit(1);
-}
+const { url } = loadEnv();
 
 const client = new pg.Client({ connectionString: url, ssl: { rejectUnauthorized: false } });
 await client.connect();

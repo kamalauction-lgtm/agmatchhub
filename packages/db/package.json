@@ -6,7 +6,11 @@
   "type": "module",
   "scripts": {
     "migrate": "node scripts/db-migrate.mjs",
+    "migrate:staging": "node scripts/db-migrate.mjs --env=staging",
     "status": "node scripts/db-migrate.mjs --status",
+    "status:staging": "node scripts/db-migrate.mjs --status --env=staging",
+    "dry-run": "node scripts/db-dry-run.mjs",
+    "dry-run:staging": "node scripts/db-dry-run.mjs --env=staging",
     "seed:admin": "node scripts/seed-admin.mjs",
     "test": "vitest run tests"
   },

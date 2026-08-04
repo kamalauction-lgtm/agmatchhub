@@ -9,26 +9,15 @@
  * Usage: node scripts/db-dry-run.mjs 00029_x.sql 00030_y.sql
  *        node scripts/db-dry-run.mjs            # all pending migrations
  */
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
+import { loadEnv, restArgs } from "./load-env.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-const envFile = join(root, ".env.local");
-if (existsSync(envFile)) {
-  for (const line of readFileSync(envFile, "utf8").split(/\r?\n/)) {
-    const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
-    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^"|"$/g, "");
-  }
-}
-
-const url = process.env.DATABASE_URL;
-if (!url) {
-  console.error("DATABASE_URL not set (add it to .env.local)");
-  process.exit(1);
-}
+const { url } = loadEnv();
 
 const dir = join(root, "supabase", "migrations");
 const client = new pg.Client({ connectionString: url, ssl: { rejectUnauthorized: false } });
@@ -40,7 +29,7 @@ const applied = new Set(
   )
 );
 
-const requested = process.argv.slice(2);
+const requested = restArgs();
 const files = (requested.length ? requested : readdirSync(dir).filter((f) => f.endsWith(".sql")))
   .filter((f) => requested.length || !applied.has(f.slice(0, 5)))
   .sort();
