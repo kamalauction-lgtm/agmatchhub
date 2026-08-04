@@ -22,11 +22,45 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
-      - run: npx tsc --noEmit
-      - run: npm run test  # RLS suite runs when test env secrets are configured; skips otherwise
+      - run: npm run typecheck
       - run: npm run build
       - name: Check no secrets committed
         run: |
-          if git grep -nE "sb_secret_|SUPABASE_SERVICE_ROLE_KEY=." -- ':!.env.example' ':!.github/workflows/ci.yml'; then
+          if git grep -nE "sb_secret_|SUPABASE_SERVICE_ROLE_KEY=." -- ':!*.env.example' ':!.github/workflows/ci.yml'; then
             echo "::error::Possible secret committed"; exit 1
           fi
+
+  rls:
+    # The RLS suite is the platform's strongest safety net: it must run against a
+    # real Postgres with real policies. It targets the STAGING project, never
+    # production. Without staging secrets configured it is skipped loudly rather
+    # than silently passing — see docs/stage-a-audit-and-architecture.md §B.5 S4.
+    runs-on: ubuntu-latest
+    env:
+      # Lifted to job env so the steps below can branch on presence: the
+      # `secrets` context is not reliably available inside a step-level `if`.
+      STAGING_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Report missing staging credentials
+        if: env.STAGING_SUPABASE_URL == ''
+        run: |
+          echo "::warning::RLS suite skipped — staging Supabase secrets are not configured."
+          echo "Configure STAGING_SUPABASE_URL, STAGING_SUPABASE_ANON_KEY and the TEST_* credentials."
+      - name: Run RLS suite against staging
+        if: env.STAGING_SUPABASE_URL != ''
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.STAGING_SUPABASE_ANON_KEY }}
+          TEST_RA_EMAIL: ${{ secrets.TEST_RA_EMAIL }}
+          TEST_RA_PASSWORD: ${{ secrets.TEST_RA_PASSWORD }}
+          TEST_SA_EMAIL: ${{ secrets.TEST_SA_EMAIL }}
+          TEST_SA_PASSWORD: ${{ secrets.TEST_SA_PASSWORD }}
+          TEST_ADMIN_EMAIL: ${{ secrets.TEST_ADMIN_EMAIL }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+        run: npm test

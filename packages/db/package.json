@@ -1,0 +1,20 @@
+{
+  "name": "@pg/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Single owner of the PropertiGuru Next database: migrations, seeds and the RLS test suite.",
+  "type": "module",
+  "scripts": {
+    "migrate": "node scripts/db-migrate.mjs",
+    "status": "node scripts/db-migrate.mjs --status",
+    "seed:admin": "node scripts/seed-admin.mjs",
+    "test": "vitest run tests"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.7"
+  },
+  "devDependencies": {
+    "pg": "^8.22.0",
+    "vitest": "^4.1.10"
+  }
+}
