@@ -30,7 +30,36 @@ const STATUSES = [
   "spam",
 ] as const;
 
+/**
+ * Data layer, outside the component: the React Compiler (rightly) refuses
+ * impure calls like Date.now() during render, and SLA state is a fact about
+ * the data, not about presentation. Each row is annotated once per request.
+ */
+async function getLeads(): Promise<LeadRow[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("leads")
+    .select(
+      `id, human_readable_id, status, message, inquiry_type, locale,
+       first_response_due, first_responded_at, created_at,
+       contacts (full_name, phone, email),
+       listings (title, slug)`
+    )
+    .order("created_at", { ascending: false })
+    .limit(100);
+
+  const now = Date.now();
+  return ((data ?? []) as unknown as Omit<LeadRow, "isOverdue">[]).map((l) => ({
+    ...l,
+    isOverdue:
+      !l.first_responded_at &&
+      !!l.first_response_due &&
+      Date.parse(l.first_response_due) < now,
+  }));
+}
+
 type LeadRow = {
+  isOverdue: boolean;
   id: string;
   human_readable_id: string;
   status: string;
@@ -58,29 +87,13 @@ export default async function LeadsPage({
 }) {
   await requireUser();
   const { updated, error } = await searchParams;
-  const supabase = await createClient();
   const t = await getTranslations("leads");
   const ts = await getTranslations("leadStatus");
   const format = await getFormatter();
 
-  const { data } = await supabase
-    .from("leads")
-    .select(
-      `id, human_readable_id, status, message, inquiry_type, locale,
-       first_response_due, first_responded_at, created_at,
-       contacts (full_name, phone, email),
-       listings (title, slug)`
-    )
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  const rows = (data ?? []) as unknown as LeadRow[];
-  const now = Date.now();
-
+  const rows = await getLeads();
   const open = rows.filter((l) => !["closed_won", "closed_lost", "spam"].includes(l.status));
-  const overdue = open.filter(
-    (l) => !l.first_responded_at && l.first_response_due && Date.parse(l.first_response_due) < now
-  );
+  const overdue = open.filter((l) => l.isOverdue);
 
   return (
     <AgentShell wide>
@@ -109,10 +122,7 @@ export default async function LeadsPage({
       ) : (
         <div className="space-y-4">
           {rows.map((lead) => {
-            const isOverdue =
-              !lead.first_responded_at &&
-              !!lead.first_response_due &&
-              Date.parse(lead.first_response_due) < now;
+            const isOverdue = lead.isOverdue;
             const waPhone = lead.contacts?.phone.replace(/^\+/, "");
             const waText = encodeURIComponent(
               t("waGreeting", {
