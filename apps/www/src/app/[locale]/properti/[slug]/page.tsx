@@ -12,8 +12,12 @@ import {
   mediaUrl,
 } from "@/lib/format";
 import { brand } from "@/config/brand";
+import { getBuyerConsent } from "@/lib/inquiry";
+import { InquiryForm } from "@/components/inquiry-form";
 
-export const revalidate = 300;
+// The page carries per-buyer inquiry feedback in its query string, so it is
+// rendered per request; the data reads underneath stay cacheable.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -44,14 +48,23 @@ export async function generateMetadata({
 
 export default async function ListingPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
   const listing = await getListingBySlug(slug);
   if (!listing) notFound();
+
+  const sp = await searchParams;
+  const inquiryStatus = typeof sp.inquiry === "string" ? sp.inquiry : undefined;
+  const leadRef =
+    typeof sp.ref === "string" && /^[A-Z-]+-[0-9-]+$/.test(sp.ref) ? sp.ref : undefined;
+  const errorField = typeof sp.field === "string" ? sp.field.slice(0, 30) : undefined;
+  const consent = await getBuyerConsent(locale);
 
   const [media, t, tType, tOwn, tFurn, tCond] = await Promise.all([
     getListingMedia(listing.id),
@@ -230,24 +243,25 @@ export default async function ListingPage({
               </p>
             )}
 
-            {/* Enquiry is a queued, privileged operation and is not wired yet.
-                The agent's phone number is deliberately not public: contact
+            {/* The agent's phone number is deliberately not public: contact
                 flows through a lead so consent, assignment and the response
-                SLA are all recorded. */}
-            <button
-              type="button"
-              disabled
-              className="mt-5 w-full cursor-not-allowed rounded-lg bg-brand py-3 text-sm font-semibold text-white opacity-50"
-            >
-              {t("contactAgent")}
-            </button>
-            <button
-              type="button"
-              disabled
-              className="mt-2 w-full cursor-not-allowed rounded-lg border border-line py-3 text-sm font-semibold opacity-50"
-            >
-              {t("requestViewing")}
-            </button>
+                SLA are all recorded before anyone talks. */}
+            <div className="mt-5">
+              {consent ? (
+                <InquiryForm
+                  slug={slug}
+                  locale={locale}
+                  consent={consent}
+                  status={inquiryStatus}
+                  leadRef={leadRef}
+                  errorField={errorField}
+                />
+              ) : (
+                <p className="rounded-lg border border-line bg-surface p-3 text-sm text-muted">
+                  {t("contactAgent")}
+                </p>
+              )}
+            </div>
           </div>
 
           <p className="mt-4 px-1 text-xs leading-relaxed text-muted">{brand.appName}</p>

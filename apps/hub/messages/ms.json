@@ -974,7 +974,8 @@
       "admin_request_submitted": "Keperluan baharu menunggu kelulusan",
       "admin_violation_reported": "Laporan pelanggaran baharu difailkan",
       "requirement_updated": "Keperluan yang anda hantar hartanah telah dikemas kini",
-      "submission_added_for_you": "Satu hartanah telah ditambah untuk anda"
+      "submission_added_for_you": "Satu hartanah telah ditambah untuk anda",
+      "lead_new": "Prospek pembeli baharu"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",

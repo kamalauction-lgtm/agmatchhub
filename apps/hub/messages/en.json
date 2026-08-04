@@ -974,7 +974,8 @@
       "admin_request_submitted": "New requirement awaiting approval",
       "admin_violation_reported": "New violation report filed",
       "requirement_updated": "The requirement you submitted a property for was updated",
-      "submission_added_for_you": "A property was added for you"
+      "submission_added_for_you": "A property was added for you",
+      "lead_new": "New buyer lead"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",

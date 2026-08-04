@@ -53,6 +53,10 @@ const forbidden = [
   "users_private",
   "agent_profiles",
   "audit_logs",
+  "contacts",
+  "leads",
+  "lead_events",
+  "inquiry_rate_limits",
 ];
 for (const t of forbidden) {
   const { status, text } = await get(`${t}?select=*&limit=1`);
