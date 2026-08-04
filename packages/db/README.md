@@ -1,0 +1,67 @@
+# @pg/db
+
+Single owner of the PropertiGuru Next database: migrations, seeds, the RLS
+test suite, and the privileged batch jobs. Both applications share the one
+schema that lives here — neither app carries migrations of its own.
+
+## Environments
+
+Every script takes `--env=staging` or `--env=local` (default; the production
+project) and prints the target host before touching anything. Shell variables
+win over file values, standard dotenv precedence.
+
+| File | Points at |
+|---|---|
+| `.env.local` | Production (`jtruwmwinymflkrvuuwd`, Tokyo) |
+| `.env.staging` | Staging (`jokyyhvtahiypuzmfydp`, Mumbai) |
+
+Both are git-ignored. The direct `db.<ref>.supabase.co` hosts are IPv6-only on
+this network — always use the IPv4 Supavisor pooler, and note staging needs
+the `aws-1-` prefix.
+
+**Migrations run staging → production, never production first.**
+
+## Commands
+
+```bash
+npm run status:staging       # applied / pending migrations
+npm run dry-run:staging      # apply pending in a transaction, report, ROLL BACK
+npm run migrate:staging      # apply pending for real
+npm test                     # RLS suite (38 tests; needs TEST_* credentials)
+npm run ghl-drain:staging    # drain ghl_sync_pending leads (dry-run by default)
+node scripts/verify-public-boundary.mjs --env=staging
+                             # prove the anon boundary from outside, over HTTP
+node scripts/seed-staging-catalogue.mjs --env=staging
+                             # seed test catalogue (refuses production)
+```
+
+## GHL drainer
+
+`ghl-drain.mjs` pushes pending leads to GoHighLevel as contacts +
+opportunities. With `GHL_LIVE=false` (the default) the entire pipeline runs
+against synthetic ids, so it is fully testable with no GHL account. The first
+`GHL_LIVE=true` run automatically resets dry-run-synced rows and replays them
+for real. Failures record `ghl_last_error` and increment `ghl_attempts`; rows
+at the attempt cap (5) are reported as dead-letter every run and need a manual
+reset. An inquiry never waits on GHL — that is the entire reason this is a
+drainer and not a call in the request path.
+
+## Hard-won rules (each one cost an incident)
+
+1. Never subquery a table inside its own RLS policy — `SECURITY DEFINER`
+   helpers or triggers instead (four separate `42P17` incidents).
+2. Confidential columns live in `*_private` companion tables; RLS filters
+   rows, not columns.
+3. Audit/actor FK columns point at `auth.users`, never `profiles` — a second
+   `profiles` FK breaks every PostgREST embed on the table.
+4. Supabase default privileges grant `anon`/`authenticated` ALL on new tables,
+   views **and functions** (EXECUTE). Every public object gets an explicit
+   `revoke all` + minimal grant-back. Views: SELECT only. Functions: EXECUTE
+   to the intended role only.
+5. A write rejected over HTTP is not proof a grant is revoked — PostgreSQL
+   checks view updatability before privileges. Assert grants in
+   `information_schema.role_table_grants`.
+6. Fire-and-forget inserts hide RLS denials. If a trail matters, verify the
+   rows actually landed.
+7. Guard triggers run for every role, including ones that bypass RLS — service
+   contexts need an explicit door (see 00035).

@@ -31,9 +31,13 @@ export function loadEnv(argv = process.argv.slice(2)) {
     process.exit(1);
   }
 
+  // Shell wins over file — the standard dotenv precedence, and what the
+  // original db-migrate loader did. A one-off override like
+  // `GHL_LIVE=true node scripts/ghl-drain.mjs` must actually take effect;
+  // silently ignoring it cost a debugging round.
   for (const line of readFileSync(envFile, "utf8").split(/\r?\n/)) {
     const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
-    if (m) process.env[m[1]] = m[2].replace(/^"|"$/g, "");
+    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^"|"$/g, "");
   }
 
   const url = process.env.DATABASE_URL;

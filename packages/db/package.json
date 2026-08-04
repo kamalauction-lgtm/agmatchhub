@@ -12,7 +12,9 @@
     "dry-run": "node scripts/db-dry-run.mjs",
     "dry-run:staging": "node scripts/db-dry-run.mjs --env=staging",
     "seed:admin": "node scripts/seed-admin.mjs",
-    "test": "vitest run tests"
+    "test": "vitest run tests",
+    "ghl-drain": "node scripts/ghl-drain.mjs",
+    "ghl-drain:staging": "node scripts/ghl-drain.mjs --env=staging"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.7"
