@@ -226,7 +226,8 @@
     "submissions": "Penyerahan saya",
     "notifications": "Notifikasi",
     "profile": "Profil saya",
-    "wanted": "Papan Dicari"
+    "wanted": "Papan Dicari",
+    "leads": "Prospek"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -1279,5 +1280,47 @@
       "upload_failed": "Muat naik imej gagal. Sila cuba lagi.",
       "save_failed": "Tidak dapat menyimpan. Sila cuba lagi."
     }
+  },
+  "leads": {
+    "title": "Prospek",
+    "summary": "{open} terbuka · {overdue} lewat tempoh",
+    "empty": "Belum ada prospek. Apabila pembeli bertanya tentang hartanah anda di marketplace, ia akan muncul di sini.",
+    "updated": "Prospek dikemas kini.",
+    "errors": {
+      "invalid": "Permintaan itu tidak sah.",
+      "not_found": "Prospek tidak dijumpai.",
+      "update_failed": "Prospek gagal dikemas kini. Sila cuba lagi."
+    },
+    "slaOverdue": "Respons lewat tempoh",
+    "slaWaiting": "Menunggu respons pertama",
+    "statusLabel": "Status prospek",
+    "setStatus": "Simpan",
+    "markResponded": "Tanda sudah dihubungi",
+    "openWhatsApp": "Buka WhatsApp",
+    "waGreeting": "Salam {name}, berhubung pertanyaan anda tentang \"{listing}\". Terima kasih atas minat anda!",
+    "types": {
+      "general": "Pertanyaan umum",
+      "viewing_request": "Permintaan lawatan",
+      "price_question": "Pertanyaan harga",
+      "availability": "Ketersediaan",
+      "financing": "Pembiayaan"
+    }
+  },
+  "leadStatus": {
+    "new": "Baharu",
+    "contact_attempted": "Cubaan hubungi",
+    "contacted": "Sudah dihubungi",
+    "qualified": "Layak",
+    "property_matched": "Hartanah dipadankan",
+    "viewing_proposed": "Lawatan dicadangkan",
+    "viewing_confirmed": "Lawatan disahkan",
+    "viewed": "Sudah melawat",
+    "negotiating": "Rundingan",
+    "booking": "Tempahan",
+    "financing": "Pembiayaan",
+    "closed_won": "Selesai — berjaya",
+    "closed_lost": "Selesai — gagal",
+    "nurture": "Pupukan jangka panjang",
+    "spam": "Spam"
   }
 }

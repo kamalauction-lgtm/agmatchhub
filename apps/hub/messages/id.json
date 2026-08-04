@@ -226,7 +226,8 @@
     "submissions": "Pengajuan saya",
     "notifications": "Notifikasi",
     "profile": "Profil saya",
-    "wanted": "Papan Dicari"
+    "wanted": "Papan Dicari",
+    "leads": "Prospek"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -1279,5 +1280,47 @@
       "upload_failed": "Unggah gambar gagal. Coba lagi.",
       "save_failed": "Tidak dapat menyimpan. Coba lagi."
     }
+  },
+  "leads": {
+    "title": "Prospek",
+    "summary": "{open} terbuka · {overdue} lewat batas",
+    "empty": "Belum ada prospek. Saat pembeli bertanya tentang listing Anda di marketplace, prospek akan muncul di sini.",
+    "updated": "Prospek diperbarui.",
+    "errors": {
+      "invalid": "Permintaan tidak valid.",
+      "not_found": "Prospek tidak ditemukan.",
+      "update_failed": "Gagal memperbarui prospek. Silakan coba lagi."
+    },
+    "slaOverdue": "Respons lewat batas",
+    "slaWaiting": "Menunggu respons pertama",
+    "statusLabel": "Status prospek",
+    "setStatus": "Simpan",
+    "markResponded": "Tandai sudah dihubungi",
+    "openWhatsApp": "Buka WhatsApp",
+    "waGreeting": "Halo {name}, sehubungan pertanyaan Anda tentang \"{listing}\". Terima kasih atas minat Anda!",
+    "types": {
+      "general": "Pertanyaan umum",
+      "viewing_request": "Permintaan kunjungan",
+      "price_question": "Pertanyaan harga",
+      "availability": "Ketersediaan",
+      "financing": "Pembiayaan / KPR"
+    }
+  },
+  "leadStatus": {
+    "new": "Baru",
+    "contact_attempted": "Coba dihubungi",
+    "contacted": "Sudah dihubungi",
+    "qualified": "Terkualifikasi",
+    "property_matched": "Properti dicocokkan",
+    "viewing_proposed": "Kunjungan diusulkan",
+    "viewing_confirmed": "Kunjungan dikonfirmasi",
+    "viewed": "Sudah berkunjung",
+    "negotiating": "Negosiasi",
+    "booking": "Booking",
+    "financing": "Pembiayaan",
+    "closed_won": "Selesai — berhasil",
+    "closed_lost": "Selesai — gagal",
+    "nurture": "Dibina jangka panjang",
+    "spam": "Spam"
   }
 }

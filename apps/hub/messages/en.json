@@ -226,7 +226,8 @@
     "submissions": "My submissions",
     "notifications": "Notifications",
     "profile": "My profile",
-    "wanted": "Wanted board"
+    "wanted": "Wanted board",
+    "leads": "Leads"
   },
   "requests": {
     "title": "My requests",
@@ -1279,5 +1280,47 @@
       "upload_failed": "Image upload failed. Please try again.",
       "save_failed": "Could not save. Please try again."
     }
+  },
+  "leads": {
+    "title": "Leads",
+    "summary": "{open} open · {overdue} overdue",
+    "empty": "No leads yet. When a buyer inquires on one of your marketplace listings, it lands here.",
+    "updated": "Lead updated.",
+    "errors": {
+      "invalid": "That request was not valid.",
+      "not_found": "Lead not found.",
+      "update_failed": "Could not update the lead. Please try again."
+    },
+    "slaOverdue": "Response overdue",
+    "slaWaiting": "Awaiting first response",
+    "statusLabel": "Lead status",
+    "setStatus": "Set",
+    "markResponded": "Mark as responded",
+    "openWhatsApp": "Open WhatsApp",
+    "waGreeting": "Hello {name}, this is regarding your inquiry about \"{listing}\". Thank you for your interest!",
+    "types": {
+      "general": "General question",
+      "viewing_request": "Viewing request",
+      "price_question": "Price question",
+      "availability": "Availability",
+      "financing": "Financing"
+    }
+  },
+  "leadStatus": {
+    "new": "New",
+    "contact_attempted": "Contact attempted",
+    "contacted": "Contacted",
+    "qualified": "Qualified",
+    "property_matched": "Property matched",
+    "viewing_proposed": "Viewing proposed",
+    "viewing_confirmed": "Viewing confirmed",
+    "viewed": "Viewed",
+    "negotiating": "Negotiating",
+    "booking": "Booking",
+    "financing": "Financing",
+    "closed_won": "Closed — won",
+    "closed_lost": "Closed — lost",
+    "nurture": "Long-term nurture",
+    "spam": "Spam"
   }
 }
