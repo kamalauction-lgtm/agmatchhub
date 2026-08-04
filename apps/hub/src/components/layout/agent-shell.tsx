@@ -38,6 +38,7 @@ export async function AgentShell({
           <nav className="hidden items-center gap-4 text-sm font-medium sm:flex">
             <Link href="/dashboard" className="hover:text-crimson">{t("dashboard")}</Link>
             <Link href="/leads" className="hover:text-crimson">{t("leads")}</Link>
+            <Link href="/listings" className="hover:text-crimson">{t("listings")}</Link>
             <Link href="/requests" className="hover:text-crimson">{t("requests")}</Link>
             <Link href="/submissions" className="hover:text-crimson">{t("submissions")}</Link>
             <Link href="/profile" className="hover:text-crimson">{t("profile")}</Link>

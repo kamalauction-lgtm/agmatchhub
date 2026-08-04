@@ -19,6 +19,7 @@ export default async function AdminLayout({
           <Link href="/admin"><BrandLockup size={28} /></Link>
           <nav className="flex items-center gap-4 text-sm font-medium">
             <Link href="/admin/requests" className="hover:text-crimson">{t("nav.requests")}</Link>
+            <Link href="/admin/listings" className="hover:text-crimson">{t("nav.listings")}</Link>
             <Link href="/admin/agents" className="hover:text-crimson">{t("nav.agents")}</Link>
             <Link href="/admin/countries" className="hover:text-crimson">{t("nav.countries")}</Link>
             <Link href="/admin/legal" className="hover:text-crimson">{t("nav.legal")}</Link>

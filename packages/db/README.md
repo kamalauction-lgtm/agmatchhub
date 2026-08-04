@@ -65,3 +65,8 @@ drainer and not a call in the request path.
    rows actually landed.
 7. Guard triggers run for every role, including ones that bypass RLS — service
    contexts need an explicit door (see 00035).
+8. **Never consult `current_user` inside a SECURITY DEFINER function** — it
+   names the function's owner, not the caller, so a
+   `current_user = 'postgres'` "service door" admits everyone. Guard triggers
+   are SECURITY INVOKER; use `session_user` for connection identity (00039,
+   which closed a real self-publish privilege escalation).
