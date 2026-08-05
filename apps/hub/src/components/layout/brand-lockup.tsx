@@ -39,29 +39,21 @@ export function BrandLockup({ size = 36 }: { size?: number }) {
   );
 }
 
-/** Wordmark image (crisp SVG text), theme-aware. */
+/**
+ * Text wordmark, rendered from `brand.appName`.
+ *
+ * This was two SVG files with the product name drawn into them, which meant a
+ * rename required redrawing artwork — and they still said "MatchHub" after
+ * the platform stopped being MatchHub. Text keeps §70 honest: renaming is a
+ * config change, and it stays crisp at any size and in both themes.
+ */
 export function BrandWordmark({ height = 28 }: { height?: number }) {
-  const w = Math.round(height * (620 / 84));
   return (
-    <>
-      <Image
-        src={brand.logos.wordmarkLight.src}
-        alt={brand.logos.wordmarkLight.alt}
-        width={w}
-        height={height}
-        className="h-auto dark:hidden"
-        unoptimized
-        priority
-      />
-      <Image
-        src={brand.logos.wordmarkDark.src}
-        alt={brand.logos.wordmarkDark.alt}
-        width={w}
-        height={height}
-        className="hidden h-auto dark:block"
-        unoptimized
-        priority
-      />
-    </>
+    <span
+      className="font-extrabold leading-none tracking-tight"
+      style={{ fontSize: `${height}px` }}
+    >
+      {brand.appName}
+    </span>
   );
 }

@@ -273,13 +273,17 @@
   },
   "nav": {
     "dashboard": "Papan pemuka",
-    "requests": "Keperluan saya",
-    "submissions": "Penyerahan saya",
+    "requests": "Keperluan klien",
+    "submissions": "Serahan saya",
     "notifications": "Notifikasi",
     "profile": "Profil saya",
     "wanted": "Papan Dicari",
     "leads": "Prospek",
-    "listings": "Iklan"
+    "listings": "Iklan",
+    "sectionWork": "Kerja harian",
+    "sectionCollaboration": "Kolaborasi",
+    "sectionAccount": "Akaun",
+    "matchhub": "MatchHub"
   },
   "requests": {
     "title": "Keperluan saya",

@@ -273,13 +273,17 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "requests": "My requests",
+    "requests": "Client requirements",
     "submissions": "My submissions",
     "notifications": "Notifications",
     "profile": "My profile",
     "wanted": "Wanted board",
     "leads": "Leads",
-    "listings": "Listings"
+    "listings": "Listings",
+    "sectionWork": "Daily work",
+    "sectionCollaboration": "Collaboration",
+    "sectionAccount": "Account",
+    "matchhub": "MatchHub"
   },
   "requests": {
     "title": "My requests",

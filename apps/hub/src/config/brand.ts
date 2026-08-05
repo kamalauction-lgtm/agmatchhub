@@ -15,12 +15,20 @@ export type BrandLogo = {
   isPlaceholder: boolean;
 };
 
+/**
+ * The platform is the agent operating system. MatchHub is one module inside
+ * it, not the product (Kamal, 4 Aug 2026) — so the application name is
+ * platform-level and module names live in `messages/*`, never here.
+ *
+ * These remain working names pending the brand decision (risk R1); every one
+ * is env-backed so a rename is a config change, not a code change.
+ */
 export const brand = {
-  appName: process.env.NEXT_PUBLIC_APP_NAME ?? "IQI AG MatchHub",
-  appShortName: process.env.NEXT_PUBLIC_APP_SHORT_NAME ?? "MatchHub",
+  appName: process.env.NEXT_PUBLIC_APP_NAME ?? "IQI AG Agent Platform",
+  appShortName: process.env.NEXT_PUBLIC_APP_SHORT_NAME ?? "Agent Platform",
   tagline:
     process.env.NEXT_PUBLIC_APP_TAGLINE ??
-    "One Requirement. Multiple Opportunities. Controlled Collaboration.",
+    "One platform for your whole property business.",
   companyName: "IQI AG",
   supportEmail: "",
   supportPhone: "",
@@ -50,16 +58,6 @@ export const brand = {
     agTeamLight: {
       src: "/brand/ag-mark-light.png",
       alt: "AG Team logo",
-      isPlaceholder: false,
-    },
-    wordmarkDark: {
-      src: "/brand/wordmark-dark.svg",
-      alt: "IQI AG MatchHub",
-      isPlaceholder: false,
-    },
-    wordmarkLight: {
-      src: "/brand/wordmark-light.svg",
-      alt: "IQI AG MatchHub",
       isPlaceholder: false,
     },
   } satisfies Record<string, BrandLogo>,

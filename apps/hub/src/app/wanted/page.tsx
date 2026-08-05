@@ -4,6 +4,7 @@ import QRCode from "qrcode";
 import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { BrandLockup, BrandWordmark } from "@/components/layout/brand-lockup";
+import { brand } from "@/config/brand";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 /**
@@ -83,7 +84,7 @@ export default async function WantedBoardPage({
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex items-center justify-between border-b border-line px-4 py-4 sm:px-6">
-        <Link href="/" aria-label="IQI AG MatchHub"><BrandLockup size={28} /></Link>
+        <Link href="/" aria-label={brand.appName}><BrandLockup size={28} /></Link>
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <Link href="/login"
@@ -244,7 +245,7 @@ export default async function WantedBoardPage({
       </main>
 
       <footer className="border-t border-line px-6 py-6 text-center text-xs text-muted">
-        IQI AG MatchHub — {t("footerNote")}
+        {brand.appName} — {t("footerNote")}
       </footer>
     </div>
   );

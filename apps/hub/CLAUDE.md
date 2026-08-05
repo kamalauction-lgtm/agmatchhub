@@ -1,18 +1,26 @@
-# IQI AG MatchHub — Claude Code guide
+# Agent Platform (apps/hub) — Claude Code guide
 
 @AGENTS.md
 
 ## What this is
 
-Private, requirement-driven property co-broke platform (NOT a public listing
-portal). Requesting Agent posts a client requirement → Admin approves → secure
-password-protected link → Supply Agents submit properties → RA filters → only
-approved properties reach the client via a separate presentation link.
+The **agent operating system**: the app an agent works in all day. Leads,
+marketplace listings, collaboration, profile and verification, with more
+modules coming (co-marketing, landing page, digital card, content studio,
+training).
 
-Master spec lives at `../docs/master-spec-sections-1-69.md` and
-`../docs/master-spec-sections-70-86.md`. Architecture + plan:
-`../docs/phase0-architecture-and-plan.md`. Follow them; do not remove
-requirements.
+**MatchHub is ONE module inside it** (Kamal, 4 Aug 2026) — the private,
+requirement-driven co-broke flow: Requesting Agent posts a client requirement
+→ Admin approves → password-protected link → Supply Agents submit properties
+→ RA filters → only approved properties reach the client via a separate
+presentation link. It is no longer the identity of this application, and
+nothing in the UI should imply it is.
+
+MatchHub's master spec lives at `docs/master-spec-sections-1-69.md` and
+`docs/master-spec-sections-70-86.md`; architecture in
+`docs/phase0-architecture-and-plan.md`. Platform-level plans live in the repo
+root `docs/` — Stage A, the benchmark, and the co-marketing and AI-dashboard
+module designs. Follow them; do not remove requirements.
 
 ## Hard rules (never break)
 
@@ -29,12 +37,16 @@ requirements.
    every critical action.
 6. **No hard-coded** app name, colours, roles, countries, legal text, or
    domains. Brand → `src/config/brand.ts`; URLs → env; UI text → `messages/*`.
+   This bit rots quietly: the wanted board carried a literal "IQI AG MatchHub"
+   in two places and the wordmark SVGs had the product name drawn into them,
+   so the rename needed artwork. Wordmarks are text from `brand.appName` now.
 7. **Official logos**: IQI logo is a labelled placeholder until the official
    file arrives. Never generate or substitute lookalike official logos.
 
 ## Stack & conventions
 
-Next.js 16 (App Router; note: `src/proxy.ts`, NOT middleware.ts) · TypeScript
+Next.js 16 (App Router; note: `src/middleware.ts` — edge, NOT `proxy.ts`
+which is Node-only and breaks on Cloudflare) · TypeScript
 strict · Tailwind v4 tokens in `globals.css` · Supabase (Postgres/Auth/Storage)
 · next-intl (en/ms/id, cookie-based, no URL prefix) · Zod validation in server
 actions.
