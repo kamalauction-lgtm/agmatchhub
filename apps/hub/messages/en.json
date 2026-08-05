@@ -1456,7 +1456,15 @@
         "bad_photo_type": "Photos must be JPG, PNG or WebP.",
         "photo_too_large": "Each photo must be under 10 MB."
       }
-    }
+    },
+    "sectionOwn": "My own listings",
+    "sectionBorrowed": "Borrowed via co-marketing",
+    "borrowedHelp": "Listings owned by another agent that you may market as your own inventory, under the commission terms you accepted.",
+    "borrowedEmpty": "You have not borrowed any listings yet. The co-marketing pool opens soon.",
+    "borrowedBadge": "Borrowed",
+    "borrowedCount": "{count, plural, one {# borrowed} other {# borrowed}}",
+    "listedBy": "Listing agent",
+    "yourShare": "Your commission share"
   },
   "listingStatus": {
     "draft": "Draft",

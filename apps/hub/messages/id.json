@@ -1456,7 +1456,15 @@
         "bad_photo_type": "Foto harus JPG, PNG, atau WebP.",
         "photo_too_large": "Setiap foto harus di bawah 10 MB."
       }
-    }
+    },
+    "sectionOwn": "Listing milik saya",
+    "sectionBorrowed": "Dipinjam lewat pemasaran bersama",
+    "borrowedHelp": "Listing milik agen lain yang boleh Anda pasarkan sebagai stok sendiri, sesuai terma komisi yang Anda terima.",
+    "borrowedEmpty": "Anda belum meminjam listing apa pun. Kumpulan pemasaran bersama segera dibuka.",
+    "borrowedBadge": "Dipinjam",
+    "borrowedCount": "{count} dipinjam",
+    "listedBy": "Agen penyenarai",
+    "yourShare": "Bagian komisi Anda"
   },
   "listingStatus": {
     "draft": "Draf",

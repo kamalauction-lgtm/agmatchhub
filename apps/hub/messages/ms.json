@@ -1456,7 +1456,15 @@
         "bad_photo_type": "Foto mesti JPG, PNG atau WebP.",
         "photo_too_large": "Setiap foto mesti bawah 10 MB."
       }
-    }
+    },
+    "sectionOwn": "Iklan saya sendiri",
+    "sectionBorrowed": "Dipinjam melalui pemasaran bersama",
+    "borrowedHelp": "Iklan milik ejen lain yang boleh anda pasarkan sebagai stok sendiri, mengikut terma komisen yang anda terima.",
+    "borrowedEmpty": "Anda belum meminjam sebarang iklan. Kumpulan pemasaran bersama akan dibuka tidak lama lagi.",
+    "borrowedBadge": "Dipinjam",
+    "borrowedCount": "{count} dipinjam",
+    "listedBy": "Ejen penyenarai",
+    "yourShare": "Bahagian komisen anda"
   },
   "listingStatus": {
     "draft": "Draf",
