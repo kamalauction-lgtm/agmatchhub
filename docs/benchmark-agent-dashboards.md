@@ -211,7 +211,31 @@ store both fields (`property_submissions.asking_price`,
 `monthly_rental`, `availability_status`). This is cheap, high-value, and
 directly protects the requesting agent in front of their client.
 
-### 2.6 Still to capture
+### 2.6 The co-marketing mechanic, on the listing card
+
+Captured from `propmall.co/listing`, 4 Aug 2026. Every listing card carries two
+actions side by side: **👁 View Listing** and **♡ Co-Marketing**. The card shown
+belongs to another agent (Rizal R R) — so picking up someone else's listing is
+a single click from the browse list, not a negotiation.
+
+The card also shows a `Published` badge with photo count, and a two-state row:
+**LF Updated** (active) / **Repost Today** — a bump action, the same habitual
+mechanic as Rumah123's *Sundul*.
+
+Listing facts on the card: price with period (RM 1,800 monthly), full title,
+location, property type and storey class, built-up with price-per-sqft, rooms,
+bathrooms, and a listing reference (LR2607000446).
+
+**This mechanic is now our own module design** — see
+[Co-Marketing module design](module-co-marketing.md). Kamal's brief goes
+further than PropMall: the listing agent must hold **valid documents and a
+clear commission** before the property can be shared, contact details swap to
+the marketing agent on their own landing page, and the dashboard still shows
+who the true listing agent is. That combination — a document gate plus
+versioned dual-accepted commission terms — is exactly what our existing
+MatchHub engine already does and PropMall appears not to.
+
+### 2.7 Still to capture
 
 Leads Hub contents, listings management, the `+` create menu, and the
 Premium subscription page (tiers, prices, what is gated).
