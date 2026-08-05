@@ -24,15 +24,17 @@ export default async function NewListingPage({
   const tt = await getTranslations("propertyTypes");
   const to = await getTranslations("ownershipTypes");
 
-  // Regencies + provinces for the location select (public reference data).
+  // Province + regency only (~550 options). With the full BPS hierarchy
+  // seeded, districts would put 7,700 rows in one select — kecamatan
+  // precision arrives with a proper search-as-you-type picker later.
   const { data: locations } = await supabase
     .from("locations")
     .select("id, name, level, path_names")
     .eq("country_code", "ID")
     .eq("is_active", true)
-    .in("level", ["province", "regency", "district"])
+    .in("level", ["province", "regency"])
     .order("path_names")
-    .limit(1000);
+    .limit(600);
 
   const input =
     "mt-1 w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm";

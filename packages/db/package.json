@@ -14,7 +14,9 @@
     "seed:admin": "node scripts/seed-admin.mjs",
     "test": "vitest run tests",
     "ghl-drain": "node scripts/ghl-drain.mjs",
-    "ghl-drain:staging": "node scripts/ghl-drain.mjs --env=staging"
+    "ghl-drain:staging": "node scripts/ghl-drain.mjs --env=staging",
+    "seed:locations": "node scripts/seed-locations-id.mjs",
+    "seed:locations:staging": "node scripts/seed-locations-id.mjs --env=staging"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.7"
