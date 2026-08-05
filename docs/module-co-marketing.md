@@ -58,8 +58,8 @@ accepted and neither can silently change.**
    Both agents see each other in the dashboard.
 4. **Leads belong to the MA who generated them**, but the LA is always notified
    that activity happened on their property.
-5. **The main domain shows the original lister only.** Borrowed copies exist
-   solely on the borrowing agent's own landing page or domain. See §7.
+5. **Marketplace surfaces show the original lister only.** Borrowed copies
+   exist solely under `/agent/*` or the agent's own domain. See §7.
 6. **Every pickup, withdrawal, term change and deal outcome is audited.**
 
 ## 5. Data model (migrations 00040+)
@@ -175,17 +175,51 @@ This is cleaner than the benchmark and it removes the buyer-confusion problem
 outright: search the marketplace and each property appears exactly once, with
 the agent who actually holds the mandate.
 
-### 7.1 Where the landing page lives
+### 7.1 Where the landing page lives — decided
 
-Three options, in increasing cost:
+**Kamal's call, 4 Aug 2026:** path-based on the main domain, with a custom
+domain as the Premium upgrade. Same shape as PropMall's
+`propmall.my/sitiaggroup`.
 
-| Tier | Shape | Notes |
-|---|---|---|
-| Default | `namaagen.propertiguru.id` | Wildcard DNS + one Worker route. Free, instant. |
-| Path fallback | `propertiguru.id/agen/nama` | Simplest, but blurs the "main domain = original lister only" rule. **Not recommended.** |
-| Premium | `namaagen.com` (agent's own domain) | Cloudflare for SaaS custom hostnames, automatic per-agent SSL. A natural paid upgrade. |
+| Tier | Shape |
+|---|---|
+| **Default (all agents)** | `propertiguru.id/agent/namaagen` |
+| Listing on that page | `propertiguru.id/agent/namaagen/list/judul-listing-1208` |
+| **Premium** | `namaagen.com` — Cloudflare for SaaS custom hostnames, automatic per-agent SSL |
 
-Recommendation: ship the subdomain, sell the custom domain.
+Because the landing page now sits on the main domain, invariant 5 must be
+stated by *surface*, not by domain:
+
+> **Marketplace surfaces** — home, `/cari`, `/properti/*` — show the original
+> listing agent only, and never contain borrowed listings.
+> **The `/agent/*` namespace** is the agent's own space, where borrowed
+> listings are the whole point.
+
+The namespaces never mix. A borrowed listing has exactly one URL, under the
+borrowing agent, and it is not reachable from marketplace search.
+
+### 7.2 What the page looks like (from the benchmark)
+
+Captured from `propmall.my/sitiaggroup/list/...`, 4 Aug 2026:
+
+- **The agent card sits at the top of the right column, above the price** —
+  photo, name with licence number (`Siti Hajar (E 2820)`), agency with its own
+  registration (`IQI REALTY SDN BHD (E (1) 1584/24)`), phone, and a green
+  **WhatsApp button as the primary call to action**.
+- Large gallery (20 photos) with a thumbnail strip.
+- Price, title, location, then attributes as plain rows: tenure, lot type,
+  corner, built-up, land area, rooms, bathrooms.
+- **Published date shown** — freshness as a trust signal.
+- Nothing on the page indicates whether the listing is the agent's own or
+  borrowed. To the public it is simply hers. That is the model working
+  correctly.
+
+Two notes for our build. Malaysia requires the agent's REN/E number and the
+agency registration to be displayed publicly — **Indonesia has no direct
+equivalent**, so our agent card shows IQI membership and verification status
+instead, which is the trust signal that actually means something here. And
+WhatsApp is the primary action, not a secondary one, consistent with our
+standing rule.
 
 ### 7.2 The SEO conflict — and the honest resolution
 
