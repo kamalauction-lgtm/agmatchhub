@@ -78,7 +78,69 @@ paid products.
 
 ## 2. PropMall
 
-*Pending. Kamal has access; screenshots to follow.*
+*Captured 4 Aug 2026. Screens seen so far: `/feeds` (agent landing).*
+
+Positioning is stated in the logo lockup itself: **"Built By Agents, For
+Agents"** — an agent-first co-operative posture rather than a portal that
+sells leads to agents. Worth noting because it is the closest posture to ours.
+
+### 2.1 The agent landing page is a *feed*, not a KPI dashboard
+
+`/feeds` is where a logged-in agent lands. The content is platform
+announcements as dated cards (an infrastructure-upgrade notice with a
+"read more"), not the agent's own numbers.
+
+**Read:** a deliberate different answer to "what does an agent see first" —
+platform communication over personal performance. Our dashboard chose the
+opposite (needs-attention-today numbers first). I still think ours is right
+for a daily working tool, but this argues for **an announcements channel
+somewhere in the OS** — IQI Indonesia has a real need to push project
+launches, policy changes and training to agents, and today we have no surface
+for it beyond per-user notifications.
+
+### 2.2 Top navigation
+
+Compact icon rail, right-aligned: a directory/listing icon, a home icon, a
+**`+` create menu with a dropdown** (multiple create actions, not a single
+"add listing"), a notifications bell with an unread badge, avatar, and a
+hamburger overflow menu.
+
+A **floating WhatsApp button** sits bottom-right on the page — support and
+contact run through WhatsApp as a first-class channel, consistent with the
+Malaysian/Indonesian market reality behind our own WhatsApp-only rule.
+
+### 2.3 Agent-branded microsite (MyHartanah.co)
+
+The announcement artwork advertises a companion product: **an agent's own
+branded property website**. Visible in the promotional image — so treat as
+marketing material, not a confirmed feature inventory:
+
+- Agent identity block: photo, name, **REN licence number**, agency, phone
+  with a *Show Number* reveal.
+- Its own search over the agent's inventory ("Discover 5,013 dream properties
+  at MyHartanah.co") with state / category / tenure / price / bedroom filters.
+- Featured listings grid, and a mobile listing detail with **Whatsapp / Call /
+  Details** as the three primary actions.
+- A **"Below Market Value"** badge on a listing card — a value-signal tag, not
+  just a status.
+- Site navigation includes **"Done Deals"**, plus task-oriented menus labelled
+  **"I Want To"** and **"Tools"**.
+
+**Read, three things worth stealing conceptually:**
+
+1. **Agent microsite** is already in our §10 Module 2 / Phase 2 — this
+   confirms it is table stakes in this market, not a luxury.
+2. **"Done Deals"** — transacted-deal display again (cf. Brickz). Two of two
+   benchmarked platforms surface transaction evidence to agents.
+3. **"I Want To" task menus** — organising navigation by intent rather than by
+   object. A genuinely good pattern for the non-tech-literate agents Kamal
+   describes, and cheap for us to adopt on the dashboard.
+
+### 2.4 Still to capture
+
+Listings management, leads/enquiries, the `+` create menu contents, the
+hamburger overflow (likely where the real module list lives), co-broke or
+agent-to-agent features, and any credits/subscription surface.
 
 ---
 
@@ -105,6 +167,11 @@ published agent marketing only.*
 | **Transacted-price data product** | None | Indonesia has no Brickz equivalent — potential differentiator, needs a data source |
 | Account-sharing policy | Not addressed | Cheap to add to terms + a login-anomaly signal |
 | Password rotation nudge | Not addressed | Low value; skip unless compliance asks |
+| **Agent-branded microsite** | Phase 2, unbuilt | Table stakes here — both benchmarks have it |
+| **Transacted deals / "Done Deals"** | None | 2 of 2 benchmarks surface transaction evidence |
+| **Platform announcements channel** | Per-user notifications only | **Adopt** — IQI needs to push launches and training |
+| **Intent-led navigation ("I Want To")** | Object-led (Listings, Leads…) | Cheap to add; suits non-tech-literate agents |
+| WhatsApp as first-class support channel | Used for lead contact only | Matches our WhatsApp-only rule; extend to support |
 
 ### Actions this suggests (not yet scheduled)
 
