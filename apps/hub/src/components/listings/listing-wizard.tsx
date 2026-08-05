@@ -26,10 +26,31 @@ export type WizardLabels = Record<string, string>;
 const STEPS = ["type", "location", "unit", "price", "description", "photos", "review"] as const;
 type Step = (typeof STEPS)[number];
 
-const PROPERTY_TYPES = [
-  "rumah", "apartemen", "ruko", "rukan", "kondominium", "villa", "kost",
-  "gudang", "pabrik", "kantor", "toko", "hotel", "tanah", "kavling", "lainnya",
-] as const;
+/**
+ * Property types offered per category. An agent choosing "Residensial" must
+ * not be shown Gudang or Pabrik — the old list showed all fifteen regardless,
+ * which let a warehouse be filed as a home.
+ *
+ * Land appears under both because a plot is sold as residential or commercial
+ * depending on its zoning, and the agent is the one who knows which.
+ */
+const TYPES_BY_CATEGORY: Record<string, readonly string[]> = {
+  residential: ["rumah", "apartemen", "kondominium", "villa", "kost", "tanah", "kavling", "lainnya"],
+  commercial: ["ruko", "rukan", "kantor", "toko", "hotel", "gudang", "pabrik", "tanah", "kavling", "lainnya"],
+};
+
+/**
+ * The stored category is derived from the chosen TYPE, not from the card.
+ * Two cards keep the choice simple for the agent while the database still
+ * gets precise values, which is what marketplace filters read.
+ */
+function categoryForType(type: string, picked: string): string {
+  if (["gudang", "pabrik"].includes(type)) return "industrial";
+  if (["tanah", "kavling"].includes(type)) return "land";
+  if (["rumah", "apartemen", "kondominium", "villa", "kost"].includes(type)) return "residential";
+  if (["ruko", "rukan", "kantor", "toko", "hotel"].includes(type)) return "commercial";
+  return picked === "commercial" ? "commercial" : "other";
+}
 
 const OWNERSHIP = ["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", "adat", "lainnya"] as const;
 
@@ -149,7 +170,7 @@ export function ListingWizard({
     const fd = new FormData();
     fd.set("listingType", f.listingType);
     if (f.listingType === "rent") fd.set("rentPeriod", f.rentPeriod);
-    fd.set("propertyCategory", f.propertyCategory);
+    fd.set("propertyCategory", categoryForType(f.propertyType, f.propertyCategory));
     fd.set("propertyType", f.propertyType);
     fd.set("ownershipType", f.ownershipType);
     fd.set("locationId", f.locationId);
@@ -238,7 +259,16 @@ export function ListingWizard({
                   <button
                     key={v}
                     type="button"
-                    onClick={() => set("propertyCategory", v)}
+                    onClick={() => {
+                      const list = TYPES_BY_CATEGORY[v] ?? [];
+                      setF((prev) => ({
+                        ...prev,
+                        propertyCategory: v,
+                        // Reset the type when it does not exist in the new
+                        // category, so the pair is always valid.
+                        propertyType: list.includes(prev.propertyType) ? prev.propertyType : list[0],
+                      }));
+                    }}
                     className={`rounded-xl border p-4 text-left ${
                       f.propertyCategory === v
                         ? "border-crimson bg-crimson-soft"
@@ -292,7 +322,7 @@ export function ListingWizard({
               <label className={label} htmlFor="pt">{t.propertyType}</label>
               <select id="pt" value={f.propertyType} className={`mt-1 ${input}`}
                 onChange={(e) => set("propertyType", e.target.value)}>
-                {PROPERTY_TYPES.map((p) => (
+                {(TYPES_BY_CATEGORY[f.propertyCategory] ?? []).map((p) => (
                   <option key={p} value={p}>{typeLabels[p] ?? p}</option>
                 ))}
               </select>
