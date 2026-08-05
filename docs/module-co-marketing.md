@@ -61,6 +61,24 @@ accepted and neither can silently change.**
 5. **Marketplace surfaces show the original lister only.** Borrowed copies
    exist solely under `/agent/*` or the agent's own domain. See §7.
 6. **Every pickup, withdrawal, term change and deal outcome is audited.**
+7. **No chain borrowing. A listing has exactly one owner.** (Kamal, 4 Aug
+   2026.) An agent borrows only from the *original* listing agent. A borrowed
+   listing can never be re-offered onward, so there is no second-hand or
+   third-hand inventory and no ambiguity about who holds the mandate.
+
+   Enforced structurally, not by convention: `guard_comarketing_offer()`
+   compares `listing_agent_id` against `listings.agent_id`, which is always
+   the original owner, and the RLS insert policy requires
+   `listing_agent_id = auth.uid()`. Verified adversarially on staging — a
+   marketing agent re-offering a listing she had borrowed was refused by the
+   trigger ("only the listing owner may offer it for co-marketing"), and
+   re-offering it while naming the true owner as listing agent was refused by
+   RLS (42501).
+
+   The remaining route to a fake second mandate is not co-marketing at all: an
+   agent creating their *own* duplicate listing of the same property. That is
+   duplicate/exclusivity fraud, and it belongs to duplicate detection (§8.6),
+   not to this guard.
 
 ## 5. Data model (migrations 00040+)
 
