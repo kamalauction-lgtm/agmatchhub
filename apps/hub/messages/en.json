@@ -72,29 +72,55 @@
     "startVerification": "Complete verification",
     "adminConsole": "Admin console",
     "myRequests": "My requests",
-    "allClear": "All clear - no leads waiting and nothing rejected. Time to list something new.",
-    "today": {
-      "label": "Needs attention today",
-      "overdue": "Overdue responses",
-      "newLeads": "New leads",
-      "live": "Listings live",
-      "rejected": "Listings rejected"
-    },
     "modules": {
       "label": "Your modules",
       "leads": "Leads & follow-up",
       "leadsDesc": "Marketplace inquiries, response SLA and your pipeline.",
       "listings": "Marketplace listings",
-      "listingsQuota": "{active}/{max} slots",
       "listingsDesc": "Create, track and renew public listings. {inReview} in review.",
       "matchhub": "MatchHub co-broke",
       "matchhubCounts": "{requests} req · {submissions} sub",
       "matchhubDesc": "Private client requirements, property submissions and protected collaboration.",
       "profile": "Profile & verification",
       "profileDesc": "Trust profile, documents, name card and social links.",
-      "viewings": "Viewings & tasks",
       "contentStudio": "Content studio",
-      "comingSoon": "Coming soon to your dashboard."
+      "coMarketing": "Co-marketing",
+      "coMarketingDesc": "Borrow listings from other agents under agreed commission terms.",
+      "landingPage": "My landing page",
+      "landingPageDesc": "Your own page of properties, with your contact details.",
+      "digitalCard": "Digital name card",
+      "digitalCardDesc": "A shareable card with your profile and listings.",
+      "contentStudioDesc": "Turn one listing into posts, captions and a brochure.",
+      "training": "Training & guides",
+      "trainingDesc": "Learn the platform and sharpen your sales skills."
+    },
+    "independentAgent": "Independent property agent",
+    "planLabel": "Your plan",
+    "quotaLabel": "Active listings",
+    "brief": {
+      "title": "Today's brief",
+      "greeting": {
+        "morning": "Good morning, {name}.",
+        "afternoon": "Good afternoon, {name}.",
+        "evening": "Good evening, {name}."
+      },
+      "allClear": "Nothing waiting. Good time to add a listing or follow up an old lead.",
+      "actions": {
+        "overdueLeads": "Reply to {count, plural, one {# lead} other {# leads}} past the response deadline",
+        "newLeads": "{count, plural, one {# new lead} other {# new leads}} waiting for a first reply",
+        "expiringListings": "{count, plural, one {# listing expires} other {# listings expire}} within 7 days — renew before they drop out of search",
+        "rejectedListings": "Fix {count, plural, one {# rejected listing} other {# rejected listings}} and resubmit",
+        "draftListings": "Finish {count, plural, one {# draft listing} other {# draft listings}}",
+        "inReviewListings": "{count, plural, one {# listing is} other {# listings are}} awaiting moderation"
+      }
+    },
+    "pipeline": {
+      "label": "Listing pipeline",
+      "draft": "Draft",
+      "inReview": "In review",
+      "live": "Live",
+      "expiring": "Expiring soon",
+      "closed": "Sold / rented"
     }
   },
   "verification": {
@@ -1488,5 +1514,11 @@
       "not_moderatable": "This listing is not awaiting review.",
       "update_failed": "Update failed. Try again."
     }
+  },
+  "plans": {
+    "free": "Free",
+    "iqiPremium": "Premium",
+    "complimentary": "Complimentary — verified IQI agent",
+    "upgradeCta": "Get verified for Premium"
   }
 }

@@ -72,29 +72,55 @@
     "startVerification": "Lengkapi verifikasi",
     "adminConsole": "Konsol admin",
     "myRequests": "Kebutuhan saya",
-    "allClear": "Semua beres - tidak ada prospek menunggu dan tidak ada yang ditolak. Saatnya pasang listing baru.",
-    "today": {
-      "label": "Perlu perhatian hari ini",
-      "overdue": "Respons lewat batas",
-      "newLeads": "Prospek baru",
-      "live": "Listing tayang",
-      "rejected": "Listing ditolak"
-    },
     "modules": {
       "label": "Modul Anda",
       "leads": "Prospek & tindak lanjut",
       "leadsDesc": "Pertanyaan marketplace, SLA respons, dan pipeline Anda.",
       "listings": "Listing marketplace",
-      "listingsQuota": "{active}/{max} slot",
       "listingsDesc": "Buat, pantau, dan perpanjang listing publik. {inReview} dalam tinjauan.",
       "matchhub": "MatchHub co-broke",
       "matchhubCounts": "{requests} kebutuhan · {submissions} pengajuan",
       "matchhubDesc": "Kebutuhan klien privat, pengajuan properti, dan kolaborasi terlindungi.",
       "profile": "Profil & verifikasi",
       "profileDesc": "Profil kepercayaan, dokumen, kartu nama, dan tautan sosial.",
-      "viewings": "Kunjungan & tugas",
       "contentStudio": "Studio konten",
-      "comingSoon": "Segera hadir di dasbor Anda."
+      "coMarketing": "Pemasaran bersama",
+      "coMarketingDesc": "Pinjam listing agen lain dengan terma komisi yang disepakati.",
+      "landingPage": "Halaman saya",
+      "landingPageDesc": "Halaman properti Anda sendiri, dengan kontak Anda.",
+      "digitalCard": "Kartu nama digital",
+      "digitalCardDesc": "Kartu yang bisa dibagikan berisi profil dan listing Anda.",
+      "contentStudioDesc": "Ubah satu listing jadi postingan, caption, dan brosur.",
+      "training": "Pelatihan & panduan",
+      "trainingDesc": "Pelajari platform dan asah kemampuan jualan Anda."
+    },
+    "independentAgent": "Agen properti independen",
+    "planLabel": "Paket Anda",
+    "quotaLabel": "Listing aktif",
+    "brief": {
+      "title": "Ringkasan hari ini",
+      "greeting": {
+        "morning": "Selamat pagi, {name}.",
+        "afternoon": "Selamat siang, {name}.",
+        "evening": "Selamat malam, {name}."
+      },
+      "allClear": "Tidak ada yang menunggu. Waktu yang tepat untuk pasang listing baru atau follow up prospek lama.",
+      "actions": {
+        "overdueLeads": "Balas {count} prospek yang sudah lewat batas respons",
+        "newLeads": "{count} prospek baru menunggu balasan pertama",
+        "expiringListings": "{count} listing kedaluwarsa dalam 7 hari — perpanjang sebelum hilang dari pencarian",
+        "rejectedListings": "Perbaiki {count} listing yang ditolak lalu ajukan ulang",
+        "draftListings": "Selesaikan {count} draf listing",
+        "inReviewListings": "{count} listing sedang menunggu tinjauan"
+      }
+    },
+    "pipeline": {
+      "label": "Alur listing",
+      "draft": "Draf",
+      "inReview": "Dalam tinjauan",
+      "live": "Tayang",
+      "expiring": "Segera berakhir",
+      "closed": "Terjual / tersewa"
     }
   },
   "verification": {
@@ -1488,5 +1514,11 @@
       "not_moderatable": "Listing ini tidak sedang menunggu tinjauan.",
       "update_failed": "Pembaruan gagal. Coba lagi."
     }
+  },
+  "plans": {
+    "free": "Gratis",
+    "iqiPremium": "Premium",
+    "complimentary": "Gratis — agen IQI terverifikasi",
+    "upgradeCta": "Verifikasi untuk dapat Premium"
   }
 }

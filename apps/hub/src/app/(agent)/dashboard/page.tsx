@@ -1,15 +1,23 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
-import { MAX_ACTIVE_LISTINGS } from "@/config/quotas";
+import { getDashboard } from "@/lib/dashboard/brief";
+import { planFor } from "@/config/plans";
 
 /**
- * The agent OS home (§20 agent dashboard). MatchHub is deliberately ONE
- * module card among peers here — the platform is the operating system, not a
- * co-broke tool with extras (product decision, Kamal, 4 Aug 2026). New
- * modules (viewings, tasks, projects, content studio) slot in as cards.
+ * The agent OS home (§20). MatchHub and Co-Marketing are module cards among
+ * peers here — the platform is the operating system, not a co-broke tool with
+ * extras (Kamal, 4 Aug 2026).
+ *
+ * Structure synthesised from the benchmark
+ * (docs/benchmark-agent-dashboards.md): an identity + plan block and a listing
+ * pipeline in the shape Rumah123 uses, a flat module grid as PropertyGuru's
+ * rail does, PropMall's prominent upgrade path, and the Brief Harian from
+ * docs/module-ai-agent-dashboard.md §3 — rules-only, which needs no model and
+ * is the part that actually changes what the agent does next.
  */
 
 const STATUS_KEYS = [
@@ -19,60 +27,6 @@ const STATUS_KEYS = [
   "expired_licence", "archived",
 ] as const;
 
-type Counts = {
-  leadsNew: number;
-  leadsUnanswered: number;
-  leadsOverdue: number;
-  listingsPublished: number;
-  listingsInReview: number;
-  listingsRejected: number;
-  listingsActive: number;
-  mhRequests: number;
-  mhSubmissions: number;
-};
-
-async function getCounts(): Promise<Counts> {
-  const supabase = await createClient();
-
-  // head-count queries only — the dashboard must stay cheap (§24). RLS scopes
-  // every one of these to the signed-in agent.
-  const [leadsNew, leadsUnanswered, leadsOverdue, pub, rev, rej, act, reqs, subs] =
-    await Promise.all([
-      supabase.from("leads").select("id", { count: "exact", head: true }).eq("status", "new"),
-      supabase
-        .from("leads")
-        .select("id", { count: "exact", head: true })
-        .is("first_responded_at", null)
-        .not("status", "in", '("closed_won","closed_lost","spam")'),
-      supabase
-        .from("leads")
-        .select("id", { count: "exact", head: true })
-        .is("first_responded_at", null)
-        .lt("first_response_due", new Date().toISOString()),
-      supabase.from("listings").select("id", { count: "exact", head: true }).eq("status", "published"),
-      supabase.from("listings").select("id", { count: "exact", head: true }).eq("status", "pending_review"),
-      supabase.from("listings").select("id", { count: "exact", head: true }).eq("status", "rejected"),
-      supabase
-        .from("listings")
-        .select("id", { count: "exact", head: true })
-        .in("status", ["draft", "pending_review", "published"]),
-      supabase.from("property_requests").select("id", { count: "exact", head: true }),
-      supabase.from("property_submissions").select("id", { count: "exact", head: true }),
-    ]);
-
-  return {
-    leadsNew: leadsNew.count ?? 0,
-    leadsUnanswered: leadsUnanswered.count ?? 0,
-    leadsOverdue: leadsOverdue.count ?? 0,
-    listingsPublished: pub.count ?? 0,
-    listingsInReview: rev.count ?? 0,
-    listingsRejected: rej.count ?? 0,
-    listingsActive: act.count ?? 0,
-    mhRequests: reqs.count ?? 0,
-    mhSubmissions: subs.count ?? 0,
-  };
-}
-
 export default async function DashboardPage() {
   const supabase = await createClient();
   const {
@@ -80,42 +34,119 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const [{ data: profile }, { data: isAdmin }] = await Promise.all([
-    supabase.from("profiles").select("display_name, agent_status").eq("id", user.id).single(),
+  const [{ data: profile }, { data: isAdmin }, { data: agentProfile }] = await Promise.all([
+    supabase.from("profiles").select("display_name, avatar_url, agent_status").eq("id", user.id).single(),
     supabase.rpc("is_platform_admin"),
+    supabase.from("agent_profiles").select("agency_name, city").eq("user_id", user.id).maybeSingle(),
   ]);
 
   const t = await getTranslations("dashboard");
+  const tp = await getTranslations("plans");
 
   const status = (STATUS_KEYS as readonly string[]).includes(profile?.agent_status ?? "")
     ? (profile!.agent_status as (typeof STATUS_KEYS)[number])
     : "draft";
   const isVerified = status === "verified";
-  const counts = isVerified
-    ? await getCounts()
-    : ({
-        leadsNew: 0, leadsUnanswered: 0, leadsOverdue: 0,
-        listingsPublished: 0, listingsInReview: 0, listingsRejected: 0,
-        listingsActive: 0, mhRequests: 0, mhSubmissions: 0,
-      } satisfies Counts);
+  const plan = planFor(profile?.agent_status);
 
-  const needsAttention =
-    counts.leadsOverdue > 0 || counts.leadsNew > 0 || counts.listingsRejected > 0;
+  // Unverified agents have no inventory and no leads; skip twelve queries.
+  const data = isVerified ? await getDashboard() : null;
+  const counts = data?.counts;
+  const brief = data?.brief;
+
+  const quotaPct = counts
+    ? Math.min(100, Math.round((counts.listingsActive / plan.maxListings) * 100))
+    : 0;
 
   return (
     <AgentShell wide>
-      <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
-      <p className="mb-6 text-muted">
-        {t("welcome", { name: profile?.display_name ?? user.email ?? "" })}
-      </p>
+      {/* Identity + plan ------------------------------------------------ */}
+      <section className="mb-6 grid gap-4 sm:grid-cols-[1fr_20rem]">
+        <div className="flex items-center gap-4 rounded-xl border border-line bg-surface p-5">
+          {profile?.avatar_url ? (
+            <Image
+              src={profile.avatar_url}
+              alt=""
+              width={56}
+              height={56}
+              unoptimized
+              className="h-14 w-14 shrink-0 rounded-full object-cover"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-crimson text-xl font-bold text-white"
+            >
+              {(profile?.display_name ?? "?").charAt(0).toUpperCase()}
+            </span>
+          )}
+          <div className="min-w-0">
+            <h1 className="truncate text-lg font-semibold">
+              {profile?.display_name ?? user.email}
+            </h1>
+            <p className="truncate text-sm text-muted">
+              {agentProfile?.agency_name ?? t("independentAgent")}
+              {agentProfile?.city ? ` · ${agentProfile.city}` : ""}
+            </p>
+            <span
+              className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${
+                isVerified ? "bg-success/10 text-success" : "bg-crimson-soft text-crimson"
+              }`}
+            >
+              {t(`status.${status}`)}
+            </span>
+          </div>
+        </div>
 
+        <div className="rounded-xl border border-line bg-surface p-5">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+            {t("planLabel")}
+          </p>
+          <p className="mt-1 text-lg font-bold">{tp(plan.nameKey as never)}</p>
+          {plan.key === "iqi_premium" && (
+            <p className="text-xs text-success">{tp("complimentary")}</p>
+          )}
+
+          {isVerified && counts && (
+            <>
+              <div className="mt-3 flex items-center justify-between text-xs text-muted">
+                <span>{t("quotaLabel")}</span>
+                <span className="font-semibold text-foreground">
+                  {counts.listingsActive}/{plan.maxListings}
+                </span>
+              </div>
+              <div
+                className="mt-1 h-2 overflow-hidden rounded-full bg-line"
+                role="progressbar"
+                aria-valuenow={counts.listingsActive}
+                aria-valuemin={0}
+                aria-valuemax={plan.maxListings}
+                aria-label={t("quotaLabel")}
+              >
+                <div
+                  className={`h-full rounded-full ${quotaPct >= 90 ? "bg-danger" : "bg-crimson"}`}
+                  style={{ width: `${quotaPct}%` }}
+                />
+              </div>
+            </>
+          )}
+
+          {plan.canUpgrade && (
+            <Link
+              href="/verification"
+              className="mt-4 block rounded-lg bg-success px-4 py-2.5 text-center text-sm font-semibold text-white hover:opacity-90"
+            >
+              {tp("upgradeCta")}
+            </Link>
+          )}
+        </div>
+      </section>
+
+      {/* Verification gate ---------------------------------------------- */}
       {!isVerified && (
-        <section className="mb-6 rounded-xl border border-line bg-surface p-6">
-          <h2 className="mb-2 text-sm font-medium text-muted">{t("statusLabel")}</h2>
-          <span className="inline-block rounded-full bg-crimson-soft px-3 py-1 text-sm font-semibold text-crimson">
-            {t(`status.${status}`)}
-          </span>
-          <p className="mt-3 text-sm leading-6 text-muted">{t("statusNote")}</p>
+        <section className="mb-8 rounded-xl border border-crimson/30 bg-crimson-soft p-6">
+          <h2 className="font-semibold">{t("statusLabel")}</h2>
+          <p className="mt-2 text-sm leading-6 text-muted">{t("statusNote")}</p>
           <Link
             href="/verification"
             className="mt-4 inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
@@ -125,125 +156,119 @@ export default async function DashboardPage() {
         </section>
       )}
 
-      {isVerified && (
+      {isVerified && counts && brief && (
         <>
-          {/* Today strip: what needs the agent NOW. */}
-          <section aria-label={t("today.label")} className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <Link
-              href="/leads"
-              className={`rounded-xl border p-4 ${
-                counts.leadsOverdue > 0 ? "border-danger/50 bg-danger/5" : "border-line"
-              }`}
-            >
-              <p className="text-3xl font-bold">{counts.leadsOverdue}</p>
-              <p className="mt-1 text-xs font-medium text-muted">{t("today.overdue")}</p>
-            </Link>
-            <Link
-              href="/leads"
-              className={`rounded-xl border p-4 ${
-                counts.leadsNew > 0 ? "border-warning/50 bg-warning/5" : "border-line"
-              }`}
-            >
-              <p className="text-3xl font-bold">{counts.leadsNew}</p>
-              <p className="mt-1 text-xs font-medium text-muted">{t("today.newLeads")}</p>
-            </Link>
-            <Link href="/listings" className="rounded-xl border border-line p-4">
-              <p className="text-3xl font-bold">{counts.listingsPublished}</p>
-              <p className="mt-1 text-xs font-medium text-muted">{t("today.live")}</p>
-            </Link>
-            <Link
-              href="/listings"
-              className={`rounded-xl border p-4 ${
-                counts.listingsRejected > 0 ? "border-warning/50 bg-warning/5" : "border-line"
-              }`}
-            >
-              <p className="text-3xl font-bold">{counts.listingsRejected}</p>
-              <p className="mt-1 text-xs font-medium text-muted">{t("today.rejected")}</p>
-            </Link>
+          {/* Brief harian ------------------------------------------------ */}
+          <section className="mb-8 rounded-xl border border-line p-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">
+              {t("brief.title")}
+            </h2>
+            <p className="mt-2 text-lg font-semibold">
+              {t(`brief.greeting.${brief.greetingKey}`, {
+                name: (profile?.display_name ?? "").split(" ")[0],
+              })}
+            </p>
+
+            {brief.allClear ? (
+              <p className="mt-2 text-sm text-success">{t("brief.allClear")}</p>
+            ) : (
+              <ol className="mt-4 space-y-2">
+                {brief.actions.map((a, i) => (
+                  <li key={a.key}>
+                    <Link
+                      href={a.href}
+                      className={`flex items-center gap-3 rounded-lg border p-3 transition hover:border-crimson ${
+                        a.tone === "danger"
+                          ? "border-danger/40 bg-danger/5"
+                          : a.tone === "warning"
+                            ? "border-warning/40 bg-warning/5"
+                            : "border-line"
+                      }`}
+                    >
+                      <span
+                        aria-hidden
+                        className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-surface text-xs font-bold"
+                      >
+                        {i + 1}
+                      </span>
+                      <span className="text-sm font-medium">
+                        {t(`brief.actions.${a.key}`, { count: a.count })}
+                      </span>
+                      <span aria-hidden className="ml-auto text-muted">
+                        →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            )}
           </section>
 
-          {!needsAttention && (
-            <p className="mb-8 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
-              {t("allClear")}
-            </p>
-          )}
+          {/* Listing pipeline (Rumah123's shape) ------------------------- */}
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
+            {t("pipeline.label")}
+          </h2>
+          <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-5">
+            {[
+              ["draft", counts.listingsDraft],
+              ["inReview", counts.listingsInReview],
+              ["live", counts.listingsPublished],
+              ["expiring", counts.listingsExpiring],
+              ["closed", counts.listingsClosed],
+            ].map(([key, value]) => (
+              <Link
+                key={key as string}
+                href="/listings"
+                className="rounded-xl border border-line p-4 transition hover:border-crimson"
+              >
+                <p className="text-2xl font-bold">{value as number}</p>
+                <p className="mt-1 text-xs font-medium text-muted">
+                  {t(`pipeline.${key as string}`)}
+                </p>
+              </Link>
+            ))}
+          </section>
 
-          {/* Module cards — the OS surface. Every future module lands here. */}
+          {/* Modules ----------------------------------------------------- */}
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
             {t("modules.label")}
           </h2>
-          <section className="grid gap-4 sm:grid-cols-2">
-            <Link
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ModuleCard
               href="/leads"
-              className="group rounded-xl border border-line p-5 transition hover:border-crimson"
-            >
-              <div className="flex items-start justify-between">
-                <span aria-hidden className="text-2xl">📥</span>
-                {counts.leadsUnanswered > 0 && (
-                  <span className="rounded-full bg-crimson px-2 py-0.5 text-xs font-bold text-white">
-                    {counts.leadsUnanswered}
-                  </span>
-                )}
-              </div>
-              <h3 className="mt-3 font-semibold group-hover:text-crimson">{t("modules.leads")}</h3>
-              <p className="mt-1 text-sm text-muted">{t("modules.leadsDesc")}</p>
-            </Link>
-
-            <Link
+              icon="📥"
+              title={t("modules.leads")}
+              desc={t("modules.leadsDesc")}
+              badge={counts.leadsUnanswered || undefined}
+            />
+            <ModuleCard
               href="/listings"
-              className="group rounded-xl border border-line p-5 transition hover:border-crimson"
-            >
-              <div className="flex items-start justify-between">
-                <span aria-hidden className="text-2xl">🏠</span>
-                <span className="text-xs font-medium text-muted">
-                  {t("modules.listingsQuota", { active: counts.listingsActive, max: MAX_ACTIVE_LISTINGS })}
-                </span>
-              </div>
-              <h3 className="mt-3 font-semibold group-hover:text-crimson">{t("modules.listings")}</h3>
-              <p className="mt-1 text-sm text-muted">
-                {t("modules.listingsDesc", { inReview: counts.listingsInReview })}
-              </p>
-            </Link>
-
-            <Link
+              icon="🏠"
+              title={t("modules.listings")}
+              desc={t("modules.listingsDesc", { inReview: counts.listingsInReview })}
+              meta={`${counts.listingsActive}/${plan.maxListings}`}
+            />
+            <ModuleCard
               href="/requests"
-              className="group rounded-xl border border-line p-5 transition hover:border-crimson"
-            >
-              <div className="flex items-start justify-between">
-                <span aria-hidden className="text-2xl">🤝</span>
-                <span className="text-xs font-medium text-muted">
-                  {t("modules.matchhubCounts", {
-                    requests: counts.mhRequests,
-                    submissions: counts.mhSubmissions,
-                  })}
-                </span>
-              </div>
-              <h3 className="mt-3 font-semibold group-hover:text-crimson">
-                {t("modules.matchhub")}
-              </h3>
-              <p className="mt-1 text-sm text-muted">{t("modules.matchhubDesc")}</p>
-            </Link>
-
-            <Link
+              icon="🤝"
+              title={t("modules.matchhub")}
+              desc={t("modules.matchhubDesc")}
+              meta={t("modules.matchhubCounts", {
+                requests: counts.mhRequests,
+                submissions: counts.mhSubmissions,
+              })}
+            />
+            <ModuleCard
               href="/profile"
-              className="group rounded-xl border border-line p-5 transition hover:border-crimson"
-            >
-              <span aria-hidden className="text-2xl">👤</span>
-              <h3 className="mt-3 font-semibold group-hover:text-crimson">{t("modules.profile")}</h3>
-              <p className="mt-1 text-sm text-muted">{t("modules.profileDesc")}</p>
-            </Link>
-
-            {/* Coming next in the OS — visible so agents know the direction. */}
-            <div className="rounded-xl border border-dashed border-line p-5 opacity-70">
-              <span aria-hidden className="text-2xl">🗓️</span>
-              <h3 className="mt-3 font-semibold">{t("modules.viewings")}</h3>
-              <p className="mt-1 text-sm text-muted">{t("modules.comingSoon")}</p>
-            </div>
-            <div className="rounded-xl border border-dashed border-line p-5 opacity-70">
-              <span aria-hidden className="text-2xl">✨</span>
-              <h3 className="mt-3 font-semibold">{t("modules.contentStudio")}</h3>
-              <p className="mt-1 text-sm text-muted">{t("modules.comingSoon")}</p>
-            </div>
+              icon="👤"
+              title={t("modules.profile")}
+              desc={t("modules.profileDesc")}
+            />
+            <SoonCard icon="🔁" title={t("modules.coMarketing")} desc={t("modules.coMarketingDesc")} />
+            <SoonCard icon="🌐" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
+            <SoonCard icon="💳" title={t("modules.digitalCard")} desc={t("modules.digitalCardDesc")} />
+            <SoonCard icon="✨" title={t("modules.contentStudio")} desc={t("modules.contentStudioDesc")} />
+            <SoonCard icon="🎓" title={t("modules.training")} desc={t("modules.trainingDesc")} />
           </section>
         </>
       )}
@@ -257,5 +282,56 @@ export default async function DashboardPage() {
         </Link>
       )}
     </AgentShell>
+  );
+}
+
+function ModuleCard({
+  href,
+  icon,
+  title,
+  desc,
+  badge,
+  meta,
+}: {
+  href: string;
+  icon: string;
+  title: string;
+  desc: string;
+  badge?: number;
+  meta?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group rounded-xl border border-line p-5 transition hover:border-crimson"
+    >
+      <div className="flex items-start justify-between gap-2">
+        <span aria-hidden className="text-2xl">
+          {icon}
+        </span>
+        {badge ? (
+          <span className="rounded-full bg-crimson px-2 py-0.5 text-xs font-bold text-white">
+            {badge}
+          </span>
+        ) : meta ? (
+          <span className="text-xs font-medium text-muted">{meta}</span>
+        ) : null}
+      </div>
+      <h3 className="mt-3 font-semibold group-hover:text-crimson">{title}</h3>
+      <p className="mt-1 text-sm text-muted">{desc}</p>
+    </Link>
+  );
+}
+
+/** Announced but unbuilt — agents should see where the platform is going. */
+function SoonCard({ icon, title, desc }: { icon: string; title: string; desc: string }) {
+  return (
+    <div className="rounded-xl border border-dashed border-line p-5 opacity-70">
+      <span aria-hidden className="text-2xl">
+        {icon}
+      </span>
+      <h3 className="mt-3 font-semibold">{title}</h3>
+      <p className="mt-1 text-sm text-muted">{desc}</p>
+    </div>
   );
 }

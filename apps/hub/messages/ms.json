@@ -72,29 +72,55 @@
     "startVerification": "Lengkapkan pengesahan",
     "adminConsole": "Konsol admin",
     "myRequests": "Keperluan saya",
-    "allClear": "Semua beres - tiada prospek menunggu dan tiada yang ditolak. Masa untuk iklankan sesuatu yang baharu.",
-    "today": {
-      "label": "Perlu perhatian hari ini",
-      "overdue": "Respons lewat tempoh",
-      "newLeads": "Prospek baharu",
-      "live": "Iklan disiarkan",
-      "rejected": "Iklan ditolak"
-    },
     "modules": {
       "label": "Modul anda",
       "leads": "Prospek & susulan",
       "leadsDesc": "Pertanyaan marketplace, SLA respons dan saluran jualan anda.",
       "listings": "Iklan marketplace",
-      "listingsQuota": "{active}/{max} slot",
       "listingsDesc": "Cipta, jejak dan perbaharui iklan awam. {inReview} dalam semakan.",
       "matchhub": "MatchHub co-broke",
       "matchhubCounts": "{requests} keperluan · {submissions} serahan",
       "matchhubDesc": "Keperluan pelanggan persendirian, serahan hartanah dan kerjasama terlindung.",
       "profile": "Profil & pengesahan",
       "profileDesc": "Profil kepercayaan, dokumen, kad nama dan pautan sosial.",
-      "viewings": "Lawatan & tugasan",
       "contentStudio": "Studio kandungan",
-      "comingSoon": "Akan datang ke papan pemuka anda."
+      "coMarketing": "Pemasaran bersama",
+      "coMarketingDesc": "Pinjam iklan ejen lain di bawah terma komisen yang dipersetujui.",
+      "landingPage": "Halaman saya",
+      "landingPageDesc": "Halaman hartanah anda sendiri, dengan maklumat hubungan anda.",
+      "digitalCard": "Kad nama digital",
+      "digitalCardDesc": "Kad boleh kongsi dengan profil dan iklan anda.",
+      "contentStudioDesc": "Tukar satu iklan kepada pos, kapsyen dan brosur.",
+      "training": "Latihan & panduan",
+      "trainingDesc": "Pelajari platform dan tajamkan kemahiran jualan anda."
+    },
+    "independentAgent": "Ejen hartanah bebas",
+    "planLabel": "Pelan anda",
+    "quotaLabel": "Iklan aktif",
+    "brief": {
+      "title": "Ringkasan hari ini",
+      "greeting": {
+        "morning": "Selamat pagi, {name}.",
+        "afternoon": "Selamat tengah hari, {name}.",
+        "evening": "Selamat petang, {name}."
+      },
+      "allClear": "Tiada yang menunggu. Masa yang baik untuk tambah iklan atau susuli prospek lama.",
+      "actions": {
+        "overdueLeads": "Balas {count} prospek yang sudah lewat tempoh respons",
+        "newLeads": "{count} prospek baharu menunggu balasan pertama",
+        "expiringListings": "{count} iklan tamat dalam 7 hari — perbaharui sebelum hilang dari carian",
+        "rejectedListings": "Betulkan {count} iklan yang ditolak dan hantar semula",
+        "draftListings": "Siapkan {count} draf iklan",
+        "inReviewListings": "{count} iklan sedang menunggu moderasi"
+      }
+    },
+    "pipeline": {
+      "label": "Saluran iklan",
+      "draft": "Draf",
+      "inReview": "Dalam semakan",
+      "live": "Disiarkan",
+      "expiring": "Hampir tamat",
+      "closed": "Terjual / disewa"
     }
   },
   "verification": {
@@ -1488,5 +1514,11 @@
       "not_moderatable": "Iklan ini tidak menunggu semakan.",
       "update_failed": "Kemas kini gagal. Cuba lagi."
     }
+  },
+  "plans": {
+    "free": "Percuma",
+    "iqiPremium": "Premium",
+    "complimentary": "Percuma — ejen IQI disahkan",
+    "upgradeCta": "Sahkan akaun untuk Premium"
   }
 }
