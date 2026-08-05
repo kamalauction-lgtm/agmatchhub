@@ -69,10 +69,81 @@ them as one document-upload step.
 **Read:** scam/spam pressure on agent inboxes is significant enough to warrant a
 user-facing control, not just backend filtering.
 
-### 1.5 Still to capture
+### 1.5 Packages and the credit economy
 
-Dashboard home, Listings index, Leads index, Market Watch, Brickz, credits and
-paid products.
+*From PropertyGuru Group Malaysia's public agent-offerings site, 4 Aug 2026.*
+
+Four tiers, priced per month and billed annually — and note the level: these
+are **RM 4,300 to RM 21,500 a year**, a different universe from Rumah123's
+Indonesian pricing and from our Rp49k–249k ladder.
+
+| Tier | Monthly | Annual | Concurrent listings | Universal credits |
+|---|---|---|---|---|
+| Bronze | RM 359.82 | RM 4,317.84 | 50 | 1,200 |
+| Silver | RM 561.42 | RM 6,737.04 | 150 | 2,400 |
+| Gold | RM 1,002.42 | RM 12,029.04 | 350 | 4,800 |
+| Elite | RM 1,789.92 | RM 21,479.04 | 500 | 15,000 |
+
+Higher tiers add non-feature benefits that are pure status and access:
+pre-qualification for **PG Agent Awards**, **co-marketing options**, premium
+support, and **round-table access** at Elite.
+
+**Three separate credit currencies** — Universal/Ad Credits (365-day expiry,
+volume discounts), **Prime Credits** (Featured Agent only), and iProperty
+Featured Credits for dual-platform agents.
+
+Ranking add-ons stack in a strict ladder:
+
+`Featured Agent` › `Turbo Pro` (guaranteed top-10) › `Turbo` › `Boost` › regular
+
+### 1.6 Featured Agent — the most interesting mechanic in the whole benchmark
+
+- **Exactly 7 slots per area, district or project**, split by category (condo,
+  residential, commercial). Artificial scarcity, sold.
+- Bookable for **30 / 90 / 180 days**, extendable, with future availability
+  reservable.
+- **Dynamic pricing**: the Prime Credit cost moves with competition and
+  listing supply for that property type, location and project.
+- Buys: pinned above Turbo and Spotlight, extra-large images in the carousel,
+  placement on project pages, a **Featured Agent badge**, and dedicated
+  WhatsApp + Message buttons.
+
+**Read:** this is not "pay for a better listing" — it is **selling territory**.
+An agent buys visibility over an *area*, not over one property, and scarcity
+plus dynamic pricing turns local competition into revenue. It also creates a
+genuine credibility signal, because only seven agents can hold a district.
+
+For us that is worth understanding rather than copying wholesale: it is the
+strongest monetisation idea seen anywhere in this study, and it maps naturally
+onto Indonesia's kecamatan hierarchy, which we already seeded. But it sits in
+direct tension with our §14 rule that paid promotion must not outrank on
+payment alone.
+
+### 1.7 Tools, grouped the way they market them
+
+They organise the agent value proposition into three promises:
+
+| Promise | Tools |
+|---|---|
+| **Win with reach** | Ranking tools |
+| **Win with speed** | MarketWatch · Lead Management · Listing Management · Listing Performance Insights |
+| **Win with credibility** | Verified Badge · Brickz · **Everyone Welcome Badge** |
+
+Also named: **AI writing and video generation** for listing descriptions and
+visuals, and cross-listing that duplicates a listing onto iProperty PRO in one
+step. Headline claim: 92 million platform visits and 7 million unique seekers
+a year across both platforms.
+
+Two things worth taking from the framing itself:
+
+1. **Reach / speed / credibility** is a better way to explain an agent
+   platform than a feature list. Agents buy outcomes, not modules.
+2. The **Everyone Welcome Badge** is an inclusivity signal as a product
+   feature — a reminder that trust markers need not all be about competence.
+
+### 1.8 Still to capture
+
+Dashboard home, Listings index, Leads index, MarketWatch and Brickz screens.
 
 ---
 
@@ -354,7 +425,11 @@ Sources: [Dashboard agen](https://www.rumah123.com/panduan-properti/dashboard-ag
 | **Named human support (WhatsApp)** | None | Trivial to add, high trust value in this market |
 | **Always-visible subscribe CTA** | None | Ties to entitlements engine (Epic 4) |
 | **Listing Quality Score surfaced** | In schema (00030), not shown | **Highest-value half-built win** — market leader validates it |
-| **Promotion credits economy** | None; subscription-only plan ladder | Rethink §7 — incumbent's revenue is credits + boosts, not subscription |
+| **Promotion credits economy** | None; subscription-only plan ladder | Rethink §7 — **both** incumbents run on credits + boosts, not subscription |
+| **Area-exclusive visibility (Featured Agent)** | None | Strongest monetisation idea in the study; maps onto our kecamatan hierarchy; conflicts with §14 |
+| **Dynamic pricing on promotion** | None | Scarcity + competition priced automatically |
+| **Status benefits (awards, round-table)** | None | Higher tiers sell access and standing, not just features |
+| **Verified / credibility badges** | Verification exists, no public badge | Cheap; both MY platforms monetise trust |
 | **One-click bump ("Sundul")** | None | Cheap, habitual, monetisable |
 | **Instant brochure from listing** | AI Content Studio (Phase 2) | The unglamorous daily-use version; ship this shape first |
 | **Specialisation / area-expert badges** | None | Credibility mechanic, near-zero cost, fits trust profile |
