@@ -58,8 +58,8 @@ accepted and neither can silently change.**
    Both agents see each other in the dashboard.
 4. **Leads belong to the MA who generated them**, but the LA is always notified
    that activity happened on their property.
-5. **One canonical public listing.** See §7 — this is the trap in the whole
-   design.
+5. **The main domain shows the original lister only.** Borrowed copies exist
+   solely on the borrowing agent's own landing page or domain. See §7.
 6. **Every pickup, withdrawal, term change and deal outcome is audited.**
 
 ## 5. Data model (migrations 00040+)
@@ -157,22 +157,63 @@ collaborating agent actually needs:
 We already store both fields. Add `withdrawn` and `terms_changed` as a third
 and fourth, and stop there — notification fatigue is real.
 
-## 7. The trap: duplicate content
+## 7. Two surfaces, one rule (Kamal, 4 Aug 2026)
 
-Twenty agents marketing one property means twenty pages for one property. Left
-alone this produces duplicate content that damages search ranking for
-everyone, and buyer confusion when the same home appears repeatedly in one
-result set.
+Every agent gets their own landing page. Borrowed properties live **there**,
+never on the main marketplace.
 
-Rules:
+| Surface | Whose properties | Whose contact | Borrowed listings? |
+|---|---|---|---|
+| **Marketplace** `www.propertiguru.id` | The original listing agent's | **Original listing agent only** | **Never** |
+| **Agent landing page** (their own domain) | Their own **plus borrowed** | The agent whose page it is | **Yes — this is the point** |
 
-1. **The public marketplace (`www`) shows one canonical listing only** — the
-   LA's. Co-marketed copies never enter marketplace search.
-2. **Microsites carry `rel=canonical`** pointing at the canonical listing.
-3. **Each MA's copy gets its own AI-written description** (§8.2), so the pages
-   are genuinely different documents, not spun duplicates.
-4. Microsite pages are `noindex` until the copy is distinct enough to earn
-   indexing.
+Stated as an invariant: *on the main domain and the main property page, only
+the original lister is ever shown. Borrowing exists so an agent can build
+inventory on their own page — nowhere else.*
+
+This is cleaner than the benchmark and it removes the buyer-confusion problem
+outright: search the marketplace and each property appears exactly once, with
+the agent who actually holds the mandate.
+
+### 7.1 Where the landing page lives
+
+Three options, in increasing cost:
+
+| Tier | Shape | Notes |
+|---|---|---|
+| Default | `namaagen.propertiguru.id` | Wildcard DNS + one Worker route. Free, instant. |
+| Path fallback | `propertiguru.id/agen/nama` | Simplest, but blurs the "main domain = original lister only" rule. **Not recommended.** |
+| Premium | `namaagen.com` (agent's own domain) | Cloudflare for SaaS custom hostnames, automatic per-agent SSL. A natural paid upgrade. |
+
+Recommendation: ship the subdomain, sell the custom domain.
+
+### 7.2 The SEO conflict — and the honest resolution
+
+There is a real tension here that a naive design hides:
+
+- If a borrowed page **canonicalises to the marketplace listing**, search
+  engines pass all authority to the main page, which shows the *original*
+  agent. The borrowing agent's page never ranks and never earns the lead —
+  the whole feature is pointless for them.
+- If it **does not canonicalise**, twenty near-identical pages compete, which
+  degrades everyone and can get microsites classed as thin content.
+
+Resolution, and this is a product decision as much as a technical one:
+
+1. **Borrowed listings on a landing page are a *sharing* surface, not a search
+   surface.** They are `noindex`. The agent shares the link on WhatsApp, in a
+   Facebook group, to their own network — which is how agents in this market
+   actually distribute anyway.
+2. **The agent's *own* listings on their landing page are indexed**, with the
+   agent as canonical. Their SEO equity comes from their own mandates, which
+   is the correct incentive: it rewards winning listings, not collecting them.
+3. **Each borrowed copy still gets unique AI-written copy** (§8.2) so it reads
+   as the agent's own work when shared, and so a page can later be promoted to
+   indexed if the agent's version becomes genuinely distinct.
+
+This keeps the marketplace clean, gives borrowing agents a real distribution
+tool, and refuses to build a search-spam machine — which would be punished by
+Google eventually and would poison the main domain's reputation along with it.
 
 ## 8. The AI layer
 
@@ -225,7 +266,7 @@ route to admin. **Never auto-ban** — human review, per §12.
 | Phase | Scope |
 |---|---|
 | **A** | Schema + RLS + offer creation with the document gate + pool browsing with area/type filters + pickup with terms snapshot |
-| **B** | Microsite rendering with contact swap, canonical rules, price/availability notifications |
+| **B** | Agent landing page on `namaagen.propertiguru.id` with contact swap, borrowed-listing rules from §7, price/availability notifications |
 | **C** | Lead attribution, LA activity notifications, deal outcome and commission recording |
 | **D** | AI: pool ranking, per-agent copy, instant buyer match |
 | **E** | Fairness warnings, conflict detection, agency-scoped and invite-only pools |
@@ -247,3 +288,8 @@ in the MA's own listing list.
 4. **Does a co-marketed deal need the owner's knowledge?** Malaysia and
    Indonesia practice differ; this is a legal question, not a product one, and
    belongs with the §68 legal review.
+5. **Custom domains** — is `namaagen.com` a Premium-plan feature, a paid
+   add-on, or an IQI-verified benefit? It carries a real per-hostname cost.
+6. **Should borrowed listings ever be indexable?** §7.2 says no by default. If
+   Kamal wants them indexed, that is a deliberate SEO risk to accept in
+   writing, not a default to drift into.
