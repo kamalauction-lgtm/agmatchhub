@@ -136,18 +136,131 @@ marketing material, not a confirmed feature inventory:
    object. A genuinely good pattern for the non-tech-literate agents Kamal
    describes, and cheap for us to adopt on the dashboard.
 
-### 2.4 Still to capture
+### 2.4 The real module list (hamburger overflow)
 
-Listings management, leads/enquiries, the `+` create menu contents, the
-hamburger overflow (likely where the real module list lives), co-broke or
-agent-to-agent features, and any credits/subscription surface.
+Captured 4 Aug 2026. This is PropMall's actual agent module inventory:
+
+| Item | Note |
+|---|---|
+| My Profile | |
+| **My Website** | Opens externally — the agent microsite (MyHartanah) |
+| **My Digital Card** | Opens externally — digital name card as its own product |
+| **My Referral** | Agent referral programme |
+| Profile Setting | Separate from "My Profile" |
+| **Leads Hub** | Leads are a "hub", the working centre |
+| **Tutorial & Knowledge Base** | Training and education inside the product |
+| **Torinrin (PropMall Support)** | WhatsApp icon — support is *a named human*, not a ticket queue |
+| Exit PropMall | |
+| **Subscribe PropMall Premium** | Green, visually loudest item in the menu |
+
+Feed cards below the fold include a **"July 2026 Training Schedule"** post —
+training is pushed through the same announcements feed.
+
+**Read — four things this changes for us:**
+
+1. **Digital name card is a shipped product, not a field.** We already store
+   `name_card_front_path` / `name_card_back_path` on `agent_profiles` (§71
+   trust profile, migration 00019) — we have the data and no product on top of
+   it. Cheapest high-visibility win available to us.
+2. **Referral programme as a first-class module.** We have nothing, and this is
+   directly adjacent to Kamal's existing IQI recruitment funnel work — agent
+   referral and agent recruitment are the same motion in this market.
+3. **Training / knowledge base inside the agent tool.** Combined with the
+   training-schedule feed post, education is not a separate portal. IQI already
+   runs heavy agent training; today it lives entirely outside any product.
+4. **Support is a named person on WhatsApp.** Not a helpdesk. This matches the
+   market reality behind our WhatsApp-only rule and is trivially cheap to add.
+
+Also note the monetisation posture: the subscribe call-to-action is the most
+visually prominent element in the entire menu.
+
+### 2.5 Still to capture
+
+Leads Hub contents, listings management, the `+` create menu, and the
+Premium subscription page (tiers, prices, what is gated).
 
 ---
 
-## 3. Rumah123 (Indonesia — PropertyGuru Group)
+## 3. Rumah123 (Indonesia — 99 Group / PropertyGuru Group)
 
-*No agent account available. Will be assessed from public surfaces and their
-published agent marketing only.*
+*No agent account. Assembled 4 Aug 2026 from Rumah123's own public agent guides
+and marketing pages — sources at the foot of this section. This is the direct
+incumbent competitor in our actual market, so it carries the most weight.*
+
+### 3.1 Dashboard structure
+
+Four top-level menus: **Dashboard**, **Iklan Saya**, **Daftar Pembelian**
+(purchase history), **Informasi**.
+
+Profile block top-left shows photo, name, **membership start date**,
+**membership validity period**, and office name — or explicitly *"Independent
+Property Agent"* when unaffiliated.
+
+Headline metrics: **iklan tertunda** (pending), **iklan tayang** (live),
+**iklan terjual** (sold), and remaining **kuota iklan** for the membership
+tier.
+
+### 3.2 Commercial model — the part that matters most
+
+Membership tiers: **Silver+ / Gold / Platinum**, each setting ad quota and
+features. On top of that sits a paid booster economy, priced separately:
+
+| Product | Claim |
+|---|---|
+| **Premier Listing** | Top tier, ranks above Featured and Standard |
+| **Featured Listing** | Above standard ads, "up to 8× more views" |
+| **Top Properti** | Top position 24 hours–7 days, "up to 60–120× views" |
+| **Booster Mingguan** | 7-day weekly package |
+| **Sundul** | One-click bump to the top — the cheap, habitual action |
+| **K123dit (Kredit)** | Credit wallet that pays for all of the above |
+
+**Read:** revenue is *not* mainly the subscription — it is a credit wallet
+feeding per-listing promotion, with a one-click bump ("Sundul") designed to be
+habitual. This is the model our §7 plans and §14 ranking weights have to
+survive competitively. Note the tension with our own §14 rule that paid
+promotion must never outrank on payment alone: their headline claims are
+explicitly about buying position.
+
+### 3.3 Agent tooling
+
+- **Lead Management Platform (LMP)** — manage, monitor and follow up leads. A
+  named product, not a screen.
+- **Listing Quality Score (LQS)** — agents score their own listing quality.
+  **We already designed exactly this** (`listing_quality_scores`, migration
+  00030) and have not surfaced it yet.
+- **Halaman Personal Agen** — agent profile/microsite. Third of three
+  benchmarks with one.
+- **Brosur Instan** — generate a promotional brochure from a listing ID for
+  social media. Instant marketing collateral from inventory.
+- **Rumah123 Pro** — a separate agent mobile app.
+- **Principal Dashboard** — office principals monitor team performance. Maps
+  to our team-leader / branch-manager roles (§6), which we have modelled but
+  not built.
+- **Agent Academy** — training programme.
+- **Agen Spesialis / Area Spesialis / Kantor Agen Pilihan** — specialisation
+  and area-expertise badges, and an office ranking.
+
+### 3.4 Read for us
+
+1. **Listing Quality Score is validated by the market leader.** Ours exists in
+   schema. Surfacing it — with the actionable recommendations we already
+   specified — is a high-value, already-half-built move.
+2. **Area/specialisation badges** are a credibility mechanic we lack entirely,
+   and they cost nothing but a verification step. Fits our trust-profile work.
+3. **Brosur Instan** is the concrete, unglamorous version of our AI Marketing
+   Content Studio (§12). Generating a shareable brochure from a listing is the
+   feature agents here actually use daily.
+4. **Principal Dashboard** confirms team/branch oversight is expected in this
+   market, not enterprise-only.
+5. Their commercial engine is **credits + promotion**, not subscription. Our
+   Rp49k/129k/249k plan ladder (§7) is a different bet; it should probably be
+   *complemented* by promotion credits rather than competing purely on
+   subscription price.
+
+Sources: [Dashboard agen](https://www.rumah123.com/panduan-properti/dashboard-agen-rumah123/) ·
+[Fitur agen](https://www.rumah123.com/explore/agent/) ·
+[Fitur performa listing](https://www.rumah123.com/panduan-properti/fitur-untuk-meningkatkan-performa-listing/) ·
+[Rumah123 Pro (Play Store)](https://play.google.com/store/apps/details?id=com.rumah123.android.agent2)
 
 ---
 
@@ -172,6 +285,18 @@ published agent marketing only.*
 | **Platform announcements channel** | Per-user notifications only | **Adopt** — IQI needs to push launches and training |
 | **Intent-led navigation ("I Want To")** | Object-led (Listings, Leads…) | Cheap to add; suits non-tech-literate agents |
 | WhatsApp as first-class support channel | Used for lead contact only | Matches our WhatsApp-only rule; extend to support |
+| **Digital name card** | Files stored (00019), no product | **Cheapest win** — data already exists |
+| **Agent referral programme** | None | Adjacent to Kamal's IQI recruitment funnel |
+| **Training / knowledge base in-product** | None | IQI runs heavy training entirely outside any product |
+| **Named human support (WhatsApp)** | None | Trivial to add, high trust value in this market |
+| **Always-visible subscribe CTA** | None | Ties to entitlements engine (Epic 4) |
+| **Listing Quality Score surfaced** | In schema (00030), not shown | **Highest-value half-built win** — market leader validates it |
+| **Promotion credits economy** | None; subscription-only plan ladder | Rethink §7 — incumbent's revenue is credits + boosts, not subscription |
+| **One-click bump ("Sundul")** | None | Cheap, habitual, monetisable |
+| **Instant brochure from listing** | AI Content Studio (Phase 2) | The unglamorous daily-use version; ship this shape first |
+| **Specialisation / area-expert badges** | None | Credibility mechanic, near-zero cost, fits trust profile |
+| **Principal / team dashboard** | Roles modelled (§6), unbuilt | Expected in this market, not enterprise-only |
+| **Separate agent mobile app** | PWA only | Deliberate: PWA-before-native is our §5 principle |
 
 ### Actions this suggests (not yet scheduled)
 
