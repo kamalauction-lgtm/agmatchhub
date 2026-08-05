@@ -59,7 +59,7 @@ export async function ListingCard({
               </span>
             )}
             {/* Promotion is always labelled, never disguised as relevance (§14). */}
-            {listing.is_featured && (
+            {(listing.is_boosted || listing.is_featured) && (
               <span className="rounded-md bg-accent px-2 py-1 text-xs font-semibold text-white">
                 {t("featured")}
               </span>

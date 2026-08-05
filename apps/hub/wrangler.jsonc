@@ -18,6 +18,7 @@
   // build time from .env.production; secrets are set via `wrangler secret`.
   "vars": {
     "NEXT_PUBLIC_APP_URL": "https://hub.propertiguru.id",
+    "NEXT_PUBLIC_MARKETPLACE_URL": "https://www.propertiguru.id",
     "APP_BASE_URL": "https://hub.propertiguru.id",
     "AUTH_CALLBACK_URL": "https://hub.propertiguru.id/auth/callback",
     "REQUEST_LINK_BASE_URL": "https://hub.propertiguru.id/r",

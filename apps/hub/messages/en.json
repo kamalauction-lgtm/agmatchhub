@@ -1464,7 +1464,49 @@
     "borrowedBadge": "Borrowed",
     "borrowedCount": "{count, plural, one {# borrowed} other {# borrowed}}",
     "listedBy": "Listing agent",
-    "yourShare": "Your commission share"
+    "yourShare": "Your commission share",
+    "boost": {
+      "cta": "Boost 3 days",
+      "help": "Free for now. Puts your listing on top of search.",
+      "running": "Boosted",
+      "willLapse": "When it lapses, boost again to stay on top.",
+      "activeUntil": "on top {when}",
+      "done": "Boosted. Your listing is now on top of search for 3 days.",
+      "errors": {
+        "already_boosted": "That listing is already boosted.",
+        "no_credits": "Not enough credits.",
+        "not_published": "Only a published listing can be boosted.",
+        "not_owner": "You can only boost your own listing.",
+        "product_gone": "That boost is no longer available.",
+        "boost_failed": "Could not boost the listing. Please try again.",
+        "invalid": "That request was not valid.",
+        "quota": "You have reached your active listing limit."
+      }
+    },
+    "share": {
+      "label": "Share this listing",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "facebook": "Facebook",
+      "copy": "Copy",
+      "copied": "Copied",
+      "caption": "Ready-made caption"
+    },
+    "advisor": {
+      "title": "Listing advice",
+      "titleTooShort": "Title is too short — aim for at least {min} characters so buyers know what it is.",
+      "titleTooLong": "Title is over {max} characters and will be cut off in search results.",
+      "titleAllCaps": "All capitals reads as shouting and lowers trust.",
+      "titleShouty": "Sales words like this make a listing look like spam.",
+      "titleNoLocation": "Put the location in the title — buyers search by area. Try adding \"{place}\".",
+      "titleNoBedrooms": "Add the bedroom count ({n} KT) — it is the first filter buyers use.",
+      "descTooShort": "Description is too short — at least {min} characters helps buyers decide.",
+      "descNoLandmark": "Mention what is nearby: a station, toll road, school or mall.",
+      "descNoCta": "End with an invitation, e.g. \"hubungi untuk jadwal survey\".",
+      "descHasPhone": "Remove the phone number — enquiries should come through the platform so the lead is tracked and answered on time.",
+      "looksGood": "This listing looks solid. Small improvements below are optional.",
+      "suggestions": "Suggested titles"
+    }
   },
   "listingStatus": {
     "draft": "Draft",

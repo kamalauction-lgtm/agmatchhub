@@ -1464,7 +1464,49 @@
     "borrowedBadge": "Dipinjam",
     "borrowedCount": "{count} dipinjam",
     "listedBy": "Ejen penyenarai",
-    "yourShare": "Bahagian komisen anda"
+    "yourShare": "Bahagian komisen anda",
+    "boost": {
+      "cta": "Boost 3 hari",
+      "help": "Percuma buat masa ini. Naikkan iklan anda ke atas carian.",
+      "running": "Sedang di-boost",
+      "willLapse": "Bila tamat, boost semula untuk kekal di atas.",
+      "activeUntil": "di atas {when}",
+      "done": "Berjaya. Iklan anda di atas carian selama 3 hari.",
+      "errors": {
+        "already_boosted": "Iklan itu sudah di-boost.",
+        "no_credits": "Kredit tidak mencukupi.",
+        "not_published": "Hanya iklan yang disiarkan boleh di-boost.",
+        "not_owner": "Anda hanya boleh boost iklan sendiri.",
+        "product_gone": "Boost itu tiada lagi.",
+        "boost_failed": "Gagal boost iklan. Sila cuba lagi.",
+        "invalid": "Permintaan tidak sah.",
+        "quota": "Anda telah mencapai had iklan aktif."
+      }
+    },
+    "share": {
+      "label": "Kongsi iklan ini",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "facebook": "Facebook",
+      "copy": "Salin",
+      "copied": "Disalin",
+      "caption": "Kapsyen siap pakai"
+    },
+    "advisor": {
+      "title": "Nasihat iklan",
+      "titleTooShort": "Tajuk terlalu pendek — sasarkan sekurang-kurangnya {min} aksara.",
+      "titleTooLong": "Tajuk melebihi {max} aksara dan akan dipotong dalam hasil carian.",
+      "titleAllCaps": "Semua huruf besar nampak seperti menjerit dan mengurangkan kepercayaan.",
+      "titleShouty": "Perkataan jualan begini menjadikan iklan nampak seperti spam.",
+      "titleNoLocation": "Letakkan lokasi dalam tajuk — pembeli mencari ikut kawasan. Cuba tambah \"{place}\".",
+      "titleNoBedrooms": "Tambah bilangan bilik ({n} KT) — itu penapis pertama pembeli.",
+      "descTooShort": "Keterangan terlalu pendek — sekurang-kurangnya {min} aksara membantu pembeli membuat keputusan.",
+      "descNoLandmark": "Sebut apa yang berdekatan: stesen, tol, sekolah atau mall.",
+      "descNoCta": "Akhiri dengan pelawaan, cth. \"hubungi untuk jadual lawatan\".",
+      "descHasPhone": "Buang nombor telefon — pertanyaan patut melalui platform supaya prospek direkod dan dijawab tepat masa.",
+      "looksGood": "Iklan ini nampak kemas. Penambahbaikan di bawah pilihan sahaja.",
+      "suggestions": "Cadangan tajuk"
+    }
   },
   "listingStatus": {
     "draft": "Draf",

@@ -1464,7 +1464,49 @@
     "borrowedBadge": "Dipinjam",
     "borrowedCount": "{count} dipinjam",
     "listedBy": "Agen penyenarai",
-    "yourShare": "Bagian komisi Anda"
+    "yourShare": "Bagian komisi Anda",
+    "boost": {
+      "cta": "Boost 3 hari",
+      "help": "Gratis untuk sekarang. Menaikkan listing Anda ke atas pencarian.",
+      "running": "Sedang di-boost",
+      "willLapse": "Saat habis, boost lagi supaya tetap di atas.",
+      "activeUntil": "di atas {when}",
+      "done": "Berhasil. Listing Anda di atas pencarian selama 3 hari.",
+      "errors": {
+        "already_boosted": "Listing itu sudah di-boost.",
+        "no_credits": "Kredit tidak cukup.",
+        "not_published": "Hanya listing yang tayang bisa di-boost.",
+        "not_owner": "Anda hanya bisa boost listing sendiri.",
+        "product_gone": "Boost itu sudah tidak tersedia.",
+        "boost_failed": "Gagal boost listing. Silakan coba lagi.",
+        "invalid": "Permintaan tidak valid.",
+        "quota": "Anda sudah mencapai batas listing aktif."
+      }
+    },
+    "share": {
+      "label": "Bagikan listing ini",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "facebook": "Facebook",
+      "copy": "Salin",
+      "copied": "Tersalin",
+      "caption": "Caption siap pakai"
+    },
+    "advisor": {
+      "title": "Saran listing",
+      "titleTooShort": "Judul terlalu pendek — usahakan minimal {min} karakter agar pembeli paham isinya.",
+      "titleTooLong": "Judul lebih dari {max} karakter dan akan terpotong di hasil pencarian.",
+      "titleAllCaps": "Huruf kapital semua terkesan berteriak dan menurunkan kepercayaan.",
+      "titleShouty": "Kata-kata jualan seperti ini membuat listing terlihat seperti spam.",
+      "titleNoLocation": "Cantumkan lokasi di judul — pembeli mencari berdasarkan area. Coba tambahkan \"{place}\".",
+      "titleNoBedrooms": "Tambahkan jumlah kamar ({n} KT) — itu filter pertama yang dipakai pembeli.",
+      "descTooShort": "Deskripsi terlalu pendek — minimal {min} karakter membantu pembeli memutuskan.",
+      "descNoLandmark": "Sebutkan yang ada di dekatnya: stasiun, tol, sekolah, atau mall.",
+      "descNoCta": "Tutup dengan ajakan, mis. \"hubungi untuk jadwal survey\".",
+      "descHasPhone": "Hapus nomor telepon — pertanyaan sebaiknya lewat platform agar prospek tercatat dan terjawab tepat waktu.",
+      "looksGood": "Listing ini sudah rapi. Perbaikan di bawah bersifat opsional.",
+      "suggestions": "Saran judul"
+    }
   },
   "listingStatus": {
     "draft": "Draf",

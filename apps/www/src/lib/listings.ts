@@ -61,6 +61,9 @@ export type PublicListing = {
   agent_agency_name: string | null;
   agent_is_verified: boolean;
 
+  boost_weight: number;
+  is_boosted: boolean;
+
   cover_image_path: string | null;
   cover_thumbnail_path: string | null;
   cover_alt_text: string | null;
@@ -136,7 +139,9 @@ export async function searchListings(params: SearchParams): Promise<SearchResult
 
   switch (params.sort) {
     case "newest":
-      query = query.order("published_at", { ascending: false, nullsFirst: false });
+      query = query
+        .order("boost_weight", { ascending: false })
+        .order("published_at", { ascending: false, nullsFirst: false });
       break;
     case "price_asc":
       query = query.order("price", { ascending: true, nullsFirst: false });
@@ -145,9 +150,11 @@ export async function searchListings(params: SearchParams): Promise<SearchResult
       query = query.order("price", { ascending: false, nullsFirst: false });
       break;
     default:
-      // Quality-first ranking (§14). Promoted listings are labelled in the UI
-      // and can never outrank on the strength of payment alone.
+      // Quality-first ranking (§14). Promotion lifts a listing but is always
+      // labelled, and it never rescues a listing that fails moderation or
+      // expiry — those never reach this view at all.
       query = query
+        .order("boost_weight", { ascending: false })
         .order("is_featured", { ascending: false })
         .order("ranking_score", { ascending: false })
         .order("published_at", { ascending: false, nullsFirst: false });
