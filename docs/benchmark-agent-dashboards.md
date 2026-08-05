@@ -174,7 +174,44 @@ training is pushed through the same announcements feed.
 Also note the monetisation posture: the subscribe call-to-action is the most
 visually prominent element in the entire menu.
 
-### 2.5 Still to capture
+### 2.5 Co-Marketing — correction to an earlier claim
+
+Captured live from `propmall.co/notification`, 4 Aug 2026.
+
+**I was wrong earlier.** I recorded that no benchmarked platform had a MatchHub
+equivalent. PropMall has **Co-Marketing**, and it is clearly central: the
+agent's entire notification stream is co-marketing events, going back months.
+
+Only two event types appear, repeatedly:
+
+| Event | Icon | Meaning |
+|---|---|---|
+| **Co-Marketing Listing Price Goes Down** | green tick + `$` | The listing agent dropped the price on a property you are co-marketing |
+| **Co-Marketing Listing Not Available** | red `✕` | A co-marketed property has been withdrawn or sold |
+
+Real examples in the stream: *Endlot Terrace Two & Half Storey Presint 8
+Putrajaya*, *3.03 Acre Land Beside Main Road Batu Kikir at Tampin*, *3 Storey
+Shoplot Bangi Gateway*, *Land Beside Housing Area Sendayan 4.887 acre*.
+Timestamps run from May to today, so this fires continuously.
+
+**Read — this is the sharpest single lesson in the whole benchmark.** Of every
+possible co-broke notification, a mature agent-to-agent platform ships exactly
+two, and both answer the only questions a collaborating agent actually has:
+
+1. *Did the price move?* — because it changes what I can sell, and I look
+   foolish quoting a stale price to my buyer.
+2. *Is it still available?* — because showing a client a dead property is the
+   single most damaging thing that can happen to an agent's credibility.
+
+**Our gap:** MatchHub notifies on messages, offers, viewings, contact release
+and submission events. It does **not** notify when a supply agent changes the
+asking price, or flips `availability_status` to unavailable. Those are the two
+events PropMall considers worth interrupting an agent for — and we already
+store both fields (`property_submissions.asking_price`,
+`monthly_rental`, `availability_status`). This is cheap, high-value, and
+directly protects the requesting agent in front of their client.
+
+### 2.6 Still to capture
 
 Leads Hub contents, listings management, the `+` create menu, and the
 Premium subscription page (tiers, prices, what is gated).
@@ -272,7 +309,9 @@ Sources: [Dashboard agen](https://www.rumah123.com/panduan-properti/dashboard-ag
 | Leads module | Built — `/leads`, SLA badges, WhatsApp | Parity, and our response-SLA framing is sharper |
 | Notifications | Built — in-app + push + email | Parity |
 | Profile & verification | Built — `/profile`, `/verification` | Parity in surface, weaker in flow (see below) |
-| Co-broke collaboration | Built — MatchHub | **We are ahead**; no equivalent seen |
+| Co-broke collaboration | Built — MatchHub | PropMall has Co-Marketing (earlier "no equivalent" claim was wrong). We remain far deeper: verified requirements, protected identities, versioned commission agreements |
+| **Co-broke price-drop alert** | Not built | **Adopt** — PropMall interrupts agents for this; we store the field already |
+| **Co-broke "no longer available" alert** | Not built | **Adopt** — protects the agent in front of their client |
 | **Two-stage gated verification** | Single-stage document upload | **Adopt** — split identity from professional standing |
 | **Plan tier + expiry visible** | Flat quota constant, no plan surface | **Adopt** with the entitlements engine (Epic 4) |
 | **Lead spam filter (agent-controlled)** | Contact-detection exists in MatchHub only | **Adopt** — reuse the detection we already have |
