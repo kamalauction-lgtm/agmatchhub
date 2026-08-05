@@ -71,7 +71,31 @@
     },
     "startVerification": "Complete verification",
     "adminConsole": "Admin console",
-    "myRequests": "My requests"
+    "myRequests": "My requests",
+    "allClear": "All clear - no leads waiting and nothing rejected. Time to list something new.",
+    "today": {
+      "label": "Needs attention today",
+      "overdue": "Overdue responses",
+      "newLeads": "New leads",
+      "live": "Listings live",
+      "rejected": "Listings rejected"
+    },
+    "modules": {
+      "label": "Your modules",
+      "leads": "Leads & follow-up",
+      "leadsDesc": "Marketplace inquiries, response SLA and your pipeline.",
+      "listings": "Marketplace listings",
+      "listingsQuota": "{active}/{max} slots",
+      "listingsDesc": "Create, track and renew public listings. {inReview} in review.",
+      "matchhub": "MatchHub co-broke",
+      "matchhubCounts": "{requests} req · {submissions} sub",
+      "matchhubDesc": "Private client requirements, property submissions and protected collaboration.",
+      "profile": "Profile & verification",
+      "profileDesc": "Trust profile, documents, name card and social links.",
+      "viewings": "Viewings & tasks",
+      "contentStudio": "Content studio",
+      "comingSoon": "Coming soon to your dashboard."
+    }
   },
   "verification": {
     "title": "Agent verification",

@@ -71,7 +71,31 @@
     },
     "startVerification": "Lengkapkan pengesahan",
     "adminConsole": "Konsol admin",
-    "myRequests": "Keperluan saya"
+    "myRequests": "Keperluan saya",
+    "allClear": "Semua beres - tiada prospek menunggu dan tiada yang ditolak. Masa untuk iklankan sesuatu yang baharu.",
+    "today": {
+      "label": "Perlu perhatian hari ini",
+      "overdue": "Respons lewat tempoh",
+      "newLeads": "Prospek baharu",
+      "live": "Iklan disiarkan",
+      "rejected": "Iklan ditolak"
+    },
+    "modules": {
+      "label": "Modul anda",
+      "leads": "Prospek & susulan",
+      "leadsDesc": "Pertanyaan marketplace, SLA respons dan saluran jualan anda.",
+      "listings": "Iklan marketplace",
+      "listingsQuota": "{active}/{max} slot",
+      "listingsDesc": "Cipta, jejak dan perbaharui iklan awam. {inReview} dalam semakan.",
+      "matchhub": "MatchHub co-broke",
+      "matchhubCounts": "{requests} keperluan · {submissions} serahan",
+      "matchhubDesc": "Keperluan pelanggan persendirian, serahan hartanah dan kerjasama terlindung.",
+      "profile": "Profil & pengesahan",
+      "profileDesc": "Profil kepercayaan, dokumen, kad nama dan pautan sosial.",
+      "viewings": "Lawatan & tugasan",
+      "contentStudio": "Studio kandungan",
+      "comingSoon": "Akan datang ke papan pemuka anda."
+    }
   },
   "verification": {
     "title": "Pengesahan ejen",
