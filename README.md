@@ -1,8 +1,9 @@
-# PropertiGuru Next
+# PropertiGuru
 
 Indonesia's AI-powered property marketplace and agent operating system.
 
-> `propertiguru` is an **internal working name**. Do not create final branding
+> `propertiguru` is an **internal working name** (the folder and repo carry it;
+> the public brand is still undecided). Do not create final branding
 > assets under it — see risk R1 in the [plan of record](docs/stage-a-audit-and-architecture.md#j-risk-register).
 
 ## Layout
