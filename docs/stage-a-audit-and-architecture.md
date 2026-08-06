@@ -70,7 +70,7 @@ Everything in §10 that is not on that line is Phase 2 or later. MatchHub alread
 ## B.2 Folder structure
 
 ```
-apps/hub (today: ag-matchhub/app)
+apps/hub
 ├── src/app/
 │   ├── (admin)/admin/*     11 admin routes (agents, requests, reports, legal, countries, audit)
 │   ├── (agent)/*           12 agent routes (dashboard, requests, submissions, profile, notifications)

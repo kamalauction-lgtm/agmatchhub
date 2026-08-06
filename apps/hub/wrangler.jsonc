@@ -1,5 +1,9 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
+  // Deployed Cloudflare Worker name. Deliberately NOT renamed with the repo:
+  // changing it creates a NEW worker on next deploy and orphans the live one
+  // serving hub.propertiguru.id. Rename only as a planned cutover — new
+  // worker, move the custom domain route, then delete the old one.
   "name": "ag-matchhub",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-01",
