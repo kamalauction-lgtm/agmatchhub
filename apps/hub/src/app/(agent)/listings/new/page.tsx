@@ -74,6 +74,10 @@ export default async function NewListingPage({
     checkCopy: tw("checkCopy"),
     titleSuggestions: tw("titleSuggestions"),
     photosChosen: tw("photosChosen"),
+    draftRestored: tw("draftRestored"),
+    draftPhotosLost: tw("draftPhotosLost"),
+    draftContinue: tw("draftContinue"),
+    draftStartOver: tw("draftStartOver"),
 
     // reused from the existing form namespace
     forSale: t("sale"),

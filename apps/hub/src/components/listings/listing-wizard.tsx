@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { draftListingCopy, reviewListingCopy } from "@/app/(agent)/listings/ai-actions";
 
 /**
@@ -54,6 +54,32 @@ function categoryForType(type: string, picked: string): string {
 
 const OWNERSHIP = ["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", "adat", "lainnya"] as const;
 
+/**
+ * Draft persistence.
+ *
+ * Seven steps on a phone, between viewings, on Indonesian mobile data. Closing
+ * the tab used to lose everything — the single most damaging thing a long form
+ * can do to someone's trust in it. State is mirrored to localStorage on every
+ * change and restored on return, including which step they were on.
+ *
+ * Photos are the one thing that cannot survive: File objects are not
+ * serialisable and a browser will not let a page re-attach a file it did not
+ * receive from a user gesture. So the banner says so plainly rather than
+ * letting an agent submit a listing they believe still has pictures.
+ */
+const DRAFT_KEY = "pg_listing_wizard_v1";
+const DRAFT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+
+type DraftShape = {
+  savedAt: number;
+  step: Step;
+  /** How far the agent had got — without it, resuming re-locks steps they
+   *  already completed, which is the same annoyance twice. */
+  furthest: number;
+  fields: Record<string, unknown>;
+  hadPhotos: boolean;
+};
+
 export function ListingWizard({
   action,
   locations,
@@ -68,6 +94,13 @@ export function ListingWizard({
   ownershipLabels: Record<string, string>;
 }) {
   const [step, setStep] = useState<Step>("type");
+  /**
+   * Furthest step reached. Without it, stepping BACK re-disabled every step
+   * ahead, so an agent who jumped back to check something had to press Next
+   * repeatedly to return — worst right after a draft restore, which lands them
+   * mid-wizard. A completed step stays reachable.
+   */
+  const [furthest, setFurthest] = useState(0);
   const [pending, startTransition] = useTransition();
   const [aiBusy, setAiBusy] = useState(false);
   const [descMode, setDescMode] = useState<"choose" | "self" | "ai">("choose");
@@ -101,10 +134,84 @@ export function ListingWizard({
 
   const [photos, setPhotos] = useState<FileList | null>(null);
 
+  // null = nothing restored; otherwise the age of what we brought back.
+  const [restored, setRestored] = useState<{ savedAt: number; hadPhotos: boolean } | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Restore once, on mount. The state updates are deferred past the render
+  // commit — the React Compiler rejects synchronous setState in an effect,
+  // and it is right to: it causes a cascading re-render.
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      await Promise.resolve();
+      if (cancelled) return;
+      try {
+        const raw = localStorage.getItem(DRAFT_KEY);
+        if (raw) {
+          const d = JSON.parse(raw) as DraftShape;
+          if (d?.savedAt && Date.now() - d.savedAt < DRAFT_MAX_AGE_MS && d.fields) {
+            setF((prev) => ({ ...prev, ...(d.fields as typeof prev) }));
+            if ((STEPS as readonly string[]).includes(d.step)) {
+              setStep(d.step);
+              setFurthest(Math.max(d.furthest ?? 0, STEPS.indexOf(d.step)));
+            }
+            setRestored({ savedAt: d.savedAt, hadPhotos: !!d.hadPhotos });
+          } else {
+            localStorage.removeItem(DRAFT_KEY);
+          }
+        }
+      } catch {
+        localStorage.removeItem(DRAFT_KEY);
+      }
+      setHydrated(true);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Save on every change — but only after hydration, or the empty initial
+  // state would overwrite the draft we are about to restore.
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      const draft: DraftShape = {
+        savedAt: Date.now(),
+        step,
+        furthest,
+        fields: f,
+        hadPhotos: !!photos && photos.length > 0,
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    } catch {
+      // Quota or private mode — losing the draft is bad, breaking the form is worse.
+    }
+  }, [hydrated, f, step, furthest, photos]);
+
+  function discardDraft() {
+    try {
+      localStorage.removeItem(DRAFT_KEY);
+    } catch {
+      /* nothing to do */
+    }
+  }
+
+  function startOver() {
+    discardDraft();
+    window.location.reload();
+  }
+
   const set = <K extends keyof typeof f>(k: K, v: (typeof f)[K]) =>
     setF((prev) => ({ ...prev, [k]: v }));
 
   const idx = STEPS.indexOf(step);
+
+  /** Move to a step and remember how far we have been. */
+  function goTo(next: Step) {
+    setStep(next);
+    setFurthest((prev) => Math.max(prev, STEPS.indexOf(next)));
+  }
   const location = locations.find((l) => l.id === f.locationId);
 
   function writerInput() {
@@ -191,6 +298,8 @@ export function ListingWizard({
     fd.set("title", f.title);
     fd.set("description", f.description);
     if (photos) Array.from(photos).forEach((p) => fd.append("photos", p));
+    // The listing is on its way to the server; the draft has done its job.
+    discardDraft();
     startTransition(() => action(fd));
   }
 
@@ -216,14 +325,14 @@ export function ListingWizard({
         <p className="mb-3 text-sm font-semibold">{t.progress}</p>
         <ol className="flex gap-2 overflow-x-auto sm:block sm:space-y-1">
           {STEPS.map((s, i) => {
-            const done = i < idx;
+            const done = i < idx || (i <= furthest && s !== step);
             const current = s === step;
             return (
               <li key={s}>
                 <button
                   type="button"
-                  onClick={() => i <= idx && setStep(s)}
-                  disabled={i > idx}
+                  onClick={() => i <= furthest && goTo(s)}
+                  disabled={i > furthest}
                   className={`flex w-full items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-left text-sm ${
                     current
                       ? "bg-crimson-soft font-semibold text-crimson"
@@ -245,6 +354,31 @@ export function ListingWizard({
 
       {/* Body ----------------------------------------------------------- */}
       <div className="min-w-0 flex-1">
+        {restored && (
+          <div className="mb-5 rounded-xl border border-warning/40 bg-warning/5 p-4">
+            <p className="text-sm font-semibold">{t.draftRestored}</p>
+            {restored.hadPhotos && (
+              <p className="mt-1 text-sm text-muted">{t.draftPhotosLost}</p>
+            )}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setRestored(null)}
+                className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong"
+              >
+                {t.draftContinue}
+              </button>
+              <button
+                type="button"
+                onClick={startOver}
+                className="rounded-lg border border-line px-4 py-2 text-sm font-semibold hover:bg-surface"
+              >
+                {t.draftStartOver}
+              </button>
+            </div>
+          </div>
+        )}
+
         {step === "type" && (
           <section className="space-y-6">
             <h2 className="text-lg font-semibold">{t.step_type}</h2>
@@ -596,7 +730,7 @@ export function ListingWizard({
         {/* Footer -------------------------------------------------------- */}
         <div className="sticky bottom-16 z-10 mt-8 -mx-4 flex items-center gap-3 border-t border-line bg-background/95 px-4 py-3 backdrop-blur sm:bottom-0">
           {idx > 0 && (
-            <button type="button" onClick={() => setStep(STEPS[idx - 1])}
+            <button type="button" onClick={() => goTo(STEPS[idx - 1])}
               className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold hover:bg-surface">
               {t.back}
             </button>
@@ -604,7 +738,7 @@ export function ListingWizard({
           <div className="flex-1" />
           {step !== "review" ? (
             <button type="button" disabled={!canAdvance[step]}
-              onClick={() => setStep(STEPS[idx + 1])}
+              onClick={() => goTo(STEPS[idx + 1])}
               className="rounded-lg bg-crimson px-6 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-40">
               {t.next}
             </button>

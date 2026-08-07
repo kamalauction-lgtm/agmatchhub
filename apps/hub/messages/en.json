@@ -1534,7 +1534,11 @@
       "aiWorking": "Writing…",
       "checkCopy": "Check my writing",
       "titleSuggestions": "Pick a title",
-      "photosChosen": "{n} photo(s) selected"
+      "photosChosen": "{n} photo(s) selected",
+      "draftRestored": "We brought back what you had already filled in.",
+      "draftPhotosLost": "Photos could not be saved — please choose them again at the Photos step.",
+      "draftContinue": "Continue",
+      "draftStartOver": "Start over"
     }
   },
   "listingStatus": {

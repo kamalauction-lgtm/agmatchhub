@@ -1534,7 +1534,11 @@
       "aiWorking": "Sedang menulis…",
       "checkCopy": "Periksa tulisan saya",
       "titleSuggestions": "Pilih judul",
-      "photosChosen": "{n} foto dipilih"
+      "photosChosen": "{n} foto dipilih",
+      "draftRestored": "Kami kembalikan data yang tadi sudah Anda isi.",
+      "draftPhotosLost": "Foto tidak bisa disimpan — silakan pilih ulang di langkah Foto.",
+      "draftContinue": "Lanjutkan",
+      "draftStartOver": "Mulai dari awal"
     }
   },
   "listingStatus": {
