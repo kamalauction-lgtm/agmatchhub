@@ -181,7 +181,8 @@
       "requests": "Kebutuhan",
       "reports": "Laporan",
       "audit": "Audit",
-      "listings": "Listing"
+      "listings": "Listing",
+      "overview": "Ringkasan"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -1607,5 +1608,32 @@
     "iqiPremium": "Premium",
     "complimentary": "Gratis — agen IQI terverifikasi",
     "upgradeCta": "Verifikasi untuk dapat Premium"
+  },
+  "adminHome": {
+    "title": "Ringkasan admin",
+    "summary": "{count} hal menunggu tindakan Anda.",
+    "allClear": "Tidak ada yang menunggu. Semua antrean kosong.",
+    "queues": "Perlu perhatian Anda",
+    "queue": {
+      "listings": "Listing dalam peninjauan",
+      "agents": "Agen menunggu verifikasi",
+      "requests": "Kebutuhan untuk disetujui",
+      "reports": "Laporan terbuka"
+    },
+    "queueHint": {
+      "listings": "Agen belum bisa menghasilkan sebelum ini diputuskan",
+      "agents": "Mereka belum bisa bekerja sebelum terverifikasi",
+      "requests": "Tautan tetap terkunci sampai disetujui",
+      "reports": "Masalah kepercayaan makin buruk bila dibiarkan"
+    },
+    "snapshot": "Platform",
+    "stat": {
+      "published": "Listing tayang",
+      "verifiedAgents": "Agen terverifikasi"
+    },
+    "recent": "Aktivitas admin terbaru",
+    "noActivity": "Belum ada aktivitas tercatat.",
+    "systemActor": "Sistem",
+    "viewAudit": "Buka jejak audit lengkap"
   }
 }

@@ -73,7 +73,9 @@ export default async function NewListingPage({
     aiWorking: tw("aiWorking"),
     checkCopy: tw("checkCopy"),
     titleSuggestions: tw("titleSuggestions"),
-    photosChosen: tw("photosChosen"),
+    // .raw: the count is only known in the client component, which substitutes
+    // {n} itself. Calling tw() here throws FORMATTING_ERROR for the missing arg.
+    photosChosen: tw.raw("photosChosen") as string,
     draftRestored: tw("draftRestored"),
     draftPhotosLost: tw("draftPhotosLost"),
     draftContinue: tw("draftContinue"),

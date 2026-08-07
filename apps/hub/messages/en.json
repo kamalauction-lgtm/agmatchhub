@@ -181,7 +181,8 @@
       "requests": "Requests",
       "reports": "Reports",
       "audit": "Audit",
-      "listings": "Listings"
+      "listings": "Listings",
+      "overview": "Overview"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -1607,5 +1608,32 @@
     "iqiPremium": "Premium",
     "complimentary": "Complimentary — verified IQI agent",
     "upgradeCta": "Get verified for Premium"
+  },
+  "adminHome": {
+    "title": "Admin overview",
+    "summary": "{count} items are waiting on you.",
+    "allClear": "Nothing is waiting. All queues are clear.",
+    "queues": "Needs your attention",
+    "queue": {
+      "listings": "Listings in review",
+      "agents": "Agents awaiting verification",
+      "requests": "Requirements to approve",
+      "reports": "Open reports"
+    },
+    "queueHint": {
+      "listings": "An agent cannot earn until this is decided",
+      "agents": "They cannot work until verified",
+      "requests": "The link stays locked until approved",
+      "reports": "Trust issues age badly"
+    },
+    "snapshot": "Platform",
+    "stat": {
+      "published": "Published listings",
+      "verifiedAgents": "Verified agents"
+    },
+    "recent": "Recent admin activity",
+    "noActivity": "No activity recorded yet.",
+    "systemActor": "System",
+    "viewAudit": "Open the full audit trail"
   }
 }

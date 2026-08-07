@@ -14,10 +14,14 @@ export default async function AdminLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between border-b border-line px-6 py-4">
-        <div className="flex items-center gap-6">
+      {/* Wraps rather than overflowing: eight sections no longer fit on one
+          line on a narrow window, and an off-screen nav item is an unreachable
+          one. */}
+      <header className="flex flex-wrap items-center justify-between gap-4 border-b border-line px-6 py-4">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <Link href="/admin"><BrandLockup size={28} /></Link>
-          <nav className="flex items-center gap-4 text-sm font-medium">
+          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-medium">
+            <Link href="/admin" className="hover:text-crimson">{t("nav.overview")}</Link>
             <Link href="/admin/requests" className="hover:text-crimson">{t("nav.requests")}</Link>
             <Link href="/admin/listings" className="hover:text-crimson">{t("nav.listings")}</Link>
             <Link href="/admin/agents" className="hover:text-crimson">{t("nav.agents")}</Link>

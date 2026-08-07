@@ -181,7 +181,8 @@
       "requests": "Keperluan",
       "reports": "Laporan",
       "audit": "Audit",
-      "listings": "Iklan"
+      "listings": "Iklan",
+      "overview": "Gambaran"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -1607,5 +1608,32 @@
     "iqiPremium": "Premium",
     "complimentary": "Percuma — ejen IQI disahkan",
     "upgradeCta": "Sahkan akaun untuk Premium"
+  },
+  "adminHome": {
+    "title": "Gambaran keseluruhan admin",
+    "summary": "{count} perkara menunggu tindakan anda.",
+    "allClear": "Tiada yang menunggu. Semua barisan kosong.",
+    "queues": "Perlu perhatian anda",
+    "queue": {
+      "listings": "Listing dalam semakan",
+      "agents": "Ejen menunggu pengesahan",
+      "requests": "Keperluan untuk diluluskan",
+      "reports": "Laporan terbuka"
+    },
+    "queueHint": {
+      "listings": "Ejen tidak boleh menjana pendapatan sebelum ini diputuskan",
+      "agents": "Mereka tidak boleh bekerja sebelum disahkan",
+      "requests": "Pautan kekal terkunci sehingga diluluskan",
+      "reports": "Isu kepercayaan bertambah buruk jika dibiarkan"
+    },
+    "snapshot": "Platform",
+    "stat": {
+      "published": "Listing diterbitkan",
+      "verifiedAgents": "Ejen disahkan"
+    },
+    "recent": "Aktiviti admin terkini",
+    "noActivity": "Belum ada aktiviti direkodkan.",
+    "systemActor": "Sistem",
+    "viewAudit": "Buka jejak audit penuh"
   }
 }
