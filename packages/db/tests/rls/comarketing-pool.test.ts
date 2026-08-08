@@ -91,8 +91,17 @@ describe.skipIf(!hasPoolEnv)("co-marketing pool (§4, module design §6.2)", () 
   });
 
   it("a marketing agent never sees the listing agent's confidences", async () => {
-    const { data: offerPrivate } = await ma.from("comarketing_offer_private").select("offer_id");
-    expect(offerPrivate ?? []).toHaveLength(0);
+    // Not "zero rows": an agent who has published offers of their own owns
+    // those private rows by right. What must never appear is a private row
+    // belonging to an offer someone ELSE published.
+    const { data: offerPrivate } = await ma
+      .from("comarketing_offer_private")
+      .select("offer_id, comarketing_offers!inner (listing_agent_id)");
+    for (const row of (offerPrivate ?? []) as unknown as {
+      comarketing_offers: { listing_agent_id: string } | null;
+    }[]) {
+      expect(row.comarketing_offers?.listing_agent_id).toBe(maId);
+    }
 
     // property_private rows for her OWN properties are hers by right; rows for
     // a property she merely markets or browses must not appear.

@@ -87,3 +87,34 @@ drainer and not a call in the request path.
    `current_user = 'postgres'` "service door" admits everyone. Guard triggers
    are SECURITY INVOKER; use `session_user` for connection identity (00039,
    which closed a real self-publish privilege escalation).
+9. **A NOT NULL column with no default and no trigger is a table nobody can
+   insert into.** 00040 declared `human_readable_id not null unique` on both
+   co-marketing tables, documented the intended format in a trailing comment,
+   and never assigned it. Every row that existed came from a seed script that
+   happened to pass one, so the gap stayed invisible until the first insert
+   from the application (00045).
+10. **`create or replace function` is a silent overwrite.** Reusing an existing
+    guard's name swaps its body — an insert guard landing on an UPDATE trigger
+    would have let `accepted_terms` be rewritten on every update. Caught in
+    00044 only because the trigger name collided too, which errors where the
+    function does not. Check `pg_proc` before naming a new guard.
+11. **"Zero rows visible" is the wrong assertion for a `*_private` leak test.**
+    An agent owns the private rows of their own listings and offers. Assert
+    that every visible row belongs to the caller, not that none exist —
+    otherwise the test breaks the moment the fixture agent publishes anything.
+
+## Test environment
+
+The RLS suite reads `.env.local`. Beyond `TEST_RA_*`, `TEST_SA_*` and
+`TEST_ADMIN_*`, the co-marketing pool tests need a marketing/listing agent pair
+with a live open-pool offer between them:
+
+```
+TEST_MA_EMAIL=     # marketing agent — picks listings up
+TEST_MA_PASSWORD=
+TEST_LA_EMAIL=     # listing agent — publishes offers
+TEST_LA_PASSWORD=
+```
+
+`scripts/seed-staging-comarketing.mjs` creates exactly that pair. Without these
+the block skips rather than passing vacuously.
