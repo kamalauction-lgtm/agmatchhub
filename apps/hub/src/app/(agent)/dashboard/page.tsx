@@ -264,7 +264,12 @@ export default async function DashboardPage() {
               title={t("modules.profile")}
               desc={t("modules.profileDesc")}
             />
-            <SoonCard icon="🔁" title={t("modules.coMarketing")} desc={t("modules.coMarketingDesc")} />
+            <ModuleCard
+              href="/collab/pool"
+              icon="🔁"
+              title={t("modules.coMarketing")}
+              desc={t("modules.coMarketingDesc")}
+            />
             <SoonCard icon="🌐" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
             <SoonCard icon="💳" title={t("modules.digitalCard")} desc={t("modules.digitalCardDesc")} />
             <SoonCard icon="✨" title={t("modules.contentStudio")} desc={t("modules.contentStudioDesc")} />

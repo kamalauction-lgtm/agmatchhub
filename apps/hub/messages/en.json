@@ -284,7 +284,8 @@
     "sectionWork": "Daily work",
     "sectionCollaboration": "Collaboration",
     "sectionAccount": "Account",
-    "matchhub": "MatchHub"
+    "matchhub": "MatchHub",
+    "pool": "Co-marketing"
   },
   "requests": {
     "title": "My requests",
@@ -1476,12 +1477,15 @@
       "errors": {
         "already_boosted": "That listing is already boosted.",
         "no_credits": "Not enough credits.",
-        "not_published": "Only a published listing can be boosted.",
-        "not_owner": "You can only boost your own listing.",
+        "not_published": "Only a published listing can be offered.",
+        "not_owner": "Only the listing owner can offer a property for co-marketing.",
         "product_gone": "That boost is no longer available.",
         "boost_failed": "Could not boost the listing. Please try again.",
         "invalid": "That request was not valid.",
-        "quota": "You have reached your active listing limit."
+        "quota": "You have reached your active listing limit.",
+        "no_authorisation": "Owner authorisation is not on record for this property. Co-marketing needs it — add it under the property's documents first.",
+        "already_offered": "This listing is already in the pool.",
+        "offer_failed": "That did not work. Please try again."
       }
     },
     "share": {
@@ -1540,6 +1544,44 @@
       "draftPhotosLost": "Photos could not be saved — please choose them again at the Photos step.",
       "draftContinue": "Continue",
       "draftStartOver": "Start over"
+    },
+    "offer": {
+      "cta": "Let other agents market this",
+      "heading": "Offer this listing for co-marketing",
+      "help": "Other verified agents can market this property as their own inventory, with their contact details public. You keep the mandate and your share of the commission. They can never re-offer it onward.",
+      "totalCommission": "Total commission (%)",
+      "totalCommissionHelp": "Of the sale or rental price",
+      "marketingShare": "Their share (%)",
+      "marketingShareHelp": "Of the total commission",
+      "payer": "Commission paid by",
+      "payerOwner": "The owner",
+      "payerBuyer": "The buyer",
+      "payerDeveloper": "The developer",
+      "maxAgents": "Max. marketing agents",
+      "maxAgentsHelp": "Leave blank for no limit",
+      "requiresApproval": "Approve each agent myself",
+      "requiresApprovalHelp": "Slower, but you choose who represents this property",
+      "minPrice": "Do not advertise below",
+      "minPriceHelp": "Kept private — marketing agents never see this",
+      "notes": "Note to marketing agents",
+      "notesPlaceholder": "Viewings by appointment only, owner prefers weekday visits…",
+      "submit": "Publish to the pool",
+      "cancel": "Cancel",
+      "preview": "On a deal at the asking price",
+      "youKeep": "You keep",
+      "theyGet": "They get",
+      "live": "🤝 In the co-marketing pool",
+      "liveHelp": "{share}% to the marketing agent · {count} agents marketing it",
+      "withdraw": "Withdraw",
+      "done": "Published to the pool. Other agents can pick it up now.",
+      "withdrawnDone": "Withdrawn from the pool. Agents already marketing it keep the terms they accepted.",
+      "errors": {
+        "no_authorisation": "Owner authorisation is not on record for this property. Co-marketing needs it — add it under the property's documents first.",
+        "not_owner": "Only the listing owner can offer a property for co-marketing.",
+        "not_published": "Only a published listing can be offered.",
+        "already_offered": "This listing is already in the pool.",
+        "offer_failed": "That did not work. Please try again."
+      }
     }
   },
   "listingStatus": {
@@ -1635,5 +1677,67 @@
     "noActivity": "No activity recorded yet.",
     "systemActor": "System",
     "viewAudit": "Open the full audit trail"
+  },
+  "pool": {
+    "title": "Co-marketing pool",
+    "intro": "Listings other agents have opened up under stated commission terms. Pick one up and it becomes your inventory — your name, your contact, your lead. The terms you accept are recorded and cannot be changed afterwards.",
+    "offerMine": "Offer my listings",
+    "count": "{count} listings in the pool",
+    "empty": "Nothing in the pool yet. Be the first — offer one of your own listings.",
+    "emptyFiltered": "No listings match these filters. Try widening them.",
+    "pickUp": "Market this listing",
+    "pickUpHelp": "You earn {share}% of the commission",
+    "drop": "Stop marketing",
+    "filter": {
+      "province": "Province",
+      "type": "Property type",
+      "listingType": "Sale or rent",
+      "minShare": "Min. your share (%)",
+      "any": "Any",
+      "sale": "For sale",
+      "rent": "For rent",
+      "apply": "Filter",
+      "clear": "Clear"
+    },
+    "badge": {
+      "yourShare": "for you",
+      "needsApproval": "Approval needed"
+    },
+    "terms": {
+      "listedBy": "Listed by",
+      "totalCommission": "Total commission",
+      "payer": "Paid by",
+      "maxAgents": "Max. marketing agents"
+    },
+    "payer": {
+      "owner": "The owner",
+      "buyer": "The buyer",
+      "developer": "The developer"
+    },
+    "spec": {
+      "beds": "{n} bed",
+      "baths": "{n} bath",
+      "built": "{n} m² built",
+      "land": "{n} m² land"
+    },
+    "state": {
+      "marketing": "✓ You are marketing this",
+      "pending": "⏳ Waiting for the listing agent",
+      "yours": "This is your own listing"
+    },
+    "notice": {
+      "picked": "Added to your inventory. It is on your listings page now.",
+      "pickedPending": "Request sent. This listing agent approves each marketing agent, so you will hear back shortly.",
+      "dropped": "Removed from your inventory."
+    },
+    "errors": {
+      "already_picked_up": "You have already picked this listing up.",
+      "at_capacity": "This listing has reached its limit of marketing agents.",
+      "gone": "This listing is no longer available for co-marketing.",
+      "changed_hands": "This listing has changed hands and the offer is no longer valid.",
+      "own_listing": "This is your own listing.",
+      "pickup_failed": "That did not work. Please try again.",
+      "invalid": "Something was missing from that request."
+    }
   }
 }

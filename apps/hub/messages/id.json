@@ -284,7 +284,8 @@
     "sectionWork": "Kerja harian",
     "sectionCollaboration": "Kolaborasi",
     "sectionAccount": "Akun",
-    "matchhub": "MatchHub"
+    "matchhub": "MatchHub",
+    "pool": "Pemasaran bersama"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -1476,12 +1477,15 @@
       "errors": {
         "already_boosted": "Listing itu sudah di-boost.",
         "no_credits": "Kredit tidak cukup.",
-        "not_published": "Hanya listing yang tayang bisa di-boost.",
-        "not_owner": "Anda hanya bisa boost listing sendiri.",
+        "not_published": "Hanya listing yang sudah tayang yang bisa ditawarkan.",
+        "not_owner": "Hanya pemilik listing yang bisa menawarkan properti untuk pemasaran bersama.",
         "product_gone": "Boost itu sudah tidak tersedia.",
         "boost_failed": "Gagal boost listing. Silakan coba lagi.",
         "invalid": "Permintaan tidak valid.",
-        "quota": "Anda sudah mencapai batas listing aktif."
+        "quota": "Anda sudah mencapai batas listing aktif.",
+        "no_authorisation": "Otorisasi pemilik belum tercatat untuk properti ini. Pemasaran bersama membutuhkannya — tambahkan dulu di dokumen properti.",
+        "already_offered": "Listing ini sudah ada di kolam.",
+        "offer_failed": "Gagal. Silakan coba lagi."
       }
     },
     "share": {
@@ -1540,6 +1544,44 @@
       "draftPhotosLost": "Foto tidak bisa disimpan — silakan pilih ulang di langkah Foto.",
       "draftContinue": "Lanjutkan",
       "draftStartOver": "Mulai dari awal"
+    },
+    "offer": {
+      "cta": "Izinkan agen lain memasarkannya",
+      "heading": "Tawarkan listing ini untuk pemasaran bersama",
+      "help": "Agen lain yang terverifikasi bisa memasarkan properti ini sebagai inventori mereka sendiri, dengan kontak mereka yang tampil. Mandat dan bagian komisi Anda tetap. Mereka tidak bisa menawarkannya lagi ke orang lain.",
+      "totalCommission": "Total komisi (%)",
+      "totalCommissionHelp": "Dari harga jual atau sewa",
+      "marketingShare": "Bagian mereka (%)",
+      "marketingShareHelp": "Dari total komisi",
+      "payer": "Komisi dibayar oleh",
+      "payerOwner": "Pemilik",
+      "payerBuyer": "Pembeli",
+      "payerDeveloper": "Pengembang",
+      "maxAgents": "Maks. agen pemasar",
+      "maxAgentsHelp": "Kosongkan untuk tanpa batas",
+      "requiresApproval": "Saya setujui tiap agen sendiri",
+      "requiresApprovalHelp": "Lebih lambat, tapi Anda memilih siapa yang mewakili properti ini",
+      "minPrice": "Jangan iklankan di bawah",
+      "minPriceHelp": "Tetap rahasia — agen pemasar tidak akan melihatnya",
+      "notes": "Catatan untuk agen pemasar",
+      "notesPlaceholder": "Kunjungan hanya dengan janji temu, pemilik lebih suka hari kerja…",
+      "submit": "Terbitkan ke kolam",
+      "cancel": "Batal",
+      "preview": "Pada harga yang diminta",
+      "youKeep": "Anda dapat",
+      "theyGet": "Mereka dapat",
+      "live": "🤝 Ada di kolam pemasaran bersama",
+      "liveHelp": "{share}% untuk agen pemasar · {count} agen memasarkannya",
+      "withdraw": "Tarik kembali",
+      "done": "Terbit ke kolam. Agen lain sudah bisa mengambilnya.",
+      "withdrawnDone": "Ditarik dari kolam. Agen yang sudah memasarkannya tetap memakai ketentuan yang mereka setujui.",
+      "errors": {
+        "no_authorisation": "Otorisasi pemilik belum tercatat untuk properti ini. Pemasaran bersama membutuhkannya — tambahkan dulu di dokumen properti.",
+        "not_owner": "Hanya pemilik listing yang bisa menawarkan properti untuk pemasaran bersama.",
+        "not_published": "Hanya listing yang sudah tayang yang bisa ditawarkan.",
+        "already_offered": "Listing ini sudah ada di kolam.",
+        "offer_failed": "Gagal. Silakan coba lagi."
+      }
     }
   },
   "listingStatus": {
@@ -1635,5 +1677,67 @@
     "noActivity": "Belum ada aktivitas tercatat.",
     "systemActor": "Sistem",
     "viewAudit": "Buka jejak audit lengkap"
+  },
+  "pool": {
+    "title": "Kolam pemasaran bersama",
+    "intro": "Listing yang dibuka agen lain dengan ketentuan komisi yang jelas. Ambil satu dan listing itu jadi inventori Anda — nama Anda, kontak Anda, lead Anda. Ketentuan yang Anda setujui tercatat dan tidak bisa diubah setelahnya.",
+    "offerMine": "Tawarkan listing saya",
+    "count": "{count} listing di kolam",
+    "empty": "Belum ada isinya. Jadilah yang pertama — tawarkan listing Anda sendiri.",
+    "emptyFiltered": "Tidak ada listing yang cocok dengan filter ini. Coba perlebar.",
+    "pickUp": "Pasarkan listing ini",
+    "pickUpHelp": "Anda mendapat {share}% dari komisi",
+    "drop": "Berhenti memasarkan",
+    "filter": {
+      "province": "Provinsi",
+      "type": "Tipe properti",
+      "listingType": "Jual atau sewa",
+      "minShare": "Min. bagian Anda (%)",
+      "any": "Semua",
+      "sale": "Dijual",
+      "rent": "Disewa",
+      "apply": "Saring",
+      "clear": "Hapus filter"
+    },
+    "badge": {
+      "yourShare": "untuk Anda",
+      "needsApproval": "Perlu persetujuan"
+    },
+    "terms": {
+      "listedBy": "Didaftarkan oleh",
+      "totalCommission": "Total komisi",
+      "payer": "Dibayar oleh",
+      "maxAgents": "Maks. agen pemasar"
+    },
+    "payer": {
+      "owner": "Pemilik",
+      "buyer": "Pembeli",
+      "developer": "Pengembang"
+    },
+    "spec": {
+      "beds": "{n} kamar",
+      "baths": "{n} kamar mandi",
+      "built": "{n} m² bangunan",
+      "land": "{n} m² tanah"
+    },
+    "state": {
+      "marketing": "✓ Anda memasarkan ini",
+      "pending": "⏳ Menunggu agen pemilik listing",
+      "yours": "Ini listing Anda sendiri"
+    },
+    "notice": {
+      "picked": "Masuk ke inventori Anda. Sudah ada di halaman listing Anda.",
+      "pickedPending": "Permintaan terkirim. Agen pemilik listing ini menyetujui tiap agen pemasar, jadi Anda akan segera dikabari.",
+      "dropped": "Dihapus dari inventori Anda."
+    },
+    "errors": {
+      "already_picked_up": "Anda sudah mengambil listing ini.",
+      "at_capacity": "Listing ini sudah mencapai batas jumlah agen pemasar.",
+      "gone": "Listing ini tidak lagi tersedia untuk pemasaran bersama.",
+      "changed_hands": "Listing ini sudah berpindah tangan dan penawarannya tidak berlaku lagi.",
+      "own_listing": "Ini listing Anda sendiri.",
+      "pickup_failed": "Gagal. Silakan coba lagi.",
+      "invalid": "Ada data yang kurang pada permintaan itu."
+    }
   }
 }

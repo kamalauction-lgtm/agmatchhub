@@ -6,6 +6,8 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { SharePanel } from "@/components/listings/share-panel";
 import { MAX_ACTIVE_LISTINGS } from "@/config/quotas";
 import { shareCaption } from "@/lib/ai/listing-advisor";
+import { money, place } from "@/lib/listings/format";
+import { OfferToPool } from "@/components/listings/offer-to-pool";
 import { boostListing } from "./boost-actions";
 
 /**
@@ -56,15 +58,6 @@ type BorrowedRow = {
   } | null;
 };
 
-function money(currency: string, price: number, rentPeriod: string | null) {
-  const suffix = rentPeriod ? (rentPeriod === "monthly" ? "/bln" : "/thn") : "";
-  return `${currency} ${Number(price).toLocaleString("id-ID")}${suffix}`;
-}
-
-function place(p: { regency_name: string | null; province_name: string | null } | null) {
-  return [p?.regency_name, p?.province_name].filter(Boolean).join(", ") || "—";
-}
-
 /** Active boost, decided once outside render (no impure calls in components). */
 function activeBoostEnd(rows: { ends_at: string; status: string }[]): string | null {
   const now = Date.now();
@@ -75,10 +68,16 @@ function activeBoostEnd(rows: { ends_at: string; status: string }[]): string | n
 export default async function MyListingsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ submitted?: string; error?: string; boosted?: string }>;
+  searchParams: Promise<{
+    submitted?: string;
+    error?: string;
+    boosted?: string;
+    offered?: string;
+    withdrawn?: string;
+  }>;
 }) {
   const user = await requireUser();
-  const { submitted, error, boosted } = await searchParams;
+  const { submitted, error, boosted, offered, withdrawn } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("listings");
   const ts = await getTranslations("listingStatus");
@@ -111,6 +110,36 @@ export default async function MyListingsPage({
   ]);
 
   const ownRows = (own ?? []) as unknown as OwnRow[];
+
+  // Live co-marketing offers on the agent's own listings, with how many agents
+  // have picked each one up. Fetched after the listings so the `in` filter is
+  // bounded by what is actually on screen.
+  const offerByListing = new Map<
+    string,
+    { id: string; marketing_agent_share_pct: number; engagements: number }
+  >();
+  if (ownRows.length) {
+    const { data: offers } = await supabase
+      .from("comarketing_offers")
+      .select("id, listing_id, marketing_agent_share_pct, comarketing_engagements(id, status)")
+      .in("listing_id", ownRows.map((l) => l.id))
+      .eq("status", "active");
+
+    for (const o of (offers ?? []) as unknown as {
+      id: string;
+      listing_id: string;
+      marketing_agent_share_pct: number;
+      comarketing_engagements: { status: string }[] | null;
+    }[]) {
+      offerByListing.set(o.listing_id, {
+        id: o.id,
+        marketing_agent_share_pct: o.marketing_agent_share_pct,
+        engagements: (o.comarketing_engagements ?? []).filter((e) =>
+          ["pending", "active"].includes(e.status)
+        ).length,
+      });
+    }
+  }
   const borrowedRows = (borrowed ?? []) as unknown as BorrowedRow[];
   const active = ownRows.filter((l) =>
     ["draft", "pending_review", "published"].includes(l.status)
@@ -120,9 +149,44 @@ export default async function MyListingsPage({
 
   const notice =
     boosted ? { tone: "success" as const, text: t("boost.done") }
+    : offered ? { tone: "success" as const, text: t("offer.done") }
+    : withdrawn ? { tone: "success" as const, text: t("offer.withdrawnDone") }
     : submitted ? { tone: "success" as const, text: t("submittedNotice", { id: submitted }) }
-    : error ? { tone: "warn" as const, text: t(`boost.errors.${error}` as never) }
+    : error ? { tone: "warn" as const, text: t(`boost.errors.${error}`) }
     : null;
+
+  // Passed down rather than read in the client component: next-intl's client
+  // hooks would need the whole namespace shipped to the browser for six labels.
+  const offerLabels = {
+    cta: t("offer.cta"),
+    heading: t("offer.heading"),
+    help: t("offer.help"),
+    totalCommission: t("offer.totalCommission"),
+    totalCommissionHelp: t("offer.totalCommissionHelp"),
+    marketingShare: t("offer.marketingShare"),
+    marketingShareHelp: t("offer.marketingShareHelp"),
+    payer: t("offer.payer"),
+    payerOwner: t("offer.payerOwner"),
+    payerBuyer: t("offer.payerBuyer"),
+    payerDeveloper: t("offer.payerDeveloper"),
+    maxAgents: t("offer.maxAgents"),
+    maxAgentsHelp: t("offer.maxAgentsHelp"),
+    requiresApproval: t("offer.requiresApproval"),
+    requiresApprovalHelp: t("offer.requiresApprovalHelp"),
+    minPrice: t("offer.minPrice"),
+    minPriceHelp: t("offer.minPriceHelp"),
+    notes: t("offer.notes"),
+    notesPlaceholder: t("offer.notesPlaceholder"),
+    submit: t("offer.submit"),
+    cancel: t("offer.cancel"),
+    preview: t("offer.preview"),
+    youKeep: t("offer.youKeep"),
+    theyGet: t("offer.theyGet"),
+    live: t("offer.live"),
+    // .raw: {share} and {count} are substituted in the client component.
+    liveHelp: t.raw("offer.liveHelp") as string,
+    withdraw: t("offer.withdraw"),
+  };
 
   return (
     <AgentShell wide>
@@ -238,6 +302,16 @@ export default async function MyListingsPage({
                     </form>
                   )}
                 </div>
+
+                {isLive && (
+                  <OfferToPool
+                    listingId={l.id}
+                    price={l.price}
+                    currency={l.currency}
+                    activeOffer={offerByListing.get(l.id) ?? null}
+                    labels={offerLabels}
+                  />
+                )}
 
                 {isLive && (
                   <div className="mt-4">

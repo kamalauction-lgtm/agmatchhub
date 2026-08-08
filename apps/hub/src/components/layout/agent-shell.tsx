@@ -64,6 +64,7 @@ export async function AgentShell({
     {
       title: t("sectionCollaboration"),
       items: [
+        { href: "/collab/pool", icon: "🔁", label: t("pool") },
         { href: "/requests", icon: "📋", label: t("requests") },
         { href: "/submissions", icon: "🏢", label: t("submissions") },
         { href: "/wanted", icon: "📣", label: t("wanted"), accent: true },

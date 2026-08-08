@@ -27,13 +27,30 @@ the `aws-1-` prefix.
 npm run status:staging       # applied / pending migrations
 npm run dry-run:staging      # apply pending in a transaction, report, ROLL BACK
 npm run migrate:staging      # apply pending for real
-npm test                     # RLS suite (38 tests; needs TEST_* credentials)
+npm test                     # RLS suite (47 tests; needs TEST_* credentials)
 npm run ghl-drain:staging    # drain ghl_sync_pending leads (dry-run by default)
 node scripts/verify-public-boundary.mjs --env=staging
                              # prove the anon boundary from outside, over HTTP
 node scripts/seed-staging-catalogue.mjs --env=staging
                              # seed test catalogue (refuses production)
 ```
+
+### Test credentials
+
+`TEST_RA_*`, `TEST_SA_*` and `TEST_ADMIN_*` drive most of the suite. The
+co-marketing pool tests need a second pair — a marketing agent and a listing
+agent with a live open-pool offer between them, which the RA/SA fixtures do not
+have:
+
+```bash
+TEST_MA_EMAIL / TEST_MA_PASSWORD    # marketing agent (picks listings up)
+TEST_LA_EMAIL / TEST_LA_PASSWORD    # listing agent  (publishes the offer)
+```
+
+`scripts/seed-staging-comarketing.mjs` creates exactly that pair on staging.
+Without these four variables `comarketing-pool.test.ts` skips rather than
+passing vacuously — a skipped block is visible in the run output; a vacuous
+pass is not.
 
 ## GHL drainer
 

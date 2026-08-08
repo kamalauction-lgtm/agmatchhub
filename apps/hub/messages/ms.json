@@ -284,7 +284,8 @@
     "sectionWork": "Kerja harian",
     "sectionCollaboration": "Kolaborasi",
     "sectionAccount": "Akaun",
-    "matchhub": "MatchHub"
+    "matchhub": "MatchHub",
+    "pool": "Pemasaran bersama"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -1476,12 +1477,15 @@
       "errors": {
         "already_boosted": "Iklan itu sudah di-boost.",
         "no_credits": "Kredit tidak mencukupi.",
-        "not_published": "Hanya iklan yang disiarkan boleh di-boost.",
-        "not_owner": "Anda hanya boleh boost iklan sendiri.",
+        "not_published": "Hanya listing yang telah diterbitkan boleh ditawarkan.",
+        "not_owner": "Hanya pemilik listing boleh menawarkan hartanah untuk pemasaran bersama.",
         "product_gone": "Boost itu tiada lagi.",
         "boost_failed": "Gagal boost iklan. Sila cuba lagi.",
         "invalid": "Permintaan tidak sah.",
-        "quota": "Anda telah mencapai had iklan aktif."
+        "quota": "Anda telah mencapai had iklan aktif.",
+        "no_authorisation": "Kebenaran pemilik belum direkodkan untuk hartanah ini. Pemasaran bersama memerlukannya — tambah dahulu di bawah dokumen hartanah.",
+        "already_offered": "Listing ini sudah ada dalam kolam.",
+        "offer_failed": "Itu tidak berjaya. Sila cuba lagi."
       }
     },
     "share": {
@@ -1540,6 +1544,44 @@
       "draftPhotosLost": "Foto tidak dapat disimpan — sila pilih semula di langkah Foto.",
       "draftContinue": "Teruskan",
       "draftStartOver": "Mula semula"
+    },
+    "offer": {
+      "cta": "Benarkan ejen lain memasarkannya",
+      "heading": "Tawarkan listing ini untuk pemasaran bersama",
+      "help": "Ejen lain yang disahkan boleh memasarkan hartanah ini sebagai inventori mereka sendiri, dengan maklumat hubungan mereka dipaparkan. Anda kekal memegang mandat dan bahagian komisen anda. Mereka tidak boleh menawarkannya semula kepada orang lain.",
+      "totalCommission": "Jumlah komisen (%)",
+      "totalCommissionHelp": "Daripada harga jualan atau sewa",
+      "marketingShare": "Bahagian mereka (%)",
+      "marketingShareHelp": "Daripada jumlah komisen",
+      "payer": "Komisen dibayar oleh",
+      "payerOwner": "Pemilik",
+      "payerBuyer": "Pembeli",
+      "payerDeveloper": "Pemaju",
+      "maxAgents": "Maks. ejen pemasaran",
+      "maxAgentsHelp": "Biarkan kosong untuk tiada had",
+      "requiresApproval": "Saya luluskan setiap ejen sendiri",
+      "requiresApprovalHelp": "Lebih perlahan, tetapi anda memilih siapa mewakili hartanah ini",
+      "minPrice": "Jangan iklankan di bawah",
+      "minPriceHelp": "Kekal sulit — ejen pemasaran tidak akan melihatnya",
+      "notes": "Nota kepada ejen pemasaran",
+      "notesPlaceholder": "Lawatan dengan temu janji sahaja, pemilik lebih suka hari bekerja…",
+      "submit": "Terbitkan ke kolam",
+      "cancel": "Batal",
+      "preview": "Pada harga yang diminta",
+      "youKeep": "Anda dapat",
+      "theyGet": "Mereka dapat",
+      "live": "🤝 Dalam kolam pemasaran bersama",
+      "liveHelp": "{share}% kepada ejen pemasaran · {count} ejen sedang memasarkannya",
+      "withdraw": "Tarik balik",
+      "done": "Diterbitkan ke kolam. Ejen lain boleh mengambilnya sekarang.",
+      "withdrawnDone": "Ditarik balik daripada kolam. Ejen yang sudah memasarkannya kekal dengan terma yang mereka terima.",
+      "errors": {
+        "no_authorisation": "Kebenaran pemilik belum direkodkan untuk hartanah ini. Pemasaran bersama memerlukannya — tambah dahulu di bawah dokumen hartanah.",
+        "not_owner": "Hanya pemilik listing boleh menawarkan hartanah untuk pemasaran bersama.",
+        "not_published": "Hanya listing yang telah diterbitkan boleh ditawarkan.",
+        "already_offered": "Listing ini sudah ada dalam kolam.",
+        "offer_failed": "Itu tidak berjaya. Sila cuba lagi."
+      }
     }
   },
   "listingStatus": {
@@ -1635,5 +1677,67 @@
     "noActivity": "Belum ada aktiviti direkodkan.",
     "systemActor": "Sistem",
     "viewAudit": "Buka jejak audit penuh"
+  },
+  "pool": {
+    "title": "Kolam pemasaran bersama",
+    "intro": "Listing yang dibuka oleh ejen lain dengan terma komisen yang dinyatakan. Ambil satu dan ia menjadi inventori anda — nama anda, hubungan anda, lead anda. Terma yang anda terima direkodkan dan tidak boleh diubah selepas itu.",
+    "offerMine": "Tawarkan listing saya",
+    "count": "{count} listing dalam kolam",
+    "empty": "Belum ada apa-apa dalam kolam. Jadilah yang pertama — tawarkan listing anda sendiri.",
+    "emptyFiltered": "Tiada listing sepadan dengan penapis ini. Cuba luaskan.",
+    "pickUp": "Pasarkan listing ini",
+    "pickUpHelp": "Anda memperoleh {share}% daripada komisen",
+    "drop": "Berhenti memasarkan",
+    "filter": {
+      "province": "Wilayah",
+      "type": "Jenis hartanah",
+      "listingType": "Jual atau sewa",
+      "minShare": "Min. bahagian anda (%)",
+      "any": "Semua",
+      "sale": "Untuk dijual",
+      "rent": "Untuk disewa",
+      "apply": "Tapis",
+      "clear": "Kosongkan"
+    },
+    "badge": {
+      "yourShare": "untuk anda",
+      "needsApproval": "Perlu kelulusan"
+    },
+    "terms": {
+      "listedBy": "Disenaraikan oleh",
+      "totalCommission": "Jumlah komisen",
+      "payer": "Dibayar oleh",
+      "maxAgents": "Maks. ejen pemasaran"
+    },
+    "payer": {
+      "owner": "Pemilik",
+      "buyer": "Pembeli",
+      "developer": "Pemaju"
+    },
+    "spec": {
+      "beds": "{n} bilik",
+      "baths": "{n} bilik air",
+      "built": "{n} m² binaan",
+      "land": "{n} m² tanah"
+    },
+    "state": {
+      "marketing": "✓ Anda sedang memasarkan ini",
+      "pending": "⏳ Menunggu ejen penyenarai",
+      "yours": "Ini listing anda sendiri"
+    },
+    "notice": {
+      "picked": "Ditambah ke inventori anda. Ia ada di halaman listing anda sekarang.",
+      "pickedPending": "Permohonan dihantar. Ejen penyenarai ini meluluskan setiap ejen pemasaran, jadi anda akan dimaklumkan tidak lama lagi.",
+      "dropped": "Dikeluarkan daripada inventori anda."
+    },
+    "errors": {
+      "already_picked_up": "Anda sudah mengambil listing ini.",
+      "at_capacity": "Listing ini telah mencapai had ejen pemasaran.",
+      "gone": "Listing ini tidak lagi tersedia untuk pemasaran bersama.",
+      "changed_hands": "Listing ini telah bertukar tangan dan tawaran tidak lagi sah.",
+      "own_listing": "Ini listing anda sendiri.",
+      "pickup_failed": "Itu tidak berjaya. Sila cuba lagi.",
+      "invalid": "Ada maklumat yang tertinggal dalam permintaan itu."
+    }
   }
 }
