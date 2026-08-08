@@ -232,3 +232,164 @@ export async function suggestLocations(term: string, limit = 8): Promise<PublicL
   if (error) throw new Error(`location lookup failed: ${error.message}`);
   return (data ?? []) as PublicLocation[];
 }
+
+/* -------------------------------------------------------------------------- */
+/* Homepage facets                                                             */
+/* -------------------------------------------------------------------------- */
+
+export type PropertyTypeFacet = {
+  property_type: string;
+  property_category: string;
+  listing_type: "sale" | "rent";
+  listing_count: number;
+  min_price: number | null;
+};
+
+export type LocationFacet = {
+  province_name: string | null;
+  regency_name: string;
+  listing_type: "sale" | "rent";
+  listing_count: number;
+  min_price: number | null;
+};
+
+/** numeric arrives from PostgREST as a string; coerce once, at the boundary. */
+function num(v: unknown): number | null {
+  if (v === null || v === undefined) return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+/**
+ * Counts per property type, for the "browse by type" grid (migration 00046).
+ *
+ * Rolled up across sale and rent when `type` is omitted, because the homepage
+ * grid asks "what kinds of property are on this site", not "…for sale".
+ *
+ * When rolled up, `min_price` is deliberately NULL. A sale price and a monthly
+ * rent are not comparable quantities, and taking the smaller of the two
+ * produces a real lie: with a Rp 18 juta/month rental and a Rp 3,25 miliar
+ * house on the site, "Houses from Rp 18 jt" is what the grid would say. Callers
+ * that want a "from" price must ask for one listing type.
+ */
+export async function getPropertyTypeFacets(
+  type?: "sale" | "rent"
+): Promise<PropertyTypeFacet[]> {
+  let q = publicDb().from("public_facet_property_types").select("*");
+  if (type) q = q.eq("listing_type", type);
+
+  const { data, error } = await q;
+  if (error) throw new Error(`property type facets failed: ${error.message}`);
+
+  const rolled = new Map<string, PropertyTypeFacet>();
+  for (const row of (data ?? []) as Record<string, unknown>[]) {
+    const key = String(row.property_type);
+    const existing = rolled.get(key);
+    const count = Number(row.listing_count ?? 0);
+    const min = num(row.min_price);
+    if (existing) {
+      existing.listing_count += count;
+      if (min !== null && (existing.min_price === null || min < existing.min_price)) {
+        existing.min_price = min;
+      }
+    } else {
+      rolled.set(key, {
+        property_type: key,
+        property_category: String(row.property_category ?? ""),
+        listing_type: row.listing_type as "sale" | "rent",
+        listing_count: count,
+        min_price: min,
+      });
+    }
+  }
+
+  const out = [...rolled.values()].sort((a, b) => b.listing_count - a.listing_count);
+  if (!type) for (const f of out) f.min_price = null;
+  return out;
+}
+
+/**
+ * Counts per kota/kabupaten, for the "browse by city" grid (migration 00046).
+ *
+ * Same rule as above: no "from" price when sale and rent are rolled together.
+ */
+export async function getLocationFacets(
+  type?: "sale" | "rent",
+  limit = 12
+): Promise<LocationFacet[]> {
+  let q = publicDb().from("public_facet_locations").select("*");
+  if (type) q = q.eq("listing_type", type);
+
+  const { data, error } = await q;
+  if (error) throw new Error(`location facets failed: ${error.message}`);
+
+  const rolled = new Map<string, LocationFacet>();
+  for (const row of (data ?? []) as Record<string, unknown>[]) {
+    const key = String(row.regency_name);
+    const existing = rolled.get(key);
+    const count = Number(row.listing_count ?? 0);
+    const min = num(row.min_price);
+    if (existing) {
+      existing.listing_count += count;
+      if (min !== null && (existing.min_price === null || min < existing.min_price)) {
+        existing.min_price = min;
+      }
+    } else {
+      rolled.set(key, {
+        province_name: (row.province_name as string) ?? null,
+        regency_name: key,
+        listing_type: row.listing_type as "sale" | "rent",
+        listing_count: count,
+        min_price: min,
+      });
+    }
+  }
+
+  const out = [...rolled.values()]
+    .sort((a, b) => b.listing_count - a.listing_count)
+    .slice(0, limit);
+  if (!type) for (const f of out) f.min_price = null;
+  return out;
+}
+
+/**
+ * The promoted rail. Boosted and featured listings first — and the card labels
+ * them as promoted, per §14: paid placement is allowed to lift a listing, but
+ * never to hide that it was paid for.
+ *
+ * Falls back to nothing rather than quietly filling the rail with ordinary
+ * listings, so an empty promotion economy shows as an absent section instead of
+ * a section that misrepresents itself.
+ */
+export async function getPromotedListings(limit = 4): Promise<PublicListing[]> {
+  const { data, error } = await publicDb()
+    .from("public_listings")
+    .select("*")
+    .or("is_boosted.eq.true,is_featured.eq.true")
+    .order("boost_weight", { ascending: false })
+    .order("ranking_score", { ascending: false })
+    .limit(limit);
+
+  if (error) throw new Error(`promoted listings failed: ${error.message}`);
+  return (data ?? []) as PublicListing[];
+}
+
+/** Provinces with published stock, for the footer's SEO grid. */
+export async function getProvinceFacets(): Promise<{ name: string; count: number }[]> {
+  const { data, error } = await publicDb()
+    .from("public_facet_locations")
+    .select("province_name, listing_count");
+
+  if (error) throw new Error(`province facets failed: ${error.message}`);
+
+  const rolled = new Map<string, number>();
+  for (const row of (data ?? []) as Record<string, unknown>[]) {
+    const name = row.province_name as string | null;
+    if (!name) continue;
+    rolled.set(name, (rolled.get(name) ?? 0) + Number(row.listing_count ?? 0));
+  }
+
+  return [...rolled.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+}
