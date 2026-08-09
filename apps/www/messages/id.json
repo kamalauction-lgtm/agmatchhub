@@ -204,5 +204,10 @@
     "backHome": "Kembali ke beranda",
     "error": "Terjadi kesalahan",
     "errorHelp": "Silakan muat ulang halaman atau coba beberapa saat lagi."
+  },
+  "agentPage": {
+    "verified": "Terverifikasi",
+    "inventory": "{count} properti",
+    "empty": "Belum ada properti yang ditampilkan."
   }
 }

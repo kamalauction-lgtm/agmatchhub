@@ -204,5 +204,10 @@
     "backHome": "Back to home",
     "error": "Something went wrong",
     "errorHelp": "Please reload the page or try again shortly."
+  },
+  "agentPage": {
+    "verified": "Verified",
+    "inventory": "{count} properties",
+    "empty": "No properties listed yet."
   }
 }

@@ -30,6 +30,8 @@ const STATUS_KEYS = [
 
 export default async function DashboardPage() {
   const partnerIdentityPublic = await isPartnerIdentityPublic();
+  const marketplaceUrl =
+    process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id";
   const supabase = await createClient();
   const {
     data: { user },
@@ -37,7 +39,7 @@ export default async function DashboardPage() {
   if (!user) redirect("/login");
 
   const [{ data: profile }, { data: isAdmin }, { data: agentProfile }] = await Promise.all([
-    supabase.from("profiles").select("display_name, avatar_url, agent_status").eq("id", user.id).single(),
+    supabase.from("profiles").select("display_name, avatar_url, agent_status, public_slug").eq("id", user.id).single(),
     supabase.rpc("is_platform_admin"),
     supabase.from("agent_profiles").select("agency_name, city").eq("user_id", user.id).maybeSingle(),
   ]);
@@ -272,7 +274,25 @@ export default async function DashboardPage() {
               title={t("modules.coMarketing")}
               desc={t("modules.coMarketingDesc")}
             />
-            <SoonCard icon="🌐" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
+            {/* Opens the agent's public page on the marketplace — a different
+                origin, so a plain anchor rather than <Link>. */}
+            {profile?.public_slug ? (
+              <a
+                href={`${marketplaceUrl}/agent/${profile.public_slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-line p-5 transition hover:border-crimson"
+              >
+                <span aria-hidden className="text-2xl">🌐</span>
+                <h3 className="mt-3 font-semibold">{t("modules.landingPage")}</h3>
+                <p className="mt-1 text-sm text-muted">{t("modules.landingPageDesc")}</p>
+                <p className="mt-2 truncate text-xs text-crimson">
+                  /agent/{profile.public_slug}
+                </p>
+              </a>
+            ) : (
+              <SoonCard icon="🌐" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
+            )}
             <SoonCard icon="💳" title={t("modules.digitalCard")} desc={t("modules.digitalCardDesc")} />
             <SoonCard icon="✨" title={t("modules.contentStudio")} desc={t("modules.contentStudioDesc")} />
             <SoonCard icon="🎓" title={t("modules.training")} desc={t("modules.trainingDesc")} />

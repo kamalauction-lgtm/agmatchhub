@@ -480,3 +480,77 @@ export async function isPartnerIdentityPublic(): Promise<boolean> {
   }
   return data?.partner_identity_public === true;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Agent landing pages (migration 00050)                                       */
+/* -------------------------------------------------------------------------- */
+
+export type PublicAgent = {
+  id: string;
+  public_slug: string;
+  display_name: string | null;
+  avatar_url: string | null;
+  is_verified: boolean;
+  agency_name: string | null;
+  city: string | null;
+  state_region: string | null;
+  biography: string | null;
+  profile_photo_path: string | null;
+  published_listing_count: number;
+};
+
+export async function getAgentBySlug(slug: string): Promise<PublicAgent | null> {
+  const { data, error } = await publicDb()
+    .from("public_agent_profiles")
+    .select("*")
+    .eq("public_slug", slug)
+    .maybeSingle();
+
+  if (error) {
+    console.error(`agent lookup failed: ${error.message}`);
+    return null;
+  }
+  if (!data) return null;
+
+  const agent = data as PublicAgent;
+  // Same rule as listings: the agency stays hidden while the group identity is
+  // held back (migration 00048).
+  if (!(await isPartnerIdentityPublic())) agent.agency_name = null;
+  return agent;
+}
+
+/**
+ * Everything on an agent's page — their own mandates and what they market for
+ * others, in one grid.
+ *
+ * The agent fields on every row are REWRITTEN to the page owner. Without this a
+ * borrowed listing would render the original agent's name on someone else's
+ * page, which breaks the model outright and leaks exactly the relationship the
+ * co-marketing module exists to protect. It is done here, once, rather than
+ * trusted to each card.
+ */
+export async function getAgentListings(agent: PublicAgent): Promise<PublicListing[]> {
+  const { data, error } = await publicDb()
+    .from("public_agent_listings")
+    .select("*")
+    .eq("page_agent_id", agent.id)
+    .order("published_at", { ascending: false, nullsFirst: false })
+    .limit(60);
+
+  if (error) {
+    console.error(`agent listings failed: ${error.message}`);
+    return [];
+  }
+
+  const rows = (data ?? []) as PublicListing[];
+  return scrubAgency(
+    rows.map((r) => ({
+      ...r,
+      agent_id: agent.id,
+      agent_display_name: agent.display_name,
+      agent_avatar_url: agent.avatar_url,
+      agent_agency_name: agent.agency_name,
+      agent_is_verified: agent.is_verified,
+    }))
+  );
+}
