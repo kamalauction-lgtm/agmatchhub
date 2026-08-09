@@ -393,3 +393,45 @@ export async function getProvinceFacets(): Promise<{ name: string; count: number
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count);
 }
+
+/* -------------------------------------------------------------------------- */
+/* Advertising banners (migration 00047)                                       */
+/* -------------------------------------------------------------------------- */
+
+export type BannerSlot = "home_top" | "home_middle";
+
+export type SiteBanner = {
+  id: string;
+  slot: BannerSlot;
+  title: string;
+  subtitle: string | null;
+  advertiser_label: string | null;
+  location_label: string | null;
+  price_label: string | null;
+  image_path: string | null;
+  link_url: string | null;
+  cta_label: string | null;
+  position: number;
+};
+
+/**
+ * Live banners for a slot. The view already applies the scheduling window, so
+ * a campaign that has not started or has ended is not merely hidden here — it
+ * is not readable by the anon key at all.
+ */
+export async function getBanners(slot: BannerSlot): Promise<SiteBanner[]> {
+  const { data, error } = await publicDb()
+    .from("public_site_banners")
+    .select("*")
+    .eq("slot", slot)
+    .order("position", { ascending: true })
+    .limit(4);
+
+  // A failed ad query must not take the homepage down with it. Advertising is
+  // the least important thing on this page; the catalogue is the most.
+  if (error) {
+    console.error(`banner query failed for ${slot}: ${error.message}`);
+    return [];
+  }
+  return (data ?? []) as SiteBanner[];
+}

@@ -65,7 +65,8 @@
       "loanAmount": "Jumlah pinjaman",
       "disclaimer": "Perkiraan kasar dengan bunga tetap. Cicilan sebenarnya tergantung bank, skema bunga, asuransi, dan biaya provisi.",
       "cta": "Lihat properti di kisaran ini"
-    }
+    },
+    "adLabel": "Iklan"
   },
   "search": {
     "title": "Hasil pencarian",

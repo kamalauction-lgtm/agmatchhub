@@ -6,10 +6,12 @@ import {
   getLocationFacets,
   getPromotedListings,
   getProvinceFacets,
+  getBanners,
 } from "@/lib/listings";
 import { ListingCard } from "@/components/listing-card";
 import { SearchBar } from "@/components/search-bar";
 import { KprCalculator } from "@/components/kpr-calculator";
+import { PromoBanner } from "@/components/promo-banner";
 import { routing } from "@/i18n/routing";
 import { brand } from "@/config/brand";
 
@@ -59,13 +61,25 @@ export default async function HomePage({
 
   // One round of parallel reads. Every one is a bounded query against a
   // public_* view; none can reach a base table.
-  const [{ listings }, typeFacets, cityFacets, promoted, provinces] = await Promise.all([
+  const [
+    { listings },
+    typeFacets,
+    cityFacets,
+    promoted,
+    provinces,
+    topBanners,
+    middleBanners,
+  ] = await Promise.all([
     searchListings({ sort: "newest", page: 1 }),
     getPropertyTypeFacets(),
     getLocationFacets(undefined, 12),
     getPromotedListings(4),
     getProvinceFacets(),
+    getBanners("home_top"),
+    getBanners("home_middle"),
   ]);
+
+  const adLabel = t("adLabel");
 
   const latest = listings.slice(0, 6);
 
@@ -141,6 +155,17 @@ export default async function HomePage({
           })}
         </div>
       </section>
+
+      {/* Advertising — top slot ------------------------------------------- */}
+      {topBanners.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pt-8">
+          <div className={topBanners.length > 1 ? "grid gap-4 lg:grid-cols-2" : ""}>
+            {topBanners.map((b) => (
+              <PromoBanner key={b.id} banner={b} adLabel={adLabel} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Promoted rail ---------------------------------------------------- */}
       {promoted.length > 0 && (
@@ -221,6 +246,17 @@ export default async function HomePage({
           </div>
         )}
       </section>
+
+      {/* Advertising — middle slot ---------------------------------------- */}
+      {middleBanners.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-4">
+          <div className={middleBanners.length > 1 ? "grid gap-4 lg:grid-cols-2" : ""}>
+            {middleBanners.map((b) => (
+              <PromoBanner key={b.id} banner={b} adLabel={adLabel} size="tall" />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Browse by city --------------------------------------------------- */}
       {cityFacets.length > 0 && (

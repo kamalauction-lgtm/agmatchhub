@@ -105,6 +105,11 @@ export function formatRelativeDate(iso: string | null, locale = "id"): string {
 export function mediaUrl(path: string | null): string | null {
   if (!path) return null;
   if (path.startsWith("http")) return path;
+  // A leading slash means an asset served by this site (`/banners/x.svg`), not
+  // a storage object. Without this the path is rewritten into a storage URL
+  // that 404s, and because the caller draws a gradient over the image the
+  // failure is invisible — the artwork simply never appears.
+  if (path.startsWith("/")) return path;
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!base) return null;
   return `${base}/storage/v1/object/public/${path.replace(/^\/+/, "")}`;

@@ -182,7 +182,8 @@
       "reports": "Reports",
       "audit": "Audit",
       "listings": "Listings",
-      "overview": "Overview"
+      "overview": "Overview",
+      "banners": "Banners"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -285,7 +286,8 @@
     "sectionCollaboration": "Collaboration",
     "sectionAccount": "Account",
     "matchhub": "MatchHub",
-    "pool": "Co-marketing"
+    "pool": "Co-marketing",
+    "banners": "Banners"
   },
   "requests": {
     "title": "My requests",
@@ -1738,6 +1740,58 @@
       "own_listing": "This is your own listing.",
       "pickup_failed": "That did not work. Please try again.",
       "invalid": "Something was missing from that request."
+    }
+  },
+  "adminBanners": {
+    "title": "Marketplace banners",
+    "intro": "Advertising placements on the public marketplace homepage — new-development campaigns and similar. Every banner is labelled as advertising to visitors, and every change here is recorded in the audit trail.",
+    "create": "New banner",
+    "save": "Save changes",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "pause": "Pause",
+    "activate": "Set live",
+    "live": "Live",
+    "paused": "Paused",
+    "empty": "Nothing in this slot.",
+    "preview": "How visitors will see it",
+    "adLabel": "Ad",
+    "titlePlaceholder": "Your headline here",
+    "confirmDelete": "Delete this banner permanently? The audit record is kept.",
+    "slot": "Position on the page",
+    "slotTop": "Top of homepage",
+    "slotMiddle": "Middle of homepage",
+    "slotTopHelp": "Above the listings, under the quick links. The most visible slot.",
+    "slotMiddleHelp": "Between the latest listings and the city grid. A natural break in the page.",
+    "headline": "Headline",
+    "subtitle": "Supporting line",
+    "advertiser": "Advertiser",
+    "advertiserHelp": "Who is advertising. Required before a banner can go live — an ad must say whose it is.",
+    "location": "Location",
+    "price": "Price line",
+    "image": "Image",
+    "imageHelp": "A path on the marketplace (/banners/name.svg) or a storage path. External URLs are rejected — they would publish as a broken image.",
+    "link": "Link",
+    "cta": "Button text",
+    "startsAt": "Starts",
+    "endsAt": "Ends",
+    "position": "Order",
+    "active": "Live",
+    "activeHelp": "Also needs to be inside its date window to appear.",
+    "done": {
+      "created": "Banner created.",
+      "updated": "Banner updated.",
+      "activated": "Banner is live.",
+      "paused": "Banner paused. It is off the marketplace now.",
+      "deleted": "Banner deleted."
+    },
+    "errors": {
+      "advertiser_required": "Name the advertiser before setting this banner live.",
+      "bad_window": "The end date must come after the start date.",
+      "external_image": "Use a path on the marketplace or in storage. An external image URL will not render.",
+      "invalid": "Something was missing from that form.",
+      "save_failed": "That did not save. Please try again."
     }
   }
 }

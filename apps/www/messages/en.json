@@ -65,7 +65,8 @@
       "loanAmount": "Loan amount",
       "disclaimer": "A rough estimate at a fixed rate. Your actual instalment depends on the bank, the rate structure, insurance and arrangement fees.",
       "cta": "See properties in this range"
-    }
+    },
+    "adLabel": "Advertisement"
   },
   "search": {
     "title": "Search results",

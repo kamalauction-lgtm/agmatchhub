@@ -182,7 +182,8 @@
       "reports": "Laporan",
       "audit": "Audit",
       "listings": "Iklan",
-      "overview": "Gambaran"
+      "overview": "Gambaran",
+      "banners": "Sepanduk"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -285,7 +286,8 @@
     "sectionCollaboration": "Kolaborasi",
     "sectionAccount": "Akaun",
     "matchhub": "MatchHub",
-    "pool": "Pemasaran bersama"
+    "pool": "Pemasaran bersama",
+    "banners": "Sepanduk"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -1738,6 +1740,58 @@
       "own_listing": "Ini listing anda sendiri.",
       "pickup_failed": "Itu tidak berjaya. Sila cuba lagi.",
       "invalid": "Ada maklumat yang tertinggal dalam permintaan itu."
+    }
+  },
+  "adminBanners": {
+    "title": "Sepanduk pasaran",
+    "intro": "Ruangan iklan di halaman utama pasaran awam — kempen pembangunan baharu dan seumpamanya. Setiap sepanduk dilabel sebagai iklan kepada pelawat, dan setiap perubahan di sini direkodkan dalam jejak audit.",
+    "create": "Sepanduk baharu",
+    "save": "Simpan perubahan",
+    "cancel": "Batal",
+    "edit": "Sunting",
+    "delete": "Padam",
+    "pause": "Jeda",
+    "activate": "Siarkan",
+    "live": "Disiarkan",
+    "paused": "Dijeda",
+    "empty": "Tiada apa-apa di ruangan ini.",
+    "preview": "Rupa yang dilihat pelawat",
+    "adLabel": "Iklan",
+    "titlePlaceholder": "Tajuk anda di sini",
+    "confirmDelete": "Padam sepanduk ini secara kekal? Rekod audit dikekalkan.",
+    "slot": "Kedudukan di halaman",
+    "slotTop": "Atas halaman utama",
+    "slotMiddle": "Tengah halaman utama",
+    "slotTopHelp": "Di atas senarai, bawah pautan pantas. Ruangan paling ketara.",
+    "slotMiddleHelp": "Antara listing terbaru dan grid bandar. Pemisah semula jadi halaman.",
+    "headline": "Tajuk",
+    "subtitle": "Baris sokongan",
+    "advertiser": "Pengiklan",
+    "advertiserHelp": "Siapa yang mengiklan. Wajib sebelum sepanduk boleh disiarkan — iklan mesti menyatakan miliknya.",
+    "location": "Lokasi",
+    "price": "Baris harga",
+    "image": "Imej",
+    "imageHelp": "Laluan di pasaran (/banners/nama.svg) atau laluan storan. URL luaran ditolak — ia akan terbit sebagai imej rosak.",
+    "link": "Pautan",
+    "cta": "Teks butang",
+    "startsAt": "Mula",
+    "endsAt": "Tamat",
+    "position": "Susunan",
+    "active": "Disiarkan",
+    "activeHelp": "Perlu juga berada dalam tempoh tarikhnya untuk muncul.",
+    "done": {
+      "created": "Sepanduk dicipta.",
+      "updated": "Sepanduk dikemas kini.",
+      "activated": "Sepanduk kini disiarkan.",
+      "paused": "Sepanduk dijeda. Ia sudah tiada di pasaran.",
+      "deleted": "Sepanduk dipadam."
+    },
+    "errors": {
+      "advertiser_required": "Nyatakan pengiklan sebelum menyiarkan sepanduk ini.",
+      "bad_window": "Tarikh tamat mesti selepas tarikh mula.",
+      "external_image": "Guna laluan di pasaran atau dalam storan. URL imej luaran tidak akan dipaparkan.",
+      "invalid": "Ada maklumat yang tertinggal dalam borang itu.",
+      "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
     }
   }
 }

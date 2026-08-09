@@ -182,7 +182,8 @@
       "reports": "Laporan",
       "audit": "Audit",
       "listings": "Listing",
-      "overview": "Ringkasan"
+      "overview": "Ringkasan",
+      "banners": "Banner"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -285,7 +286,8 @@
     "sectionCollaboration": "Kolaborasi",
     "sectionAccount": "Akun",
     "matchhub": "MatchHub",
-    "pool": "Pemasaran bersama"
+    "pool": "Pemasaran bersama",
+    "banners": "Banner"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -1738,6 +1740,58 @@
       "own_listing": "Ini listing Anda sendiri.",
       "pickup_failed": "Gagal. Silakan coba lagi.",
       "invalid": "Ada data yang kurang pada permintaan itu."
+    }
+  },
+  "adminBanners": {
+    "title": "Banner marketplace",
+    "intro": "Slot iklan di halaman utama marketplace publik — kampanye proyek baru dan sejenisnya. Setiap banner diberi label iklan bagi pengunjung, dan setiap perubahan di sini tercatat di jejak audit.",
+    "create": "Banner baru",
+    "save": "Simpan perubahan",
+    "cancel": "Batal",
+    "edit": "Ubah",
+    "delete": "Hapus",
+    "pause": "Jeda",
+    "activate": "Tayangkan",
+    "live": "Tayang",
+    "paused": "Dijeda",
+    "empty": "Belum ada apa pun di slot ini.",
+    "preview": "Tampilan bagi pengunjung",
+    "adLabel": "Iklan",
+    "titlePlaceholder": "Judul Anda di sini",
+    "confirmDelete": "Hapus banner ini permanen? Catatan auditnya tetap disimpan.",
+    "slot": "Posisi di halaman",
+    "slotTop": "Atas halaman utama",
+    "slotMiddle": "Tengah halaman utama",
+    "slotTopHelp": "Di atas listing, di bawah tautan cepat. Slot paling terlihat.",
+    "slotMiddleHelp": "Antara listing terbaru dan grid kota. Jeda alami di halaman.",
+    "headline": "Judul",
+    "subtitle": "Baris pendukung",
+    "advertiser": "Pengiklan",
+    "advertiserHelp": "Siapa yang memasang iklan. Wajib diisi sebelum banner bisa tayang — iklan harus menyebut pemiliknya.",
+    "location": "Lokasi",
+    "price": "Baris harga",
+    "image": "Gambar",
+    "imageHelp": "Path di marketplace (/banners/nama.svg) atau path storage. URL eksternal ditolak — hasilnya jadi gambar rusak.",
+    "link": "Tautan",
+    "cta": "Teks tombol",
+    "startsAt": "Mulai",
+    "endsAt": "Berakhir",
+    "position": "Urutan",
+    "active": "Tayang",
+    "activeHelp": "Harus juga berada dalam rentang tanggalnya agar muncul.",
+    "done": {
+      "created": "Banner dibuat.",
+      "updated": "Banner diperbarui.",
+      "activated": "Banner sudah tayang.",
+      "paused": "Banner dijeda. Sudah tidak tampil di marketplace.",
+      "deleted": "Banner dihapus."
+    },
+    "errors": {
+      "advertiser_required": "Isi pengiklan sebelum menayangkan banner ini.",
+      "bad_window": "Tanggal berakhir harus setelah tanggal mulai.",
+      "external_image": "Gunakan path di marketplace atau storage. URL gambar eksternal tidak akan tampil.",
+      "invalid": "Ada isian yang kurang pada formulir itu.",
+      "save_failed": "Gagal menyimpan. Silakan coba lagi."
     }
   }
 }
