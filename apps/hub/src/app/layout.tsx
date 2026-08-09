@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { brand } from "@/config/brand";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { PwaRegister } from "@/components/pwa-register";
 import "./globals.css";
 
@@ -16,14 +17,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: brand.appName,
-    template: `%s · ${brand.appName}`,
-  },
-  description: brand.tagline,
-  applicationName: brand.appName,
-};
+/**
+ * Static metadata becomes generateMetadata so the browser tab honours the
+ * identity flag (migration 00048). Hiding the logo while the tab still reads
+ * "IQI AG Agent Platform" would give the game away in the most visible place
+ * there is.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const name = (await isPartnerIdentityPublic())
+    ? brand.appName
+    : brand.appNameNeutral;
+  return {
+    title: { default: name, template: `%s · ${name}` },
+    description: brand.tagline,
+    applicationName: name,
+  };
+}
 
 export default async function RootLayout({
   children,

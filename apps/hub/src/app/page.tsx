@@ -2,9 +2,11 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { brand } from "@/config/brand";
 import { BrandLockup, BrandWordmark } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 export default async function LandingPage() {
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   const t = await getTranslations("landing");
   const tc = await getTranslations("common");
 
@@ -13,7 +15,7 @@ export default async function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex items-center justify-between border-b border-line px-6 py-4">
-        <BrandLockup size={30} />
+        <BrandLockup size={30} partnerIdentityPublic={partnerIdentityPublic} />
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
           <Link
@@ -73,7 +75,7 @@ export default async function LandingPage() {
       </main>
 
       <footer className="border-t border-line px-6 py-6 text-center text-xs text-muted">
-        {brand.appName} — {brand.tagline}
+        {partnerIdentityPublic ? brand.appName : brand.appNameNeutral} — {brand.tagline}
       </footer>
     </div>
   );

@@ -183,7 +183,8 @@
       "audit": "Audit",
       "listings": "Iklan",
       "overview": "Gambaran",
-      "banners": "Sepanduk"
+      "banners": "Sepanduk",
+      "identity": "Identiti"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -1313,7 +1314,9 @@
     "offerCta": "Tawarkan hartanah anda",
     "qrHint": "Imbas untuk buka keperluan ini di telefon anda",
     "footerNote": "Platform co-broke persendirian oleh IQI AG. Ejen sahaja.",
-    "perYear": "/tahun"
+    "perYear": "/tahun",
+    "heroBodyNeutral": "Setiap kad di bawah ialah keperluan klien sebenar daripada ejen yang disahkan. Ada hartanah yang sepadan? Hantar dan co-broke — terlindung, dijejaki dan diaudit.",
+    "footerNoteNeutral": "Platform co-broke persendirian. Khusus ejen."
   },
   "adminAddProperty": {
     "title": "Tambah hartanah untuk ejen",
@@ -1651,7 +1654,8 @@
     "free": "Percuma",
     "iqiPremium": "Premium",
     "complimentary": "Percuma — ejen IQI disahkan",
-    "upgradeCta": "Sahkan akaun untuk Premium"
+    "upgradeCta": "Sahkan akaun untuk Premium",
+    "complimentaryNeutral": "Percuma — ejen disahkan"
   },
   "adminHome": {
     "title": "Gambaran keseluruhan admin",
@@ -1792,6 +1796,44 @@
       "external_image": "Guna laluan di pasaran atau dalam storan. URL imej luaran tidak akan dipaparkan.",
       "invalid": "Ada maklumat yang tertinggal dalam borang itu.",
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
+    }
+  },
+  "adminIdentity": {
+    "title": "Identiti kumpulan",
+    "intro": "Sama ada penjenamaan kumpulan pengendali dipaparkan di pasaran dan aplikasi ejen. Ditahan semasa pelancaran supaya platform dinilai atas kekuatannya sendiri; hidupkan apabila pengguna sudah cukup ramai untuk gabungan itu menambah nilai, bukan menjadi keseluruhan tawaran.",
+    "activate": "Papar identiti kumpulan",
+    "hide": "Sembunyikan identiti kumpulan",
+    "activateHelp": "Menghidupkan penjenamaan di semua tempat serentak — logo, nama agensi di sebelah ejen, dan teks yang menyebut kumpulan.",
+    "hideHelp": "Mengembalikan kedua-dua aplikasi kepada penjenamaan neutral. Perhatikan bahawa apa yang telah dilihat pelawat tidak boleh ditarik balik.",
+    "confirmActivate": "Papar identiti kumpulan di pasaran awam dan kepada setiap ejen? Ini kelihatan serta-merta oleh semua orang.",
+    "confirmHide": "Kembalikan kedua-dua aplikasi kepada penjenamaan neutral?",
+    "cacheNote": "Pasaran menyimpan cache halaman utamanya, jadi perubahan mungkin mengambil masa beberapa minit di sana. Aplikasi ejen berubah serta-merta.",
+    "state": {
+      "hiddenTitle": "Neutral — identiti kumpulan disembunyikan",
+      "hiddenBody": "Pelawat dan ejen melihat platform atas namanya sendiri. Tiada logo kumpulan, tiada nama agensi di sebelah ejen pada listing awam.",
+      "publicTitle": "Disiarkan — identiti kumpulan adalah awam",
+      "publicBody": "Logo, nama agensi dan teks kumpulan dipaparkan di kedua-dua aplikasi.",
+      "since": "Mula diaktifkan {when}"
+    },
+    "affects": {
+      "title": "Apa yang berubah",
+      "logos": "Susun atur logo dalam aplikasi ejen, log masuk dan pautan dikongsi — tanda kata teks digunakan sebagai ganti.",
+      "agency": "Nama agensi yang dipaparkan di sebelah ejen pada listing awam dan halaman hartanah.",
+      "copy": "Teks dalam aplikasi ejen yang menyebut kumpulan, pada papan dikehendaki dan label pakej."
+    },
+    "unaffected": {
+      "title": "Apa yang TIDAK berubah",
+      "legal": "Kandungan undang-undang. Terma, privasi dan butiran syarikat kekal menyebut entiti pengendali — siapa yang mengendalikan perkhidmatan ialah kewajipan pendedahan, bukan pilihan pemasaran.",
+      "data": "Tiada apa-apa mengenai data. Tiada listing, rekod ejen atau terma komisen yang diubah atau disembunyikan.",
+      "agents": "Apa yang ejen boleh buat. Pengesahan, kebenaran dan setiap modul berfungsi sama sahaja."
+    },
+    "done": {
+      "activated": "Identiti kumpulan kini awam di kedua-dua aplikasi.",
+      "hidden": "Kedua-dua aplikasi kembali kepada penjenamaan neutral."
+    },
+    "errors": {
+      "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
+      "invalid": "Ada maklumat yang tertinggal dalam permintaan itu."
     }
   }
 }

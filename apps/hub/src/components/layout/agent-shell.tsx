@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { brand } from "@/config/brand";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { signOut } from "@/app/(auth)/actions";
 
@@ -35,6 +36,7 @@ export async function AgentShell({
   children: React.ReactNode;
   wide?: boolean;
 }) {
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   const tc = await getTranslations("common");
   const t = await getTranslations("nav");
 
@@ -94,7 +96,7 @@ export async function AgentShell({
         <Link
           href="/dashboard"
           className="flex items-center gap-2 border-b border-line px-5 py-4"
-          aria-label={brand.appName}
+          aria-label={partnerIdentityPublic ? brand.appName : brand.appNameNeutral}
         >
           <span
             aria-hidden

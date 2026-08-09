@@ -7,6 +7,7 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getActiveDeclaration } from "@/lib/consents";
 import { BrandLockup } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { submitProperty } from "./actions";
 import { FormDraftGuard } from "@/components/forms/draft-guard";
@@ -61,6 +62,7 @@ export default async function SubmitPropertyPage({
   if (!link || !link.active || new Date(link.expires_at) < new Date()) {
     redirect(`/r/${encodeURIComponent(token)}`);
   }
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   const reqMetaGate = Array.isArray(link.property_requests)
     ? link.property_requests[0]
     : link.property_requests;
@@ -106,7 +108,7 @@ export default async function SubmitPropertyPage({
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <header className="flex items-center justify-between px-6 py-4">
-        <BrandLockup size={28} />
+        <BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} />
         <LanguageSwitcher />
       </header>
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">

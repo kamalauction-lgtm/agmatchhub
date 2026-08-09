@@ -25,6 +25,14 @@ export type BrandLogo = {
  */
 export const brand = {
   appName: process.env.NEXT_PUBLIC_APP_NAME ?? "IQI AG Agent Platform",
+  /**
+   * The name used while the group identity is held back (migration 00048).
+   * Hiding the logos but leaving "IQI" in the wordmark and the browser tab
+   * would defeat the whole exercise — this is the name every surface falls
+   * back to until an admin activates the affiliation.
+   */
+  appNameNeutral:
+    process.env.NEXT_PUBLIC_APP_NAME_NEUTRAL ?? "PropertiGuru Agent Platform",
   appShortName: process.env.NEXT_PUBLIC_APP_SHORT_NAME ?? "Agent Platform",
   tagline:
     process.env.NEXT_PUBLIC_APP_TAGLINE ??

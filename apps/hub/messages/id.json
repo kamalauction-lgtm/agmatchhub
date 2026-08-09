@@ -183,7 +183,8 @@
       "audit": "Audit",
       "listings": "Listing",
       "overview": "Ringkasan",
-      "banners": "Banner"
+      "banners": "Banner",
+      "identity": "Identitas"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -1313,7 +1314,9 @@
     "offerCta": "Tawarkan properti Anda",
     "qrHint": "Pindai untuk membuka kebutuhan ini di ponsel Anda",
     "footerNote": "Platform co-broke privat oleh IQI AG. Khusus agen.",
-    "perYear": "/tahun"
+    "perYear": "/tahun",
+    "heroBodyNeutral": "Setiap kartu di bawah adalah kebutuhan klien nyata dari agen terverifikasi. Punya properti yang cocok? Ajukan dan co-broke — terlindungi, terlacak, teraudit.",
+    "footerNoteNeutral": "Platform co-broke privat. Khusus agen."
   },
   "adminAddProperty": {
     "title": "Tambah properti untuk agen",
@@ -1651,7 +1654,8 @@
     "free": "Gratis",
     "iqiPremium": "Premium",
     "complimentary": "Gratis — agen IQI terverifikasi",
-    "upgradeCta": "Verifikasi untuk dapat Premium"
+    "upgradeCta": "Verifikasi untuk dapat Premium",
+    "complimentaryNeutral": "Gratis — agen terverifikasi"
   },
   "adminHome": {
     "title": "Ringkasan admin",
@@ -1792,6 +1796,44 @@
       "external_image": "Gunakan path di marketplace atau storage. URL gambar eksternal tidak akan tampil.",
       "invalid": "Ada isian yang kurang pada formulir itu.",
       "save_failed": "Gagal menyimpan. Silakan coba lagi."
+    }
+  },
+  "adminIdentity": {
+    "title": "Identitas grup",
+    "intro": "Apakah branding grup pengelola ditampilkan di marketplace dan aplikasi agen. Ditahan saat peluncuran agar platform dinilai atas kekuatannya sendiri; nyalakan begitu penggunanya cukup banyak sehingga afiliasi itu menambah bobot, bukan menjadi seluruh proposisi.",
+    "activate": "Tampilkan identitas grup",
+    "hide": "Sembunyikan identitas grup",
+    "activateHelp": "Menyalakan branding di semua tempat sekaligus — logo, nama agensi di samping agen, dan teks yang menyebut grup.",
+    "hideHelp": "Mengembalikan kedua aplikasi ke branding netral. Perlu diingat, yang sudah dilihat pengunjung tidak bisa ditarik kembali.",
+    "confirmActivate": "Tampilkan identitas grup di marketplace publik dan ke semua agen? Ini langsung terlihat oleh semua orang.",
+    "confirmHide": "Kembalikan kedua aplikasi ke branding netral?",
+    "cacheNote": "Marketplace menyimpan cache halaman utamanya, jadi perubahan di sana bisa perlu beberapa menit. Aplikasi agen berubah seketika.",
+    "state": {
+      "hiddenTitle": "Netral — identitas grup disembunyikan",
+      "hiddenBody": "Pengunjung dan agen melihat platform atas namanya sendiri. Tanpa logo grup, tanpa nama agensi di samping agen pada listing publik.",
+      "publicTitle": "Tayang — identitas grup sudah publik",
+      "publicBody": "Logo, nama agensi, dan teks grup tampil di kedua aplikasi.",
+      "since": "Pertama diaktifkan {when}"
+    },
+    "affects": {
+      "title": "Yang berubah",
+      "logos": "Susunan logo di aplikasi agen, halaman masuk, dan tautan yang dibagikan — diganti wordmark teks.",
+      "agency": "Nama agensi yang tampil di samping agen pada listing publik dan halaman properti.",
+      "copy": "Teks di aplikasi agen yang menyebut grup, di papan dicari dan label paket."
+    },
+    "unaffected": {
+      "title": "Yang TIDAK berubah",
+      "legal": "Konten hukum. Syarat, privasi, dan detail perusahaan tetap menyebut entitas pengelola — siapa yang menjalankan layanan adalah kewajiban keterbukaan, bukan pilihan pemasaran.",
+      "data": "Tidak ada yang berubah pada data. Tidak ada listing, data agen, atau ketentuan komisi yang diubah atau disembunyikan.",
+      "agents": "Apa yang bisa dilakukan agen. Verifikasi, izin, dan setiap modul bekerja persis sama."
+    },
+    "done": {
+      "activated": "Identitas grup kini publik di kedua aplikasi.",
+      "hidden": "Kedua aplikasi kembali ke branding netral."
+    },
+    "errors": {
+      "save_failed": "Gagal menyimpan. Silakan coba lagi.",
+      "invalid": "Ada data yang kurang pada permintaan itu."
     }
   }
 }

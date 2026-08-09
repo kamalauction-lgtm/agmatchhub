@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -28,6 +29,7 @@ const STATUS_KEYS = [
 ] as const;
 
 export default async function DashboardPage() {
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   const supabase = await createClient();
   const {
     data: { user },
@@ -104,7 +106,7 @@ export default async function DashboardPage() {
           </p>
           <p className="mt-1 text-lg font-bold">{tp(plan.nameKey as never)}</p>
           {plan.key === "iqi_premium" && (
-            <p className="text-xs text-success">{tp("complimentary")}</p>
+            <p className="text-xs text-success">{tp(partnerIdentityPublic ? "complimentary" : "complimentaryNeutral")}</p>
           )}
 
           {isVerified && counts && (

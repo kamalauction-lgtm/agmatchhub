@@ -183,7 +183,8 @@
       "audit": "Audit",
       "listings": "Listings",
       "overview": "Overview",
-      "banners": "Banners"
+      "banners": "Banners",
+      "identity": "Identity"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -1313,7 +1314,9 @@
     "offerCta": "Offer your property",
     "qrHint": "Scan to open this requirement on your phone",
     "footerNote": "A private co-broke platform by IQI AG. Agents only.",
-    "perYear": "/year"
+    "perYear": "/year",
+    "heroBodyNeutral": "Every card below is a live client requirement from a verified agent. Have a matching property? Submit it and co-broke — protected, tracked and audited.",
+    "footerNoteNeutral": "A private co-broke platform. Agents only."
   },
   "adminAddProperty": {
     "title": "Add property for an agent",
@@ -1651,7 +1654,8 @@
     "free": "Free",
     "iqiPremium": "Premium",
     "complimentary": "Complimentary — verified IQI agent",
-    "upgradeCta": "Get verified for Premium"
+    "upgradeCta": "Get verified for Premium",
+    "complimentaryNeutral": "Complimentary — verified agent"
   },
   "adminHome": {
     "title": "Admin overview",
@@ -1792,6 +1796,44 @@
       "external_image": "Use a path on the marketplace or in storage. An external image URL will not render.",
       "invalid": "Something was missing from that form.",
       "save_failed": "That did not save. Please try again."
+    }
+  },
+  "adminIdentity": {
+    "title": "Group identity",
+    "intro": "Whether the operating group's branding is shown across the marketplace and the agent app. Held back at launch so the platform is judged on its own; switch it on once there are enough users for the affiliation to add weight rather than carry the whole proposition.",
+    "activate": "Show the group identity",
+    "hide": "Hide the group identity",
+    "activateHelp": "Turns the branding on everywhere at once — logos, agency names beside agents, and the copy that names the group.",
+    "hideHelp": "Returns both apps to neutral branding. Note that anything already seen by visitors cannot be unseen.",
+    "confirmActivate": "Show the group identity on the public marketplace and to every agent? This is visible immediately to everyone.",
+    "confirmHide": "Return both apps to neutral branding?",
+    "cacheNote": "The marketplace caches its homepage, so it may take a few minutes to change there. The agent app changes immediately.",
+    "state": {
+      "hiddenTitle": "Neutral — the group identity is hidden",
+      "hiddenBody": "Visitors and agents see the platform on its own. No group logos, no agency name beside agents on public listings.",
+      "publicTitle": "Live — the group identity is public",
+      "publicBody": "Logos, agency names and group copy are shown across both apps.",
+      "since": "First activated {when}"
+    },
+    "affects": {
+      "title": "What this changes",
+      "logos": "The logo lock-up in the agent app, sign-in and shared links — the text wordmark is used instead.",
+      "agency": "The agency name shown beside an agent on public listings and property pages.",
+      "copy": "Copy in the agent app that names the group, on the wanted board and the plan label."
+    },
+    "unaffected": {
+      "title": "What this does NOT change",
+      "legal": "Legal content. Terms, privacy and company details in Legal content keep naming the operating entity — who runs a service is a disclosure obligation, not a marketing choice.",
+      "data": "Nothing about the data. No listing, agent record or commission term is altered or hidden.",
+      "agents": "What agents can do. Verification, permissions and every module work exactly the same either way."
+    },
+    "done": {
+      "activated": "The group identity is now public across both apps.",
+      "hidden": "Both apps are back to neutral branding."
+    },
+    "errors": {
+      "save_failed": "That did not save. Please try again.",
+      "invalid": "Something was missing from that request."
     }
   }
 }

@@ -97,6 +97,22 @@ export type SearchResult = {
  * Search. Every query is bounded — there is no code path here that can return
  * an unpaginated result set to an anonymous caller (§24).
  */
+/**
+ * Strip the agency name from listings while the affiliation is held back.
+ *
+ * Applied at the data layer, not in the card component, so every consumer is
+ * covered — including the next one somebody writes without remembering the
+ * flag exists. The agent's own name and verification status stay: a buyer
+ * still knows exactly who they are dealing with, which is the part that
+ * matters to them.
+ */
+async function scrubAgency<T extends { agent_agency_name: string | null }>(
+  rows: T[]
+): Promise<T[]> {
+  if (await isPartnerIdentityPublic()) return rows;
+  return rows.map((r) => ({ ...r, agent_agency_name: null }));
+}
+
 export async function searchListings(params: SearchParams): Promise<SearchResult> {
   const page = Math.max(1, params.page ?? 1);
   const from = (page - 1) * PAGE_SIZE;
@@ -165,7 +181,7 @@ export async function searchListings(params: SearchParams): Promise<SearchResult
 
   const total = count ?? 0;
   return {
-    listings: (data ?? []) as PublicListing[],
+    listings: await scrubAgency((data ?? []) as PublicListing[]),
     total,
     page,
     pageCount: Math.max(1, Math.ceil(total / PAGE_SIZE)),
@@ -180,7 +196,8 @@ export async function getListingBySlug(slug: string): Promise<PublicListing | nu
     .maybeSingle();
 
   if (error) throw new Error(`listing lookup failed: ${error.message}`);
-  return (data as PublicListing) ?? null;
+  if (!data) return null;
+  return (await scrubAgency([data as PublicListing]))[0];
 }
 
 export type PublicMedia = {
@@ -371,7 +388,7 @@ export async function getPromotedListings(limit = 4): Promise<PublicListing[]> {
     .limit(limit);
 
   if (error) throw new Error(`promoted listings failed: ${error.message}`);
-  return (data ?? []) as PublicListing[];
+  return scrubAgency((data ?? []) as PublicListing[]);
 }
 
 /** Provinces with published stock, for the footer's SEO grid. */
@@ -434,4 +451,32 @@ export async function getBanners(slot: BannerSlot): Promise<SiteBanner[]> {
     return [];
   }
   return (data ?? []) as SiteBanner[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* Platform identity (migration 00048)                                         */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Is the operating group's identity public yet?
+ *
+ * False during the neutral launch: the marketplace shows agents by name and
+ * verification status, without the agency behind them. Flipped by an admin in
+ * the hub once the platform stands on its own.
+ *
+ * Fails CLOSED. If this query errors we return false, which hides branding —
+ * the reverse would reveal an affiliation the owner has deliberately held back
+ * because a database hiccup happened to coincide with a page render.
+ */
+export async function isPartnerIdentityPublic(): Promise<boolean> {
+  const { data, error } = await publicDb()
+    .from("public_platform_identity")
+    .select("partner_identity_public")
+    .maybeSingle();
+
+  if (error) {
+    console.error(`identity flag read failed: ${error.message}`);
+    return false;
+  }
+  return data?.partner_identity_public === true;
 }

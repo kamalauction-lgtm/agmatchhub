@@ -4,6 +4,7 @@ import QRCode from "qrcode";
 import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { BrandLockup, BrandWordmark } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { brand } from "@/config/brand";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
@@ -25,6 +26,7 @@ export default async function WantedBoardPage({
     country?: string; tx?: string; type?: string; max?: string; q?: string;
   }>;
 }) {
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   const { country = "", tx = "", type = "", max = "", q = "" } = await searchParams;
   const t = await getTranslations("wanted");
   const tr = await getTranslations("requests");
@@ -84,7 +86,7 @@ export default async function WantedBoardPage({
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex items-center justify-between border-b border-line px-4 py-4 sm:px-6">
-        <Link href="/" aria-label={brand.appName}><BrandLockup size={28} /></Link>
+        <Link href="/" aria-label={partnerIdentityPublic ? brand.appName : brand.appNameNeutral}><BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} /></Link>
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <Link href="/login"
@@ -101,7 +103,7 @@ export default async function WantedBoardPage({
           {t("heroTitle")}
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">
-          {t("heroBody")}
+          {t(partnerIdentityPublic ? "heroBody" : "heroBodyNeutral")}
         </p>
       </section>
 
@@ -245,7 +247,7 @@ export default async function WantedBoardPage({
       </main>
 
       <footer className="border-t border-line px-6 py-6 text-center text-xs text-muted">
-        {brand.appName} — {t("footerNote")}
+        {partnerIdentityPublic ? brand.appName : brand.appNameNeutral} — {t(partnerIdentityPublic ? "footerNote" : "footerNoteNeutral")}
       </footer>
     </div>
   );

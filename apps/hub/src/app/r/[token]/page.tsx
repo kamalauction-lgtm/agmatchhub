@@ -5,17 +5,21 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { createClient } from "@/lib/supabase/server";
 import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { BrandLockup } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { unlockRequestLink } from "./actions";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-center font-mono text-lg tracking-widest uppercase outline-none focus:border-crimson";
 
-function Shell({ children }: { children: React.ReactNode }) {
+async function Shell({ children }: { children: React.ReactNode }) {
+  // Shell renders the lock-up, so it reads the flag itself rather than
+  // having every caller thread it through.
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <header className="flex items-center justify-between px-6 py-4">
-        <BrandLockup size={28} />
+        <BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} />
         <LanguageSwitcher />
       </header>
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">{children}</main>

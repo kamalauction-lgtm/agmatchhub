@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { requireAdmin } from "@/lib/authz";
 import { BrandLockup } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { signOut } from "@/app/(auth)/actions";
 
@@ -9,6 +10,7 @@ export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   await requireAdmin();
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   const t = await getTranslations("admin");
   const tc = await getTranslations("common");
 
@@ -19,7 +21,7 @@ export default async function AdminLayout({
           one. */}
       <header className="flex flex-wrap items-center justify-between gap-4 border-b border-line px-6 py-4">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <Link href="/admin"><BrandLockup size={28} /></Link>
+          <Link href="/admin"><BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} /></Link>
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-medium">
             <Link href="/admin" className="hover:text-crimson">{t("nav.overview")}</Link>
             <Link href="/admin/requests" className="hover:text-crimson">{t("nav.requests")}</Link>
@@ -27,6 +29,7 @@ export default async function AdminLayout({
             <Link href="/admin/agents" className="hover:text-crimson">{t("nav.agents")}</Link>
             <Link href="/admin/banners" className="hover:text-crimson">{t("nav.banners")}</Link>
             <Link href="/admin/countries" className="hover:text-crimson">{t("nav.countries")}</Link>
+            <Link href="/admin/identity" className="hover:text-crimson">{t("nav.identity")}</Link>
             <Link href="/admin/legal" className="hover:text-crimson">{t("nav.legal")}</Link>
             <Link href="/admin/reports" className="hover:text-crimson">{t("nav.reports")}</Link>
             <Link href="/admin/audit" className="hover:text-crimson">{t("nav.audit")}</Link>

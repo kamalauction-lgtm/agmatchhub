@@ -6,6 +6,7 @@ import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getClientSafeProperties } from "@/lib/projections/client-safe";
 import { getActiveDeclaration } from "@/lib/consents";
 import { BrandLockup } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { LinkedText } from "@/components/client-view/linked-text";
 import { PresentationBoard } from "@/components/client-view/presentation-board";
@@ -291,11 +292,14 @@ export default async function ClientPresentationPage({
   );
 }
 
-function Shell({ children }: { children: React.ReactNode }) {
+async function Shell({ children }: { children: React.ReactNode }) {
+  // Shell renders the lock-up, so it reads the flag itself rather than
+  // having every caller thread it through.
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   return (
     <div className="min-h-screen bg-surface">
       <div className="flex items-center justify-between border-b border-line bg-background px-4 py-3 sm:px-6">
-        <BrandLockup size={26} />
+        <BrandLockup size={26} partnerIdentityPublic={partnerIdentityPublic} />
         <LanguageSwitcher />
       </div>
       {children}

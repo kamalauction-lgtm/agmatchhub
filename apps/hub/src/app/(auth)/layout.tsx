@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { brand } from "@/config/brand";
 import { BrandLockup } from "@/components/layout/brand-lockup";
+import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const partnerIdentityPublic = await isPartnerIdentityPublic();
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <header className="flex items-center justify-between px-6 py-4">
-        <Link href="/" aria-label={brand.appName}>
-          <BrandLockup size={28} />
+        <Link href="/" aria-label={partnerIdentityPublic ? brand.appName : brand.appNameNeutral}>
+          <BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} />
         </Link>
         <LanguageSwitcher />
       </header>
@@ -20,7 +22,7 @@ export default function AuthLayout({
         </div>
       </main>
       <footer className="px-6 py-4 text-center text-xs text-muted">
-        {brand.appName} — {brand.tagline}
+        {partnerIdentityPublic ? brand.appName : brand.appNameNeutral} — {brand.tagline}
       </footer>
     </div>
   );
