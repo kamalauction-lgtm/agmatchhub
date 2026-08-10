@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Public marketplace. Separate worker from the hub on purpose: the two apps
+  // have different privilege levels and must not share a runtime or a secret
+  // store. See repo hard rule 1.
+  "name": "propertiguru-www",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    { "pattern": "www.propertiguru.id", "custom_domain": true }
+  ],
+  // Runtime env. NEXT_PUBLIC_* are also inlined at build time from
+  // .env.production.
+  //
+  // THERE IS NO SUPABASE_SERVICE_ROLE_KEY HERE, AND THERE NEVER MAY BE.
+  // Repo hard rule 1: this app must not merely avoid using the service key, it
+  // must not possess it. It reads through public_* views with the anon key and
+  // writes nothing directly. This is the control that stops a marketplace
+  // compromise from reaching commission terms, minimum prices and client
+  // identities in the hub. Do not add it "temporarily".
+  "vars": {
+    "NEXT_PUBLIC_APP_URL": "https://www.propertiguru.id",
+    "NEXT_PUBLIC_HUB_URL": "https://hub.propertiguru.id",
+    "NEXT_PUBLIC_APP_NAME": "PropertiGuru",
+    "NEXT_PUBLIC_APP_SHORT_NAME": "PropertiGuru",
+    // Left unset (not "true") on purpose: the name is still a working name
+    // pending the brand decision, and the UI says so rather than presenting it
+    // as final. Set to "true" only once the name is actually settled.
+    // "NEXT_PUBLIC_BRAND_FINAL": "true",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://jtruwmwinymflkrvuuwd.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_qoUdeoGQVbm9uE9Om4Yhjg_AMtLVjzK"
+  }
+}
