@@ -55,7 +55,7 @@ const api = (base, key) => ({
   list: async (bucket, prefix = "") => {
     const r = await fetch(`${base}/storage/v1/object/list/${bucket}`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({ prefix, limit: 1000, sortBy: { column: "name", order: "asc" } }),
     });
     if (!r.ok) throw new Error(`list ${bucket}: ${r.status} ${await r.text()}`);
@@ -63,7 +63,7 @@ const api = (base, key) => ({
   },
   download: async (bucket, path) => {
     const r = await fetch(`${base}/storage/v1/object/${bucket}/${path}`, {
-      headers: { Authorization: `Bearer ${key}` },
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
     });
     if (!r.ok) throw new Error(`download ${bucket}/${path}: ${r.status}`);
     return { body: Buffer.from(await r.arrayBuffer()), type: r.headers.get("content-type") };
@@ -72,6 +72,7 @@ const api = (base, key) => ({
     const r = await fetch(`${base}/storage/v1/object/${bucket}/${path}`, {
       method: "POST",
       headers: {
+        apikey: key,
         Authorization: `Bearer ${key}`,
         "Content-Type": type || "application/octet-stream",
         "x-upsert": "false", // never clobber something already there
