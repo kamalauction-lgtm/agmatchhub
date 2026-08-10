@@ -1039,7 +1039,9 @@
       "submission_added_for_you": "Satu hartanah telah ditambah untuk anda",
       "lead_new": "Prospek pembeli baharu",
       "listing_approved": "Iklan diluluskan - kini disiarkan",
-      "listing_rejected": "Iklan ditolak"
+      "listing_rejected": "Iklan ditolak",
+      "comarketing_listing_unavailable": "Listing yang anda pasarkan tidak lagi tersedia",
+      "comarketing_price_changed": "Harga berubah pada listing yang anda pasarkan"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",

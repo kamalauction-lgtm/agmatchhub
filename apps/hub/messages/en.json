@@ -1039,7 +1039,9 @@
       "submission_added_for_you": "A property was added for you",
       "lead_new": "New buyer lead",
       "listing_approved": "Listing approved - now live",
-      "listing_rejected": "Listing rejected"
+      "listing_rejected": "Listing rejected",
+      "comarketing_listing_unavailable": "A listing you market is no longer available",
+      "comarketing_price_changed": "The price changed on a listing you market"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
