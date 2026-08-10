@@ -18,6 +18,10 @@
  *   node ../../scripts/verify-build-target.mjs
  *
  * Run from an app directory, after `opennextjs-cloudflare build`.
+ *
+ * NOTE: the deploy script deletes .open-next before building, because OpenNext
+ * leaves its fetch cache in place across builds. Without that, a bundle built
+ * correctly against production still ships a cache full of staging responses.
  */
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -62,11 +66,21 @@ function scan(dir) {
     const st = statSync(path);
     if (st.isDirectory()) {
       scan(path);
-    } else if (/\.(js|mjs|cjs|json)$/.test(entry)) {
-      const text = readFileSync(path, "utf8");
-      for (const m of text.matchAll(REF)) {
-        if (!found.has(m[1])) found.set(m[1], path.slice(APP.length + 1));
-      }
+      continue;
+    }
+    // Every file, not just *.js — OpenNext's fetch cache under
+    // .open-next/cache/__fetch/ stores entries as extensionless hashes, and an
+    // earlier version of this check filtered by extension and sailed straight
+    // past a cache full of staging responses. Read as utf8 and ignore anything
+    // that is not text.
+    let text;
+    try {
+      text = readFileSync(path, "utf8");
+    } catch {
+      continue;
+    }
+    for (const m of text.matchAll(REF)) {
+      if (!found.has(m[1])) found.set(m[1], path.slice(APP.length + 1));
     }
   }
 }

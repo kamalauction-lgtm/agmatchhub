@@ -94,6 +94,19 @@ Zod in server actions · Vitest · Cloudflare Workers via OpenNext.
   server corrupts `.next/dev/types` and the build deadlocks on the lock file.
 - `.env.production` is committed and contains only `NEXT_PUBLIC_*` values, which
   are inlined at build time. Real secrets go in via `wrangler secret put`.
+- **`.env.local` outranks `.env.production` in Next.js, and `NEXT_PUBLIC_*` is
+  inlined into the bundle.** Both apps' `.env.local` get pointed at staging
+  constantly — it is how features get verified — so a deploy from a developer
+  machine ships a worker that talks to staging, and `wrangler.jsonc` cannot
+  correct it at runtime. It fails silently: the site loads and serves seed data.
+  `npm run deploy` now wipes `.open-next`, builds, and runs
+  `scripts/verify-build-target.mjs`, which refuses to deploy a bundle whose
+  Supabase project ref does not match `.env.production`. Move `.env.local` aside
+  before deploying.
+- OpenNext does **not** clear `.open-next/cache/` between builds. A correct
+  build can otherwise ship a fetch cache full of the previous build's staging
+  responses — which is why deploy wipes the directory first, and why the
+  verifier reads every file rather than filtering by extension.
 - Adding a translation key with a dot in it creates a nested object in
   next-intl. Notification kinds use underscores for this reason.
 
