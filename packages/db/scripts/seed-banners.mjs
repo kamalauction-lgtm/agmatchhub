@@ -13,9 +13,14 @@
  *   node scripts/seed-banners.mjs --env=staging
  */
 import pg from "pg";
-import { loadEnv } from "./load-env.mjs";
+import { loadEnv, restArgs } from "./load-env.mjs";
 
 const { url, envName } = loadEnv();
+
+// --remove takes the samples down without putting them back. The seed path
+// already deletes-then-inserts, so without this flag "remove" silently
+// re-seeded — which is exactly what happened the first time it was asked for.
+const REMOVE = restArgs().includes("--remove");
 
 const SAMPLE_ADVERTISER = "Contoh Pengiklan (sample)";
 
@@ -54,6 +59,12 @@ try {
     "delete from public.site_banners where advertiser_label = $1",
     [SAMPLE_ADVERTISER]
   );
+
+  if (REMOVE) {
+    await client.query("commit");
+    console.log(`${envName}: removed ${removed} sample banner(s)`);
+    process.exit(0);
+  }
 
   for (const b of BANNERS) {
     await client.query(
