@@ -1,82 +1,34 @@
-import Link from "next/link";
-import { getTranslations } from "next-intl/server";
-import { brand } from "@/config/brand";
-import { BrandLockup, BrandWordmark } from "@/components/layout/brand-lockup";
-import { isPartnerIdentityPublic } from "@/lib/platform-identity";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
-export default async function LandingPage() {
-  const partnerIdentityPublic = await isPartnerIdentityPublic();
-  const t = await getTranslations("landing");
-  const tc = await getTranslations("common");
+/**
+ * The hub's front door.
+ *
+ * This used to be a marketing landing page for MatchHub — hero, three pillars,
+ * "create an agent account". That made sense when the hub was the whole
+ * product. It is not any more: `www.propertiguru.id` is the public portal and
+ * does the selling, and `hub.propertiguru.id` is the tool agents work in all
+ * day. A marketing page in front of a tool is a door you have to walk past
+ * every morning (Kamal, 10 Aug 2026).
+ *
+ * So it forwards: signed in goes to work, signed out goes to sign in. Nobody
+ * lands on a page whose only purpose is to offer another link.
+ *
+ * The old page is not lost — it is in git, and if a public marketing page for
+ * the agent platform is ever wanted it belongs on the marketplace side anyway.
+ *
+ * Registration is still reachable: /login links to /register, and the wanted
+ * board stays public at /wanted for agents who arrive from a shared link.
+ */
 
-  const pillars = ["protect", "control", "audit"] as const;
+// Always evaluated per request — the answer depends on who is asking.
+export const dynamic = "force-dynamic";
 
-  return (
-    <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between border-b border-line px-6 py-4">
-        <BrandLockup size={30} partnerIdentityPublic={partnerIdentityPublic} />
-        <div className="flex items-center gap-4">
-          <LanguageSwitcher />
-          <Link
-            href="/login"
-            className="rounded-lg border border-line px-4 py-2 text-sm font-medium transition-colors hover:border-crimson hover:text-crimson"
-          >
-            {tc("signIn")}
-          </Link>
-        </div>
-      </header>
+export default async function HubEntry() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-      <main className="flex-1">
-        <section className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
-          <div className="mb-6 flex justify-center">
-            <BrandWordmark height={34} />
-          </div>
-          <h1 className="mx-auto mb-6 max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
-            {t("heroTitle")}
-          </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-8 text-muted">
-            {t("heroBody")}
-          </p>
-          <div className="mb-4 flex justify-center">
-            <Link
-              href="/wanted"
-              className="rounded-lg border-2 border-crimson px-6 py-3 font-semibold text-crimson transition-colors hover:bg-crimson hover:text-white"
-            >
-              {t("browseWanted")} →
-            </Link>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/register"
-              className="w-full rounded-lg bg-crimson px-6 py-3 font-semibold text-white transition-colors hover:bg-crimson-strong sm:w-auto"
-            >
-              {t("ctaRegister")}
-            </Link>
-            <Link
-              href="/login"
-              className="w-full rounded-lg border border-line px-6 py-3 font-semibold transition-colors hover:border-crimson hover:text-crimson sm:w-auto"
-            >
-              {t("ctaSignIn")}
-            </Link>
-          </div>
-        </section>
-
-        <section className="border-t border-line bg-surface">
-          <div className="mx-auto grid max-w-5xl gap-8 px-6 py-16 sm:grid-cols-3">
-            {pillars.map((key) => (
-              <div key={key} className="rounded-xl border border-line bg-background p-6">
-                <h2 className="mb-2 font-semibold">{t(`pillars.${key}`)}</h2>
-                <p className="text-sm leading-6 text-muted">{t(`pillars.${key}Body`)}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-line px-6 py-6 text-center text-xs text-muted">
-        {partnerIdentityPublic ? brand.appName : brand.appNameNeutral} — {brand.tagline}
-      </footer>
-    </div>
-  );
+  redirect(user ? "/dashboard" : "/login");
 }
