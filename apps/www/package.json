@@ -9,7 +9,7 @@
     "start": "next start --port 8154",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "deploy": "node -e \"fs.rmSync('.open-next',{recursive:true,force:true})\" && opennextjs-cloudflare build && node ../../scripts/verify-build-target.mjs && opennextjs-cloudflare deploy",
+    "deploy": "node -e \"for (const d of ['.open-next','.next']) fs.rmSync(d,{recursive:true,force:true})\" && opennextjs-cloudflare build && node ../../scripts/verify-build-target.mjs && opennextjs-cloudflare deploy",
     "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
   },
   "dependencies": {
