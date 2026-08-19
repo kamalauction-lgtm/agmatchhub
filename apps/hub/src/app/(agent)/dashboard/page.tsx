@@ -293,9 +293,24 @@ export default async function DashboardPage() {
             ) : (
               <SoonCard icon="🌐" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
             )}
-            <SoonCard icon="💳" title={t("modules.digitalCard")} desc={t("modules.digitalCardDesc")} />
-            <SoonCard icon="✨" title={t("modules.contentStudio")} desc={t("modules.contentStudioDesc")} />
-            <SoonCard icon="🎓" title={t("modules.training")} desc={t("modules.trainingDesc")} />
+            <ModuleCard
+              href="/studio"
+              icon="✨"
+              title={t("modules.contentStudio")}
+              desc={t("modules.contentStudioDesc")}
+            />
+            <ModuleCard
+              href="/card"
+              icon="💳"
+              title={t("modules.digitalCard")}
+              desc={t("modules.digitalCardDesc")}
+            />
+            <ModuleCard
+              href="/training"
+              icon="🎓"
+              title={t("modules.training")}
+              desc={t("modules.trainingDesc")}
+            />
           </section>
         </>
       )}

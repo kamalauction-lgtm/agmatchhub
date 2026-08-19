@@ -31,6 +31,7 @@ export default async function AdminLayout({
             <Link href="/admin/countries" className="hover:text-crimson">{t("nav.countries")}</Link>
             <Link href="/admin/identity" className="hover:text-crimson">{t("nav.identity")}</Link>
             <Link href="/admin/legal" className="hover:text-crimson">{t("nav.legal")}</Link>
+            <Link href="/admin/training" className="hover:text-crimson">{t("nav.training")}</Link>
             <Link href="/admin/reports" className="hover:text-crimson">{t("nav.reports")}</Link>
             <Link href="/admin/audit" className="hover:text-crimson">{t("nav.audit")}</Link>
             <Link href="/dashboard" className="text-muted hover:text-foreground">{t("nav.agentView")}</Link>

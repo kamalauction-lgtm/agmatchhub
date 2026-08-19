@@ -1,8 +1,18 @@
 # Module design — Content Studio
 
-*Design v1, 10 Aug 2026. Not built. Written at the end of a long session from
-context that would otherwise be lost; the implementation session should start
-here rather than from a blank page.*
+*Design v1, 10 Aug 2026. Phase 1 (WhatsApp + caption, §3 items 1–2) built
+10 Aug 2026 — `/studio` picker, `/studio/[listingId]` workspace, writer exports
+`writeWhatsappBroadcast` / `writeSocialCaption` / `suggestHashtags`, data layer
+in `apps/hub/src/lib/studio/listings.ts`. Story/feed images (§3 item 3) built
+11 Aug 2026 — client-canvas posters (`poster-canvas.tsx`), 1080×1080 +
+1080×1920, cover photo + badge/price/place/specs/agent, PNG download and
+native share-with-file; text-only fallback when the listing has no cover.
+Direct publishing & scheduling added same day (§8). Brochure (§3 item 4) built
+11 Aug 2026 as a print view — `/studio/[listingId]/brochure`, gallery + specs +
+agent card, browser Print/Save-as-PDF, copy in the listing's language. **All
+four §3 outputs are now live.** Building it surfaced and fixed a platform bug:
+`i18n/request.ts` ignored explicitly requested locales, so every
+`getTranslations({locale})` call silently served the cookie language.*
 
 ## 1. What it is
 
@@ -111,3 +121,43 @@ export alongside the existing description generator.
 The dashboard card at `apps/hub/src/app/(agent)/dashboard/page.tsx` becomes a
 `ModuleCard` pointing at `/studio` — replacing the `SoonCard`, exactly as the
 co-marketing and landing-page cards were.
+
+## 8. Direct publishing & scheduling (added 11 Aug 2026)
+
+Built as a revision of §6's "no auto-posting": posting is still never
+automatic *on the platform's initiative* — a queue row exists only because the
+agent pressed **Schedule** on a caption they edited, and the publisher sends
+that text unmodified. Three layers:
+
+1. **Intents & the native share sheet** (live for everyone, no setup):
+   WhatsApp/Telegram/X prefill; Instagram and Facebook block prefilled text by
+   policy, so those buttons copy the caption first, then open the app. On
+   phones, `navigator.share` opens the OS share sheet into any installed app.
+2. **Scheduling queue**: migration `00052` — `social_accounts` (metadata,
+   owner-readable), `social_account_secrets` (page tokens, RLS with **no
+   policies** — service role only), `scheduled_posts` (owner schedules and
+   cancels; the publisher claims rows with a conditional update, so
+   overlapping sweeps cannot double-post). UI: schedule panel on the caption
+   tab, `/studio/scheduled` queue, `/studio/accounts` connections.
+3. **Publisher**: `POST /api/social/publish-due` guarded by
+   `SOCIAL_CRON_SECRET`, called every few minutes by an external cron (a
+   one-line Cloudflare cron worker, or curl for testing). FB Pages get a
+   photo/feed post; IG Business gets container → publish. IG **requires** a
+   public image URL — enforced at schedule time, in the UI, and at publish.
+
+### What Kamal must do before real publishing works
+
+1. Create an app at **developers.facebook.com** (type: Business), add
+   **Facebook Login for Business**.
+2. Set OAuth redirect URI: `https://hub.propertiguru.id/api/social/oauth/callback`.
+3. Request via App Review: `pages_show_list`, `pages_read_engagement`,
+   `pages_manage_posts`, `instagram_basic`, `instagram_content_publish`,
+   `business_management` — needs Business Verification and a screencast of the
+   connect + schedule flow.
+4. `wrangler secret put META_APP_ID / META_APP_SECRET / SOCIAL_CRON_SECRET`.
+5. Point a cron at the publish endpoint (5-minute interval is plenty).
+
+Until then the connect page explains itself and everything else works. Meta
+constraint worth remembering: only **FB Pages** and **IG Business/Creator
+accounts linked to a Page** can be published to via API — personal profiles
+cannot, and no platform can grant that.

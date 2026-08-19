@@ -61,6 +61,8 @@ export async function AgentShell({
       items: [
         { href: "/leads", icon: "📥", label: t("leads") },
         { href: "/listings", icon: "🏘️", label: t("listings") },
+        { href: "/studio", icon: "✨", label: t("studio") },
+        { href: "/training", icon: "🎓", label: t("training") },
       ],
     },
     {
@@ -77,6 +79,7 @@ export async function AgentShell({
       items: [
         { href: "/notifications", icon: "🔔", label: t("notifications"), badge: unread ?? 0 },
         { href: "/profile", icon: "👤", label: t("profile") },
+        { href: "/card", icon: "💳", label: t("card") },
       ],
     },
   ];
