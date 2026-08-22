@@ -1673,6 +1673,35 @@
         "already_offered": "This listing is already in the pool.",
         "offer_failed": "That did not work. Please try again."
       }
+    },
+    "edit": {
+      "cta": "Edit",
+      "title": "Edit listing",
+      "back": "Back to listings",
+      "listingTitle": "Listing title",
+      "description": "Description",
+      "listingType": "Sale or rent",
+      "forSale": "For sale",
+      "forRent": "For rent",
+      "price": "Price ({currency})",
+      "rentPeriod": "Rent period",
+      "notApplicable": "Not applicable",
+      "monthly": "Per month",
+      "yearly": "Per year",
+      "propertyFacts": "Property facts",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "buildingSize": "Building size (m²)",
+      "landSize": "Land size (m²)",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "saved": "Listing updated.",
+      "savedToReview": "Listing updated and sent back for review — it will return to the marketplace once approved.",
+      "willReturnToReview": "This listing is live. Saving changes sends it back for review before it appears publicly again.",
+      "errors": {
+        "invalid": "Please check the highlighted fields.",
+        "save_failed": "That did not save. Please try again."
+      }
     }
   },
   "studio": {
@@ -1769,7 +1798,10 @@
         "instagram_business": "Instagram Business"
       },
       "connectedAt": "connected {when}",
-      "status": { "expired": "Expired — reconnect", "revoked": "Revoked" },
+      "status": {
+        "expired": "Expired — reconnect",
+        "revoked": "Revoked"
+      },
       "disconnect": "Disconnect",
       "disconnectNote": "Disconnecting removes the stored access token and this account's scheduled posts.",
       "connectedNotice": "{count, plural, one {# account connected.} other {# accounts connected.}}",

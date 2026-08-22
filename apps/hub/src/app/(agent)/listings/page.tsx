@@ -74,10 +74,11 @@ export default async function MyListingsPage({
     boosted?: string;
     offered?: string;
     withdrawn?: string;
+    edited?: string;
   }>;
 }) {
   const user = await requireUser();
-  const { submitted, error, boosted, offered, withdrawn } = await searchParams;
+  const { submitted, error, boosted, offered, withdrawn, edited } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("listings");
   const ts = await getTranslations("listingStatus");
@@ -152,6 +153,8 @@ export default async function MyListingsPage({
     : offered ? { tone: "success" as const, text: t("offer.done") }
     : withdrawn ? { tone: "success" as const, text: t("offer.withdrawnDone") }
     : submitted ? { tone: "success" as const, text: t("submittedNotice", { id: submitted }) }
+    : edited === "review" ? { tone: "success" as const, text: t("edit.savedToReview") }
+    : edited ? { tone: "success" as const, text: t("edit.saved") }
     : error ? { tone: "warn" as const, text: t(`boost.errors.${error}`) }
     : null;
 
@@ -281,6 +284,17 @@ export default async function MyListingsPage({
                     )}
                   </div>
 
+                  {/* Edit is offered for every status. A draft is the thing
+                      most likely to need changing, so gating it on `isLive`
+                      would hide it exactly when it is wanted. */}
+                  <div className="flex shrink-0 items-start gap-2">
+                  <Link
+                    href={`/listings/${l.id}/edit`}
+                    className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+                  >
+                    {t("edit.cta")}
+                  </Link>
+
                   {isLive && (
                     <form action={boostListing} className="shrink-0">
                       <input type="hidden" name="listingId" value={l.id} />
@@ -301,6 +315,7 @@ export default async function MyListingsPage({
                       </p>
                     </form>
                   )}
+                  </div>
                 </div>
 
                 {isLive && (

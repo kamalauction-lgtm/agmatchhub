@@ -1673,6 +1673,35 @@
         "already_offered": "Listing ini sudah ada di kolam.",
         "offer_failed": "Gagal. Silakan coba lagi."
       }
+    },
+    "edit": {
+      "cta": "Ubah",
+      "title": "Ubah listing",
+      "back": "Kembali ke listing",
+      "listingTitle": "Judul listing",
+      "description": "Deskripsi",
+      "listingType": "Jual atau sewa",
+      "forSale": "Dijual",
+      "forRent": "Disewa",
+      "price": "Harga ({currency})",
+      "rentPeriod": "Periode sewa",
+      "notApplicable": "Tidak berlaku",
+      "monthly": "Per bulan",
+      "yearly": "Per tahun",
+      "propertyFacts": "Data properti",
+      "bedrooms": "Kamar tidur",
+      "bathrooms": "Kamar mandi",
+      "buildingSize": "Luas bangunan (m²)",
+      "landSize": "Luas tanah (m²)",
+      "save": "Simpan perubahan",
+      "cancel": "Batal",
+      "saved": "Listing diperbarui.",
+      "savedToReview": "Listing diperbarui dan dikirim ulang untuk ditinjau — akan kembali tayang setelah disetujui.",
+      "willReturnToReview": "Listing ini sedang tayang. Menyimpan perubahan akan mengirimnya kembali untuk ditinjau sebelum tampil lagi.",
+      "errors": {
+        "invalid": "Mohon periksa kolom yang ditandai.",
+        "save_failed": "Gagal menyimpan. Silakan coba lagi."
+      }
     }
   },
   "studio": {
@@ -1769,7 +1798,10 @@
         "instagram_business": "Instagram Business"
       },
       "connectedAt": "terhubung {when}",
-      "status": { "expired": "Kedaluwarsa — hubungkan ulang", "revoked": "Dicabut" },
+      "status": {
+        "expired": "Kedaluwarsa — hubungkan ulang",
+        "revoked": "Dicabut"
+      },
       "disconnect": "Putuskan",
       "disconnectNote": "Memutuskan koneksi menghapus token akses tersimpan dan postingan terjadwal akun ini.",
       "connectedNotice": "{count} akun terhubung.",

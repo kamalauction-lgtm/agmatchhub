@@ -1673,6 +1673,35 @@
         "already_offered": "Listing ini sudah ada dalam kolam.",
         "offer_failed": "Itu tidak berjaya. Sila cuba lagi."
       }
+    },
+    "edit": {
+      "cta": "Sunting",
+      "title": "Sunting listing",
+      "back": "Kembali ke listing",
+      "listingTitle": "Tajuk listing",
+      "description": "Penerangan",
+      "listingType": "Jual atau sewa",
+      "forSale": "Untuk dijual",
+      "forRent": "Untuk disewa",
+      "price": "Harga ({currency})",
+      "rentPeriod": "Tempoh sewa",
+      "notApplicable": "Tidak berkenaan",
+      "monthly": "Sebulan",
+      "yearly": "Setahun",
+      "propertyFacts": "Maklumat hartanah",
+      "bedrooms": "Bilik tidur",
+      "bathrooms": "Bilik air",
+      "buildingSize": "Luas binaan (m²)",
+      "landSize": "Luas tanah (m²)",
+      "save": "Simpan perubahan",
+      "cancel": "Batal",
+      "saved": "Listing dikemas kini.",
+      "savedToReview": "Listing dikemas kini dan dihantar semula untuk semakan — ia akan kembali ke pasaran setelah diluluskan.",
+      "willReturnToReview": "Listing ini disiarkan. Menyimpan perubahan akan menghantarnya semula untuk semakan sebelum ia dipaparkan semula.",
+      "errors": {
+        "invalid": "Sila semak medan yang ditandakan.",
+        "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
+      }
     }
   },
   "studio": {
@@ -1769,7 +1798,10 @@
         "instagram_business": "Instagram Business"
       },
       "connectedAt": "disambungkan {when}",
-      "status": { "expired": "Tamat tempoh — sambung semula", "revoked": "Dibatalkan" },
+      "status": {
+        "expired": "Tamat tempoh — sambung semula",
+        "revoked": "Dibatalkan"
+      },
       "disconnect": "Putuskan",
       "disconnectNote": "Memutuskan sambungan membuang token akses tersimpan dan siaran berjadual akaun ini.",
       "connectedNotice": "{count} akaun disambungkan.",
