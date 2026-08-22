@@ -1,0 +1,2025 @@
+[
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 1,
+    "source_rows": [
+      7,
+      12
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Adhi Persada Property (Grand Dhika City Bekasi C2633), Tower Cempaka, No Unit 2633, Luas 24.20 M2, Type Studio"
+    ],
+    "address_raw": "Jl. Margahayu, Bekasi Timur Bekasi Jawa Barat kode pos 17113",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2016-05-18",
+    "purchase_price": 400000000,
+    "purchase_price_raw": "400000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 437000000,
+    "fair_value_raw": "437000000",
+    "market_entries": [
+      {
+        "raw": "Rp 400.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 400000000
+      },
+      {
+        "raw": "Rp. 16.100.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 16100000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.jual-apartemen.com/61370/jual-apartemen-grand-dhika-bekasi-timur-studio-sudah-balik-nama-rental-garanti-1-tahun/",
+        "label": "ß Website Selling",
+        "row": 8
+      },
+      {
+        "url": "https://travelio.com/property/bekasi/minimalist-unfurnished-studio-with-ac-at-grand-dhika-city-jatiwarna-apartment-by-travelio_BDF16AAFC?searchType=monthly&guest=1&checkIn=09-04-2026&nights=30&handpicked=&checkOut=09-05-2026",
+        "label": "ß Website Rental",
+        "row": 10
+      }
+    ],
+    "remarks": [
+      "currently under PKPU"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 2,
+    "source_rows": [
+      13,
+      18
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Adhi Persada Property (Grand Dhika City Bekasi C0926), Tower Cempaka, No Unit. 0926, luas 48.40M2, Type 2BR"
+    ],
+    "address_raw": "Jl. Margahayu, Bekasi Timur Bekasi Jawa Barat kode pos 17113",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2016-11-30",
+    "purchase_price": 800000000,
+    "purchase_price_raw": "800000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 751000000,
+    "fair_value_raw": "751000000",
+    "market_entries": [
+      {
+        "raw": "Rp 835.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 835000000
+      },
+      {
+        "raw": "Rp. 36.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 36000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.jual-apartemen.com/37735/dijual-new-apartment-graha-dhika-city-2-br-unfurnished-integrated-with-lrt-station/",
+        "label": "ß Website Selling",
+        "row": 14
+      },
+      {
+        "url": "https://www.apartemen123.com/listing/sewa-apartemen-grand-dhika-city-bekasi/",
+        "label": "ß Website Rental",
+        "row": 16
+      }
+    ],
+    "remarks": [
+      "currently under PKPU"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 3,
+    "source_rows": [
+      19,
+      26
+    ],
+    "property_type_raw": "Housing",
+    "text_lines": [
+      "PT Kertabakti Raharja (Perumahan Diamond Park Residence)",
+      "No Unit B8-3, Luas Tanah 90m2, Luas Bngunan 112 M2 , Type Blue Diamond"
+    ],
+    "address_raw": "Jl. Raya Bandara Juanda No.5, Dukuh, Sedati Agung, Kec. Sedati, Kabupaten Sidoarjo, Jawa Timur kode pos 61253",
+    "tenure_raw": "Freehold",
+    "condition_raw": "semi furnished",
+    "sp_date": "2017-02-27",
+    "purchase_price": 1000000000,
+    "purchase_price_raw": "1000000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 939000000,
+    "fair_value_raw": "939000000",
+    "market_entries": [
+      {
+        "raw": "Rp1.050.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 1050000000
+      },
+      {
+        "raw": "Rp24.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 24000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.99.co/id/properti/rumah-dijual-1miliar-gedangan-cp-1010917590",
+        "label": "ß Website Selling",
+        "row": 21
+      },
+      {
+        "url": "https://www.99.co/id/properti/disewakan-rumah-diamond-park-res-juanda-waru-1003476794",
+        "label": "ß Website Rental",
+        "row": 24
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 4,
+    "source_rows": [
+      27,
+      32
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Adhi Persada Property (Grand Dhika City Bekasi C 2601), Tower Cempaka Lt 26, Type Studio Sudut , No Unit. 2601, Luas 25.70"
+    ],
+    "address_raw": "Jl. Margahayu, Bekasi Timur Bekasi Jawa Barat kode pos 17113",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "21/Des/17",
+    "purchase_price": 573000000,
+    "purchase_price_raw": "573000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 483000000,
+    "fair_value_raw": "483000000",
+    "market_entries": [
+      {
+        "raw": "Rp 400.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 400000000
+      },
+      {
+        "raw": "Rp. 16.100.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 16100000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.jual-apartemen.com/61370/jual-apartemen-grand-dhika-bekasi-timur-studio-sudah-balik-nama-rental-garanti-1-tahun/",
+        "label": "ß Website Selling",
+        "row": 28
+      },
+      {
+        "url": "https://travelio.com/property/bekasi/minimalist-unfurnished-studio-with-ac-at-grand-dhika-city-jatiwarna-apartment-by-travelio_BDF16AAFC?searchType=monthly&guest=1&checkIn=09-04-2026&nights=30&handpicked=&checkOut=09-05-2026",
+        "label": "ß Website Rental",
+        "row": 30
+      }
+    ],
+    "remarks": [
+      "currently under PKPU"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 5,
+    "source_rows": [
+      33,
+      38
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Adhi Persada Property (Grand Dhika City Bekasi C 0303), Tower Cempaka, Type 2BR, Luas 48.40, No Unit 0303, Type 2BR"
+    ],
+    "address_raw": "Jl. Margahayu, Bekasi Timur Bekasi Jawa Barat kode pos 17113",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2018-09-27",
+    "purchase_price": 1087000000,
+    "purchase_price_raw": "1087000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 751000000,
+    "fair_value_raw": "751000000",
+    "market_entries": [
+      {
+        "raw": "Rp 835.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 835000000
+      },
+      {
+        "raw": "Rp. 36.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 36000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.jual-apartemen.com/37735/dijual-new-apartment-graha-dhika-city-2-br-unfurnished-integrated-with-lrt-station/",
+        "label": "ß Website Selling",
+        "row": 34
+      },
+      {
+        "url": "https://www.apartemen123.com/listing/sewa-apartemen-grand-dhika-city-bekasi/",
+        "label": "ß Website Rental",
+        "row": 36
+      }
+    ],
+    "remarks": [
+      "currently under PKPU"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 6,
+    "source_rows": [
+      39,
+      44
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Gracia Griya Kencana (Newton The Hybrid Park), Tower Bahama, Type 2BR-A, Luas 58.49 M2, No Unit. 23-BC"
+    ],
+    "address_raw": "Jl. Terusan Buah Batu No.5, Batununggal, Kec. Bandung Kidul, Kota Bandung, Jawa Barat kode pos 40287",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2016-12-22",
+    "purchase_price": 994842000,
+    "purchase_price_raw": "994842000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 704000000,
+    "fair_value_raw": "704000000",
+    "market_entries": [
+      {
+        "raw": "Rp 350.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 350000000
+      },
+      {
+        "raw": "Rp. 54.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 54000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/bandung-buah-batu/apartemen-2kt-di-newton-resident-lantai-17-fully-furnished-aps7584948/",
+        "label": "ß Website Selling",
+        "row": 40
+      },
+      {
+        "url": "https://mamikos.com/unit/apartemen-newton-the-hybrid-park/apartemen-newton-the-hybrid-park-tipe-2br-full-furnished-lt-15-bandung-kidul-bandung-2-br-2",
+        "label": "ß Website Rental",
+        "row": 42
+      }
+    ],
+    "remarks": [
+      "Under PKPU trial results that PT Gracia Griya Kencana Bankrupt"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 7,
+    "source_rows": [
+      45,
+      50
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Inten Cipta Sejati (Green Park View),Tower G, Lt. 18 , Luas 34.00 M2 (semi gross), Type : 2 BA, No Unit G1854"
+    ],
+    "address_raw": "Daan Mogot Rd No.1 - 4, RT.1/RW.5, Duri Kosambi, Cengkareng, West Jakarta City, Jakarta, Kodepos 11750",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-02-12",
+    "purchase_price": 550000000,
+    "purchase_price_raw": "550000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 265000000,
+    "fair_value_raw": "265000000",
+    "market_entries": [
+      {
+        "raw": "Rp 250.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 250000000
+      },
+      {
+        "raw": "Rp. 17.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 17000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.jual-apartemen.com/126761/jual-apartemen-green-park-view-jakarta-barat-2-bedroom-unfurnished1/",
+        "label": "ß Website Selling",
+        "row": 46
+      },
+      {
+        "url": "https://www.pinhome.id/disewa/apartemen-sekunder/unit/disewakan-apartemen-tipe-2br-kosongan-bersih-murah-jakarta-barat-di-apartemen-green-park-view",
+        "label": "ß Website Rental",
+        "row": 48
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 8,
+    "source_rows": [
+      51,
+      56
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Vasanta Indo Properti/PT Sirius Surya Sentosa ( Vasanta Innopark), Tower Aoki, Tipe 2BR, Floor 38, Luas 43.28 M2, No Unit A#C38-19"
+    ],
+    "address_raw": "JL. Kalimantan Kavling CB2, Kawasan Komersial, Kota Industri MM2100, Cikarang, Jawa Barat, Kodepos 17530",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-08-14",
+    "purchase_price": 668948708,
+    "purchase_price_raw": "668948708",
+    "maintenance_fee": 1126455,
+    "maintenance_fee_raw": "1126455",
+    "fair_value": 708000000,
+    "fair_value_raw": "708000000",
+    "market_entries": [
+      {
+        "raw": "Rp 800.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 800000000
+      },
+      {
+        "raw": "Rp. 33.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 33000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/1-unit-apartmen-di-vasanta-innopark-bekasi-iid-944347015",
+        "label": "ß Website Selling",
+        "row": 52
+      },
+      {
+        "url": "https://www.travelio.com/property/cikarang/2br-unfurnished-at-18th-floor-vasanta-innopark-apartment-by-travelio_A7CFA2BC3?searchType=monthly&guest=1&checkIn=09-04-2026&nights=30&handpicked=&checkOut=09-05-2026&roomName=2%20Bedrooms&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 54
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 9,
+    "source_rows": [
+      57,
+      62
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Vasanta Indo Properti/PT Sirius Surya Sentosa ( Vasanta Innopark), Tower Aoki, Tipe 2BR,Floor 38, Luas 43.28 M2, No Unit A#C38-18"
+    ],
+    "address_raw": "JL. Kalimantan Kavling CB2, Kawasan Komersial, Kota Industri MM2100, Cikarang, Jawa Barat, Kodepos 17530",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-08-14",
+    "purchase_price": 668948708,
+    "purchase_price_raw": "668948708",
+    "maintenance_fee": 1126455,
+    "maintenance_fee_raw": "1126455",
+    "fair_value": 708000000,
+    "fair_value_raw": "708000000",
+    "market_entries": [
+      {
+        "raw": "Rp 800.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 800000000
+      },
+      {
+        "raw": "Rp. 33.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 33000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/1-unit-apartmen-di-vasanta-innopark-bekasi-iid-944347015",
+        "label": "ß Website Selling",
+        "row": 58
+      },
+      {
+        "url": "https://www.travelio.com/property/cikarang/2br-unfurnished-at-18th-floor-vasanta-innopark-apartment-by-travelio_A7CFA2BC3?searchType=monthly&guest=1&checkIn=09-04-2026&nights=30&handpicked=&checkOut=09-05-2026&roomName=2%20Bedrooms&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 60
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 10,
+    "source_rows": [
+      63,
+      68
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Adhi Persada Properti (Grand Dhika City), Tower Cempaka, Lt. 06, No Unit 20, luas 24.20 m2, Type Studio"
+    ],
+    "address_raw": "Jl. Margahayu, Bekasi Timur Bekasi Jawa Barat kode pos 17113",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-08-22",
+    "purchase_price": 549500000,
+    "purchase_price_raw": "549500000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 405000000,
+    "fair_value_raw": "405000000",
+    "market_entries": [
+      {
+        "raw": "Rp 400.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 400000000
+      },
+      {
+        "raw": "Rp. 16.100.000 as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 16100000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://rumah.trovit.co.id/listing/dp.trovit-ID-5330003733938823919",
+        "label": "ß Website Selling",
+        "row": 64
+      },
+      {
+        "url": "https://travelio.com/property/bekasi/minimalist-unfurnished-studio-with-ac-at-grand-dhika-city-jatiwarna-apartment-by-travelio_BDF16AAFC?searchType=monthly&guest=1&checkIn=09-04-2026&nights=30&handpicked=&checkOut=09-05-2026",
+        "label": "ß Website Rental",
+        "row": 66
+      }
+    ],
+    "remarks": [
+      "currently under PKPU"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 11,
+    "source_rows": [
+      69,
+      73
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Satria Pusaka Permata Perkasa ( Apartment Lexington Residence) Tower Aoki, Tipe 1BR,Floor 38, Luas 43.28 M2, No Unit A#C38-01"
+    ],
+    "address_raw": "Jl Jalan Raya Deplu No. 12 Kelurahan Pesanggrahan, Kabupaten Bintaro, Jakarta Selatan, Kodepos 12330",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2020-06-17",
+    "purchase_price": 1100000000,
+    "purchase_price_raw": "1100000000",
+    "maintenance_fee": 1503057,
+    "maintenance_fee_raw": "1503057",
+    "fair_value": 1255000000,
+    "fair_value_raw": "1255000000",
+    "market_entries": [
+      {
+        "raw": "Rp. 1.500.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 1500000000
+      },
+      {
+        "raw": "Rp. 45.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 45000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.jual-apartemen.com/48983/dijual-murah-apartemen-lexington-residences-pondok-pinang-1-br-53-m2-unfurnished1/",
+        "label": "ß Website Selling",
+        "row": 71
+      },
+      {
+        "url": "https://www.apartemen123.com/39182/disewakan-furnished-and-unfurnished-apartemen-lexington-jakarta-selatan/",
+        "label": "ß Website Rental",
+        "row": 72
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 12,
+    "source_rows": [
+      74,
+      79
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Vasanta Indo Properti/PT Sirius Surya Sentosa ( Vasanta Innopark) Tower Aoki, Tipe 2BR,Floor 38, Luas 43.28 M2, No Unit A#C38-01"
+    ],
+    "address_raw": "JL. Kalimantan Kavling CB2, Kawasan Komersial, Kota Industri MM2100, Cikarang, Jawa Barat, Kodepos 17530",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2020-07-24",
+    "purchase_price": 657137414,
+    "purchase_price_raw": "657137414",
+    "maintenance_fee": 1126455,
+    "maintenance_fee_raw": "1126455",
+    "fair_value": 708000000,
+    "fair_value_raw": "708000000",
+    "market_entries": [
+      {
+        "raw": "Rp 800.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 800000000
+      },
+      {
+        "raw": "Rp. 33.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 33000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/1-unit-apartmen-di-vasanta-innopark-bekasi-iid-944347015",
+        "label": "ß Website Selling",
+        "row": 76
+      },
+      {
+        "url": "https://www.travelio.com/property/cikarang/2br-unfurnished-at-18th-floor-vasanta-innopark-apartment-by-travelio_A7CFA2BC3?searchType=monthly&guest=1&checkIn=09-04-2026&nights=30&handpicked=&checkOut=09-05-2026&roomName=2%20Bedrooms&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 77
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 13,
+    "source_rows": [
+      80,
+      85
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Triyasa Propertindo (Samira Regency) 'Tipe : Ruko, Unit : 95/60 Blok : A Nomor : 7, Luas Bangunan/Tanah : 95/60"
+    ],
+    "address_raw": "Jl. Gondang, RT.003/RW.005, Samira Regency Desa Cimuning, Kecamatan Mustika Jaya, Kota Bekasi, Provinsi Jawa Barat. Kodepos 17155",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2020-01-29",
+    "purchase_price": 1100000000,
+    "purchase_price_raw": "1100000000",
+    "maintenance_fee": 150000,
+    "maintenance_fee_raw": "150000",
+    "fair_value": 1040000000,
+    "fair_value_raw": "1040000000",
+    "market_entries": [
+      {
+        "raw": "Rp 1.314.940.541 as at June 2025",
+        "kind": "unclear",
+        "amount": 1314940541
+      }
+    ],
+    "urls": [],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 14,
+    "source_rows": [
+      86,
+      91
+    ],
+    "property_type_raw": "Housing",
+    "text_lines": [
+      "PT Triyasa Propertindo (Samira Regency) Unit: Amethyst Tipe 30/60 Blok:B Nomor: B19"
+    ],
+    "address_raw": "Jl. Gondang, RT.003/RW.005, Samira Regency Desa Cimuning, Kecamatan Mustika Jaya, Kota Bekasi, Provinsi Jawa Barat. Kodepos 17155",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2021-07-22",
+    "purchase_price": 536391818,
+    "purchase_price_raw": "536391818",
+    "maintenance_fee": 150000,
+    "maintenance_fee_raw": "150000",
+    "fair_value": 674000000,
+    "fair_value_raw": "674000000",
+    "market_entries": [
+      {
+        "raw": "Rp 533.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 533000000
+      },
+      {
+        "raw": "Rp. 26.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 26000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.pinhome.id/dijual/rumah-sekunder/unit/dijual-rumah-murah-di-cimuning-8",
+        "label": "ß Website Selling",
+        "row": 88
+      },
+      {
+        "url": "https://www.travelio.com/property/bekasi/homey-unfurnished-2br-house-at-samira-regency-by-travelio-realty_4CA2D0A6C?searchType=monthly&guest=1&checkIn=13-04-2026&nights=30&handpicked=&checkOut=13-05-2026&roomName=2BR%20House&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 89
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 15,
+    "source_rows": [
+      92,
+      97
+    ],
+    "property_type_raw": "Housing",
+    "text_lines": [
+      "PT Triyasa Propertindo (Samira Regency) Unit: Amethyst Tipe 30/60 Blok:B Nomor: B20"
+    ],
+    "address_raw": "Jl. Gondang, RT.003/RW.005, Samira Regency Desa Cimuning, Kecamatan Mustika Jaya, Kota Bekasi, Provinsi Jawa Barat. Kodepos 17155",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2021-07-22",
+    "purchase_price": 536391818,
+    "purchase_price_raw": "536391818",
+    "maintenance_fee": 150000,
+    "maintenance_fee_raw": "150000",
+    "fair_value": 674000000,
+    "fair_value_raw": "674000000",
+    "market_entries": [
+      {
+        "raw": "Rp 533.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 533000000
+      },
+      {
+        "raw": "Rp. 26.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 26000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.pinhome.id/dijual/rumah-sekunder/unit/dijual-rumah-murah-di-cimuning-8",
+        "label": "ß Website Selling",
+        "row": 94
+      },
+      {
+        "url": "https://www.travelio.com/property/bekasi/homey-unfurnished-2br-house-at-samira-regency-by-travelio-realty_4CA2D0A6C?searchType=monthly&guest=1&checkIn=13-04-2026&nights=30&handpicked=&checkOut=13-05-2026&roomName=2BR%20House&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 95
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 16,
+    "source_rows": [
+      98,
+      102
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Cipta Pilar Persada ( Cordova Edupartment) Type : Studio, Lt : 11 No. unit : 1132 Luas (SM) : 25.17 M2, Luas (Nett) : 21.10 M2"
+    ],
+    "address_raw": "Jl. Ngesrep Tim. V No.Dalam, Sumurboto, Kec. Banyumanik, Kota Semarang, Jawa Tengah 50269",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2021-11-11",
+    "purchase_price": 524700000,
+    "purchase_price_raw": "524700000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 524700000,
+    "fair_value_raw": "524700000",
+    "market_entries": [
+      {
+        "raw": "Rp 400.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 400000000
+      },
+      {
+        "raw": "Rp. 25.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 25000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/semarang-tembalang/murah-apartemen-cordova-dekat-undip-dan-toll-aps7610961/",
+        "label": "ß Website Selling",
+        "row": 100
+      },
+      {
+        "url": "https://www.sewa-apartemen.net/198597/disewakan-studio-apartment-at-cordova-edupartment-semarang/",
+        "label": "ß Website Rental",
+        "row": 101
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 17,
+    "source_rows": [
+      103,
+      108
+    ],
+    "property_type_raw": "Housing",
+    "text_lines": [
+      "PT Megatopmas Prima (Perumahan Green Florencia) No Unit D2-12, Luas Tanah 45M2, Luas Bangunan 97M2, Type Carrera"
+    ],
+    "address_raw": "Perumahan Jaya Maspion Permata No.21, Dusun Bangah Timur, Bangah, Kec. Gedangan, Kabupaten Sidoarjo, Jawa Timur kodepos 61257",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-01-25",
+    "purchase_price": 603736000,
+    "purchase_price_raw": "603736000",
+    "maintenance_fee": 150000,
+    "maintenance_fee_raw": "150000",
+    "fair_value": 630000000,
+    "fair_value_raw": "630000000",
+    "market_entries": [
+      {
+        "raw": "Rp 780.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 780000000
+      },
+      {
+        "raw": "Rp. 25.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 25000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/sidoarjo-gedangan/rumah-baru-minimalis-green-florencia-gedangan-sidoarjo-hos10128560/",
+        "label": "ß Website Selling",
+        "row": 105
+      },
+      {
+        "url": "https://www.instagram.com/p/CloqSjhBBj9/?img_index=1",
+        "label": "ß Website Rental",
+        "row": 106
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 18,
+    "source_rows": [
+      109,
+      113
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Bumi Arta Sedayu (Kartika Residence) Blok B1A, Nomor Kavling 1A, Building : 95m2 land : 78M2"
+    ],
+    "address_raw": "Jl. Raya Klari No.23-24, Kondangjaya, Kec. Karawang Tim., Karawang, Jawa Barat 41371",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2023-01-09",
+    "purchase_price": 1650000000,
+    "purchase_price_raw": "1650000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 1431000000,
+    "fair_value_raw": "1431000000",
+    "market_entries": [
+      {
+        "raw": "Rp. 1.550.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 1550000000
+      },
+      {
+        "raw": "Rp. 50.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 50000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/ruko-usaha-kecantikan-2-lantai-kartika-residence-karawang-timur-iid-931293188",
+        "label": "ß Website Selling",
+        "row": 111
+      },
+      {
+        "url": "https://www.facebook.com/groups/3059929337429756/posts/8758697810886185/",
+        "label": "ß Website Rental",
+        "row": 112
+      }
+    ],
+    "remarks": [
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 19,
+    "source_rows": [
+      114,
+      118
+    ],
+    "property_type_raw": "Warehousing",
+    "text_lines": [
+      "PT Jaya Sukses Makmur Sentosa Tbk ( Tanrise property) Nomor Kavling A-12, Luas Tanah 285 M2, Luas Bangunan 180 M2"
+    ],
+    "address_raw": "Jl. Simo Tambaan 2 No. 69, Kelurahan Simomulyo Baru, Kecamatan Sukomanunggal, Kota Surabaya",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2023-02-23",
+    "purchase_price": 4350000000,
+    "purchase_price_raw": "4350000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 3360000000,
+    "fair_value_raw": "3360000000",
+    "market_entries": [
+      {
+        "raw": "Rp 3.600.000.000 in April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 3600000000
+      },
+      {
+        "raw": "Rp. 165.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 165000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/sidoarjo-gedangan/gudang-dan-kantor-strategis-di-kompleks-pergudangan-gedangan-was4611813/",
+        "label": "ß Website Selling",
+        "row": 114
+      },
+      {
+        "url": "https://www.rumah123.com/properti/surabaya-sukomanunggal/disewakan-gudang-tritan-point-siap-pakai-bebas-banjir-di-sukomaunggal-margomulyo-dekat-benowo-dan-osowilangun-war9763622/",
+        "label": "ß Website Rental",
+        "row": 116
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 20,
+    "source_rows": [
+      119,
+      124
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Vasanta Indo Properti/PT Sirius Surya Sentosa ( Vasanta Innopark) Tower Aoki, Tipe Studio,Floor 38, Luas 26.19 M2, No Unit A#A38-17"
+    ],
+    "address_raw": "JL. Kalimantan Kavling CB2, Kawasan Komersial, Kota Industri MM2100, Cikarang, Jawa Barat, Kodepos 17530",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": null,
+    "purchase_price": 451486876,
+    "purchase_price_raw": "451486876",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 444000000,
+    "fair_value_raw": "444000000",
+    "market_entries": [
+      {
+        "raw": "Rp 300.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 300000000
+      },
+      {
+        "raw": "Rp. 16.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 16000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/dijual-cozy-studio-unfurnished-apartment-vasanta-innopark-iid-944378914",
+        "label": "ß Website Selling",
+        "row": 121
+      },
+      {
+        "url": "https://www.travelio.com/property/cikarang/studio-room-unfurnished-at-25th-floor-apartment-vasanta-innopark-by-travelio_4DFF3FD7C?searchType=monthly&guest=1&checkIn=01-06-2026&nights=30&handpicked=&checkOut=01-07-2026&roomName=Studio%20Room&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 124
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 21,
+    "source_rows": [
+      125,
+      130
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Surya Berdikari Sentosa ( Vasanta Innopark) Tower Aoki, Tipe Studio,Floor 38, Luas 26.19 M2, No Unit A#A38-16"
+    ],
+    "address_raw": "JL. Kalimantan Kavling CB2, Kawasan Komersial, Kota Industri MM2100, Cikarang, Jawa Barat, Kodepos 17530",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2023-09-01",
+    "purchase_price": 444000000,
+    "purchase_price_raw": "444000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 444000000,
+    "fair_value_raw": "444000000",
+    "market_entries": [
+      {
+        "raw": "Rp 300.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 300000000
+      },
+      {
+        "raw": "Rp. 16.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 16000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/dijual-cozy-studio-unfurnished-apartment-vasanta-innopark-iid-944378914",
+        "label": "ß Website Selling",
+        "row": 126
+      },
+      {
+        "url": "https://www.travelio.com/property/cikarang/studio-room-unfurnished-at-25th-floor-apartment-vasanta-innopark-by-travelio_4DFF3FD7C?searchType=monthly&guest=1&checkIn=01-06-2026&nights=30&handpicked=&checkOut=01-07-2026&roomName=Studio%20Room&roomBreakfast=0",
+        "label": "ß Website Rental",
+        "row": 128
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 22,
+    "source_rows": [
+      131,
+      135
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Mentari Agung Mandiri ( Matahari Land) Cherryfield Ruko No. Unit R19E Luas Tanah 91m2 Luas Bangunan 139m2, 2 Lantai"
+    ],
+    "address_raw": "Perumahan Cherry Field Jl. Ciganitri, Desa Cipagalo, Kecamatan Bojongsoang, Kabupaten Bandung, Jawa Barat 40287.",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2024-03-19",
+    "purchase_price": 1927626000,
+    "purchase_price_raw": "1927626000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 1927626000,
+    "fair_value_raw": "1927626000",
+    "market_entries": [
+      {
+        "raw": "Rp 2.150.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 2150000000
+      },
+      {
+        "raw": "Rp. 90.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 90000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/bandung-terusan-buah-batu/ruko-baru-super-strategis-di-cherryfield-buahbatu-bandung-shs9454154/",
+        "label": "ß Website Selling",
+        "row": 133
+      },
+      {
+        "url": "https://www.rumah123.com/properti/bandung-bojongsoang/sewa-ruko-cherry-field-shr9907597/",
+        "label": "ß Website Rental",
+        "row": 134
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 23,
+    "source_rows": [
+      136,
+      140
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Sindelli Propertindo Abadi (JKT Living Star) Tower A, No Unit. A -11-31, Type 2BR-C, Luas 41.45"
+    ],
+    "address_raw": "Jl. Lap. Tembak No.10, RW.4, Pekayon, Kec. Ps. Rebo, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta kode pos 13710",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2017-02-02",
+    "purchase_price": 504269964,
+    "purchase_price_raw": "504269964",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 504269964,
+    "fair_value_raw": "504269964",
+    "market_entries": [
+      {
+        "raw": "Rp 620.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 620000000
+      },
+      {
+        "raw": "Rp. 3.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 3000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.99.co/id/properti/apartemen-dijual-620jt-pasar-rebo-cp-1012672994",
+        "label": "ß Website Selling",
+        "row": 137
+      },
+      {
+        "url": "https://mamikos.com/unit/apartemen-jakarta-living-star/apartemen-jkt-living-star-tipe-2-br-lt-25-pasar-rebo-jakarta-timur-2-br",
+        "label": "ß Website Rental",
+        "row": 138
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 24,
+    "source_rows": [
+      141,
+      145
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Raya Bumi Nusantara Permai (Icon Apartment Gresik) Tower Bougenviille Lt 7, No Unit 12, Luas 36.13 M2"
+    ],
+    "address_raw": "Jl. Dr. Wahidin S.H. No.778 a, Dahanrejo, Kembangan, Kec. Kebomas, Kabupaten Gresik, Jawa Timur Kodepos 61124",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-02-28",
+    "purchase_price": 308000000,
+    "purchase_price_raw": "308000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 246000000,
+    "fair_value_raw": "246000000",
+    "market_entries": [
+      {
+        "raw": "Rp 470.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 470000000
+      },
+      {
+        "raw": "Rp. 20.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 20000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/jual-apartement-icon-mall-gresik-type-2br-loft-iid-941108832",
+        "label": "ß Website Selling",
+        "row": 143
+      },
+      {
+        "url": "https://www.rumah123.com/properti/gresik-kebomas/view-pool-apartemen-icon-gresik-ciamikk-apr7593570/",
+        "label": "ß Website Rental",
+        "row": 144
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 25,
+    "source_rows": [
+      146,
+      151
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Raya Bumi Nusantara Permai (Icon Apartment Gresik) Tower Bougenviille Lt 7, No Unit 11, Luas 36.13 M2"
+    ],
+    "address_raw": "Jl. Dr. Wahidin S.H. No.778 a, Dahanrejo, Kembangan, Kec. Kebomas, Kabupaten Gresik, Jawa Timur Kodepos 61124",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2019-03-29",
+    "purchase_price": 308000000,
+    "purchase_price_raw": "308000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 246000000,
+    "fair_value_raw": "246000000",
+    "market_entries": [
+      {
+        "raw": "Rp 470.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 470000000
+      },
+      {
+        "raw": "Rp. 20.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 20000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/jual-apartement-icon-mall-gresik-type-2br-loft-iid-941108832",
+        "label": "ß Website Selling",
+        "row": 147
+      },
+      {
+        "url": "https://www.rumah123.com/properti/gresik-kebomas/view-pool-apartemen-icon-gresik-ciamikk-apr7593570/",
+        "label": "ß Website Rental",
+        "row": 148
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 26,
+    "source_rows": [
+      152,
+      156
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT ISPI Pratamalestari Perkasa (Mutiara Gading City) Ruko Pasadena,No. Unit : R07-15, Luas Bangunan/Tanah : 154/93 M2"
+    ],
+    "address_raw": "Jl. Mutiara Gading City No.18, Babelan Kota, Kec. Babelan, Kabupaten Bekasi, Jawa Barat 17610",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2024-07-23",
+    "purchase_price": 1998000000,
+    "purchase_price_raw": "1998000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 1998000000,
+    "fair_value_raw": "1998000000",
+    "market_entries": [
+      {
+        "raw": "Rp. 1.500.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 1500000000
+      },
+      {
+        "raw": "Rp. 30.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 30000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/ruko-pasadena-siap-pakai-2lt-67m-mutiara-gading-city-bekasi-iid-934732027",
+        "label": "ß Website Selling",
+        "row": 154
+      },
+      {
+        "url": "https://www.dotproperty.id/komersial-disewa-dengan-2-kamar-tidur-di-setia-asih-jawa-barat_9531175",
+        "label": "ß Website Rental",
+        "row": 155
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 27,
+    "source_rows": [
+      157,
+      162
+    ],
+    "property_type_raw": "Housing",
+    "text_lines": [
+      "PT Hutomo Mandala Raharjo (Perumahan MANSION NINE) Type : Lyndon, Blok SH5, Kavling 05, Luas bangunan/tanah : 90/60M2"
+    ],
+    "address_raw": "Jl. Lakarsantri No.134, Lakarsantri, Kec. Lakarsantri, Surabaya, Jawa Timur 60211",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2024-09-12",
+    "purchase_price": 999000000,
+    "purchase_price_raw": "999000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 999000000,
+    "fair_value_raw": "999000000",
+    "market_entries": [
+      {
+        "raw": "Rp. 1.200.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 1200000000
+      },
+      {
+        "raw": "Rp. 40.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 40000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.pinhome.id/dijual/rumah-sekunder/unit/dijual-rumah-mansion-nine-type-lyndon-di-mansion-nine-surabaya",
+        "label": "ß Website Selling",
+        "row": 159
+      },
+      {
+        "url": "https://www.kost123.com/iklan/rumah-disewakan-mansion-nine-surabaya-barat-minimalis-siap-huni-66d0407b098bbd8e897dd91b",
+        "label": "ß Website Rental",
+        "row": 160
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 28,
+    "source_rows": [
+      163,
+      167
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Arya Lingga Manik ( Panorama Bali Residence ) Ruko Panorama Bali Residence Blok A11 No. 14 Land: 70m2 Building 150m2"
+    ],
+    "address_raw": "Jl. Raya Parung, Kelurahan Patut Nutug, Kecamatan Ciseeng, Kabupaten Bogor, Jawa Barat 16120",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2025-01-15",
+    "purchase_price": 621621622,
+    "purchase_price_raw": "621621622",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 621621622,
+    "fair_value_raw": "621621622",
+    "market_entries": [
+      {
+        "raw": "Rp 715.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 715000000
+      },
+      {
+        "raw": "Rp. 45.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 45000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/bogor/shs2972693/",
+        "label": "ß Website Selling",
+        "row": 164
+      },
+      {
+        "url": "https://www.pinhome.id/disewa/ruko-sekunder/unit/disewakan-ruko-di-panorama-bali-resident-parung-bogor-di-ciseeng",
+        "label": "ß Website Rental",
+        "row": 165
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 29,
+    "source_rows": [
+      168,
+      172
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Arya Lingga Manik ( Panorama Bali Residence ) Ruko Panorama Bali Residence Blok A11 No. 15 Land: 70m2 Building 150m2"
+    ],
+    "address_raw": "Jl. Raya Parung, Kelurahan Patut Nutug, Kecamatan Ciseeng, Kabupaten Bogor, Jawa Barat 16120",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2025-01-15",
+    "purchase_price": 621621622,
+    "purchase_price_raw": "621621622",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 621621622,
+    "fair_value_raw": "621621622",
+    "market_entries": [
+      {
+        "raw": "Rp 715.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 715000000
+      },
+      {
+        "raw": "Rp. 45.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 45000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/bogor/shs2972693/",
+        "label": "ß Website Selling",
+        "row": 169
+      },
+      {
+        "url": "https://www.pinhome.id/disewa/ruko-sekunder/unit/disewakan-ruko-di-panorama-bali-resident-parung-bogor-di-ciseeng",
+        "label": "ß Website Rental",
+        "row": 170
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 30,
+    "source_rows": [
+      173,
+      177
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Bangun Laksana Persada (Laksana Business Park) Type : Opxima, Blok: 1L No : 010, Building Size 126m2 and Land Size 144m2"
+    ],
+    "address_raw": "Jl. Raya Kali Baru, Laksana, Kecamatan Pakuhaji, Kabupaten Tangerang, Banten 15570",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2025-06-17",
+    "purchase_price": 1757700000,
+    "purchase_price_raw": "1757700000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 1757700000,
+    "fair_value_raw": "1757700000",
+    "market_entries": [
+      {
+        "raw": "Rp 1.956.640.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 1956640000
+      },
+      {
+        "raw": "Rp. 180.000.000/year as at April 2026 (Rental)",
+        "kind": "rental",
+        "amount": 180000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.99.co/id/properti/gudang-dijual-1miliar-pakuhaji-cp-1008421236",
+        "label": "ß Website Selling",
+        "row": 174
+      },
+      {
+        "url": "https://rumaindo.com/iklan/disewakan-gudang-laksana-business-park-laksana-pakuhaji-tangerang-ri-621309540",
+        "label": "ß Website Rental",
+        "row": 176
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 31,
+    "source_rows": [
+      178,
+      184
+    ],
+    "property_type_raw": "Housing",
+    "text_lines": [
+      "PT Kreasi Prima Nusantara (Pesona Prima 8 Banjaran) Type Palem, Blok B3 No. Kavling 26 Land: 72m2, Building: 36m2"
+    ],
+    "address_raw": "Jl. Pahlawan No.62, Kiangroke, Kecamatan Banjaran, Kabupaten Bandung, Jawa Barat 40377",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2025-06-20",
+    "purchase_price": 337837838,
+    "purchase_price_raw": "337837838",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 337837838,
+    "fair_value_raw": "337837838",
+    "market_entries": [
+      {
+        "raw": "Rp 380.000.000 as at April 2026 (For Sell)",
+        "kind": "sale",
+        "amount": 380000000
+      },
+      {
+        "raw": "-",
+        "kind": "unclear",
+        "amount": null
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.pinhome.id/dijual/rumah-baru/pesona-prima-8-banjaran-1",
+        "label": "ß Website Selling",
+        "row": 179
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 32,
+    "source_rows": [
+      185,
+      189
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Triyasa Propertindo (Samira Regency) Tipe : Ruko, Unit : 95/60 Blok : A Nomor : 6, Luas Bangunan/Tanah : 95/60"
+    ],
+    "address_raw": "Jl. Gondang, RT.003/RW.005, Samira Regency Desa Cimuning, Kecamatan Mustika Jaya, Kota Bekasi, Provinsi Jawa Barat. Kodepos 17155",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2020-01-29",
+    "purchase_price": 1100000000,
+    "purchase_price_raw": "1100000000",
+    "maintenance_fee": 150000,
+    "maintenance_fee_raw": "150000",
+    "fair_value": 1040000000,
+    "fair_value_raw": "1040000000",
+    "market_entries": [
+      {
+        "raw": "Rp 1.314.940.541 as at June 2025",
+        "kind": "unclear",
+        "amount": 1314940541
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/perumahan-baru/properti/bekasi/ruko-samira-bekasi/ruko/shs16829/",
+        "label": null,
+        "row": 187
+      }
+    ],
+    "remarks": [
+      "On Rent for Period : 05 Januari 202 - 04 Januari 2027 Rp 36.036.036,-",
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 33,
+    "source_rows": [
+      190,
+      195
+    ],
+    "property_type_raw": "Warehousing",
+    "text_lines": [
+      "PT. Nuraiti Tjermin ( Gudang Royal Kosambi) Blok : BB, Unit : 12A, Lusa Tanah : 156 M2"
+    ],
+    "address_raw": "Jl. Raya Salembaran, Komplek Pergudangan Royal Kosambi, Kota Tanggerang.",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2021-08-19",
+    "purchase_price": 2200000000,
+    "purchase_price_raw": "2200000000",
+    "maintenance_fee": 675000,
+    "maintenance_fee_raw": "675000",
+    "fair_value": 2290000000,
+    "fair_value_raw": "2290000000",
+    "market_entries": [
+      {
+        "raw": "Rp 2.300.000.000 as at June 2025",
+        "kind": "unclear",
+        "amount": 2300000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/tangerang/was3758948/",
+        "label": null,
+        "row": 192
+      }
+    ],
+    "remarks": [
+      "On Rent for Period : 13 August 2026 - 13 November 2026 Rp 32.673.267,-",
+      "Recommend to sell"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 34,
+    "source_rows": [
+      196,
+      200
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Indoserena Dwimakmur (Lumina City) Tower Amsterdam Lt 10, No Unit. A10/S2, Type Studio , Luas Unit 21.58"
+    ],
+    "address_raw": "KM 4 No 700 Indonesia, Jl. Gatot Subroto, Jatiuwung, Cibodas, Kota Tangerang, Banten kode pos 15430",
+    "tenure_raw": "Freehold",
+    "condition_raw": null,
+    "sp_date": "2016-05-18",
+    "purchase_price": 216223200,
+    "purchase_price_raw": "216223200",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 216223200,
+    "fair_value_raw": "216223200",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Still under construction"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 35,
+    "source_rows": [
+      201,
+      205
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Indoserena Dwimakmur (Lumina City) Tower Amsterdam Lt 32, No Unit. A32/N8, Type 1 Bedroom, Luas 28.80"
+    ],
+    "address_raw": "KM 4 No 700 Indonesia, Jl. Gatot Subroto, Jatiuwung, Cibodas, Kota Tangerang, Banten kode pos 15430",
+    "tenure_raw": "Freehold",
+    "condition_raw": null,
+    "sp_date": "2016-05-26",
+    "purchase_price": 305838000,
+    "purchase_price_raw": "305838000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 305838000,
+    "fair_value_raw": "305838000",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Still under construction"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 36,
+    "source_rows": [
+      206,
+      210
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "PT Sintesis Kreasi Bersama (Asthana Kemang) Tower SAWEDA/07/CB, Tipe Unit : 3BRB, Luas Nett : 107.17 M2"
+    ],
+    "address_raw": "Jl. Ampera Raya No.1A, Cilandak Tim., Kec. Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta Kodepos 12550",
+    "tenure_raw": "Freehold",
+    "condition_raw": null,
+    "sp_date": "2020-02-27",
+    "purchase_price": 3841269500,
+    "purchase_price_raw": "3841269500",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 3841269500,
+    "fair_value_raw": "3841269500",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Still under construction"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 37,
+    "source_rows": [
+      211,
+      215
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "Urban Jakarta Propertindo Tbk Tower Shelton No 07 lantai 09, 2 Bedrooms, Luas 63.70 M2"
+    ],
+    "address_raw": "Jl. Caman Raya, Jatibening, Kec. Pondokgede, Kota Bekasi, Kodepos 17412",
+    "tenure_raw": "Freehold",
+    "condition_raw": null,
+    "sp_date": "2021-04-05",
+    "purchase_price": 1426618000,
+    "purchase_price_raw": "1426618000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 1426618000,
+    "fair_value_raw": "1426618000",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Still under construction"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 38,
+    "source_rows": [
+      216,
+      220
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Balten Sejahtera (PT Tri Mitralumba) Unit No. A6 (Hook). Luas Tanah 106 m². Luas Bangunan 76m²"
+    ],
+    "address_raw": "Perumahan Grianan Agung, Jl. Gondang Kabupaten Malang, Kecamatan Singosari,Kelurahan Randuagung",
+    "tenure_raw": "Freehold",
+    "condition_raw": null,
+    "sp_date": "2023-10-04",
+    "purchase_price": 879120000,
+    "purchase_price_raw": "879120000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 879120000,
+    "fair_value_raw": "879120000",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Still under construction"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 39,
+    "source_rows": [
+      221,
+      226
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "PT Sentul City Tbk (Pancar Square) Ruko Pancar Square No. Unit 10, Building Size 86m2, Land 54m2"
+    ],
+    "address_raw": "Jl. Bali Raya, Bojong Koneng, Kec. Babakan Madang, Kabupaten Bogor, Jawa Barat 16810",
+    "tenure_raw": "Freehold",
+    "condition_raw": null,
+    "sp_date": "2025-09-24",
+    "purchase_price": 1225000000,
+    "purchase_price_raw": "1225000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "N/A",
+    "fair_value": 1225000000,
+    "fair_value_raw": "1225000000",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Still under construction"
+    ]
+  },
+  {
+    "source_sheet": "Property List P365",
+    "source_company": "PT IFCA Property365 Indonesia",
+    "source_property_no": 40,
+    "source_rows": [
+      227,
+      233
+    ],
+    "property_type_raw": "Warehousing",
+    "text_lines": [
+      "PT Belaputera Intiland (Kota Baru Parahyangan) Tipe : Ruko, No. unit : 12, Luas tanah : 132 m2, Luas bangunan : 124 m2"
+    ],
+    "address_raw": "Kota Baru Parahyangan, Jalan Parahyangan Kav. 6-A Cesa Cipeundeuy, Kecamatan Padalarang, Kabupaten Bandung Barat, Provinsi Jawa barat Kodepos 40553",
+    "tenure_raw": "Freehold",
+    "condition_raw": "SOLD",
+    "sp_date": "2020-01-28",
+    "purchase_price": 2934600000,
+    "purchase_price_raw": "2934600000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": null,
+    "fair_value": 37819445746,
+    "fair_value_raw": "37819445746",
+    "market_entries": [],
+    "urls": [],
+    "remarks": [
+      "Seliing Price at Rp3.606.606.604 in 2024"
+    ]
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 1,
+    "source_rows": [
+      7,
+      12
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "Urbana Apartment,Tower Princeton, Upper Ground Floor, Blok No. C-15, Type Single+, Size Semi Gross is 34.75 M"
+    ],
+    "address_raw": "Jalan Flamboyan, Komplek Harapan Kita, Kelurahan Bencongan, Kecamatan Kelapa Dua, Tangerang",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2007-12-17",
+    "purchase_price": 183782130,
+    "purchase_price_raw": "183782130",
+    "maintenance_fee": 405009,
+    "maintenance_fee_raw": "405009",
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [
+      {
+        "raw": "Rp 260.000.000 as at 11 November 2019",
+        "kind": "unclear",
+        "amount": 260000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://rumah.trovit.co.id/listing/apartemen-the-habitat-karawaci-urbana-university-village-dijual-murah-dan-strategis-dekat-uph-tangerang.1DA1s1h1i10H3",
+        "label": null,
+        "row": 7
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 2,
+    "source_rows": [
+      13,
+      20
+    ],
+    "property_type_raw": "Stall",
+    "text_lines": [
+      "Palu Grand Mall",
+      "LGF Floor, Unit : LGF-130, Wide : 7.11 m2"
+    ],
+    "address_raw": "Jalan Cumi-cumi No. 77 - Bumi Bahari - Kota Palu - Sulawesi Tengah",
+    "tenure_raw": "Leasehold",
+    "condition_raw": "Empty",
+    "sp_date": "2013-12-07",
+    "purchase_price": 248181818,
+    "purchase_price_raw": "248181818",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": "None",
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [
+      {
+        "raw": "Estimated rent cost per month Rp 2.500.000,-",
+        "kind": "rental",
+        "amount": 2500000
+      }
+    ],
+    "urls": [],
+    "remarks": [
+      "Ownership of the lease from 2015-2034"
+    ]
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 3,
+    "source_rows": [
+      21,
+      26
+    ],
+    "property_type_raw": "Ruko",
+    "text_lines": [
+      "Ruko Race Perumahan Karawang Residence, Type : Ruko Race, Land : 65 m2, Building : 195 m2, Blok TA7, No. Unit : 02"
+    ],
+    "address_raw": "Jalan Resinda Raya Karawang Jawa Barat",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2014-08-15",
+    "purchase_price": 1761094545,
+    "purchase_price_raw": "1761094545",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": null,
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [],
+    "urls": [],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 4,
+    "source_rows": [
+      27,
+      32
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "Gunawangsa Tidar Apartment (PT. Warna-Warni Investama), Tower : A, Type : 2BR+, Semi Gross Wide : 40.63 m2, 36 Floor, No. Unit : 03"
+    ],
+    "address_raw": "Jl. Kertajaya Indah Timur Blok 0/104-105 Surabaya Telp. 031-594 5377 Fax. 031-5994659",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2014-09-18",
+    "purchase_price": 279090909,
+    "purchase_price_raw": "279090909",
+    "maintenance_fee": 826932,
+    "maintenance_fee_raw": "826932",
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [
+      {
+        "raw": "Rp 325.000.000 as at jan 2024",
+        "kind": "unclear",
+        "amount": 325000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.rumah123.com/properti/surabaya/aps3160063/",
+        "label": null,
+        "row": 27
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 6,
+    "source_rows": [
+      33,
+      38
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "Amazana Serpong Residences, Tower Lavender No. Unit A 0925 Luas 22 m2 Type Studio, Luas: 41.40m2"
+    ],
+    "address_raw": "BSD City Serpong Tangerang selatan",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2015-05-20",
+    "purchase_price": 348000000,
+    "purchase_price_raw": "348000000",
+    "maintenance_fee": 835750,
+    "maintenance_fee_raw": "835750",
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [
+      {
+        "raw": "Rp 370,000,000",
+        "kind": "unclear",
+        "amount": null
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://jendela360.com/jual-apartemen-amazana-serpong-residence/amza001",
+        "label": null,
+        "row": 33
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 7,
+    "source_rows": [
+      39,
+      44
+    ],
+    "property_type_raw": "Apartment",
+    "text_lines": [
+      "Grand Dhika City Jatiwarna, Lantai 22, Unit 32, Type 2 Bedroom D, Tower Emerald, 41.40m2"
+    ],
+    "address_raw": "Jl. H. Djoyomartono Bekasi Timur Km 16 Kota Bekasi",
+    "tenure_raw": "Freehold",
+    "condition_raw": "Empty",
+    "sp_date": "2015-07-29",
+    "purchase_price": 594900909,
+    "purchase_price_raw": "594900909",
+    "maintenance_fee": 761640,
+    "maintenance_fee_raw": "761640",
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [
+      {
+        "raw": "Rp 800.000.000 as at 30 Dec 2023",
+        "kind": "unclear",
+        "amount": 800000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.apartemendijual.com/85204/apartemen-siap-huni-dijual-grand-dhika-city-lifestyle-jatiwarna-bekasi-2br-furnished-unfurnished/",
+        "label": null,
+        "row": 39
+      }
+    ],
+    "remarks": []
+  },
+  {
+    "source_sheet": "Property List PICI",
+    "source_company": "PT IFCA Consulting Indonesia",
+    "source_property_no": 8,
+    "source_rows": [
+      45,
+      51
+    ],
+    "property_type_raw": "Stall",
+    "text_lines": [
+      "Pasar Turi Surabaya, Lantai 2, Zoning : Busana Muslim dan Perlengkapan, No Stand : Blok C2 No.31, Ukuran : 6.75m2"
+    ],
+    "address_raw": "Jl. Semarang, bubutan kota Surabaya",
+    "tenure_raw": "Leasehold",
+    "condition_raw": "Empty",
+    "sp_date": "2015-09-01",
+    "purchase_price": 862000000,
+    "purchase_price_raw": "862000000",
+    "maintenance_fee": null,
+    "maintenance_fee_raw": null,
+    "fair_value": null,
+    "fair_value_raw": null,
+    "market_entries": [
+      {
+        "raw": "Rp 550.000.000",
+        "kind": "unclear",
+        "amount": 550000000
+      }
+    ],
+    "urls": [
+      {
+        "url": "https://www.olx.co.id/item/dijual-stand-pasar-turi-baru-lokasi-strategis-lg-blok-b-6-no-3-iid-896282026",
+        "label": null,
+        "row": 46
+      }
+    ],
+    "remarks": []
+  }
+]
