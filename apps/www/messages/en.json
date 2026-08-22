@@ -8,7 +8,8 @@
     "newProjects": "New Projects",
     "agents": "Agents",
     "forAgents": "For Agents",
-    "language": "Language"
+    "language": "Language",
+    "agentLogin": "Agent login"
   },
   "home": {
     "heroTitle": "Find the right property, faster",
@@ -38,8 +39,7 @@
       "rent": "For rent",
       "land": "Land",
       "commercial": "Commercial",
-      "newest": "Newest",
-      "list": "List a property"
+      "newest": "Newest"
     },
     "promotedTitle": "Featured properties",
     "promotedSubtitle": "These listings were promoted by their agent. The position is paid for — the listing itself is reviewed like any other.",
@@ -51,9 +51,6 @@
     "propertyIn": "Property in {place}",
     "listingCount": "{count, plural, one {# listing} other {# listings}}",
     "fromPrice": "From {amount}",
-    "agentCtaTitle": "Are you a property agent?",
-    "agentCtaBody": "Publish listings, manage leads, and market other agents' listings under agreed commission terms — all in one platform.",
-    "agentCtaButton": "Go to the agent platform",
     "kpr": {
       "title": "Estimate your mortgage",
       "intro": "Work out the monthly instalment before you start looking. Drag to adjust.",
@@ -193,9 +190,6 @@
     "errorGeneric": "Something went wrong. Please try again."
   },
   "footer": {
-    "forAgents": "For property agents",
-    "agentPitch": "Manage listings, leads and co-broke collaboration in one place.",
-    "openHub": "Open the agent portal",
     "disclaimer": "Property information is supplied by agents and owners. Carry out your own checks before transacting.",
     "rights": "All rights reserved."
   },

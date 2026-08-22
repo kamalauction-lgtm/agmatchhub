@@ -55,7 +55,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
             href={brand.hubUrl}
             className="rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white hover:bg-brand-strong"
           >
-            {t("forAgents")}
+            {t("agentLogin")}
           </a>
         </div>
       </div>

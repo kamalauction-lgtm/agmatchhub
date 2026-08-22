@@ -13,7 +13,6 @@ import { SearchBar } from "@/components/search-bar";
 import { KprCalculator } from "@/components/kpr-calculator";
 import { PromoBanner } from "@/components/promo-banner";
 import { routing } from "@/i18n/routing";
-import { brand } from "@/config/brand";
 
 /**
  * The marketplace homepage.
@@ -91,7 +90,6 @@ export default async function HomePage({
     { key: "land", icon: "🌳", href: `${searchHref}?propertyType=tanah` },
     { key: "commercial", icon: "🏢", href: `${searchHref}?category=commercial` },
     { key: "newest", icon: "✨", href: `${searchHref}?sort=newest` },
-    { key: "list", icon: "📣", href: brand.hubUrl, external: true },
   ] as const;
 
   return (
@@ -324,21 +322,6 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* For agents ------------------------------------------------------- */}
-      <section className="border-t border-line">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-10">
-          <div>
-            <h2 className="text-lg font-bold tracking-tight sm:text-xl">{t("agentCtaTitle")}</h2>
-            <p className="mt-1 max-w-xl text-sm text-muted">{t("agentCtaBody")}</p>
-          </div>
-          <a
-            href={brand.hubUrl}
-            className="rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-strong"
-          >
-            {t("agentCtaButton")}
-          </a>
-        </div>
-      </section>
 
       {/* By province — an SEO surface as much as a navigation one. --------- */}
       {provinces.length > 0 && (

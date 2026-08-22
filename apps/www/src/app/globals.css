@@ -5,8 +5,10 @@
    and in brand config — never as literals in components. Swapping --brand and
    --brand-strong is the whole rebrand at the CSS layer.
 
-   Deliberately distinct from the hub's crimson: the marketplace is a consumer
-   surface and should read as trustworthy and calm, not as an internal tool. */
+   Merah putih (Kamal, 10 Aug 2026) - the Indonesian flag reading, red on white.
+   Shares the hub's crimson family so the two surfaces feel like one company.
+   Green is reserved for one thing only: the "verified" signal, where it carries
+   meaning rather than decoration. */
 :root {
   --background: #ffffff;
   --foreground: #14181f;
@@ -15,9 +17,9 @@
   --line: #e3e6ea;
   --muted: #64707f;
 
-  --brand: #0f766e;
-  --brand-strong: #0b5a54;
-  --brand-soft: #eefaf8;
+  --brand: #b11226;
+  --brand-strong: #8d0e1e;
+  --brand-soft: #fdf1f2;
   --accent: #c2872a;
 
   --success: #15803d;
@@ -36,9 +38,9 @@
     --line: #2a313c;
     --muted: #9aa6b4;
 
-    --brand: #2dd4bf;
-    --brand-strong: #14b8a6;
-    --brand-soft: #10231f;
+    --brand: #ef4b60;
+    --brand-strong: #d92d45;
+    --brand-soft: #2a0f14;
     --accent: #d9a441;
   }
 }

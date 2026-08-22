@@ -8,7 +8,8 @@
     "newProjects": "Proyek Baru",
     "agents": "Agen",
     "forAgents": "Untuk Agen",
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "agentLogin": "Masuk agen"
   },
   "home": {
     "heroTitle": "Temukan properti yang tepat, lebih cepat",
@@ -38,8 +39,7 @@
       "rent": "Disewa",
       "land": "Tanah",
       "commercial": "Komersial",
-      "newest": "Terbaru",
-      "list": "Iklankan properti"
+      "newest": "Terbaru"
     },
     "promotedTitle": "Properti pilihan",
     "promotedSubtitle": "Listing ini dipromosikan oleh agennya. Posisinya dibayar — isinya tetap ditinjau seperti listing lain.",
@@ -51,9 +51,6 @@
     "propertyIn": "Properti di {place}",
     "listingCount": "{count} listing",
     "fromPrice": "Mulai {amount}",
-    "agentCtaTitle": "Anda agen properti?",
-    "agentCtaBody": "Pasang listing, kelola prospek, dan pinjam listing agen lain lewat pemasaran bersama — semuanya dalam satu platform.",
-    "agentCtaButton": "Masuk ke platform agen",
     "kpr": {
       "title": "Hitung cicilan KPR",
       "intro": "Perkirakan cicilan bulanan Anda sebelum mulai mencari. Geser untuk menyesuaikan.",
@@ -193,9 +190,6 @@
     "errorGeneric": "Terjadi kesalahan. Silakan coba lagi."
   },
   "footer": {
-    "forAgents": "Untuk agen properti",
-    "agentPitch": "Kelola listing, prospek, dan kolaborasi co-broke di satu tempat.",
-    "openHub": "Masuk ke portal agen",
     "disclaimer": "Informasi properti disediakan oleh agen dan pemilik. Lakukan pemeriksaan mandiri sebelum bertransaksi.",
     "rights": "Seluruh hak cipta dilindungi."
   },
