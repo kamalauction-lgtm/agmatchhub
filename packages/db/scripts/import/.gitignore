@@ -1,0 +1,4 @@
+# Third-party images downloaded for review. Not ours to redistribute, and not
+# something to carry in git history — they are fetched on demand by
+# fetch-media-candidates.mjs and reviewed locally.
+media-candidates/
