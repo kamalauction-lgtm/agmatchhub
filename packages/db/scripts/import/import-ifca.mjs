@@ -175,11 +175,18 @@ function extractDevelopment(textLines) {
   return null;
 }
 
-/** Unit designation, verbatim from the sheet. */
+/**
+ * Unit designation, verbatim from the sheet.
+ *
+ * The character class must include # and / — the sheet writes units as
+ * "A#C38-01", and stopping at the # recorded every one of them as just "A".
+ * A truncated unit number is worse than none: it looks like real data.
+ */
 function extractUnit(textLines) {
   const text = textLines.join(" ");
-  const m = text.match(/(?:no\.?\s*unit|unit\s*:?)\s*([A-Za-z0-9-]+)/i);
-  return m ? m[1] : null;
+  const m = text.match(/(?:no\.?\s*unit|unit\s*:?)\s*([A-Za-z0-9#/.-]+)/i);
+  if (!m) return null;
+  return m[1].replace(/[.,]+$/, "") || null;
 }
 
 /**
@@ -255,6 +262,53 @@ function buildDescription(p, mapped, sizes, development, unit, bedrooms, loc) {
   return s.join(" ");
 }
 
+/**
+ * Suspected duplicates (section 15).
+ *
+ * Signals: same development AND same unit designation, or same address AND the
+ * same building size. Deliberately narrow - two units in one tower share a
+ * development, a floor, a size and a price and are still different properties
+ * (P365 #8 and #12 differ only by unit A#C38-19 vs A#C38-01).
+ *
+ * Never deletes and never overwrites. It flags, and a human decides.
+ */
+async function findDuplicate(client, { development, unit, address, buildingSize }) {
+  const clauses = [];
+  const params = [];
+  if (development && unit) {
+    params.push(`%${development}%`, unit);
+    clauses.push(`(l.title ilike $${params.length - 1} and pp.unit_number = $${params.length})`);
+  }
+  // Address + size ALONE is not a duplicate signal. Units in one tower share an
+  // address and a floor area by design: A#C38-19, A#C38-18 and A#C38-01 are the
+  // same building, the same 43.28 m2, and three different properties. Flagging
+  // those wastes review time and teaches people to ignore the flag.
+  //
+  // So this clause only applies where neither side carries a unit number —
+  // houses and shophouses, where address plus size really does identify one
+  // property. A differing unit number is decisive evidence of difference.
+  if (address && buildingSize && !unit) {
+    params.push(address, buildingSize);
+    clauses.push(
+      `(pp.exact_address = $${params.length - 1} and p.building_size = $${params.length}
+        and pp.unit_number is null)`
+    );
+  }
+  if (!clauses.length) return null;
+
+  const { rows } = await client.query(
+    `select p.id, p.human_readable_id
+     from public.properties p
+     join public.property_private pp on pp.property_id = p.id
+     left join public.listings l on l.property_id = p.id
+     where (${clauses.join(" or ")})
+     limit 1`,
+    params
+  );
+  return rows[0] ?? null;
+}
+
+
 /* ---------------------------------------------------------------------------
  * Validation (§14)
  * ------------------------------------------------------------------------- */
@@ -318,11 +372,32 @@ try {
 
   await client.query("begin");
 
+  // Re-runnable. The audit row upserts on source key, but properties and
+  // listings would pile up on a second run, so a prior import OF THIS FILE is
+  // cleared first. Scoped to source_file: nothing created by hand is touched.
+  const { rows: prior } = await client.query(
+    "select property_id, listing_id from public.property_imports where source_file = $1",
+    [SOURCE_FILE]
+  );
+  if (prior.length) {
+    const listingIds = prior.map((r) => r.listing_id).filter(Boolean);
+    const propertyIds = prior.map((r) => r.property_id).filter(Boolean);
+    if (listingIds.length) {
+      await client.query("delete from public.listing_media where listing_id = any($1)", [listingIds]);
+      await client.query("delete from public.listings where id = any($1)", [listingIds]);
+    }
+    if (propertyIds.length) {
+      await client.query("delete from public.property_private where property_id = any($1)", [propertyIds]);
+      await client.query("delete from public.properties where id = any($1)", [propertyIds]);
+    }
+    console.log(`cleared previous import: ${propertyIds.length} properties, ${listingIds.length} listings`);
+  }
+
   for (const p of props) {
     const mapped = TYPE_MAP[p.property_type_raw] ?? null;
     const saleEntry = p.market_entries.find((m) => m.kind === "sale" && m.amount) ?? null;
     const rentalEntry = p.market_entries.find((m) => m.kind === "rental") ?? null;
-    const { status, warnings } = validate(p, mapped, saleEntry);
+    let { status, warnings } = validate(p, mapped, saleEntry);
 
     const development = extractDevelopment(p.text_lines);
     const unit = extractUnit(p.text_lines);
@@ -335,6 +410,16 @@ try {
     // A record only becomes a property if it is at least type-mappable and not
     // marked sold. Everything else is recorded in the audit table and skipped —
     // an unimportable row still needs to be explainable later.
+    // Section 15 - checked BEFORE anything is created, against the catalogue
+    // as it stands (including rows created earlier in this same run).
+    const dup = await findDuplicate(client, {
+      development, unit, address: p.address_raw, buildingSize: sizes.building_size,
+    });
+    if (dup) {
+      warnings.push(`Possible duplicate of ${dup.human_readable_id} - same development and unit, or same address and size`);
+      if (status === "VALID") status = "DUPLICATE_SUSPECTED";
+    }
+
     const importable = mapped && status !== "NOT_FOR_SALE" && status !== "DATA_CONFLICT";
 
     if (importable) {
@@ -442,6 +527,7 @@ try {
     "NOT_FOR_SALE": by("NOT_FOR_SALE"),
     "LEGAL_ENCUMBRANCE": by("LEGAL_ENCUMBRANCE"),
     "DATA_CONFLICT": by("DATA_CONFLICT"),
+    "DUPLICATE_SUSPECTED": by("DUPLICATE_SUSPECTED"),
   });
 
   if (process.argv.includes("--samples")) {
