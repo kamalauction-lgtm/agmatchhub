@@ -163,6 +163,33 @@ regencies, 7,215 districts) `location_aliases` `landmarks` `id_sequences`
 
 ---
 
+## 4b. Import is an ORIGIN, not a listing class
+
+An imported listing **is** a normal listing. There is no `imported_listings`
+table, no second product type, and no capability an imported listing lacks.
+
+```
+IMPORT RECORD  ->  NORMAL PROPERTY  ->  NORMAL LISTING  ->  everything
+```
+
+`property_imports` and `listing_media_source` hold provenance only: batch,
+source kind/portal/URL/external id, parse result, validation status, errors.
+`listings.creation_source` records `manual | import | api | developer_feed` and
+is **inert** — no policy, view, trigger or index reads it, and
+`public_listings` does not expose it.
+
+Once imported, a listing must work with edit, moderation, publish/unpublish,
+sold/rented, archive, renew, boost, analytics, co-marketing, shared inventory,
+agent pages, MatchHub, GHL leads, Content Studio and social publishing exactly
+as a hand-made one does — wherever the normal business rules permit.
+
+**If a future feature ever branches on `creation_source`, that is the bug.**
+`node packages/db/scripts/verify-import-parity.mjs --env=staging` checks this
+mechanically against the live schema and fails loudly. Run it after any change
+that touches listing capability.
+
+---
+
 ## 5. Hard rules a new module MUST follow
 
 1. **`apps/www` must never hold `SUPABASE_SERVICE_ROLE_KEY`.** Not "must not
