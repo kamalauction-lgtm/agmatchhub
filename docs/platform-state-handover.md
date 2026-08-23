@@ -34,10 +34,10 @@ Cloudflare Workers via OpenNext.
 
 ---
 
-## 2. Database — 78 tables, 10 public views, 55 migrations
+## 2. Database — 78 tables, 10 public views, 56 migrations
 
 Migrations are `packages/db/supabase/migrations/NNNNN_name.sql`, applied with
-`node scripts/db-migrate.mjs --env=staging`. **Next number is 00056.**
+`node scripts/db-migrate.mjs --env=staging`. **Next number is 00057.**
 
 ### Tables by domain
 
