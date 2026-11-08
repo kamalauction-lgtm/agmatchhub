@@ -66,33 +66,94 @@ type Filters = {
   maxPrice?: string;
 };
 
+/** One flat row of pool_offer_cards (migration 00099). */
+type PoolCardRow = {
+  offer_id: string;
+  offer_human_readable_id: string;
+  listing_agent_id: string;
+  listing_agent_display_name: string | null;
+  total_commission_pct: number | null;
+  marketing_agent_share_pct: number;
+  payer: string;
+  requires_la_approval: boolean;
+  max_marketing_agents: number | null;
+  notes: string | null;
+  created_at: string;
+  expires_at: string | null;
+  listing_id: string;
+  listing_human_readable_id: string;
+  title: string;
+  listing_type: string;
+  price: number;
+  currency: string;
+  rent_period: string | null;
+  property_type: string;
+  property_category: string;
+  province_name: string | null;
+  regency_name: string | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  building_size: number | null;
+  land_size: number | null;
+};
+
+/** Reshape a flat card row into the OfferRow the render code reads. */
+function toOfferRow(r: PoolCardRow): OfferRow {
+  return {
+    id: r.offer_id,
+    human_readable_id: r.offer_human_readable_id,
+    listing_agent_id: r.listing_agent_id,
+    total_commission_pct: r.total_commission_pct,
+    marketing_agent_share_pct: r.marketing_agent_share_pct,
+    payer: r.payer,
+    requires_la_approval: r.requires_la_approval,
+    max_marketing_agents: r.max_marketing_agents,
+    notes: r.notes,
+    created_at: r.created_at,
+    expires_at: r.expires_at,
+    listings: {
+      id: r.listing_id,
+      human_readable_id: r.listing_human_readable_id,
+      title: r.title,
+      listing_type: r.listing_type,
+      price: r.price,
+      currency: r.currency,
+      rent_period: r.rent_period,
+      properties: {
+        property_type: r.property_type,
+        property_category: r.property_category,
+        province_name: r.province_name,
+        regency_name: r.regency_name,
+        bedrooms: r.bedrooms,
+        bathrooms: r.bathrooms,
+        building_size: r.building_size,
+        land_size: r.land_size,
+      },
+    },
+    profiles: r.listing_agent_display_name
+      ? { display_name: r.listing_agent_display_name }
+      : null,
+  };
+}
+
 async function getPool(userId: string, f: Filters) {
   const supabase = await createClient();
 
+  // Reads the 00099 projection: only card columns, never the listing's
+  // moderation or ownership columns.
   let query = supabase
-    .from("comarketing_offers")
-    .select(
-      `id, human_readable_id, listing_agent_id, total_commission_pct, marketing_agent_share_pct,
-       payer, requires_la_approval, max_marketing_agents, notes, created_at, expires_at,
-       listings!inner (
-         id, human_readable_id, title, listing_type, price, currency, rent_period,
-         properties!inner (property_type, property_category, province_name, regency_name,
-                           bedrooms, bathrooms, building_size, land_size)
-       ),
-       profiles!listing_agent_id (display_name)`
-    )
-    .eq("status", "active")
-    .eq("scope", "open_pool")
+    .from("pool_offer_cards")
+    .select("*")
     .order("created_at", { ascending: false })
     .limit(60);
 
   // Filters run in Postgres, not in the page — a pool that grows to thousands
   // of offers must not be fetched whole and thrown away in JavaScript.
-  if (f.province) query = query.eq("listings.properties.province_name", f.province);
-  if (f.type) query = query.eq("listings.properties.property_type", f.type);
-  if (f.listingType) query = query.eq("listings.listing_type", f.listingType);
+  if (f.province) query = query.eq("province_name", f.province);
+  if (f.type) query = query.eq("property_type", f.type);
+  if (f.listingType) query = query.eq("listing_type", f.listingType);
   if (f.minShare) query = query.gte("marketing_agent_share_pct", Number(f.minShare));
-  if (f.maxPrice) query = query.lte("listings.price", Number(f.maxPrice));
+  if (f.maxPrice) query = query.lte("price", Number(f.maxPrice));
 
   const [offers, mine] = await Promise.all([
     query,
@@ -106,7 +167,7 @@ async function getPool(userId: string, f: Filters) {
   if (offers.error) console.error("pool query failed", offers.error.message);
 
   return {
-    offers: (offers.data ?? []) as unknown as OfferRow[],
+    offers: ((offers.data ?? []) as unknown as PoolCardRow[]).map(toOfferRow),
     /** offer_id -> the agent's own engagement, so a card knows which state to show. */
     engagements: new Map(
       (mine.data ?? []).map((e) => [e.offer_id as string, e as { id: string; status: string }])
@@ -118,18 +179,13 @@ async function getPool(userId: string, f: Filters) {
 async function getProvinces() {
   const supabase = await createClient();
   const { data } = await supabase
-    .from("comarketing_offers")
-    .select("listings!inner (properties!inner (province_name))")
-    .eq("status", "active")
-    .eq("scope", "open_pool")
+    .from("pool_offer_cards")
+    .select("province_name")
     .limit(500);
 
   const names = new Set<string>();
-  for (const row of (data ?? []) as unknown as {
-    listings: { properties: { province_name: string | null } | null } | null;
-  }[]) {
-    const n = row.listings?.properties?.province_name;
-    if (n) names.add(n);
+  for (const row of (data ?? []) as { province_name: string | null }[]) {
+    if (row.province_name) names.add(row.province_name);
   }
   return [...names].sort();
 }

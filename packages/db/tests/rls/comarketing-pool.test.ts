@@ -72,22 +72,37 @@ describe.skipIf(!hasPoolEnv)("co-marketing pool (§4, module design §6.2)", () 
     expect(engagements ?? []).toHaveLength(0);
   });
 
-  it("a browsing agent sees the facts a pool card needs (00044 gap 1)", async () => {
+  it("a browsing agent sees the facts a pool card needs via pool_offer_cards (00099)", async () => {
     const { data } = await ma
-      .from("comarketing_offers")
-      .select("id, marketing_agent_share_pct, listings!inner (title, price, properties!inner (province_name))")
-      .eq("status", "active")
-      .eq("scope", "open_pool")
+      .from("pool_offer_cards")
+      .select("offer_id, marketing_agent_share_pct, title, price, province_name")
       .limit(1);
 
     expect((data ?? []).length).toBeGreaterThanOrEqual(1);
-    const row = data![0] as unknown as {
-      listings: { title: string; price: number } | null;
-    };
+    const row = data![0] as unknown as { title: string; price: number };
     // The regression 00041 was written for, one audience earlier: rows present
-    // but every embedded field empty.
-    expect(row.listings?.title).toBeTruthy();
-    expect(Number(row.listings?.price)).toBeGreaterThan(0);
+    // but every field empty.
+    expect(row.title).toBeTruthy();
+    expect(Number(row.price)).toBeGreaterThan(0);
+  });
+
+  it("a browsing agent cannot read other agents' listing rows directly (00099)", async () => {
+    // Pool browse on the base table was removed. The only rows a marketing
+    // agent may read here are their own; no other agent's listing comes back.
+    const { data } = await ma.from("listings").select("id, created_by").limit(50);
+    for (const r of (data ?? []) as unknown as { created_by: string }[]) {
+      expect(r.created_by).toBe(maId);
+    }
+  });
+
+  it("the pool projection never exposes listing moderation or ownership columns (00099)", async () => {
+    const { data, error } = await ma
+      .from("pool_offer_cards")
+      .select("moderation_reason, created_by, agency_id, moderated_by")
+      .limit(1);
+    // PostgREST rejects an unknown column, so the select must fail outright.
+    expect(error).not.toBeNull();
+    expect(data ?? []).toHaveLength(0);
   });
 
   it("a marketing agent never sees the listing agent's confidences", async () => {
