@@ -60,6 +60,18 @@
   --danger: #e53935;
   --danger-soft: #fef2f2;
 
+  /* Accent and text-safe ink (Phase 1) -------------------------------------
+     `accent` was used by the boost button and the publishing chip but never
+     defined, so both rendered with no background. #7a5f1f gives white text
+     6.0:1 and gold text 5.9:1 on card. The ink tokens are text colours for
+     tinted badge fills, where the bare semantic colours fail 4.5:1. */
+  --accent: #7a5f1f;
+  --accent-soft: #f6efdb;
+  --gold: #a8842f;            /* decorative only: rules, rings, icons */
+  --gold-light: #c9a64b;      /* badge fill, pair with --foreground text */
+  --success-ink: #166534;     /* 7.1:1 on white */
+  --warning-ink: #9a3412;     /* 7.0:1 on warning-soft */
+
   /* Elevation ------------------------------------------------------------- */
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
   --shadow-raised: 0 4px 16px rgb(15 23 42 / 0.08);
@@ -100,6 +112,14 @@
     --danger: #f05a56;
     --danger-soft: #2a1618;
 
+    /* Accent stays deep gold in dark mode so white button text keeps 6:1. */
+    --accent: #7a5f1f;
+    --accent-soft: #2a2312;
+    --gold: #c9a64b;
+    --gold-light: #c9a64b;
+    --success-ink: #86efac;
+    --warning-ink: #fdba74;
+
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.2);
     --shadow-raised: 0 4px 16px rgb(0 0 0 / 0.4);
   }
@@ -132,6 +152,12 @@
   --color-warning-soft: var(--warning-soft);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-success-ink: var(--success-ink);
+  --color-warning-ink: var(--warning-ink);
 
   --shadow-card: var(--shadow-card);
   --shadow-raised: var(--shadow-raised);
