@@ -1,6 +1,6 @@
 # Production readiness report — PropertiGuru Stage B
 
-*Prepared 8 November 2026 for the owner's `APPROVE PRODUCTION` decision. Target launch 30 November 2026, markets MY + ID. Every number below was measured today on this machine against the staging project `aylzekkeurjsudazzxjv` and, read-only, the production project `jokyyhvtahiypuzmfydp`. Source of the per-epic evidence: [stage-b-build-log.md](stage-b-build-log.md).*
+*Prepared 8 November 2026 for the owner's `APPROVE PRODUCTION` decision; revised the same evening after the characters (00097) and the completion of all 36 AI roles (E13, 00098). Target launch 30 November 2026, markets MY + ID. Every number below was measured today on this machine against the staging project `aylzekkeurjsudazzxjv` and, read-only, the production project `jokyyhvtahiypuzmfydp`. Source of the per-epic evidence: [stage-b-build-log.md](stage-b-build-log.md).*
 
 ---
 
@@ -10,7 +10,8 @@
 
 What is true today:
 
-- Every epic of the approved build (E0–E12) is built on staging, typechecks, lints, builds for production, and passes the full suite: **455 tests, 46 files, 0 failures**, including a negative RLS case for every new table.
+- Every epic of the approved build (E0–E12), plus the two follow-ups the owner asked for on 8 Nov (the AI Workforce characters, 00097, and the completion of the nineteen planned roles, E13 / 00098), is built on staging, typechecks, lints, builds for production, and passes the full suite: **467 tests, 49 files, 0 failures**, including a negative RLS case for every new table. **All 36 AI roles are live in the catalogue**; every one of them answers through its rules path today because no provider key exists.
+- The staging hub is deployed and reachable at **https://hub-staging.propertiguru.id** (Worker `ag-matchhub-staging`, its own secrets and cron triggers), so the pilot has a real URL.
 - Nothing from Stage B is in production. The hub Worker was last deployed on 13 September 2026 and the schema stops at migration 00077; both are unchanged and unharmed.
 - Every live-money, live-message and partner-system path is off by design and cannot be switched on by accident: payments need three independent switches, WhatsApp needs two plus Meta credentials that do not exist, Hero is read-only and keyless, AI has no provider key.
 
@@ -18,7 +19,7 @@ Why not yet:
 
 | # | Condition for requesting `APPROVE PRODUCTION` | Status today |
 |---|---|---|
-| C1 | **The source is committed and pushed.** Until 8 Nov the last commit was dated 23 Aug 2026; 327 files including **40 migrations (00057–00096) — 21 of which are already running in production** — existed only on this laptop. | **Met 8 Nov** — commit `b902bd9` on `feat/propertiguru-next-foundation`, pushed to `kamalauction-lgtm/agmatchhub`; `packages/db/.env.*` now ignored explicitly and verified absent from the commit. CI runs on `main`/`develop`/PRs only, so open a PR (or merge) for the pipeline to run, and add the staging secrets (§5) for the RLS job. |
+| C1 | **The source is committed and pushed.** Until 8 Nov the last commit was dated 23 Aug 2026; 327 files including **40 migrations (00057–00096) — 21 of which are already running in production** — existed only on this laptop. | **Met 8 Nov** — commit `b902bd9`, then PR kamalauction-lgtm/agmatchhub#1 **merged into `main`** (`f07ce69`); the characters (`bc2c7d2`) and E13 (`1c83ed8`, `6325c5f`) are on `main` too. `packages/db/.env.*` ignored explicitly and verified absent. CI has run on `main`; its RLS job still skips until the staging secrets (§5) exist in GitHub. |
 | C2 | **The pilot (27–28 Nov) has run on staging with real agents and met its exit criteria** (§8). | Not started; blocked on the owner inputs in §9. |
 | C3 | **The production secrets exist** for what will be switched on (at minimum `CRON_SECRET`; an AI key if AI is to be live; others only with their own approvals). | Production Worker holds 6 secrets; none of the Stage B ones (§5). |
 | C4 | **Production residue decision**: 32 test requirements and 3 test accounts in production (§6). | Awaiting authorisation to remove. |
@@ -45,6 +46,8 @@ What `APPROVE PRODUCTION` will and will not do is spelled out in §11.
 | E10 Ingest multi-country | Malaysian location matcher, per-country vocabulary / units / currency / language, ingest agent per country | curl-proven ID + MY + re-send + mismatch; Hero adapter change prepared, not applied |
 | E11 Payments scaffold | Billplz / Midtrans / Stripe adapters with verified signature schemes, intents priced by the database, webhook, `/admin/payments`; every gateway `off`, `live` impossible outside `LIVE_BILLING` by trigger | 18 unit + 6 RLS; signed / tampered / replayed webhook on the dev server |
 | E12 WhatsApp Cloud API | Design doc + scaffold: rules in SQL (24-h window, approved templates, consent + switch for marketing, permanent opt-outs, test recipients), webhook with app-secret signature, platform door on `/leads`, `/admin/whatsapp`; both numbers `off`, flags off | 7 unit + 6 RLS; handshake / signed / tampered / replayed / stranger / STOP on the dev server |
+| Characters (owner request, 8 Nov) | 00097 `ai_role_personas`: a named character with portrait and three-language words for every role, the same cast in both countries (owner decision), standing beside the agent on every AI surface | 2 RLS cases; rendered on hub-staging |
+| E13 AI Workforce complete (owner request, 8 Nov) | 00098: the nineteen planned roles go live — twelve new metered features, `market_facts` + `closing_steps` seeded **draft** until an admin verifies them, `closing_checklists`, `ai_weekly_reviews`, six caller-scoped functions, attachments (images / PDF) through `packages/ai`; nine new screens (`/ai/{research,outreach,documents,crossborder,coach,closing,review}`, `/collab/partners`, `/studio/plan`, `/listings/[id]/report`) and panels on listings, edit, leads, requests, collab, training, Studio | 5 unit + 5 RLS; every screen rendered and the rules paths exercised on hub-staging; see the build log E13 |
 
 Deferred by the owner's own decisions, not slipped: live charging (D8), outbound WhatsApp (D8), Hero Phase 2 (D2), GHL migration (D8), Malaysian domain (D7).
 
@@ -58,24 +61,25 @@ Deferred by the owner's own decisions, not slipped: live charging (D8), outbound
 | `npm run typecheck` (every workspace) | clean |
 | `npm run lint` | clean (one pre-existing warning in `worker.js`) |
 | `npm run build` (hub + www, production mode, hub cache cleared) | both produced a build (`BUILD_ID` present in each app) in 72 s; the "dynamic server usage" lines during the hub build are the known, harmless static-render probes of cookie-reading routes |
-| `npm test` → full suite on staging | **455 passed / 455, 46 files, 0 skipped failures, fixture sweep clean** |
+| `npm test` → full suite on staging | **467 passed / 467, 49 files, 0 skipped failures, fixture sweep clean** (8 Nov evening) |
 
-Of the 455: unit tests for every pure module (normalisation, dates, signature schemes, webhook parsers, i18n parity across id/en/ms), and RLS tests that sign in as five standing accounts and prove, per table, that the wrong role is refused.
+Of the 467: unit tests for every pure module (normalisation, dates, signature schemes, webhook parsers, i18n parity across id/en/ms), and RLS tests that sign in as five standing accounts and prove, per table, that the wrong role is refused.
 
-### 2.2 By hand on the staging dev server (screens in the build log)
-Register → verify → brief → `/ai` denial; listing wizard with quality card; studio texts; lead → draft → wa.me; Hero card link / unlink / admin benefits; `/plan` in IDR with catalogue; admin repricing in three currencies; ingest from curl for ID and MY; payments admin refusing `live`, sandbox checkout against the **real** Midtrans sandbox (refused the placeholder key, recorded honestly), signed webhook settling a top-up; WhatsApp handshake, inbound, STOP, platform door opening and closing with the window.
+### 2.2 By hand on the staging dev server and on hub-staging (screens in the build log)
+Register → verify → brief → `/ai` denial; listing wizard with quality card; studio texts; lead → draft → wa.me; Hero card link / unlink / admin benefits; `/plan` in IDR with catalogue; admin repricing in three currencies; ingest from curl for ID and MY; payments admin refusing `live`, sandbox checkout against the **real** Midtrans sandbox (refused the placeholder key, recorded honestly), signed webhook settling a top-up; WhatsApp handshake, inbound, STOP, platform door opening and closing with the window. On the deployed staging Worker (8 Nov): the AI Workforce directory with the cast, companions on leads/tasks/Studio, and the E13 screens — research (2 comparables, median, range), objection coach (library answer), closing checklist (created, 10 MY sale steps), weekly review (7 vs 7 numbers), owner report, photo check + other-language fields on edit, Studio video tab and poster templates, onboarding guide, chat-to-requirement filling nine fields.
 
 ### 2.3 Not exercised — and why
 | Path | Reason | What unblocks it |
 |---|---|---|
-| Any real AI call | no provider key (D1: reuse existing; none found usable locally) | `GEMINI_API_KEY` or `ANTHROPIC_API_KEY` in `.env.staging`, then the pilot |
+| Any real AI call — including every E13 model layer (photo vision, document reading, translation, coach, weekly insight, week planner) | no provider key (D1: reuse existing; none found usable locally); the deterministic paths answer and say so | `GEMINI_API_KEY` or `ANTHROPIC_API_KEY` as a staging Worker secret and in `.env.staging`, then the pilot |
 | Hero `rens/status` live call | no `HERO_API_KEY` (scope `rens:status`) | key from Hero Command HQ → Integrations |
-| Cron end to end on a Worker | staging has no deployed Worker; the route is exercised, the trigger is not | first production deploy with `CRON_SECRET` |
+| Cron end to end on a Worker | the staging Worker now carries both triggers and `CRON_SECRET`; a tick has been observed returning 200, the jobs it runs have nothing to do without a key or traffic | pilot traffic |
+| The 20 market facts and 30 closing steps as *facts* | drafted by the builder from current MY/ID rules, seeded with `status = draft`; shown as draft on every screen | owner (ideally counsel per country) verifies row by row on `/admin/ai` |
 | Gateway round-trips (Billplz / Midtrans / Stripe) | no sandbox credentials | sandbox accounts (D8 keeps live off anyway) |
 | Meta WhatsApp | no app, token or number | design §6 |
 | Hero → hub MY ingest | Hero's adapter still sends ID only (Hero production change, D2) | owner applies the prepared change |
-| Production migrations 00078–00096 | by rule, staging first; not approved | `APPROVE PRODUCTION` |
-| CI on this code | nothing committed since 23 Aug; CI never saw Stage B | C1 |
+| Production migrations 00078–00098 | by rule, staging first; not approved | `APPROVE PRODUCTION` |
+| CI RLS job on this code | CI ran on `main` after the merge; the RLS job skips without the staging secrets in GitHub | §5 GitHub secrets |
 | Load / p95 timings (blueprint §11.16–17) | need a key and the pilot's traffic | pilot |
 
 ---
@@ -102,20 +106,20 @@ Register → verify → brief → `/ai` denial; listing wizard with quality card
 ## 4. What production would receive
 
 ### 4.1 Schema delta (staging-verified, pending on production)
-19 migrations, **00078 → 00096**, applied in order by `npm run db:migrate`. Measured effect (staging vs production today): tables 103 → 123, RLS policies 222 → 261, every new table with RLS and a negative test.
+21 migrations, **00078 → 00098**, applied in order by `npm run db:migrate`. Measured effect (staging 8 Nov evening vs production today): tables 103 → 128, RLS policies 222 → 270, SECURITY DEFINER functions 84 → 136, every new table with RLS and a negative test.
 
 | Kind | What | Reversibility |
 |---|---|---|
-| New tables (additive) | `ai_*` (jobs, briefs, roles, settings), `listing_quality`, `lead_intelligence`, `agent_tasks`, `hero_links`, `hero_benefits`, `payment_providers`, `credit_packs(_prices)`, `payment_intents`, `payment_events`, `wa_accounts`, `wa_templates`, `wa_opt_outs`, `wa_messages`, `wa_webhook_events` | drop table |
+| New tables (additive) | `ai_*` (jobs, briefs, roles, settings, role_personas, weekly_reviews), `listing_quality`, `lead_intelligence`, `agent_tasks`, `hero_links`, `hero_benefits`, `payment_providers`, `credit_packs(_prices)`, `payment_intents`, `payment_events`, `wa_accounts`, `wa_templates`, `wa_opt_outs`, `wa_messages`, `wa_webhook_events`, `market_facts`, `closing_steps`, `closing_checklists` | drop table |
 | New nullable columns on live tables | `plans.family/product_key/product_name`, `subscriptions.family`, `contacts.wa_last_inbound_at`, `viewing_appointments.lead_id` (+ `submission_id` made nullable) | drop column / restore not-null |
 | Constraint changes | `credit_wallets` PK → (agent_id, kind) and `credit_transactions.kind` (**0 rows in production today**); `plan_versions` unique (plan, currency, version) + one-current-per-currency; `subscriptions` one live per (user, family); widened check lists on `entitlement_grants.source`, `credit_transactions.reason`, `lead_events` agent-insert kinds | each has a paired `down` note in its header |
-| Seeded reference rows | flags `whatsapp_cloud`, `whatsapp_marketing` (off); MYR + USD plan versions and IDR v2 for Pro/Agency (D4 prices); `payment_providers` (3, off); `credit_packs` (4, unpriced); `wa_accounts` (MY, ID, off); `hero_benefits` singleton (D3 values); AI roles catalogue | delete rows |
-| Functions / triggers | ~40 new or replaced SECURITY DEFINER functions; triggers: plan-version entitlement inheritance, subscription family, provider live-mode guard, updated_at | `create or replace` back |
+| Seeded reference rows | flags `whatsapp_cloud`, `whatsapp_marketing` (off); MYR + USD plan versions and IDR v2 for Pro/Agency (D4 prices); `payment_providers` (3, off); `credit_packs` (4, unpriced); `wa_accounts` (MY, ID, off); `hero_benefits` singleton (D3 values); AI roles catalogue (36, all live) + 36 characters; `ai_models` (20 features, `poster_image` off by design); `market_facts` (20) and `closing_steps` (30), all **draft** | delete rows |
+| Functions / triggers | ~50 new or replaced SECURITY DEFINER functions; triggers: plan-version entitlement inheritance, subscription family, provider live-mode guard, updated_at | `create or replace` back |
 
 No migration drops or rewrites existing business data. Expected run time on production: under one minute; no downtime (additive DDL, tiny tables).
 
 ### 4.2 Application delta
-`apps/hub` Worker: new routes (`/ai`, `/tasks`, `/plan`, `/plan/payment/[id]`, `/admin/{ai,hero,payments,whatsapp}`, `/api/cron`, `/api/payments/webhook/[provider]`, `/api/whatsapp/webhook`), the custom `worker.js` with the two Cron Triggers, messages in id/en/ms. `apps/www` **unchanged in behaviour** (it carries uncommitted earlier MY-market work that is already live).
+`apps/hub` Worker: new routes (`/ai` and `/ai/{research,outreach,documents,crossborder,coach,closing,review}`, `/tasks`, `/plan`, `/plan/payment/[id]`, `/collab/partners`, `/studio/plan`, `/listings/[id]/report`, `/admin/{ai,hero,payments,whatsapp}`, `/api/cron`, `/api/ai/document`, `/api/payments/webhook/[provider]`, `/api/whatsapp/webhook`), the custom `worker.js` with the two Cron Triggers, 72 character images under `public/ai/characters/`, messages in id/en/ms. `apps/www` **unchanged in behaviour** (it carries uncommitted earlier MY-market work that is already live).
 
 ### 4.3 Flags on production after migration (all pre-existing flags keep their values)
 `ai_features` is **enabled for everyone** in production today. The blueprint's deployment plan (§12.5) targets it to the pilot cohort. Recommendation: before any AI key is added to production, set `ai_features` to targeted (country / users) — one click on `/admin/flags/ai_features` — or every verified agent gets AI on day one.
@@ -142,8 +146,9 @@ Rotation note: any secret that was ever pasted into a chat or a terminal in earl
 
 ## 6. Security posture
 
-- **RLS everywhere**: 261 policies on staging; every new table has a negative test proving the wrong role is refused; the suite signs in as five real accounts, never as the service role for assertions.
-- **Writes through functions**: payments, WhatsApp, Hero grants, credits, AI ledger — none agent-writable; SECURITY DEFINER functions check `auth.uid()` and capability; service-only functions refuse any user session.
+- **RLS everywhere**: 270 policies on staging; every new table has a negative test proving the wrong role is refused; the suite signs in as five real accounts, never as the service role for assertions.
+- **Writes through functions**: payments, WhatsApp, Hero grants, credits, AI ledger, weekly-review cache — none agent-writable; market facts and closing steps are admin-only (`ai.manage`) and their verification is audited; SECURITY DEFINER functions check `auth.uid()` and capability; service-only functions refuse any user session.
+- **Files sent to a model** (E13 photo check, document summariser) are fetched or uploaded in memory, sent as bytes, and dropped; only the ledger row (feature, tokens, size hash) remains.
 - **No secrets in the database**: gateway and Meta keys are Worker variables; admin pages show presence by name only; `payment_events` / `wa_webhook_events` redact key-shaped fields.
 - **Key-shape vs mode guards**: a live Stripe or Midtrans key is refused under a sandbox row and the reverse; `live` provider mode is refused by trigger outside `LIVE_BILLING`; WhatsApp test mode is enforced in SQL against the recipient list.
 - **Webhooks**: every delivery verified (HMAC with the provider's secret), recorded verified or not, deduplicated on the provider's event id (and, for WhatsApp, only verified bodies dedupe — fixed after the first proof found an unsigned copy could suppress the real one).
@@ -158,7 +163,7 @@ Rotation note: any secret that was ever pasted into a chat or a terminal in earl
 
 | # | Risk | Likelihood / impact | Mitigation in place / needed |
 |---|---|---|---|
-| R1 | **Source only on one laptop** (C1) | high / severe | commit + push + tag before anything else |
+| R1 | **Source only on one laptop** (C1) | ~~high / severe~~ **closed 8 Nov** | on `main` in GitHub; tag the pilot-verified commit at step 1 of §10 |
 | R2 | AI cost or quality unknown — no key has ever been exercised | high / medium | caps + circuit breaker + per-agent quota built; pilot measures cost from `ai_jobs` against the owner's ceiling |
 | R3 | Hero link finds nobody (e-mail/phone mismatch between systems) | medium / medium | phone fallback + normalisation built; pilot agents verify with their Hero identities |
 | R4 | Malaysian ingest never lands (no verified MY company profile; Hero adapter sends ID only) | high for MY / medium | create the MY company profile; apply the prepared Hero change |
@@ -167,6 +172,8 @@ Rotation note: any secret that was ever pasted into a chat or a terminal in earl
 | R7 | Agents keep using `wa.me`; platform WhatsApp unused | medium / low | by design during pilot; adoption is an exit criterion for cut-over, not launch |
 | R8 | Pilot slips past 28 Nov → launch 30 Nov without pilot evidence | medium / high | §9 inputs by 20 Nov; if not, the honest answer is a later launch, not an untested one |
 | R9 | A migration misbehaves on production data that staging does not have (leads, requests) | low / medium | all migrations touching live tables are additive; backup/PITR confirmed first (C5); rollback runbook §10 |
+| R10 | An agent quotes a **draft** market fact or closing step to a client as if verified | medium / medium | every screen labels drafts and the brief says "to be confirmed"; the owner verifies rows on `/admin/ai` before the pilot (§9) |
+| R11 | AI quality of the nineteen new roles unknown — none has produced a model answer yet | high / medium | same caps and ledger as E1; the pilot exercises each once with a key; rules paths are the fallback by design |
 
 ---
 
@@ -196,7 +203,8 @@ P1–P6 and P9–P10 are the launch gate. P7 and P8 inform their own later appro
 | By | Input | Why |
 |---|---|---|
 | **now** | Go-ahead to **commit and push** the repository (C1), then enable the CI staging secrets | nothing else is safe until the source exists in two places |
-| 14 Nov | AI provider key (Gemini via Hero's billing, or Anthropic) into `.env.staging` | pilot P1–P6, P9 |
+| 14 Nov | AI provider key (Gemini via Hero's billing, or Anthropic) into `.env.staging` **and** as a secret on `ag-matchhub-staging` | pilot P1–P6, P9; first real exercise of every AI layer |
+| 14 Nov | Verify (or correct / retire) the 20 market facts and 30 closing steps on `/admin/ai`, ideally with a conveyancing lawyer per country | E13 roles show "draft" until then (R10) |
 | 14 Nov | `HERO_API_KEY` (scope `rens:status`) into `.env.staging` | pilot P5 |
 | 14 Nov | Pilot cohort names (2 MY + 2 ID + 1) and their Hero identities | registration on staging the week before |
 | 14 Nov | A verified **Malaysian company profile** on staging (and later production) for MY ingest | E10 MY path |
@@ -213,7 +221,7 @@ P1–P6 and P9–P10 are the launch gate. P7 and P8 inform their own later appro
 1. **Freeze.** Tag the pilot-verified commit. Confirm the Supabase backup / PITR point (C5); keep a `pg_dump` of the schema locally.
 2. **Residue.** If authorised: `npm run test:production` sweep removes the 32 `TSTREQ` requirements; delete the 3 test accounts by hand with an audit note.
 3. **Flags first.** On production `/admin/flags`: `ai_features` → targeted to the cohort; confirm `payments` off; (`whatsapp_*` arrive off with 00095).
-4. **Migrations.** `npm run db:status` → 19 pending → `npm run db:migrate` (production). Verify: `plan_catalogue('MYR'|'IDR'|'USD')` returns four rows each; `commercial_settings.billing_mode = FREE_LAUNCH`; `payment_providers` all `off`; `wa_accounts` all `off`.
+4. **Migrations.** `npm run db:status` → 21 pending (00078–00098) → `npm run db:migrate` (production). Verify: `plan_catalogue('MYR'|'IDR'|'USD')` returns four rows each; `commercial_settings.billing_mode = FREE_LAUNCH`; `payment_providers` all `off`; `wa_accounts` all `off`.
 5. **Secrets.** `wrangler secret put CRON_SECRET` (always); the AI key and `HERO_API_KEY` only if approved for launch. Record the current Worker deployment id for rollback.
 6. **Deploy hub.** Stop any dev server; `npm run deploy:hub` (wipes `.open-next`, builds, verifies the Supabase ref, deploys `ag-matchhub` with the two Cron Triggers). `apps/www` is not redeployed.
 7. **Smoke on production** with the cohort accounts: P1, P4, P5 (if Hero key), `/admin/ai`, `/plan` in the agent's currency, `/api/cron?only=reminders` with the secret returns JSON, Worker log shows `[cron 15m] 200`.
@@ -225,7 +233,7 @@ P1–P6 and P9–P10 are the launch gate. P7 and P8 inform their own later appro
 
 ## 11. What `APPROVE PRODUCTION` means — and does not
 
-**It authorises**: C1–C5 completed, steps 1–8 of §10 for the code and schema delivered in E0–E12, with the flags and secrets named in §4.3 and §5 at the levels the owner states in the approval.
+**It authorises**: C1–C5 completed, steps 1–8 of §10 for the code and schema delivered in E0–E13 (plus the characters), with the flags and secrets named in §4.3 and §5 at the levels the owner states in the approval.
 
 **It does not authorise** any of these, each of which keeps its own gate exactly as the owner's decisions require:
 
