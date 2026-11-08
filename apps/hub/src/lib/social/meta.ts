@@ -34,8 +34,10 @@ export function metaConfigured(): boolean {
   return !!(process.env.META_APP_ID && process.env.META_APP_SECRET);
 }
 
+/** Env only. A missing base throws: the OAuth redirect must never point at a dev server. */
 function redirectUri(): string {
-  const base = process.env.APP_BASE_URL ?? "http://localhost:8151";
+  const base = process.env.APP_BASE_URL;
+  if (!base) throw new Error("APP_BASE_URL is not set");
   return `${base}/api/social/oauth/callback`;
 }
 

@@ -98,9 +98,10 @@ export async function getAgentCardListings(agentId: string, limit = 3): Promise<
   return (data ?? []) as CardListing[];
 }
 
+/** Env only. A missing base throws: a card link must never point at a dev server. */
 export function cardUrl(slug: string): string {
-  const base =
-    process.env.APP_BASE_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:8151";
+  const base = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL;
+  if (!base) throw new Error("APP_BASE_URL is not set");
   return `${base}/c/${slug}`;
 }
 
