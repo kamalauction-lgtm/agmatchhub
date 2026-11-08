@@ -172,7 +172,7 @@ Rotation note: any secret that was ever pasted into a chat or a terminal in earl
 
 ## 8. Pilot plan and exit criteria (27–28 Nov, staging)
 
-**Who**: 2 MY + 2 ID + 1 optional real agents (D5), real identities, created through normal registration on staging and verified by the admin. **Where**: staging dev server behind a tunnel, or a staging Worker if the owner wants one (adds ~US$5/month). **Flags**: `ai_features`, `whatsapp_cloud`, `payments` targeted to these five only on staging.
+**Who**: 2 MY + 2 ID + 1 optional real agents (D5), real identities, created through normal registration on staging and verified by the admin. **Where**: the staging Worker **https://hub-staging.propertiguru.id** (`ag-matchhub-staging`, deployed 8 Nov on the owner's instruction; built against the staging project by `npm run deploy:staging -w @pg/hub`, which refuses a bundle naming production; its own secrets, its own VAPID pair, the same two cron schedules). Owner step before agents register there: set the staging Supabase project's Auth → Site URL / redirect URLs to this hostname so confirmation and reset e-mails land on staging. **Flags**: `ai_features`, `whatsapp_cloud`, `payments` targeted to these five only on staging.
 
 | # | Script (from blueprint §11) | Pass when |
 |---|---|---|

@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "deploy": "node -e \"for (const d of ['.open-next','.next']) fs.rmSync(d,{recursive:true,force:true})\" && opennextjs-cloudflare build && node ../../scripts/verify-build-target.mjs && opennextjs-cloudflare deploy",
     "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "dev:staging": "node scripts/dev-staging.mjs"
+    "dev:staging": "node scripts/dev-staging.mjs",
+    "deploy:staging": "node scripts/deploy-staging.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // STAGING Worker (8 Nov 2026): the same app, built against the staging
+  // Supabase project (aylzekkeurjsudazzxjv), on its own hostname. Deployed
+  // only by scripts/deploy-staging.mjs, which injects the staging values at
+  // build time and refuses a bundle that names the production project.
+  // Nothing here is reachable from the production Worker or its database.
+  "name": "ag-matchhub-staging",
+  "main": "worker.js",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "triggers": { "crons": ["*/15 * * * *", "0 23 * * *"] },
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    { "pattern": "hub-staging.propertiguru.id", "custom_domain": true }
+  ],
+  // Runtime env for server code; NEXT_PUBLIC_* are also inlined at build time
+  // from .env.staging.production (URLs) and packages/db/.env.staging (project).
+  // The publishable key is public by design. Secrets: `wrangler secret put
+  // <NAME> --config wrangler.staging.jsonc`.
+  "vars": {
+    "NEXT_PUBLIC_APP_URL": "https://hub-staging.propertiguru.id",
+    "NEXT_PUBLIC_MARKETPLACE_URL": "https://www.propertiguru.id",
+    "APP_BASE_URL": "https://hub-staging.propertiguru.id",
+    "AUTH_CALLBACK_URL": "https://hub-staging.propertiguru.id/auth/callback",
+    "REQUEST_LINK_BASE_URL": "https://hub-staging.propertiguru.id/r",
+    "CLIENT_PRESENTATION_BASE_URL": "https://hub-staging.propertiguru.id/p",
+    "EMAIL_FROM": "PropertiGuru Staging <noreply@propertiguru.id>",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://aylzekkeurjsudazzxjv.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_PMY_c8-sf8spUvnAKtYChg_6iXFD_rs",
+    "NEXT_PUBLIC_VAPID_PUBLIC_KEY": "BP_iHroTEk0mQkD5Wlx75Rb4V3QtEN7sNJCecm1rgx9dvnp7V4JwQaWlLzx2J0zXahMTEI0Ck9V1dclBPZujH9M",
+    "NEXT_PUBLIC_APP_NAME": "IQI AG Agent Platform",
+    "NEXT_PUBLIC_APP_SHORT_NAME": "Agent Platform",
+    "NEXT_PUBLIC_APP_TAGLINE": "One platform for your whole property business.",
+    "PG_TARGET_LABEL": "staging"
+  }
+}
