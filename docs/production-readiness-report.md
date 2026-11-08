@@ -18,7 +18,7 @@ Why not yet:
 
 | # | Condition for requesting `APPROVE PRODUCTION` | Status today |
 |---|---|---|
-| C1 | **The source is committed and pushed.** The repository's last commit is dated 23 Aug 2026; 256 files including **40 migrations (00057–00096) — 21 of which are already running in production** — exist only on this laptop. | **Open — highest priority.** Needs the owner's go-ahead to commit and push (branch `feat/propertiguru-next-foundation`, remote `kamalauction-lgtm/agmatchhub`). |
+| C1 | **The source is committed and pushed.** Until 8 Nov the last commit was dated 23 Aug 2026; 327 files including **40 migrations (00057–00096) — 21 of which are already running in production** — existed only on this laptop. | **Met 8 Nov** — commit `b902bd9` on `feat/propertiguru-next-foundation`, pushed to `kamalauction-lgtm/agmatchhub`; `packages/db/.env.*` now ignored explicitly and verified absent from the commit. CI runs on `main`/`develop`/PRs only, so open a PR (or merge) for the pipeline to run, and add the staging secrets (§5) for the RLS job. |
 | C2 | **The pilot (27–28 Nov) has run on staging with real agents and met its exit criteria** (§8). | Not started; blocked on the owner inputs in §9. |
 | C3 | **The production secrets exist** for what will be switched on (at minimum `CRON_SECRET`; an AI key if AI is to be live; others only with their own approvals). | Production Worker holds 6 secrets; none of the Stage B ones (§5). |
 | C4 | **Production residue decision**: 32 test requirements and 3 test accounts in production (§6). | Awaiting authorisation to remove. |
