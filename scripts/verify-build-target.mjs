@@ -76,6 +76,13 @@ const expectedRef = new URL(expectedUrl).hostname.split(".")[0];
 const REF = /https:\/\/([a-z]{20})\.supabase\.co/g;
 const found = new Map(); // ref -> first file that contained it
 
+// The hub's public URLs must not point at a local dev server. .env.local
+// outranks .env.production and its values are inlined, so a deploy from a
+// developer machine ships localhost links and nothing errors. Scoped to this
+// project's dev ports on purpose: a bare "localhost" appears in library text.
+const LOCAL_DEV = /https?:\/\/(?:localhost|127\.0\.0\.1):(?:8151|8152|8154)\b/g;
+const localFound = new Map(); // local URL -> first file that contained it
+
 function scan(dir) {
   for (const entry of readdirSync(dir)) {
     const path = join(dir, entry);
@@ -98,6 +105,9 @@ function scan(dir) {
     for (const m of text.matchAll(REF)) {
       if (!found.has(m[1])) found.set(m[1], path.slice(APP.length + 1));
     }
+    for (const m of text.matchAll(LOCAL_DEV)) {
+      if (!localFound.has(m[0])) localFound.set(m[0], path.slice(APP.length + 1));
+    }
   }
 }
 
@@ -115,6 +125,16 @@ if (wrong.length) {
       `correct this at runtime.\n\n` +
       `Fix: move .env.local aside, rebuild, then deploy.\n\n` +
       `    mv .env.local .env.local.dev && npm run deploy && mv .env.local.dev .env.local`
+  );
+}
+
+if (isHub && localFound.size) {
+  fail(
+    `The hub build contains local development URLs.\n\n` +
+      [...localFound].map(([u, file]) => `  found    : ${u}  in ${file}`).join("\n") +
+      `\n\nThese come from .env.local, which overrides .env.production in Next.js and\n` +
+      `is inlined into the bundle. A deploy would ship links to a dev server.\n\n` +
+      `Fix: move .env.local aside, rebuild, then deploy.`
   );
 }
 
