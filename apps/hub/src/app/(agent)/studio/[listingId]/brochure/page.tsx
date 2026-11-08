@@ -199,8 +199,12 @@ export default async function BrochurePage({
           <div className="min-w-0">
             <p className="font-semibold">{listing.agent_display_name}</p>
             <p className="text-sm text-muted">
-              {tB("contactLine")}{" "}
-              <span className="font-medium text-foreground">{listing.share_url}</span>
+              {listing.share_url && (
+                <>
+                  {tB("contactLine")}{" "}
+                  <span className="font-medium text-foreground">{listing.share_url}</span>
+                </>
+              )}
             </p>
           </div>
         </section>

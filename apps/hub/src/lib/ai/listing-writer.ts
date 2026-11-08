@@ -127,7 +127,8 @@ export function writeTitles(i: WriterInput): string[] {
  */
 export type StudioInput = WriterInput & {
   title: string;
-  url: string;
+  /** Null when no marketplace URL is configured; the call-to-action line is then left out. */
+  url: string | null;
   /** Raw DB value (rumah, apartemen…), used for hashtags. */
   propertyTypeSlug?: string | null;
   language?: string | null;
@@ -301,7 +302,7 @@ export function writeWhatsappBroadcast(i: StudioInput): string {
   const blocks: string[] = [`🏡 *${i.title}*`, facts.join("\n")];
   const ready = readyLine(i, L);
   if (ready) blocks.push(`✅ ${ready}`);
-  blocks.push(`${L.cta} ${i.url}`);
+  if (i.url) blocks.push(`${L.cta} ${i.url}`);
 
   return blocks.filter(Boolean).join("\n\n");
 }
@@ -345,7 +346,7 @@ export function writeSocialCaption(i: StudioInput): string {
   if (p) tail.push(`📍 ${p}`);
   if (tail.length) blocks.push(tail.join("\n"));
 
-  blocks.push(`${L.cta} ${i.url}\n${L.dm}`);
+  blocks.push(i.url ? `${L.cta} ${i.url}\n${L.dm}` : L.dm);
 
   const tags = suggestHashtags(i);
   if (tags.length) blocks.push(tags.join(" "));

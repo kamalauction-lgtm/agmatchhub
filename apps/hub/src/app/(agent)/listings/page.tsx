@@ -6,6 +6,7 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { SharePanel } from "@/components/listings/share-panel";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { shareCaption } from "@/lib/ai/listing-advisor";
+import { publicSiteUrl } from "@/lib/studio/listings";
 import { money, place } from "@/lib/listings/format";
 import { OfferToPool } from "@/components/listings/offer-to-pool";
 import { boostListing } from "./boost-actions";
@@ -151,9 +152,8 @@ export default async function MyListingsPage({
     ["draft", "pending_review", "published"].includes(l.status)
   ).length;
 
-  // Env only. Share captions embed this URL, so a missing value throws rather than shipping a wrong host.
-  const siteUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL;
-  if (!siteUrl) throw new Error("NEXT_PUBLIC_MARKETPLACE_URL is not set");
+  // Env only. Null when unset or malformed: share links are then withheld and the page still renders.
+  const siteUrl = publicSiteUrl();
 
   const notice =
     boosted ? { tone: "success" as const, text: t("boost.done") }
@@ -254,7 +254,7 @@ export default async function MyListingsPage({
           {ownRows.map((l) => {
             const boostEnd = activeBoostEnd(l.listing_boosts ?? []);
             const isLive = l.status === "published";
-            const url = `${siteUrl}/properti/${l.slug}`;
+            const url = siteUrl ? `${siteUrl}/properti/${l.slug}` : null;
             const caption = shareCaption({
               title: l.title,
               price: money(l.currency, l.price, l.rent_period),

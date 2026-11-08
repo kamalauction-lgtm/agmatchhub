@@ -128,7 +128,8 @@ export function shareCaption(opts: {
   title: string;
   price: string;
   place: string;
-  url: string;
+  /** Null when no marketplace URL is configured; the "more" line is then left out. */
+  url: string | null;
   bedrooms?: number | null;
   bathrooms?: number | null;
   size?: number | null;
@@ -148,7 +149,7 @@ export function shareCaption(opts: {
     specs ? `📐 ${specs}` : null,
     `💰 ${opts.price}`,
     ``,
-    `Selengkapnya: ${opts.url}`,
+    opts.url ? `Selengkapnya: ${opts.url}` : null,
   ]
     .filter((l) => l !== null)
     .join("\n");

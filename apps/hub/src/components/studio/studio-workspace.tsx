@@ -122,7 +122,8 @@ export function StudioWorkspace({
   /** Who is at the agent's side on each tab: Mira (WhatsApp), Kira (captions), Neo (TikTok), Juno (posters), Atlas (brochure). */
   companions?: Partial<Record<string, Companion>>;
   drafts: Record<StudioTextTabKey, string>;
-  shareUrl: string;
+  /** Null when no valid marketplace URL is configured: the Telegram and Facebook share targets are hidden. */
+  shareUrl: string | null;
   listingId: string;
   coverImageUrl: string | null;
   poster: PosterData;
@@ -418,14 +419,16 @@ export function StudioWorkspace({
               >
                 {labels.openInstagram}
               </button>
-              <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(current)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${btn} bg-[#229ED9] text-white hover:opacity-90`}
-              >
-                {labels.telegram}
-              </a>
+              {shareUrl && (
+                <a
+                  href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(current)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${btn} bg-[#229ED9] text-white hover:opacity-90`}
+                >
+                  {labels.telegram}
+                </a>
+              )}
               <a
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(current)}`}
                 target="_blank"
@@ -436,7 +439,7 @@ export function StudioWorkspace({
               </a>
             </>
           )}
-          {tab === "facebook" && (
+          {tab === "facebook" && shareUrl && (
             <button
               type="button"
               onClick={() =>

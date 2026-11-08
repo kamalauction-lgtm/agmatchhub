@@ -53,8 +53,8 @@ export type StudioListing = {
 
   /** Marketing someone else's mandate under a live engagement. */
   borrowed: boolean;
-  /** Lead-capture link for THIS agent's assets. */
-  share_url: string;
+  /** Lead-capture link for THIS agent's assets. Null when no valid marketplace URL is configured. */
+  share_url: string | null;
 };
 
 /** numeric columns can arrive from PostgREST as strings; coerce at the boundary. */
@@ -64,11 +64,19 @@ function num(v: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
-/** Env only. A missing value throws: a share link with the wrong host must not ship. */
-function marketplaceUrl(): string {
-  const url = process.env.NEXT_PUBLIC_MARKETPLACE_URL;
-  if (!url) throw new Error("NEXT_PUBLIC_MARKETPLACE_URL is not set");
-  return url;
+/**
+ * Env only. Null when the variable is unset, empty, or not an absolute
+ * http(s) URL. Callers then withhold share links; the page still renders.
+ */
+export function publicSiteUrl(): string | null {
+  const raw = process.env.NEXT_PUBLIC_MARKETPLACE_URL?.trim();
+  if (!raw) return null;
+  try {
+    const { protocol, origin } = new URL(raw);
+    return protocol === "https:" || protocol === "http:" ? origin : null;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -91,7 +99,7 @@ function toStudioListing(
   ownIds: Set<string>
 ): StudioListing {
   const borrowed = !ownIds.has(String(row.id));
-  const site = marketplaceUrl();
+  const site = publicSiteUrl();
 
   return {
     id: String(row.id),
@@ -133,11 +141,13 @@ function toStudioListing(
     // Borrowed → the borrower's landing page, which carries THEIR contact. A
     // missing slug falls back to the site root — never to the marketplace
     // listing page, which would credit the original agent.
-    share_url: borrowed
-      ? profile.public_slug
-        ? `${site}/agent/${profile.public_slug}`
-        : site
-      : `${site}/properti/${row.slug}`,
+    share_url: !site
+      ? null
+      : borrowed
+        ? profile.public_slug
+          ? `${site}/agent/${profile.public_slug}`
+          : site
+        : `${site}/properti/${row.slug}`,
   };
 }
 

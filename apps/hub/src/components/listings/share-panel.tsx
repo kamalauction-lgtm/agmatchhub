@@ -15,7 +15,8 @@ export function SharePanel({
   caption,
   labels,
 }: {
-  url: string;
+  /** Null when no valid marketplace URL is configured: link targets and copy-link are hidden; WhatsApp and copy-text stay. */
+  url: string | null;
   caption: string;
   labels: {
     share: string;
@@ -30,7 +31,7 @@ export function SharePanel({
   const [copied, setCopied] = useState<"none" | "link" | "text">("none");
 
   const encodedCaption = encodeURIComponent(caption);
-  const encodedUrl = encodeURIComponent(url);
+  const encodedUrl = url ? encodeURIComponent(url) : "";
 
   const targets = [
     {
@@ -55,7 +56,7 @@ export function SharePanel({
 
   async function copy(what: "link" | "text") {
     try {
-      await navigator.clipboard.writeText(what === "link" ? url : caption);
+      await navigator.clipboard.writeText(what === "link" ? (url ?? "") : caption);
       setCopied(what);
       setTimeout(() => setCopied("none"), 2000);
     } catch {
@@ -70,7 +71,7 @@ export function SharePanel({
       </p>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {targets.map((t) => (
+        {targets.filter((t) => url || t.key === "whatsapp").map((t) => (
           <a
             key={t.key}
             href={t.href}
@@ -81,13 +82,15 @@ export function SharePanel({
             {t.label}
           </a>
         ))}
-        <button
-          type="button"
-          onClick={() => copy("link")}
-          className="rounded-lg border border-line px-3 py-2 text-sm font-semibold hover:bg-surface"
-        >
-          {copied === "link" ? labels.copied : labels.copy}
-        </button>
+        {url && (
+          <button
+            type="button"
+            onClick={() => copy("link")}
+            className="rounded-lg border border-line px-3 py-2 text-sm font-semibold hover:bg-surface"
+          >
+            {copied === "link" ? labels.copied : labels.copy}
+          </button>
+        )}
       </div>
 
       <details className="mt-3">
