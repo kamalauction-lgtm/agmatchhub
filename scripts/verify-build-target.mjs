@@ -64,6 +64,12 @@ if (!expectedUrl) {
   fail(`NEXT_PUBLIC_SUPABASE_URL is not set in ${ENV_FILE}.`);
 }
 
+// Only the hub uses the marketplace link; apps/www does not define this variable.
+const isHub = APP.replace(/\\/g, "/").endsWith("/hub");
+if (isHub && !envValue("NEXT_PUBLIC_MARKETPLACE_URL")) {
+  fail(`NEXT_PUBLIC_MARKETPLACE_URL is not set in ${ENV_FILE}. The hub would hide marketplace links or fail on share links.`);
+}
+
 const expectedRef = new URL(expectedUrl).hostname.split(".")[0];
 
 // --- what it ACTUALLY points at ------------------------------------------------

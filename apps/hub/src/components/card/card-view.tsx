@@ -81,10 +81,9 @@ export function CardView({
 }) {
   const photo = cardPhotoUrl(card);
   const place = [card.city, card.state_region].filter(Boolean).join(", ");
+  // Env only. Empty means no marketplace links are rendered.
   const marketplaceUrl =
-    marketplaceUrlOverride ??
-    process.env.NEXT_PUBLIC_MARKETPLACE_URL ??
-    "https://www.propertiguru.id";
+    marketplaceUrlOverride ?? process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "";
 
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
@@ -177,6 +176,7 @@ export function CardView({
 
         {/* Links ---------------------------------------------------------- */}
         <div className="mt-5 space-y-2 text-left">
+          {marketplaceUrl && (
           <a
             href={`${marketplaceUrl}/agent/${card.public_slug}`}
             target="_blank"
@@ -192,6 +192,7 @@ export function CardView({
             )}
             <ArrowRightIcon className="h-4 w-4 shrink-0 text-muted" />
           </a>
+          )}
 
           {card.links.map((l) => {
             const Icon = PLATFORM_ICONS[l.platform] ?? LinkIcon;
@@ -214,7 +215,7 @@ export function CardView({
         </div>
 
         {/* Recent listings — evidence rather than a claim ------------------ */}
-        {listings.length > 0 && (
+        {listings.length > 0 && marketplaceUrl && (
           <section className="mt-6 text-left">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
               {labels.recentListings}

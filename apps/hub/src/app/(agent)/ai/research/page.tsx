@@ -44,7 +44,7 @@ export default async function ResearchPage({ searchParams }: { searchParams: Pro
         countries={(countries ?? []) as { code: string; name: string }[]}
         propertyTypes={propertyTypes}
         regencies={regencies}
-        marketplaceUrl={process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id"}
+        marketplaceUrl={process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? ""}
         initial={{ country, listingType: sp.lt === "rent" ? "rent" : "sale", propertyType: sp.type ?? "", regency: sp.regency ?? "", bedrooms: sp.br ?? "" }}
         labels={{
           sourceAi: tr.raw("sourceAi") as string, sourceRules: tr("sourceRules"),

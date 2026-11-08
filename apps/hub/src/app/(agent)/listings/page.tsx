@@ -151,7 +151,9 @@ export default async function MyListingsPage({
     ["draft", "pending_review", "published"].includes(l.status)
   ).length;
 
-  const siteUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id";
+  // Env only. Share captions embed this URL, so a missing value throws rather than shipping a wrong host.
+  const siteUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL;
+  if (!siteUrl) throw new Error("NEXT_PUBLIC_MARKETPLACE_URL is not set");
 
   const notice =
     boosted ? { tone: "success" as const, text: t("boost.done") }

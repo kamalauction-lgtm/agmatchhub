@@ -101,7 +101,7 @@ export function ResearchTool({ action, countries, propertyTypes, regencies, mark
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-semibold">{fmt(c.price, c.currency)}{c.rent_period ? ` /${c.rent_period === "monthly" ? "m" : "y"}` : ""}</span>
-                      <a href={`${marketplaceUrl}/p/${c.slug}`} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-blue hover:underline">{labels.openListing} ↗</a>
+                      {marketplaceUrl && <a href={`${marketplaceUrl}/p/${c.slug}`} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-blue hover:underline">{labels.openListing} ↗</a>}
                     </div>
                   </li>
                 ))}

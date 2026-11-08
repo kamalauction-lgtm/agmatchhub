@@ -76,7 +76,7 @@ export default async function BannersPage({
           banners={(data ?? []) as BannerRow[]}
           labels={labels}
           marketplaceUrl={
-            process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id"
+            process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? ""
           }
         />
       </div>

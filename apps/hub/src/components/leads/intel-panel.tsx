@@ -117,9 +117,11 @@ export function IntelPanel({
                     {money(m)} · {m.district_name ?? m.regency_name ?? "—"}{m.bedrooms != null ? ` · ${m.bedrooms} BR` : ""}{m.building_size ? ` · ${m.building_size} m²` : ""}
                   </p>
                   <p className="mt-1 text-xs text-muted">{m.reasons.map((r) => labels.why[r] ?? r).join(" · ")}</p>
-                  <a href={`${marketplaceUrl}/properti/${m.slug}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-blue hover:underline">
-                    {labels.openListing} →
-                  </a>
+                  {marketplaceUrl && (
+                    <a href={`${marketplaceUrl}/properti/${m.slug}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-blue hover:underline">
+                      {labels.openListing} →
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

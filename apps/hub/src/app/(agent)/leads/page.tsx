@@ -137,7 +137,8 @@ export default async function LeadsPage({
     noMatches: ti("noMatches"), own: ti("own"), pool: ti("pool"), openListing: ti("openListing"),
     why: Object.fromEntries(["same_area", "same_type", "same_category", "similar_price", "cheaper", "pricier", "similar_size"].map((k) => [k, ti(`why.${k}` as never)])),
   };
-  const marketplaceUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id";
+  // Env only. Empty hides the open-listing links in the intel panel.
+  const marketplaceUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "";
   const ts = await getTranslations("leadStatus");
   const format = await getFormatter();
 

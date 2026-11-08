@@ -90,7 +90,8 @@ export default async function DashboardPage({
   const days: Range = RANGES.includes(Number(rangeParam) as Range) ? (Number(rangeParam) as Range) : 30;
 
   const partnerIdentityPublic = await isPartnerIdentityPublic();
-  const marketplaceUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id";
+  // Env only (CLAUDE.md rule 6). Unset means no marketplace link is shown.
+  const marketplaceUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "";
   const supabase = await createClient();
   const {
     data: { user },
@@ -132,6 +133,7 @@ export default async function DashboardPage({
           supabase
             .from("listings")
             .select("id, title, status, price, currency, human_readable_id")
+            .eq("agent_id", user.id)
             .order("updated_at", { ascending: false })
             .limit(4),
           entitlementInt(user.id, ENTITLEMENT.boostMonthlyCredits),
@@ -606,7 +608,7 @@ export default async function DashboardPage({
                 />
                 {/* Opens the agent's public page on the marketplace — a
                     different origin, so a plain anchor rather than <Link>. */}
-                {profile?.public_slug ? (
+                {profile?.public_slug && marketplaceUrl ? (
                   <a
                     href={`${marketplaceUrl}/agent/${profile.public_slug}`}
                     target="_blank"

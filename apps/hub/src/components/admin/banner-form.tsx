@@ -54,7 +54,8 @@ export function BannerForm({
   const [cta, setCta] = useState(banner?.cta_label ?? "");
   const [image, setImage] = useState(banner?.image_path ?? "");
 
-  const previewSrc = image.startsWith("/") ? `${marketplaceUrl}${image}` : image;
+  // With no marketplace base, a root-relative image shows as its raw path (a preview placeholder), not a broken host.
+  const previewSrc = marketplaceUrl && image.startsWith("/") ? `${marketplaceUrl}${image}` : image;
 
   const field =
     "mt-1 w-full rounded-lg border border-line bg-background px-3 py-2 text-sm outline-none focus:border-crimson";

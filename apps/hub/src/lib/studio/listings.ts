@@ -64,8 +64,11 @@ function num(v: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/** Env only. A missing value throws: a share link with the wrong host must not ship. */
 function marketplaceUrl(): string {
-  return process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id";
+  const url = process.env.NEXT_PUBLIC_MARKETPLACE_URL;
+  if (!url) throw new Error("NEXT_PUBLIC_MARKETPLACE_URL is not set");
+  return url;
 }
 
 /**
