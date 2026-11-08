@@ -2094,7 +2094,8 @@
         "facilities": "the facilities",
         "other": "the missing detail"
       }
-    }
+    },
+    "ownerReport": "Owner report"
   },
   "studio": {
     "title": "Content studio",
@@ -2164,7 +2165,10 @@
       "download": "Download PNG",
       "shareImage": "Share image…",
       "noCoverNote": "This listing has no cover photo yet, so the image uses a plain background. Add photos to the listing for the full version.",
-      "exportFailed": "Could not export the image. Try again, or screenshot the preview."
+      "exportFailed": "Could not export the image. Try again, or screenshot the preview.",
+      "styleDark": "Classic",
+      "styleLight": "Light card",
+      "styleBand": "Accent band"
     },
     "errors": {
       "invalid": "That did not work — please check the form and try again.",
@@ -2252,7 +2256,20 @@
         "no_provider": "Written without AI — no AI provider is connected yet.",
         "failed": "Written without AI — the AI did not answer this time."
       }
-    }
+    },
+    "video": {
+      "tab": "Video",
+      "help": "A 30-second walkthrough: what to film, what to say, what to show on screen.",
+      "cta": "Write the script",
+      "working": "Writing…",
+      "scene": "Scene",
+      "shot": "Shot",
+      "voice": "Say",
+      "onScreen": "On screen",
+      "shotList": "Shot list",
+      "seconds": "{n}s"
+    },
+    "planLink": "Plan a week"
   },
   "listingStatus": {
     "draft": "Draft",
@@ -2409,7 +2426,8 @@
       "own_listing": "This is your own listing.",
       "pickup_failed": "That did not work. Please try again.",
       "invalid": "Something was missing from that request."
-    }
+    },
+    "partnersLink": "Partners abroad"
   },
   "adminBanners": {
     "title": "Marketplace banners",
@@ -3253,7 +3271,22 @@
       "my": "Malaysia",
       "id": "Indonesia"
     },
-    "personaSame": "same as default"
+    "personaSame": "same as default",
+    "knowledgeTitle": "Market facts & closing steps",
+    "knowledgeHint": "Seeded as draft (00098). Agents see the draft label until you mark a row verified. Retired rows disappear from agents.",
+    "factsTitle": "Market facts (cross-border buyers)",
+    "stepsTitle": "Closing steps",
+    "knowCols": {
+      "country": "Country",
+      "item": "Item",
+      "status": "Status",
+      "verifiedAt": "Verified"
+    },
+    "knowStatus": {
+      "draft": "Draft",
+      "verified": "Verified",
+      "retired": "Retired"
+    }
   },
   "aiWorkforce": {
     "title": "AI Workforce",
@@ -3286,7 +3319,8 @@
       "international": "International research & collaboration"
     },
     "meet": "Meet your AI colleagues — each has a name, a face and three strengths.",
-    "castCountry": "Cast for {country}"
+    "castCountry": "Cast for {country}",
+    "alsoHero": "Also in AG Hero"
   },
   "tasks": {
     "title": "Tasks & viewings",
@@ -3687,6 +3721,416 @@
       "duplicate": "A template with that name and language already exists for this number.",
       "invalid": "Invalid input.",
       "failed": "That action failed."
+    }
+  },
+  "aiTools": {
+    "backToWorkforce": "AI Workforce",
+    "quota": "{remaining} of {total} AI tasks left this month",
+    "sourceAi": "Written with AI — [model]. Check it before you use it.",
+    "sourceRules": "Written from the facts on record, without AI.",
+    "reason": {
+      "quota": "Without AI — this month’s AI tasks are used up.",
+      "daily_cap": "Without AI — today’s AI limit is reached.",
+      "platform_cap": "Without AI — the platform’s AI budget for today is spent.",
+      "circuit_open": "Without AI — AI is resting for a few minutes after errors.",
+      "disabled": "Without AI — AI is switched off by the platform.",
+      "feature_off": "Without AI — AI features are not enabled for your account yet.",
+      "unverified": "Without AI — AI opens after verification.",
+      "no_provider": "Without AI — no AI provider is connected yet.",
+      "failed": "Without AI — the AI did not answer this time."
+    },
+    "research": {
+      "title": "Listing Researcher",
+      "intro": "Comparable published listings and their asking prices around a search — the same public facts a buyer sees, gathered in one place.",
+      "listingType": "Sale or rent",
+      "sale": "For sale",
+      "rent": "For rent",
+      "propertyType": "Property type",
+      "regency": "Area",
+      "anyRegency": "Any area",
+      "bedrooms": "Bedrooms",
+      "anyBedrooms": "Any bedrooms",
+      "run": "Research",
+      "working": "Researching…",
+      "stats": "The numbers",
+      "count": "Listings",
+      "median": "Median asking",
+      "perSqm": "Median per m²",
+      "range": "Range",
+      "none": "No published listings match this search yet.",
+      "comparables": "Comparable listings",
+      "mine": "mine",
+      "typicalRange": "Typical range",
+      "drivers": "What moves the price",
+      "caution": "Caution",
+      "openListing": "Open",
+      "published": "listed"
+    },
+    "outreach": {
+      "title": "Owner Outreach Drafter",
+      "intro": "The first message to an owner who may want to sell or let. Respectful, specific, one easy next step — you send it from your own phone.",
+      "property": "The property",
+      "propertyHint": "e.g. 3-bedroom terrace on Jalan Melati, corner lot, for-sale sign up since June",
+      "source": "How you came across the owner",
+      "sourceHint": "e.g. expired listing, a sign, a neighbour’s referral",
+      "offer": "What you bring",
+      "offerHint": "e.g. two buyers looking in this street; a free valuation",
+      "ownerName": "Owner’s name (optional)",
+      "channel": "Channel",
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "run": "Draft the message",
+      "working": "Drafting…",
+      "message": "Message",
+      "subject": "Subject",
+      "followUp": "If there is no reply in a week",
+      "tips": "Tips",
+      "copy": "Copy",
+      "copied": "Copied",
+      "openWhatsapp": "Open WhatsApp with this text",
+      "phone": "Owner’s WhatsApp number (optional)",
+      "phoneHint": "Only to open WhatsApp — never stored",
+      "notStored": "Nothing you type here is saved. The owner becomes a contact only when you add them yourself."
+    },
+    "documents": {
+      "title": "Document Summariser",
+      "intro": "Upload a long document — a tenancy agreement, a sale and purchase agreement, a strata notice — and read the gist in your language. You verify anything legal or financial.",
+      "upload": "Upload a document",
+      "uploadHint": "PDF, photo or .txt, up to 8 MB",
+      "orPaste": "— or paste the text —",
+      "pasteHint": "Paste the document text here",
+      "run": "Summarise",
+      "working": "Reading…",
+      "kind": "Document",
+      "summary": "Summary",
+      "parties": "Parties",
+      "dates": "Key dates",
+      "amounts": "Amounts",
+      "obligations": "Obligations",
+      "verify": "Verify with a lawyer or the owner",
+      "unreadable": "The document could not be read well — the summary may be incomplete.",
+      "copy": "Copy summary",
+      "copied": "Copied",
+      "transient": "The file is read and dropped. Nothing is stored except the AI ledger entry (no content).",
+      "disclaimer": "A summary, not advice. Legal and financial terms must be confirmed with a qualified professional.",
+      "errors": {
+        "unsupported": "That file type is not supported. Use a PDF, a photo or a text file.",
+        "too_large": "The file is too large — up to 8 MB.",
+        "empty": "Upload a document or paste its text first."
+      }
+    },
+    "crossborder": {
+      "title": "Cross-border Researcher",
+      "intro": "What a buyer from the other market needs to know before they enquire — from the platform’s market facts, tailored to one listing. Draft facts are shown as draft until an admin verifies them.",
+      "listingCountry": "The listing is in",
+      "buyerCountry": "The buyer is from",
+      "listing": "Listing (optional)",
+      "noListing": "General brief, no specific listing",
+      "run": "Write the brief",
+      "working": "Writing…",
+      "facts": "Facts used",
+      "draft": "draft — to be confirmed",
+      "verified": "verified",
+      "draftBanner": "Some of these facts have not been verified yet. Treat them as a starting point and confirm before you quote them to a client.",
+      "headline": "In short",
+      "nextSteps": "Next steps",
+      "mustCheck": "Must be checked",
+      "copy": "Copy brief",
+      "copied": "Copied",
+      "source": "source",
+      "topics": {
+        "eligibility": "Eligibility",
+        "minimum_price": "Minimum price",
+        "restrictions": "Restrictions",
+        "title_types": "Title types",
+        "taxes_buying": "Taxes when buying",
+        "taxes_selling": "Taxes when selling",
+        "financing": "Financing",
+        "process": "Process",
+        "holding_costs": "Holding costs",
+        "visas": "Visas and stay"
+      }
+    },
+    "coach": {
+      "title": "Coach",
+      "intro": "Practise the conversation before you have it. Bring an objection a client raised, or answer a scenario and get honest feedback.",
+      "tabObjection": "Objection",
+      "tabPractice": "Practice",
+      "objection": "What the client said",
+      "objectionHint": "e.g. “It’s too expensive for this area.”",
+      "context": "Context (optional)",
+      "contextHint": "e.g. 2-bedroom condo, asking 650k, viewed yesterday",
+      "run": "Coach me",
+      "working": "Thinking…",
+      "meaning": "What it probably means",
+      "approaches": "Three ways to answer",
+      "sampleReply": "A reply you could send",
+      "followUp": "Then ask",
+      "copy": "Copy",
+      "copied": "Copied",
+      "scenario": "Scenario",
+      "yourReply": "Your reply",
+      "replyHint": "Write what you would actually say",
+      "score": "Score",
+      "clarity": "Clarity",
+      "empathy": "Empathy",
+      "nextStep": "Next step",
+      "feedback": "Feedback",
+      "improved": "A stronger version",
+      "tryNext": "Try answering this next",
+      "heroHint": "You are linked to AG Hero — the full Sales Lab and AI Coach are there too.",
+      "heroOpen": "Open in AG Hero",
+      "examples": {
+        "price": "It’s too expensive.",
+        "think": "Let me think about it.",
+        "agent": "I already have an agent.",
+        "wait": "I’ll wait for prices to drop."
+      }
+    },
+    "closing": {
+      "title": "Closing Checklist",
+      "intro": "The documents and steps between an accepted offer and the keys, for this country and this kind of deal. Start one per deal and tick as you go.",
+      "newTitle": "New checklist",
+      "labelHint": "e.g. Unit 12-3, Mr Tan",
+      "sale": "Sale",
+      "rent": "Rental",
+      "noLead": "Not linked to a lead",
+      "create": "Start checklist",
+      "mine": "My checklists",
+      "archived": "Archived",
+      "showOpen": "Show open",
+      "showArchived": "Show archived",
+      "empty": "No checklists yet.",
+      "pickOne": "Pick a checklist on the left, or start one.",
+      "markCompleted": "Mark completed",
+      "archive": "Archive",
+      "draftBanner": "Some steps are still draft — an admin has not verified them yet. Use them as a guide, not as legal advice.",
+      "draft": "draft",
+      "days": "{count, plural, one {~# day} other {~# days}}",
+      "notes": "Notes",
+      "saveNotes": "Save notes",
+      "status": {
+        "open": "Open",
+        "completed": "Completed",
+        "archived": "Archived"
+      },
+      "party": {
+        "agent": "Agent",
+        "buyer": "Buyer",
+        "seller": "Seller",
+        "landlord": "Landlord",
+        "tenant": "Tenant",
+        "lawyer": "Lawyer",
+        "notary": "Notary / PPAT",
+        "bank": "Bank",
+        "authority": "Authority"
+      },
+      "errors": {
+        "invalid": "Please check the fields.",
+        "save_failed": "That did not save. Please try again.",
+        "not_found": "That checklist was not found."
+      }
+    },
+    "review": {
+      "title": "Performance Reviewer",
+      "intro": "Your last seven days against the seven before — your own past first. Peers appear only as anonymised medians, and only when at least five were active.",
+      "verifyFirst": "The weekly review starts once your account is verified.",
+      "again": "Write it again",
+      "numbersOnly": "The numbers are below. The written insight needs an AI task.",
+      "metric": "Metric",
+      "thisWeek": "Last 7 days",
+      "lastWeek": "7 days before",
+      "weekOf": "Week of {date}",
+      "peersTitle": "Peers in your country",
+      "peersNote": "Medians across {count} active agents. Nobody is named.",
+      "peersFew": "Not enough active peers this week for a fair comparison.",
+      "m": {
+        "leads": "New enquiries",
+        "replies": "First replies sent",
+        "response": "Median time to first reply",
+        "published": "Listings published",
+        "views": "Listing views",
+        "inquiries": "Listing enquiries"
+      }
+    },
+    "partners": {
+      "title": "Partner Finder",
+      "intro": "Verified agents in the other market who work the same property categories as you — for cross-border referrals and co-broke. Only what their public profile shows.",
+      "noCategories": "Add your property categories to your profile so partners can be matched to you.",
+      "editProfile": "Edit profile",
+      "empty": "No matching agents in the other market yet.",
+      "listings": "{count, plural, one {# listing} other {# listings}}",
+      "poolOffers": "{count, plural, one {# pool offer} other {# pool offers}}",
+      "viewCard": "View card",
+      "seePool": "See pool",
+      "privacy": "Contact goes through the public card. No phone numbers are shown here."
+    },
+    "plan": {
+      "title": "Social Calendar Planner",
+      "intro": "A week of posts across your listings — one a day, rotating listings and platforms, a different angle each day. Edit, keep what you like, schedule through the Studio.",
+      "weekStart": "Week starting",
+      "plan": "Plan the week",
+      "working": "Planning…",
+      "empty": "You need at least one published listing to plan a week.",
+      "noAccounts": "No social account is connected, so posts can be copied but not scheduled.",
+      "connect": "Connect an account",
+      "keep": "Keep",
+      "time": "Time",
+      "scheduleAll": "Schedule {count} posts",
+      "scheduledHint": "Each kept post goes into your queue exactly as shown. Instagram posts need a cover photo.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "igNeedsImage": "No cover photo — Instagram cannot publish this one.",
+      "errors": {
+        "invalid": "The plan could not be read. Plan the week again.",
+        "nothing_scheduled": "Nothing was scheduled — check the accounts, the times and the photos."
+      },
+      "angles": {
+        "price": "price",
+        "location": "location",
+        "lifestyle": "lifestyle",
+        "feature": "one feature",
+        "question": "a question",
+        "photos": "the photos",
+        "cta": "call to action"
+      },
+      "weekdays": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "report": {
+      "title": "Owner Report Writer",
+      "intro": "This listing’s period in numbers, written up as the update you send to the owner: what happened, what it means, what you will do next.",
+      "days": "{count, plural, one {Last # day} other {Last # days}}",
+      "ownerName": "Owner’s name",
+      "apply": "Apply",
+      "writeAi": "Write with AI",
+      "writeAgain": "Write it again",
+      "nextSteps": "Next steps",
+      "copy": "Copy report",
+      "copied": "Copied",
+      "sendWhatsapp": "Send via WhatsApp",
+      "sendNote": "Opens WhatsApp on your phone with the text — you pick the owner there. Nothing is sent by the platform.",
+      "live": "Live for {days} days",
+      "priceChanges": "{count, plural, one {# price change} other {# price changes}}",
+      "m": {
+        "views": "Views",
+        "unique": "People",
+        "saves": "Saves",
+        "whatsapp": "WhatsApp clicks",
+        "newLeads": "New enquiries",
+        "viewingStage": "At viewing stage",
+        "negotiating": "Negotiating",
+        "viewingsBooked": "Viewings booked"
+      }
+    },
+    "refresh": {
+      "title": "Refresh planner",
+      "hint": "{count, plural, one {# listing needs} other {# listings need}} attention this week",
+      "reason": {
+        "expiring": "Expires soon",
+        "no_photos": "No photos",
+        "reverify": "Re-verify",
+        "stale": "Gone quiet",
+        "old_draft": "Old draft"
+      },
+      "action": {
+        "expiring": "Renew",
+        "no_photos": "Add photos",
+        "reverify": "Confirm details",
+        "stale": "Promote",
+        "old_draft": "Finish"
+      },
+      "stats": "{views} views in 14 days · {inquiries} enquiries in 30 days"
+    },
+    "photos": {
+      "title": "Photo check",
+      "hint": "Duplicates and resolution are checked at once. “Check with AI” looks for blur, faces, number plates, documents and watermarks.",
+      "check": "Check with AI",
+      "working": "Looking…",
+      "noPhotos": "This listing has no photos yet.",
+      "tooFew": "Fewer than 5 photos",
+      "noCover": "No cover photo",
+      "allGood": "All clear",
+      "bestCover": "Photo {n} would make the best cover.",
+      "duplicateOf": "(same as #{n})",
+      "summary": "Summary",
+      "rule": {
+        "low_res": "low resolution",
+        "tiny_file": "very small file",
+        "duplicate": "duplicate"
+      },
+      "issue": {
+        "blur": "blurry",
+        "dark": "too dark",
+        "face": "face visible",
+        "plate": "number plate",
+        "document": "document / screen",
+        "watermark": "watermark",
+        "not_property": "not the property",
+        "other": "check"
+      }
+    },
+    "translate": {
+      "fieldsTitle": "{lang} version",
+      "cta": "Translate to {lang}",
+      "working": "Translating…",
+      "done": "Translated — review the fields, then save.",
+      "notes": "Notes",
+      "hint": "Shown to buyers who browse in this language. Review every number and name before saving.",
+      "titleField": "Title",
+      "descriptionField": "Description",
+      "replyCta": "Translate",
+      "lang": {
+        "en": "English",
+        "id": "Bahasa Indonesia",
+        "ms": "Bahasa Malaysia"
+      }
+    },
+    "onboarding": {
+      "title": "Your first week",
+      "progress": "{done} of {total} done",
+      "next": "Next",
+      "steps": {
+        "profile": "Complete your profile",
+        "verified": "Get verified",
+        "first_listing": "Create your first listing",
+        "first_photo": "Add photos to a listing",
+        "first_published": "Get a listing published",
+        "first_share": "Share a listing from the Studio",
+        "first_lead": "Receive your first enquiry",
+        "first_reply": "Reply to an enquiry",
+        "first_task": "Plan your first task",
+        "first_viewing": "Arrange your first viewing",
+        "first_guide": "Finish a training guide"
+      }
+    },
+    "profiler": {
+      "title": "Paste the chat, get the requirement",
+      "hint": "Paste what the client wrote (WhatsApp, e-mail, notes). The fields below fill in with only what they actually said — check each one.",
+      "placeholder": "e.g. “Looking for a 3-bedroom condo to rent in Mont Kiara, max RM4,500, fully furnished, moving in January.”",
+      "run": "Fill the form",
+      "working": "Reading…",
+      "filled": "{count} fields filled — check them below",
+      "missing": "Still to ask",
+      "privacy": "The chat is not stored. Names and phone numbers are removed before the AI sees it."
+    },
+    "offerSummary": {
+      "cta": "Explain this offer",
+      "working": "Writing…",
+      "forOwner": "For the owner",
+      "forBuyer": "For the buyer / tenant",
+      "keyTerms": "Key terms",
+      "caveats": "Caveats",
+      "nextStep": "Next step",
+      "copy": "Copy",
+      "copied": "Copied"
     }
   }
 }

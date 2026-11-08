@@ -9,6 +9,7 @@ import { shareCaption } from "@/lib/ai/listing-advisor";
 import { money, place } from "@/lib/listings/format";
 import { OfferToPool } from "@/components/listings/offer-to-pool";
 import { boostListing } from "./boost-actions";
+import { RefreshPlanner } from "@/components/listings/refresh-planner";
 
 /**
  * The agent's inventory, in two parts: listings they hold the mandate for, and
@@ -235,6 +236,9 @@ export default async function MyListingsPage({
         </p>
       )}
 
+      {/* The Refresh Planner (00098): what expires or goes stale, and what to do. */}
+      <RefreshPlanner />
+
       <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">
         {t("sectionOwn")}
       </h2>
@@ -308,6 +312,15 @@ export default async function MyListingsPage({
                   >
                     {t("edit.cta")}
                   </Link>
+                  {isLive && (
+                    <Link
+                      href={`/listings/${l.id}/report`}
+                      className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+                      title={t("ownerReport")}
+                    >
+                      {t("ownerReport")}
+                    </Link>
+                  )}
 
                   {isLive && (
                     <form action={boostListing} className="shrink-0">

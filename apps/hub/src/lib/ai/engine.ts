@@ -10,6 +10,7 @@ import {
   ProviderError,
   type ModelRoute,
   type Provider,
+  type Attachment,
 } from "@pg/ai";
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
@@ -53,6 +54,13 @@ export type AiContext = {
   /** Allow an unverified agent (admins testing prompts). Default false. */
   allowUnverified?: boolean;
   temperature?: number;
+  /**
+   * Files that go to the model with the text (photos, a PDF). Never redacted,
+   * never logged; only their count and sizes enter the input hash.
+   */
+  attachments?: Attachment[];
+  /** A vision or document call may need longer than a text one. */
+  timeoutMs?: number;
 };
 
 type QuotaRow = {
@@ -125,7 +133,10 @@ export async function runAi<T>(
   // 5 · Input: redact, then fill.
   const safeInput = ctx.redactInput === false ? input : redactDeep(input);
   const userText = fillTemplate(prompt.template, { ...safeInput, input: safeInput });
-  const inputHash = await sha256Hex(canonical({ feature, v: prompt.version, locale: ctx.locale, i: safeInput }));
+  const inputHash = await sha256Hex(canonical({
+    feature, v: prompt.version, locale: ctx.locale, i: safeInput,
+    a: (ctx.attachments ?? []).map((x) => [x.mimeType, x.dataBase64.length]),
+  }));
 
   // 6 · Call, fall back once, record exactly once per attempt.
   let lastKind: ProviderError["kind"] = "upstream";
@@ -133,7 +144,10 @@ export async function runAi<T>(
     const apiKey = process.env[apiKeyEnvName(route.provider)];
     if (!apiKey) continue;
     try {
-      const res = await generate({ route, apiKey, system: prompt.system, user: userText, schema, temperature: ctx.temperature });
+      const res = await generate({
+        route, apiKey, system: prompt.system, user: userText, schema, temperature: ctx.temperature,
+        attachments: ctx.attachments, timeoutMs: ctx.timeoutMs,
+      });
       const jobId = await record({
         status: "ok", provider: res.provider, model: res.model, prompt_version: prompt.version, input_hash: inputHash,
         tokens_in: res.usage.tokensIn, tokens_out: res.usage.tokensOut, cost_micros: res.costMicros, latency_ms: res.latencyMs,

@@ -176,6 +176,12 @@ export default async function PoolPage({
         >
           {t("offerMine")}
         </Link>
+        <Link
+          href="/collab/partners"
+          className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+        >
+          {t("partnersLink")}
+        </Link>
       </div>
       <p className="mb-6 max-w-2xl text-sm text-muted">{t("intro")}</p>
 

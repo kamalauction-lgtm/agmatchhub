@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { pickTranslation } from "@/lib/training";
+import { OnboardingGuide } from "@/components/training/onboarding-guide";
 
 /**
  * Training & guides — the last module card to come alive (§20's grid).
@@ -47,6 +48,9 @@ export default async function TrainingPage() {
     <AgentShell>
       <h1 className="text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-4 mt-1 text-sm text-muted">{t("intro")}</p>
+
+      {/* The Onboarding Guide (00098): the first listing, lead and viewing as live facts. */}
+      <OnboardingGuide />
 
       {total > 0 && (
         <div className="mb-6">

@@ -83,3 +83,16 @@ export async function draftStudioCopy(listingId: string): Promise<StudioAiResult
     texts: { whatsapp: floor.whatsapp, caption: floor.caption, facebook: floor.caption, tiktok: "", brochure: "" },
   };
 }
+
+/** Video Script Writer: a 30-second walkthrough with a shot list, from the same facts as the copy. */
+export async function draftVideoScript(listingId: string) {
+  const user = await requireUser();
+  if (!z.string().uuid().safeParse(listingId).success) throw new Error("bad listing id");
+  const listing = await getStudioListing(user.id, listingId);
+  if (!listing) throw new Error("listing not found");
+  const locale = copyLocaleFor(listing);
+  const tt = await getTranslations({ locale, namespace: "propertyTypes" });
+  const input = buildStudioInput(listing, (slug) => (tt.has(slug as never) ? tt(slug as never) : slug));
+  const { writeVideoScript } = await import("@/lib/ai/video-script");
+  return writeVideoScript({ ...input, listingId: listing.id, currency: listing.currency }, { userId: user.id, locale });
+}

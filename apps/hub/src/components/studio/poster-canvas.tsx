@@ -37,7 +37,13 @@ export type PosterLabels = {
   shareImage: string;
   noCoverNote: string;
   exportFailed: string;
+  styleDark: string;
+  styleLight: string;
+  styleBand: string;
 };
+
+/** Poster Designer templates (00098): the classic dark gradient, a light card, an accent band. */
+type Style = "dark" | "light" | "band";
 
 type Preset = "feed" | "story";
 const SIZES: Record<Preset, { w: number; h: number }> = {
@@ -111,6 +117,7 @@ const FONT = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
 
 export function PosterCanvas({ data, labels }: { data: PosterData; labels: PosterLabels }) {
   const [preset, setPreset] = useState<Preset>("feed");
+  const [style, setStyle] = useState<Style>("dark");
   const [failed, setFailed] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -125,11 +132,53 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       const accent = accentColor();
+      const margin = 64;
+      // Story posters leave room for Instagram's UI at both ends.
+      const topSafe = preset === "story" ? 180 : margin;
+      const bottomSafe = preset === "story" ? 220 : margin;
+
+      if (style === "light") {
+        // Photo on the upper two thirds, a white card with dark text below.
+        const cardTop = Math.round(h * 0.62);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, w, h);
+        ctx.save();
+        ctx.beginPath(); ctx.rect(0, 0, w, cardTop); ctx.clip();
+        ctx.fillStyle = "#e9e9ee"; ctx.fillRect(0, 0, w, cardTop);
+        if (img) drawCover(ctx, img, w, cardTop);
+        ctx.restore();
+        ctx.font = `700 34px ${FONT}`;
+        const bt = data.badge.toUpperCase();
+        const bw = ctx.measureText(bt).width + 48;
+        ctx.fillStyle = accent; roundRect(ctx, margin, topSafe, bw, 64, 14); ctx.fill();
+        ctx.fillStyle = "#ffffff"; ctx.textBaseline = "middle"; ctx.fillText(bt, margin + 24, topSafe + 34);
+        ctx.textBaseline = "alphabetic";
+        const maxWidth = w - margin * 2;
+        let y = cardTop + 96;
+        if (data.price) { ctx.font = `800 72px ${FONT}`; ctx.fillStyle = accent; ctx.fillText(data.price, margin, y); y += 72; }
+        ctx.font = `600 42px ${FONT}`; ctx.fillStyle = "#15151a";
+        for (const line of wrapLines(ctx, data.title, maxWidth, 2)) { ctx.fillText(line, margin, y); y += 54; }
+        y += 8;
+        if (data.specs) { ctx.font = `500 32px ${FONT}`; ctx.fillStyle = "#4a4a55"; ctx.fillText(data.specs, margin, y); y += 50; }
+        if (data.place) { ctx.font = `500 32px ${FONT}`; ctx.fillStyle = "#4a4a55"; ctx.fillText(`📍 ${data.place}`, margin, y); y += 50; }
+        if (data.agentName) { ctx.font = `500 28px ${FONT}`; ctx.fillStyle = "#6a6a75"; ctx.fillText(data.agentName, margin, Math.min(y + 10, h - bottomSafe)); }
+        return;
+      }
 
       // Backdrop — also the whole design when there is no photo.
       ctx.fillStyle = "#101014";
       ctx.fillRect(0, 0, w, h);
       if (img) drawCover(ctx, img, w, h);
+
+      if (style === "band") {
+        // An accent band across the top carries the badge and the price.
+        const bandH = 190;
+        ctx.fillStyle = accent; ctx.fillRect(0, topSafe - 24, w, bandH);
+        ctx.fillStyle = "#ffffff"; ctx.textBaseline = "middle";
+        ctx.font = `700 34px ${FONT}`; ctx.fillText(data.badge.toUpperCase(), margin, topSafe + 30);
+        if (data.price) { ctx.font = `800 70px ${FONT}`; ctx.fillText(data.price, margin, topSafe + 108); }
+        ctx.textBaseline = "alphabetic";
+      }
 
       // Legibility gradient over the lower part.
       const grad = ctx.createLinearGradient(0, h * 0.42, 0, h);
@@ -138,21 +187,18 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
-      const margin = 64;
-      // Story posters leave room for Instagram's UI at both ends.
-      const topSafe = preset === "story" ? 180 : margin;
-      const bottomSafe = preset === "story" ? 220 : margin;
-
-      // Listing-type badge, top-left.
-      ctx.font = `700 34px ${FONT}`;
-      const badgeText = data.badge.toUpperCase();
-      const bw = ctx.measureText(badgeText).width + 48;
-      ctx.fillStyle = accent;
-      roundRect(ctx, margin, topSafe, bw, 64, 14);
-      ctx.fill();
-      ctx.fillStyle = "#ffffff";
-      ctx.textBaseline = "middle";
-      ctx.fillText(badgeText, margin + 24, topSafe + 34);
+      // Listing-type badge, top-left (the band style already carries it).
+      if (style === "dark") {
+        ctx.font = `700 34px ${FONT}`;
+        const badgeText = data.badge.toUpperCase();
+        const bw = ctx.measureText(badgeText).width + 48;
+        ctx.fillStyle = accent;
+        roundRect(ctx, margin, topSafe, bw, 64, 14);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.textBaseline = "middle";
+        ctx.fillText(badgeText, margin + 24, topSafe + 34);
+      }
 
       // Facts stack, drawn bottom-up so spacing stays right on both presets.
       ctx.textBaseline = "alphabetic";
@@ -189,13 +235,13 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
       }
       y -= 14;
 
-      if (data.price) {
+      if (data.price && style === "dark") {
         ctx.font = `800 76px ${FONT}`;
         ctx.fillStyle = "#ffffff";
         ctx.fillText(data.price, margin, y);
       }
     },
-    [preset, data]
+    [preset, style, data]
   );
 
   useEffect(() => {
@@ -221,7 +267,7 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
 
   useEffect(() => {
     draw(imgRef.current);
-  }, [preset, draw]);
+  }, [preset, style, draw]);
 
   async function toBlob(): Promise<Blob | null> {
     const canvas = canvasRef.current;
@@ -237,7 +283,7 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${data.fileBase}-${preset}.png`;
+      a.download = `${data.fileBase}-${preset}-${style}.png`;
       a.click();
       URL.revokeObjectURL(url);
     } catch {
@@ -249,7 +295,7 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
     try {
       const blob = await toBlob();
       if (!blob) throw new Error("no blob");
-      const file = new File([blob], `${data.fileBase}-${preset}.png`, { type: "image/png" });
+      const file = new File([blob], `${data.fileBase}-${preset}-${style}.png`, { type: "image/png" });
       if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({ files: [file] });
       } else {
@@ -278,6 +324,14 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
       <div className="flex flex-wrap gap-2">
         {presetBtn("feed", labels.presetFeed)}
         {presetBtn("story", labels.presetStory)}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {(["dark", "light", "band"] as const).map((s) => (
+          <button key={s} type="button" onClick={() => setStyle(s)} aria-pressed={style === s}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${style === s ? "bg-indigo text-white" : "border border-line hover:bg-surface"}`}>
+            {s === "dark" ? labels.styleDark : s === "light" ? labels.styleLight : labels.styleBand}
+          </button>
+        ))}
       </div>
 
       {!data.imageUrl && (

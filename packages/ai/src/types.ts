@@ -16,12 +16,21 @@ export type ModelRoute = {
 
 export type Usage = { tokensIn: number; tokensOut: number };
 
+/**
+ * A file handed to the model alongside the text: a listing photo for the
+ * Photo Checker, a PDF for the Document Summariser. Base64, never a URL — the
+ * platform fetches what it is allowed to see and the provider sees only bytes.
+ */
+export type Attachment = { mimeType: string; dataBase64: string; label?: string };
+
 export type GenerateRequest<T> = {
   route: ModelRoute;
   apiKey: string;
   system: string;
   /** The user turn. Already redacted by the caller where the feature allows. */
   user: string;
+  /** Images or PDFs that travel with the user turn (vision / document features). */
+  attachments?: Attachment[];
   /** Output contract. The adapter asks for JSON and the result is parsed with it. */
   schema: ZodType<T>;
   temperature?: number;

@@ -25,7 +25,16 @@ export async function anthropicGenerate<T>(req: GenerateRequest<T>): Promise<Gen
         max_tokens: req.route.maxOutputTokens,
         temperature: req.temperature ?? 0.4,
         system: `${req.system}\n\nRespond with a single JSON object and nothing else.`,
-        messages: [{ role: "user", content: req.user }],
+        messages: [{
+          role: "user",
+          content: [
+            ...(req.attachments ?? []).map((a) =>
+              a.mimeType === "application/pdf"
+                ? { type: "document", source: { type: "base64", media_type: a.mimeType, data: a.dataBase64 } }
+                : { type: "image", source: { type: "base64", media_type: a.mimeType, data: a.dataBase64 } }),
+            { type: "text", text: req.user },
+          ],
+        }],
       }),
     },
     req.timeoutMs ?? 25_000,

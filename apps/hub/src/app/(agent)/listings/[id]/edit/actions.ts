@@ -26,6 +26,8 @@ const schema = z.object({
   listingId: z.string().uuid(),
   title: z.string().trim().min(8).max(140),
   description: z.string().trim().min(20).max(4000),
+  titleEn: z.string().trim().max(140).optional(),
+  descriptionEn: z.string().trim().max(4000).optional(),
   price: z.coerce.number().positive().max(1_000_000_000_000),
   listingType: z.enum(["sale", "rent"]),
   rentPeriod: z.enum(["monthly", "yearly", ""]).optional(),
@@ -65,6 +67,8 @@ export async function updateListing(formData: FormData): Promise<void> {
     .update({
       title: d.title,
       description: d.description,
+      title_en: d.titleEn || null,
+      description_en: d.descriptionEn || null,
       price: d.price,
       listing_type: d.listingType,
       rent_period: d.listingType === "rent" ? d.rentPeriod || null : null,

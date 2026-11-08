@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { PosterCanvas, type PosterData, type PosterLabels } from "./poster-canvas";
 import type { StudioAiResult } from "@/app/(agent)/studio/ai-actions";
+import type { VideoScript } from "@/lib/ai/video-script";
 import { CompanionBadge, type Companion } from "@/components/ai/companion";
 
 /**
@@ -37,7 +38,7 @@ const PHONE = /(08\d{8,}|\+62[\s-]?8\d{7,}|\+60[\s-]?1\d{8,})/;
 const CAPTION_MAX = 2200;
 
 export type StudioTextTabKey = "whatsapp" | "caption" | "facebook" | "tiktok";
-export type StudioTabKey = StudioTextTabKey | "images" | "brochure";
+export type StudioTabKey = StudioTextTabKey | "images" | "brochure" | "video";
 
 export type StudioAccount = {
   id: string;
@@ -52,6 +53,16 @@ export type StudioLabels = {
   tabTiktok: string;
   tabImages: string;
   tabBrochure: string;
+  tabVideo: string;
+  videoHelp: string;
+  videoCta: string;
+  videoWorking: string;
+  videoScene: string;
+  videoShot: string;
+  videoVoice: string;
+  videoOnScreen: string;
+  videoShotList: string;
+  videoSeconds: string;
   whatsappHelp: string;
   captionHelp: string;
   facebookHelp: string;
@@ -104,6 +115,7 @@ export function StudioWorkspace({
   accounts,
   scheduleAction,
   aiAction,
+  videoAction,
   quota,
   labels,
 }: {
@@ -117,6 +129,8 @@ export function StudioWorkspace({
   accounts: StudioAccount[];
   scheduleAction: (fd: FormData) => void;
   aiAction: (listingId: string) => Promise<StudioAiResult>;
+  /** The Video Script Writer (00098): a 30-second walkthrough with a shot list. */
+  videoAction: (listingId: string) => Promise<VideoScript>;
   quota: { remaining: number; total: number } | null;
   labels: StudioLabels;
 }) {
@@ -128,6 +142,17 @@ export function StudioWorkspace({
   const [pasteHint, setPasteHint] = useState(false);
   const [accountId, setAccountId] = useState(accounts[0]?.id ?? "");
   const [when, setWhen] = useState("");
+  const [video, setVideo] = useState<VideoScript | null>(null);
+  const [videoBusy, setVideoBusy] = useState(false);
+  const [videoErr, setVideoErr] = useState(false);
+
+  async function writeVideo() {
+    setVideoBusy(true); setVideoErr(false);
+    try { setVideo(await videoAction(listingId)); } catch { setVideoErr(true); } finally { setVideoBusy(false); }
+  }
+  const videoText = video
+    ? [video.title, "", `${labels.videoVoice}: ${video.hook}`, "", ...video.scenes.map((s, i) => `${i + 1}. [${s.seconds}s] ${labels.videoShot}: ${s.shot}\n   ${labels.videoVoice}: ${s.voice}${s.onScreen ? `\n   ${labels.videoOnScreen}: ${s.onScreen}` : ""}`), "", `CTA: ${video.cta}`, "", `${labels.videoShotList}:`, ...video.shotList.map((s) => `- ${s}`)].join("\n")
+    : "";
 
   // navigator.share exists on phones, not desktops; the server snapshot says
   // false so SSR and hydration agree, then the client snapshot takes over.
@@ -137,7 +162,7 @@ export function StudioWorkspace({
     () => false
   );
 
-  const isText = tab !== "images" && tab !== "brochure";
+  const isText = tab !== "images" && tab !== "brochure" && tab !== "video";
   const current = isText ? text[tab as StudioTextTabKey] : "";
   const hasPhone = PHONE.test(current);
   const overCaptionLimit = tab === "caption" && current.length > CAPTION_MAX;
@@ -152,6 +177,7 @@ export function StudioWorkspace({
     { key: "caption", label: labels.tabCaption, help: labels.captionHelp },
     { key: "facebook", label: labels.tabFacebook, help: labels.facebookHelp },
     { key: "tiktok", label: labels.tabTiktok, help: labels.tiktokHelp },
+    { key: "video", label: labels.tabVideo, help: labels.videoHelp },
     { key: "images", label: labels.tabImages, help: labels.imagesHelp },
     { key: "brochure", label: labels.tabBrochure, help: labels.brochureHelp },
   ];
@@ -270,6 +296,47 @@ export function StudioWorkspace({
         {tab === "images" && (
           <div className="mt-3">
             <PosterCanvas data={poster} labels={labels.poster} />
+          </div>
+        )}
+
+        {tab === "video" && (
+          <div className="mt-3 space-y-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <button type="button" onClick={writeVideo} disabled={videoBusy} className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-60`}>
+                {videoBusy ? labels.videoWorking : `✦ ${labels.videoCta}`}
+              </button>
+              {video && (
+                <p className="text-xs text-muted">
+                  <span className={`mr-2 rounded-full px-2 py-0.5 font-semibold ${video.source === "ai" ? "bg-indigo-soft text-indigo" : "bg-card text-muted"}`}>{video.source === "ai" ? "✦ AI" : "✍︎"}</span>
+                  {video.source === "ai" ? labels.aiSource.replace("[model]", video.model ?? "AI") : (labels.aiReasons[video.reason ?? "failed"] ?? labels.rulesSource)}
+                </p>
+              )}
+              {videoErr && <p className="text-xs text-danger">{labels.aiReasons.failed}</p>}
+            </div>
+            {video && (
+              <>
+                <p className="text-base font-semibold">{video.title}</p>
+                <p className="rounded-lg bg-indigo-soft px-3 py-2 text-sm italic">“{video.hook}”</p>
+                <ol className="space-y-2">
+                  {video.scenes.map((s, i) => (
+                    <li key={i} className="grid gap-1 rounded-lg border border-line bg-surface px-3 py-2 text-sm sm:grid-cols-[4rem_1fr]">
+                      <span className="text-xs font-semibold text-muted">{labels.videoScene} {i + 1} · {labels.videoSeconds.replace("{n}", String(s.seconds))}</span>
+                      <div>
+                        <p><span className="font-semibold">{labels.videoShot}:</span> {s.shot}</p>
+                        <p><span className="font-semibold">{labels.videoVoice}:</span> {s.voice}</p>
+                        {s.onScreen && <p className="text-xs text-muted"><span className="font-semibold">{labels.videoOnScreen}:</span> {s.onScreen}</p>}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <p className="text-sm"><span className="font-semibold">CTA:</span> {video.cta}</p>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.videoShotList}</p>
+                  <ul className="mt-1 list-disc pl-5 text-sm">{video.shotList.map((s, i) => <li key={i}>{s}</li>)}</ul>
+                </div>
+                <button type="button" onClick={() => copyText(videoText)} className={btnGhost}>{copied ? labels.copied : labels.copy}</button>
+              </>
+            )}
           </div>
         )}
 

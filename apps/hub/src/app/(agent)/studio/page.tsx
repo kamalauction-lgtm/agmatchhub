@@ -26,6 +26,10 @@ export default async function StudioPickerPage() {
           <p className="mt-1 text-sm text-muted">{t("intro")}</p>
         </div>
         <p className="text-sm">
+          <Link href="/studio/plan" className="font-medium text-crimson hover:underline">
+            {t("planLink")}
+          </Link>
+          {" · "}
           <Link href="/studio/scheduled" className="font-medium text-crimson hover:underline">
             {t("queueLink")}
           </Link>

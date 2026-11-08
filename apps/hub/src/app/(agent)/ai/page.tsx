@@ -161,7 +161,12 @@ export default async function AiWorkforcePage() {
                 );
                 const base = "group overflow-hidden rounded-2xl border bg-card shadow-card transition-colors duration-150";
                 return isLive ? (
-                  <Link key={r.key} href={r.route!} className={`${base} border-line hover:border-blue`}>{card}</Link>
+                  <div key={r.key} className="flex flex-col gap-1.5">
+                    <Link href={r.route!} className={`${base} border-line hover:border-blue`}>{card}</Link>
+                    {heroOpen && (
+                      <a href={r.external_url!} target="_blank" rel="noopener noreferrer" className="self-end text-xs font-semibold text-indigo hover:underline">{t("alsoHero")} ↗</a>
+                    )}
+                  </div>
                 ) : heroOpen ? (
                   <a key={r.key} href={r.external_url!} target="_blank" rel="noopener noreferrer" className={`${base} border-line hover:border-indigo`}>{card}</a>
                 ) : (

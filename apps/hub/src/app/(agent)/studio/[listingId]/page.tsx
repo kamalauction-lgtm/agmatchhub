@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { getStudioListing, publicMediaUrl } from "@/lib/studio/listings";
 import { schedulePost } from "../social-actions";
-import { draftStudioCopy } from "../ai-actions";
+import { draftStudioCopy, draftVideoScript } from "../ai-actions";
 import { writeWhatsappBroadcast, writeSocialCaption } from "@/lib/ai/listing-writer";
 import { buildStudioInput, copyLocaleFor } from "@/lib/studio/input";
 import { aiQuotaFor } from "@/lib/ai/engine";
@@ -157,6 +157,7 @@ export default async function StudioWorkspacePage({
         }))}
         scheduleAction={schedulePost}
         aiAction={draftStudioCopy}
+        videoAction={draftVideoScript}
         quota={quota ? { remaining: quota.remaining, total: quota.monthly_allowance } : null}
         labels={{
           tabWhatsapp: t("tabWhatsapp"),
@@ -165,6 +166,16 @@ export default async function StudioWorkspacePage({
           tabTiktok: t("tabTiktok"),
           tabImages: t("tabImages"),
           tabBrochure: t("tabBrochure"),
+          tabVideo: t("video.tab"),
+          videoHelp: t("video.help"),
+          videoCta: t("video.cta"),
+          videoWorking: t("video.working"),
+          videoScene: t("video.scene"),
+          videoShot: t("video.shot"),
+          videoVoice: t("video.voice"),
+          videoOnScreen: t("video.onScreen"),
+          videoShotList: t("video.shotList"),
+          videoSeconds: t.raw("video.seconds") as string,
           whatsappHelp: t("whatsappHelp"),
           captionHelp: t("captionHelp"),
           facebookHelp: t("facebookHelp"),
@@ -191,6 +202,9 @@ export default async function StudioWorkspacePage({
             shareImage: t("poster.shareImage"),
             noCoverNote: t("poster.noCoverNote"),
             exportFailed: t("poster.exportFailed"),
+            styleDark: t("poster.styleDark"),
+            styleLight: t("poster.styleLight"),
+            styleBand: t("poster.styleBand"),
           },
           // .raw: {count}/{max} are substituted in the client component.
           chars: t.raw("chars") as string,

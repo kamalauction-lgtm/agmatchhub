@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import Image from "next/image";
 import { Panel, StatCard } from "@/components/admin/panel";
 import { BarChart } from "@/components/admin/charts";
-import { updateModel, updateSettings, updateRoleStatus, upsertPersonaVariant } from "./actions";
+import { updateModel, updateSettings, updateRoleStatus, upsertPersonaVariant, setKnowledgeStatus } from "./actions";
 
 /**
  * The AI console: what the engine spent, what it refused, which model answers
@@ -71,6 +71,28 @@ export default async function AiAdminPage({
     .from("ai_role_personas").select("id, role_key, country_code, name, avatar_path").order("role_key");
   const personaDefault = new Map((personas ?? []).filter((p) => !p.country_code).map((p) => [p.role_key, p]));
   const personaFor = (key: string, c: string) => (personas ?? []).find((p) => p.role_key === key && p.country_code === c) ?? null;
+
+  // Market facts and closing steps (00098): draft until the owner verifies.
+  const [{ data: facts }, { data: steps }] = await Promise.all([
+    supabase.from("market_facts").select("id, country_code, audience, topic, body, status, verified_at").order("country_code").order("position"),
+    supabase.from("closing_steps").select("id, country_code, transaction_type, position, title, status, verified_at").order("country_code").order("transaction_type").order("position"),
+  ]);
+  const knowledgeRow = (table: "market_facts" | "closing_steps", r: { id: string; country_code: string; status: string; verified_at: string | null }, label: string, sub: string) => (
+    <tr key={r.id}>
+      <td className="px-4 py-2 font-mono text-muted">{r.country_code}</td>
+      <td className="px-2 py-2"><p className="font-medium">{label}</p><p className="max-w-xl truncate text-muted" title={sub}>{sub}</p></td>
+      <td className="px-2 py-2 text-muted">{r.verified_at ? new Date(r.verified_at).toLocaleDateString() : "—"}</td>
+      <td className="px-2 py-2">
+        <form action={setKnowledgeStatus} className="flex items-center gap-1">
+          <input type="hidden" name="table" value={table} /><input type="hidden" name="id" value={r.id} />
+          <select name="status" defaultValue={r.status} className={`${input} w-28`} aria-label={`${table} ${r.id}`}>
+            <option value="draft">{t("knowStatus.draft")}</option><option value="verified">{t("knowStatus.verified")}</option><option value="retired">{t("knowStatus.retired")}</option>
+          </select>
+          <button type="submit" className={btn}>{t("save")}</button>
+        </form>
+      </td>
+    </tr>
+  );
 
   return (
     <>
@@ -298,6 +320,26 @@ export default async function AiAdminPage({
                   </tr>
                 );
               })}
+            </tbody>
+          </table>
+        </div>
+      </Panel>
+
+      {/* Market facts & closing steps ------------------------------------- */}
+      <Panel title={t("knowledgeTitle")} hint={t("knowledgeHint")} className="mb-6" bodyClassName="p-0">
+        <div className="overflow-x-auto">
+          <p className="px-4 pt-3 text-xs font-semibold uppercase tracking-wide text-muted">{t("factsTitle")}</p>
+          <table className="w-full text-xs">
+            <thead className="text-left text-muted"><tr><th className="px-4 py-2">{t("knowCols.country")}</th><th className="px-2 py-2">{t("knowCols.item")}</th><th className="px-2 py-2">{t("knowCols.verifiedAt")}</th><th className="px-2 py-2">{t("knowCols.status")}</th></tr></thead>
+            <tbody className="divide-y divide-line">
+              {(facts ?? []).map((f) => knowledgeRow("market_facts", f, `${f.audience} · ${f.topic}`, ((f.body as Record<string, string>)?.en ?? "")))}
+            </tbody>
+          </table>
+          <p className="px-4 pt-4 text-xs font-semibold uppercase tracking-wide text-muted">{t("stepsTitle")}</p>
+          <table className="w-full text-xs">
+            <thead className="text-left text-muted"><tr><th className="px-4 py-2">{t("knowCols.country")}</th><th className="px-2 py-2">{t("knowCols.item")}</th><th className="px-2 py-2">{t("knowCols.verifiedAt")}</th><th className="px-2 py-2">{t("knowCols.status")}</th></tr></thead>
+            <tbody className="divide-y divide-line">
+              {(steps ?? []).map((s) => knowledgeRow("closing_steps", s, `${s.transaction_type} · ${s.position}`, ((s.title as Record<string, string>)?.en ?? "")))}
             </tbody>
           </table>
         </div>

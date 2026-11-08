@@ -21,7 +21,13 @@ export async function geminiGenerate<T>(req: GenerateRequest<T>): Promise<Genera
       headers: { "content-type": "application/json", "x-goog-api-key": req.apiKey },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: req.system }] },
-        contents: [{ role: "user", parts: [{ text: req.user }] }],
+        contents: [{
+          role: "user",
+          parts: [
+            ...(req.attachments ?? []).map((a) => ({ inlineData: { mimeType: a.mimeType, data: a.dataBase64 } })),
+            { text: req.user },
+          ],
+        }],
         generationConfig: {
           responseMimeType: "application/json",
           maxOutputTokens: req.route.maxOutputTokens,

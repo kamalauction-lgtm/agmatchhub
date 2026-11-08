@@ -10,6 +10,7 @@ import { sendLeadWhatsapp, sendLeadWhatsappTemplate } from "./whatsapp-actions";
 import { IntelPanel } from "@/components/leads/intel-panel";
 import { aiQuotaFor } from "@/lib/ai/engine";
 import { getCompanions } from "@/lib/ai/cast";
+import { translateReply } from "@/app/(agent)/ai/actions";
 
 /**
  * The agent's lead inbox — marketplace inquiries land here (§28 steps 11–16).
@@ -120,6 +121,12 @@ export default async function LeadsPage({
       useTemplate: tsec("platform.useTemplate"), sendTemplate: tsec("platform.sendTemplate"), variable: tsec.raw("platform.variable") as string,
       reasons: Object.fromEntries(["opted_out", "no_phone", "not_test_recipient", "no_account", "feature_off"].map((r) => [r, tsec(`platform.reason.${r}` as never)])),
     },
+  };
+  const ttx = await getTranslations("aiTools.translate");
+  const translateLabels = {
+    cta: ttx("replyCta"), working: ttx("working"),
+    targets: (["en", "id", "ms"] as const).map((c) => ({ code: c, label: ttx(`lang.${c}`) })),
+    reasons: replyLabels.reasons,
   };
   const ti = await getTranslations("leads.intel");
   const intelLabels = {
@@ -298,6 +305,8 @@ export default async function LeadsPage({
                       sendTemplateAction={sendLeadWhatsappTemplate}
                       platform={platformOf.get(lead.id) ?? null}
                       companions={{ whatsapp: cast.reply_drafter, email: cast.email_composer }}
+                      translateAction={translateReply}
+                      translate={translateLabels}
                       quota={quota ? { remaining: quota.remaining, total: quota.monthly_allowance } : null}
                       labels={replyLabels}
                     />

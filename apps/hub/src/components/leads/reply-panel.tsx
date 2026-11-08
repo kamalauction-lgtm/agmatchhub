@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { SecretaryDraft } from "@/lib/ai/secretary";
 import { CompanionBadge, type Companion } from "@/components/ai/companion";
+import type { TranslationResult } from "@/lib/ai/translate";
 
 /**
  * The Secretary on one lead: draft → edit → send.
@@ -63,6 +64,8 @@ export function ReplyPanel({
   sendTemplateAction,
   platform,
   companions,
+  translateAction,
+  translate,
   quota,
   labels,
 }: {
@@ -78,6 +81,9 @@ export function ReplyPanel({
   platform?: PlatformWhatsapp | null;
   /** The colleagues at the agent's side here: Mira drafts WhatsApp, Orion writes e-mail. */
   companions?: { whatsapp?: Companion; email?: Companion };
+  /** The Translation Assistant: the drafted text into another language, in place. */
+  translateAction?: (input: { text: string; target: "en" | "id" | "ms" }) => Promise<TranslationResult>;
+  translate?: { cta: string; working: string; targets: { code: "en" | "id" | "ms"; label: string }[]; reasons: Record<string, string> };
   quota: { remaining: number; total: number } | null;
   labels: ReplyLabels;
 }) {
@@ -88,6 +94,19 @@ export function ReplyPanel({
   const [subject, setSubject] = useState(defaultSubject);
   const [copied, setCopied] = useState(false);
   const [templateId, setTemplateId] = useState("");
+  const [target, setTarget] = useState<"en" | "id" | "ms">("en");
+  const [translating, setTranslating] = useState(false);
+  const [translateNote, setTranslateNote] = useState<string | null>(null);
+
+  async function doTranslate() {
+    if (!translateAction || !text.trim()) return;
+    setTranslating(true); setTranslateNote(null);
+    try {
+      const r = await translateAction({ text, target });
+      if (r.source === "ai" && r.fields.text) setText(r.fields.text);
+      else if (r.source === "rules") setTranslateNote(translate?.reasons[r.reason] ?? null);
+    } catch { setTranslateNote(translate?.reasons.failed ?? null); } finally { setTranslating(false); }
+  }
 
   async function ask(ch: "whatsapp" | "email") {
     setBusy(true);
@@ -138,6 +157,17 @@ export function ReplyPanel({
             <input value={subject} onChange={(e) => setSubject(e.target.value)} aria-label={labels.subject} className="w-full rounded-lg border border-line bg-card px-3 py-2 text-sm" />
           )}
           <textarea value={text} onChange={(e) => setText(e.target.value)} rows={channel === "email" ? 9 : 6} className="w-full rounded-lg border border-line bg-card px-3 py-2 text-sm leading-6" />
+          {translateAction && translate && (
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <select value={target} onChange={(e) => setTarget(e.target.value as "en" | "id" | "ms")} className="rounded-lg border border-line bg-card px-2 py-1.5 text-xs" aria-label={translate.cta}>
+                {translate.targets.map((x) => <option key={x.code} value={x.code}>{x.label}</option>)}
+              </select>
+              <button type="button" onClick={doTranslate} disabled={translating || !text.trim()} className={`${btn} border border-line bg-card hover:border-crimson hover:text-crimson disabled:opacity-50`}>
+                {translating ? translate.working : `✦ ${translate.cta}`}
+              </button>
+              {translateNote && <span className="text-muted">{translateNote}</span>}
+            </div>
+          )}
 
           {(draft.nextStep || draft.questions.length > 0) && (
             <div className="grid gap-2 text-xs text-muted sm:grid-cols-2">

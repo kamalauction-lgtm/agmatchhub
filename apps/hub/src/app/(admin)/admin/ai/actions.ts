@@ -186,3 +186,36 @@ export async function upsertPersonaVariant(formData: FormData): Promise<void> {
   revalidatePath("/dashboard");
   done("updated");
 }
+
+/* -------------------------------------------------------------------------- */
+
+const knowledgeSchema = z.object({
+  table: z.enum(["market_facts", "closing_steps"]),
+  id: z.string().uuid(),
+  status: z.enum(["draft", "verified", "retired"]),
+});
+
+/**
+ * Market facts and closing steps (00098) ship as DRAFT. Marking a row verified
+ * is the owner's sign-off that the fact is right for this market today — so it
+ * is audited with who and when, and agents stop seeing the draft label.
+ */
+export async function setKnowledgeStatus(formData: FormData): Promise<void> {
+  const actor = await requireCapability("ai.manage");
+  const parsed = knowledgeSchema.safeParse(Object.fromEntries(formData.entries()));
+  if (!parsed.success) done("invalid");
+  const { table, id, status } = parsed.data;
+  const supabase = await createClient();
+  const { data: before } = await supabase.from(table).select("status").eq("id", id).maybeSingle();
+  const { error } = await supabase.from(table).update({
+    status, updated_by: actor.id,
+    verified_by: status === "verified" ? actor.id : null,
+    verified_at: status === "verified" ? new Date().toISOString() : null,
+  }).eq("id", id);
+  if (error) { console.error("setKnowledgeStatus", error.message); done("failed"); }
+  await logAudit({ action: "ai.knowledge_status_changed", entityType: table, entityId: id, previous: { status: before?.status ?? null }, next: { status } });
+  revalidatePath(PATH);
+  revalidatePath("/ai/crossborder");
+  revalidatePath("/ai/closing");
+  done("updated");
+}

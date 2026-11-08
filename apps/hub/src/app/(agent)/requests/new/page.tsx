@@ -4,6 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { RequestForm } from "@/components/requests/request-form";
+import { ChatToRequirement } from "@/components/requests/chat-to-requirement";
+import { extractRequirementAction } from "@/app/(agent)/ai/actions";
+import { getCompanions } from "@/lib/ai/cast";
+import { AI_REASON_KEYS } from "@/components/ai/ai-status";
 
 export default async function NewRequestPage({
   searchParams,
@@ -18,6 +22,9 @@ export default async function NewRequestPage({
   if (profile?.agent_status !== "verified") redirect("/requests");
 
   const t = await getTranslations("requests");
+  const tb = await getTranslations("aiTools.profiler");
+  const tr = await getTranslations("aiTools");
+  const cast = await getCompanions(["buyer_profiler"]);
 
   return (
     <AgentShell>
@@ -29,6 +36,16 @@ export default async function NewRequestPage({
           <span className="mt-1 block text-xs">{t("dataKeptNote")}</span>
         </p>
       )}
+      <ChatToRequirement
+        action={extractRequirementAction}
+        companion={cast.buyer_profiler}
+        labels={{
+          sourceAi: tr.raw("sourceAi") as string, sourceRules: tr("sourceRules"),
+          reasons: Object.fromEntries(AI_REASON_KEYS.map((k) => [k, tr(`reason.${k}`)])),
+          title: tb("title"), hint: tb("hint"), placeholder: tb("placeholder"), run: tb("run"), working: tb("working"),
+          filled: tb.raw("filled") as string, missing: tb("missing"), privacy: tb("privacy"),
+        }}
+      />
       <RequestForm />
     </AgentShell>
   );

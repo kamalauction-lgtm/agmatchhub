@@ -2094,7 +2094,8 @@
         "facilities": "kemudahan",
         "other": "butiran yang tertinggal"
       }
-    }
+    },
+    "ownerReport": "Laporan pemilik"
   },
   "studio": {
     "title": "Studio kandungan",
@@ -2164,7 +2165,10 @@
       "download": "Muat turun PNG",
       "shareImage": "Kongsi imej…",
       "noCoverNote": "Iklan ini belum ada foto muka depan, jadi imej menggunakan latar kosong. Tambah foto pada iklan untuk versi penuh.",
-      "exportFailed": "Gagal mengeksport imej. Cuba lagi, atau tangkap skrin pratonton."
+      "exportFailed": "Gagal mengeksport imej. Cuba lagi, atau tangkap skrin pratonton.",
+      "styleDark": "Klasik",
+      "styleLight": "Kad cerah",
+      "styleBand": "Jalur aksen"
     },
     "errors": {
       "invalid": "Tidak berjaya — semak borang dan cuba lagi.",
@@ -2252,7 +2256,20 @@
         "no_provider": "Ditulis tanpa AI — belum ada pembekal AI disambungkan.",
         "failed": "Ditulis tanpa AI — AI tidak menjawab kali ini."
       }
-    }
+    },
+    "video": {
+      "tab": "Video",
+      "help": "Walkthrough 30 saat: apa yang dirakam, apa yang disebut, apa yang ditunjukkan di skrin.",
+      "cta": "Tulis skrip",
+      "working": "Menulis…",
+      "scene": "Babak",
+      "shot": "Syot",
+      "voice": "Sebut",
+      "onScreen": "Di skrin",
+      "shotList": "Senarai syot",
+      "seconds": "{n}s"
+    },
+    "planLink": "Rancang seminggu"
   },
   "listingStatus": {
     "draft": "Draf",
@@ -2409,7 +2426,8 @@
       "own_listing": "Ini listing anda sendiri.",
       "pickup_failed": "Itu tidak berjaya. Sila cuba lagi.",
       "invalid": "Ada maklumat yang tertinggal dalam permintaan itu."
-    }
+    },
+    "partnersLink": "Rakan kongsi luar negara"
   },
   "adminBanners": {
     "title": "Sepanduk pasaran",
@@ -3253,7 +3271,22 @@
       "my": "Malaysia",
       "id": "Indonesia"
     },
-    "personaSame": "sama seperti lalai"
+    "personaSame": "sama seperti lalai",
+    "knowledgeTitle": "Fakta pasaran & langkah penutupan",
+    "knowledgeHint": "Dibenihkan sebagai draf (00098). Ejen nampak label draf sehingga anda tandakan baris disahkan. Baris yang dibersarakan hilang daripada ejen.",
+    "factsTitle": "Fakta pasaran (pembeli rentas sempadan)",
+    "stepsTitle": "Langkah penutupan",
+    "knowCols": {
+      "country": "Negara",
+      "item": "Item",
+      "status": "Status",
+      "verifiedAt": "Disahkan"
+    },
+    "knowStatus": {
+      "draft": "Draf",
+      "verified": "Disahkan",
+      "retired": "Dibersarakan"
+    }
   },
   "aiWorkforce": {
     "title": "Tenaga Kerja AI",
@@ -3286,7 +3319,8 @@
       "international": "Penyelidikan & kerjasama antarabangsa"
     },
     "meet": "Kenali rakan sekerja AI anda — setiap satu ada nama, wajah dan tiga kekuatan.",
-    "castCountry": "Watak untuk {country}"
+    "castCountry": "Watak untuk {country}",
+    "alsoHero": "Juga di AG Hero"
   },
   "tasks": {
     "title": "Tugas & lawatan",
@@ -3687,6 +3721,416 @@
       "duplicate": "Templat dengan nama dan bahasa itu sudah wujud untuk nombor ini.",
       "invalid": "Input tidak sah.",
       "failed": "Tindakan itu gagal."
+    }
+  },
+  "aiTools": {
+    "backToWorkforce": "Tenaga Kerja AI",
+    "quota": "{remaining} daripada {total} tugasan AI berbaki bulan ini",
+    "sourceAi": "Ditulis dengan AI — [model]. Semak sebelum digunakan.",
+    "sourceRules": "Ditulis daripada fakta yang direkodkan, tanpa AI.",
+    "reason": {
+      "quota": "Tanpa AI — tugasan AI bulan ini sudah habis.",
+      "daily_cap": "Tanpa AI — had AI hari ini sudah dicapai.",
+      "platform_cap": "Tanpa AI — bajet AI platform untuk hari ini sudah habis.",
+      "circuit_open": "Tanpa AI — AI berehat beberapa minit selepas ralat.",
+      "disabled": "Tanpa AI — AI dimatikan oleh platform.",
+      "feature_off": "Tanpa AI — ciri AI belum diaktifkan untuk akaun anda.",
+      "unverified": "Tanpa AI — AI dibuka selepas pengesahan.",
+      "no_provider": "Tanpa AI — tiada penyedia AI disambungkan lagi.",
+      "failed": "Tanpa AI — AI tidak menjawab kali ini."
+    },
+    "research": {
+      "title": "Penyelidik Penyenaraian",
+      "intro": "Penyenaraian setara yang diterbitkan dan harga tawarannya di sekitar carian — fakta awam yang sama dilihat pembeli, dikumpul di satu tempat.",
+      "listingType": "Jual atau sewa",
+      "sale": "Untuk dijual",
+      "rent": "Untuk disewa",
+      "propertyType": "Jenis hartanah",
+      "regency": "Kawasan",
+      "anyRegency": "Mana-mana kawasan",
+      "bedrooms": "Bilik tidur",
+      "anyBedrooms": "Berapa pun",
+      "run": "Selidik",
+      "working": "Menyelidik…",
+      "stats": "Angkanya",
+      "count": "Penyenaraian",
+      "median": "Median tawaran",
+      "perSqm": "Median se-m²",
+      "range": "Julat",
+      "none": "Belum ada penyenaraian diterbitkan yang sepadan dengan carian ini.",
+      "comparables": "Penyenaraian setara",
+      "mine": "saya",
+      "typicalRange": "Julat lazim",
+      "drivers": "Yang menggerakkan harga",
+      "caution": "Perhatian",
+      "openListing": "Buka",
+      "published": "disenaraikan"
+    },
+    "outreach": {
+      "title": "Penggubal Mesej Pemilik",
+      "intro": "Mesej pertama kepada pemilik yang mungkin mahu menjual atau menyewakan. Sopan, khusus, satu langkah seterusnya yang mudah — anda hantar dari telefon sendiri.",
+      "property": "Hartanahnya",
+      "propertyHint": "cth. teres 3 bilik di Jalan Melati, lot tepi, papan tanda dijual sejak Jun",
+      "source": "Bagaimana anda tahu tentang pemilik",
+      "sourceHint": "cth. penyenaraian tamat, papan tanda, rujukan jiran",
+      "offer": "Apa yang anda bawa",
+      "offerHint": "cth. dua pembeli sedang mencari di jalan ini; penilaian percuma",
+      "ownerName": "Nama pemilik (pilihan)",
+      "channel": "Saluran",
+      "whatsapp": "WhatsApp",
+      "email": "E-mel",
+      "run": "Gubal mesej",
+      "working": "Menggubal…",
+      "message": "Mesej",
+      "subject": "Subjek",
+      "followUp": "Jika tiada balasan dalam seminggu",
+      "tips": "Petua",
+      "copy": "Salin",
+      "copied": "Disalin",
+      "openWhatsapp": "Buka WhatsApp dengan teks ini",
+      "phone": "Nombor WhatsApp pemilik (pilihan)",
+      "phoneHint": "Hanya untuk membuka WhatsApp — tidak disimpan",
+      "notStored": "Tiada apa yang anda taip di sini disimpan. Pemilik menjadi kenalan hanya apabila anda menambahnya sendiri."
+    },
+    "documents": {
+      "title": "Peringkas Dokumen",
+      "intro": "Muat naik dokumen panjang — perjanjian sewaan, SPA, notis strata — dan baca intipatinya dalam bahasa anda. Hal undang-undang dan kewangan tetap anda sahkan.",
+      "upload": "Muat naik dokumen",
+      "uploadHint": "PDF, gambar atau .txt, sehingga 8 MB",
+      "orPaste": "— atau tampal teksnya —",
+      "pasteHint": "Tampal teks dokumen di sini",
+      "run": "Ringkaskan",
+      "working": "Membaca…",
+      "kind": "Dokumen",
+      "summary": "Ringkasan",
+      "parties": "Pihak-pihak",
+      "dates": "Tarikh penting",
+      "amounts": "Jumlah",
+      "obligations": "Kewajipan",
+      "verify": "Sahkan dengan peguam atau pemilik",
+      "unreadable": "Dokumen tidak dapat dibaca dengan baik — ringkasan mungkin tidak lengkap.",
+      "copy": "Salin ringkasan",
+      "copied": "Disalin",
+      "transient": "Fail dibaca dan dibuang. Tiada yang disimpan kecuali catatan lejar AI (tanpa kandungan).",
+      "disclaimer": "Ringkasan, bukan nasihat. Terma undang-undang dan kewangan mesti disahkan dengan profesional bertauliah.",
+      "errors": {
+        "unsupported": "Jenis fail itu tidak disokong. Gunakan PDF, gambar atau fail teks.",
+        "too_large": "Fail terlalu besar — sehingga 8 MB.",
+        "empty": "Muat naik dokumen atau tampal teksnya dahulu."
+      }
+    },
+    "crossborder": {
+      "title": "Penyelidik Rentas Sempadan",
+      "intro": "Apa yang pembeli dari pasaran satu lagi perlu tahu sebelum bertanya — daripada fakta pasaran platform, disesuaikan kepada satu penyenaraian. Fakta draf ditunjukkan sebagai draf sehingga admin mengesahkannya.",
+      "listingCountry": "Penyenaraian berada di",
+      "buyerCountry": "Pembeli dari",
+      "listing": "Penyenaraian (pilihan)",
+      "noListing": "Taklimat umum, tiada penyenaraian khusus",
+      "run": "Tulis taklimat",
+      "working": "Menulis…",
+      "facts": "Fakta digunakan",
+      "draft": "draf — perlu disahkan",
+      "verified": "disahkan",
+      "draftBanner": "Sebahagian fakta ini belum disahkan. Anggap sebagai titik permulaan dan sahkan sebelum menyampaikannya kepada klien.",
+      "headline": "Ringkasnya",
+      "nextSteps": "Langkah seterusnya",
+      "mustCheck": "Mesti disemak",
+      "copy": "Salin taklimat",
+      "copied": "Disalin",
+      "source": "sumber",
+      "topics": {
+        "eligibility": "Kelayakan",
+        "minimum_price": "Harga minimum",
+        "restrictions": "Sekatan",
+        "title_types": "Jenis hak milik",
+        "taxes_buying": "Cukai semasa membeli",
+        "taxes_selling": "Cukai semasa menjual",
+        "financing": "Pembiayaan",
+        "process": "Proses",
+        "holding_costs": "Kos pemilikan",
+        "visas": "Visa dan penginapan"
+      }
+    },
+    "coach": {
+      "title": "Jurulatih",
+      "intro": "Latih perbualan sebelum ia berlaku. Bawa bantahan yang dibangkitkan klien, atau jawab satu senario dan dapatkan maklum balas jujur.",
+      "tabObjection": "Bantahan",
+      "tabPractice": "Latihan",
+      "objection": "Apa yang klien kata",
+      "objectionHint": "cth. “Terlalu mahal untuk kawasan ini.”",
+      "context": "Konteks (pilihan)",
+      "contextHint": "cth. kondo 2 bilik, harga 650k, dilawati semalam",
+      "run": "Latih saya",
+      "working": "Berfikir…",
+      "meaning": "Kemungkinan maksudnya",
+      "approaches": "Tiga cara menjawab",
+      "sampleReply": "Balasan yang boleh anda hantar",
+      "followUp": "Kemudian tanya",
+      "copy": "Salin",
+      "copied": "Disalin",
+      "scenario": "Senario",
+      "yourReply": "Balasan anda",
+      "replyHint": "Tulis apa yang anda benar-benar akan kata",
+      "score": "Skor",
+      "clarity": "Kejelasan",
+      "empathy": "Empati",
+      "nextStep": "Langkah seterusnya",
+      "feedback": "Maklum balas",
+      "improved": "Versi lebih kukuh",
+      "tryNext": "Cuba jawab ini pula",
+      "heroHint": "Anda dipautkan ke AG Hero — Sales Lab dan AI Coach penuh ada di sana juga.",
+      "heroOpen": "Buka di AG Hero",
+      "examples": {
+        "price": "Terlalu mahal.",
+        "think": "Biar saya fikir dulu.",
+        "agent": "Saya dah ada ejen.",
+        "wait": "Saya tunggu harga turun."
+      }
+    },
+    "closing": {
+      "title": "Senarai Semak Penutupan",
+      "intro": "Dokumen dan langkah antara tawaran diterima dan kunci, untuk negara dan jenis urus niaga ini. Mulakan satu bagi setiap urus niaga dan tandakan sambil berjalan.",
+      "newTitle": "Senarai baharu",
+      "labelHint": "cth. Unit 12-3, En. Tan",
+      "sale": "Jualan",
+      "rent": "Sewaan",
+      "noLead": "Tidak dipautkan kepada petunjuk",
+      "create": "Mulakan senarai",
+      "mine": "Senarai saya",
+      "archived": "Diarkibkan",
+      "showOpen": "Tunjuk terbuka",
+      "showArchived": "Tunjuk arkib",
+      "empty": "Belum ada senarai.",
+      "pickOne": "Pilih senarai di kiri, atau mulakan satu.",
+      "markCompleted": "Tanda selesai",
+      "archive": "Arkibkan",
+      "draftBanner": "Sebahagian langkah masih draf — admin belum mengesahkannya. Gunakan sebagai panduan, bukan nasihat undang-undang.",
+      "draft": "draf",
+      "days": "{count, plural, one {~# hari} other {~# hari}}",
+      "notes": "Nota",
+      "saveNotes": "Simpan nota",
+      "status": {
+        "open": "Terbuka",
+        "completed": "Selesai",
+        "archived": "Diarkibkan"
+      },
+      "party": {
+        "agent": "Ejen",
+        "buyer": "Pembeli",
+        "seller": "Penjual",
+        "landlord": "Tuan rumah",
+        "tenant": "Penyewa",
+        "lawyer": "Peguam",
+        "notary": "Notari / PPAT",
+        "bank": "Bank",
+        "authority": "Pihak berkuasa"
+      },
+      "errors": {
+        "invalid": "Sila semak medan.",
+        "save_failed": "Tidak disimpan. Sila cuba lagi.",
+        "not_found": "Senarai itu tidak dijumpai."
+      }
+    },
+    "review": {
+      "title": "Penilai Prestasi",
+      "intro": "Tujuh hari terakhir anda berbanding tujuh hari sebelumnya — masa lalu anda sendiri dahulu. Rakan sebaya muncul hanya sebagai median tanpa nama, dan hanya apabila sekurang-kurangnya lima orang aktif.",
+      "verifyFirst": "Ulasan mingguan bermula selepas akaun anda disahkan.",
+      "again": "Tulis semula",
+      "numbersOnly": "Angkanya di bawah. Ulasan bertulis memerlukan satu tugasan AI.",
+      "metric": "Metrik",
+      "thisWeek": "7 hari terakhir",
+      "lastWeek": "7 hari sebelumnya",
+      "weekOf": "Minggu {date}",
+      "peersTitle": "Rakan sebaya di negara anda",
+      "peersNote": "Median merentasi {count} ejen aktif. Tiada nama.",
+      "peersFew": "Rakan sebaya aktif minggu ini belum mencukupi untuk perbandingan adil.",
+      "m": {
+        "leads": "Pertanyaan baharu",
+        "replies": "Balasan pertama dihantar",
+        "response": "Median masa balasan pertama",
+        "published": "Penyenaraian diterbitkan",
+        "views": "Paparan",
+        "inquiries": "Pertanyaan penyenaraian"
+      }
+    },
+    "partners": {
+      "title": "Pencari Rakan Kongsi",
+      "intro": "Ejen disahkan di pasaran satu lagi yang mengusahakan kategori hartanah yang sama dengan anda — untuk rujukan dan co-broke rentas sempadan. Hanya apa yang ditunjukkan profil awam mereka.",
+      "noCategories": "Tambah kategori hartanah anda pada profil supaya rakan kongsi boleh dipadankan.",
+      "editProfile": "Sunting profil",
+      "empty": "Belum ada ejen sepadan di pasaran satu lagi.",
+      "listings": "{count, plural, one {# penyenaraian} other {# penyenaraian}}",
+      "poolOffers": "{count, plural, one {# tawaran pool} other {# tawaran pool}}",
+      "viewCard": "Lihat kad",
+      "seePool": "Lihat pool",
+      "privacy": "Hubungan melalui kad awam. Tiada nombor telefon ditunjukkan di sini."
+    },
+    "plan": {
+      "title": "Perancang Kalendar Sosial",
+      "intro": "Seminggu hantaran merentasi penyenaraian anda — satu sehari, bergilir penyenaraian dan platform, sudut berbeza setiap hari. Sunting, simpan yang anda suka, jadualkan melalui Studio.",
+      "weekStart": "Minggu bermula",
+      "plan": "Rancang minggu",
+      "working": "Merancang…",
+      "empty": "Perlu sekurang-kurangnya satu penyenaraian diterbitkan untuk merancang seminggu.",
+      "noAccounts": "Tiada akaun sosial disambungkan, jadi hantaran boleh disalin tetapi tidak dijadualkan.",
+      "connect": "Sambung akaun",
+      "keep": "Simpan",
+      "time": "Masa",
+      "scheduleAll": "Jadualkan {count} hantaran",
+      "scheduledHint": "Setiap hantaran yang disimpan masuk ke baris gilir anda tepat seperti ditunjukkan. Hantaran Instagram perlukan gambar muka depan.",
+      "copy": "Salin",
+      "copied": "Disalin",
+      "igNeedsImage": "Tiada gambar muka depan — Instagram tidak boleh menerbitkan yang ini.",
+      "errors": {
+        "invalid": "Rancangan tidak dapat dibaca. Rancang semula.",
+        "nothing_scheduled": "Tiada yang dijadualkan — semak akaun, masa dan gambar."
+      },
+      "angles": {
+        "price": "harga",
+        "location": "lokasi",
+        "lifestyle": "gaya hidup",
+        "feature": "satu kelebihan",
+        "question": "soalan",
+        "photos": "gambar",
+        "cta": "seruan"
+      },
+      "weekdays": {
+        "mon": "Isn",
+        "tue": "Sel",
+        "wed": "Rab",
+        "thu": "Kha",
+        "fri": "Jum",
+        "sat": "Sab",
+        "sun": "Ahd"
+      }
+    },
+    "report": {
+      "title": "Penulis Laporan Pemilik",
+      "intro": "Tempoh penyenaraian ini dalam angka, ditulis sebagai kemas kini yang anda hantar kepada pemilik: apa yang berlaku, maksudnya, dan langkah anda seterusnya.",
+      "days": "{count, plural, one {# hari terakhir} other {# hari terakhir}}",
+      "ownerName": "Nama pemilik",
+      "apply": "Guna",
+      "writeAi": "Tulis dengan AI",
+      "writeAgain": "Tulis semula",
+      "nextSteps": "Langkah seterusnya",
+      "copy": "Salin laporan",
+      "copied": "Disalin",
+      "sendWhatsapp": "Hantar melalui WhatsApp",
+      "sendNote": "Membuka WhatsApp di telefon anda dengan teks ini — anda pilih pemilik di sana. Platform tidak menghantar apa-apa.",
+      "live": "Aktif {days} hari",
+      "priceChanges": "{count, plural, one {# perubahan harga} other {# perubahan harga}}",
+      "m": {
+        "views": "Paparan",
+        "unique": "Orang",
+        "saves": "Disimpan",
+        "whatsapp": "Klik WhatsApp",
+        "newLeads": "Pertanyaan baharu",
+        "viewingStage": "Peringkat lawatan",
+        "negotiating": "Berunding",
+        "viewingsBooked": "Lawatan ditempah"
+      }
+    },
+    "refresh": {
+      "title": "Perancang penyegaran",
+      "hint": "{count, plural, one {# penyenaraian perlukan} other {# penyenaraian perlukan}} perhatian minggu ini",
+      "reason": {
+        "expiring": "Hampir tamat",
+        "no_photos": "Tiada gambar",
+        "reverify": "Sahkan semula",
+        "stale": "Sunyi",
+        "old_draft": "Draf lama"
+      },
+      "action": {
+        "expiring": "Perbaharui",
+        "no_photos": "Tambah gambar",
+        "reverify": "Sahkan butiran",
+        "stale": "Promosikan",
+        "old_draft": "Selesaikan"
+      },
+      "stats": "{views} paparan dalam 14 hari · {inquiries} pertanyaan dalam 30 hari"
+    },
+    "photos": {
+      "title": "Semakan gambar",
+      "hint": "Pendua dan resolusi disemak serta-merta. “Semak dengan AI” mencari kabur, wajah, nombor plat, dokumen dan tera air.",
+      "check": "Semak dengan AI",
+      "working": "Melihat…",
+      "noPhotos": "Penyenaraian ini belum ada gambar.",
+      "tooFew": "Kurang daripada 5 gambar",
+      "noCover": "Tiada gambar muka depan",
+      "allGood": "Semua baik",
+      "bestCover": "Gambar {n} paling sesuai jadi muka depan.",
+      "duplicateOf": "(sama dengan #{n})",
+      "summary": "Ringkasan",
+      "rule": {
+        "low_res": "resolusi rendah",
+        "tiny_file": "fail sangat kecil",
+        "duplicate": "pendua"
+      },
+      "issue": {
+        "blur": "kabur",
+        "dark": "terlalu gelap",
+        "face": "wajah kelihatan",
+        "plate": "nombor plat",
+        "document": "dokumen / skrin",
+        "watermark": "tera air",
+        "not_property": "bukan hartanahnya",
+        "other": "semak"
+      }
+    },
+    "translate": {
+      "fieldsTitle": "Versi {lang}",
+      "cta": "Terjemah ke {lang}",
+      "working": "Menterjemah…",
+      "done": "Diterjemah — semak medan, kemudian simpan.",
+      "notes": "Nota",
+      "hint": "Ditunjukkan kepada pembeli yang melayari dalam bahasa ini. Semak setiap angka dan nama sebelum menyimpan.",
+      "titleField": "Tajuk",
+      "descriptionField": "Keterangan",
+      "replyCta": "Terjemah",
+      "lang": {
+        "en": "Bahasa Inggeris",
+        "id": "Bahasa Indonesia",
+        "ms": "Bahasa Malaysia"
+      }
+    },
+    "onboarding": {
+      "title": "Minggu pertama anda",
+      "progress": "{done} daripada {total} selesai",
+      "next": "Seterusnya",
+      "steps": {
+        "profile": "Lengkapkan profil",
+        "verified": "Dapatkan pengesahan",
+        "first_listing": "Cipta penyenaraian pertama",
+        "first_photo": "Tambah gambar pada penyenaraian",
+        "first_published": "Terbitkan satu penyenaraian",
+        "first_share": "Kongsi penyenaraian dari Studio",
+        "first_lead": "Terima pertanyaan pertama",
+        "first_reply": "Balas satu pertanyaan",
+        "first_task": "Rancang tugasan pertama",
+        "first_viewing": "Atur lawatan pertama",
+        "first_guide": "Selesaikan satu panduan"
+      }
+    },
+    "profiler": {
+      "title": "Tampal chat, dapatkan keperluannya",
+      "hint": "Tampal apa yang klien tulis (WhatsApp, e-mel, nota). Medan di bawah diisi hanya dengan apa yang mereka benar-benar kata — semak setiap satu.",
+      "placeholder": "cth. “Cari kondo 3 bilik untuk disewa di Mont Kiara, maks RM4,500, perabot penuh, masuk Januari.”",
+      "run": "Isi borang",
+      "working": "Membaca…",
+      "filled": "{count} medan diisi — semak di bawah",
+      "missing": "Masih perlu ditanya",
+      "privacy": "Chat tidak disimpan. Nama dan nombor telefon dibuang sebelum AI melihatnya."
+    },
+    "offerSummary": {
+      "cta": "Terangkan tawaran ini",
+      "working": "Menulis…",
+      "forOwner": "Untuk pemilik",
+      "forBuyer": "Untuk pembeli / penyewa",
+      "keyTerms": "Terma utama",
+      "caveats": "Kaveat",
+      "nextStep": "Langkah seterusnya",
+      "copy": "Salin",
+      "copied": "Disalin"
     }
   }
 }

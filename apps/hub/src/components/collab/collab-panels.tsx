@@ -7,6 +7,9 @@ import {
   respondViewing, requestContactRelease,
 } from "@/app/(agent)/collab/actions";
 import { reportViolation } from "@/app/(agent)/collab/report-actions";
+import { OfferSummaryButton } from "@/components/collab/offer-summary-button";
+import { summariseOfferAction } from "@/app/(agent)/ai/actions";
+import { AI_REASON_KEYS } from "@/components/ai/ai-status";
 
 const REPORT_CATEGORIES = [
   "client_bypass", "agent_bypass", "false_information", "unauthorised_listing",
@@ -43,6 +46,14 @@ export async function CollabPanels({
   } = await supabase.auth.getUser();
   if (!user) return null;
   const t = await getTranslations("collab");
+  const tos = await getTranslations("aiTools.offerSummary");
+  const tr = await getTranslations("aiTools");
+  const offerSummaryLabels = {
+    sourceAi: tr.raw("sourceAi") as string, sourceRules: tr("sourceRules"),
+    reasons: Object.fromEntries(AI_REASON_KEYS.map((k) => [k, tr(`reason.${k}`)])),
+    cta: tos("cta"), working: tos("working"), forOwner: tos("forOwner"), forBuyer: tos("forBuyer"), keyTerms: tos("keyTerms"),
+    caveats: tos("caveats"), nextStep: tos("nextStep"), copy: tos("copy"), copied: tos("copied"),
+  };
 
   const [{ data: conv }, { data: offers }, { data: viewings }, { data: release }] =
     await Promise.all([
@@ -181,6 +192,7 @@ export async function CollabPanels({
                   {o.counter_terms && <span className="text-xs text-muted"> — {o.counter_terms}</span>}
                 </p>
               )}
+              <OfferSummaryButton offerId={o.id} role={role} action={summariseOfferAction} labels={offerSummaryLabels} />
               <div className="mt-3 flex flex-wrap gap-2">
                 {role === "sa" && o.status === "submitted" && (
                   <>
