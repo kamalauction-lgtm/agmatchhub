@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { updateCountry } from "./actions";
 
 const selectCls =
@@ -11,16 +11,20 @@ export default async function CountriesPage({
 }: {
   searchParams: Promise<{ saved?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("platform.configure");
   const { saved, error } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("adminCountries");
 
-  const [{ data: countries }, { data: languages }, { data: currencies }] = await Promise.all([
+  const [{ data: countries }, { data: languages }, { data: currencies }, { data: agents }] = await Promise.all([
     supabase.from("countries").select("*").order("name"),
     supabase.from("languages").select("code, name").order("code"),
     supabase.from("currencies").select("code").order("code"),
+    // Candidates for the per-country ingest agent: verified profiles, grouped by country below.
+    supabase.from("profiles").select("id, display_name, country_code").eq("agent_status", "verified").order("display_name").limit(500),
   ]);
+  const ingestAgentOf = (c: { settings: unknown }) =>
+    ((c.settings as { ingest?: { agent_id?: string | null } } | null)?.ingest?.agent_id ?? "") as string;
 
   return (
     <div>
@@ -34,7 +38,7 @@ export default async function CountriesPage({
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {t("saveFailed")}
+          {error === "ingest_agent" ? t("ingestAgentInvalid") : t("saveFailed")}
         </p>
       )}
 
@@ -47,6 +51,7 @@ export default async function CountriesPage({
               <th className="px-4 py-3">{t("cols.language")}</th>
               <th className="px-4 py-3">{t("cols.currency")}</th>
               <th className="px-4 py-3">{t("cols.unit")}</th>
+              <th className="px-4 py-3">{t("cols.ingestAgent")}</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
@@ -83,6 +88,15 @@ export default async function CountriesPage({
                   <select form={`country-${c.code}`} name="measurementUnit" defaultValue={c.measurement_unit} className={selectCls}>
                     <option value="sqft">sqft</option>
                     <option value="sqm">sqm</option>
+                  </select>
+                </td>
+                <td className="px-4 py-3">
+                  {/* Hero → ingest drafts land on this profile for the country (E10). */}
+                  <select form={`country-${c.code}`} name="ingestAgentId" defaultValue={ingestAgentOf(c)} className={selectCls} title={t("ingestAgentHint")}>
+                    <option value="">{t("ingestAgentNone")}</option>
+                    {(agents ?? []).filter((a) => a.country_code === c.code).map((a) => (
+                      <option key={a.id} value={a.id}>{a.display_name ?? a.id.slice(0, 8)}</option>
+                    ))}
                   </select>
                 </td>
                 <td className="px-4 py-3 text-right">

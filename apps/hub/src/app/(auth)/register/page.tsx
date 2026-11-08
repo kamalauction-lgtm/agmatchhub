@@ -8,9 +8,9 @@ const KNOWN_ERRORS = ["password_mismatch", "weak_password", "email_in_use", "gen
 export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; ref?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, ref } = await searchParams;
   const t = await getTranslations("auth");
   const tc = await getTranslations("common");
 
@@ -22,7 +22,12 @@ export default async function RegisterPage({
           {t(`errors.${KNOWN_ERRORS.includes(error) ? error : "generic"}`)}
         </p>
       )}
+      {/* Carried from /join?ref=CODE so the code survives the round trip
+          through registration. Hidden rather than shown as an editable field:
+          it is not something the person types, and a visible code invites
+          somebody to paste a stranger's. */}
       <form action={signUp} className="space-y-4">
+        {ref && <input type="hidden" name="ref" value={ref.slice(0, 16)} />}
         <label className="block">
           <span className="mb-1 block text-sm font-medium">{t("displayName")}</span>
           <input

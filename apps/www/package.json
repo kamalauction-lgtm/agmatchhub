@@ -2,15 +2,18 @@
   "name": "@pg/www",
   "version": "0.1.0",
   "private": true,
-  "description": "Public property marketplace (www.propertiguru.id). Anonymous traffic only — never holds a service-role key.",
+  "description": "Public property marketplace (www.propertiguru.id). Anonymous traffic only \u2014 never holds a service-role key.",
   "scripts": {
     "dev": "next dev --port 8154",
     "build": "next build --webpack",
     "start": "next start --port 8154",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "deploy": "node -e \"for (const d of ['.open-next','.next']) fs.rmSync(d,{recursive:true,force:true})\" && opennextjs-cloudflare build && node ../../scripts/verify-build-target.mjs && opennextjs-cloudflare deploy",
-    "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
+    "deploy": "node scripts/deploy-market.mjs id",
+    "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "dev:my": "node scripts/dev-market.mjs my",
+    "dev:id": "node scripts/dev-market.mjs id",
+    "deploy:my": "node scripts/deploy-market.mjs my"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.7",

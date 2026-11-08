@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 
 const FILTERS = ["submitted", "under_review", "resolved", "all"] as const;
 
@@ -10,7 +10,7 @@ export default async function ReportsQueuePage({
 }: {
   searchParams: Promise<{ status?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("report.manage");
   const { status = "submitted" } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("adminReports");

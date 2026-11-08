@@ -3,19 +3,19 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 
 /**
  * Admin management of training guides (00054). RLS already restricts writes
- * to platform admins; requireAdmin() here is the router-level gate so a
+ * to platform admins; requireCapability('content.manage') here is the gate so a
  * non-admin never reaches a half-working form.
  */
 
 const CATEGORIES = ["platform", "sales", "marketing"] as const;
 
 export async function createGuide(formData: FormData) {
-  await requireAdmin();
+  await requireCapability("content.manage");
   const parsed = z
     .object({
       category: z.enum(CATEGORIES),
@@ -45,7 +45,7 @@ export async function createGuide(formData: FormData) {
 }
 
 export async function saveTranslation(formData: FormData) {
-  await requireAdmin();
+  await requireCapability("content.manage");
   const parsed = z
     .object({
       guideId: z.string().uuid(),
@@ -81,7 +81,7 @@ export async function saveTranslation(formData: FormData) {
 }
 
 export async function togglePublish(formData: FormData) {
-  await requireAdmin();
+  await requireCapability("content.manage");
   const parsed = z
     .object({ guideId: z.string().uuid(), publish: z.enum(["true", "false"]) })
     .safeParse({ guideId: formData.get("guideId"), publish: formData.get("publish") });
@@ -115,7 +115,7 @@ export async function togglePublish(formData: FormData) {
 }
 
 export async function deleteGuide(formData: FormData) {
-  await requireAdmin();
+  await requireCapability("content.manage");
   const parsed = z.object({ guideId: z.string().uuid() }).safeParse({
     guideId: formData.get("guideId"),
   });

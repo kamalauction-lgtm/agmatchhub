@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 
 /**
@@ -20,7 +20,7 @@ import { logAudit } from "@/lib/audit";
 const schema = z.object({ enable: z.enum(["true", "false"]) });
 
 export async function setPartnerIdentity(formData: FormData): Promise<void> {
-  await requireAdmin();
+  await requireCapability("platform.configure");
   const parsed = schema.safeParse(Object.fromEntries(formData.entries()));
   if (!parsed.success) redirect("/admin/identity?error=invalid");
 

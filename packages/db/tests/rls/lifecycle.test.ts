@@ -1,5 +1,19 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterAll } from "vitest";
+import { createClient } from "@supabase/supabase-js";
 import { hasEnv, raClient, saClient, uid } from "./setup";
+
+/** Requirements this file created; removed with the service role afterwards,
+ *  because an agent can only cancel a requirement, never delete it, and a
+ *  cancelled row per run is exactly the leak the global sweep exists to catch. */
+const createdRequests: string[] = [];
+afterAll(async () => {
+  if (!createdRequests.length || !process.env.SUPABASE_SERVICE_ROLE_KEY) return;
+  const service = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { persistSession: false },
+  });
+  await service.from("property_request_private").delete().in("request_id", createdRequests);
+  await service.from("property_requests").delete().in("id", createdRequests);
+});
 
 /**
  * Positive lifecycle tests — the flows agents actually perform must WORK,
@@ -20,7 +34,10 @@ describe.skipIf(!hasEnv)("agent write lifecycle (positive paths)", () => {
       .insert({
         human_readable_id: humanId,
         requesting_agent_id: me,
-        title: "Lifecycle test requirement",
+        // Fixture-marked so the teardown can remove it: agents cannot
+        // hard-delete a requirement, only cancel it, and 32 cancelled copies
+        // of this row had accumulated on production before the marker.
+        title: "[fixture] Lifecycle test requirement",
         transaction_type: "buy",
         property_category: "residential",
         country_code: "MY",
@@ -32,6 +49,7 @@ describe.skipIf(!hasEnv)("agent write lifecycle (positive paths)", () => {
       .single();
     expect(error, error?.message).toBeNull();
     expect(inserted?.id).toBeTruthy();
+    createdRequests.push(inserted!.id);
 
     // private notes companion row
     const { error: privErr } = await ra

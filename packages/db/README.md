@@ -6,32 +6,46 @@ schema that lives here — neither app carries migrations of its own.
 
 ## Environments
 
-Every script takes `--env=staging` or `--env=local` (default; the production
-project) and prints the target host before touching anything. Shell variables
-win over file values, standard dotenv precedence.
+Every script takes a mandatory `--env=<target>` and prints the Supabase project
+ref before touching anything. There is no default target. Shell variables win
+over file values, standard dotenv precedence.
 
-| File | Points at |
-|---|---|
-| `.env.local` | Production (`jtruwmwinymflkrvuuwd`, Tokyo) |
-| `.env.staging` | Staging (`jokyyhvtahiypuzmfydp`, Mumbai) |
+| Flag | File | Points at |
+|---|---|---|
+| `--env=staging` | `.env.staging` | **Staging** — `propertiguru-staging`, `aylzekkeurjsudazzxjv`, pooler `aws-0-ap-northeast-2` (created 7 Nov 2026) |
+| `--env=production` | `.env.production` | **Production** — `jokyyhvtahiypuzmfydp`, pooler `aws-1-ap-south-1` |
+| `--env=legacy` | `.env.legacy` | the retired `jtruwmwinymflkrvuuwd` — no longer exists |
 
-Both are git-ignored. The direct `db.<ref>.supabase.co` hosts are IPv6-only on
-this network — always use the IPv4 Supavisor pooler, and note staging needs
-the `aws-1-` prefix.
+All git-ignored. The direct `db.<ref>.supabase.co` hosts are IPv6-only on this
+network — always use the IPv4 Supavisor pooler, and note the pooler cluster
+prefix differs per project (find it with the dashboard's Connect → Session
+pooler, or by probing: a wrong cluster says "tenant or user not found").
 
-**Migrations run staging → production, never production first.**
+The loader refuses to run `--env=staging` if `.env.staging` resolves to the
+production ref. (Before 7 Nov 2026 this table was written backwards and the
+file named "staging" held production — the reason the flag is mandatory.)
+
+**Migrations run staging → production, never production first.** Staging
+carries every migration (77 replayed on 7 Nov 2026, object counts identical to
+production: 103 tables, 10 views, 102 functions, 222 policies, 233 indexes).
 
 ## Commands
 
 ```bash
-npm run status:staging       # applied / pending migrations
-npm run dry-run:staging      # apply pending in a transaction, report, ROLL BACK
-npm run migrate:staging      # apply pending for real
-npm test                     # RLS suite (47 tests; needs TEST_* credentials)
-npm run ghl-drain:staging    # drain ghl_sync_pending leads (dry-run by default)
-node scripts/verify-public-boundary.mjs --env=staging
+npm run migrate:staging         # apply pending to STAGING (always first)
+npm run status:staging
+npm test                        # full suite against STAGING (tests/unit + rls + integration)
+npm run test:production         # the same against production — needs --i-mean-production, which the script adds
+npm run seed:test-users:staging # create / re-sync the five standing test accounts on staging
+npm run seed:scenario:staging   # the MatchHub + co-marketing rows 16 tests read (REQ/SUB/COM/CMO-2026-9000xx)
+npm run seed:locations:staging  # ID + MY geography
+npm run status:production       # applied / pending migrations
+npm run dry-run:production      # apply pending in a transaction, report, ROLL BACK
+npm run migrate:production      # apply pending for real
+npm run ghl-drain:production    # drain ghl_sync_pending leads (dry-run by default)
+node scripts/verify-public-boundary.mjs --env=production
                              # prove the anon boundary from outside, over HTTP
-node scripts/seed-staging-catalogue.mjs --env=staging
+node scripts/seed-staging-catalogue.mjs --env=production
                              # seed test catalogue (refuses production)
 ```
 
@@ -105,9 +119,13 @@ drainer and not a call in the request path.
 
 ## Test environment
 
-The RLS suite reads `.env.local`. Beyond `TEST_RA_*`, `TEST_SA_*` and
-`TEST_ADMIN_*`, the co-marketing pool tests need a marketing/listing agent pair
-with a live open-pool offer between them:
+The suite reads exactly one file, named by `PG_ENV_FILE`, which only
+`scripts/test.mjs --env=<target>` sets (`npm test` → staging). Bare `vitest`
+throws before creating a client. The standing accounts on staging are created
+by `seed-test-users.mjs` on the `.test` domain — never on
+`@fixture.propertiguru.invalid`, which the teardown sweeps after every run.
+Beyond `TEST_RA_*`, `TEST_SA_*` and `TEST_ADMIN_*`, the co-marketing pool tests
+need a marketing/listing agent pair with a live open-pool offer between them:
 
 ```
 TEST_MA_EMAIL=     # marketing agent — picks listings up

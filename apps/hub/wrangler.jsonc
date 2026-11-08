@@ -5,9 +5,14 @@
   // serving hub.propertiguru.id. Rename only as a planned cutover — new
   // worker, move the custom domain route, then delete the old one.
   "name": "ag-matchhub",
-  "main": ".open-next/worker.js",
+  // Custom entry that wraps .open-next/worker.js and adds the cron handler
+  // (see worker.js). OpenNext's build output is unchanged.
+  "main": "worker.js",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
+  // Every 15 minutes: social publishing, reminders. 23:00 UTC = 07:00 in
+  // Kuala Lumpur and Jakarta: the AI Manager's daily brief.
+  "triggers": { "crons": ["*/15 * * * *", "0 23 * * *"] },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

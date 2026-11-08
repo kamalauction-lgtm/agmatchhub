@@ -123,7 +123,17 @@ export default async function NewListingPage({
     description: t("description"),
     photosHelp: t("photosHelp"),
     submitHelp: t("submitHelp"),
+    // AI Listing Assistant (E3)
+    rulesBadge: tw("rulesBadge"),
+    aiSource: tw("aiSource"),
+    rulesSource: tw("rulesSource"),
+    comparables: tw("comparables"),
+    sellingPoints: tw("sellingPoints"),
+    sellingPointsHint: tw("sellingPointsHint"),
   };
+  for (const r of ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"]) {
+    labels[`aiReason_${r}`] = tw(`aiReason.${r}` as never);
+  }
 
   for (const k of ADVICE_KEYS) {
     // Advice messages carry placeholders the rules layer fills at runtime;

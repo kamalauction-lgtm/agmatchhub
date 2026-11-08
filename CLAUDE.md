@@ -9,7 +9,7 @@ Two products, one database.
 | Workspace | What | Deploys to |
 |---|---|---|
 | `apps/hub` | Agent operating system + MatchHub co-broke platform. **Live in production.** | `hub.propertiguru.id` |
-| `apps/www` | Public property marketplace (Indonesia). | `www.propertiguru.id` *(not yet live)* |
+| `apps/www` | Public property marketplace (Indonesia). **Live.** | `www.propertiguru.id` |
 | `packages/db` | **Single owner of the schema**: migrations, seeds, RLS test suite. | — |
 
 Plan of record: `docs/stage-a-audit-and-architecture.md` (audit, architecture,
@@ -63,15 +63,27 @@ npm run dev:www        # marketplace dev server (port 8152)
 npm run typecheck      # every workspace
 npm run lint           # every workspace
 npm run build          # every workspace
-npm test               # RLS suite (packages/db)
-npm run db:status      # list applied/pending migrations
-npm run db:migrate     # apply pending migrations
+npm test               # full suite against STAGING (packages/db)
+npm run db:status      # list applied/pending migrations (production)
+npm run db:migrate     # apply pending migrations (production — after staging!)
 npm run deploy:hub     # OpenNext build + deploy to Cloudflare
 ```
 
 Migrations: add `packages/db/supabase/migrations/NNNNN_name.sql` (5-digit
-prefix, ordered), then `npm run db:migrate`. Tracking table is Supabase
-CLI-compatible.
+prefix, ordered), then **staging first**:
+
+```bash
+npm run migrate:staging -w @pg/db     # apply to propertiguru-staging
+npm test                              # suite runs on staging
+npm run db:migrate                    # only then production
+```
+
+Staging is Supabase project `aylzekkeurjsudazzxjv` (`propertiguru-staging`,
+created 7 Nov 2026, same Pro org, ~US$10/month), credentials in the
+git-ignored `packages/db/.env.staging`. Standing test accounts there come
+from `npm run seed:test-users:staging -w @pg/db`. The loader refuses a
+`.env.staging` that points at production, and `npm run test:production`
+needs an extra flag. Tracking table is Supabase CLI-compatible.
 
 ## Stack
 
@@ -95,18 +107,27 @@ Zod in server actions · Vitest · Cloudflare Workers via OpenNext.
 - `.env.production` is committed and contains only `NEXT_PUBLIC_*` values, which
   are inlined at build time. Real secrets go in via `wrangler secret put`.
 - **`.env.local` outranks `.env.production` in Next.js, and `NEXT_PUBLIC_*` is
-  inlined into the bundle.** Both apps' `.env.local` get pointed at staging
-  constantly — it is how features get verified — so a deploy from a developer
-  machine ships a worker that talks to staging, and `wrangler.jsonc` cannot
-  correct it at runtime. It fails silently: the site loads and serves seed data.
-  `npm run deploy` now wipes `.open-next`, builds, and runs
+  inlined into the bundle**, so a deploy from a developer machine ships whatever
+  database `.env.local` names. It fails silently: the site loads and serves the
+  wrong data. `npm run deploy` wipes `.open-next`, builds, and runs
   `scripts/verify-build-target.mjs`, which refuses to deploy a bundle whose
-  Supabase project ref does not match `.env.production`. Move `.env.local` aside
-  before deploying.
+  Supabase project ref does not match `.env.production`.
+  Both apps' `.env.local` now point at the same project as `.env.production`
+  (`jokyyhvtahiypuzmfydp`), which is also the only project with the schema — so
+  `npm run dev` shows current data and a forgetful deploy is no longer wrong.
+  Moving `.env.local` aside before deploying is still the safe habit, but it is
+  belt-and-braces rather than the thing standing between you and an incident.
 - OpenNext does **not** clear `.open-next/cache/` between builds. A correct
-  build can otherwise ship a fetch cache full of the previous build's staging
-  responses — which is why deploy wipes the directory first, and why the
-  verifier reads every file rather than filtering by extension.
+  build can otherwise ship a fetch cache full of the previous build's responses
+  — which is why deploy wipes the directory first, and why the verifier reads
+  every file rather than filtering by extension.
+- The db tooling requires `--env=` explicitly and prints the Supabase project
+  ref. `packages/db/.env.production` is the live database;
+  `packages/db/.env.staging` is `propertiguru-staging` (`aylzekkeurjsudazzxjv`,
+  Seoul pooler `aws-0-ap-northeast-2`); `packages/db/.env.legacy` is the
+  retired `jtruwmwinymflkrvuuwd` project, which no longer exists.
+- Tests read their target from `PG_ENV_FILE`, set only by
+  `packages/db/scripts/test.mjs`. Bare `vitest` fails on purpose.
 - Adding a translation key with a dot in it creates a nested object in
   next-intl. Notification kinds use underscores for this reason.
 
@@ -114,5 +135,6 @@ Zod in server actions · Vitest · Cloudflare Workers via OpenNext.
 
 Typecheck, lint and build pass; new tables have RLS policies **and** a negative
 test proving the wrong role is blocked; critical actions are audited; UI strings
-exist in all three locales; and you report honestly what was tested versus what
-was not.
+exist in every locale the app ships (hub: id/en/ms, www: id/en — enforced by
+`packages/db/tests/unit/i18n-parity.test.ts`); and you report honestly what was
+tested versus what was not.

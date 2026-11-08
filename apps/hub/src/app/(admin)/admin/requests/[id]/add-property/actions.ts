@@ -33,7 +33,7 @@ export async function addPropertyOnBehalf(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
-  const { data: isAdmin } = await supabase.rpc("is_platform_admin");
+  const { data: isAdmin } = await supabase.rpc("has_capability", { p_capability: "request.manage" });
   if (!isAdmin) redirect("/dashboard");
 
   const service = createServiceClient();

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 
 const FILTERS = ["pending_admin_approval", "resubmitted", "amendment_required", "link_active", "all"] as const;
 
@@ -10,7 +10,7 @@ export default async function AdminRequestsPage({
 }: {
   searchParams: Promise<{ status?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("request.manage");
   const { status = "pending_admin_approval" } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("adminRequests");

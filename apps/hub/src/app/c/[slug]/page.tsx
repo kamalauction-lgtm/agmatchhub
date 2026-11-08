@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getAgentCard } from "@/lib/card/data";
+import QRCode from "qrcode";
+import { getAgentCard, getAgentCardListings, cardUrl } from "@/lib/card/data";
 import { CardView, type CardLabels } from "@/components/card/card-view";
 import { locales } from "@/i18n/request";
 
@@ -60,12 +61,27 @@ export default async function PublicCardPage({
     saveContact: t("saveContact"),
     share: t("share"),
     copied: t("copied"),
+    recentListings: t("recentListings"),
+    scanToSave: t("scanToSave"),
+    activeListings: t("activeListings"),
     platform: Object.fromEntries(PLATFORM_KEYS.map((k) => [k, t(`platforms.${k}` as never)])),
   };
 
+  /* Both are extras: a card that cannot reach the listings view or cannot
+     draw a QR is still a valid card, so neither failure may take the page
+     down with it. */
+  const [listings, qrDataUrl] = await Promise.all([
+    getAgentCardListings(card.id).catch(() => []),
+    QRCode.toDataURL(cardUrl(card.public_slug), {
+      width: 224,
+      margin: 1,
+      color: { dark: "#14181f", light: "#ffffff" },
+    }).catch(() => null),
+  ]);
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-4 py-8">
-      <CardView card={card} labels={labels} />
+      <CardView card={card} labels={labels} listings={listings} qrDataUrl={qrDataUrl} />
     </main>
   );
 }

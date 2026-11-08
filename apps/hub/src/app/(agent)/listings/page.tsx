@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { SharePanel } from "@/components/listings/share-panel";
-import { MAX_ACTIVE_LISTINGS } from "@/config/quotas";
+import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { shareCaption } from "@/lib/ai/listing-advisor";
 import { money, place } from "@/lib/listings/format";
 import { OfferToPool } from "@/components/listings/offer-to-pool";
@@ -84,7 +84,11 @@ export default async function MyListingsPage({
   const ts = await getTranslations("listingStatus");
   const format = await getFormatter();
 
-  const [{ data: own }, { data: borrowed }] = await Promise.all([
+  // Resolved, not constant: plan allowance + referral bonuses + admin grants.
+  // Fetched alongside the listings rather than after them — it is one RPC and
+  // the page already waits on two queries.
+  const [activeLimit, { data: own }, { data: borrowed }] = await Promise.all([
+    entitlementInt(user.id, ENTITLEMENT.listingActiveLimit),
     supabase
       .from("listings")
       .select(
@@ -197,16 +201,26 @@ export default async function MyListingsPage({
         <div>
           <h1 className="text-2xl font-semibold">{t("title")}</h1>
           <p className="mt-1 text-sm text-muted">
-            {t("quota", { active, max: MAX_ACTIVE_LISTINGS })}
+            {t("quota", { active, max: activeLimit })}
             {borrowedRows.length > 0 && ` · ${t("borrowedCount", { count: borrowedRows.length })}`}
           </p>
         </div>
-        <Link
-          href="/listings/new"
-          className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
-        >
-          {t("new")}
-        </Link>
+        {/* Import sits next to New, because this page is where an agent looks
+            when they are thinking about getting listings in — not the sidebar. */}
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/listings/import"
+            className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+          >
+            {t("importCta")}
+          </Link>
+          <Link
+            href="/listings/new"
+            className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+          >
+            {t("new")}
+          </Link>
+        </div>
       </div>
 
       {notice && (

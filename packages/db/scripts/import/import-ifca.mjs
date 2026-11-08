@@ -1,7 +1,7 @@
 /**
  * Import the normalized IFCA dataset into the platform.
  *
- *   node import-ifca.mjs --agent <email> [--env=staging] [--commit]
+ *   node import-ifca.mjs --agent <email> [--env=production] [--commit]
  *
  * Dry run by default: parses, validates, prints the preview report (§19) and
  * rolls back. Nothing reaches the database without --commit.
@@ -41,7 +41,7 @@ const DB_ROOT = join(HERE, "..", "..");
 const COMMIT = process.argv.includes("--commit");
 const AGENT_EMAIL = process.argv[process.argv.indexOf("--agent") + 1];
 const ENV_FILE = process.argv.find((a) => a.startsWith("--env="))?.slice(6) === "staging"
-  ? ".env.staging" : ".env.local";
+  ? ".env.production" : ".env.legacy";
 const SOURCE_FILE = "Property Listing IFCA P365 PICI as at August 2026.xlsx";
 
 if (!AGENT_EMAIL || AGENT_EMAIL.startsWith("--")) {

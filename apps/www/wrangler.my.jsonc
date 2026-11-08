@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // MALAYSIAN MARKETPLACE — a separate Worker from the Indonesian one.
+  //
+  // Same codebase, same database, different deployment. They cannot share a
+  // Worker because the market is fixed at BUILD time: NEXT_PUBLIC_* values are
+  // inlined into the bundle, so one bundle serves exactly one market, one
+  // locale set and one currency. Two markets therefore means two bundles and
+  // two Workers, each on its own domain.
+  //
+  // Build this one with:  npm run deploy:my
+  "name": "propertiguru-www-my",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+
+  // NO ROUTE YET. The domain is undecided, so this deploys to the
+  // workers.dev subdomain until one exists. Add the custom domain here when it
+  // does — and remember the Malaysian name question is still open: in Malaysia
+  // "PropertyGuru" is the incumbent portal, not a distant competitor.
+  //
+  // "routes": [
+  //   { "pattern": "www.example.my", "custom_domain": true }
+  // ],
+
+  // Runtime env. NEXT_PUBLIC_* are also inlined at build time from
+  // .env.my.production.
+  //
+  // THERE IS NO SUPABASE_SERVICE_ROLE_KEY HERE, AND THERE NEVER MAY BE.
+  // Repo hard rule 1 applies to every deployment of this app, not just the
+  // Indonesian one: it reads through public_* views with the anon key and
+  // writes nothing directly. Do not add it "temporarily".
+  "vars": {
+    "NEXT_PUBLIC_MARKET": "MY",
+    "NEXT_PUBLIC_APP_URL": "https://propertiguru-www-my.workers.dev",
+    "NEXT_PUBLIC_HUB_URL": "https://hub.propertiguru.id",
+    // Working name. The real one is undecided — see the note above.
+    "NEXT_PUBLIC_APP_NAME": "Hartanah Hub",
+    "NEXT_PUBLIC_APP_SHORT_NAME": "Hartanah Hub",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://jokyyhvtahiypuzmfydp.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_y8OGIVyz8rYIae7d-xq1dg_X8CE_NUJ"
+  }
+}

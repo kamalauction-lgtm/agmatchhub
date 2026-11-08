@@ -1,47 +1,63 @@
+import "server-only";
+import { createClient } from "@/lib/supabase/server";
+import { ENTITLEMENT, entitlementInt, resolvedPrice } from "@/lib/entitlements";
+
 /**
- * Plan display — TEMPORARY, like config/quotas.ts.
+ * The agent's plan, as the dashboard shows it.
  *
- * TODO(entitlements): Epic 4 replaces this with the plans / plan_versions /
- * entitlements tables, where tiers, prices, limits and expiry are
- * admin-editable and never live in code (§7).
+ * This file used to invent a plan from `agent_status`: verified meant
+ * "iqi_premium", everything else meant "free", and both quoted the same flat
+ * `MAX_ACTIVE_LISTINGS`. Two agents on genuinely different plans looked
+ * identical, and a referral bonus could not show up anywhere.
  *
- * Until then we derive a display tier honestly from what we actually know,
- * and every benchmarked platform proves the surface matters: PropertyGuru,
- * PropMall and Rumah123 all show tier, validity and an upgrade path on the
- * agent's first screen.
+ * It now reads the real answer from the entitlement engine (00061/00062), so
+ * the number on the dashboard is the number the publish action enforces and
+ * the number the admin's explanation screen itemises — one source, three uses.
+ *
+ * `canUpgrade` is deliberately false while billing mode is FREE_LAUNCH: there
+ * is nothing to upgrade to when everyone already holds the top plan at no
+ * charge, and an upgrade button that leads nowhere is worse than none.
  */
-import { MAX_ACTIVE_LISTINGS } from "./quotas";
 
 export type PlanView = {
-  key: "free" | "iqi_premium";
-  /** Translation key under `plans.` */
-  nameKey: string;
+  /** The plan key from the database — 'basic' | 'silver' | 'gold' | 'platinum'. */
+  key: string;
+  /** Display name as configured, already localised by the admin who set it. */
+  name: string;
+  /** What the plan is sold as (Free / Starter / Pro / Agency) — Decision 4. */
+  productKey: string | null;
+  productName: string | null;
   maxListings: number;
-  /** Complimentary entitlements have no expiry until membership revalidation exists. */
+  /** Null until subscription expiry is actually managed. */
   expiresAt: string | null;
   canUpgrade: boolean;
+  /** What they would pay. Zero during the launch, but computed, not assumed. */
+  effectivePrice: number;
+  currency: string;
+  /** Why it is that price — e.g. "Indonesia Free Launch". */
+  sourceLabel: string | null;
 };
 
-/**
- * §8: a verified agent in good standing receives Premium at no subscription
- * cost. Verification is the only signal we can trust today, so it is the only
- * one used — no invented plan state.
- */
-export function planFor(agentStatus: string | null | undefined): PlanView {
-  if (agentStatus === "verified") {
-    return {
-      key: "iqi_premium",
-      nameKey: "iqiPremium",
-      maxListings: MAX_ACTIVE_LISTINGS,
-      expiresAt: null,
-      canUpgrade: false,
-    };
-  }
+export async function planFor(userId: string): Promise<PlanView> {
+  const [price, maxListings] = await Promise.all([
+    resolvedPrice(userId),
+    entitlementInt(userId, ENTITLEMENT.listingActiveLimit),
+  ]);
+  const supabase = await createClient();
+  const { data: plan } = price
+    ? await supabase.from("plans").select("product_key, product_name").eq("key", price.plan_key).maybeSingle()
+    : { data: null };
+
   return {
-    key: "free",
-    nameKey: "free",
-    maxListings: MAX_ACTIVE_LISTINGS,
+    key: price?.plan_key ?? "basic",
+    name: price?.plan_name ?? "Basic",
+    productKey: plan?.product_key ?? null,
+    productName: plan?.product_name ?? null,
+    maxListings,
     expiresAt: null,
-    canUpgrade: true,
+    canUpgrade: price?.billing_mode === "LIVE_BILLING" && price.plan_key !== "platinum",
+    effectivePrice: Number(price?.effective_price ?? 0),
+    currency: price?.currency ?? "IDR",
+    sourceLabel: price?.policy_name ?? null,
   };
 }

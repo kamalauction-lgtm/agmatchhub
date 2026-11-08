@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { PosterCanvas, type PosterData, type PosterLabels } from "./poster-canvas";
+import type { StudioAiResult } from "@/app/(agent)/studio/ai-actions";
 
 /**
  * The Content Studio workspace: tabs over one listing, each holding a
@@ -19,17 +20,22 @@ import { PosterCanvas, type PosterData, type PosterLabels } from "./poster-canva
  *
  * Drafts are generated server-side and passed in; labels arrive as props so
  * the message dictionary stays out of the browser bundle.
+ *
+ * AI MARKETING STUDIO (E3/E4)
+ *   "Write with AI" asks the server action for every channel at once and
+ *   fills the tabs; the deterministic drafts remain the Reset baseline. The
+ *   status line says which assistant answered, or why the model did not.
  */
 
 /** Same rule the listing advisor enforces: a number in the copy bypasses lead
  *  capture and the response SLA. Generated drafts never contain one; this
  *  catches the agent typing one in. */
-const PHONE = /(08\d{8,}|\+62[\s-]?8\d{7,})/;
+const PHONE = /(08\d{8,}|\+62[\s-]?8\d{7,}|\+60[\s-]?1\d{8,})/;
 
 /** Instagram's caption ceiling; pasting more truncates silently. */
 const CAPTION_MAX = 2200;
 
-export type StudioTextTabKey = "whatsapp" | "caption";
+export type StudioTextTabKey = "whatsapp" | "caption" | "facebook" | "tiktok";
 export type StudioTabKey = StudioTextTabKey | "images" | "brochure";
 
 export type StudioAccount = {
@@ -41,13 +47,18 @@ export type StudioAccount = {
 export type StudioLabels = {
   tabWhatsapp: string;
   tabCaption: string;
+  tabFacebook: string;
+  tabTiktok: string;
   tabImages: string;
   tabBrochure: string;
   whatsappHelp: string;
   captionHelp: string;
+  facebookHelp: string;
+  tiktokHelp: string;
   imagesHelp: string;
   brochureHelp: string;
   openBrochure: string;
+  brochureBlurb: string;
   poster: PosterLabels;
   /** Raw templates; {count}/{max} substituted here. */
   chars: string;
@@ -70,6 +81,16 @@ export type StudioLabels = {
   scheduleCta: string;
   scheduleNoAccounts: string;
   igNeedsImage: string;
+  /** AI Marketing Studio */
+  aiCta: string;
+  aiWorking: string;
+  /** `[model]` substituted here. */
+  aiSource: string;
+  rulesSource: string;
+  aiReasons: Record<string, string>;
+  /** `[remaining]`/`[total]` substituted here; empty string hides it. */
+  aiQuota: string;
+  emptyTab: string;
 };
 
 export function StudioWorkspace({
@@ -80,6 +101,8 @@ export function StudioWorkspace({
   poster,
   accounts,
   scheduleAction,
+  aiAction,
+  quota,
   labels,
 }: {
   drafts: Record<StudioTextTabKey, string>;
@@ -89,10 +112,14 @@ export function StudioWorkspace({
   poster: PosterData;
   accounts: StudioAccount[];
   scheduleAction: (fd: FormData) => void;
+  aiAction: (listingId: string) => Promise<StudioAiResult>;
+  quota: { remaining: number; total: number } | null;
   labels: StudioLabels;
 }) {
   const [tab, setTab] = useState<StudioTabKey>("whatsapp");
   const [text, setText] = useState<Record<StudioTextTabKey, string>>(drafts);
+  const [brochure, setBrochure] = useState("");
+  const [ai, setAi] = useState<{ busy: boolean; source?: "ai" | "rules"; reason?: string; model?: string; error?: boolean }>({ busy: false });
   const [copied, setCopied] = useState(false);
   const [pasteHint, setPasteHint] = useState(false);
   const [accountId, setAccountId] = useState(accounts[0]?.id ?? "");
@@ -106,7 +133,8 @@ export function StudioWorkspace({
     () => false
   );
 
-  const current = tab === "images" || tab === "brochure" ? "" : text[tab];
+  const isText = tab !== "images" && tab !== "brochure";
+  const current = isText ? text[tab as StudioTextTabKey] : "";
   const hasPhone = PHONE.test(current);
   const overCaptionLimit = tab === "caption" && current.length > CAPTION_MAX;
 
@@ -118,13 +146,27 @@ export function StudioWorkspace({
   const tabs: { key: StudioTabKey; label: string; help: string }[] = [
     { key: "whatsapp", label: labels.tabWhatsapp, help: labels.whatsappHelp },
     { key: "caption", label: labels.tabCaption, help: labels.captionHelp },
+    { key: "facebook", label: labels.tabFacebook, help: labels.facebookHelp },
+    { key: "tiktok", label: labels.tabTiktok, help: labels.tiktokHelp },
     { key: "images", label: labels.tabImages, help: labels.imagesHelp },
     { key: "brochure", label: labels.tabBrochure, help: labels.brochureHelp },
   ];
 
-  async function copyText(): Promise<boolean> {
+  async function writeWithAi() {
+    setAi({ busy: true });
     try {
-      await navigator.clipboard.writeText(current);
+      const r = await aiAction(listingId);
+      setText({ whatsapp: r.texts.whatsapp, caption: r.texts.caption, facebook: r.texts.facebook, tiktok: r.texts.tiktok });
+      setBrochure(r.texts.brochure);
+      setAi({ busy: false, source: r.source, reason: r.reason, model: r.model });
+    } catch {
+      setAi({ busy: false, error: true });
+    }
+  }
+
+  async function copyText(value = current): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(value);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       return true;
@@ -154,10 +196,47 @@ export function StudioWorkspace({
   const btn = "rounded-lg px-4 py-2.5 text-sm font-semibold";
   const btnGhost = `${btn} border border-line hover:bg-surface`;
 
+  const statusLine = ai.error
+    ? labels.aiReasons.failed
+    : ai.source === "ai"
+      ? labels.aiSource.replace("[model]", ai.model ?? "AI")
+      : ai.source === "rules"
+        ? (labels.aiReasons[ai.reason ?? "failed"] ?? labels.rulesSource)
+        : null;
+
   return (
     <div className="rounded-xl border border-line">
+      {/* AI Marketing Studio -------------------------------------------- */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-surface/60 px-4 py-3">
+        <div className="min-w-0 text-xs text-muted">
+          {statusLine ? (
+            <p>
+              <span className={`mr-2 rounded-full px-2 py-0.5 font-semibold ${ai.source === "ai" ? "bg-indigo-soft text-indigo" : "bg-card text-muted"}`}>
+                {ai.source === "ai" ? "✦ AI" : "✍︎"}
+              </span>
+              {statusLine}
+            </p>
+          ) : (
+            <p>{labels.rulesSource}</p>
+          )}
+          {quota && labels.aiQuota && (
+            <p className="mt-0.5 tabular-nums">
+              {labels.aiQuota.replace("[remaining]", String(quota.remaining)).replace("[total]", String(quota.total))}
+            </p>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={writeWithAi}
+          disabled={ai.busy}
+          className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-60`}
+        >
+          {ai.busy ? labels.aiWorking : `✦ ${labels.aiCta}`}
+        </button>
+      </div>
+
       {/* Tabs ------------------------------------------------------------- */}
-      <div role="tablist" className="flex border-b border-line">
+      <div role="tablist" className="flex overflow-x-auto border-b border-line">
         {tabs.map((item) => (
           <button
             key={item.key}
@@ -169,7 +248,7 @@ export function StudioWorkspace({
               setCopied(false);
               setPasteHint(false);
             }}
-            className={`px-4 py-3 text-sm font-semibold transition ${
+            className={`shrink-0 px-4 py-3 text-sm font-semibold transition ${
               tab === item.key
                 ? "border-b-2 border-crimson text-crimson"
                 : "text-muted hover:text-foreground"
@@ -190,7 +269,24 @@ export function StudioWorkspace({
         )}
 
         {tab === "brochure" && (
-          <div className="mt-4">
+          <div className="mt-4 space-y-4">
+            {/* The assistant's short blurb for the brochure; the print view
+                itself still reads the listing. */}
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.brochureBlurb}</p>
+              <textarea
+                value={brochure}
+                onChange={(e) => setBrochure(e.target.value)}
+                rows={5}
+                placeholder={labels.emptyTab}
+                className="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm leading-6"
+              />
+              {brochure && (
+                <button type="button" onClick={() => copyText(brochure)} className={`mt-2 ${btnGhost}`}>
+                  {copied ? labels.copied : labels.copy}
+                </button>
+              )}
+            </div>
             <a
               href={`/studio/${listingId}/brochure`}
               target="_blank"
@@ -202,7 +298,7 @@ export function StudioWorkspace({
           </div>
         )}
 
-        {tab !== "images" && tab !== "brochure" && (
+        {isText && (
           <>
         <textarea
           value={current}
@@ -210,6 +306,7 @@ export function StudioWorkspace({
             setText((prev) => ({ ...prev, [tab as StudioTextTabKey]: e.target.value }))
           }
           rows={16}
+          placeholder={labels.emptyTab}
           className="mt-3 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm leading-6"
         />
 
@@ -249,17 +346,6 @@ export function StudioWorkspace({
               >
                 {labels.openInstagram}
               </button>
-              <button
-                type="button"
-                onClick={() =>
-                  copyThenOpen(
-                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
-                  )
-                }
-                className={`${btn} bg-[#1877F2] text-white hover:opacity-90`}
-              >
-                {labels.openFacebook}
-              </button>
               <a
                 href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(current)}`}
                 target="_blank"
@@ -278,12 +364,25 @@ export function StudioWorkspace({
               </a>
             </>
           )}
+          {tab === "facebook" && (
+            <button
+              type="button"
+              onClick={() =>
+                copyThenOpen(
+                  `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
+                )
+              }
+              className={`${btn} bg-[#1877F2] text-white hover:opacity-90`}
+            >
+              {labels.openFacebook}
+            </button>
+          )}
           {canShareSheet && (
             <button type="button" onClick={shareSheet} className={btnGhost}>
               {labels.shareSheet}
             </button>
           )}
-          <button type="button" onClick={copyText} className={btnGhost}>
+          <button type="button" onClick={() => copyText()} className={btnGhost}>
             {copied ? labels.copied : labels.copy}
           </button>
           <button
@@ -306,8 +405,10 @@ export function StudioWorkspace({
           </p>
         )}
 
-        {/* Schedule -------------------------------------------------------- */}
-        {tab === "caption" && (
+        {/* Schedule — the caption tab for Instagram accounts, the Facebook
+            tab for Pages; either way the queue receives EXACTLY the text
+            in that tab. */}
+        {(tab === "caption" || tab === "facebook") && (
           <div className="mt-6 rounded-xl border border-line bg-surface p-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
               {labels.scheduleTitle}
@@ -359,10 +460,9 @@ export function StudioWorkspace({
                   </p>
                 )}
 
-                {/* The queue receives EXACTLY this edited caption. */}
                 <input type="hidden" name="accountId" value={accountId} />
                 <input type="hidden" name="listingId" value={listingId} />
-                <input type="hidden" name="caption" value={text.caption} />
+                <input type="hidden" name="caption" value={text[tab as "caption" | "facebook"]} />
                 <input type="hidden" name="imageUrl" value={coverImageUrl ?? ""} />
                 <input type="hidden" name="scheduledAt" value={whenIso} />
 

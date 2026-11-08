@@ -12,6 +12,8 @@ export async function sendEmail(opts: {
   body?: string;
   ctaLabel?: string;
   ctaUrl?: string;
+  /** Replies go to a person (the agent), not to the platform's sending address. */
+  replyTo?: string;
 }): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
@@ -47,7 +49,7 @@ export async function sendEmail(opts: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ from, to: opts.to, subject: opts.subject, html }),
+      body: JSON.stringify({ from, to: opts.to, subject: opts.subject, html, ...(opts.replyTo ? { reply_to: opts.replyTo } : {}) }),
     });
     if (!res.ok) {
       console.error("[email] resend failed:", res.status, await res.text());

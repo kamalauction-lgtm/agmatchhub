@@ -2,27 +2,22 @@
  * One-time Super Admin bootstrap. Creates (or finds) the given user, confirms
  * the email, grants super_admin, sets profile display name + verified status.
  *
- * Usage: node scripts/seed-admin.mjs <email> "<Display Name>"
+ * Usage: node scripts/seed-admin.mjs --env=<target> <email> "<Display Name>"
  * Prints a generated temporary password when creating a new user.
+ *
+ * Target comes from the shared loader (mandatory --env). This file used to read
+ * `.env.legacy` by name — the retired project — so `npm run seed:admin:production`
+ * would have bootstrapped an admin on a database nothing deploys against.
  */
-import { readFileSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
 import { randomBytes } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
+import { loadEnv, restArgs } from "./load-env.mjs";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const envFile = join(root, ".env.local");
-if (existsSync(envFile)) {
-  for (const line of readFileSync(envFile, "utf8").split(/\r?\n/)) {
-    const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
-    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2];
-  }
-}
+loadEnv();
 
-const [email, displayName = "Super Admin"] = process.argv.slice(2);
+const [email, displayName = "Super Admin"] = restArgs();
 if (!email) {
-  console.error('Usage: node scripts/seed-admin.mjs <email> "<Display Name>"');
+  console.error('Usage: node scripts/seed-admin.mjs --env=<target> <email> "<Display Name>"');
   process.exit(1);
 }
 

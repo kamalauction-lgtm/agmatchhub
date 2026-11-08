@@ -2,8 +2,10 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { reviewAgent, reviewSocialLink } from "../actions";
+import { Agent360 } from "@/components/admin/agent-360";
+import { GrantPanel } from "@/components/admin/grant-panel";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 outline-none focus:border-crimson";
@@ -26,7 +28,7 @@ export default async function AgentDetailPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ done?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("agent.verify");
   const { id } = await params;
   const { done, error } = await searchParams;
   const supabase = await createClient();
@@ -179,6 +181,12 @@ export default async function AgentDetailPage({
               </p>
             )}
           </section>
+
+          {/* Commercial, entitlements and referral — the operational half of
+              this screen. Verification answers "may they work"; this answers
+              "what may they do, why, and what have they brought in". */}
+          <Agent360 userId={id} />
+          <GrantPanel userId={id} />
 
           <section className="rounded-xl border border-line p-6">
             <h2 className="mb-4 font-semibold">{t("detail.historyTitle")}</h2>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { market } from "@/config/market";
+import { formatPriceExact } from "@/lib/format";
 
 /**
  * KPR (mortgage) estimator.
@@ -17,8 +19,11 @@ import { useState } from "react";
  * Presenting this as a quotation would be misleading, so the copy does not.
  */
 
-const fmtIdr = (n: number) =>
-  `Rp ${Math.round(n).toLocaleString("id-ID")}`;
+/* Was `Rp ${n.toLocaleString("id-ID")}` with rupiah-scaled slider bounds and a
+   default of 1,500,000,000 — which on the Malaysian build read as a RM1.5
+   BILLION house. Currency, bounds and the starting figure all come from the
+   market now. */
+const fmtMoney = (n: number) => formatPriceExact(Math.round(n), market.currency);
 
 export type KprLabels = {
   title: string;
@@ -36,11 +41,14 @@ export type KprLabels = {
 export function KprCalculator({
   labels,
   searchHref,
+  /** Seeded from the listing on a property page; a generic default elsewhere. */
+  initialPrice = market.loan.defaultPrice,
 }: {
   labels: KprLabels;
   searchHref: string;
+  initialPrice?: number;
 }) {
-  const [price, setPrice] = useState(1_500_000_000);
+  const [price, setPrice] = useState(initialPrice);
   const [dpPct, setDpPct] = useState(20);
   const [rate, setRate] = useState(7.5);
   const [years, setYears] = useState(15);
@@ -68,15 +76,15 @@ export function KprCalculator({
             {labels.price}
             <input
               type="range"
-              min={100_000_000}
-              max={20_000_000_000}
-              step={50_000_000}
+              min={market.loan.minPrice}
+              max={market.loan.maxPrice}
+              step={market.loan.priceStep}
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
               className="mt-2 w-full accent-brand"
             />
             <output className="mt-1 block text-sm font-semibold text-brand">
-              {fmtIdr(price)}
+              {fmtMoney(price)}
             </output>
           </label>
 
@@ -92,7 +100,7 @@ export function KprCalculator({
               className="mt-2 w-full accent-brand"
             />
             <output className="mt-1 block text-sm font-semibold text-brand">
-              {dpPct}% · {fmtIdr((price * dpPct) / 100)}
+              {dpPct}% · {fmtMoney((price * dpPct) / 100)}
             </output>
           </label>
 
@@ -135,10 +143,10 @@ export function KprCalculator({
           {labels.monthly}
         </p>
         <p className="mt-2 text-3xl font-extrabold tracking-tight text-brand">
-          {fmtIdr(monthly)}
+          {fmtMoney(monthly)}
         </p>
         <p className="mt-3 text-xs text-muted">
-          {labels.loanAmount}: <strong className="text-foreground">{fmtIdr(loan)}</strong>
+          {labels.loanAmount}: <strong className="text-foreground">{fmtMoney(loan)}</strong>
         </p>
         <p className="mt-3 text-[11px] leading-relaxed text-muted">{labels.disclaimer}</p>
         <a

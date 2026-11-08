@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
-import { getAgentCard, cardUrl } from "@/lib/card/data";
+import { getAgentCard, getAgentCardListings, cardUrl } from "@/lib/card/data";
 import { CardView, type CardLabels } from "@/components/card/card-view";
 import { SharePanel } from "@/components/listings/share-panel";
 import { locales } from "@/i18n/request";
@@ -41,6 +41,10 @@ export default async function MyCardPage() {
       ? await getAgentCard(profile.public_slug)
       : null;
 
+  // "Exactly what your contact sees" has to include the listings block, or the
+  // preview quietly stops being a preview.
+  const previewListings = card ? await getAgentCardListings(card.id).catch(() => []) : [];
+
   // The preview promises "exactly what your contact sees", so its labels
   // follow the agent's language — same rule as the public page — while the
   // page chrome stays in the UI locale.
@@ -58,6 +62,9 @@ export default async function MyCardPage() {
     saveContact: tc("saveContact"),
     share: tc("share"),
     copied: tc("copied"),
+    recentListings: tc("recentListings"),
+    scanToSave: tc("scanToSave"),
+    activeListings: tc("activeListings"),
     platform: Object.fromEntries(PLATFORM_KEYS.map((k) => [k, tc(`platforms.${k}` as never)])),
   };
 
@@ -79,7 +86,7 @@ export default async function MyCardPage() {
       ) : (
         <div className="grid gap-6 lg:grid-cols-[24rem_1fr]">
           <div>
-            <CardView card={card} labels={labels} />
+            <CardView card={card} labels={labels} listings={previewListings} />
           </div>
 
           <div className="space-y-4">

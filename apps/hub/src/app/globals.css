@@ -1,58 +1,163 @@
 @import "tailwindcss";
 
-/* Design tokens (spec §37). Brand palette: crimson accent — never large red
-   backgrounds. Light/dark via system preference. */
+/* =============================================================================
+   PropertiGuru Design System v1.0
+   =============================================================================
+
+   The palette, type scale and surface treatment from the design system sheet.
+   Everything visual in this app resolves through these tokens — there are
+   ~1,700 token usages across the components, so this file is the one place a
+   change of look happens, and no component hard-codes a colour (rule 12).
+
+   THE ACCENT TOKEN IS STILL CALLED `crimson`
+     Its value moved from #b11226 to the design system's Red #E53935. The name
+     stayed because it is spelled out in several hundred class names, and a
+     rename would have been a mechanical edit across every screen with a real
+     chance of missing one — for no gain, since the token is what carries the
+     meaning.
+
+   RED LEADS, BLUE INFORMS
+     Red is the primary: actions, brand, the thing you press. Blue is the data
+     and navigation accent — active nav, chart series, informational chips.
+     Keeping those two jobs separate is what stops a dashboard turning into a
+     wall of red, which is the failure mode of a red-primary system.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #1f1f1f;
-  --surface: #f7f7f8;
-  --line: #e4e4e7;
-  --muted: #6b7280;
-  --crimson: #b11226;
-  --crimson-strong: #8e0e1f;
-  --crimson-soft: #fdf2f4;
-  --silver: #c0c0c0;
-  --success: #15803d;
-  --warning: #b45309;
-  --danger: #b91c1c;
+  /* Canvas ---------------------------------------------------------------- */
+  --page: #f8fafc;          /* the app background behind cards */
+  --card: #ffffff;          /* every panel, every card */
+  --background: #ffffff;    /* inputs and anything that must read as "empty" */
+  --foreground: #0f172a;    /* Slate 900 */
+
+  /* Neutrals -------------------------------------------------------------- */
+  --surface: #f1f5f9;       /* Slate 100 — inset areas, table zebra, chips */
+  --line: #e2e8f0;          /* hairlines */
+  --line-strong: #cbd5e1;   /* Slate 300 — borders that must be seen */
+  --muted: #64748b;         /* Slate 500 — secondary text */
+  --muted-strong: #334155;  /* Slate 700 — labels that carry weight */
+  --silver: #cbd5e1;
+
+  /* Brand ----------------------------------------------------------------- */
+  --crimson: #e53935;        /* Red — primary */
+  --crimson-strong: #c62828;
+  --crimson-soft: #fef2f2;
+  --navy: #0d182a;
+  --navy-soft: #f1f5f9;
+
+  /* Data + information ---------------------------------------------------- */
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --indigo: #6366f1;
+  --indigo-soft: #eef2ff;
+  --teal: #14b8a6;
+
+  /* Semantic -------------------------------------------------------------- */
+  --success: #16a34a;
+  --success-soft: #f0fdf4;
+  --warning: #f97316;
+  --warning-soft: #fff7ed;
+  --danger: #e53935;
+  --danger-soft: #fef2f2;
+
+  /* Elevation ------------------------------------------------------------- */
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-raised: 0 4px 16px rgb(15 23 42 / 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #141416;
-    --foreground: #f4f4f5;
-    --surface: #1f1f23;
-    --line: #33333a;
-    --muted: #9ca3af;
-    --crimson: #d94356;
-    --crimson-strong: #b11226;
-    --crimson-soft: #2a1518;
-    --silver: #8f8f94;
+    --page: #0b1220;
+    --card: #131a29;
+    --background: #131a29;
+    --foreground: #f1f5f9;
+
+    --surface: #1c2536;
+    --line: #263145;
+    --line-strong: #35415a;
+    --muted: #94a3b8;
+    --muted-strong: #cbd5e1;
+    --silver: #64748b;
+
+    /* Lifted for contrast on a dark ground; the hue is unchanged so the brand
+       still reads as the same red. */
+    --crimson: #f05a56;
+    --crimson-strong: #e53935;
+    --crimson-soft: #2a1618;
+    --navy: #f1f5f9;
+    --navy-soft: #1c2536;
+
+    --blue: #60a5fa;
+    --blue-soft: #16243c;
+    --indigo: #818cf8;
+    --indigo-soft: #1b1f3a;
+    --teal: #2dd4bf;
+
+    --success: #4ade80;
+    --success-soft: #10261a;
+    --warning: #fb923c;
+    --warning-soft: #2a1c10;
+    --danger: #f05a56;
+    --danger-soft: #2a1618;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.2);
+    --shadow-raised: 0 4px 16px rgb(0 0 0 / 0.4);
   }
 }
 
 @theme inline {
+  --color-page: var(--page);
+  --color-card: var(--card);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
   --color-crimson: var(--crimson);
   --color-crimson-strong: var(--crimson-strong);
   --color-crimson-soft: var(--crimson-soft);
+  --color-navy: var(--navy);
+  --color-navy-soft: var(--navy-soft);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-indigo: var(--indigo);
+  --color-indigo-soft: var(--indigo-soft);
+  --color-teal: var(--teal);
   --color-silver: var(--silver);
   --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
   --color-danger: var(--danger);
-  --font-sans: var(--font-geist-sans);
+  --color-danger-soft: var(--danger-soft);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-raised: var(--shadow-raised);
+
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
+  background: var(--page);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  /* Inter's default figures are proportional, which makes a column of numbers
+     jitter. Tabular by default across the app; the dashboards are full of
+     them. */
+  font-feature-settings: "cv11", "ss01";
 }
+
+/* The type scale from the design system sheet. Applied as defaults so a page
+   that just writes <h1> lands on the scale without repeating the sizes. */
+h1 { font-size: 2rem; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
+
+/* Numbers in cards, tables and charts line up. */
+.tabular-nums { font-variant-numeric: tabular-nums; }
 
 /* Mobile: 16px form controls stop iOS Safari's auto-zoom on focus and give
    comfortable touch targets (§37). */

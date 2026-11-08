@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { moderateListing } from "./actions";
 
 /**
@@ -47,7 +47,7 @@ export default async function ListingModerationPage({
 }: {
   searchParams: Promise<{ done?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("listing.moderate");
   const { done, error } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("adminListings");

@@ -33,7 +33,12 @@ yarn-error.log*
 # env files — never commit real secrets (spec §46)
 .env*
 !.env.example
+# The apps' .env.production hold only NEXT_PUBLIC_* build values and are committed.
 !.env.production
+# The db package's env files hold connection strings and keys for every target — never.
+packages/db/.env.production
+packages/db/.env.staging
+packages/db/.env.legacy
 
 # cloudflare / opennext build output
 .open-next/

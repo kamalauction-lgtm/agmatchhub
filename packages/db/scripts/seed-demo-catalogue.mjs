@@ -24,13 +24,13 @@
  * These are still fake property adverts. On a public marketplace they must come
  * out before launch — `--remove` is the whole point, not an afterthought.
  *
- *   node scripts/seed-demo-catalogue.mjs --env=local
- *   node scripts/seed-demo-catalogue.mjs --env=local --remove
+ *   node scripts/seed-demo-catalogue.mjs --env=legacy
+ *   node scripts/seed-demo-catalogue.mjs --env=legacy --remove
  */
 import pg from "pg";
 import { loadEnv, restArgs } from "./load-env.mjs";
 
-const { url, envName } = loadEnv();
+const { url, envName, requested } = loadEnv();
 const REMOVE = restArgs().includes("--remove");
 
 const DEMO_MARKER = "DEMO_SEED — remove before public launch";
@@ -349,7 +349,7 @@ async function seed() {
   });
   console.log(
     `\nThese are FAKE property adverts on ${envName}. Remove before any public launch:\n` +
-      `  node scripts/seed-demo-catalogue.mjs --env=${envName === "local/production" ? "local" : envName} --remove\n`
+      `  node scripts/seed-demo-catalogue.mjs --env=${requested} --remove\n`
   );
 }
 

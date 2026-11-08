@@ -5,7 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
-import { MAX_ACTIVE_LISTINGS } from "@/config/quotas";
+import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 
 /**
  * Marketplace listing creation (§28 steps 4–6). The agent's submission always
@@ -46,6 +46,12 @@ const schema = z.object({
     .or(z.literal("")),
   title: z.string().trim().min(10).max(150),
   description: optText,
+  // Newline-separated, from the assistant's chips the agent kept. Optional
+  // and bounded: at most six short lines, nothing else is accepted.
+  keySellingPoints: z
+    .string()
+    .optional()
+    .transform((s) => (s ?? "").split("\n").map((x) => x.trim()).filter(Boolean).slice(0, 6).map((x) => x.slice(0, 120))),
   price: z.string().trim().min(1).transform(Number).pipe(z.number().positive()),
   locationId: z.string().uuid().optional().or(z.literal("")),
   generalAddress: optText,
@@ -98,14 +104,17 @@ export async function createListing(formData: FormData): Promise<void> {
     redirect("/listings/new?error=invalid&field=rentPeriod");
   }
 
-  // Quota (§28 step 19). TODO(entitlements): replace the flat constant with
-  // the plans/entitlements engine from Epic 4 — never per-plan logic here.
+  /* Quota (§28 step 19), resolved from the entitlement engine rather than a
+     constant: plan allowance plus referral bonuses plus admin grants. The
+     same function backs the admin's "why does this agent have N slots"
+     explanation, so enforcement and explanation cannot disagree. */
+  const activeLimit = await entitlementInt(user.id, ENTITLEMENT.listingActiveLimit);
   const { count } = await supabase
     .from("listings")
     .select("id", { count: "exact", head: true })
     .eq("agent_id", user.id)
     .in("status", ["draft", "pending_review", "published"]);
-  if ((count ?? 0) >= MAX_ACTIVE_LISTINGS) {
+  if ((count ?? 0) >= activeLimit) {
     redirect("/listings?error=quota");
   }
 
@@ -197,6 +206,7 @@ export async function createListing(formData: FormData): Promise<void> {
       language: "id",
       title: d.title,
       description: d.description,
+      key_selling_points: d.keySellingPoints,
       slug: slugify(d.title),
       created_by: user.id,
     })

@@ -1,6 +1,6 @@
 {
   "brand": {
-    "tagline": "Find your property in Indonesia"
+    "tagline": "Find your property in {country}"
   },
   "nav": {
     "buy": "For Sale",
@@ -13,7 +13,7 @@
   },
   "home": {
     "heroTitle": "Find the right property, faster",
-    "heroSubtitle": "Thousands of houses, apartments, shophouses and land from verified agents across Indonesia.",
+    "heroSubtitle": "Thousands of verified listings from trusted agents across {country}.",
     "searchPlaceholder": "Search a location, area or building name",
     "searchButton": "Search",
     "tabBuy": "Buy",
@@ -63,7 +63,17 @@
       "disclaimer": "A rough estimate at a fixed rate. Your actual instalment depends on the bank, the rate structure, insurance and arrangement fees.",
       "cta": "See properties in this range"
     },
-    "adLabel": "Advertisement"
+    "adLabel": "Advertisement",
+    "statListings": "Listings",
+    "statCities": "Cities",
+    "statProvinces": "Provinces",
+    "browseTypeTitle": "Browse by category",
+    "browseTypeSubtitle": "Find the kind of property you need",
+    "browseAll": "See all",
+    "agentCtaTitle": "Join as a property agent",
+    "agentCtaBody": "Grow your business with us: manage your listings, receive qualified leads, and put your properties in front of more buyers.",
+    "agentCtaPrimary": "Sign up free",
+    "agentCtaSecondary": "Sign in"
   },
   "search": {
     "title": "Search results",
@@ -86,7 +96,15 @@
     "apply": "Apply",
     "previous": "Previous",
     "next": "Next",
-    "pageOf": "Page {page} of {total}"
+    "pageOf": "Page {page} of {total}",
+    "removeFilter": "Remove filter",
+    "pagination": "Pagination",
+    "filterSale": "For sale",
+    "filterRent": "For rent",
+    "filterMinPrice": "Min {amount}",
+    "filterMaxPrice": "Max {amount}",
+    "filterBedrooms": "{count}+ bedrooms",
+    "filterBathrooms": "{count}+ bathrooms"
   },
   "listing": {
     "forSale": "For sale",
@@ -121,7 +139,13 @@
     "photoCount": "{count, plural, =0 {No photos} one {1 photo} other {# photos}}",
     "noPhoto": "No photo yet",
     "notFound": "Property not found",
-    "notFoundHelp": "This listing may have been sold, rented or withdrawn by the agent."
+    "notFoundHelp": "This listing may have been sold, rented or withdrawn by the agent.",
+    "studio": "Studio",
+    "noPhotoHelp": "The agent is still preparing photos for this unit. Contact them to request current photos or arrange a viewing.",
+    "askForPhotos": "Ask the agent for photos",
+    "photoCountShort": "{n} photos",
+    "openPhoto": "View photo",
+    "contactCta": "Contact agent"
   },
   "furnishing": {
     "unfurnished": "Unfurnished",
@@ -150,7 +174,27 @@
     "hotel": "Hotel",
     "tanah": "Land",
     "kavling": "Land plot",
-    "lainnya": "Other"
+    "lainnya": "Other",
+    "terrace": "Terrace house",
+    "semi_detached": "Semi-detached",
+    "bungalow": "Bungalow",
+    "townhouse": "Townhouse",
+    "cluster_home": "Cluster home",
+    "condominium": "Condominium",
+    "serviced_residence": "Serviced residence",
+    "apartment": "Apartment",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Shoplot",
+    "shop_office": "Shop office",
+    "retail_space": "Retail space",
+    "office_space": "Office space",
+    "factory": "Factory",
+    "warehouse": "Warehouse",
+    "agricultural_land": "Agricultural land",
+    "residential_land": "Residential land",
+    "commercial_land": "Commercial land"
   },
   "ownership": {
     "shm": "SHM (freehold)",
@@ -162,12 +206,18 @@
     "strata": "Strata title",
     "ppjb": "PPJB",
     "adat": "Customary land",
-    "lainnya": "Other"
+    "lainnya": "Other",
+    "freehold": "Freehold",
+    "leasehold_99": "Leasehold (99 years)",
+    "leasehold_60": "Leasehold (60 years)",
+    "leasehold_other": "Leasehold",
+    "malay_reserve": "Malay reserve land",
+    "bumi_lot": "Bumi lot"
   },
   "inquiry": {
     "name": "Full name",
     "phone": "WhatsApp number",
-    "phoneHelp": "Example: 0812 3456 7890 — the agent will reach you on WhatsApp",
+    "phoneHelp": "Example: 012-345 6789 — the agent will reach you on WhatsApp",
     "email": "Email (optional)",
     "type": "I want to",
     "typeViewing": "Request a viewing",
@@ -181,7 +231,7 @@
     "sentBody": "The agent will contact you on WhatsApp. Your number goes only to the agent handling this property.",
     "sentRef": "Reference",
     "errorName": "Please enter your full name.",
-    "errorPhone": "That phone number does not look valid. Use 08xx or +62 format.",
+    "errorPhone": "That phone number does not look valid. Use 01x or +60 format.",
     "errorEmail": "That email address does not look valid.",
     "errorRateLimited": "Too many inquiries within an hour. Please try again later.",
     "errorConsent": "Please tick the consent box first.",

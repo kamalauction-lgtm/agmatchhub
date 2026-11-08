@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { createGuide, saveTranslation, togglePublish, deleteGuide } from "./actions";
 
 /**
@@ -26,7 +26,7 @@ export default async function AdminTrainingPage({
 }: {
   searchParams: Promise<{ saved?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("content.manage");
   const { saved, error } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("adminTraining");

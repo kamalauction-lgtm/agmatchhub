@@ -3,9 +3,10 @@
  * tracking applied versions in supabase_migrations.schema_migrations
  * (same table the Supabase CLI uses, so we can switch to `supabase db push` later).
  *
- * Usage: DATABASE_URL must be set (reads .env.local automatically).
- *   node scripts/db-migrate.mjs           # apply pending
- *   node scripts/db-migrate.mjs --status  # list applied/pending
+ * Usage (target is mandatory — see load-env.mjs):
+ *   node scripts/db-migrate.mjs --env=staging              # apply pending
+ *   node scripts/db-migrate.mjs --env=staging --status     # list applied/pending
+ *   node scripts/db-migrate.mjs --env=production           # only after staging
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";

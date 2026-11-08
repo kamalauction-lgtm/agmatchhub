@@ -4,8 +4,8 @@
  * Kamal, 10 Aug 2026: consolidate onto one Supabase project, keep every user's
  * password so nobody notices anything changed, then delete the old project.
  *
- *   SOURCE  .env.local     jtruwmwinymflkrvuuwd — old MatchHub, real data
- *   TARGET  .env.staging   jokyyhvtahiypuzmfydp — the propertiguru project
+ *   SOURCE  .env.legacy     jtruwmwinymflkrvuuwd — old MatchHub, real data
+ *   TARGET  .env.production   jokyyhvtahiypuzmfydp — the propertiguru project
  *
  *   node scripts/consolidate-wholesale.mjs            # dry run, rolls back
  *   node scripts/consolidate-wholesale.mjs --commit
@@ -52,14 +52,14 @@ function urlFrom(file) {
   throw new Error(`DATABASE_URL missing from ${file}`);
 }
 
-const source = new pg.Client({ connectionString: urlFrom(".env.local"), ssl: { rejectUnauthorized: false } });
-const target = new pg.Client({ connectionString: urlFrom(".env.staging"), ssl: { rejectUnauthorized: false } });
+const source = new pg.Client({ connectionString: urlFrom(".env.legacy"), ssl: { rejectUnauthorized: false } });
+const target = new pg.Client({ connectionString: urlFrom(".env.production"), ssl: { rejectUnauthorized: false } });
 await source.connect();
 await target.connect();
 
 const ref = (u) => new URL(u).username.split(".")[1];
-console.log(`SOURCE  ${ref(urlFrom(".env.local"))}  (taken as truth)`);
-console.log(`TARGET  ${ref(urlFrom(".env.staging"))}  (cleared, then filled)`);
+console.log(`SOURCE  ${ref(urlFrom(".env.legacy"))}  (taken as truth)`);
+console.log(`TARGET  ${ref(urlFrom(".env.production"))}  (cleared, then filled)`);
 console.log(COMMIT ? "\nMODE: COMMIT\n" : "\nMODE: dry run — everything rolls back\n");
 
 /** Public base tables, parents before children. */

@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 import { notify } from "@/lib/notifications";
 
@@ -22,7 +22,7 @@ const schema = z.object({
 });
 
 export async function moderateListing(formData: FormData): Promise<void> {
-  const admin = await requireAdmin();
+  const admin = await requireCapability("listing.moderate");
   const parsed = schema.safeParse(Object.fromEntries(formData.entries()));
   if (!parsed.success) redirect("/admin/listings?error=invalid");
   const { listingId, decision, reason } = parsed.data;

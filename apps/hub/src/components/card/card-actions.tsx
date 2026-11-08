@@ -75,14 +75,14 @@ export function CardActions({
       <button
         type="button"
         onClick={saveContact}
-        className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+        className="inline-flex min-h-11 cursor-pointer items-center rounded-lg bg-crimson px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-crimson-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
       >
         {labels.saveContact}
       </button>
       <button
         type="button"
         onClick={share}
-        className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:bg-surface"
+        className="inline-flex min-h-11 cursor-pointer items-center rounded-lg border border-line px-5 text-sm font-semibold transition-colors duration-200 hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
       >
         {copied ? labels.copied : labels.share}
       </button>

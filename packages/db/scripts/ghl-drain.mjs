@@ -15,8 +15,8 @@
  * automatically reset to pending so the real sync replays them.
  *
  * Usage:
- *   node scripts/ghl-drain.mjs --env=staging            # dry-run
- *   node scripts/ghl-drain.mjs --env=staging --limit=50
+ *   node scripts/ghl-drain.mjs --env=production            # dry-run
+ *   node scripts/ghl-drain.mjs --env=production --limit=50
  */
 import pg from "pg";
 import { loadEnv, restArgs } from "./load-env.mjs";

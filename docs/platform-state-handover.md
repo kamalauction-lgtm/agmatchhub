@@ -1,6 +1,6 @@
 # PropertiGuru — what already exists
 
-**Handover reference, 10 Aug 2026.** Written to be pasted into another AI tool
+**Handover reference, updated 26 Sep 2026.** Written to be pasted into another AI tool
 before it designs a new module, so it extends the platform instead of rebuilding
 it. Everything below is verified against the live repo and database, not
 recalled.
@@ -19,7 +19,17 @@ Two Next.js apps, **one Supabase project**, one Cloudflare account.
 
 Monorepo at `C:\Users\User\kamal\propertiguru` (npm workspaces).
 Supabase project `jokyyhvtahiypuzmfydp` (ap-south-1). There is **no staging
-environment** — `packages/db/.env.staging` points at production despite the name.
+environment**: production is the only database with the schema, and the RLS
+suite runs against it (fixtures are tagged and swept — see
+`packages/db/tests/teardown.ts`).
+
+The env files used to be named backwards — `.env.staging` held production
+credentials and `.env.local` a retired project — so `--env=staging` reached
+production and `--env=production` reached the dead one. They are now
+`packages/db/.env.production` (the live database) and `packages/db/.env.legacy`
+(`jtruwmwinymflkrvuuwd`, consolidated away, frozen at migration 00054 — nothing
+should be run against it). The tooling requires `--env=` explicitly, has no
+default target, and prints the Supabase project ref on every run.
 
 The public site carries exactly **one** agent-facing element: a "Masuk agen"
 button in the header linking to the hub. Nothing else on www addresses agents.
@@ -34,10 +44,10 @@ Cloudflare Workers via OpenNext.
 
 ---
 
-## 2. Database — 78 tables, 10 public views, 56 migrations
+## 2. Database — 103 tables, 10 public views, 74 migrations
 
 Migrations are `packages/db/supabase/migrations/NNNNN_name.sql`, applied with
-`node scripts/db-migrate.mjs --env=staging`. **Next number is 00057.**
+`node scripts/db-migrate.mjs --env=production`. **Next number is 00075.**
 
 ### Tables by domain
 
@@ -119,11 +129,18 @@ regencies, 7,215 districts) `location_aliases` `landmarks` `id_sequences`
 /r/[token]  /r/[token]/submit    password-gated supply-agent link
 /p/[token]  /p/[token]/compare   client presentation link
 
-/admin                     queue overview
-/admin/agents  /admin/agents/[id]      verification
+/admin                     Command Center — queues, trend, funnel, health
+/admin/search                          cross-entity lookup
+/admin/agents  /admin/agents/[id]      verification + Agent 360
 /admin/listings                        moderation
 /admin/requests  /admin/requests/[id]  /admin/requests/[id]/add-property
 /admin/reports  /admin/reports/[id]    violation reports
+/admin/growth                          referral campaigns, rewards, signals
+/admin/announcements                   in-app broadcasts
+/admin/organisations  /admin/organisations/[id]   Organisation 360
+/admin/commercial                      plans, policies, subscriptions
+/admin/users                           roles and capabilities
+/admin/flags  /admin/flags/[key]       feature switches + targeting
 /admin/banners                         marketplace ad banners
 /admin/identity                        group-identity switch
 /admin/countries  /admin/legal  /admin/audit  /admin/training
@@ -160,6 +177,13 @@ regencies, 7,215 districts) `location_aliases` `landmarks` `id_sequences`
 | **Training** | `/training` | Guides with progress |
 | **Property import** | `packages/db/scripts/import/` | Excel → normalized → validated → draft listings |
 | **Marketplace** | www | Search, facets, detail, lead capture, KPR calculator |
+| **Capabilities** | `role_capabilities` | Roles → capabilities as data; 17 admin sections gated on 9 |
+| **Entitlements** | `plan_entitlements`, `entitlement_grants` | What an account may do, and *why* it may — itemisable |
+| **Pricing** | `plans`, `plan_versions`, `commercial_policies` | Versioned prices; policy precedence user > agency > country > everyone |
+| **Referral growth** | `/growth`, `/join?ref=` | 15-rung ladder, pays capability never cash, fraud flagged not auto-banned |
+| **Feature switches** | `/admin/flags` | Global + user/agency/country/campaign targeting; off beats targeting |
+| **Announcements** | `/admin/announcements` | Audience is a rule, not a fan-out; reach previewed before publish |
+| **Admin reporting** | `/admin` | Period comparison, trend, funnel, segment breakdown, system health |
 
 ---
 
@@ -184,7 +208,7 @@ agent pages, MatchHub, GHL leads, Content Studio and social publishing exactly
 as a hand-made one does — wherever the normal business rules permit.
 
 **If a future feature ever branches on `creation_source`, that is the bug.**
-`node packages/db/scripts/verify-import-parity.mjs --env=staging` checks this
+`node packages/db/scripts/verify-import-parity.mjs --env=production` checks this
 mechanically against the live schema and fails loudly. Run it after any change
 that touches listing capability.
 
@@ -250,7 +274,7 @@ that touches listing capability.
 | Supabase's default grants give `anon` ALL on new tables/views | Six separate leaks. Always `revoke all` + explicit grant |
 | `current_user` inside `SECURITY DEFINER` is the function *owner* | A privilege escalation: an agent self-published a rejected listing. Guards are `SECURITY INVOKER`, use `session_user` |
 | `on conflict do nothing` skips a parent on a natural-key clash | Children orphan silently while the run reports success |
-| `.env.local` outranks `.env.production`, and `NEXT_PUBLIC_*` is inlined | A deploy ships a worker talking to the wrong database, silently. `scripts/verify-build-target.mjs` now refuses it |
+| `.env.legacy` outranks `.env.production`, and `NEXT_PUBLIC_*` is inlined | A deploy ships a worker talking to the wrong database, silently. `scripts/verify-build-target.mjs` now refuses it |
 | OpenNext does not clear `.open-next/cache/` between builds | A correct build ships the previous build's fetch cache |
 | `create or replace function` silently overwrites a same-named guard | Nearly put an insert guard on an update trigger |
 | Fire-and-forget inserts hide RLS denials | Two trails looked fine and were empty |
@@ -264,11 +288,17 @@ that touches listing capability.
 
 ## 8. What does NOT exist yet — fair game for a new module
 
-- **Entitlements engine** — `MAX_ACTIVE_LISTINGS = 20` is a flat constant in
-  `src/config/quotas.ts`, awaiting plans/entitlements tables
-- **Payments** — the credit ledger exists, every product is priced at 0
-- **EXIF/GPS stripping** on uploaded photos (needed before real public launch)
-- **Announcements channel** — admin → agent broadcasts
+- **Payments** — no checkout exists. Billing mode is `FREE_LAUNCH`; plans,
+  prices and policies are built and resolve to zero
+- **Listing view tracking** — `listings.view_count` and `save_count` exist, are
+  exposed on `public_listings`, and **nothing increments them**. Marked
+  `NOT IMPLEMENTED` in the schema (migration 00074). A real counter needs a
+  write path: the public site holds no service-role key
+- **EXIF/GPS stripping** on uploaded *listing* photos — profile photos are
+  covered. Must land before photographs do
+- **Photographs** — 30 published listings, zero images
+- **A staging project** — migrations and the RLS suite both run against
+  production
 - **Turnstile** — keys not set
 - **Co-marketing phases C–E** — lead attribution, AI pool ranking, per-agent AI
   copy, invite-only and agency-scoped pools
@@ -282,7 +312,7 @@ that touches listing capability.
 
 ## 9. Recipe for adding a module
 
-1. Migration `00056_*.sql`: tables + RLS + policies + `revoke all from anon` +
+1. Migration `00075_*.sql`: tables + RLS + policies + `revoke all from anon` +
    explicit grants. Confidential columns to a `*_private` companion.
 2. Public read (if any) through a new `public_*` view — never a base table.
 3. `apps/hub/src/app/(agent)/<module>/` or `(admin)/admin/<module>/`:
@@ -292,7 +322,7 @@ that touches listing capability.
    in `components/layout/agent-shell.tsx`.
 6. Verify: `npx tsc --noEmit`, `npm run lint`, and an anon-boundary check
    proving the new tables are unreadable without a session.
-7. Deploy: move `.env.local` aside, `npm run deploy`, restore it.
+7. Deploy: move `.env.legacy` aside, `npm run deploy`, restore it.
 
 ---
 
@@ -305,5 +335,8 @@ locations, 2 sample ad banners.
 Owning agent for imported stock: **PMgr Ts Kamal AG**, `kamal@iqiindonesia.id`,
 +6285808001688 — public slug `/agent/kamal-ag`.
 
-Theme: **merah putih** — `--brand: #b11226` on white. Green is reserved for the
-"verified" signal only.
+Theme: design system v1.0 (26 Sep 2026) — red `#E53935` primary, navy
+`#0D182A` for dark bands, blue `#2563EB` for data and navigation, slate
+neutrals, Inter. Red leads, blue informs. The palette lives in
+`apps/*/src/app/globals.css` and nowhere else; no component hard-codes a
+colour.

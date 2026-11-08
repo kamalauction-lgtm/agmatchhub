@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { updateReport } from "../actions";
 
 const inputCls =
@@ -18,7 +18,7 @@ export default async function ReportDetailPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ saved?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("report.manage");
   const { id } = await params;
   const { saved, error } = await searchParams;
   const supabase = await createClient();

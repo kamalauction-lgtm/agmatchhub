@@ -52,15 +52,31 @@ jobs:
         run: |
           echo "::warning::RLS suite skipped — staging Supabase secrets are not configured."
           echo "Configure STAGING_SUPABASE_URL, STAGING_SUPABASE_ANON_KEY and the TEST_* credentials."
-      - name: Run RLS suite against staging
+      # The suite reads ONE file named by scripts/test.mjs (--env=staging →
+      # packages/db/.env.staging). CI materialises that file from secrets so
+      # the local and CI paths are identical and no test ever needs to know
+      # whether it is in CI. The service-role key is required: the fixture
+      # sweep and the fixture-agent helper use it.
+      - name: Write packages/db/.env.staging from secrets
         if: env.STAGING_SUPABASE_URL != ''
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.STAGING_SUPABASE_ANON_KEY }}
-          TEST_RA_EMAIL: ${{ secrets.TEST_RA_EMAIL }}
-          TEST_RA_PASSWORD: ${{ secrets.TEST_RA_PASSWORD }}
-          TEST_SA_EMAIL: ${{ secrets.TEST_SA_EMAIL }}
-          TEST_SA_PASSWORD: ${{ secrets.TEST_SA_PASSWORD }}
-          TEST_ADMIN_EMAIL: ${{ secrets.TEST_ADMIN_EMAIL }}
-          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+        run: |
+          cat > packages/db/.env.staging <<EOF
+          DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_URL=${{ secrets.STAGING_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.STAGING_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY=${{ secrets.STAGING_SERVICE_ROLE_KEY }}
+          TEST_RA_EMAIL=${{ secrets.TEST_RA_EMAIL }}
+          TEST_RA_PASSWORD=${{ secrets.TEST_RA_PASSWORD }}
+          TEST_SA_EMAIL=${{ secrets.TEST_SA_EMAIL }}
+          TEST_SA_PASSWORD=${{ secrets.TEST_SA_PASSWORD }}
+          TEST_LA_EMAIL=${{ secrets.TEST_LA_EMAIL }}
+          TEST_LA_PASSWORD=${{ secrets.TEST_LA_PASSWORD }}
+          TEST_MA_EMAIL=${{ secrets.TEST_MA_EMAIL }}
+          TEST_MA_PASSWORD=${{ secrets.TEST_MA_PASSWORD }}
+          TEST_ADMIN_EMAIL=${{ secrets.TEST_ADMIN_EMAIL }}
+          TEST_ADMIN_PASSWORD=${{ secrets.TEST_ADMIN_PASSWORD }}
+          GHL_LIVE=false
+          EOF
+      - name: Run the suite against staging
+        if: env.STAGING_SUPABASE_URL != ''
         run: npm test

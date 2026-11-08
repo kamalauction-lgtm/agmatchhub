@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getAgentBySlug, getAgentListings } from "@/lib/listings";
 import { mediaUrl } from "@/lib/format";
 import { ListingCard } from "@/components/listing-card";
+import { CheckBadgeIcon, PinIcon } from "@/components/icons";
 
 /**
  * An agent's own landing page: /agent/<slug>.
@@ -66,15 +67,33 @@ export default async function AgentPage({
     getTranslations("agentPage"),
   ]);
 
+  /* Only facts the agent's profile actually states. An empty tile reading "0"
+     or "—" makes a new agent look worse than saying nothing about them. */
+  const stats: Array<[string, string]> = [
+    [t("statListings"), String(listings.length)],
+    agent.markets_served?.length
+      ? [t("statMarkets"), agent.markets_served.slice(0, 3).join(", ")]
+      : null,
+    agent.property_categories?.length
+      ? [t("statCategories"), String(agent.property_categories.length)]
+      : null,
+  ].filter(Boolean) as Array<[string, string]>;
+
   const photo = mediaUrl(agent.profile_photo_path) ?? agent.avatar_url;
   const place = [agent.city, agent.state_region].filter(Boolean).join(", ");
 
   return (
     <>
-      {/* Agent card — top of the page, as on the benchmark. */}
-      <section className="border-b border-line bg-gradient-to-b from-brand-soft to-background">
-        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-10 sm:flex-row sm:items-center">
-          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-surface-raised">
+      {/* Agent header — the same navy band as the marketplace hero, so an
+          agent's page reads as part of the platform rather than a stray white
+          screen an agent might mistake for someone else's site. */}
+      <section className="relative overflow-hidden bg-navy text-white">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(ellipse_at_top_right,rgb(37_99_235/0.45),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgb(229_57_53/0.3),transparent_55%)]"
+        />
+        <div className="relative mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 sm:flex-row sm:items-start">
+          <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full bg-white/10 ring-4 ring-white/15">
             {photo ? (
               <Image
                 src={photo}
@@ -85,42 +104,60 @@ export default async function AgentPage({
                 priority
               />
             ) : (
-              <span className="grid h-full w-full place-items-center text-3xl font-black text-muted">
+              <span className="grid h-full w-full place-items-center text-4xl font-bold text-white/70">
                 {(agent.display_name ?? "?").charAt(0)}
               </span>
             )}
           </div>
 
           <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 {agent.display_name}
               </h1>
               {agent.is_verified && (
-                <span className="rounded-full bg-success/10 px-2.5 py-0.5 text-xs font-semibold text-success">
-                  ✓ {t("verified")}
+                <span className="inline-flex items-center gap-1 rounded-full bg-success/20 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  <CheckBadgeIcon className="h-3.5 w-3.5" />
+                  {t("verified")}
                 </span>
               )}
             </div>
 
             {agent.agency_name && (
-              <p className="mt-1 text-sm text-muted">{agent.agency_name}</p>
+              <p className="mt-1.5 text-sm font-medium text-white/80">{agent.agency_name}</p>
             )}
-            {place && <p className="mt-0.5 text-sm text-muted">📍 {place}</p>}
+            {place && (
+              <p className="mt-1 flex items-center gap-1.5 text-sm text-white/60">
+                <PinIcon className="h-4 w-4 shrink-0" />
+                {place}
+              </p>
+            )}
 
             {agent.biography && (
-              <p className="mt-3 max-w-2xl text-sm text-muted">{agent.biography}</p>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70">
+                {agent.biography}
+              </p>
             )}
 
-            <p className="mt-3 text-sm font-semibold">
-              {t("inventory", { count: listings.length })}
-            </p>
+            {stats.length > 0 && (
+              <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-5">
+                {stats.map(([label, value]) => (
+                  <div key={label}>
+                    <dd className="text-xl font-bold tracking-tight text-white">{value}</dd>
+                    <dt className="mt-0.5 text-xs font-medium uppercase tracking-wide text-white/50">
+                      {label}
+                    </dt>
+                  </div>
+                ))}
+              </dl>
+            )}
           </div>
         </div>
       </section>
 
       {/* Inventory ---------------------------------------------------------- */}
       <section className="mx-auto max-w-6xl px-4 py-10">
+        <h2 className="mb-5 text-lg font-bold">{t("inventory", { count: listings.length })}</h2>
         {!listings.length ? (
           <p className="rounded-card border border-dashed border-line p-12 text-center text-sm text-muted">
             {t("empty")}

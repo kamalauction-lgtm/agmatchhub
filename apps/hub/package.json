@@ -10,10 +10,12 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "deploy": "node -e \"for (const d of ['.open-next','.next']) fs.rmSync(d,{recursive:true,force:true})\" && opennextjs-cloudflare build && node ../../scripts/verify-build-target.mjs && opennextjs-cloudflare deploy",
-    "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
+    "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "dev:staging": "node scripts/dev-staging.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@pg/ai": "*",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.7",
     "next": "16.3.0",

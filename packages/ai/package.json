@@ -1,0 +1,21 @@
+{
+  "name": "@pg/ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Provider-agnostic AI layer for the agent platform: adapters, structured output, redaction, cost. No provider SDKs — plain fetch, so it runs unchanged on Cloudflare Workers and in Node tests.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}

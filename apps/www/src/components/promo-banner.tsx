@@ -1,4 +1,5 @@
 import { mediaUrl } from "@/lib/format";
+import { PinIcon } from "./icons";
 import type { SiteBanner } from "@/lib/listings";
 
 /**
@@ -66,7 +67,16 @@ export function PromoBanner({
         )}
 
         <span className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/85">
-          {banner.location_label && <span>📍 {banner.location_label}</span>}
+          {/* An SVG pin, not the 📍 emoji it replaced: an emoji renders in a
+              different typeface on every platform, ignores the surrounding
+              colour, and is the clearest tell that a page was assembled
+              rather than designed. */}
+          {banner.location_label && (
+            <span className="inline-flex items-center gap-1">
+              <PinIcon className="h-4 w-4" />
+              {banner.location_label}
+            </span>
+          )}
           {banner.price_label && (
             <span className="font-semibold text-white">{banner.price_label}</span>
           )}

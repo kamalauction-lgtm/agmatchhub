@@ -1,6 +1,6 @@
 {
   "brand": {
-    "tagline": "Cari properti impian Anda di Indonesia"
+    "tagline": "Cari properti Anda di {country}"
   },
   "nav": {
     "buy": "Dijual",
@@ -13,7 +13,7 @@
   },
   "home": {
     "heroTitle": "Temukan properti yang tepat, lebih cepat",
-    "heroSubtitle": "Ribuan pilihan rumah, apartemen, ruko, dan tanah dari agen terverifikasi di seluruh Indonesia.",
+    "heroSubtitle": "Ribuan listing terverifikasi dari agen tepercaya di seluruh {country}.",
     "searchPlaceholder": "Cari lokasi, area, atau nama gedung",
     "searchButton": "Cari",
     "tabBuy": "Beli",
@@ -63,7 +63,17 @@
       "disclaimer": "Perkiraan kasar dengan bunga tetap. Cicilan sebenarnya tergantung bank, skema bunga, asuransi, dan biaya provisi.",
       "cta": "Lihat properti di kisaran ini"
     },
-    "adLabel": "Iklan"
+    "adLabel": "Iklan",
+    "statListings": "Properti",
+    "statCities": "Kota",
+    "statProvinces": "Provinsi",
+    "browseTypeTitle": "Jelajahi Kategori",
+    "browseTypeSubtitle": "Temukan properti sesuai kebutuhan Anda",
+    "browseAll": "Lihat Semua",
+    "agentCtaTitle": "Bergabung sebagai Agen Properti",
+    "agentCtaBody": "Kembangkan bisnis Anda bersama kami: kelola listing, terima leads berkualitas, dan promosikan properti Anda ke lebih banyak pembeli.",
+    "agentCtaPrimary": "Daftar Gratis",
+    "agentCtaSecondary": "Masuk"
   },
   "search": {
     "title": "Hasil pencarian",
@@ -86,7 +96,15 @@
     "apply": "Terapkan",
     "previous": "Sebelumnya",
     "next": "Berikutnya",
-    "pageOf": "Halaman {page} dari {total}"
+    "pageOf": "Halaman {page} dari {total}",
+    "removeFilter": "Hapus filter",
+    "pagination": "Navigasi halaman",
+    "filterSale": "Dijual",
+    "filterRent": "Disewa",
+    "filterMinPrice": "Min {amount}",
+    "filterMaxPrice": "Maks {amount}",
+    "filterBedrooms": "{count}+ kamar tidur",
+    "filterBathrooms": "{count}+ kamar mandi"
   },
   "listing": {
     "forSale": "Dijual",
@@ -121,7 +139,13 @@
     "photoCount": "{count, plural, =0 {Tanpa foto} one {1 foto} other {# foto}}",
     "noPhoto": "Foto belum tersedia",
     "notFound": "Properti tidak ditemukan",
-    "notFoundHelp": "Listing ini mungkin sudah terjual, disewa, atau ditarik oleh agen."
+    "notFoundHelp": "Listing ini mungkin sudah terjual, disewa, atau ditarik oleh agen.",
+    "studio": "Studio",
+    "noPhotoHelp": "Agen sedang menyiapkan foto untuk unit ini. Hubungi agen untuk meminta foto terbaru atau jadwalkan kunjungan.",
+    "askForPhotos": "Minta foto ke agen",
+    "photoCountShort": "{n} foto",
+    "openPhoto": "Lihat foto",
+    "contactCta": "Hubungi agen"
   },
   "furnishing": {
     "unfurnished": "Tanpa perabot",
@@ -150,7 +174,27 @@
     "hotel": "Hotel",
     "tanah": "Tanah",
     "kavling": "Kavling",
-    "lainnya": "Lainnya"
+    "lainnya": "Lainnya",
+    "terrace": "Rumah teres",
+    "semi_detached": "Berkembar",
+    "bungalow": "Banglo",
+    "townhouse": "Rumah bandar",
+    "cluster_home": "Rumah kluster",
+    "condominium": "Kondominium",
+    "serviced_residence": "Kediaman servis",
+    "apartment": "Apartmen",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Lot kedai",
+    "shop_office": "Kedai pejabat",
+    "retail_space": "Ruang runcit",
+    "office_space": "Ruang pejabat",
+    "factory": "Kilang",
+    "warehouse": "Gudang",
+    "agricultural_land": "Tanah pertanian",
+    "residential_land": "Tanah kediaman",
+    "commercial_land": "Tanah komersial"
   },
   "ownership": {
     "shm": "SHM",
@@ -162,7 +206,13 @@
     "strata": "Strata Title",
     "ppjb": "PPJB",
     "adat": "Tanah Adat",
-    "lainnya": "Lainnya"
+    "lainnya": "Lainnya",
+    "freehold": "Pegangan bebas",
+    "leasehold_99": "Pajakan (99 tahun)",
+    "leasehold_60": "Pajakan (60 tahun)",
+    "leasehold_other": "Pajakan",
+    "malay_reserve": "Tanah rizab Melayu",
+    "bumi_lot": "Lot Bumiputera"
   },
   "inquiry": {
     "name": "Nama lengkap",

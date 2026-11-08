@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { publishDeclarationVersion } from "./actions";
 
 const LOCALES = ["en", "ms", "id"] as const;
@@ -12,7 +12,7 @@ export default async function LegalContentPage({
 }: {
   searchParams: Promise<{ published?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("legal.publish");
   const { published, error } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("adminLegal");

@@ -230,7 +230,7 @@ export default async function SubmissionReviewPage({
         <div className="flex items-start gap-4">
           {saPhotoUrl ? (
             <Image src={saPhotoUrl} alt="" width={64} height={64} unoptimized
-              className="h-16 w-16 rounded-full border border-line object-cover" />
+              className="h-16 w-16 rounded-full border border-line object-cover object-top" />
           ) : (
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface text-xl">👤</div>
           )}

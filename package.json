@@ -2,7 +2,7 @@
   "name": "propertiguru",
   "version": "0.1.0",
   "private": true,
-  "description": "PropertiGuru Next — Indonesia property marketplace + agent operating system",
+  "description": "PropertiGuru Next \u2014 Indonesia property marketplace + agent operating system",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -13,15 +13,17 @@
   "scripts": {
     "dev:hub": "npm run dev -w @pg/hub",
     "dev:www": "npm run dev -w @pg/www",
+    "dev:www:my": "npm run dev:my -w @pg/www",
     "build": "npm run build --workspaces --if-present",
     "build:hub": "npm run build -w @pg/hub",
     "build:www": "npm run build -w @pg/www",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test -w @pg/db",
-    "db:migrate": "npm run migrate -w @pg/db",
-    "db:status": "npm run status -w @pg/db",
+    "db:migrate": "npm run migrate:production -w @pg/db",
+    "db:status": "npm run status:production -w @pg/db",
     "deploy:hub": "npm run deploy -w @pg/hub",
-    "deploy:www": "npm run deploy -w @pg/www"
+    "deploy:www": "npm run deploy -w @pg/www",
+    "deploy:www:my": "npm run deploy:my -w @pg/www"
   }
 }

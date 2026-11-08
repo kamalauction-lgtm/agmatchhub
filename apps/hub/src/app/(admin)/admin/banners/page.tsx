@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { BannerManager } from "@/components/admin/banner-manager";
 import type { BannerRow } from "@/components/admin/banner-form";
 
@@ -29,7 +29,7 @@ export default async function BannersPage({
 }: {
   searchParams: Promise<{ done?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("commercial.manage");
   const { done, error } = await searchParams;
   const t = await getTranslations("adminBanners");
   const supabase = await createClient();

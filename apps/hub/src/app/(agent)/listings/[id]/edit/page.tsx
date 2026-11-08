@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { QualityCard } from "@/components/listings/quality-card";
 import { updateListing } from "./actions";
 
 /**
@@ -88,6 +89,9 @@ export default async function EditListingPage({
           {t("edit.willReturnToReview")}
         </p>
       )}
+
+      {/* The score and its fixes sit above the form they are about. */}
+      <QualityCard listingId={listing.id} />
 
       <form action={updateListing} className="space-y-5">
         <input type="hidden" name="listingId" value={listing.id} />

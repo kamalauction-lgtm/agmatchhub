@@ -29,6 +29,11 @@ import { join } from "node:path";
 const APP = process.cwd();
 const OUT = join(APP, ".open-next");
 
+// Which env file describes the intended target. Defaults to the Indonesian one,
+// so existing invocations are unchanged.
+const envArg = process.argv.find((a) => a.startsWith("--env="));
+const ENV_FILE = envArg ? envArg.slice(6) : ".env.production";
+
 function fail(message) {
   console.error(`\n✗ Build target check FAILED\n\n${message}\n`);
   process.exit(1);
@@ -39,19 +44,24 @@ if (!existsSync(OUT)) {
 }
 
 // --- what the bundle SHOULD point at ------------------------------------------
-const prodEnv = join(APP, ".env.production");
+const prodEnv = join(APP, ENV_FILE);
 if (!existsSync(prodEnv)) {
-  fail(".env.production is missing, so there is nothing to verify the build against.");
+  fail(`${ENV_FILE} is missing, so there is nothing to verify the build against.`);
 }
 
-const expectedUrl = readFileSync(prodEnv, "utf8")
-  .split(/\r?\n/)
-  .find((l) => l.startsWith("NEXT_PUBLIC_SUPABASE_URL="))
-  ?.split("=", 2)[1]
-  ?.trim();
+const envText = readFileSync(prodEnv, "utf8");
+const envValue = (key) =>
+  envText
+    .split(/\r?\n/)
+    .find((l) => l.startsWith(`${key}=`))
+    ?.split("=", 2)[1]
+    ?.trim();
+
+const expectedUrl = envValue("NEXT_PUBLIC_SUPABASE_URL");
+const expectedAppUrl = envValue("NEXT_PUBLIC_APP_URL");
 
 if (!expectedUrl) {
-  fail("NEXT_PUBLIC_SUPABASE_URL is not set in .env.production.");
+  fail(`NEXT_PUBLIC_SUPABASE_URL is not set in ${ENV_FILE}.`);
 }
 
 const expectedRef = new URL(expectedUrl).hostname.split(".")[0];
@@ -111,4 +121,82 @@ if (!found.has(expectedRef)) {
   );
 }
 
-console.log(`✓ Build target verified: ${expectedRef}`);
+/* --- which MARKET was this bundle built for? -------------------------------
+ *
+ * The database check above cannot tell the markets apart: they share one
+ * Supabase project, so an Indonesian bundle deployed to the Malaysian Worker
+ * passes it and then serves rupiah prices and Indonesian place names on a
+ * Malaysian domain, with nothing erroring.
+ *
+ * NOT by the inlined app URL — that was the first attempt and it does not work.
+ * The bundle contains BOTH markets' URLs: the market table lists every market
+ * and the hub URL is shared, so the check passed on a Malaysian bundle verified
+ * against the Indonesian env file. A check that always passes is worse than no
+ * check, because it reads as proof.
+ *
+ * The prerender manifest IS decisive. `generateStaticParams` is built from
+ * `routing.locales`, which comes from the market, so the set of prerendered
+ * locale routes differs: /id + /en for Indonesia, /en + /ms for Malaysia.
+ */
+
+// Mirrors the locale sets in apps/www/src/config/market.ts. Duplicated on
+// purpose and deliberately small: this script cannot import TypeScript, and a
+// market missing from here fails loudly below rather than being waved through.
+const MARKET_LOCALES = {
+  ID: ["id", "en"],
+  MY: ["en", "ms"],
+};
+
+const expectedMarket = (envValue("NEXT_PUBLIC_MARKET") ?? "ID").toUpperCase();
+const expectedLocales = MARKET_LOCALES[expectedMarket];
+
+if (!expectedLocales) {
+  fail(
+    `${ENV_FILE} names market "${expectedMarket}", which this check does not know.\n\n` +
+      `Add it to MARKET_LOCALES in this file, mirroring src/config/market.ts.`
+  );
+}
+
+const manifestPath = join(
+  OUT,
+  "server-functions",
+  "default",
+  "apps",
+  "www",
+  ".next",
+  "prerender-manifest.json"
+);
+
+if (existsSync(manifestPath)) {
+  const routes = Object.keys(JSON.parse(readFileSync(manifestPath, "utf8")).routes ?? {});
+  const builtLocales = routes
+    .filter((r) => /^\/[a-z]{2}$/.test(r))
+    .map((r) => r.slice(1))
+    .sort();
+
+  const wanted = [...expectedLocales].sort();
+  const mismatch =
+    builtLocales.length !== wanted.length ||
+    builtLocales.some((l, i) => l !== wanted[i]);
+
+  if (builtLocales.length > 0 && mismatch) {
+    fail(
+      `The build was made for a different market.\n\n` +
+        `  expected : ${expectedMarket} — locales ${wanted.join(", ")}  (from ${ENV_FILE})\n` +
+        `  built    : locales ${builtLocales.join(", ")}\n\n` +
+        `Both markets share one database, so the Supabase check above cannot see\n` +
+        `this. Deploying anyway would put one country's listings, currency and\n` +
+        `place names on the other country's domain.\n\n` +
+        `Fix: build through the deploy script, which injects the right env file.\n` +
+        `    npm run deploy:my     (Malaysia)\n` +
+        `    npm run deploy        (Indonesia)`
+    );
+  }
+} else {
+  console.warn(
+    `  ! No prerender manifest at ${manifestPath.slice(APP.length + 1)} — the market\n` +
+      `    could not be verified. The database check above still applies.`
+  );
+}
+
+console.log(`✓ Build target verified: ${expectedRef}  (${ENV_FILE})`);

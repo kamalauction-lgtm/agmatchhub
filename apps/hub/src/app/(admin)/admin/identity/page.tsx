@@ -1,6 +1,6 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { IdentitySwitch } from "@/components/admin/identity-switch";
 
 /**
@@ -21,7 +21,7 @@ export default async function IdentityPage({
 }: {
   searchParams: Promise<{ done?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("platform.configure");
   const { done, error } = await searchParams;
   const t = await getTranslations("adminIdentity");
   const locale = await getLocale();

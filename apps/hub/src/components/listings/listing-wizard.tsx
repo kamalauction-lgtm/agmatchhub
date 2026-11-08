@@ -106,6 +106,15 @@ export function ListingWizard({
   const [descMode, setDescMode] = useState<"choose" | "self" | "ai">("choose");
   const [titleOptions, setTitleOptions] = useState<string[]>([]);
   const [advice, setAdvice] = useState<{ key: string; severity: string }[]>([]);
+  /** Where the last draft came from, and what the assistant added to it. */
+  const [aiMeta, setAiMeta] = useState<{
+    source: "ai" | "rules" | null;
+    reason?: string;
+    model?: string;
+    sellingPoints: string[];
+    notes: string[];
+    comparables: { n: number; medianPrice: number | null } | null;
+  }>({ source: null, sellingPoints: [], notes: [], comparables: null });
 
   const [f, setF] = useState({
     listingType: "sale" as "sale" | "rent",
@@ -241,7 +250,7 @@ export function ListingWizard({
   async function askAi() {
     setAiBusy(true);
     try {
-      const r = await draftListingCopy(writerInput());
+      const r = await draftListingCopy({ ...writerInput(), propertyTypeSlug: f.propertyType });
       setTitleOptions(r.titles);
       setF((prev) => ({
         ...prev,
@@ -249,6 +258,14 @@ export function ListingWizard({
         description: r.description,
       }));
       setAdvice(r.advice);
+      setAiMeta({
+        source: r.source,
+        reason: r.reason,
+        model: r.model,
+        sellingPoints: r.sellingPoints,
+        notes: r.notesForAgent,
+        comparables: r.comparables ? { n: r.comparables.n, medianPrice: r.comparables.medianPrice } : null,
+      });
       setDescMode("ai");
     } finally {
       setAiBusy(false);
@@ -292,6 +309,7 @@ export function ListingWizard({
     fd.set("buildingSize", f.buildingSize);
     fd.set("yearBuilt", f.yearBuilt);
     fd.set("furnishing", f.furnishing);
+    fd.set("keySellingPoints", aiMeta.sellingPoints.join("\n"));
     fd.set("condition", f.condition);
     fd.set("facilities", f.facilities);
     fd.set("price", f.price);
@@ -626,6 +644,34 @@ export function ListingWizard({
               </div>
             ) : (
               <>
+                {/* Which assistant answered, and what it knew. An agent should
+                    never wonder whether a sentence came from a model or from
+                    their own fields rearranged. */}
+                {aiMeta.source && (
+                  <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs text-muted">
+                    <p>
+                      <span className={`mr-2 rounded-full px-2 py-0.5 font-semibold ${aiMeta.source === "ai" ? "bg-indigo-soft text-indigo" : "bg-card text-muted"}`}>
+                        {aiMeta.source === "ai" ? "✦ AI" : t.rulesBadge}
+                      </span>
+                      {aiMeta.source === "ai"
+                        ? t.aiSource.replace("[model]", aiMeta.model ?? "AI")
+                        : (t[`aiReason_${aiMeta.reason ?? "failed"}`] ?? t.rulesSource)}
+                    </p>
+                    {aiMeta.comparables && (
+                      <p className="mt-1">
+                        {t.comparables
+                          .replace("[n]", String(aiMeta.comparables.n))
+                          .replace("[median]", aiMeta.comparables.medianPrice ? `IDR ${Math.round(aiMeta.comparables.medianPrice).toLocaleString("id-ID")}` : "—")}
+                      </p>
+                    )}
+                    {aiMeta.notes.length > 0 && (
+                      <ul className="mt-1 list-disc pl-4">
+                        {aiMeta.notes.map((n) => <li key={n}>{n}</li>)}
+                      </ul>
+                    )}
+                  </div>
+                )}
+
                 {titleOptions.length > 0 && (
                   <div>
                     <p className={label}>{t.titleSuggestions}</p>
@@ -655,6 +701,27 @@ export function ListingWizard({
                   <textarea id="de" rows={10} maxLength={5000} value={f.description}
                     className={`mt-1 ${input}`} onChange={(e) => set("description", e.target.value)} />
                 </div>
+
+                {/* Selling points ride along with the listing (key_selling_points);
+                    each chip can be removed, and the list is only ever what the
+                    agent left in it. */}
+                {aiMeta.sellingPoints.length > 0 && (
+                  <div>
+                    <p className={label}>{t.sellingPoints}</p>
+                    <p className="mt-0.5 text-xs text-muted">{t.sellingPointsHint}</p>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {aiMeta.sellingPoints.map((sp) => (
+                        <li key={sp} className="flex items-center gap-1 rounded-full border border-line bg-card px-3 py-1 text-sm">
+                          {sp}
+                          <button type="button" aria-label="×" className="ml-1 text-muted hover:text-danger"
+                            onClick={() => setAiMeta((m) => ({ ...m, sellingPoints: m.sellingPoints.filter((x) => x !== sp) }))}>
+                            ×
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 <div className="flex flex-wrap gap-2">
                   <button type="button" onClick={review} disabled={aiBusy}

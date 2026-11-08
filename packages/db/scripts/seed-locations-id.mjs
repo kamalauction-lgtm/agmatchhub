@@ -14,7 +14,7 @@
  * Jakarta rows (which carry property FKs) are updated in place, never
  * duplicated. Safe to re-run; safe on production later.
  *
- * Usage: node scripts/seed-locations-id.mjs --env=staging
+ * Usage: node scripts/seed-locations-id.mjs --env=production
  */
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";

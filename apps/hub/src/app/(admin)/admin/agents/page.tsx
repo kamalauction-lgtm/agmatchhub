@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 
 const FILTERS = ["under_review", "additional_information_required", "verified", "rejected", "all"] as const;
 
@@ -10,7 +10,7 @@ export default async function AgentQueuePage({
 }: {
   searchParams: Promise<{ status?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("agent.verify");
   const { status = "under_review" } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("admin");

@@ -10,7 +10,7 @@
  * Idempotent: re-running replaces the samples rather than stacking duplicates,
  * matched on the fictional advertiser label.
  *
- *   node scripts/seed-banners.mjs --env=staging
+ *   node scripts/seed-banners.mjs --env=production
  */
 import pg from "pg";
 import { loadEnv, restArgs } from "./load-env.mjs";

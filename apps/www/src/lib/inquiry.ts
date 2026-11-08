@@ -1,10 +1,11 @@
 "use server";
 
 import { headers } from "next/headers";
+import { market } from "@/config/market";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { publicDb } from "./supabase/public";
-import { routing } from "@/i18n/routing";
+import { routing, publicPath } from "@/i18n/routing";
 
 /**
  * The inquiry server action. Thin on purpose: real validation, rate limiting,
@@ -41,15 +42,26 @@ const schema = z.object({
 });
 
 /**
- * Normalise an Indonesian phone number to E.164. "0812…" is local convention,
- * "62…" a common paste, "+62…" already correct. Other countries pass through
- * if they arrive in E.164 — overseas buyers exist (§2).
+ * Normalise a local phone number to E.164, using THIS MARKET's dialling code.
+ *
+ * "0812…" in Indonesia and "012-345 6789" in Malaysia are both the local
+ * convention of writing a national number with a leading zero; which country
+ * that zero belongs to is the market's, not a constant. This used to hard-code
+ * +62, which on a Malaysian build would have turned every Malaysian buyer's
+ * number into an Indonesian one — an undeliverable lead that still looks like
+ * a valid phone number, so nothing downstream would flag it.
+ *
+ * Numbers already in E.164 pass through untouched: overseas buyers exist (§2).
  */
 function normalisePhone(raw: string): string {
   const digits = raw.replace(/[\s\-().]/g, "");
+  const code = market.phoneCode.replace("+", "");
+
   if (/^\+[1-9][0-9]{7,14}$/.test(digits)) return digits;
-  if (/^0[0-9]{8,13}$/.test(digits)) return `+62${digits.slice(1)}`;
-  if (/^62[0-9]{8,13}$/.test(digits)) return `+${digits}`;
+  // Local form: a leading zero standing in for the country code.
+  if (/^0[0-9]{7,13}$/.test(digits)) return `${market.phoneCode}${digits.slice(1)}`;
+  // Pasted with the country code but no plus.
+  if (new RegExp(`^${code}[0-9]{7,13}$`).test(digits)) return `+${digits}`;
   return digits; // let the database's E.164 check reject it
 }
 
@@ -76,19 +88,26 @@ export async function submitInquiry(formData: FormData): Promise<void> {
   // malformed slug there is nothing safe to return to, so go home.
   if (!parsed.success) {
     const slug = formData.get("slug");
-    const locale = formData.get("locale");
-    const prefix =
-      typeof locale === "string" && locale !== routing.defaultLocale ? `/${locale}` : "";
+    const raw = formData.get("locale");
+    /* Validation already failed, so nothing here is trusted. An unrecognised
+       locale falls back to the market's default rather than being pasted into
+       a redirect target. */
+    const locale =
+      typeof raw === "string" && (routing.locales as readonly string[]).includes(raw)
+        ? raw
+        : routing.defaultLocale;
     if (typeof slug === "string" && /^[a-z0-9-]{1,200}$/.test(slug)) {
       const field = parsed.error.issues[0]?.path[0] ?? "form";
-      redirect(`${prefix}/properti/${slug}?inquiry=invalid&field=${String(field)}#tanya`);
+      redirect(
+        `${publicPath(locale, "listing", `/${slug}`)}` +
+          `?inquiry=invalid&field=${String(field)}#tanya`
+      );
     }
     redirect("/");
   }
 
   const d = parsed.data;
-  const prefix = d.locale !== routing.defaultLocale ? `/${d.locale}` : "";
-  const back = `${prefix}/properti/${d.slug}`;
+  const back = publicPath(d.locale, "listing", `/${d.slug}`);
 
   // Honeypot filled → pretend success. A bot that knows it failed retries
   // smarter; one that thinks it succeeded goes away.

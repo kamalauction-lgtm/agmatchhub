@@ -6,11 +6,10 @@ import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { getStudioListing, publicMediaUrl } from "@/lib/studio/listings";
 import { schedulePost } from "../social-actions";
-import {
-  writeWhatsappBroadcast,
-  writeSocialCaption,
-  type StudioInput,
-} from "@/lib/ai/listing-writer";
+import { draftStudioCopy } from "../ai-actions";
+import { writeWhatsappBroadcast, writeSocialCaption } from "@/lib/ai/listing-writer";
+import { buildStudioInput, copyLocaleFor } from "@/lib/studio/input";
+import { aiQuotaFor } from "@/lib/ai/engine";
 import { money, place } from "@/lib/listings/format";
 import { StudioWorkspace } from "@/components/studio/studio-workspace";
 
@@ -38,7 +37,7 @@ export default async function StudioWorkspacePage({
   const listing = await getStudioListing(user.id, listingId);
   if (!listing) notFound();
 
-  const copyLocale = listing.language === "en" ? "en" : "id";
+  const copyLocale = copyLocaleFor(listing);
   const [t, tt] = await Promise.all([
     getTranslations("studio"),
     getTranslations({ locale: copyLocale, namespace: "propertyTypes" }),
@@ -52,38 +51,17 @@ export default async function StudioWorkspacePage({
     .eq("status", "active")
     .order("platform");
 
-  const input: StudioInput = {
-    title: listing.title,
-    url: listing.share_url,
-    language: listing.language,
-    propertyTypeSlug: listing.property_type,
-    listingType: listing.listing_type,
-    propertyTypeLabel: tt.has(listing.property_type as never)
-      ? tt(listing.property_type as never)
-      : listing.property_type,
-    province: listing.province_name,
-    regency: listing.regency_name,
-    area: listing.district_name ?? listing.general_address,
-    buildingName: listing.building_name,
-    bedrooms: listing.bedrooms,
-    bathrooms: listing.bathrooms,
-    parking: listing.parking_spaces,
-    floors: listing.floors,
-    landSize: listing.land_size,
-    buildingSize: listing.building_size,
-    yearBuilt: listing.year_built,
-    furnishing: listing.furnishing,
-    condition: listing.property_condition,
-    ownership: listing.ownership_type,
-    facilities: listing.facilities,
-    price: listing.price,
-    rentPeriod: listing.rent_period,
-    negotiable: listing.price_negotiable,
-  };
+  const input = buildStudioInput(listing, (slug) => (tt.has(slug as never) ? tt(slug as never) : slug));
+  const quota = await aiQuotaFor(user.id);
 
+  // The deterministic floor; the AI Marketing Studio button fills every tab
+  // from the same facts when the engine allows it.
+  const caption = writeSocialCaption(input);
   const drafts = {
     whatsapp: writeWhatsappBroadcast(input),
-    caption: writeSocialCaption(input),
+    caption,
+    facebook: caption,
+    tiktok: "",
   };
 
   // Poster facts, in the listing's language like everything else. Plain text —
@@ -175,16 +153,34 @@ export default async function StudioWorkspacePage({
               : `📘 ${a.display_name}`,
         }))}
         scheduleAction={schedulePost}
+        aiAction={draftStudioCopy}
+        quota={quota ? { remaining: quota.remaining, total: quota.monthly_allowance } : null}
         labels={{
           tabWhatsapp: t("tabWhatsapp"),
           tabCaption: t("tabCaption"),
+          tabFacebook: t("tabFacebook"),
+          tabTiktok: t("tabTiktok"),
           tabImages: t("tabImages"),
           tabBrochure: t("tabBrochure"),
           whatsappHelp: t("whatsappHelp"),
           captionHelp: t("captionHelp"),
+          facebookHelp: t("facebookHelp"),
+          tiktokHelp: t("tiktokHelp"),
           imagesHelp: t("imagesHelp"),
           brochureHelp: t("brochureHelp"),
           openBrochure: t("openBrochure"),
+          brochureBlurb: t("brochureBlurb"),
+          aiCta: t("ai.cta"),
+          aiWorking: t("ai.working"),
+          aiSource: t.raw("ai.source") as string,
+          rulesSource: t("ai.rulesSource"),
+          aiReasons: Object.fromEntries(
+            ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"].map(
+              (r) => [r, t(`ai.reason.${r}` as never)],
+            ),
+          ),
+          aiQuota: t.raw("ai.quota") as string,
+          emptyTab: t("ai.emptyTab"),
           poster: {
             presetFeed: t("poster.presetFeed"),
             presetStory: t("poster.presetStory"),

@@ -4,8 +4,8 @@
  * Kamal, 10 Aug 2026: consolidate onto one Supabase project so there is one
  * bill and one database, then retire the old one.
  *
- *   SOURCE  .env.local     jtruwmwinymflkrvuuwd — old MatchHub, live since Jul
- *   TARGET  .env.staging   jokyyhvtahiypuzmfydp — the propertiguru project
+ *   SOURCE  .env.legacy     jtruwmwinymflkrvuuwd — old MatchHub, live since Jul
+ *   TARGET  .env.production   jokyyhvtahiypuzmfydp — the propertiguru project
  *
  *   node scripts/consolidate-projects.mjs            # dry run, rolls back
  *   node scripts/consolidate-projects.mjs --commit
@@ -61,13 +61,13 @@ const SKIP = new Set([
   "schema_migrations",
 ]);
 
-const source = new pg.Client({ connectionString: urlFrom(".env.local"), ssl: { rejectUnauthorized: false } });
-const target = new pg.Client({ connectionString: urlFrom(".env.staging"), ssl: { rejectUnauthorized: false } });
+const source = new pg.Client({ connectionString: urlFrom(".env.legacy"), ssl: { rejectUnauthorized: false } });
+const target = new pg.Client({ connectionString: urlFrom(".env.production"), ssl: { rejectUnauthorized: false } });
 await source.connect();
 await target.connect();
 
-console.log(`SOURCE  ${new URL(urlFrom(".env.local")).username.split(".")[1]}`);
-console.log(`TARGET  ${new URL(urlFrom(".env.staging")).username.split(".")[1]}`);
+console.log(`SOURCE  ${new URL(urlFrom(".env.legacy")).username.split(".")[1]}`);
+console.log(`TARGET  ${new URL(urlFrom(".env.production")).username.split(".")[1]}`);
 console.log(COMMIT ? "\nMODE: COMMIT — changes will be kept\n" : "\nMODE: dry run — everything rolls back\n");
 
 /** Topological sort of public tables by foreign-key dependency. */

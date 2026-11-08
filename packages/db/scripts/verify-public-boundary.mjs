@@ -12,7 +12,7 @@
  *   3. No confidential value appears anywhere in a public response body.
  *   4. The public views reject anonymous writes.
  *
- * Usage: node scripts/verify-public-boundary.mjs --env=staging
+ * Usage: node scripts/verify-public-boundary.mjs --env=production
  */
 import { loadEnv } from "./load-env.mjs";
 

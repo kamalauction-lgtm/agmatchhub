@@ -13,14 +13,15 @@
  *
  * Refuses to run against production. Idempotent.
  *
- * Usage: node scripts/seed-staging-comarketing.mjs --env=staging
+ * Usage: node scripts/seed-staging-comarketing.mjs --env=legacy
  */
 import pg from "pg";
 import { loadEnv } from "./load-env.mjs";
 
-const { url, envName } = loadEnv();
-if (envName === "local/production") {
-  console.error("Refusing to seed the production database. Pass --env=staging.");
+const { url, isProduction } = loadEnv();
+/* By project ref, not env-file name — see seed-staging-catalogue.mjs. */
+if (isProduction) {
+  console.error("Refusing to seed the production database.");
   process.exit(1);
 }
 

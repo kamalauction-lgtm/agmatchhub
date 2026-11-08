@@ -25,7 +25,7 @@ const ACTION_BY_DECISION = {
 
 export async function reviewSocialLink(formData: FormData) {
   const supabase = await createClient();
-  const { data: isAdmin } = await supabase.rpc("is_platform_admin");
+  const { data: isAdmin } = await supabase.rpc("has_capability", { p_capability: "agent.verify" });
   if (!isAdmin) redirect("/dashboard");
 
   const parsed = z
@@ -57,14 +57,14 @@ export async function reviewSocialLink(formData: FormData) {
 }
 
 export async function reviewAgent(formData: FormData) {
-  // Admin gate: RLS policies additionally enforce is_platform_admin() on
+  // Capability gate: RLS policies additionally enforce is_platform_admin() on
   // every write below, so a non-admin session fails at the database too.
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
-  const { data: isAdmin } = await supabase.rpc("is_platform_admin");
+  const { data: isAdmin } = await supabase.rpc("has_capability", { p_capability: "agent.verify" });
   if (!isAdmin) redirect("/dashboard");
 
   const parsed = decisionSchema.safeParse({

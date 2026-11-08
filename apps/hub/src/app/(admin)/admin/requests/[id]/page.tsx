@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { reviewRequest } from "../actions";
 import { CRED_COOKIE } from "@/lib/agents/constants";
 
@@ -17,7 +17,7 @@ export default async function AdminRequestDetail({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ done?: string; error?: string }>;
 }) {
-  await requireAdmin();
+  await requireCapability("request.manage");
   const { id } = await params;
   const { done, error } = await searchParams;
   const supabase = await createClient();

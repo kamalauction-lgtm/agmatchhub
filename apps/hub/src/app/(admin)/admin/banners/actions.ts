@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/authz";
+import { requireCapability } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 
 /**
@@ -78,7 +78,7 @@ function rowFrom(d: z.infer<typeof bannerSchema>) {
 }
 
 export async function createBanner(formData: FormData): Promise<void> {
-  const user = await requireAdmin();
+  const user = await requireCapability("commercial.manage");
   const parsed = bannerSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!parsed.success) {
     const external = parsed.error.issues.some((i) => i.message === "external_image");
@@ -106,7 +106,7 @@ export async function createBanner(formData: FormData): Promise<void> {
 }
 
 export async function updateBanner(formData: FormData): Promise<void> {
-  await requireAdmin();
+  await requireCapability("commercial.manage");
   const id = String(formData.get("id") ?? "");
   if (!z.string().uuid().safeParse(id).success) redirect("/admin/banners?error=invalid");
 
@@ -139,7 +139,7 @@ export async function updateBanner(formData: FormData): Promise<void> {
  * and re-submitting fourteen fields correctly.
  */
 export async function toggleBanner(formData: FormData): Promise<void> {
-  await requireAdmin();
+  await requireCapability("commercial.manage");
   const id = String(formData.get("id") ?? "");
   const next = String(formData.get("isActive") ?? "") === "true";
   if (!z.string().uuid().safeParse(id).success) redirect("/admin/banners?error=invalid");
@@ -160,7 +160,7 @@ export async function toggleBanner(formData: FormData): Promise<void> {
 }
 
 export async function deleteBanner(formData: FormData): Promise<void> {
-  await requireAdmin();
+  await requireCapability("commercial.manage");
   const id = String(formData.get("id") ?? "");
   if (!z.string().uuid().safeParse(id).success) redirect("/admin/banners?error=invalid");
 

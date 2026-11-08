@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-13 — Server-to-server listing ingest (IQI AG Hero)
+
+- `POST /api/listings/ingest` (`src/app/api/listings/ingest/route.ts`): Hero sends an approved agent listing and it becomes a
+  DRAFT here — `properties` → `property_private` → `listings` exactly like the import module, `creation_source = 'api'`
+  (provenance only), `property_imports` row keyed on `source_url` so a re-send updates the same draft, photos copied into
+  `listing-media-public/<agent>/…` with the first as cover, `log_audit('listing.ingested')`. Gated by the shared secret
+  `LISTING_INGEST_SECRET`; drafts belong to the verified company profile in `LISTING_INGEST_AGENT_ID` (body `agent_id` may
+  override, must be `verified`). Never publishes. Tested end to end from Hero (13 checks) — see
+  `ag-warriors-superapp/tools/test_pi_portal_id.py`.
+
 ## v1 — Phase 1 foundation (18 Jul 2026)
 
 - Next.js 16 + TypeScript + Tailwind v4 scaffold; Supabase wired

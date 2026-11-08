@@ -11,37 +11,62 @@
    meaning rather than decoration. */
 :root {
   --background: #ffffff;
-  --foreground: #14181f;
-  --surface: #f6f7f9;
+  --foreground: #0f172a;          /* Slate 900 */
+  --page: #f8fafc;
+  --surface: #f1f5f9;             /* Slate 100 */
   --surface-raised: #ffffff;
-  --line: #e3e6ea;
-  --muted: #64707f;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;         /* Slate 300 */
+  --muted: #64748b;               /* Slate 500 */
+  --muted-strong: #334155;        /* Slate 700 */
 
-  --brand: #b11226;
-  --brand-strong: #8d0e1e;
-  --brand-soft: #fdf1f2;
-  --accent: #c2872a;
+  --brand: #e53935;               /* Red — primary */
+  --brand-strong: #c62828;
+  --brand-soft: #fef2f2;
+  --navy: #0d182a;                /* The dark bands: hero, footer, CTA */
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --accent: #f97316;              /* Orange */
 
-  --success: #15803d;
-  --warning: #b45309;
-  --danger: #b91c1c;
+  --success: #16a34a;
+  --success-soft: #f0fdf4;
+  --warning: #f97316;
+  --warning-soft: #fff7ed;
+  --danger: #e53935;
 
   --radius: 0.875rem;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-raised: 0 8px 24px rgb(15 23 42 / 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0e1116;
-    --foreground: #eef1f5;
-    --surface: #161a21;
-    --surface-raised: #1b2029;
-    --line: #2a313c;
-    --muted: #9aa6b4;
+    --background: #0b1220;
+    --foreground: #f1f5f9;
+    --page: #070d18;
+    --surface: #1c2536;
+    --surface-raised: #131a29;
+    --line: #263145;
+    --line-strong: #35415a;
+    --muted: #94a3b8;
+    --muted-strong: #cbd5e1;
 
-    --brand: #ef4b60;
-    --brand-strong: #d92d45;
-    --brand-soft: #2a0f14;
-    --accent: #d9a441;
+    --brand: #f05a56;
+    --brand-strong: #e53935;
+    --brand-soft: #2a1618;
+    --navy: #070d18;
+    --blue: #60a5fa;
+    --blue-soft: #16243c;
+    --accent: #fb923c;
+
+    --success: #4ade80;
+    --success-soft: #10261a;
+    --warning: #fb923c;
+    --warning-soft: #2a1c10;
+    --danger: #f05a56;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.2);
+    --shadow-raised: 0 8px 24px rgb(0 0 0 / 0.45);
   }
 }
 
@@ -55,12 +80,22 @@
   --color-brand: var(--brand);
   --color-brand-strong: var(--brand-strong);
   --color-brand-soft: var(--brand-soft);
+  --color-navy: var(--navy);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
   --color-accent: var(--accent);
+  --color-page: var(--page);
+  --color-line-strong: var(--line-strong);
+  --color-muted-strong: var(--muted-strong);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
-  --font-sans: var(--font-plus-jakarta);
+  --color-success-soft: var(--success-soft);
+  --color-warning-soft: var(--warning-soft);
+  --font-sans: var(--font-inter);
   --radius-card: var(--radius);
+  --shadow-card: var(--shadow-card);
+  --shadow-raised: var(--shadow-raised);
 }
 
 body {
@@ -69,6 +104,10 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+
+h1 { font-size: 2rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 
 /* 16px controls stop iOS Safari auto-zooming on focus, and 44px is the
    smallest comfortable touch target. Mobile-first is a requirement here, not

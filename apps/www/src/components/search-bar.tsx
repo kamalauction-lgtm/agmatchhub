@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { publicPath } from "@/i18n/routing";
+import { market } from "@/config/market";
+import { formatPriceShort } from "@/lib/format";
 
 /**
  * Server-rendered search form. A plain GET form means search works with
@@ -12,23 +14,9 @@ import { routing } from "@/i18n/routing";
  * compete with it.
  */
 
-/** Budget rungs, in rupiah. Round numbers a buyer actually thinks in. */
-const SALE_BUDGETS = [
-  500_000_000, 1_000_000_000, 2_000_000_000, 3_000_000_000, 5_000_000_000, 10_000_000_000,
-] as const;
-
-const RENT_BUDGETS = [
-  25_000_000, 50_000_000, 100_000_000, 200_000_000, 500_000_000,
-] as const;
-
-const PROPERTY_TYPES = [
-  "rumah", "apartemen", "ruko", "tanah", "kantor", "gudang", "villa", "kost",
-] as const;
-
-const shortIdr = (n: number) =>
-  n >= 1_000_000_000
-    ? `Rp ${n / 1_000_000_000} M`.replace(".", ",")
-    : `Rp ${n / 1_000_000} jt`;
+/* Budgets and property types come from the MARKET. They were rupiah rungs and
+   Indonesian types written in as constants, so the Malaysian build offered
+   "Up to Rp 500 jt" and a dropdown of ruko and kost. */
 
 export async function SearchBar({
   locale,
@@ -36,38 +24,54 @@ export async function SearchBar({
   defaultQuery = "",
   size = "large",
   advanced = false,
+  onDark = false,
 }: {
   locale: string;
   defaultType?: "sale" | "rent";
   defaultQuery?: string;
   size?: "large" | "compact";
   advanced?: boolean;
+  /** Sitting on the dark hero band, where the tab strip needs its own palette. */
+  onDark?: boolean;
 }) {
   const t = await getTranslations("home");
   const tp = await getTranslations("propertyType");
-  const action = locale === routing.defaultLocale ? "/cari" : `/${locale}/cari`;
+  const action = publicPath(locale, "search");
   const large = size === "large";
 
   // One budget list, not one per tab: the tab is a radio inside the same form
   // and switching it cannot re-render a server component. Sale rungs are the
   // honest default for the wider range; rent is served by the same field
   // because maxPrice means the same thing to the query either way.
-  const budgets = defaultType === "rent" ? RENT_BUDGETS : SALE_BUDGETS;
+  const budgets = defaultType === "rent" ? market.budgets.rent : market.budgets.sale;
 
+  /* `text-foreground` is not decoration here. On the dark hero the section
+     sets `text-white`, and these controls sit on a white card — without an
+     explicit colour they inherit white and render as blank boxes. Found on
+     production the first time this form was put on the dark band. */
   const selectClass =
-    "rounded-lg border border-line bg-surface-raised px-3 py-2.5 text-sm outline-none focus:border-brand";
+    "rounded-lg border border-line bg-surface-raised px-3 py-2.5 text-sm text-foreground outline-none focus:border-brand";
 
   return (
     <form action={action} method="get" className="w-full">
+      {/* The tab strip sits ABOVE the search box on the hero, so on the dark
+          band it is drawn on the band itself rather than on a card — hence its
+          own colours rather than the page's surface tokens. */}
       <div
-        className="inline-flex rounded-lg bg-surface p-1 text-sm"
+        className={`inline-flex rounded-t-lg p-1 text-sm ${
+          onDark ? "bg-white/10" : "rounded-lg bg-surface"
+        }`}
         role="group"
         aria-label={t("searchButton")}
       >
         {(["sale", "rent"] as const).map((value) => (
           <label
             key={value}
-            className="cursor-pointer rounded-md px-3 py-1.5 font-medium has-[:checked]:bg-background has-[:checked]:shadow-sm has-[:checked]:font-semibold"
+            className={`cursor-pointer rounded-md px-4 py-2 font-medium has-[:checked]:font-semibold ${
+              onDark
+                ? "text-white/70 has-[:checked]:bg-white has-[:checked]:text-navy"
+                : "has-[:checked]:bg-background has-[:checked]:shadow-sm"
+            }`}
           >
             <input
               type="radio"
@@ -82,9 +86,9 @@ export async function SearchBar({
       </div>
 
       <div
-        className={`mt-3 flex flex-col gap-2 rounded-card border border-line bg-surface-raised p-2 sm:flex-row ${
-          large ? "shadow-sm" : ""
-        }`}
+        className={`flex flex-col gap-2 border border-line bg-surface-raised p-2 sm:flex-row ${
+          onDark ? "mt-0 rounded-b-card rounded-tr-card shadow-raised" : "mt-3 rounded-card"
+        } ${large && !onDark ? "shadow-sm" : ""}`}
       >
         <input
           type="search"
@@ -92,7 +96,7 @@ export async function SearchBar({
           defaultValue={defaultQuery}
           placeholder={t("searchPlaceholder")}
           aria-label={t("searchPlaceholder")}
-          className={`flex-1 rounded-lg bg-transparent px-3 outline-none placeholder:text-muted ${
+          className={`flex-1 rounded-lg bg-transparent px-3 text-foreground outline-none placeholder:text-muted ${
             large ? "py-3 text-base" : "py-2.5 text-sm"
           }`}
         />
@@ -113,7 +117,7 @@ export async function SearchBar({
           </label>
           <select id="propertyType" name="propertyType" defaultValue="" className={selectClass}>
             <option value="">{t("anyType")}</option>
-            {PROPERTY_TYPES.map((p) => (
+            {market.searchPropertyTypes.map((p) => (
               <option key={p} value={p}>
                 {tp(p)}
               </option>
@@ -127,7 +131,7 @@ export async function SearchBar({
             <option value="">{t("anyBudget")}</option>
             {budgets.map((b) => (
               <option key={b} value={b}>
-                {t("upTo", { amount: shortIdr(b) })}
+                {t("upTo", { amount: formatPriceShort(b, market.currency, locale) })}
               </option>
             ))}
           </select>

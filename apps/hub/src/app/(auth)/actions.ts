@@ -36,6 +36,10 @@ export async function signUp(formData: FormData) {
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
   });
+  // Carried through the form from /join?ref=CODE. Never trusted here: the
+  // database decides whether it is a real, active code for somebody other
+  // than this person, on an account young enough to attribute.
+  const referralCode = String(formData.get("ref") ?? "").trim().slice(0, 16);
   if (!parsed.success) {
     const weak = parsed.error.issues.some((i) => i.path[0] === "password");
     redirect(`/register?error=${weak ? "weak_password" : "generic"}`);
@@ -58,6 +62,17 @@ export async function signUp(formData: FormData) {
       `/register?error=${error.code === "user_already_exists" ? "email_in_use" : "generic"}`,
     );
   }
+
+  /* Attribute the signup while we still have a session for the new account.
+   * Deliberately not fatal: a referral that fails to attach must never cost
+   * somebody their registration. `attach_referral` returns false rather than
+   * throwing for every ordinary rejection (bad code, self-referral, already
+   * attributed), so a thrown error here is genuinely unexpected. */
+  if (referralCode) {
+    const { error: refErr } = await supabase.rpc("attach_referral", { p_code: referralCode });
+    if (refErr) console.error("attach_referral failed", refErr.message);
+  }
+
   redirect("/verify-email");
 }
 

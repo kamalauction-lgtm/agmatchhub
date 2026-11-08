@@ -1,9 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { brand } from "@/config/brand";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { RailNav, type RailGroup } from "@/components/layout/rail-nav";
 import { signOut } from "@/app/(auth)/actions";
 
 /**
@@ -44,24 +46,43 @@ export async function AgentShell({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { count: unread } = user
-    ? await supabase
-        .from("notifications")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-        .is("read_at", null)
-    : { count: 0 };
+  const [{ count: unread }, { data: profile }] = await Promise.all([
+    user
+      ? supabase
+          .from("notifications")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", user.id)
+          .is("read_at", null)
+      : Promise.resolve({ count: 0 }),
+    /* The rail carries a profile card, as the design sheet has it. An agent
+       platform is somewhere people live all day; being told who you are
+       signed in as, and whether you are cleared to work, is worth one query. */
+    user
+      ? supabase
+          .from("profiles")
+          .select("display_name, avatar_url, agent_status")
+          .eq("id", user.id)
+          .maybeSingle()
+      : Promise.resolve({ data: null }),
+  ]);
 
-  const sections: { title?: string; items: NavItem[] }[] = [
+  const sections: RailGroup[] = [
     {
+      title: null,
       items: [{ href: "/dashboard", icon: "🏠", label: t("dashboard") }],
     },
     {
       title: t("sectionWork"),
       items: [
         { href: "/leads", icon: "📥", label: t("leads") },
+        { href: "/tasks", icon: "☑️", label: t("tasks") },
         { href: "/listings", icon: "🏘️", label: t("listings") },
+        // Not 📥 — that is Leads, one row up, and two identical icons in one
+        // section is how a nav item becomes invisible.
+        { href: "/listings/import", icon: "📦", label: t("importListings") },
+        { href: "/growth", icon: "📈", label: t("growth") },
         { href: "/studio", icon: "✨", label: t("studio") },
+        { href: "/ai", icon: "✦", label: t("aiWorkforce") },
         { href: "/training", icon: "🎓", label: t("training") },
       ],
     },
@@ -79,6 +100,7 @@ export async function AgentShell({
       items: [
         { href: "/notifications", icon: "🔔", label: t("notifications"), badge: unread ?? 0 },
         { href: "/profile", icon: "👤", label: t("profile") },
+        { href: "/plan", icon: "🧾", label: t("plan") },
         { href: "/card", icon: "💳", label: t("card") },
       ],
     },
@@ -95,7 +117,7 @@ export async function AgentShell({
   return (
     <div className="min-h-screen sm:flex">
       {/* Desktop rail ---------------------------------------------------- */}
-      <aside className="hidden w-60 shrink-0 flex-col border-r border-line bg-surface sm:flex">
+      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-line bg-card sm:flex">
         <Link
           href="/dashboard"
           className="flex items-center gap-2 border-b border-line px-5 py-4"
@@ -112,45 +134,48 @@ export async function AgentShell({
           </span>
         </Link>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4">
-          {sections.map((section, i) => (
-            <div key={section.title ?? `s${i}`} className={i > 0 ? "mt-5" : ""}>
-              {section.title && (
-                <p className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wide text-muted">
-                  {section.title}
-                </p>
-              )}
-              <ul className="space-y-0.5">
-                {section.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={`flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition hover:bg-background ${
-                        item.accent ? "text-crimson" : ""
-                      }`}
-                    >
-                      <span aria-hidden className="text-base leading-none">
-                        {item.icon}
-                      </span>
-                      <span className="truncate">{item.label}</span>
-                      {!!item.badge && (
-                        <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-crimson px-1 text-[10px] font-bold text-white">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
+        {/* Who you are, and whether you are cleared to work. Verification
+            status belongs here rather than only on the profile page: an
+            unverified agent cannot publish, and the reason should not be
+            somewhere they have to go looking for. */}
+        <div className="border-b border-line px-4 py-4 text-center">
+          {profile?.avatar_url ? (
+            <Image
+              src={profile.avatar_url}
+              alt=""
+              width={64}
+              height={64}
+              unoptimized
+              className="mx-auto h-16 w-16 rounded-full object-cover object-top"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-crimson text-xl font-bold text-white"
+            >
+              {(profile?.display_name ?? "?").charAt(0).toUpperCase()}
+            </span>
+          )}
+          <p className="mt-2 truncate text-sm font-bold">{profile?.display_name ?? "—"}</p>
+          <p className="text-xs text-muted">{t("agentRole")}</p>
+          <span
+            className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+              profile?.agent_status === "verified"
+                ? "bg-success-soft text-success"
+                : "bg-warning-soft text-warning"
+            }`}
+          >
+            {profile?.agent_status === "verified" ? t("verifiedBadge") : t("unverifiedBadge")}
+          </span>
+        </div>
+
+        <RailNav groups={sections} />
 
         <div className="border-t border-line p-3">
           <form action={signOut}>
             <button
               type="submit"
-              className="w-full rounded-lg border border-line px-3 py-2 text-sm font-medium hover:border-crimson hover:text-crimson"
+              className="w-full cursor-pointer rounded-lg px-3 py-2 text-left text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface hover:text-danger"
             >
               {tc("signOut")}
             </button>
@@ -160,7 +185,7 @@ export async function AgentShell({
 
       {/* Content column --------------------------------------------------- */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-line bg-background/95 px-4 py-3 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-line bg-card/95 px-4 py-3 backdrop-blur sm:px-6">
           {/* Brand shows on phones, where the rail is hidden */}
           <Link href="/dashboard" className="flex items-center gap-2 sm:hidden">
             <span
@@ -208,7 +233,7 @@ export async function AgentShell({
       </div>
 
       {/* Phone bottom bar (§37 mobile-first) ------------------------------- */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex border-t border-line bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 flex border-t border-line bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden">
         {bottomTabs.map((item) => (
           <Link
             key={item.href}

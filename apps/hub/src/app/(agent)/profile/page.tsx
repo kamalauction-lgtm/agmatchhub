@@ -1,8 +1,9 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { HeroCard } from "@/components/profile/hero-card";
+import { AvatarUpload } from "@/components/profile/avatar-upload";
 import { updateTrustProfile, addSocialLink, removeSocialLink } from "./actions";
 
 const inputCls =
@@ -18,9 +19,9 @@ const KNOWN_ERRORS = ["invalid_fields", "invalid_file_type", "file_too_large",
 export default async function ProfilePage({
   searchParams,
 }: {
-  searchParams: Promise<{ saved?: string; error?: string }>;
+  searchParams: Promise<{ saved?: string; error?: string; hero?: string }>;
 }) {
-  const { saved, error } = await searchParams;
+  const { saved, error, hero: heroNotice } = await searchParams;
   const user = await requireUser();
   const supabase = await createClient();
   const t = await getTranslations("trustProfile");
@@ -54,21 +55,20 @@ export default async function ProfilePage({
       )}
 
       <form action={updateTrustProfile} className="mb-8 space-y-5 rounded-xl border border-line p-6">
-        <div className="flex items-center gap-4">
-          {photoUrl ? (
-            <Image src={photoUrl} alt="" width={72} height={72} unoptimized
-              className="h-18 w-18 rounded-full border border-line object-cover" />
-          ) : (
-            <div className="flex h-18 w-18 items-center justify-center rounded-full bg-surface text-2xl">
-              👤
-            </div>
-          )}
-          <label className="block text-sm">
-            <span className="mb-1 block font-medium">{t("photo")}</span>
-            <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp" className="block text-sm" />
-            <span className="text-xs text-muted">{t("photoHint")}</span>
-          </label>
-        </div>
+        <AvatarUpload
+          currentPhotoUrl={photoUrl}
+          labels={{
+            photo: t("photo"),
+            hint: t("photoHint"),
+            choose: t("photoChoose"),
+            change: t("photoChange"),
+            modeHead: t("photoModeHead"),
+            modeFull: t("photoModeFull"),
+            nudge: t("photoNudge"),
+            autoCropped: t("photoAutoCropped"),
+            cropFailed: t("photoCropFailed"),
+          }}
+        />
 
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm">
@@ -181,6 +181,9 @@ export default async function ProfilePage({
           </form>
         </details>
       </section>
+
+      {/* AG Hero link + launch benefits (E8). */}
+      <HeroCard userId={user.id} notice={heroNotice} />
     </AgentShell>
   );
 }

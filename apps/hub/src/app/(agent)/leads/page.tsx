@@ -1,8 +1,14 @@
+import Link from "next/link";
 import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { markLeadResponded, updateLeadStatus } from "./actions";
+import { draftLeadReply, sendLeadEmail, qualifyLead, findLeadMatches, type LeadIntel } from "./ai-actions";
+import { ReplyPanel, type PlatformWhatsapp } from "@/components/leads/reply-panel";
+import { sendLeadWhatsapp, sendLeadWhatsappTemplate } from "./whatsapp-actions";
+import { IntelPanel } from "@/components/leads/intel-panel";
+import { aiQuotaFor } from "@/lib/ai/engine";
 
 /**
  * The agent's lead inbox — marketplace inquiries land here (§28 steps 11–16).
@@ -83,15 +89,87 @@ type LeadRow = {
 export default async function LeadsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ updated?: string; error?: string }>;
+  searchParams: Promise<{ updated?: string; error?: string; sort?: string }>;
 }) {
-  await requireUser();
-  const { updated, error } = await searchParams;
+  const user = await requireUser();
+  const { updated, error, sort } = await searchParams;
   const t = await getTranslations("leads");
+  const tsec = await getTranslations("leads.secretary");
+  const quota = await aiQuotaFor(user.id);
+  const REASONS = ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"];
+  const replyLabels = {
+    draftWhatsapp: tsec("draftWhatsapp"),
+    draftEmail: tsec("draftEmail"),
+    working: tsec("working"),
+    sourceAi: tsec.raw("sourceAi") as string,
+    sourceRules: tsec("sourceRules"),
+    reasons: Object.fromEntries(REASONS.map((r) => [r, tsec(`reason.${r}` as never)])),
+    nextStep: tsec("nextStep"),
+    questions: tsec("questions"),
+    openWhatsapp: tsec("openWhatsapp"),
+    sendEmail: tsec("sendEmail"),
+    subject: tsec("subject"),
+    noEmail: tsec("noEmail"),
+    copy: tsec("copy"),
+    copied: tsec("copied"),
+    quota: tsec.raw("quota") as string,
+    platform: {
+      send: tsec("platform.send"), testMode: tsec("platform.testMode"), windowClosed: tsec("platform.windowClosed"),
+      useTemplate: tsec("platform.useTemplate"), sendTemplate: tsec("platform.sendTemplate"), variable: tsec.raw("platform.variable") as string,
+      reasons: Object.fromEntries(["opted_out", "no_phone", "not_test_recipient", "no_account", "feature_off"].map((r) => [r, tsec(`platform.reason.${r}` as never)])),
+    },
+  };
+  const ti = await getTranslations("leads.intel");
+  const intelLabels = {
+    qualify: ti("qualify"), requalify: ti("requalify"), working: ti("working"), intent: ti("intent"),
+    sourceAi: ti.raw("sourceAi") as string, sourceRules: ti("sourceRules"),
+    reasons: Object.fromEntries(REASONS.map((r) => [r, tsec(`reason.${r}` as never)])),
+    action: ti("action"), findMatches: ti("findMatches"), finding: ti("finding"), matchesTitle: ti("matchesTitle"),
+    noMatches: ti("noMatches"), own: ti("own"), pool: ti("pool"), openListing: ti("openListing"),
+    why: Object.fromEntries(["same_area", "same_type", "same_category", "similar_price", "cheaper", "pricier", "similar_size"].map((k) => [k, ti(`why.${k}` as never)])),
+  };
+  const marketplaceUrl = process.env.NEXT_PUBLIC_MARKETPLACE_URL ?? "https://www.propertiguru.id";
   const ts = await getTranslations("leadStatus");
   const format = await getFormatter();
 
-  const rows = await getLeads();
+  const rowsRaw = await getLeads();
+  const supabase = await createClient();
+  const [{ data: intelRows }, { data: radarRows }] = await Promise.all([
+    supabase.from("lead_intelligence").select("lead_id, intent, reason, signals, suggested_action, source, model"),
+    supabase.rpc("lead_radar"),
+  ]);
+  const intelOf = new Map(
+    ((intelRows ?? []) as { lead_id: string; intent: number; reason: string; signals: string[]; suggested_action: string | null; source: "ai" | "rules"; model: string | null }[])
+      .map((r) => [r.lead_id, { intent: r.intent, reason: r.reason, signals: r.signals ?? [], suggestedAction: r.suggested_action, source: r.source, model: r.model } as LeadIntel]),
+  );
+  const radarOf = new Map(((radarRows ?? []) as { lead_id: string; duplicate_count: number; hours_silent: number; is_cold: boolean }[]).map((r) => [r.lead_id, r]));
+
+  /* The platform WhatsApp number (E12): one flag read, then one rule check per
+   * open lead — the same wa_send_check() the send action runs, so the door the
+   * panel shows is the door that will open. Off = no extra queries at all. */
+  const platformOf = new Map<string, PlatformWhatsapp>();
+  const { data: waOn } = await supabase.rpc("is_feature_enabled", { p_key: "whatsapp_cloud", p_user: user.id });
+  if (waOn === true) {
+    const [{ data: me }, { data: templates }] = await Promise.all([
+      supabase.from("profiles").select("country_code").eq("id", user.id).maybeSingle(),
+      supabase.from("wa_templates").select("id, name, language, body, variables, wa_accounts!inner(country_code, mode)").eq("status", "approved"),
+    ]);
+    const { data: acct } = me?.country_code
+      ? await supabase.from("wa_accounts").select("mode").eq("country_code", me.country_code).neq("mode", "off").maybeSingle()
+      : { data: null };
+    if (acct) {
+      const mine = ((templates ?? []) as unknown as { id: string; name: string; language: string; body: string; variables: number; wa_accounts: { country_code: string } }[])
+        .filter((t) => t.wa_accounts.country_code === me!.country_code)
+        .map(({ id, name, language, body, variables }) => ({ id, name, language, body, variables }));
+      const openLeads = rowsRaw.filter((l) => !["closed_won", "closed_lost", "spam"].includes(l.status));
+      const checks = await Promise.all(openLeads.map((l) => supabase.rpc("wa_send_check", { p_lead: l.id, p_kind: "session", p_template: null })));
+      openLeads.forEach((l, i) => platformOf.set(l.id, { session: String(checks[i].data ?? "check_failed"), mode: acct.mode === "live" ? "live" : "test", templates: mine }));
+    }
+  }
+  // Intent SORTS; it never filters. Default order stays newest-first.
+  const rows = sort === "intent"
+    ? [...rowsRaw].sort((a, b) => (intelOf.get(b.id)?.intent ?? 0) - (intelOf.get(a.id)?.intent ?? 0))
+    : rowsRaw;
   const open = rows.filter((l) => !["closed_won", "closed_lost", "spam"].includes(l.status));
   const overdue = open.filter((l) => l.isOverdue);
 
@@ -99,9 +177,17 @@ export default async function LeadsPage({
     <AgentShell wide>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>
-        <p className="text-sm text-muted">
-          {t("summary", { open: open.length, overdue: overdue.length })}
-        </p>
+        <div className="flex items-center gap-3 text-sm text-muted">
+          <p>{t("summary", { open: open.length, overdue: overdue.length })}</p>
+          <nav className="flex rounded-lg bg-surface p-0.5 text-xs font-semibold" aria-label={ti("sortLabel")}>
+            {[["newest", "/leads"], ["intent", "/leads?sort=intent"]].map(([k, href]) => (
+              <a key={k} href={href} aria-current={(sort ?? "newest") === k ? "page" : undefined}
+                 className={`min-h-7 rounded-md px-3 leading-7 ${(sort ?? "newest") === k ? "bg-card text-blue shadow-card" : "text-muted hover:text-foreground"}`}>
+                {ti(`sort.${k}` as never)}
+              </a>
+            ))}
+          </nav>
+        </div>
       </div>
 
       {updated && (
@@ -157,6 +243,16 @@ export default async function LeadsPage({
                           {t("slaWaiting")}
                         </span>
                       )}
+                      {(radarOf.get(lead.id)?.duplicate_count ?? 0) > 0 && (
+                        <span className="rounded-full bg-indigo-soft px-2 py-0.5 text-xs font-semibold text-indigo" title={ti("duplicateHint")}>
+                          {ti("duplicate", { count: radarOf.get(lead.id)!.duplicate_count })}
+                        </span>
+                      )}
+                      {radarOf.get(lead.id)?.is_cold && (
+                        <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-semibold text-muted" title={ti("coldHint")}>
+                          {ti("cold", { days: Math.floor((radarOf.get(lead.id)!.hours_silent ?? 0) / 24) })}
+                        </span>
+                      )}
                     </div>
 
                     <p className="mt-2 text-base font-semibold">
@@ -175,6 +271,31 @@ export default async function LeadsPage({
                         {lead.message}
                       </blockquote>
                     )}
+
+                    {/* Qualifier + matcher: a reasoned score, and alternatives. */}
+                    <IntelPanel
+                      leadId={lead.id}
+                      initial={intelOf.get(lead.id) ?? null}
+                      qualifyAction={qualifyLead}
+                      matchAction={findLeadMatches}
+                      marketplaceUrl={marketplaceUrl}
+                      labels={intelLabels}
+                    />
+
+                    {/* The Secretary: draft → edit → the agent sends. */}
+                    <ReplyPanel
+                      leadId={lead.id}
+                      phone={lead.contacts?.phone ?? null}
+                      email={lead.contacts?.email ?? null}
+                      defaultSubject={tsec("defaultSubject", { listing: lead.listings?.title ?? "" })}
+                      draftAction={draftLeadReply}
+                      sendEmailAction={sendLeadEmail}
+                      sendWhatsappAction={sendLeadWhatsapp}
+                      sendTemplateAction={sendLeadWhatsappTemplate}
+                      platform={platformOf.get(lead.id) ?? null}
+                      quota={quota ? { remaining: quota.remaining, total: quota.monthly_allowance } : null}
+                      labels={replyLabels}
+                    />
                   </div>
 
                   <div className="flex w-full shrink-0 flex-col gap-2 sm:w-56">
@@ -189,6 +310,13 @@ export default async function LeadsPage({
                         {t("openWhatsApp")}
                       </a>
                     )}
+
+                    <Link
+                      href={`/tasks?lead=${lead.id}`}
+                      className="rounded-lg border border-line px-4 py-2.5 text-center text-sm font-semibold hover:bg-surface"
+                    >
+                      ✦ {ti("tasksLink")}
+                    </Link>
 
                     {!lead.first_responded_at && (
                       <form action={markLeadResponded}>

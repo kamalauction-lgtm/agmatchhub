@@ -9,15 +9,18 @@
  * Refuses to run against production. Idempotent: re-running replaces the
  * seeded rows rather than duplicating them.
  *
- * Usage: node scripts/seed-staging-catalogue.mjs --env=staging
+ * Usage: node scripts/seed-staging-catalogue.mjs --env=legacy
  */
 import pg from "pg";
 import { loadEnv } from "./load-env.mjs";
 
-const { url, envName } = loadEnv();
+const { url, isProduction } = loadEnv();
 
-if (envName === "local/production") {
-  console.error("Refusing to seed the production database. Pass --env=staging.");
+/* Guarded on the project ref, not the env-file name. This check used to read
+ * `envName === "local/production"`, which under the repo's inverted file names
+ * blocked the *dev* project and waved seed data straight into production. */
+if (isProduction) {
+  console.error("Refusing to seed the production database.");
   process.exit(1);
 }
 

@@ -13,7 +13,7 @@ const schema = z.object({
 
 export async function publishDeclarationVersion(formData: FormData) {
   const supabase = await createClient();
-  const { data: isAdmin } = await supabase.rpc("is_platform_admin");
+  const { data: isAdmin } = await supabase.rpc("has_capability", { p_capability: "legal.publish" });
   if (!isAdmin) redirect("/dashboard");
 
   const parsed = schema.safeParse({

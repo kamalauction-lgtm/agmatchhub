@@ -1,4 +1,5 @@
 import "server-only";
+import { market } from "@/config/market";
 import { publicDb } from "./supabase/public";
 
 /**
@@ -117,9 +118,14 @@ export async function searchListings(params: SearchParams): Promise<SearchResult
   const page = Math.max(1, params.page ?? 1);
   const from = (page - 1) * PAGE_SIZE;
 
+  /* Every public read is scoped to this build's market. Without it a
+     Malaysian deployment pointed at the shared database would serve Indonesian
+     listings in rupiah — the views expose `country_code` precisely so the
+     filter can be stated here rather than assumed. */
   let query = publicDb()
     .from("public_listings")
     .select("*", { count: "exact" })
+    .eq("country_code", market.country)
     .range(from, from + PAGE_SIZE - 1);
 
   if (params.type) query = query.eq("listing_type", params.type);
@@ -193,6 +199,7 @@ export async function getListingBySlug(slug: string): Promise<PublicListing | nu
     .from("public_listings")
     .select("*")
     .eq("slug", slug)
+    .eq("country_code", market.country)
     .maybeSingle();
 
   if (error) throw new Error(`listing lookup failed: ${error.message}`);
@@ -292,7 +299,10 @@ function num(v: unknown): number | null {
 export async function getPropertyTypeFacets(
   type?: "sale" | "rent"
 ): Promise<PropertyTypeFacet[]> {
-  let q = publicDb().from("public_facet_property_types").select("*");
+  let q = publicDb()
+    .from("public_facet_property_types")
+    .select("*")
+    .eq("country_code", market.country);
   if (type) q = q.eq("listing_type", type);
 
   const { data, error } = await q;
@@ -334,7 +344,10 @@ export async function getLocationFacets(
   type?: "sale" | "rent",
   limit = 12
 ): Promise<LocationFacet[]> {
-  let q = publicDb().from("public_facet_locations").select("*");
+  let q = publicDb()
+    .from("public_facet_locations")
+    .select("*")
+    .eq("country_code", market.country);
   if (type) q = q.eq("listing_type", type);
 
   const { data, error } = await q;
@@ -382,6 +395,7 @@ export async function getPromotedListings(limit = 4): Promise<PublicListing[]> {
   const { data, error } = await publicDb()
     .from("public_listings")
     .select("*")
+    .eq("country_code", market.country)
     .or("is_boosted.eq.true,is_featured.eq.true")
     .order("boost_weight", { ascending: false })
     .order("ranking_score", { ascending: false })
@@ -395,7 +409,8 @@ export async function getPromotedListings(limit = 4): Promise<PublicListing[]> {
 export async function getProvinceFacets(): Promise<{ name: string; count: number }[]> {
   const { data, error } = await publicDb()
     .from("public_facet_locations")
-    .select("province_name, listing_count");
+    .select("province_name, listing_count")
+    .eq("country_code", market.country);
 
   if (error) throw new Error(`province facets failed: ${error.message}`);
 
@@ -440,6 +455,7 @@ export async function getBanners(slot: BannerSlot): Promise<SiteBanner[]> {
   const { data, error } = await publicDb()
     .from("public_site_banners")
     .select("*")
+    .eq("country_code", market.country)
     .eq("slot", slot)
     .order("position", { ascending: true })
     .limit(4);
@@ -497,6 +513,10 @@ export type PublicAgent = {
   biography: string | null;
   profile_photo_path: string | null;
   published_listing_count: number;
+  /* Exposed by `public_agent_profiles` and previously missing from this type,
+     so the agent page could not use them even though every query selects *. */
+  markets_served: string[] | null;
+  property_categories: string[] | null;
 };
 
 export async function getAgentBySlug(slug: string): Promise<PublicAgent | null> {
@@ -504,6 +524,7 @@ export async function getAgentBySlug(slug: string): Promise<PublicAgent | null> 
     .from("public_agent_profiles")
     .select("*")
     .eq("public_slug", slug)
+    .eq("country_code", market.country)
     .maybeSingle();
 
   if (error) {

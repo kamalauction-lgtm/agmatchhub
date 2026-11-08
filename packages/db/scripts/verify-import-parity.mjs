@@ -1,7 +1,7 @@
 /**
  * Prove that an imported listing is indistinguishable from a manual one.
  *
- *   node scripts/verify-import-parity.mjs --env=staging
+ *   node scripts/verify-import-parity.mjs --env=production
  *
  * Kamal's rule: the import method is the ORIGIN of a listing, never a class of
  * listing. An agent must never hit "I cannot do that because it was imported".
@@ -21,7 +21,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ENV = process.argv.find((a) => a.startsWith("--env="))?.slice(6) === "staging"
-  ? ".env.staging" : ".env.local";
+  ? ".env.production" : ".env.legacy";
 
 const url = readFileSync(join(ROOT, ENV), "utf8")
   .split(/\r?\n/).find((l) => l.startsWith("DATABASE_URL="))?.slice(13).trim();

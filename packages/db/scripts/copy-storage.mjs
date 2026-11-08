@@ -14,8 +14,8 @@
  * bucket and writing to any bucket is a privileged operation; the anon key
  * cannot do either. Set them in:
  *
- *   packages/db/.env.local     SUPABASE_SERVICE_ROLE_KEY  (source — already set)
- *   packages/db/.env.staging   SUPABASE_SERVICE_ROLE_KEY  (target — get it from
+ *   packages/db/.env.legacy     SUPABASE_SERVICE_ROLE_KEY  (source — already set)
+ *   packages/db/.env.production   SUPABASE_SERVICE_ROLE_KEY  (target — get it from
  *     Supabase -> propertiguru -> Settings -> API -> service_role)
  *
  * Idempotent: existing objects are skipped, so a partial run can be repeated
@@ -37,10 +37,10 @@ function env(file) {
   return out;
 }
 
-const SRC = env(".env.local");
-const TGT = env(".env.staging");
+const SRC = env(".env.legacy");
+const TGT = env(".env.production");
 
-for (const [label, e, file] of [["SOURCE", SRC, ".env.local"], ["TARGET", TGT, ".env.staging"]]) {
+for (const [label, e, file] of [["SOURCE", SRC, ".env.legacy"], ["TARGET", TGT, ".env.production"]]) {
   if (!e.SUPABASE_SERVICE_ROLE_KEY) {
     console.error(
       `\n${label} service_role key is missing from ${file}.\n\n` +
