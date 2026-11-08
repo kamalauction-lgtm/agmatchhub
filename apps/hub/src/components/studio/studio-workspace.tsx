@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { PosterCanvas, type PosterData, type PosterLabels } from "./poster-canvas";
 import type { StudioAiResult } from "@/app/(agent)/studio/ai-actions";
+import { CompanionBadge, type Companion } from "@/components/ai/companion";
 
 /**
  * The Content Studio workspace: tabs over one listing, each holding a
@@ -94,6 +95,7 @@ export type StudioLabels = {
 };
 
 export function StudioWorkspace({
+  companions,
   drafts,
   shareUrl,
   listingId,
@@ -105,6 +107,8 @@ export function StudioWorkspace({
   quota,
   labels,
 }: {
+  /** Who is at the agent's side on each tab: Mira (WhatsApp), Kira (captions), Neo (TikTok), Juno (posters), Atlas (brochure). */
+  companions?: Partial<Record<string, Companion>>;
   drafts: Record<StudioTextTabKey, string>;
   shareUrl: string;
   listingId: string;
@@ -209,6 +213,7 @@ export function StudioWorkspace({
       {/* AI Marketing Studio -------------------------------------------- */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-surface/60 px-4 py-3">
         <div className="min-w-0 text-xs text-muted">
+          <CompanionBadge c={companions?.[tab] ?? companions?.caption} className="mb-1" />
           {statusLine ? (
             <p>
               <span className={`mr-2 rounded-full px-2 py-0.5 font-semibold ${ai.source === "ai" ? "bg-indigo-soft text-indigo" : "bg-card text-muted"}`}>

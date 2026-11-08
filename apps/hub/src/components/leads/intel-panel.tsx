@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { LeadIntel, LeadMatch } from "@/app/(agent)/leads/ai-actions";
+import { CompanionBadge, type Companion } from "@/components/ai/companion";
 
 /**
  * Qualifier + matcher on one lead. The score is shown as dots with its reason
@@ -34,10 +35,15 @@ export function IntelPanel({
   qualifyAction,
   matchAction,
   marketplaceUrl,
+  companion,
+  matchCompanion,
   labels,
 }: {
   leadId: string;
   initial: LeadIntel | null;
+  /** Zayn qualifies; Niko finds the alternatives. */
+  companion?: Companion;
+  matchCompanion?: Companion;
   qualifyAction: (leadId: string) => Promise<LeadIntel>;
   matchAction: (leadId: string) => Promise<LeadMatch[]>;
   marketplaceUrl: string;
@@ -64,6 +70,7 @@ export function IntelPanel({
     <div className="mt-3 space-y-3">
       {/* Intent ---------------------------------------------------------- */}
       <div className="flex flex-wrap items-center gap-3 text-xs">
+        <CompanionBadge c={companion} size="xs" />
         {intel ? (
           <>
             <span className="flex items-center gap-1" title={labels.intent}>
@@ -90,7 +97,10 @@ export function IntelPanel({
       {/* Matches --------------------------------------------------------- */}
       {matches && (
         <div className="rounded-lg border border-line bg-surface/60 p-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.matchesTitle}</p>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.matchesTitle}</p>
+            <CompanionBadge c={matchCompanion} size="xs" />
+          </div>
           {matches.length === 0 ? (
             <p className="mt-1 text-sm text-muted">{labels.noMatches}</p>
           ) : (

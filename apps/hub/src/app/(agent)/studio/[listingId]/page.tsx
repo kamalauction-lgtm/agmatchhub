@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getCompanions } from "@/lib/ai/cast";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
@@ -102,6 +103,7 @@ export default async function StudioWorkspacePage({
     fileBase: listing.human_readable_id || listing.id,
   };
 
+  const cast = await getCompanions(["reply_drafter", "caption_writer", "video_scriptwriter", "poster_designer", "brochure_writer"]);
   return (
     <AgentShell wide>
       <Link href="/studio" className="text-sm font-medium text-muted hover:text-crimson">
@@ -139,6 +141,7 @@ export default async function StudioWorkspacePage({
       )}
 
       <StudioWorkspace
+        companions={{ whatsapp: cast.reply_drafter, caption: cast.caption_writer, facebook: cast.caption_writer, tiktok: cast.video_scriptwriter, images: cast.poster_designer, brochure: cast.brochure_writer }}
         drafts={drafts}
         shareUrl={listing.share_url}
         listingId={listing.id}

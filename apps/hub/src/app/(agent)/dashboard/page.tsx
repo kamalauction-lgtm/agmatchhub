@@ -373,7 +373,10 @@ export default async function DashboardPage({
                     never replaces it. */}
                 {aiBrief?.paragraph && (
                   <div className="border-b border-line bg-indigo-soft/40 px-5 py-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-indigo">✦ {t("brief.aiEyebrow")}</p>
+                    <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-indigo">
+                      {manager?.avatar_path && <Image src={manager.avatar_path} alt="" width={22} height={22} unoptimized className="h-[22px] w-[22px] rounded-full object-cover" />}
+                      ✦ {manager ? `${manager.name} · ` : ""}{t("brief.aiEyebrow")}
+                    </p>
                     <p className="mt-1 text-sm leading-6">{aiBrief.paragraph}</p>
                   </div>
                 )}

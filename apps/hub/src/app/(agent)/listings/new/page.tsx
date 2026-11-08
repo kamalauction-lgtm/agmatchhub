@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { getCompanions } from "@/lib/ai/cast";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
@@ -144,6 +145,7 @@ export default async function NewListingPage({
   const typeLabels = Object.fromEntries(PROPERTY_TYPES.map((p) => [p, tt(p)]));
   const ownershipLabels = Object.fromEntries(OWNERSHIP.map((o) => [o, to(o)]));
 
+  const cast = await getCompanions(["listing_copywriter"]);
   return (
     <AgentShell wide>
       <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
@@ -157,6 +159,7 @@ export default async function NewListingPage({
       )}
 
       <ListingWizard
+        companion={cast.listing_copywriter}
         action={createListing}
         locations={(locations ?? []) as { id: string; name: string; level: string; path_names: string[] }[]}
         t={labels}

@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { getCompanions } from "@/lib/ai/cast";
+import { CompanionBadge } from "@/components/ai/companion";
 
 /**
  * The listing's quality score with the specific fixes, not a grade.
@@ -21,6 +23,7 @@ export async function QualityCard({ listingId }: { listingId: string }) {
     .eq("listing_id", listingId)
     .maybeSingle();
   if (!q) return null;
+  const { quality_auditor: halo } = await getCompanions(["quality_auditor"]);
 
   const recs = (q.recommendations ?? []) as Rec[];
   // Recommendation keys are data from the database, so the typed `t` cannot
@@ -39,9 +42,12 @@ export async function QualityCard({ listingId }: { listingId: string }) {
   return (
     <section className="mb-6 rounded-xl border border-line bg-card p-5 shadow-card">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h2 className="text-base font-semibold">{t("title")}</h2>
-          <p className="mt-0.5 text-xs text-muted">{t("hint")}</p>
+        <div className="flex items-start gap-3">
+          <CompanionBadge c={halo} size="md" className="shrink-0" />
+          <div>
+            <h2 className="text-base font-semibold">{t("title")}</h2>
+            <p className="mt-0.5 text-xs text-muted">{t("hint")}</p>
+          </div>
         </div>
         <p className={`text-3xl font-bold tabular-nums ${tone}`}>
           {q.total_score}<span className="text-sm font-medium text-muted">/100</span>

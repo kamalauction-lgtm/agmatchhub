@@ -9,6 +9,7 @@ import { ReplyPanel, type PlatformWhatsapp } from "@/components/leads/reply-pane
 import { sendLeadWhatsapp, sendLeadWhatsappTemplate } from "./whatsapp-actions";
 import { IntelPanel } from "@/components/leads/intel-panel";
 import { aiQuotaFor } from "@/lib/ai/engine";
+import { getCompanions } from "@/lib/ai/cast";
 
 /**
  * The agent's lead inbox — marketplace inquiries land here (§28 steps 11–16).
@@ -96,6 +97,7 @@ export default async function LeadsPage({
   const t = await getTranslations("leads");
   const tsec = await getTranslations("leads.secretary");
   const quota = await aiQuotaFor(user.id);
+  const cast = await getCompanions(["reply_drafter", "email_composer", "lead_qualifier", "alternative_finder"]);
   const REASONS = ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"];
   const replyLabels = {
     draftWhatsapp: tsec("draftWhatsapp"),
@@ -279,6 +281,8 @@ export default async function LeadsPage({
                       qualifyAction={qualifyLead}
                       matchAction={findLeadMatches}
                       marketplaceUrl={marketplaceUrl}
+                      companion={cast.lead_qualifier}
+                      matchCompanion={cast.alternative_finder}
                       labels={intelLabels}
                     />
 
@@ -293,6 +297,7 @@ export default async function LeadsPage({
                       sendWhatsappAction={sendLeadWhatsapp}
                       sendTemplateAction={sendLeadWhatsappTemplate}
                       platform={platformOf.get(lead.id) ?? null}
+                      companions={{ whatsapp: cast.reply_drafter, email: cast.email_composer }}
                       quota={quota ? { remaining: quota.remaining, total: quota.monthly_allowance } : null}
                       labels={replyLabels}
                     />

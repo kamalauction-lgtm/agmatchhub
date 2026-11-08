@@ -7,6 +7,7 @@ import { Panel } from "@/components/admin/panel";
 import { TaskSuggestions } from "@/components/tasks/task-suggestions";
 import { createTask, createTasksBulk, setTaskStatus, proposeLeadViewing, setLeadViewingStatus } from "./actions";
 import { suggestTasks } from "./ai-actions";
+import { getCompanions } from "@/lib/ai/cast";
 
 /**
  * Tasks and viewings: what the agent has agreed to do, by when, and where it
@@ -86,6 +87,7 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
   const viewings = (viewingsRaw ?? []) as unknown as Viewing[];
 
   const REASONS = ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"];
+  const cast = await getCompanions(["task_planner"]);
   const suggestLabels = {
     fromLead: t("suggest.fromLead"), fromBrief: t("suggest.fromBrief"), working: t("suggest.working"),
     sourceAi: t.raw("suggest.sourceAi") as string, sourceRules: t("suggest.sourceRules"),
@@ -161,7 +163,7 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
 
       <div className="mb-6 grid gap-4 lg:grid-cols-2">
         {/* Suggestions ------------------------------------------------------ */}
-        <TaskSuggestions leadId={lead?.id} suggestAction={suggestTasks} bulkAction={createTasksBulk} labels={suggestLabels} />
+        <TaskSuggestions leadId={lead?.id} suggestAction={suggestTasks} bulkAction={createTasksBulk} companion={cast.task_planner} labels={suggestLabels} />
 
         {/* Manual task ------------------------------------------------------ */}
         <Panel title={t("newTask")}>

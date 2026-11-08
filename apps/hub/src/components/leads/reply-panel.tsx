@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { SecretaryDraft } from "@/lib/ai/secretary";
+import { CompanionBadge, type Companion } from "@/components/ai/companion";
 
 /**
  * The Secretary on one lead: draft → edit → send.
@@ -61,6 +62,7 @@ export function ReplyPanel({
   sendWhatsappAction,
   sendTemplateAction,
   platform,
+  companions,
   quota,
   labels,
 }: {
@@ -74,6 +76,8 @@ export function ReplyPanel({
   sendTemplateAction?: (fd: FormData) => void;
   /** null = the platform number is not available to this agent (flag off / no account). */
   platform?: PlatformWhatsapp | null;
+  /** The colleagues at the agent's side here: Mira drafts WhatsApp, Orion writes e-mail. */
+  companions?: { whatsapp?: Companion; email?: Companion };
   quota: { remaining: number; total: number } | null;
   labels: ReplyLabels;
 }) {
@@ -107,7 +111,7 @@ export function ReplyPanel({
   return (
     <div className="mt-3 rounded-lg border border-line bg-surface/60 p-3">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-indigo">✦</span>
+        <CompanionBadge c={channel === "email" ? companions?.email ?? companions?.whatsapp : companions?.whatsapp} />
         <button type="button" disabled={busy || !phone} onClick={() => ask("whatsapp")} className={`${btn} border border-line bg-card hover:border-crimson hover:text-crimson disabled:opacity-50`}>
           {busy && channel === "whatsapp" ? labels.working : labels.draftWhatsapp}
         </button>

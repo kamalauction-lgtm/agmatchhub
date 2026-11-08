@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { draftListingCopy, reviewListingCopy } from "@/app/(agent)/listings/ai-actions";
+import { CompanionBadge, type Companion } from "@/components/ai/companion";
 
 /**
  * Multi-step listing wizard.
@@ -81,6 +82,7 @@ type DraftShape = {
 };
 
 export function ListingWizard({
+  companion,
   action,
   locations,
   t,
@@ -90,6 +92,8 @@ export function ListingWizard({
   action: (fd: FormData) => void;
   locations: Loc[];
   t: WizardLabels;
+  /** Luna, the Listing Copywriter, beside the description step. */
+  companion?: Companion;
   typeLabels: Record<string, string>;
   ownershipLabels: Record<string, string>;
 }) {
@@ -635,7 +639,7 @@ export function ListingWizard({
                 </button>
                 <button type="button" onClick={askAi} disabled={aiBusy}
                   className="rounded-xl border border-crimson bg-crimson-soft p-5 text-left hover:opacity-90 disabled:opacity-60">
-                  <span aria-hidden className="text-2xl">✨</span>
+                  {companion ? <CompanionBadge c={companion} size="md" /> : <span aria-hidden className="text-2xl">✨</span>}
                   <p className="mt-2 font-semibold text-crimson">
                     {aiBusy ? t.aiWorking : t.writeAi}
                   </p>
@@ -649,6 +653,7 @@ export function ListingWizard({
                     their own fields rearranged. */}
                 {aiMeta.source && (
                   <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs text-muted">
+                    {companion && <CompanionBadge c={companion} className="mb-1" />}
                     <p>
                       <span className={`mr-2 rounded-full px-2 py-0.5 font-semibold ${aiMeta.source === "ai" ? "bg-indigo-soft text-indigo" : "bg-card text-muted"}`}>
                         {aiMeta.source === "ai" ? "✦ AI" : t.rulesBadge}

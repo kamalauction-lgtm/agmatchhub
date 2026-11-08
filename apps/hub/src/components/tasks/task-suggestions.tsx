@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { TaskProposal } from "@/lib/ai/tasks";
+import { CompanionBadge, type Companion } from "@/components/ai/companion";
 
 /**
  * "Suggest tasks" → a checklist the agent edits → "Add selected" posts the
@@ -24,9 +25,12 @@ export function TaskSuggestions({
   leadId,
   suggestAction,
   bulkAction,
+  companion,
   labels,
 }: {
   leadId?: string;
+  /** Kael, the Task Planner. */
+  companion?: Companion;
   suggestAction: (input: { leadId?: string }) => Promise<TaskProposal>;
   bulkAction: (fd: FormData) => void;
   labels: SuggestLabels;
@@ -57,7 +61,7 @@ export function TaskSuggestions({
   return (
     <div className="rounded-xl border border-line bg-surface/60 p-4">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-indigo">✦</span>
+        <CompanionBadge c={companion} />
         {leadId && (
           <button type="button" disabled={busy} onClick={() => ask(true)} className={`${btn} border border-line bg-card hover:border-crimson hover:text-crimson disabled:opacity-50`}>
             {busy ? labels.working : labels.fromLead}
