@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Deployed Cloudflare Worker name. Deliberately NOT renamed with the repo:
+  // changing it creates a NEW worker on next deploy and orphans the live one
+  // serving hub.propertiguru.id. Rename only as a planned cutover — new
+  // worker, move the custom domain route, then delete the old one.
+  "name": "ag-matchhub",
+  // Custom entry that wraps .open-next/worker.js and adds the cron handler
+  // (see worker.js). OpenNext's build output is unchanged.
+  "main": "worker.js",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Every 15 minutes: social publishing, reminders. 23:00 UTC = 07:00 in
+  // Kuala Lumpur and Jakarta: the AI Manager's daily brief.
+  "triggers": { "crons": ["*/15 * * * *", "0 23 * * *"] },
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    { "pattern": "hub.propertiguru.id", "custom_domain": true }
+  ],
+  // Runtime env for server code. NEXT_PUBLIC_* values are also inlined at
+  // build time from .env.production; secrets are set via `wrangler secret`.
+  "vars": {
+    "NEXT_PUBLIC_APP_URL": "https://hub.propertiguru.id",
+    "NEXT_PUBLIC_MARKETPLACE_URL": "https://www.propertiguru.id",
+    "APP_BASE_URL": "https://hub.propertiguru.id",
+    "AUTH_CALLBACK_URL": "https://hub.propertiguru.id/auth/callback",
+    "REQUEST_LINK_BASE_URL": "https://hub.propertiguru.id/r",
+    "CLIENT_PRESENTATION_BASE_URL": "https://hub.propertiguru.id/p",
+    "EMAIL_FROM": "IQI AG MatchHub <noreply@propertiguru.id>",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://jokyyhvtahiypuzmfydp.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_y8OGIVyz8rYIae7d-xq1dg_X8CE_NUJ",
+    "NEXT_PUBLIC_VAPID_PUBLIC_KEY": "BAD35F_p_FfT7Mk7hI-1D6bCKStkk_75sMVPAEDGdBeywwuXpBGLhGSPDLm0k-5SNxHWfi1hXpVdsyxDb04OJJE",
+    "NEXT_PUBLIC_APP_NAME": "IQI AG Agent Platform",
+    "NEXT_PUBLIC_APP_SHORT_NAME": "Agent Platform",
+    "NEXT_PUBLIC_APP_TAGLINE": "One platform for your whole property business."
+  }
+}

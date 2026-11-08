@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Foto contoh">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#7c2d12"/><stop offset="1" stop-color="#1c0a05"/>
+  </linearGradient></defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <g fill="#ffffff" opacity="0.12">
+    <rect x="250" y="300" width="300" height="200" rx="6"/>
+    <path d="M230 300 L400 190 L570 300 Z"/>
+    <rect x="330" y="380" width="60" height="120" rx="3" fill="#000" opacity="0.25"/>
+    <rect x="430" y="370" width="70" height="60" rx="3" fill="#000" opacity="0.25"/>
+  </g>
+  <text x="400" y="80" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="34" font-weight="700" fill="#ffffff">Ruko / Kantor</text>
+  <text x="400" y="560" text-anchor="middle" font-family="system-ui,Segoe UI,sans-serif" font-size="20" fill="#ffffff" opacity="0.75">Foto contoh — bukan properti nyata</text>
+</svg>

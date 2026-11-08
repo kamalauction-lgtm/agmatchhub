@@ -1,0 +1,30 @@
+{
+  "name": "@pg/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Single owner of the PropertiGuru Next database: migrations, seeds and the RLS test suite.",
+  "type": "module",
+  "scripts": {
+    "migrate:staging": "node scripts/db-migrate.mjs --env=staging",
+    "status:staging": "node scripts/db-migrate.mjs --status --env=staging",
+    "seed:test-users:staging": "node scripts/seed-test-users.mjs --env=staging",
+    "seed:scenario:staging": "node scripts/seed-staging-scenario.mjs --env=staging",
+    "seed:locations:staging": "node scripts/seed-locations-id.mjs --env=staging && node scripts/seed-locations-my.mjs --env=staging",
+    "migrate:production": "node scripts/db-migrate.mjs --env=production",
+    "status:production": "node scripts/db-migrate.mjs --status --env=production",
+    "dry-run:production": "node scripts/db-dry-run.mjs --env=production",
+    "seed:admin:production": "node scripts/seed-admin.mjs --env=production",
+    "seed:locations:production": "node scripts/seed-locations-id.mjs --env=production",
+    "ghl-drain:production": "node scripts/ghl-drain.mjs --env=production",
+    "test": "node scripts/test.mjs --env=staging",
+    "test:production": "node scripts/test.mjs --env=production --i-mean-production"
+  },
+  "//scripts": "Every script names its target. There is no bare `migrate` on purpose: the loader requires --env, and a script alias that hides which database it writes to is the same default-target problem one layer up. `test` is the one alias with a target baked in, and that target is STAGING; production needs the explicit script.",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.7"
+  },
+  "devDependencies": {
+    "pg": "^8.22.0",
+    "vitest": "^4.1.10"
+  }
+}
