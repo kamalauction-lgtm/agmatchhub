@@ -1,9 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { requireCapability } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
+import Image from "next/image";
 import { Panel, StatCard } from "@/components/admin/panel";
 import { BarChart } from "@/components/admin/charts";
-import { updateModel, updateSettings, updateRoleStatus } from "./actions";
+import { updateModel, updateSettings, updateRoleStatus, upsertPersonaVariant } from "./actions";
 
 /**
  * The AI console: what the engine spent, what it refused, which model answers
@@ -64,6 +65,12 @@ export default async function AiAdminPage({
 
   const input = "w-full rounded-lg border border-line bg-card px-2 py-1 text-xs";
   const btn = "min-h-8 cursor-pointer rounded-lg border border-line px-3 text-xs font-semibold hover:border-crimson hover:text-crimson";
+
+  // The cast (00097): default row per role plus any country overrides.
+  const { data: personas } = await supabase
+    .from("ai_role_personas").select("id, role_key, country_code, name, avatar_path").order("role_key");
+  const personaDefault = new Map((personas ?? []).filter((p) => !p.country_code).map((p) => [p.role_key, p]));
+  const personaFor = (key: string, c: string) => (personas ?? []).find((p) => p.role_key === key && p.country_code === c) ?? null;
 
   return (
     <>
@@ -246,6 +253,51 @@ export default async function AiAdminPage({
                   </td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      </Panel>
+
+      {/* Characters -------------------------------------------------------- */}
+      <Panel title={t("personasTitle")} hint={t("personasHint")} className="mb-6" bodyClassName="p-0">
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead className="bg-surface text-left text-muted">
+              <tr>
+                <th className="px-4 py-2">{t("personaCols.role")}</th>
+                <th className="px-2 py-2">{t("personaCols.default")}</th>
+                <th className="px-2 py-2">{t("personaCols.my")}</th>
+                <th className="px-2 py-2">{t("personaCols.id")}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-line">
+              {(roles ?? []).map((r) => {
+                const d = personaDefault.get(r.key);
+                return (
+                  <tr key={r.key}>
+                    <td className="px-4 py-2">
+                      <div className="flex items-center gap-2">
+                        {d?.avatar_path && <Image src={d.avatar_path} alt="" width={28} height={28} unoptimized className="h-7 w-7 rounded-full object-cover" />}
+                        <span className="font-medium">{(r.name as Record<string, string>).en}</span>
+                      </div>
+                    </td>
+                    <td className="px-2 py-2 font-semibold text-indigo">{d ? `✦ ${d.name}` : "—"}</td>
+                    {(["MY", "ID"] as const).map((c) => {
+                      const v = personaFor(r.key, c);
+                      return (
+                        <td key={c} className="px-2 py-2">
+                          <form action={upsertPersonaVariant} className="flex items-center gap-1">
+                            <input type="hidden" name="roleKey" value={r.key} />
+                            <input type="hidden" name="country" value={c} />
+                            <input name="name" defaultValue={v?.name ?? ""} placeholder={t("personaSame")} maxLength={40} className={`${input} w-28`} aria-label={`${r.key} ${c}`} />
+                            <button type="submit" className={btn}>{t("save")}</button>
+                          </form>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

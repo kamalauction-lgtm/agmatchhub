@@ -149,3 +149,40 @@ export async function updateRoleStatus(formData: FormData): Promise<void> {
   revalidatePath("/ai");
   done("updated");
 }
+
+/* -------------------------------------------------------------------------- */
+/* Characters (00097): a per-country name for a role, or back to the default   */
+/* -------------------------------------------------------------------------- */
+
+const personaSchema = z.object({
+  roleKey: z.string().min(2).max(60),
+  country: z.enum(["MY", "ID"]),
+  name: z.string().trim().max(40),
+});
+
+/** Empty name = remove the country variant (the default cast shows again). */
+export async function upsertPersonaVariant(formData: FormData): Promise<void> {
+  const actor = await requireCapability("ai.manage");
+  const parsed = personaSchema.safeParse(Object.fromEntries(formData.entries()));
+  if (!parsed.success) done("invalid");
+  const { roleKey, country, name } = parsed.data;
+  const supabase = await createClient();
+  const { data: def } = await supabase.from("ai_role_personas").select("tagline, skills, portrait_path, avatar_path").eq("role_key", roleKey).is("country_code", null).maybeSingle();
+  if (!def) done("invalid");
+  const { data: existing } = await supabase.from("ai_role_personas").select("id, name").eq("role_key", roleKey).eq("country_code", country).maybeSingle();
+
+  let error = null;
+  if (!name) {
+    if (existing) ({ error } = await supabase.from("ai_role_personas").delete().eq("id", existing.id));
+  } else if (existing) {
+    ({ error } = await supabase.from("ai_role_personas").update({ name, updated_by: actor.id }).eq("id", existing.id));
+  } else {
+    ({ error } = await supabase.from("ai_role_personas").insert({ role_key: roleKey, country_code: country, name, tagline: def.tagline, skills: def.skills, portrait_path: def.portrait_path, avatar_path: def.avatar_path, updated_by: actor.id }));
+  }
+  if (error) { console.error("upsertPersonaVariant", error.message); done("failed"); }
+  await logAudit({ action: "ai.persona_variant_changed", entityType: "ai_role", entityId: roleKey, previous: { country, name: existing?.name ?? null }, next: { country, name: name || null } });
+  revalidatePath(PATH);
+  revalidatePath("/ai");
+  revalidatePath("/dashboard");
+  done("updated");
+}

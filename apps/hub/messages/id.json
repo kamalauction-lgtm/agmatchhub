@@ -135,7 +135,8 @@
         "unverified": "Brief berbasis aturan — AI terbuka setelah verifikasi.",
         "no_provider": "Brief berbasis aturan — belum ada penyedia AI yang terhubung.",
         "failed": "Brief berbasis aturan — AI tidak menjawab kali ini."
-      }
+      },
+      "by": "{name}, Manajer AI Anda"
     },
     "pipeline": {
       "label": "Alur listing",
@@ -3243,7 +3244,16 @@
       "updated": "Tersimpan.",
       "failed": "Tidak dapat menyimpan.",
       "invalid": "Input tidak valid."
-    }
+    },
+    "personasTitle": "Karakter",
+    "personasHint": "Setiap peran punya karakter: nama, potret, persona dan kekuatan (dari enam lembar karakter). Ketik nama di bawah negara untuk memberi pasar itu karakternya sendiri; kosongkan untuk memakai default.",
+    "personaCols": {
+      "role": "Peran",
+      "default": "Default",
+      "my": "Malaysia",
+      "id": "Indonesia"
+    },
+    "personaSame": "sama seperti default"
   },
   "aiWorkforce": {
     "title": "Tenaga Kerja AI",
@@ -3274,7 +3284,9 @@
       "sales_transaction": "Penjualan & transaksi",
       "team_training": "Manajemen tim & pelatihan",
       "international": "Riset & kolaborasi internasional"
-    }
+    },
+    "meet": "Kenali rekan kerja AI Anda — masing-masing punya nama, wajah dan tiga kekuatan.",
+    "castCountry": "Karakter untuk {country}"
   },
   "tasks": {
     "title": "Tugas & kunjungan",

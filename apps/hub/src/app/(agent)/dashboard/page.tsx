@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getTranslations, getFormatter, getLocale } from "next-intl/server";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
@@ -99,7 +100,7 @@ export default async function DashboardPage({
   const [{ data: profile }, { data: isAdmin }, { data: agentProfile }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, avatar_url, agent_status, public_slug")
+      .select("display_name, avatar_url, agent_status, public_slug, country_code")
       .eq("id", user.id)
       .single(),
     supabase.rpc("is_platform_admin"),
@@ -180,6 +181,13 @@ export default async function DashboardPage({
   // The AI Manager's paragraph over the rules-only list — cached per day, so
   // this is one cheap read on every render after the first.
   const locale = await getLocale();
+  /* The AI Manager has a face (00097): the agent's country row of the cast
+     wins over the default, like the /ai directory. */
+  const { data: personaRows } = await supabase
+    .from("ai_role_personas").select("name, avatar_path, country_code").eq("role_key", "ai_manager");
+  const manager = (personaRows ?? []).find((p) => p.country_code && p.country_code === (profile as { country_code?: string | null } | null)?.country_code)
+    ?? (personaRows ?? []).find((p) => !p.country_code) ?? null;
+
   const [aiBrief, aiQuota] =
     isVerified && brief && counts
       ? await Promise.all([
@@ -204,14 +212,21 @@ export default async function DashboardPage({
 
         {/* Greeting -------------------------------------------------------- */}
         <header className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
+          <div className="flex min-w-0 items-center gap-3">
+            {manager?.avatar_path && (
+              <Image src={manager.avatar_path} alt={manager.name} width={48} height={48} unoptimized
+                     className="h-12 w-12 shrink-0 rounded-full border-2 border-card object-cover shadow-card" title={t("brief.by", { name: manager.name })} />
+            )}
+            <div className="min-w-0">
             <h1 className="truncate">
               {t(`brief.greeting.${brief?.greetingKey ?? "morning"}`, { name: firstName })}
             </h1>
             <p className="mt-1 text-sm text-muted">
               {agentProfile?.agency_name ?? t("independentAgent")}
               {agentProfile?.city ? ` · ${agentProfile.city}` : ""}
+              {manager ? ` · ${t("brief.by", { name: manager.name })}` : ""}
             </p>
+            </div>
           </div>
           {isVerified && rangeTabs}
         </header>

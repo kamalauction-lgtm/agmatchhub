@@ -135,7 +135,8 @@
         "unverified": "Taklimat peraturan sahaja — AI dibuka selepas pengesahan.",
         "no_provider": "Taklimat peraturan sahaja — belum ada pembekal AI disambungkan.",
         "failed": "Taklimat peraturan sahaja — AI tidak menjawab kali ini."
-      }
+      },
+      "by": "{name}, Pengurus AI anda"
     },
     "pipeline": {
       "label": "Saluran iklan",
@@ -3243,7 +3244,16 @@
       "updated": "Disimpan.",
       "failed": "Tidak dapat menyimpan.",
       "invalid": "Input tidak sah."
-    }
+    },
+    "personasTitle": "Watak",
+    "personasHint": "Setiap peranan ada watak: nama, potret, persona dan kekuatan (dari enam helaian watak). Taip nama di bawah negara untuk memberi pasaran itu watak sendiri; biarkan kosong untuk guna lalai.",
+    "personaCols": {
+      "role": "Peranan",
+      "default": "Lalai",
+      "my": "Malaysia",
+      "id": "Indonesia"
+    },
+    "personaSame": "sama seperti lalai"
   },
   "aiWorkforce": {
     "title": "Tenaga Kerja AI",
@@ -3274,7 +3284,9 @@
       "sales_transaction": "Jualan & transaksi",
       "team_training": "Pengurusan pasukan & latihan",
       "international": "Penyelidikan & kerjasama antarabangsa"
-    }
+    },
+    "meet": "Kenali rakan sekerja AI anda — setiap satu ada nama, wajah dan tiga kekuatan.",
+    "castCountry": "Watak untuk {country}"
   },
   "tasks": {
     "title": "Tugas & lawatan",

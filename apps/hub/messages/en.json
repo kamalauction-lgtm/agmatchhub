@@ -135,7 +135,8 @@
         "unverified": "Rules-only brief — AI opens after verification.",
         "no_provider": "Rules-only brief — no AI provider is connected yet.",
         "failed": "Rules-only brief — the AI did not answer this time."
-      }
+      },
+      "by": "{name}, your AI Manager"
     },
     "pipeline": {
       "label": "Listing pipeline",
@@ -3243,7 +3244,16 @@
       "updated": "Saved.",
       "failed": "Could not save that.",
       "invalid": "Invalid input."
-    }
+    },
+    "personasTitle": "Characters",
+    "personasHint": "Every role has a character: name, portrait, persona and strengths (from the six character sheets). Type a name under a country to give that market its own character; leave it empty to use the default.",
+    "personaCols": {
+      "role": "Role",
+      "default": "Default",
+      "my": "Malaysia",
+      "id": "Indonesia"
+    },
+    "personaSame": "same as default"
   },
   "aiWorkforce": {
     "title": "AI Workforce",
@@ -3274,7 +3284,9 @@
       "sales_transaction": "Sales & transaction",
       "team_training": "Team management & training",
       "international": "International research & collaboration"
-    }
+    },
+    "meet": "Meet your AI colleagues — each has a name, a face and three strengths.",
+    "castCountry": "Cast for {country}"
   },
   "tasks": {
     "title": "Tasks & viewings",
