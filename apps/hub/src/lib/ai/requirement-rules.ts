@@ -92,6 +92,10 @@ export function parseBudget(text: string, currency: string | null): { min: numbe
   return { min: null, max: null };
 }
 
+/** Month names in the three languages — "in January" is a date, not a place. */
+const MONTHS = new Set(["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december",
+  "januari", "februari", "maret", "mac", "mei", "juni", "jun", "juli", "julai", "agustus", "ogos", "oktober", "desember", "disember"]);
+
 const TYPES: [RegExp, string, RequirementDraft["property_category"]][] = [
   [/\b(apartemen|apartment|apt|kondominium|condominium|condo|kondo|serviced residence|flat)\b/i, "apartment", "residential"],
   [/\b(rumah|house|landed|terrace|teres|semi-?d|bungalow|banglo|villa|cluster|townhouse)\b/i, "house", "residential"],
@@ -136,15 +140,18 @@ export function ruleRequirement(chat: string, hint: { country: string | null; cu
   // Places: capitalised words after a location preposition, up to a comma or stop.
   const places = [...text.matchAll(/\b(?:di|at|in|area|kawasan|daerah|sekitar|near|dekat|around)\s+([A-Z][\p{L}.'-]+(?:\s+[A-Z][\p{L}.'-]+){0,2})/gu)]
     .map((m) => m[1].trim())
+    .filter((p) => !MONTHS.has(p.split(" ")[0].toLowerCase()))
     .filter((p, i, arr) => arr.indexOf(p) === i)
     .slice(0, 4);
   out.preferred_areas = places;
   if (places[0]) out.city = places[0];
 
+  // The title speaks the chat's language, not the agent's country's.
+  const english = /\b(rent|rental|lease|buy|purchase|looking|bedroom|condo|house)\b/i.test(text);
   const parts = [
     out.bedrooms_min ? `${out.bedrooms_min}BR` : null,
     out.property_type,
-    out.transaction_type === "rent" ? (hint.country === "ID" ? "disewa" : "to rent") : out.transaction_type === "buy" ? (hint.country === "ID" ? "dibeli" : "to buy") : null,
+    out.transaction_type === "rent" ? (english ? "to rent" : "disewa") : out.transaction_type === "buy" ? (english ? "to buy" : "dibeli") : null,
     places[0] ?? null,
   ].filter(Boolean);
   const title = parts.length ? parts.join(" · ") : text.slice(0, 80);

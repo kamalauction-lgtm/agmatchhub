@@ -30,7 +30,9 @@ describe("Buyer Profile Builder rules", () => {
     expect(r.missing).toContain("transaction_type");
     expect(r.missing).not.toContain("budget");
 
-    const rent = ruleRequirement("Looking to rent a 2BR condo in Mont Kiara, max RM4,500 per month", { country: "MY", currency: "MYR" });
+    const rent = ruleRequirement("Looking to rent a 2BR condo in Mont Kiara, max RM4,500 per month, moving in January", { country: "ID", currency: "MYR" });
+    expect(rent.preferred_areas).toEqual(["Mont Kiara"]); // "in January" is a date, not a place
+    expect(rent.title).toMatch(/to rent/);               // the chat's language, not the agent's country
     expect(rent.transaction_type).toBe("rent");
     expect(rent.max_monthly_rent).toBe(4500);
     expect(rent.budget_max).toBe(null);
