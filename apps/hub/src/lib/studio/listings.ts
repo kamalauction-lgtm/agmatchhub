@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
+import { publicSiteUrl } from "@/lib/public-site-url";
 
 /**
  * What the Content Studio works on: the agent's promotable inventory — their
@@ -62,21 +63,6 @@ function num(v: unknown): number | null {
   if (v === null || v === undefined) return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
-}
-
-/**
- * Env only. Null when the variable is unset, empty, or not an absolute
- * http(s) URL. Callers then withhold share links; the page still renders.
- */
-export function publicSiteUrl(): string | null {
-  const raw = process.env.NEXT_PUBLIC_MARKETPLACE_URL?.trim();
-  if (!raw) return null;
-  try {
-    const { protocol, origin } = new URL(raw);
-    return protocol === "https:" || protocol === "http:" ? origin : null;
-  } catch {
-    return null;
-  }
 }
 
 /**

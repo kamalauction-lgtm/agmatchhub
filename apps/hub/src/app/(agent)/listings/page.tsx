@@ -6,7 +6,7 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { SharePanel } from "@/components/listings/share-panel";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { shareCaption } from "@/lib/ai/listing-advisor";
-import { publicSiteUrl } from "@/lib/studio/listings";
+import { publicSiteUrl } from "@/lib/public-site-url";
 import { money, place } from "@/lib/listings/format";
 import { OfferToPool } from "@/components/listings/offer-to-pool";
 import { boostListing } from "./boost-actions";
