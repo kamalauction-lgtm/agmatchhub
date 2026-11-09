@@ -25,24 +25,32 @@ export const defaultLocale: Locale = "en";
 /** Default UI language per market, mirroring `countries` (id-first for ID). */
 const COUNTRY_DEFAULT: Record<string, Locale> = { ID: "id", MY: "en" };
 
+/** The agent's selectable UI languages are country-scoped. */
+const COUNTRY_LANGUAGES: Record<string, readonly Locale[]> = {
+  ID: ["id", "en"],
+  MY: ["en", "ms"],
+};
+export function allowedLocalesForCountry(countryCode: string | null | undefined): readonly Locale[] {
+  return COUNTRY_LANGUAGES[countryCode ?? ""] ?? locales;
+}
 const isLocale = (v: unknown): v is Locale => (locales as readonly string[]).includes(String(v));
 
-async function profileLocale(): Promise<Locale | null> {
+type ProfileLocale = { preferred: Locale | null; countryCode: string | null };
+async function profileLocale(): Promise<ProfileLocale> {
+  const fallback: ProfileLocale = { preferred: null, countryCode: null };
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return null;
-    const { data } = await supabase
-      .from("profiles")
-      .select("preferred_language, country_code")
-      .eq("id", user.id)
-      .maybeSingle();
-    if (isLocale(data?.preferred_language)) return data.preferred_language;
-    const byCountry = data?.country_code ? COUNTRY_DEFAULT[data.country_code] : undefined;
-    return byCountry ?? null;
+    if (!user) return fallback;
+    const { data } = await supabase.from("profiles")
+      .select("preferred_language, country_code").eq("id", user.id).maybeSingle();
+    return {
+      preferred: isLocale(data?.preferred_language) ? data.preferred_language : null,
+      countryCode: data?.country_code ?? null,
+    };
   } catch {
-    // Locale is never worth failing a request over.
-    return null;
+    // Missing preferences must not prevent page access.
+    return fallback;
   }
 }
 
@@ -50,11 +58,20 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
   let locale: Locale;
   if (isLocale(requested)) {
+    // Content Studio may explicitly request the listing's content language.
     locale = requested;
   } else {
     const store = await cookies();
     const cookieLocale = store.get("locale")?.value;
-    locale = isLocale(cookieLocale) ? cookieLocale : ((await profileLocale()) ?? defaultLocale);
+    const profile = await profileLocale();
+    const allowed = allowedLocalesForCountry(profile.countryCode);
+    if (isLocale(cookieLocale) && allowed.includes(cookieLocale)) {
+      locale = cookieLocale;
+    } else if (profile.preferred && allowed.includes(profile.preferred)) {
+      locale = profile.preferred;
+    } else {
+      locale = COUNTRY_DEFAULT[profile.countryCode ?? ""] ?? defaultLocale;
+    }
   }
 
   return {
