@@ -9,7 +9,10 @@
     "back": "Back",
     "language": "Language",
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "environment": {
+      "staging": "Staging · test data"
+    }
   },
   "landing": {
     "heroTitle": "Controlled property collaboration for professional agents",
@@ -2430,7 +2433,12 @@
       "pickup_failed": "That did not work. Please try again.",
       "invalid": "Something was missing from that request."
     },
-    "partnersLink": "Partners abroad"
+    "partnersLink": "Partners abroad",
+    "band": {
+      "inPool": "in the pool",
+      "youMarket": "you market",
+      "needApproval": "need approval"
+    }
   },
   "adminBanners": {
     "title": "Marketplace banners",

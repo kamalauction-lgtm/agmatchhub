@@ -9,7 +9,10 @@
     "back": "Kembali",
     "language": "Bahasa",
     "show": "Lihat",
-    "hide": "Sembunyikan"
+    "hide": "Sembunyikan",
+    "environment": {
+      "staging": "Staging · data uji"
+    }
   },
   "landing": {
     "heroTitle": "Kolaborasi properti terkendali untuk agen profesional",
@@ -2430,7 +2433,12 @@
       "pickup_failed": "Gagal. Silakan coba lagi.",
       "invalid": "Ada data yang kurang pada permintaan itu."
     },
-    "partnersLink": "Mitra luar negeri"
+    "partnersLink": "Mitra luar negeri",
+    "band": {
+      "inPool": "di kolam",
+      "youMarket": "Anda pasarkan",
+      "needApproval": "perlu persetujuan"
+    }
   },
   "adminBanners": {
     "title": "Banner marketplace",

@@ -9,7 +9,10 @@
     "back": "Kembali",
     "language": "Bahasa",
     "show": "Papar",
-    "hide": "Sembunyi"
+    "hide": "Sembunyi",
+    "environment": {
+      "staging": "Staging · data ujian"
+    }
   },
   "landing": {
     "heroTitle": "Kerjasama hartanah terkawal untuk ejen profesional",
@@ -2430,7 +2433,12 @@
       "pickup_failed": "Itu tidak berjaya. Sila cuba lagi.",
       "invalid": "Ada maklumat yang tertinggal dalam permintaan itu."
     },
-    "partnersLink": "Rakan kongsi luar negara"
+    "partnersLink": "Rakan kongsi luar negara",
+    "band": {
+      "inPool": "dalam kolam",
+      "youMarket": "anda pasarkan",
+      "needApproval": "perlu kelulusan"
+    }
   },
   "adminBanners": {
     "title": "Sepanduk pasaran",

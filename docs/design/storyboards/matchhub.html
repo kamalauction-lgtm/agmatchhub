@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MatchHub 2.0 — storyboard (design only)</title>
+<style>
+  :root { --ink:#0b1b33; --ink-2:#16294a; --blue:#2563eb; --blue-soft:#eff6ff; --violet:#6366f1; --violet-soft:#eef2ff;
+          --gold:#a8842f; --gold-soft:#f6efdb; --ice:#f8fafc; --line:#e2e8f0; --text:#0f172a; --muted:#64748b; --ok:#166534; --ok-soft:#f0fdf4;
+          --warn:#9a3412; --warn-soft:#fff7ed; --crimson:#e53935; --radius:16px; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#e9eef6; color:var(--text); font:15px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .wrap { max-width:1480px; margin:0 auto; padding:32px 24px 80px; }
+  h1 { font-size:28px; margin:0 0 6px; } h2 { font-size:22px; margin:40px 0 8px; }
+  h3 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 12px; }
+  .notice { background:#fff7e6; border:1px solid #f1d59b; color:#5c3d00; padding:12px 16px; border-radius:12px; margin:16px 0 24px; }
+  .cmp { display:grid; grid-template-columns:1fr; gap:24px; } @media (min-width:1100px){ .cmp.two{ grid-template-columns:1fr 1fr; } }
+  .shot { background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; } .shot img { display:block; width:100%; height:auto; }
+  .cap { color:var(--muted); font-size:13px; margin-top:8px; }
+  .desk { background:var(--ice); border-radius:var(--radius); border:1px solid var(--line); overflow:hidden; display:grid; grid-template-columns:232px 1fr; min-height:720px; }
+  .side { background:#fff; border-right:1px solid var(--line); padding:18px 14px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; margin-bottom:20px; } .mark { width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg,var(--blue),var(--violet)); }
+  .nav div { padding:9px 10px; border-radius:10px; color:var(--muted); font-size:14px; } .nav .on { background:var(--blue-soft); color:var(--blue); font-weight:600; } .nav .grp { font-size:11px; letter-spacing:.08em; color:#8a97ab; padding-top:14px; }
+  .main { padding:22px 26px; display:grid; gap:16px; align-content:start; }
+  .band { background:linear-gradient(120deg,var(--ink),var(--ink-2)); color:#fff; border-radius:22px; padding:22px 24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px; align-items:flex-end; }
+  .band h4 { margin:0 0 4px; font-size:22px; } .band p { margin:0; color:#c8d6f2; font-size:14px; max-width:60ch; }
+  .band .kpis { display:flex; gap:10px; flex-wrap:wrap; } .band .k { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:8px 12px; min-width:110px; }
+  .band .k b { display:block; font-size:20px; } .band .k span { font-size:11px; color:#c8d6f2; }
+  .env { display:inline-flex; align-items:center; gap:6px; background:var(--gold-soft); color:#5c3d00; border:1px solid #e9d9a8; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700; }
+  .filters { display:flex; gap:10px; flex-wrap:wrap; align-items:center; } .chip { border:1px solid var(--line); background:#fff; padding:8px 12px; border-radius:999px; font-size:13px; } .chip.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+  .tabs { display:flex; gap:4px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:4px; width:max-content; } .tabs span { padding:7px 12px; border-radius:9px; font-size:13px; color:var(--muted); } .tabs .on { background:var(--blue-soft); color:var(--blue); font-weight:600; }
+  .btn { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 14px; border-radius:12px; border:1px solid var(--line); background:#fff; font-weight:600; font-size:13px; }
+  .btn.primary { background:var(--blue); border-color:var(--blue); color:#fff; } .btn.crimson { background:var(--crimson); border-color:var(--crimson); color:#fff; }
+  .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; } .card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 2px rgb(15 23 42 / .04); }
+  .tag { display:inline-block; font-size:11px; font-weight:700; padding:3px 8px; border-radius:999px; } .t-ok{ background:var(--ok-soft); color:var(--ok);} .t-info{ background:var(--blue-soft); color:var(--blue);} .t-warn{ background:var(--warn-soft); color:var(--warn);} .t-neu{ background:#eef1f6; color:#475569;} .t-gold{ background:var(--gold-soft); color:#5c3d00;}
+  .tile { height:84px; border-radius:12px; background:linear-gradient(135deg,var(--blue-soft),#e6ecf9 60%,var(--violet-soft)); display:flex; align-items:flex-end; padding:10px 12px; justify-content:space-between; }
+  .tile b { font-size:18px; color:var(--ink); } .tile small { color:var(--muted); font-size:12px; }
+  .terms { display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; font-size:13px; margin-top:10px; border-top:1px solid var(--line); padding-top:10px; } .terms dt { color:var(--muted); } .terms dd { margin:0; font-weight:600; text-align:right; }
+  .share { display:flex; align-items:center; gap:8px; margin-top:8px; } .share .bar { flex:1; height:8px; background:#eef1f6; border-radius:999px; overflow:hidden; } .share .bar i { display:block; height:100%; width:50%; background:var(--blue); border-radius:999px; }
+  .steps { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; } .step { background:#fff; border:1px solid var(--line); border-radius:10px; padding:8px; font-size:11px; text-align:center; color:var(--muted); } .step.on { border-color:var(--blue); color:var(--blue); font-weight:700; background:var(--blue-soft); } .step.done { color:var(--ok); background:var(--ok-soft); border-color:#bbf7d0; }
+  .row { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; } .row:last-child{ border-bottom:0; }
+  .phone { width:375px; max-width:100%; background:var(--ice); border-radius:26px; border:10px solid #0b1b33; overflow:hidden; margin:0 auto; } .phone .screen { padding:14px; display:grid; gap:12px; min-height:720px; }
+  .phone .cards { grid-template-columns:1fr; } .phone .band { padding:16px; } .phone .band .k { min-width:90px; } .phone .steps { grid-template-columns:repeat(3,1fr); }
+  .bottom { background:#fff; border-top:1px solid var(--line); padding:8px 14px; display:flex; justify-content:space-around; font-size:11px; color:var(--muted); } .bottom .on { color:var(--blue); font-weight:700; }
+  .legend { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>MatchHub 2.0 — Property Collaboration &amp; Intelligence Centre</h1>
+  <div class="cap">Storyboard for the co-marketing pool, client requirements, submissions and the public Wanted board · desktop 1440 and mobile 375 · Deep Navy structure, Electric Blue actions, restrained Gold for environment and premium marks only.</div>
+  <div class="notice">
+    <strong>Design storyboard, not shipped pages.</strong> Figures and titles are <span class="tag t-neu">SAMPLE</span> unless they come from the current staging screenshots beside them.
+    No matching score, deal status or AI capability is shown that the application does not already compute. Every field drawn on a pool card exists in the <code>pool_offer_cards</code> projection (00099–00102); there is <strong>no photo</strong> because the projection carries none.
+  </div>
+
+  <!-- 1 POOL -->
+  <h2 id="pool">1 · Co-marketing pool</h2>
+  <div class="cmp two">
+    <div>
+      <h3>Current — staging, 1440 px</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/mh-current-pool-1440.png" alt="Current co-marketing pool, desktop"></div>
+      <div class="cap">Plain header, six-field filter block, two-column term cards. The staging note is the offer's free-text note, not an environment label.</div>
+    </div>
+    <div>
+      <h3>Proposed — desktop 1440 px</h3>
+      <div class="desk">
+        <aside class="side"><div class="brand"><div class="mark"></div>Agent Hub</div>
+          <div class="nav"><div>Command centre</div><div>Leads</div><div>Tasks</div><div>My listings</div><div class="grp">COLLABORATION</div><div class="on">Co-marketing pool</div><div>Client requirements</div><div>My submissions</div><div>Wanted board</div></div></aside>
+        <section class="main">
+          <div class="band">
+            <div><h4>Co-marketing pool</h4><p>Listings other agents have opened under stated commission terms. Pick one up and it becomes your inventory — your name, your contact, your lead.</p></div>
+            <div class="kpis"><div class="k"><b>2</b><span>in the pool</span></div><div class="k"><b>1</b><span>you market</span></div><div class="k"><b>50%</b><span>typical share</span></div></div>
+          </div>
+          <div class="legend"><span class="env">◆ STAGING · test data</span><span class="cap" style="margin:0">Environment label from configuration, shown on every MatchHub page on staging; never on production.</span></div>
+          <div class="filters"><span class="chip on">All provinces</span><span class="chip">DKI Jakarta</span><span class="chip">House</span><span class="chip">Sale</span><span class="chip">Min. share 50%</span><span class="btn" style="margin-left:auto">Offer my listings</span><span class="btn">Partners abroad</span></div>
+          <div class="cards">
+            <div class="card">
+              <div class="tile"><div><small>LST-2026-900003 · House · Sale</small><br><b>IDR 3.800.000.000</b></div><span class="tag t-ok">50% for you</span></div>
+              <h5 style="margin:12px 0 2px;font-size:16px">Rumah 4 kamar Pondok Indah, taman luas</h5>
+              <div class="cap" style="margin:0">Jakarta Selatan, DKI Jakarta · 4 bed · 3 bath · 190 m² built · 220 m² land</div>
+              <div class="share"><span class="cap" style="margin:0">Your share</span><div class="bar"><i></i></div><b style="font-size:13px">50%</b></div>
+              <dl class="terms"><dt>Listed by</dt><dd>Marketing Agent (staging)</dd><dt>Total commission</dt><dd>2.5%</dd><dt>Paid by</dt><dd>The owner</dd><dt>Max. marketing agents</dt><dd>5</dd></dl>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span class="tag t-info">✓ You are marketing this</span><span class="btn">Stop marketing</span></div>
+            </div>
+            <div class="card">
+              <div class="tile"><div><small>LST-2026-900001 · House · Sale</small><br><b>IDR 3.500.000.000</b></div><span class="tag t-ok">50% for you</span></div>
+              <h5 style="margin:12px 0 2px;font-size:16px">Rumah 4 kamar Cilandak Barat, carport 2 mobil</h5>
+              <div class="cap" style="margin:0">Jakarta Selatan, DKI Jakarta · 4 bed · 3 bath · 180 m² built · 200 m² land</div>
+              <div class="share"><span class="cap" style="margin:0">Your share</span><div class="bar"><i></i></div><b style="font-size:13px">50%</b></div>
+              <dl class="terms"><dt>Listed by</dt><dd>Listing Agent (staging)</dd><dt>Total commission</dt><dd>2.5%</dd><dt>Paid by</dt><dd>The owner</dd><dt>Max. marketing agents</dt><dd>5</dd></dl>
+              <div style="margin-top:12px"><span class="btn crimson" style="width:100%;justify-content:center">Market this listing</span><div class="cap" style="text-align:center">You earn 50% of the commission · terms recorded, cannot change later</div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="cap">Same data as today, from the same projection. New: command band with three real counts, chip filters, a typographic price tile instead of a blank area, and a share bar. Pickup and stop actions unchanged.</div>
+    </div>
+  </div>
+  <div class="cmp two" style="margin-top:24px">
+    <div><h3>Current — staging, 375 px</h3><div class="shot"><img src="../../../.playwright-mcp/mh-current-pool-375.png" alt="Current pool, mobile"></div></div>
+    <div><h3>Proposed — mobile 375 px</h3>
+      <div class="phone"><div class="screen">
+        <div class="band"><div><h4 style="font-size:18px">Co-marketing pool</h4><p style="font-size:13px">2 in the pool · 1 you market</p></div></div>
+        <div><span class="env">◆ STAGING · test data</span></div>
+        <div class="filters"><span class="chip on">All</span><span class="chip">House</span><span class="chip">Sale</span><span class="chip">50%+</span></div>
+        <div class="cards"><div class="card"><div class="tile"><div><small>House · Sale</small><br><b>IDR 3.5 bn</b></div><span class="tag t-ok">50% for you</span></div><h5 style="margin:10px 0 2px;font-size:15px">Rumah 4 kamar Cilandak Barat</h5><div class="cap" style="margin:0">Jakarta Selatan · 4 bed · 180 m²</div><div style="margin-top:10px"><span class="btn crimson" style="width:100%;justify-content:center">Market this listing</span></div></div></div>
+        <div class="bottom"><span>Home</span><span>Leads</span><span>Listings</span><span class="on">MatchHub</span><span>Profile</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- 2 REQUIREMENTS -->
+  <h2 id="requests">2 · Client requirements</h2>
+  <div class="cmp two">
+    <div><h3>Current — staging, 1440 px</h3><div class="shot"><img src="../../../.playwright-mcp/mh-current-requests-1440.png" alt="Current client requirements, desktop"></div><div class="cap">Empty state on this account. With data it is a table: ID, title, city, type, status, date.</div></div>
+    <div><h3>Proposed — desktop 1440 px (list + detail)</h3>
+      <div class="desk">
+        <aside class="side"><div class="brand"><div class="mark"></div>Agent Hub</div><div class="nav"><div>Command centre</div><div>Leads</div><div class="grp">COLLABORATION</div><div>Co-marketing pool</div><div class="on">Client requirements</div><div>My submissions</div></div></aside>
+        <section class="main">
+          <div class="band"><div><h4>Client requirements</h4><p>Post what your client needs. Admin approves, supply agents submit, you shortlist, and only approved properties reach the client.</p></div><div class="kpis"><div class="k"><b>1</b><span>open</span></div><div class="k"><b>0</b><span>awaiting approval</span></div><div class="k"><b>0</b><span>in client review</span></div></div></div>
+          <div class="tabs"><span class="on">Open</span><span>Awaiting approval</span><span>With client</span><span>Closed</span></div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><span class="cap" style="margin:0">REQ-2026-900001 · Buy · Residential</span><h5 style="margin:4px 0 2px;font-size:17px">Rumah 3 kamar di Jakarta Selatan <span class="tag t-neu">SAMPLE</span></h5><div class="cap" style="margin:0">Jakarta Selatan, DKI Jakarta · up to IDR 3.000.000.000</div></div><span class="tag t-info">Receiving submissions</span></div>
+            <div class="steps" style="margin-top:12px"><div class="step done">Draft</div><div class="step done">Approved</div><div class="step on">Receiving</div><div class="step">Reviewing</div><div class="step">Client review</div><div class="step">Closed</div></div>
+            <div class="cap">Stage strip uses the existing 23-state <code>status</code> machine grouped into six visible stages; the exact status stays in the badge.</div>
+            <div class="row"><span>Submissions received</span><b>3</b></div><div class="row"><span>Protected link</span><span class="btn">Copy link</span></div><div class="row"><span>Client presentation</span><span class="btn primary">Prepare →</span></div>
+          </div>
+        </section>
+      </div>
+      <div class="cap">Detail view keeps every existing panel (requirement, link, submissions, feedback) and adds the stage strip. Nothing about approval or the password-protected link changes.</div>
+    </div>
+  </div>
+
+  <!-- 3 SUBMISSIONS -->
+  <h2 id="submissions">3 · Submissions and co-agency</h2>
+  <div class="cmp two">
+    <div><h3>Current — staging, 1440 px</h3><div class="shot"><img src="../../../.playwright-mcp/mh-current-submissions-1440.png" alt="Current submissions, desktop"></div></div>
+    <div><h3>Proposed — desktop 1440 px</h3>
+      <div class="desk">
+        <aside class="side"><div class="brand"><div class="mark"></div>Agent Hub</div><div class="nav"><div>Command centre</div><div class="grp">COLLABORATION</div><div>Co-marketing pool</div><div>Client requirements</div><div class="on">My submissions</div></div></aside>
+        <section class="main">
+          <div class="band"><div><h4>My submissions</h4><p>Properties you have put forward to other agents' clients. Status comes from the requesting agent's review; you see your own submissions only.</p></div><div class="kpis"><div class="k"><b>0</b><span>submitted</span></div><div class="k"><b>0</b><span>shortlisted</span></div><div class="k"><b>0</b><span>shown to client</span></div></div></div>
+          <div class="cards">
+            <div class="card"><div class="tile"><div><small>SUB-2026-000001 → REQ-2026-900001</small><br><b>IDR 3.400.000.000</b></div><span class="tag t-warn">Under review</span></div><h5 style="margin:10px 0 2px;font-size:16px">Rumah 3 kamar Kebayoran Baru <span class="tag t-neu">SAMPLE</span></h5><div class="cap" style="margin:0">For: Rumah 3 kamar di Jakarta Selatan · Jakarta Selatan</div><div class="row" style="margin-top:8px"><span>Submitted</span><span>9 Nov 2026</span></div><div class="row"><span>Client feedback</span><span class="cap" style="margin:0">Not yet</span></div></div>
+            <div class="card" style="display:grid;place-items:center;text-align:center;border-style:dashed"><div><div style="font-size:28px">✦</div><p style="margin:6px 0 0;font-weight:600">No other submissions</p><p class="cap">Find open requirements on the Wanted board.</p><span class="btn primary">Open Wanted board</span></div></div>
+          </div>
+        </section>
+      </div>
+      <div class="cap">Table becomes cards with the same columns. The empty state uses the shared EmptyState primitive and points at the Wanted board.</div>
+    </div>
+  </div>
+
+  <!-- 4 WANTED -->
+  <h2 id="wanted">4 · Public Wanted board</h2>
+  <div class="cmp two">
+    <div><h3>Current — staging, 1440 px</h3><div class="shot"><img src="../../../.playwright-mcp/mh-current-wanted-1440.png" alt="Current wanted board, desktop"></div><div class="cap">Existing defect: the wordmark renders navy-on-black above the headline (faint ghost text). Separate fix, not design.</div></div>
+    <div><h3>Proposed — desktop 1440 px</h3>
+      <div class="desk" style="grid-template-columns:1fr">
+        <section class="main">
+          <div class="band" style="border-radius:0 0 22px 22px;margin:-22px -26px 0"><div><h4>Wanted: properties for real, verified buyers &amp; tenants</h4><p>Every card is a live client requirement from a verified agent. Have a matching property? Submit it and co-broke — protected, tracked and audited.</p></div><div class="kpis"><div class="k"><b>1</b><span>wanted now</span></div></div></div>
+          <div class="filters"><span class="chip">Search title or city</span><span class="chip on">All countries</span><span class="chip">Buy or rent</span><span class="chip">All types</span><span class="chip">Max budget</span></div>
+          <div class="cards">
+            <div class="card"><div style="display:flex;gap:6px;align-items:center"><span class="tag" style="background:var(--crimson);color:#fff">WANTED · BUY</span><span class="tag t-neu">Residential</span><span class="cap" style="margin:0 0 0 auto">REQ-2026-900001</span></div><h5 style="margin:10px 0 2px;font-size:16px">Rumah 3 kamar di Jakarta Selatan (skenario uji staging)</h5><div class="cap" style="margin:0">🇮🇩 Jakarta Selatan, DKI Jakarta · Indonesia</div><p style="margin:8px 0 0;color:var(--crimson);font-weight:700">Up to IDR 3,000,000,000</p><div class="cap">Anonymised client profile only · never the client's identity or internal notes</div><div style="display:flex;gap:8px;margin-top:10px"><span class="btn crimson" style="flex:1;justify-content:center">Offer your property</span><span class="btn">▦</span></div></div>
+          </div>
+        </section>
+      </div>
+      <div class="cap">Public page keeps the teaser projection exactly as it is. Visual change only: band, chips, card rhythm. The ghost wordmark is fixed by using the shared band.</div>
+    </div>
+  </div>
+
+  <h2>5 · Component plan</h2>
+  <div class="card"><div class="row"><span><b>CommandHeader</b> (exists) — band on pool, requirements, submissions; public variant for Wanted</span><span class="tag t-ok">Reuse</span></div>
+    <div class="row"><span><b>Badge</b>, <b>Card</b>, <b>Button</b>, <b>EmptyState</b> (exist)</span><span class="tag t-ok">Reuse</span></div>
+    <div class="row"><span><b>EnvironmentBadge</b> — "STAGING · test data" from configuration (new, shared, tiny)</span><span class="tag t-info">New</span></div>
+    <div class="row"><span><b>StatCluster</b> — three counts inside the band (new; counts from existing queries only)</span><span class="tag t-info">New</span></div>
+    <div class="row"><span><b>ChipFilterBar</b> — wraps the existing GET filter form as chips; same params</span><span class="tag t-info">New</span></div>
+    <div class="row"><span><b>OfferCard</b> — pool card over <code>pool_offer_cards</code> fields; price tile, share bar, terms</span><span class="tag t-info">New</span></div>
+    <div class="row"><span><b>StageStrip</b> — six visible stages mapped from the 23 request statuses; badge keeps the exact status</span><span class="tag t-info">New</span></div>
+    <div class="row"><span>Photo on pool cards</span><span class="tag t-gold">Needs a projection change (migration) — not in this scope</span></div>
+  </div>
+</div>
+</body>
+</html>
