@@ -13,12 +13,20 @@ type RequestRow = Record<string, unknown> & { id?: string };
 export async function RequestForm({ existing }: { existing?: RequestRow }) {
   const t = await getTranslations("requests.form");
   const supabase = await createClient();
-  const [{ data: countries }, { data: currencies }] = await Promise.all([
+  const [{ data: countries }, { data: currencies }, { data: auth }] = await Promise.all([
     supabase.from("countries").select("code, name, default_currency, measurement_unit").eq("active", true).order("name"),
     supabase.from("currencies").select("code").eq("active", true).order("code"),
+    supabase.auth.getUser(),
   ]);
-
+  const { data: profile } = auth.user
+    ? await supabase.from("profiles").select("country_code").eq("id", auth.user.id).maybeSingle()
+    : { data: null };
   const v = (k: string) => (existing?.[k] ?? "") as string | number;
+  // Preserve saved cross-border selections; use agent country only for new requests.
+  const defaultCountry = String(v("country_code") || profile?.country_code || "MY");
+  const countrySettings = (countries ?? []).find((country) => country.code === defaultCountry);
+  const defaultCurrency = String(v("currency") || countrySettings?.default_currency || (defaultCountry === "ID" ? "IDR" : "MYR"));
+  const defaultUnit = String(v("measurement_unit") || countrySettings?.measurement_unit || (defaultCountry === "ID" ? "sqm" : "sqft"));
 
   const field = (name: string, label: string, extra: React.ReactNode) => (
     <label className="block text-sm">
@@ -78,7 +86,7 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
         <h2 className="font-semibold">{t("sectionLocation")}</h2>
         <div className="grid gap-4 sm:grid-cols-4">
           {field("countryCode", t("country"),
-            <select name="countryCode" defaultValue={v("country_code") || "MY"} className={inputCls}>
+            <select name="countryCode" defaultValue={defaultCountry} className={inputCls}>
               {(countries ?? []).map((c) => (
                 <option key={c.code} value={c.code}>{c.name}</option>
               ))}
@@ -111,7 +119,7 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
         <h2 className="font-semibold">{t("sectionFinancial")}</h2>
         <div className="grid gap-4 sm:grid-cols-4">
           {field("currency", t("currency"),
-            <select name="currency" defaultValue={v("currency") || "MYR"} className={inputCls}>
+            <select name="currency" defaultValue={defaultCurrency} className={inputCls}>
               {(currencies ?? []).map((c) => (
                 <option key={c.code} value={c.code}>{c.code}</option>
               ))}
@@ -154,7 +162,7 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
               ))}
             </select>)}
           {field("measurementUnit", t("unit"),
-            <select name="measurementUnit" defaultValue={v("measurement_unit") || "sqft"} className={inputCls}>
+            <select name="measurementUnit" defaultValue={defaultUnit} className={inputCls}>
               <option value="sqft">sqft</option>
               <option value="sqm">sqm</option>
             </select>)}
