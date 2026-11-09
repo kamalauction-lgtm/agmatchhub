@@ -74,7 +74,7 @@ const GRID: Array<[number, number]> = [
   [0, 1], [1, 1], [2, 1], [3, 1],
   [0, 2], [1, 2], [2, 2], [3, 2],
 ];
-const LOUNGE: [number, number] = [4, 1];
+const LOUNGE: [number, number] = [4, 2];
 
 const iso = (col: number, row: number) => ({
   x: ORIGIN.x + ((col - row) * TW) / 2,
@@ -236,7 +236,7 @@ export function OfficeScene({
       <div className={`office-floor command-band relative hidden overflow-hidden rounded-2xl md:block ${demo ? "office-demo" : ""}`}>
         <div aria-hidden className="office-grid pointer-events-none absolute inset-0" />
         <svg
-          viewBox="0 0 1280 700"
+          viewBox="250 70 900 560"
           className="relative block h-auto w-full"
           role="img"
           aria-label={labels.legend}
@@ -398,10 +398,12 @@ function Character({
   const color = STATE_COLOR[w.state];
   const dim = w.state === "planned" || w.state === "offline";
   return (
+    // Positioning and animation live on separate groups: a CSS transform on the
+    // same element would replace the SVG translate and send the sprite to 0,0.
+    <g transform={`translate(${x} ${y})`}>
     <g
-      className={`office-char office-${w.state}`}
+      className={`office-char office-${w.state} ${index % 4 === 0 ? "office-wanderer" : ""}`}
       style={{ ["--walk-x" as string]: `${walk.x}px`, ["--walk-y" as string]: `${walk.y}px`, ["--i" as string]: index } as React.CSSProperties}
-      transform={`translate(${x} ${y})`}
     >
       {/* Desk: a small iso block the character sits behind. */}
       <polygon points="-22,14 0,25 22,14 0,3" fill="#0b1b33" stroke="rgba(255,255,255,0.18)" />
@@ -411,13 +413,17 @@ function Character({
       {(w.state === "active" || w.state === "finished") && <circle cx="0" cy="10" r="26" fill="url(#glow)" className="office-glow" />}
 
       <g className="office-body">
-        <button
-          type="button"
+        <g
+          role="button"
+          tabIndex={0}
           onClick={onOpen}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); } }}
           aria-label={title}
-          style={{ all: "unset", cursor: "pointer" }}
+          style={{ cursor: "pointer", outline: "none" }}
         >
           <title>{title}</title>
+          {/* Hit area: the whole sprite, not just its drawn pixels. */}
+          <rect x="-26" y="-50" width="52" height="84" fill="transparent" />
           <ellipse cx="0" cy="0" rx="13" ry="9" fill={dim ? "#334155" : "#1e3a8a"} transform="translate(0 2)" />
           <g transform="translate(0 -18)" style={{ opacity: dim ? 0.45 : 1, filter: dim ? "grayscale(1)" : undefined }}>
             <circle cx="0" cy="0" r="19" fill="#ffffff" />
@@ -453,11 +459,12 @@ function Character({
               <text x="13" y="9" textAnchor="middle" fontSize="8" fontWeight="800" fill="#0b1b33">{demoBadge}</text>
             </g>
           )}
-        </button>
+        </g>
       </g>
       <text x="0" y="46" textAnchor="middle" fontSize="10" fontWeight="600" fill="rgba(255,255,255,0.85)" style={{ pointerEvents: "none" }}>
         {w.persona}
       </text>
+    </g>
     </g>
   );
 }

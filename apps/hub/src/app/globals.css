@@ -220,6 +220,7 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
    Characters are SVG <g> elements: transform-box makes transforms local.
    ========================================================================== */
 .office-floor { min-height: 360px; }
+.office-char [role="button"]:focus-visible > rect { stroke: var(--command-link); stroke-width: 2; rx: 8; }
 .office-grid {
   background-image:
     linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
@@ -228,11 +229,14 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
   mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
 }
 .office-char, .office-char * { transform-box: fill-box; transform-origin: center; }
+.office-char { transform-box: view-box; transform-origin: 0 0; }
 .office-body { transform-origin: 50% 90%; }
 
 /* idle: breathe, and every so often wander to the lounge and back */
 .office-idle .office-body { animation: office-breathe 3.2s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.37s); }
-.office-idle { animation: office-wander 26s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -2.1s); }
+/* Only every fourth idle character wanders, on a long cycle, so a quiet office
+   stays legible instead of emptying every desk into the lounge at once. */
+.office-idle.office-wanderer { animation: office-wander 48s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -3.7s); }
 /* active: typing at the desk */
 .office-active .office-body { animation: office-type 0.55s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.13s); }
 .office-glow { animation: office-glow 1.8s ease-in-out infinite; }
