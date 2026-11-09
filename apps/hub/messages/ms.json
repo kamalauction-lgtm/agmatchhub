@@ -3327,7 +3327,9 @@
     "close": "Tutup",
     "detailStatus": "Status",
     "detailSkills": "Bantuan dalam",
-    "statusNote": "Status menunjukkan apa yang tersedia untuk anda sekarang. Potret tidak menjadikan rakan sekerja aktif: hanya peranan bertanda Live membuka skrin yang berfungsi."
+    "statusNote": "Status menunjukkan apa yang tersedia untuk anda sekarang. Potret tidak menjadikan rakan sekerja aktif: hanya peranan bertanda Live membuka skrin yang berfungsi.",
+    "specialists": "{count} Pakar AI",
+    "catalogueNote": "{count} peranan dalam katalog. Alat berasaskan peraturan berjalan tanpa kunci AI. Ciri berkuasa model hanya berjalan apabila AI diaktifkan untuk akaun anda, dan tiada apa di halaman ini disahkan berfungsi dari hujung ke hujung."
   },
   "tasks": {
     "title": "Tugas & lawatan",

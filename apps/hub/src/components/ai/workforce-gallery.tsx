@@ -180,6 +180,7 @@ export function WorkforceGallery({
                   {labels.close}
                 </button>
               </div>
+              {active.tagline && <p className="text-base font-medium leading-6 text-foreground">{active.tagline}</p>}
               <p className="text-sm leading-6 text-muted-strong">{active.description}</p>
               {active.skills.length > 0 && (
                 <div>

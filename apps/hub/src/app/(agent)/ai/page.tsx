@@ -128,9 +128,10 @@ export default async function AiWorkforcePage() {
             <h1>{t("title")}</h1>
             <p className="command-muted mt-2 text-sm">{t("meet")}</p>
             <p className="command-muted mt-1 text-sm">{t("intro")}</p>
+            <p className="command-muted mt-3 text-xs">{t("catalogueNote", { count: roles.length })}</p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs">
-            <Badge tone="success">{t("liveCount", { count: live })}</Badge>
+            <Badge tone="accent">{t("specialists", { count: roles.length })}</Badge>
             {countryCast && country && <Badge tone="accent">{t("castCountry", { country })}</Badge>}
             {quota && verified && (
               <Badge tone="info">{t("quota", { remaining: quota.remaining, total: quota.monthly_allowance })}</Badge>

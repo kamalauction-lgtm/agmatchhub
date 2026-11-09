@@ -3327,7 +3327,9 @@
     "close": "Close",
     "detailStatus": "Status",
     "detailSkills": "What they help with",
-    "statusNote": "Status shows what is open to you now. A portrait does not make a colleague live: only roles marked Live open a working screen."
+    "statusNote": "Status shows what is open to you now. A portrait does not make a colleague live: only roles marked Live open a working screen.",
+    "specialists": "{count} AI Specialists",
+    "catalogueNote": "{count} roles in the catalogue. Rule-based tools run without AI keys. Model-powered features run only when AI is enabled for your account, and nothing on this page is verified as working end to end."
   },
   "tasks": {
     "title": "Tasks & viewings",

@@ -294,12 +294,23 @@ export default async function DashboardPage({
             {/* Performance + plan ---------------------------------------- */}
             <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
               <Panel title={t("perf.title", { count: days })} hint={t("perf.hint")}>
-                <BarChart
-                  labels={points.map((p) => shortDay(p.day))}
-                  series={series}
-                  emptyLabel={t("perf.empty")}
-                  bucketLabel={(n) => t("perf.bucket", { count: n })}
-                />
+                {series.every((s) => s.values.every((v) => v === 0)) ? (
+                  /* Dashboard-only premium empty state. The shared BarChart is
+                     untouched, so the admin pages keep their own empty label. */
+                  <div className="grid h-[220px] place-items-center rounded-2xl border border-dashed border-line-strong bg-surface/60 p-6 text-center">
+                    <div className="max-w-xs">
+                      <div aria-hidden className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-blue-soft text-2xl">📈</div>
+                      <p className="mt-3 font-semibold text-foreground">{t("perf.empty")}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <BarChart
+                    labels={points.map((p) => shortDay(p.day))}
+                    series={series}
+                    emptyLabel={t("perf.empty")}
+                    bucketLabel={(n) => t("perf.bucket", { count: n })}
+                  />
+                )}
               </Panel>
 
               {/* `planLabel` lives in the `dashboard` namespace, not `plans` —

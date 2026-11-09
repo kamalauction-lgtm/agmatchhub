@@ -3327,7 +3327,9 @@
     "close": "Tutup",
     "detailStatus": "Status",
     "detailSkills": "Membantu dalam",
-    "statusNote": "Status menunjukkan apa yang tersedia untuk Anda sekarang. Adanya potret tidak membuat rekan kerja aktif: hanya peran bertanda Live yang membuka layar yang berfungsi."
+    "statusNote": "Status menunjukkan apa yang tersedia untuk Anda sekarang. Adanya potret tidak membuat rekan kerja aktif: hanya peran bertanda Live yang membuka layar yang berfungsi.",
+    "specialists": "{count} Spesialis AI",
+    "catalogueNote": "{count} peran dalam katalog. Alat berbasis aturan berjalan tanpa kunci AI. Fitur bertenaga model hanya berjalan saat AI diaktifkan untuk akun Anda, dan tidak ada di halaman ini yang diverifikasi berfungsi dari awal hingga akhir."
   },
   "tasks": {
     "title": "Tugas & kunjungan",
