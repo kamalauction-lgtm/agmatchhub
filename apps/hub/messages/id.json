@@ -3320,7 +3320,14 @@
     },
     "meet": "Kenali rekan kerja AI Anda — masing-masing punya nama, wajah dan tiga kekuatan.",
     "castCountry": "Karakter untuk {country}",
-    "alsoHero": "Juga di AG Hero"
+    "alsoHero": "Juga di AG Hero",
+    "search": "Cari rekan kerja, keahlian, atau tugas",
+    "allCategories": "Semua",
+    "noResults": "Tidak ada rekan kerja yang cocok dengan pencarian.",
+    "close": "Tutup",
+    "detailStatus": "Status",
+    "detailSkills": "Membantu dalam",
+    "statusNote": "Status menunjukkan apa yang tersedia untuk Anda sekarang. Adanya potret tidak membuat rekan kerja aktif: hanya peran bertanda Live yang membuka layar yang berfungsi."
   },
   "tasks": {
     "title": "Tugas & kunjungan",

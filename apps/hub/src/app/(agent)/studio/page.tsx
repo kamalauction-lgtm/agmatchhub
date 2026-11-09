@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
 import { getStudioListings } from "@/lib/studio/listings";
 import { money, place } from "@/lib/listings/format";
@@ -22,10 +23,7 @@ export default async function StudioPickerPage() {
   return (
     <AgentShell wide>
       {/* Command band: fixed colours so the text stays legible in dark mode. */}
-      <header
-        className="flex flex-wrap items-start justify-between gap-3 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
-        style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
-      >
+      <CommandHeader className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
           <p className="mt-1 text-sm text-[#c8d6f2]">{t("intro")}</p>
@@ -43,7 +41,7 @@ export default async function StudioPickerPage() {
             {t("accountsLink")}
           </Link>
         </p>
-      </header>
+      </CommandHeader>
       <div className="mb-6" />
 
       {!listings.length ? (

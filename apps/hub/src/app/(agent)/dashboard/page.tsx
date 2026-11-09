@@ -8,8 +8,9 @@ import { aiQuotaFor } from "@/lib/ai/engine";
 import { regenerateBrief } from "./ai-actions";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
 import { AnnouncementFeed } from "@/components/announcements/announcement-feed";
-import { Panel, StatCard } from "@/components/admin/panel";
+import { Panel } from "@/components/admin/panel";
 import { BarChart, type Series } from "@/components/admin/charts";
 import { getDashboard } from "@/lib/dashboard/brief";
 import { planFor } from "@/config/plans";
@@ -186,7 +187,7 @@ export default async function DashboardPage({
   /* The AI Manager has a face (00097): the agent's country row of the cast
      wins over the default, like the /ai directory. */
   const { data: personaRows } = await supabase
-    .from("ai_role_personas").select("name, avatar_path, country_code").eq("role_key", "ai_manager");
+    .from("ai_role_personas").select("name, avatar_path, portrait_path, country_code").eq("role_key", "ai_manager");
   const manager = (personaRows ?? []).find((p) => p.country_code && p.country_code === (profile as { country_code?: string | null } | null)?.country_code)
     ?? (personaRows ?? []).find((p) => !p.country_code) ?? null;
 
@@ -214,14 +215,11 @@ export default async function DashboardPage({
 
         {/* Greeting -------------------------------------------------------- */}
         {/* Command band: fixed colours so the text stays legible in dark mode. */}
-        <header
-          className="flex flex-wrap items-start justify-between gap-4 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
-          style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
-        >
+        <CommandHeader className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex min-w-0 items-center gap-3">
-            {manager?.avatar_path && (
-              <Image src={manager.avatar_path} alt={manager.name} width={48} height={48} unoptimized
-                     className="h-12 w-12 shrink-0 rounded-full border-2 border-white/30 object-cover shadow-card" title={t("brief.by", { name: manager.name })} />
+            {(manager?.portrait_path ?? manager?.avatar_path) && (
+              <Image src={(manager.portrait_path ?? manager.avatar_path)!} alt={manager.name} width={96} height={96} unoptimized
+                     className="h-20 w-20 shrink-0 rounded-2xl border border-white/20 object-cover object-top shadow-card sm:h-24 sm:w-24" title={t("brief.by", { name: manager.name })} />
             )}
             <div className="min-w-0">
             <h1 className="break-words text-white">
@@ -235,7 +233,7 @@ export default async function DashboardPage({
             </div>
           </div>
           {isVerified && rangeTabs}
-        </header>
+        </CommandHeader>
 
         {/* Verification gate ---------------------------------------------- */}
         {!isVerified && (
@@ -256,43 +254,40 @@ export default async function DashboardPage({
           <>
             {/* Headline numbers ------------------------------------------ */}
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <StatCard
+              <AgentKpi
                 icon="🏠"
                 tone="blue"
                 value={format.number(summary.listings_published)}
                 label={t("kpi.liveListings")}
                 delta={summary.listings_published - summary.listings_previous}
                 caption={t("kpi.ofQuota", { used: summary.listings_active, max: plan.maxListings })}
-                series={points.map((p) => p.listings_published)}
                 href="/listings"
               />
-              <StatCard
+              <AgentKpi
                 icon="📥"
                 tone="indigo"
                 value={format.number(summary.leads_total)}
                 label={t("kpi.leads")}
                 delta={summary.leads_total - summary.leads_previous}
                 caption={t("kpi.newLeads", { count: summary.leads_new })}
-                series={points.map((p) => p.leads)}
                 href="/leads"
               />
-              <StatCard
+              <AgentKpi
                 icon="⏱"
                 tone={summary.response_rate >= 80 ? "green" : "orange"}
                 value={`${summary.response_rate}%`}
                 label={t("kpi.responseRate")}
                 caption={t("kpi.responseRateHint")}
-                series={points.map((p) => p.responses)}
                 href="/leads"
               />
-              <StatCard
+              <AgentKpi
                 icon="⚠"
                 tone={summary.leads_overdue > 0 ? "red" : "green"}
                 value={format.number(summary.leads_overdue)}
                 label={t("kpi.overdue")}
                 caption={t("kpi.overdueHint")}
-                invert
                 href="/leads"
+                invert
               />
             </div>
 
@@ -705,5 +700,37 @@ function SoonCard({ icon, title, desc }: { icon: string; title: string; desc: st
       <h3 className="mt-3 text-base font-semibold">{title}</h3>
       <p className="mt-1 text-sm leading-snug text-muted">{desc}</p>
     </div>
+  );
+}
+
+/* Agent KPI card (futuristic pilot). Same data as the StatCard it replaces; the
+   icon sits on a tinted tile and the figure is the visual anchor. No sparkline
+   and no invented figures: value, delta and caption all come from the caller. */
+const KPI_TONES: Record<string, string> = {
+  blue: "bg-blue-soft text-blue",
+  indigo: "bg-indigo-soft text-indigo",
+  green: "bg-success-soft text-success-ink",
+  orange: "bg-warning-soft text-warning-ink",
+  red: "bg-danger-soft text-danger",
+};
+function AgentKpi({ icon, tone, value, label, delta, caption, href, invert = false }: {
+  icon: string; tone: string; value: string | number; label: string; delta?: number | null; caption?: string; href: string; invert?: boolean;
+}) {
+  const up = (delta ?? 0) > 0;
+  const good = delta == null || delta === 0 ? null : invert ? !up : up;
+  return (
+    <Link href={href} className="group rounded-2xl border border-line bg-card p-5 shadow-card transition-colors duration-150 hover:border-blue">
+      <div className="flex items-start justify-between gap-3">
+        <span aria-hidden className={`grid h-11 w-11 place-items-center rounded-xl text-xl ${KPI_TONES[tone] ?? KPI_TONES.blue}`}>{icon}</span>
+        {delta != null && delta !== 0 && (
+          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${good ? "bg-success-soft text-success-ink" : "bg-danger-soft text-danger"}`}>
+            {up ? "▲" : "▼"} {Math.abs(delta)}
+          </span>
+        )}
+      </div>
+      <p className="mt-4 text-3xl font-bold tabular-nums tracking-tight">{value}</p>
+      <p className="mt-1 text-sm font-medium text-muted-strong">{label}</p>
+      {caption && <p className="mt-1 text-xs text-muted">{caption}</p>}
+    </Link>
   );
 }

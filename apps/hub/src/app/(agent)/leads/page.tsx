@@ -3,6 +3,7 @@ import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
 import { markLeadResponded, updateLeadStatus } from "./actions";
 import { draftLeadReply, sendLeadEmail, qualifyLead, findLeadMatches, type LeadIntel } from "./ai-actions";
@@ -187,10 +188,7 @@ export default async function LeadsPage({
   return (
     <AgentShell wide>
       {/* Command band: fixed colours so the text stays legible in dark mode. */}
-      <header
-        className="mb-6 flex flex-wrap items-end justify-between gap-3 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
-        style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
-      >
+      <CommandHeader className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
         <div className="flex items-center gap-3 text-sm text-[#c8d6f2]">
           <p>{t("summary", { open: open.length, overdue: overdue.length })}</p>
@@ -203,7 +201,7 @@ export default async function LeadsPage({
             ))}
           </nav>
         </div>
-      </header>
+      </CommandHeader>
 
       {updated && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">

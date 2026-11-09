@@ -1,10 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
+import { WorkforceGallery, type WorkerItem, type WorkforceLabels } from "@/components/ai/workforce-gallery";
 import { aiQuotaFor } from "@/lib/ai/engine";
 
 /**
@@ -18,6 +19,10 @@ import { aiQuotaFor } from "@/lib/ai/engine";
  * window of its own. A planned role says so plainly. A role that lives in
  * AG Hero is named but not linked until the agent has linked their Hero
  * account (E8); an unlinked agent gains nothing from a login page.
+ *
+ * Presentation (futuristic pilot, step 2): search, category navigation and the
+ * worker detail dialog live in `WorkforceGallery`. This page only computes the
+ * facts and their labels. It does not decide what a role can do.
  */
 
 export const dynamic = "force-dynamic";
@@ -70,32 +75,68 @@ export default async function AiWorkforcePage() {
 
   const byCategory = new Map<string, Role[]>();
   for (const r of roles) byCategory.set(r.category, [...(byCategory.get(r.category) ?? []), r]);
-  const categories = [...CATEGORY_ORDER.filter((c) => byCategory.has(c)), ...[...byCategory.keys()].filter((c) => !CATEGORY_ORDER.includes(c))];
+  const categoryKeys = [...CATEGORY_ORDER.filter((c) => byCategory.has(c)), ...[...byCategory.keys()].filter((c) => !CATEGORY_ORDER.includes(c))];
   const live = roles.filter((r) => r.status === "live").length;
+
+  // Every fact the gallery shows, decided here from verified backend state.
+  const items: WorkerItem[] = categoryKeys.flatMap((cat) =>
+    (byCategory.get(cat) ?? []).sort((a, b) => a.sort - b.sort).map((r): WorkerItem => {
+      const p = personaOf.get(r.key);
+      const isLive = r.status === "live" && !!r.route;
+      const heroOpen = heroLinked && !!r.external_url;
+      const actionHref = isLive ? r.route! : heroOpen ? r.external_url! : null;
+      return {
+        key: r.key,
+        category: cat,
+        name: pick(r.name),
+        persona: p?.name ?? null,
+        tagline: p ? pick(p.tagline) : "",
+        description: pick(r.description),
+        skills: pickList(p?.skills).slice(0, 3),
+        portrait: p?.portrait_path ?? null,
+        premium: r.tier === "premium",
+        statusTone: isLive ? "success" : r.external_url ? "accent" : "neutral",
+        statusLabel: isLive ? t("status.live") : r.external_url ? t("status.hero") : t("status.planned"),
+        actionHref,
+        actionExternal: !isLive && heroOpen,
+        actionLabel: t("open"),
+        unavailableHint: r.external_url ? t("heroHint") : t("comingSoon"),
+        alsoHeroHref: isLive && heroOpen ? r.external_url! : null,
+        alsoHeroLabel: isLive && heroOpen ? t("alsoHero") : null,
+      };
+    })
+  );
+
+  const categories = categoryKeys.map((c) => ({ key: c, label: t(`category.${c}` as never) }));
+  const labels: WorkforceLabels = {
+    search: t("search"),
+    allCategories: t("allCategories"),
+    noResults: t("noResults"),
+    close: t("close"),
+    detailStatus: t("detailStatus"),
+    detailSkills: t("detailSkills"),
+    premium: t("premium"),
+    alsoHero: t("alsoHero"),
+  };
 
   return (
     <AgentShell wide>
       <div className="space-y-8">
         {/* Command band: fixed colours so the text stays legible in dark mode. */}
-        <header
-          className="relative overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
-          style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
-        >
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="min-w-0 max-w-2xl">
-              <h1 className="text-white">{t("title")}</h1>
-              <p className="mt-2 text-sm text-[#c8d6f2]">{t("meet")}</p>
-              <p className="mt-1 text-sm text-[#c8d6f2]">{t("intro")}</p>
-            </div>
-            <div className="flex flex-wrap gap-2 text-xs">
-              <Badge tone="success">{t("liveCount", { count: live })}</Badge>
-              {countryCast && country && <Badge tone="accent">{t("castCountry", { country })}</Badge>}
-              {quota && verified && (
-                <Badge tone="info">{t("quota", { remaining: quota.remaining, total: quota.monthly_allowance })}</Badge>
-              )}
-            </div>
+        <CommandHeader className="flex flex-wrap items-end justify-between gap-4">
+          <div className="min-w-0 max-w-2xl">
+            <h1>{t("title")}</h1>
+            <p className="command-muted mt-2 text-sm">{t("meet")}</p>
+            <p className="command-muted mt-1 text-sm">{t("intro")}</p>
           </div>
-        </header>
+          <div className="flex flex-wrap gap-2 text-xs">
+            <Badge tone="success">{t("liveCount", { count: live })}</Badge>
+            {countryCast && country && <Badge tone="accent">{t("castCountry", { country })}</Badge>}
+            {quota && verified && (
+              <Badge tone="info">{t("quota", { remaining: quota.remaining, total: quota.monthly_allowance })}</Badge>
+            )}
+          </div>
+        </CommandHeader>
 
         {!verified && (
           <p className="rounded-xl border border-crimson/30 bg-crimson-soft px-5 py-4 text-sm">
@@ -104,79 +145,9 @@ export default async function AiWorkforcePage() {
           </p>
         )}
 
-        {categories.map((cat) => (
-          <section key={cat}>
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">{t(`category.${cat}` as never)}</h2>
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {(byCategory.get(cat) ?? []).sort((a, b) => a.sort - b.sort).map((r) => {
-                const isLive = r.status === "live" && !!r.route;
-                const heroOpen = heroLinked && !!r.external_url;
-                const p = personaOf.get(r.key);
-                const skills = pickList(p?.skills).slice(0, 3);
-                const chipTone = isLive ? "success" : r.external_url ? "accent" : "neutral";
-                const card = (
-                  <>
-                    {/* Portrait ----------------------------------------------- */}
-                    <div className="relative aspect-[448/232] w-full overflow-hidden rounded-t-2xl bg-blue-soft">
-                      {p?.portrait_path ? (
-                        <Image
-                          src={p.portrait_path}
-                          alt={p.name}
-                          fill
-                          unoptimized
-                          sizes="(min-width: 1280px) 30vw, (min-width: 640px) 45vw, 100vw"
-                          className={`object-cover transition-transform duration-300 group-hover:scale-[1.03] ${isLive || heroOpen ? "" : "saturate-[.6]"}`}
-                        />
-                      ) : (
-                        <div className="grid h-full place-items-center text-4xl text-blue/40">✦</div>
-                      )}
-                      <Badge tone={chipTone} className="absolute right-3 top-3 shadow-card">
-                        {isLive ? t("status.live") : r.external_url ? t("status.hero") : t("status.planned")}
-                      </Badge>
-                      {r.tier === "premium" && (
-                        <span className="absolute left-3 top-3 rounded-full bg-warning-soft px-2.5 py-0.5 text-[11px] font-semibold text-warning shadow-card">{t("premium")}</span>
-                      )}
-                    </div>
+        <WorkforceGallery items={items} categories={categories} labels={labels} />
 
-                    {/* Words --------------------------------------------------- */}
-                    <div className="p-5">
-                      <div className="flex items-baseline justify-between gap-3">
-                        <h3 className="text-base font-semibold">{pick(r.name)}</h3>
-                        {p && <span className="shrink-0 rounded-full bg-indigo-soft px-2.5 py-0.5 text-sm font-bold text-indigo">✦ {p.name}</span>}
-                      </div>
-                      <p className="mt-1.5 text-sm leading-6 text-muted">{p ? pick(p.tagline) || pick(r.description) : pick(r.description)}</p>
-                      {skills.length > 0 && (
-                        <ul className="mt-3 flex flex-wrap gap-1.5">
-                          {skills.map((s) => (
-                            <li key={s} className="rounded-md border border-line bg-surface px-2 py-0.5 text-[11px] font-medium text-muted-strong">{s}</li>
-                          ))}
-                        </ul>
-                      )}
-                      <p className="mt-4 text-xs font-semibold">
-                        {isLive || heroOpen
-                          ? <span className="text-blue">{t("open")} {heroOpen ? "↗" : "→"}</span>
-                          : <span className="text-muted">{r.external_url ? t("heroHint") : t("comingSoon")}</span>}
-                      </p>
-                    </div>
-                  </>
-                );
-                const base = "group overflow-hidden rounded-2xl border bg-card shadow-card transition-colors duration-150";
-                return isLive ? (
-                  <div key={r.key} className="flex flex-col gap-1.5">
-                    <Link href={r.route!} className={`${base} border-line hover:border-blue`}>{card}</Link>
-                    {heroOpen && (
-                      <a href={r.external_url!} target="_blank" rel="noopener noreferrer" className="self-end text-xs font-semibold text-indigo hover:underline">{t("alsoHero")} ↗</a>
-                    )}
-                  </div>
-                ) : heroOpen ? (
-                  <a key={r.key} href={r.external_url!} target="_blank" rel="noopener noreferrer" className={`${base} border-line hover:border-indigo`}>{card}</a>
-                ) : (
-                  <div key={r.key} className={`${base} border-dashed border-line`}>{card}</div>
-                );
-              })}
-            </div>
-          </section>
-        ))}
+        <p className="text-xs text-muted">{t("statusNote")}</p>
       </div>
     </AgentShell>
   );

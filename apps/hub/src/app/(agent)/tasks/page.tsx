@@ -3,6 +3,7 @@ import { getTranslations, getFormatter } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/admin/panel";
 import { TaskSuggestions } from "@/components/tasks/task-suggestions";
@@ -146,15 +147,12 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
   return (
     <AgentShell wide>
       {/* Command band: fixed colours so the text stays legible in dark mode. */}
-      <header
-        className="mb-5 flex flex-wrap items-end justify-between gap-3 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
-        style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
-      >
+      <CommandHeader className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
           <p className="mt-1 text-sm text-[#c8d6f2]">{t("summary", { overdue: overdue.length, today: today.length, open: open.length })}</p>
         </div>
-      </header>
+      </CommandHeader>
 
       {notice && <p className="mb-4 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">{t(`notice.${notice}` as never)}</p>}
       {error && <p className="mb-4 rounded-lg bg-danger/10 px-4 py-3 text-sm font-medium text-danger">{t(`errors.${error}` as never)}</p>}

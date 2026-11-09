@@ -3320,7 +3320,14 @@
     },
     "meet": "Kenali rakan sekerja AI anda — setiap satu ada nama, wajah dan tiga kekuatan.",
     "castCountry": "Watak untuk {country}",
-    "alsoHero": "Juga di AG Hero"
+    "alsoHero": "Juga di AG Hero",
+    "search": "Cari rakan sekerja, kemahiran atau tugas",
+    "allCategories": "Semua",
+    "noResults": "Tiada rakan sekerja yang sepadan dengan carian.",
+    "close": "Tutup",
+    "detailStatus": "Status",
+    "detailSkills": "Bantuan dalam",
+    "statusNote": "Status menunjukkan apa yang tersedia untuk anda sekarang. Potret tidak menjadikan rakan sekerja aktif: hanya peranan bertanda Live membuka skrin yang berfungsi."
   },
   "tasks": {
     "title": "Tugas & lawatan",

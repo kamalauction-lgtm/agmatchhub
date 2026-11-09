@@ -3320,7 +3320,14 @@
     },
     "meet": "Meet your AI colleagues — each has a name, a face and three strengths.",
     "castCountry": "Cast for {country}",
-    "alsoHero": "Also in AG Hero"
+    "alsoHero": "Also in AG Hero",
+    "search": "Search colleagues, skills or tasks",
+    "allCategories": "All",
+    "noResults": "No colleague matches that search.",
+    "close": "Close",
+    "detailStatus": "Status",
+    "detailSkills": "What they help with",
+    "statusNote": "Status shows what is open to you now. A portrait does not make a colleague live: only roles marked Live open a working screen."
   },
   "tasks": {
     "title": "Tasks & viewings",
