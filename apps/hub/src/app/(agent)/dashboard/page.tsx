@@ -11,6 +11,7 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { CommandHeader } from "@/components/ui/command-header";
 import { AnnouncementFeed } from "@/components/announcements/announcement-feed";
 import { Panel } from "@/components/admin/panel";
+import { AstraBriefPanel } from "@/components/dashboard/astra-brief-panel";
 import { BarChart, type Series } from "@/components/admin/charts";
 import { getDashboard } from "@/lib/dashboard/brief";
 import { planFor } from "@/config/plans";
@@ -291,6 +292,29 @@ export default async function DashboardPage({
               />
             </div>
 
+            {/* Astra: the AI Manager's brief, under the numbers it is about -- */}
+            <AstraBriefPanel
+              manager={manager ? { name: manager.name, portrait: manager.portrait_path ?? null, avatar: manager.avatar_path ?? null } : null}
+              actions={brief.actions.map((a) => ({ key: a.key, label: t(`brief.actions.${a.key}`, { count: a.count }), href: a.href, tone: a.tone }))}
+              allClear={brief.allClear}
+              aiParagraph={aiBrief?.paragraph ?? null}
+              aiModel={aiBrief?.model ?? null}
+              sourceCaption={aiBrief?.paragraph
+                ? t("brief.aiCaption", { model: aiBrief.model ?? "AI" })
+                : t(`brief.rulesOnly.${aiBrief?.reason ?? "allClear"}` as never)}
+              quota={aiQuota ? t("brief.quota", { remaining: aiQuota.remaining, total: aiQuota.monthly_allowance }) : null}
+              labels={{
+                title: t("brief.title"),
+                role: t("brief.aiEyebrow"),
+                priorities: t("brief.priorities"),
+                allClear: t("brief.allClear"),
+                sourceAi: t("brief.sourceAi"),
+                sourceRules: t("brief.sourceRules"),
+                regenerate: t("brief.regenerate"),
+              }}
+              regenerate={regenerateBrief}
+            />
+
             {/* Performance + plan ---------------------------------------- */}
             <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
               <Panel title={t("perf.title", { count: days })} hint={t("perf.hint")}>
@@ -377,82 +401,8 @@ export default async function DashboardPage({
               </Panel>
             </div>
 
-            {/* Brief + growth -------------------------------------------- */}
-            <div className="grid gap-5 lg:grid-cols-2">
-              <Panel title={t("brief.title")} bodyClassName="p-0 sm:p-0">
-                {/* The AI Manager's sentence, when there is one. The list
-                    below is unchanged either way — the paragraph explains it,
-                    never replaces it. */}
-                {aiBrief?.paragraph && (
-                  <div className="border-b border-line bg-indigo-soft/40 px-5 py-4">
-                    <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-indigo">
-                      {manager?.avatar_path && <Image src={manager.avatar_path} alt="" width={22} height={22} unoptimized className="h-[22px] w-[22px] rounded-full object-cover" />}
-                      ✦ {manager ? `${manager.name} · ` : ""}{t("brief.aiEyebrow")}
-                    </p>
-                    <p className="mt-1 text-sm leading-6">{aiBrief.paragraph}</p>
-                  </div>
-                )}
-                {brief.allClear ? (
-                  <p className="px-5 py-10 text-center text-sm font-medium text-success">
-                    {t("brief.allClear")}
-                  </p>
-                ) : (
-                  <ol className="divide-y divide-line">
-                    {brief.actions.map((a, i) => (
-                      <li key={a.key}>
-                        <Link
-                          href={a.href}
-                          className="flex items-center gap-3 px-5 py-3 transition-colors duration-150 hover:bg-surface"
-                        >
-                          <span
-                            aria-hidden
-                            className={`grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-bold ${
-                              a.tone === "danger"
-                                ? "bg-danger-soft text-danger"
-                                : a.tone === "warning"
-                                  ? "bg-warning-soft text-warning"
-                                  : "bg-surface text-muted"
-                            }`}
-                          >
-                            {i + 1}
-                          </span>
-                          <span className="min-w-0 flex-1 text-sm font-medium">
-                            {t(`brief.actions.${a.key}`, { count: a.count })}
-                          </span>
-                          <span aria-hidden className="shrink-0 text-muted">→</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
-                )}
-                {/* Where the words came from, what is left this month, and
-                    the one button that spends a task on purpose. */}
-                <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-2.5 text-xs text-muted">
-                  <span className="min-w-0">
-                    {aiBrief?.paragraph
-                      ? t("brief.aiCaption", { model: aiBrief.model ?? "AI" })
-                      : t(`brief.rulesOnly.${aiBrief?.reason ?? "allClear"}` as never)}
-                  </span>
-                  <span className="flex items-center gap-3">
-                    {aiQuota && (
-                      <span className="tabular-nums">
-                        {t("brief.quota", { remaining: aiQuota.remaining, total: aiQuota.monthly_allowance })}
-                      </span>
-                    )}
-                    {!brief.allClear && (
-                      <form action={regenerateBrief}>
-                        <button
-                          type="submit"
-                          className="min-h-7 cursor-pointer rounded-md border border-line px-2.5 font-semibold text-muted transition-colors duration-150 hover:border-blue hover:text-blue"
-                        >
-                          {t("brief.regenerate")}
-                        </button>
-                      </form>
-                    )}
-                  </span>
-                </footer>
-              </Panel>
-
+            {/* Growth --------------------------------------------------- */}
+            <div className="grid gap-5">
               <Panel
                 title={t("growth.title")}
                 action={

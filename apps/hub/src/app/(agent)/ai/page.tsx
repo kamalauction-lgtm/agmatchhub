@@ -76,7 +76,6 @@ export default async function AiWorkforcePage() {
   const byCategory = new Map<string, Role[]>();
   for (const r of roles) byCategory.set(r.category, [...(byCategory.get(r.category) ?? []), r]);
   const categoryKeys = [...CATEGORY_ORDER.filter((c) => byCategory.has(c)), ...[...byCategory.keys()].filter((c) => !CATEGORY_ORDER.includes(c))];
-  const live = roles.filter((r) => r.status === "live").length;
 
   // Every fact the gallery shows, decided here from verified backend state.
   const items: WorkerItem[] = categoryKeys.flatMap((cat) =>

@@ -136,7 +136,10 @@
         "no_provider": "Brief berbasis aturan — belum ada penyedia AI yang terhubung.",
         "failed": "Brief berbasis aturan — AI tidak menjawab kali ini."
       },
-      "by": "{name}, Manajer AI Anda"
+      "by": "{name}, Manajer AI Anda",
+      "priorities": "Prioritas Anda hari ini",
+      "sourceAi": "Model AI",
+      "sourceRules": "Berbasis aturan"
     },
     "pipeline": {
       "label": "Alur listing",

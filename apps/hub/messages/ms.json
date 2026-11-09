@@ -136,7 +136,10 @@
         "no_provider": "Taklimat peraturan sahaja — belum ada pembekal AI disambungkan.",
         "failed": "Taklimat peraturan sahaja — AI tidak menjawab kali ini."
       },
-      "by": "{name}, Pengurus AI anda"
+      "by": "{name}, Pengurus AI anda",
+      "priorities": "Keutamaan anda hari ini",
+      "sourceAi": "Model AI",
+      "sourceRules": "Berasaskan peraturan"
     },
     "pipeline": {
       "label": "Saluran iklan",

@@ -136,7 +136,10 @@
         "no_provider": "Rules-only brief — no AI provider is connected yet.",
         "failed": "Rules-only brief — the AI did not answer this time."
       },
-      "by": "{name}, your AI Manager"
+      "by": "{name}, your AI Manager",
+      "priorities": "Your priorities today",
+      "sourceAi": "AI model",
+      "sourceRules": "Rule-based"
     },
     "pipeline": {
       "label": "Listing pipeline",
