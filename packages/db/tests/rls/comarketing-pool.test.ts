@@ -87,11 +87,23 @@ describe.skipIf(!hasPoolEnv)("co-marketing pool (§4, module design §6.2)", () 
   });
 
   it("a browsing agent cannot read other agents' listing rows directly (00099)", async () => {
-    // Pool browse on the base table was removed. The only rows a marketing
-    // agent may read here are their own; no other agent's listing comes back.
+    // Pool browse on the base table was removed. A marketing agent may read
+    // their own listings, and listings they hold a live engagement on (00041).
+    // Any other agent's listing must not come back.
+    const { data: held } = await ma
+      .from("comarketing_engagements")
+      .select("offer_id")
+      .eq("marketing_agent_id", maId)
+      .in("status", ["pending", "active", "paused"]);
+    const heldOfferIds = (held ?? []).map((e) => e.offer_id as string);
+    const { data: heldOffers } = heldOfferIds.length
+      ? await ma.from("comarketing_offers").select("listing_id").in("id", heldOfferIds)
+      : { data: [] as { listing_id: string }[] };
+    const engagedListingIds = new Set((heldOffers ?? []).map((o) => o.listing_id as string));
+
     const { data } = await ma.from("listings").select("id, created_by").limit(50);
-    for (const r of (data ?? []) as unknown as { created_by: string }[]) {
-      expect(r.created_by).toBe(maId);
+    for (const r of (data ?? []) as unknown as { id: string; created_by: string }[]) {
+      expect(r.created_by === maId || engagedListingIds.has(r.id)).toBe(true);
     }
   });
 
