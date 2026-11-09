@@ -117,6 +117,24 @@ describe.skipIf(!hasPoolEnv)("co-marketing pool (§4, module design §6.2)", () 
     expect(data ?? []).toHaveLength(0);
   });
 
+  it("a browsing agent reads only offers they are engaged on, directly (00102)", async () => {
+    // The table-level pool read was removed. Only engaged offers come back.
+    const { data: held } = await ma
+      .from("comarketing_engagements")
+      .select("offer_id")
+      .eq("marketing_agent_id", maId)
+      .in("status", ["pending", "active", "paused"]);
+    const heldIds = new Set((held ?? []).map((e) => e.offer_id as string));
+    const { data } = await ma
+      .from("comarketing_offers")
+      .select("id, listing_agent_id")
+      .limit(200);
+    for (const r of (data ?? []) as { id: string; listing_agent_id: string }[]) {
+      // The agent's own offers (as listing agent) are theirs by the owner policy.
+      expect(r.listing_agent_id === maId || heldIds.has(r.id)).toBe(true);
+    }
+  });
+
   it("a marketing agent never sees the listing agent's confidences", async () => {
     // Not "zero rows": an agent who has published offers of their own owns
     // those private rows by right. What must never appear is a private row
