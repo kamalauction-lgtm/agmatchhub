@@ -7,6 +7,7 @@ import {
   getProvinceFacets,
   getBanners,
 } from "@/lib/listings";
+import { withBuildFallback } from "@/lib/build-fallback";
 import { routing } from "@/i18n/routing";
 import { market } from "@/config/market";
 import { MarketHome } from "@/markets";
@@ -34,6 +35,18 @@ import { MarketHome } from "@/markets";
 // catalogue that changes a few times an hour.
 export const revalidate = 300;
 
+type HomeData = [
+  Awaited<ReturnType<typeof searchListings>>,
+  Awaited<ReturnType<typeof getPropertyTypeFacets>>,
+  Awaited<ReturnType<typeof getLocationFacets>>,
+  Awaited<ReturnType<typeof getPromotedListings>>,
+  Awaited<ReturnType<typeof getProvinceFacets>>,
+  Awaited<ReturnType<typeof getBanners>>,
+  Awaited<ReturnType<typeof getBanners>>,
+];
+
+const EMPTY_HOME: HomeData = [{ listings: [], total: 0, page: 1, pageCount: 1 }, [], [], [], [], [], []];
+
 export default async function HomePage({
   params,
 }: {
@@ -51,6 +64,9 @@ export default async function HomePage({
 
   // One round of parallel reads. Every one is a bounded query against a
   // public_* view, scoped to this market's country; none can reach a base table.
+  // A failure throws — at runtime always, and at build time unless this is a
+  // CI placeholder build (see lib/build-fallback.ts). A release build whose
+  // database is unreachable therefore fails instead of shipping an empty page.
   const [
     { listings, total },
     typeFacets,
@@ -59,15 +75,19 @@ export default async function HomePage({
     provinces,
     topBanners,
     middleBanners,
-  ] = await Promise.all([
-    searchListings({ sort: "newest", page: 1 }),
-    getPropertyTypeFacets(),
-    getLocationFacets(undefined, 12),
-    getPromotedListings(4),
-    getProvinceFacets(),
-    getBanners("home_top"),
-    getBanners("home_middle"),
-  ]);
+  ] = await withBuildFallback(
+    Promise.all([
+      searchListings({ sort: "newest", page: 1 }),
+      getPropertyTypeFacets(),
+      getLocationFacets(undefined, 12),
+      getPromotedListings(4),
+      getProvinceFacets(),
+      getBanners("home_top"),
+      getBanners("home_middle"),
+    ]) as Promise<HomeData>,
+    EMPTY_HOME,
+    { NEXT_PHASE: process.env.NEXT_PHASE, WWW_CI_PLACEHOLDER_BUILD: process.env.WWW_CI_PLACEHOLDER_BUILD },
+  );
 
   return (
     <MarketHome

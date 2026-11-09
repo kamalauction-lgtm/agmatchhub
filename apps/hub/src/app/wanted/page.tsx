@@ -3,7 +3,10 @@ import Image from "next/image";
 import QRCode from "qrcode";
 import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
-import { BrandLockup, BrandWordmark } from "@/components/layout/brand-lockup";
+import { BrandLockup } from "@/components/layout/brand-lockup";
+import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/empty-state";
+import { buttonClass } from "@/components/ui/button";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { brand } from "@/config/brand";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
@@ -17,7 +20,7 @@ import { LanguageSwitcher } from "@/components/layout/language-switcher";
 const OPEN_STATUSES = ["link_active", "receiving_submissions", "reviewing_submissions"];
 
 const inputCls =
-  "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
+  "min-h-11 w-full rounded-xl border border-line-strong bg-background px-3 py-2.5 text-sm text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
 
 export default async function WantedBoardPage({
   searchParams,
@@ -90,19 +93,18 @@ export default async function WantedBoardPage({
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <Link href="/login"
-            className="rounded-lg border border-line px-4 py-2 text-sm font-medium hover:border-crimson hover:text-crimson">
+            className={buttonClass("secondary", "min-h-10")}>
             {t("agentSignIn")}
           </Link>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="bg-[#17171a] px-4 pt-12 pb-24 text-center">
-        <div className="mb-4 flex justify-center"><BrandWordmark height={26} /></div>
-        <h1 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+      <section className="command-band px-4 pt-12 pb-24 text-center">
+        <h1 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
           {t("heroTitle")}
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">
+        <p className="command-muted mx-auto mt-3 max-w-xl text-sm leading-6">
           {t(partnerIdentityPublic ? "heroBody" : "heroBodyNeutral")}
         </p>
       </section>
@@ -110,7 +112,7 @@ export default async function WantedBoardPage({
       {/* Filter bar overlapping the hero */}
       <div className="mx-auto -mt-14 w-full max-w-6xl px-4 sm:px-6">
         <form action="/wanted"
-          className="grid gap-3 rounded-2xl border border-line bg-background p-4 shadow-xl sm:grid-cols-2 lg:grid-cols-6">
+          className="grid gap-3 rounded-2xl border border-line bg-card p-4 shadow-raised sm:grid-cols-2 lg:grid-cols-6">
           <input name="q" defaultValue={q} placeholder={t("searchHint")}
             className={`${inputCls} lg:col-span-2`} />
           <select name="country" defaultValue={country} className={inputCls}>
@@ -133,8 +135,7 @@ export default async function WantedBoardPage({
           <div className="flex gap-2">
             <input name="max" defaultValue={max} type="number" min="0"
               placeholder={t("maxBudget")} className={inputCls} />
-            <button type="submit"
-              className="rounded-lg bg-crimson px-5 text-sm font-semibold whitespace-nowrap text-white hover:bg-crimson-strong">
+            <button type="submit" className={buttonClass("primary", "whitespace-nowrap px-5")}>
               {t("search")}
             </button>
           </div>
@@ -150,11 +151,7 @@ export default async function WantedBoardPage({
         </div>
 
         {!cards.length ? (
-          <div className="rounded-2xl border border-line bg-surface p-16 text-center">
-            <p className="mb-2 text-3xl">🔍</p>
-            <p className="font-medium">{t("emptyTitle")}</p>
-            <p className="mt-1 text-sm text-muted">{t("emptyBody")}</p>
-          </div>
+          <EmptyState icon="🔍" title={t("emptyTitle")} className="py-16">{t("emptyBody")}</EmptyState>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {cards.map(({ r, token, qr }) => {
@@ -163,14 +160,12 @@ export default async function WantedBoardPage({
                 : (money(r.currency, r.budget_max) ?? money(r.currency, r.budget_min));
               return (
                 <article key={r.id}
-                  className="group flex flex-col rounded-2xl border border-line bg-background p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                  className="group flex min-w-0 flex-col rounded-2xl border border-line bg-card p-5 shadow-card transition-colors duration-150 hover:border-blue">
                   <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
-                    <span className="rounded-full bg-crimson px-2.5 py-1 font-bold text-white uppercase">
+                    <Badge tone="danger" className="uppercase">
                       {t("wantedBadge")} · {tr(`transaction.${r.transaction_type}`)}
-                    </span>
-                    <span className="rounded-full bg-surface px-2.5 py-1 font-medium">
-                      {tr(`form.categories.${r.property_category}`)}
-                    </span>
+                    </Badge>
+                    <Badge tone="neutral">{tr(`form.categories.${r.property_category}`)}</Badge>
                     <span className="ml-auto font-mono text-[10px] text-muted">
                       {r.human_readable_id}
                     </span>
@@ -225,15 +220,15 @@ export default async function WantedBoardPage({
 
                   <div className="mt-auto flex items-center gap-2">
                     <Link href={`/r/${token}`}
-                      className="flex-1 rounded-lg bg-crimson px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-crimson-strong">
+                      className={buttonClass("primary", "flex-1")}>
                       {t("offerCta")}
                     </Link>
                     <details className="relative">
-                      <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-line text-lg select-none hover:border-crimson [&::-webkit-details-marker]:hidden"
+                      <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-line-strong text-lg select-none hover:border-blue [&::-webkit-details-marker]:hidden"
                         title={t("qrHint")}>
                         ▦
                       </summary>
-                      <div className="absolute right-0 bottom-12 z-10 rounded-xl border border-line bg-white p-3 shadow-xl">
+                      <div className="absolute right-0 bottom-12 z-10 rounded-xl border border-line bg-white p-3 shadow-raised">
                         <Image src={qr} alt="QR" width={150} height={150} unoptimized />
                         <p className="mt-1 max-w-[150px] text-center text-[10px] text-muted">{t("qrHint")}</p>
                       </div>

@@ -3,6 +3,9 @@ import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
+import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/empty-state";
 import { SharePanel } from "@/components/listings/share-panel";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { shareCaption } from "@/lib/ai/listing-advisor";
@@ -200,10 +203,11 @@ export default async function MyListingsPage({
 
   return (
     <AgentShell wide>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      {/* Command band: fixed colours so the text stays legible in dark mode. */}
+      <CommandHeader className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted">
+          <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+          <p className="mt-1 text-sm text-[#c8d6f2]">
             {t("quota", { active, max: activeLimit })}
             {borrowedRows.length > 0 && ` · ${t("borrowedCount", { count: borrowedRows.length })}`}
           </p>
@@ -213,7 +217,7 @@ export default async function MyListingsPage({
         <div className="flex flex-wrap gap-2">
           <Link
             href="/listings/import"
-            className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+            className="rounded-lg border border-white/30 px-4 py-2.5 text-sm font-semibold text-white hover:border-white"
           >
             {t("importCta")}
           </Link>
@@ -224,7 +228,7 @@ export default async function MyListingsPage({
             {t("new")}
           </Link>
         </div>
-      </div>
+      </CommandHeader>
 
       {notice && (
         <p
@@ -246,9 +250,7 @@ export default async function MyListingsPage({
       </h2>
 
       {!ownRows.length ? (
-        <p className="rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
-          {t("empty")}
-        </p>
+        <EmptyState title={t("empty")} />
       ) : (
         <div className="space-y-4">
           {ownRows.map((l) => {
@@ -266,22 +268,14 @@ export default async function MyListingsPage({
             });
 
             return (
-              <article key={l.id} className="rounded-xl border border-line p-4 sm:p-5">
+              <article key={l.id} className="rounded-2xl border border-line bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue sm:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono text-xs text-muted">{l.human_readable_id}</span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                          l.status === "published"
-                            ? "bg-success/10 text-success"
-                            : l.status === "rejected"
-                              ? "bg-danger/10 text-danger"
-                              : "bg-surface"
-                        }`}
-                      >
+                      <Badge tone={l.status === "published" ? "success" : l.status === "rejected" ? "danger" : "neutral"}>
                         {ts(l.status as never)}
-                      </span>
+                      </Badge>
                       {boostEnd && (
                         <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-semibold text-warning">
                           ⚡ {t("boost.activeUntil", {
@@ -395,7 +389,7 @@ export default async function MyListingsPage({
             const listing = e.comarketing_offers?.listings;
             const share = e.accepted_terms?.marketing_agent_share_pct;
             return (
-              <article key={e.id} className="rounded-xl border border-line p-4">
+              <article key={e.id} className="rounded-2xl border border-line bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue">
                 <div className="flex items-start justify-between gap-2">
                   <span className="rounded-full bg-crimson-soft px-2 py-0.5 text-xs font-semibold text-crimson">
                     {t("borrowedBadge")}

@@ -3,6 +3,8 @@ import { getTranslations, getFormatter } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { CommandHeader } from "@/components/ui/command-header";
+import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/admin/panel";
 import { TaskSuggestions } from "@/components/tasks/task-suggestions";
 import { createTask, createTasksBulk, setTaskStatus, proposeLeadViewing, setLeadViewingStatus } from "./actions";
@@ -144,12 +146,13 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
 
   return (
     <AgentShell wide>
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+      {/* Command band: fixed colours so the text stays legible in dark mode. */}
+      <CommandHeader className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted">{t("summary", { overdue: overdue.length, today: today.length, open: open.length })}</p>
+          <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+          <p className="mt-1 text-sm text-[#c8d6f2]">{t("summary", { overdue: overdue.length, today: today.length, open: open.length })}</p>
         </div>
-      </div>
+      </CommandHeader>
 
       {notice && <p className="mb-4 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">{t(`notice.${notice}` as never)}</p>}
       {error && <p className="mb-4 rounded-lg bg-danger/10 px-4 py-3 text-sm font-medium text-danger">{t(`errors.${error}` as never)}</p>}
@@ -214,9 +217,9 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
                   <span className="font-mono text-xs text-muted">{v.human_readable_id}</span>
                   <span className="font-medium">{v.proposed_date}{v.proposed_time ? ` · ${v.proposed_time}` : ""}</span>
                   <span className="text-muted">{t(v.viewing_type as never)} · {v.lead_id ? (c?.full_name ?? "—") : t("matchhubViewing")}{l ? ` · ${l.title}` : ""}</span>
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${v.status === "confirmed" ? "bg-success/10 text-success" : v.status === "cancelled" ? "bg-surface text-muted" : "bg-warning/10 text-warning"}`}>
+                  <Badge tone={v.status === "confirmed" ? "success" : v.status === "cancelled" ? "neutral" : "warning"}>
                     {t(`viewingStatus.${v.status}` as never)}
-                  </span>
+                  </Badge>
                   {v.lead_id && v.status === "confirmed" && (
                     <span className="ml-auto flex gap-2">
                       {(["completed", "cancelled"] as const).map((s) => (

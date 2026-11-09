@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PropertiGuru 2.0 — Futuristic storyboards (design only)</title>
+<style>
+  :root {
+    --ink: #0b1b33;
+    --ink-2: #1c2f4f;
+    --blue: #2f6bff;
+    --blue-soft: #e8efff;
+    --violet: #6f55e6;
+    --violet-soft: #efeaff;
+    --gold: #a9823f;
+    --ice: #f4f7fb;
+    --line: #dde5f0;
+    --text: #0f1d33;
+    --muted: #5b6b84;
+    --ok: #0f7a4a;
+    --warn: #8a5a00;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9eef6; color: var(--text); font: 15px/1.45 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 32px 24px 80px; }
+  h1 { font-size: 28px; margin: 0 0 6px; }
+  h2 { font-size: 22px; margin: 40px 0 8px; }
+  h3 { font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+  .notice { background: #fff7e6; border: 1px solid #f1d59b; color: #5c3d00; padding: 12px 16px; border-radius: 12px; margin: 16px 0 24px; }
+  .grid-compare { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 1100px) { .grid-compare.two { grid-template-columns: 1fr 1fr; } }
+  .cap { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  .shot { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .shot img { display: block; width: 100%; height: auto; }
+
+  /* Desktop frame (1440) */
+  .desk { width: 100%; background: var(--ice); border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; display: grid; grid-template-columns: 232px 1fr; min-height: 760px; }
+  .side { background: #fff; border-right: 1px solid var(--line); padding: 18px 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; margin-bottom: 20px; }
+  .mark { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--blue), var(--violet)); }
+  .nav { display: grid; gap: 4px; }
+  .nav div { padding: 9px 10px; border-radius: 10px; color: var(--muted); font-size: 14px; }
+  .nav .on { background: var(--blue-soft); color: var(--blue); font-weight: 600; }
+  .nav .grp { font-size: 11px; letter-spacing: .08em; color: #8a97ab; padding-top: 14px; }
+  .main { padding: 22px 26px; display: grid; gap: 18px; align-content: start; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .hero-ai { background: linear-gradient(120deg, var(--ink) 0%, var(--ink-2) 60%, #243f6e 100%); color: #eaf1ff; border-radius: 20px; padding: 22px 24px; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 180px; gap: 16px; align-items: center; }
+  .hero-ai .eyebrow { color: #9fb8ff; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+  .hero-ai h4 { margin: 4px 0 8px; font-size: 22px; }
+  .hero-ai p { margin: 0; color: #c8d6f2; }
+  .hero-ai img { width: 180px; height: 180px; object-fit: cover; object-position: top; border-radius: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); padding: 4px 10px; border-radius: 999px; font-size: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-weight: 600; font-size: 14px; color: var(--text); }
+  .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .kpi .v { font-size: 26px; font-weight: 700; margin-top: 6px; }
+  .kpi .l { color: var(--muted); font-size: 13px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; }
+  .t-live { background: #dff7ea; color: var(--ok); }
+  .t-plan { background: var(--violet-soft); color: var(--violet); }
+  .t-restr { background: #fff1d6; color: var(--warn); }
+  .t-sample { background: #eef1f6; color: #5b6b84; }
+  .two-col { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; }
+  .list { display: grid; gap: 10px; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .row:last-child { border-bottom: 0; }
+  .roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .role img { width: 100%; height: 150px; object-fit: cover; object-position: top; border-radius: 12px; }
+  .role h5 { margin: 10px 0 2px; font-size: 16px; }
+  .role p { margin: 0; color: var(--muted); font-size: 13px; }
+  .listing { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .photo { height: 140px; border-radius: 12px; background: linear-gradient(135deg, #bcd0f3, #e6ecf9 55%, #d6c9ff); position: relative; }
+  .photo .tg { position: absolute; left: 10px; top: 10px; }
+  .legend { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 14px; }
+
+  /* Mobile frame (375) */
+  .phone { width: 375px; max-width: 100%; background: var(--ice); border-radius: 26px; border: 10px solid #0b1b33; overflow: hidden; margin: 0 auto; }
+  .phone .screen { padding: 14px; display: grid; gap: 12px; min-height: 700px; }
+  .phone .hero-ai { grid-template-columns: 1fr; padding: 16px; }
+  .phone .hero-ai img { width: 100%; height: 160px; }
+  .phone .kpis { grid-template-columns: 1fr 1fr; }
+  .phone .roles { grid-template-columns: 1fr 1fr; }
+  .phone .listing { grid-template-columns: 1fr; }
+  .fab { position: absolute; right: 14px; bottom: 18px; }
+  .sticky-bottom { background: #fff; border-top: 1px solid var(--line); padding: 8px 14px; display: flex; justify-content: space-around; font-size: 11px; color: var(--muted); }
+  .sticky-bottom .on { color: var(--blue); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>PropertiGuru 2.0 — Futuristic storyboards</h1>
+  <div class="cap">Premium Futuristic AI Command Centre · Luxury PropTech finish · Dashboard, AI Workforce, My Listings · desktop 1440 and mobile 375</div>
+
+  <div class="notice">
+    <strong>Design storyboards, not shipped pages.</strong> Nothing here is implemented in the application.
+    Figures, listing photos and titles are <strong>illustrative sample data</strong>, labelled <span class="tag t-sample">SAMPLE</span>.
+    AI role statuses reflect what the database migrations declare, not a tested end-to-end result.
+    Character portraits are the existing files in <code>apps/hub/public/ai/characters/</code>, reused without change.
+  </div>
+
+  <!-- ============================ DASHBOARD ============================ -->
+  <h2 id="dashboard">1 · Dashboard / AI Command Centre</h2>
+  <div class="grid-compare two">
+    <div>
+      <h3>Current — staging, 1440 px (captured 8 Nov)</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/staging-dashboard-1440.png" alt="Current staging dashboard, desktop"></div>
+      <div class="cap">Current build. Generic card layout, no hero, no AI panel.</div>
+    </div>
+    <div>
+      <h3>Proposed — desktop 1440 px</h3>
+      <div class="desk">
+        <aside class="side">
+          <div class="brand"><div class="mark"></div>Agent Hub</div>
+          <div class="nav">
+            <div class="on">Command centre</div>
+            <div>Leads</div><div>Tasks</div><div>My listings</div><div>Content studio</div>
+            <div class="grp">AI WORKFORCE</div><div>AI Workforce</div><div>Training</div>
+            <div class="grp">COLLABORATION</div><div>Co-marketing</div><div>Client requirements</div>
+          </div>
+        </aside>
+        <section class="main">
+          <div class="top">
+            <div><div style="font-size:13px;color:var(--muted)">Good morning, Kamal</div><div style="font-size:22px;font-weight:700">Your command centre</div></div>
+            <div style="display:flex;gap:10px"><span class="btn">Notifications</span><span class="btn primary">New listing</span></div>
+          </div>
+          <div class="hero-ai">
+            <div>
+              <div class="eyebrow">Astra · AI Manager · today's brief</div>
+              <h4>Three things need you before noon.</h4>
+              <p>Two enquiries are waiting over 6 hours. One listing has no photos. Your Monday follow-up is due.</p>
+              <div class="chips"><span class="chip">Reply to 2 enquiries</span><span class="chip">Add photos</span><span class="chip">Open follow-ups</span></div>
+            </div>
+            <img src="../../../apps/hub/public/ai/characters/ai_manager.webp" alt="Astra, AI Manager">
+          </div>
+          <div class="kpis">
+            <div class="card kpi"><div class="l">Active listings</div><div class="v">30<span style="font-size:14px;color:var(--muted)"> / 300</span></div><span class="tag t-sample">SAMPLE</span></div>
+            <div class="card kpi"><div class="l">Enquiries, 30 days</div><div class="v">12</div><span class="tag t-sample">SAMPLE</span></div>
+            <div class="card kpi"><div class="l">Overdue replies</div><div class="v">2</div><span class="tag t-sample">SAMPLE</span></div>
+            <div class="card kpi"><div class="l">AI tasks left this month</div><div class="v">500</div><span class="tag t-sample">SAMPLE</span></div>
+          </div>
+          <div class="two-col">
+            <div class="card">
+              <h3>Priority tasks</h3>
+              <div class="list">
+                <div class="row"><span>Reply to Siti (WhatsApp)</span><span class="tag t-live">Due 11:00</span></div>
+                <div class="row"><span>Add photos to Pondok Indah listing</span><span class="tag t-restr">Needs action</span></div>
+                <div class="row"><span>Follow up with owner, Cilandak</span><span class="tag t-plan">Tomorrow</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Recent listings</h3>
+              <div class="list">
+                <div class="row"><span>Rumah 4 kamar, Cilandak Barat</span><span class="tag t-live">Published</span></div>
+                <div class="row"><span>Apartemen 2 kamar, Kemang</span><span class="tag t-plan">Draft</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="cap">Proposed. Hero AI panel reads from the real daily brief; empty and unavailable states are designed in.</div>
+    </div>
+  </div>
+
+  <div class="grid-compare two" style="margin-top:24px">
+    <div>
+      <h3>Current — staging, 375 px (captured 8 Nov)</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/staging-dashboard-375.png" alt="Current staging dashboard, mobile"></div>
+    </div>
+    <div>
+      <h3>Proposed — mobile 375 px</h3>
+      <div class="phone"><div class="screen">
+        <div class="top"><div style="font-weight:700">Command centre</div><span class="btn" style="min-height:36px;padding:0 10px">EN</span></div>
+        <div class="hero-ai">
+          <div>
+            <div class="eyebrow">Astra · today</div>
+            <h4 style="font-size:18px">Three things need you before noon.</h4>
+            <p style="font-size:13px">Two enquiries waiting over 6 hours. One listing has no photos.</p>
+          </div>
+          <img src="../../../apps/hub/public/ai/characters/ai_manager.webp" alt="Astra">
+        </div>
+        <div class="kpis">
+          <div class="card kpi"><div class="l">Listings</div><div class="v">30</div><span class="tag t-sample">SAMPLE</span></div>
+          <div class="card kpi"><div class="l">Enquiries</div><div class="v">12</div><span class="tag t-sample">SAMPLE</span></div>
+        </div>
+        <div class="card"><h3>Priority</h3><div class="list"><div class="row"><span>Reply to Siti</span><span class="tag t-live">11:00</span></div><div class="row"><span>Add photos</span><span class="tag t-restr">Action</span></div></div></div>
+        <div class="sticky-bottom"><span class="on">Home</span><span>Leads</span><span>Listings</span><span>Astra</span><span>More</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ============================ AI WORKFORCE ============================ -->
+  <h2 id="workforce">2 · AI Workforce — signature experience</h2>
+  <div class="grid-compare two">
+    <div>
+      <h3>Current — staging, 1440 px (captured 9 Nov)</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/audit-staging-ai-workforce.png" alt="Current AI Workforce on staging"></div>
+      <div class="cap">Current build shows "36 live" with portraits, category groups and a token-quota badge.</div>
+    </div>
+    <div>
+      <h3>Proposed — desktop 1440 px</h3>
+      <div class="desk">
+        <aside class="side">
+          <div class="brand"><div class="mark"></div>Agent Hub</div>
+          <div class="nav">
+            <div>Command centre</div><div>Leads</div><div>Tasks</div><div>My listings</div><div>Content studio</div>
+            <div class="on">AI Workforce</div><div>Training</div>
+          </div>
+        </aside>
+        <section class="main">
+          <div class="top">
+            <div><div style="font-size:22px;font-weight:700">AI Workforce</div><div style="color:var(--muted);font-size:14px">Named colleagues. Each one shows its real status before you open it.</div></div>
+            <span class="btn">Usage · 500 tasks left</span>
+          </div>
+          <div class="legend">
+            <span class="tag t-live">Live · route open</span><span class="tag t-plan">Planned</span><span class="tag t-restr">Restricted by plan</span><span class="tag t-sample">Unavailable (explained)</span>
+          </div>
+          <div class="roles">
+            <div class="card role"><img src="../../../apps/hub/public/ai/characters/ai_manager.webp" alt="Astra, AI Manager"><h5>Astra · AI Manager</h5><p>Daily brief and priorities from your real data.</p><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-live">Live</span><span style="color:var(--blue);font-weight:600;font-size:14px">Open →</span></div></div>
+            <div class="card role"><img src="../../../apps/hub/public/ai/characters/owner_report_writer.webp" alt="Owner Report Writer"><h5>Owner Report Writer</h5><p>Plain-language owner updates from listing activity.</p><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-live">Live</span><span style="color:var(--blue);font-weight:600;font-size:14px">Open →</span></div></div>
+            <div class="card role"><img src="../../../apps/hub/public/ai/characters/document_summariser.webp" alt="Document Summariser"><h5>Document Summariser</h5><p>Key points, risks and next steps from documents you upload.</p><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-live">Live</span><span style="color:var(--blue);font-weight:600;font-size:14px">Open →</span></div></div>
+            <div class="card role"><img src="../../../apps/hub/public/ai/characters/lead_qualifier.webp" alt="Lead Qualifier"><h5>Lead Qualifier</h5><p>Ranks enquiries by how ready the buyer is.</p><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-live">Live</span><span style="color:var(--blue);font-weight:600;font-size:14px">Open →</span></div></div>
+            <div class="card role"><img src="../../../apps/hub/public/ai/characters/objection_coach.webp" alt="Objection Coach"><h5>Objection Coach</h5><p>Practice replies to common buyer objections.</p><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-live">Live</span><span style="color:var(--blue);font-weight:600;font-size:14px">Open →</span></div></div>
+            <div class="card role"><img src="../../../apps/hub/public/ai/characters/poster_designer.webp" alt="Poster Designer"><h5>Poster Designer</h5><p>Poster layouts from listing photos and facts.</p><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-restr">Restricted by plan</span><span style="color:var(--muted);font-size:14px">Upgrade to open</span></div></div>
+          </div>
+          <div class="cap">Cards above are illustrative. Status tags shown are sample states for layout, not verified run-time results.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-compare two" style="margin-top:24px">
+    <div>
+      <h3>Current — staging, 375 px</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/staging-ai-375.png" alt="Current AI Workforce, mobile"></div>
+    </div>
+    <div>
+      <h3>Proposed — mobile 375 px</h3>
+      <div class="phone"><div class="screen">
+        <div style="font-weight:700;font-size:18px">AI Workforce</div>
+        <div class="legend"><span class="tag t-live">Live</span><span class="tag t-plan">Planned</span><span class="tag t-restr">Restricted</span></div>
+        <div class="roles">
+          <div class="card role"><img src="../../../apps/hub/public/ai/characters/ai_manager.webp" alt="Astra"><h5 style="font-size:14px">Astra</h5><span class="tag t-live">Live</span></div>
+          <div class="card role"><img src="../../../apps/hub/public/ai/characters/lead_qualifier.webp" alt="Lead Qualifier"><h5 style="font-size:14px">Lead Qualifier</h5><span class="tag t-live">Live</span></div>
+          <div class="card role"><img src="../../../apps/hub/public/ai/characters/poster_designer.webp" alt="Poster Designer"><h5 style="font-size:14px">Poster Designer</h5><span class="tag t-restr">Restricted</span></div>
+          <div class="card role"><img src="../../../apps/hub/public/ai/characters/objection_coach.webp" alt="Objection Coach"><h5 style="font-size:14px">Objection Coach</h5><span class="tag t-live">Live</span></div>
+        </div>
+        <div class="sticky-bottom"><span>Home</span><span>Leads</span><span>Listings</span><span class="on">Astra</span><span>More</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ============================ MY LISTINGS ============================ -->
+  <h2 id="listings">3 · My Listings / Property intelligence</h2>
+  <div class="grid-compare two">
+    <div>
+      <h3>Current — staging, 1440 px (captured 8 Nov)</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/staging-listings-1440.png" alt="Current staging listings, desktop"></div>
+    </div>
+    <div>
+      <h3>Proposed — desktop 1440 px</h3>
+      <div class="desk">
+        <aside class="side">
+          <div class="brand"><div class="mark"></div>Agent Hub</div>
+          <div class="nav">
+            <div>Command centre</div><div>Leads</div><div>Tasks</div><div class="on">My listings</div><div>Content studio</div>
+            <div class="grp">AI WORKFORCE</div><div>AI Workforce</div>
+          </div>
+        </aside>
+        <section class="main">
+          <div class="top">
+            <div><div style="font-size:22px;font-weight:700">My listings</div><div style="color:var(--muted);font-size:14px">Your inventory, its quality and its next action.</div></div>
+            <div style="display:flex;gap:10px"><span class="btn">Grid · List</span><span class="btn primary">New listing</span></div>
+          </div>
+          <div class="legend"><span class="chip" style="background:#fff;color:var(--text);border-color:var(--line)">All 30</span><span class="tag t-live">Published</span><span class="tag t-plan">Draft</span><span class="tag t-restr">Needs photos</span></div>
+          <div class="listing">
+            <div class="card"><div class="photo"><span class="tag t-live tg">Published</span></div><h5 style="margin:10px 0 2px">Rumah 4 kamar, Pondok Indah</h5><div style="color:var(--muted);font-size:13px">Jakarta Selatan · IDR 3.8 bn · 190 m²</div><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-restr">2 photos missing</span><span style="color:var(--blue);font-weight:600;font-size:14px">Edit →</span></div></div>
+            <div class="card"><div class="photo"><span class="tag t-live tg">Published</span></div><h5 style="margin:10px 0 2px">Rumah 4 kamar, Cilandak Barat</h5><div style="color:var(--muted);font-size:13px">Jakarta Selatan · IDR 3.5 bn · 180 m²</div><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-live">Quality 92</span><span style="color:var(--blue);font-weight:600;font-size:14px">Edit →</span></div></div>
+            <div class="card"><div class="photo"><span class="tag t-plan tg">Draft</span></div><h5 style="margin:10px 0 2px">Apartemen 2 kamar, Kemang</h5><div style="color:var(--muted);font-size:13px">Jakarta Selatan · Sample</div><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="tag t-plan">Draft</span><span style="color:var(--blue);font-weight:600;font-size:14px">Continue →</span></div></div>
+          </div>
+          <div class="cap">Share link: if the marketplace link is missing or invalid, the card shows "Link unavailable" and the page keeps working. Sample data throughout.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-compare two" style="margin-top:24px">
+    <div>
+      <h3>Current — staging, 375 px</h3>
+      <div class="shot"><img src="../../../.playwright-mcp/staging-listings-375.png" alt="Current staging listings, mobile"></div>
+    </div>
+    <div>
+      <h3>Proposed — mobile 375 px</h3>
+      <div class="phone"><div class="screen">
+        <div style="font-weight:700;font-size:18px">My listings</div>
+        <div class="legend"><span class="tag t-live">Published</span><span class="tag t-plan">Draft</span><span class="tag t-restr">Needs photos</span></div>
+        <div class="listing">
+          <div class="card"><div class="photo" style="height:120px"><span class="tag t-live tg">Published</span></div><h5 style="margin:8px 0 2px;font-size:15px">Rumah 4 kamar, Pondok Indah</h5><div style="color:var(--muted);font-size:12px">IDR 3.8 bn · 190 m²</div><div style="margin-top:8px"><span class="tag t-restr">2 photos missing</span></div></div>
+          <div class="card"><div class="photo" style="height:120px"><span class="tag t-plan tg">Draft</span></div><h5 style="margin:8px 0 2px;font-size:15px">Apartemen 2 kamar, Kemang</h5><div style="color:var(--muted);font-size:12px">Sample</div></div>
+        </div>
+        <div class="sticky-bottom"><span>Home</span><span>Leads</span><span class="on">Listings</span><span>Astra</span><span>More</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ============================ PHASE 1 MAPPING ============================ -->
+  <h2>4 · Existing Phase 1 primitives (commit 6d046a6) and how they map</h2>
+  <div class="card" style="margin-top:12px">
+    <div class="list">
+      <div class="row"><span><strong>Button</strong> — primary and secondary actions, 44 px targets</span><span class="tag t-sample">Dashboard · Listings · Workforce</span></div>
+      <div class="row"><span><strong>Badge</strong> — status labels (Live, Planned, Restricted, Draft)</span><span class="tag t-sample">Workforce cards · Listings</span></div>
+      <div class="row"><span><strong>Card</strong> — metric, role and listing surfaces</span><span class="tag t-sample">All three pages</span></div>
+      <div class="row"><span><strong>EmptyState</strong> — honest empty and unavailable states</span><span class="tag t-sample">Tasks · Listings · Brief</span></div>
+      <div class="row"><span><strong>Tokens</strong> — ink, blue, violet, gold: reconcile with the existing crimson brand before any page change</span><span class="tag t-restr">Decision needed</span></div>
+    </div>
+  </div>
+
+  <h2>5 · Items the storyboards do not decide</h2>
+  <div class="card">
+    <div class="list">
+      <div class="row"><span>AI Workforce status wording ("36 live") needs owner approval before any public wording is changed.</span><span class="tag t-restr">Owner</span></div>
+      <div class="row"><span>Brand colour: the spec asks for electric blue accents; the current brand is crimson. Reconciliation is required.</span><span class="tag t-restr">Owner + design</span></div>
+      <div class="row"><span>Character portraits are reused as-is. No new artwork has been created.</span><span class="tag t-live">Done</span></div>
+      <div class="row"><span>No application page has been changed. These are isolated design files.</span><span class="tag t-live">Done</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

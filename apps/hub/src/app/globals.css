@@ -75,7 +75,25 @@
   /* Elevation ------------------------------------------------------------- */
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
   --shadow-raised: 0 4px 16px rgb(15 23 42 / 0.08);
+
+  /* Command band (futuristic pilot). Fixed, not theme-flipped: the band is a
+     dark control surface in both modes, so its text is always light. */
+  --command-from: #0b1b33;     /* deep navy: structure */
+  --command-to: #16294a;       /* a quieter navy, not a neon gradient */
+  --command-ink: #ffffff;
+  --command-muted: #c8d6f2;
+  --command-link: #9fb8ff;     /* electric-blue tint: AI and links on the band */
+  --command-gold: #c9a64b;     /* restrained premium highlight */
 }
+
+/* Shared command header: one surface for every page's top band. */
+.command-band {
+  background: linear-gradient(120deg, var(--command-from), var(--command-to));
+  color: var(--command-ink);
+}
+.command-band h1 { color: var(--command-ink); }
+.command-band .command-muted { color: var(--command-muted); }
+.command-band .command-link { color: var(--command-link); }
 
 @media (prefers-color-scheme: dark) {
   :root {

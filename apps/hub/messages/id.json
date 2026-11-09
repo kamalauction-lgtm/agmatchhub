@@ -9,7 +9,10 @@
     "back": "Kembali",
     "language": "Bahasa",
     "show": "Lihat",
-    "hide": "Sembunyikan"
+    "hide": "Sembunyikan",
+    "environment": {
+      "staging": "Staging · data uji"
+    }
   },
   "landing": {
     "heroTitle": "Kolaborasi properti terkendali untuk agen profesional",
@@ -136,7 +139,10 @@
         "no_provider": "Brief berbasis aturan — belum ada penyedia AI yang terhubung.",
         "failed": "Brief berbasis aturan — AI tidak menjawab kali ini."
       },
-      "by": "{name}, Manajer AI Anda"
+      "by": "{name}, Manajer AI Anda",
+      "priorities": "Prioritas Anda hari ini",
+      "sourceAi": "Model AI",
+      "sourceRules": "Berbasis aturan"
     },
     "pipeline": {
       "label": "Alur listing",
@@ -759,6 +765,29 @@
     "dataKeptNote": "Data yang Anda masukkan masih ada — tidak ada yang hilang.",
     "editLog": {
       "title": "Riwayat perubahan"
+    },
+    "intro": "Ajukan kebutuhan klien Anda. Admin menyetujui, agen pemasok mengirim, Anda menyaring, dan hanya properti yang disetujui yang sampai ke klien.",
+    "emptyTab": "Tidak ada apa pun di grup ini.",
+    "band": {
+      "open": "terbuka",
+      "awaitingApproval": "menunggu persetujuan",
+      "withClient": "dengan klien"
+    },
+    "tabs": {
+      "label": "Saring menurut tahap",
+      "all": "Semua",
+      "open": "Terbuka",
+      "approval": "Menunggu persetujuan",
+      "client": "Dengan klien",
+      "closed": "Ditutup"
+    },
+    "stages": {
+      "draft": "Draf",
+      "approval": "Persetujuan",
+      "receiving": "Menerima",
+      "reviewing": "Meninjau",
+      "client": "Klien",
+      "closed": "Ditutup"
     }
   },
   "adminRequests": {
@@ -970,7 +999,14 @@
       "price": "Harga",
       "status": "Status"
     },
-    "forRequest": "untuk"
+    "forRequest": "untuk",
+    "intro": "Properti yang Anda ajukan ke klien agen lain. Status berasal dari tinjauan agen pemohon; Anda hanya melihat pengajuan Anda sendiri.",
+    "openWanted": "Buka Papan Dicari",
+    "band": {
+      "submitted": "diajukan",
+      "shortlisted": "masuk daftar pendek",
+      "withClient": "dengan klien"
+    }
   },
   "submissionStatus": {
     "draft": "Draf",
@@ -2427,7 +2463,12 @@
       "pickup_failed": "Gagal. Silakan coba lagi.",
       "invalid": "Ada data yang kurang pada permintaan itu."
     },
-    "partnersLink": "Mitra luar negeri"
+    "partnersLink": "Mitra luar negeri",
+    "band": {
+      "inPool": "di kolam",
+      "youMarket": "Anda pasarkan",
+      "needApproval": "perlu persetujuan"
+    }
   },
   "adminBanners": {
     "title": "Banner marketplace",
@@ -3320,7 +3361,65 @@
     },
     "meet": "Kenali rekan kerja AI Anda — masing-masing punya nama, wajah dan tiga kekuatan.",
     "castCountry": "Karakter untuk {country}",
-    "alsoHero": "Juga di AG Hero"
+    "alsoHero": "Juga di AG Hero",
+    "search": "Cari rekan kerja, keahlian, atau tugas",
+    "allCategories": "Semua",
+    "noResults": "Tidak ada rekan kerja yang cocok dengan pencarian.",
+    "close": "Tutup",
+    "detailStatus": "Status",
+    "detailSkills": "Membantu dalam",
+    "statusNote": "Status menunjukkan apa yang tersedia untuk Anda sekarang. Adanya potret tidak membuat rekan kerja aktif: hanya peran bertanda Live yang membuka layar yang berfungsi.",
+    "specialists": "{count} Spesialis AI",
+    "catalogueNote": "{count} peran dalam katalog. Alat berbasis aturan berjalan tanpa kunci AI. Fitur bertenaga model hanya berjalan saat AI diaktifkan untuk akun Anda, dan tidak ada di halaman ini yang diverifikasi berfungsi dari awal hingga akhir.",
+    "detailWhat": "Apa yang dilakukan",
+    "detailNeeds": "Butuh",
+    "detailGives": "Memberi",
+    "detailLimits": "Batas",
+    "detailEngine": "Cara kerja",
+    "detail": {
+      "ai_manager": {
+        "what": "Membaca angka terkini Anda setiap pagi dan mengurutkan apa yang harus dikerjakan lebih dulu. Saat AI aktif, menambahkan satu paragraf singkat; jika tidak, daftar prioritas berdiri sendiri.",
+        "needs": "Prospek, tugas, dan listing Anda.",
+        "gives": "Daftar tugas berperingkat dengan tautan, dan label sumber satu baris.",
+        "limits": "Tidak pernah mengirim apa pun. Menulis ulang brief memakai satu tugas AI.",
+        "engine": "Berbasis aturan dan teruji. AI menambahkannya hanya saat AI aktif untuk akun Anda; jalur AI belum diverifikasi."
+      },
+      "lead_qualifier": {
+        "what": "Menilai setiap pertanyaan 1–5 dari apa yang ditulis dan ditanyakan, dengan alasan yang jelas, agar Anda membalas yang paling potensial lebih dulu.",
+        "needs": "Pesan pertanyaan dan listing terkait.",
+        "gives": "Skor, alasan, sinyal, dan saran langkah berikutnya.",
+        "limits": "Mengurutkan, tidak menyembunyikan. Menilai ulang dengan AI memakai satu tugas.",
+        "engine": "Berbasis aturan dan teruji. AI menambahkannya hanya saat AI aktif untuk akun Anda; jalur AI belum diverifikasi."
+      },
+      "property_matcher": {
+        "what": "Mencari hingga tiga properti lain untuk satu pertanyaan, dari listing Anda dan kolam pemasaran bersama terbuka di negara yang sama, dengan alasan kecocokannya.",
+        "needs": "Satu pertanyaan tentang listing.",
+        "gives": "Hingga tiga kecocokan dengan harga, area, dan alasan.",
+        "limits": "Hanya menyarankan. Mengirimnya ke klien adalah keputusan Anda.",
+        "engine": "Berbasis aturan dan teruji. Tidak ada model AI yang dipakai."
+      },
+      "reply_drafter": {
+        "what": "Menyusun balasan ramah dan profesional untuk pertanyaan dalam bahasa penanya, untuk WhatsApp atau e-mail, siap Anda edit dan kirim.",
+        "needs": "Pertanyaan dan listingnya.",
+        "gives": "Balasan, langkah berikutnya, dan pertanyaan yang layak diajukan.",
+        "limits": "Tidak pernah mengirim sendiri. Hanya mengutip harga yang Anda cantumkan. Satu tugas AI per draf AI.",
+        "engine": "Berbasis aturan dan teruji. AI menambahkannya hanya saat AI aktif untuk akun Anda; jalur AI belum diverifikasi."
+      },
+      "listing_copywriter": {
+        "what": "Mengubah fakta yang Anda ketik menjadi judul dan deskripsi listing, dengan poin jual, untuk Anda edit sebelum disimpan.",
+        "needs": "Formulir listing: tipe, lokasi, kamar, ukuran, harga.",
+        "gives": "Hingga tiga judul, deskripsi, poin jual, dan catatan.",
+        "limits": "Draf ke dalam formulir; Anda yang menyimpan. Hanya mengutip pembanding yang ada di katalog.",
+        "engine": "Berbasis aturan; penulis hanya tercakup uji struktural. AI menambahkannya hanya saat AI aktif; jalur AI belum diverifikasi."
+      },
+      "task_planner": {
+        "what": "Mengubah pertanyaan atau brief hari ini menjadi daftar tugas singkat dengan tenggat. Anda centang yang diinginkan dan tugas tersimpan.",
+        "needs": "Satu prospek, atau brief hari ini.",
+        "gives": "Hingga lima usulan tugas dengan jenis dan tenggat.",
+        "limits": "Hanya mengusulkan; tidak ada yang tersimpan sampai Anda centang.",
+        "engine": "Berbasis aturan dan teruji. AI menambahkannya hanya saat AI aktif untuk akun Anda; jalur AI belum diverifikasi."
+      }
+    }
   },
   "tasks": {
     "title": "Tugas & kunjungan",

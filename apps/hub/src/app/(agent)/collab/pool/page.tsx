@@ -3,7 +3,12 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
-import { money, place } from "@/lib/listings/format";
+import { CommandHeader } from "@/components/ui/command-header";
+import { StatCluster } from "@/components/ui/stat-cluster";
+import { EnvironmentBadge } from "@/components/ui/environment-badge";
+import { EmptyState } from "@/components/ui/empty-state";
+import { buttonClass } from "@/components/ui/button";
+import { OfferCard } from "@/components/collab/offer-card";
 import { pickUpListing, dropListing } from "./pickup-actions";
 
 /**
@@ -205,6 +210,7 @@ export default async function PoolPage({
   const sp = await searchParams;
   const t = await getTranslations("pool");
   const tt = await getTranslations("propertyTypes");
+  const tc = await getTranslations("common");
 
   const [{ offers, engagements }, provinces] = await Promise.all([
     getPool(user.id, sp),
@@ -224,22 +230,28 @@ export default async function PoolPage({
 
   return (
     <AgentShell wide>
-      <div className="mb-1 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{t("title")}</h1>
-        <Link
-          href="/listings"
-          className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
-        >
-          {t("offerMine")}
-        </Link>
-        <Link
-          href="/collab/partners"
-          className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
-        >
-          {t("partnersLink")}
-        </Link>
+      {/* Command band: title, intro and three counts from the rows already loaded. */}
+      <CommandHeader className="mb-4 flex flex-wrap items-end justify-between gap-4">
+        <div className="min-w-0 max-w-2xl">
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
+          <p className="command-muted mt-1 text-sm">{t("intro")}</p>
+        </div>
+        <StatCluster
+          items={[
+            { value: offers.length, label: t("band.inPool") },
+            { value: engagements.size, label: t("band.youMarket") },
+            { value: offers.filter((o) => o.requires_la_approval).length, label: t("band.needApproval") },
+          ]}
+        />
+      </CommandHeader>
+
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <EnvironmentBadge label={tc("environment.staging")} />
+        <div className="ml-auto flex flex-wrap gap-2">
+          <Link href="/listings" className={buttonClass("secondary", "min-h-10")}>{t("offerMine")}</Link>
+          <Link href="/collab/partners" className={buttonClass("secondary", "min-h-10")}>{t("partnersLink")}</Link>
+        </div>
       </div>
-      <p className="mb-6 max-w-2xl text-sm text-muted">{t("intro")}</p>
 
       {notice && (
         <p
@@ -256,7 +268,7 @@ export default async function PoolPage({
       {/* Filters ----------------------------------------------------------- */}
       <form
         action="/collab/pool"
-        className="mb-6 grid gap-3 rounded-xl border border-line bg-surface p-4 sm:grid-cols-2 lg:grid-cols-6"
+        className="mb-6 grid gap-3 rounded-2xl border border-line bg-card p-4 shadow-card sm:grid-cols-2 lg:grid-cols-6"
       >
         <label className="text-xs font-medium text-muted lg:col-span-2">
           {t("filter.province")}
@@ -313,19 +325,9 @@ export default async function PoolPage({
         </label>
 
         <div className="flex items-end gap-2">
-          <button
-            type="submit"
-            className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong"
-          >
-            {t("filter.apply")}
-          </button>
+          <button type="submit" className={buttonClass("primary", "min-h-10")}>{t("filter.apply")}</button>
           {filtered && (
-            <Link
-              href="/collab/pool"
-              className="rounded-lg border border-line px-3 py-2 text-sm hover:border-crimson hover:text-crimson"
-            >
-              {t("filter.clear")}
-            </Link>
+            <Link href="/collab/pool" className={buttonClass("ghost", "min-h-10")}>{t("filter.clear")}</Link>
           )}
         </div>
       </form>
@@ -334,128 +336,25 @@ export default async function PoolPage({
       <p className="mb-3 text-sm text-muted">{t("count", { count: offers.length })}</p>
 
       {!offers.length ? (
-        <p className="rounded-xl border border-dashed border-line p-10 text-center text-sm text-muted">
-          {filtered ? t("emptyFiltered") : t("empty")}
-        </p>
+        <EmptyState icon="✦" title={filtered ? t("emptyFiltered") : t("empty")} />
       ) : (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {offers.map((o) => {
-            const l = o.listings;
-            const p = l?.properties ?? null;
-            const mine = engagements.get(o.id);
+            const p = o.listings?.properties ?? null;
             // An agent's own offers are readable here (the pool policy does not
             // exclude them), and the guard refuses the pickup. Say so on the card
             // rather than offering a button that can only fail.
             const isOwn = o.listing_agent_id === user.id;
-            const share = Number(o.marketing_agent_share_pct);
-
             return (
-              <article key={o.id} className="rounded-xl border border-line p-4 sm:p-5">
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-[11px] text-muted">
-                      {l?.human_readable_id}
-                    </span>
-                    {p && (
-                      <span className="rounded-full bg-surface px-2 py-0.5 text-xs">
-                        {tt(p.property_type as never)}
-                      </span>
-                    )}
-                    {o.requires_la_approval && (
-                      <span className="rounded-full bg-warning/10 px-2 py-0.5 text-xs font-medium text-warning">
-                        {t("badge.needsApproval")}
-                      </span>
-                    )}
-                  </div>
-                  <span className="rounded-full bg-success/10 px-2.5 py-0.5 text-sm font-bold text-success">
-                    {share}% {t("badge.yourShare")}
-                  </span>
-                </div>
-
-                <h3 className="mt-2 font-semibold">{l?.title ?? "—"}</h3>
-                <p className="mt-0.5 text-sm text-muted">{place(p)}</p>
-                <p className="mt-1 font-bold text-crimson">
-                  {l ? money(l.currency, l.price, l.rent_period) : "—"}
-                </p>
-
-                {p && (
-                  <p className="mt-2 text-xs text-muted">
-                    {[
-                      p.bedrooms ? t("spec.beds", { n: p.bedrooms }) : null,
-                      p.bathrooms ? t("spec.baths", { n: p.bathrooms }) : null,
-                      p.building_size ? t("spec.built", { n: p.building_size }) : null,
-                      p.land_size ? t("spec.land", { n: p.land_size }) : null,
-                    ]
-                      .filter(Boolean)
-                      .join(" · ")}
-                  </p>
-                )}
-
-                <dl className="mt-3 space-y-1 border-t border-line pt-3 text-xs">
-                  <div className="flex justify-between gap-2">
-                    <dt className="text-muted">{t("terms.listedBy")}</dt>
-                    <dd className="font-medium">{o.profiles?.display_name ?? "—"}</dd>
-                  </div>
-                  {o.total_commission_pct !== null && (
-                    <div className="flex justify-between gap-2">
-                      <dt className="text-muted">{t("terms.totalCommission")}</dt>
-                      <dd className="font-medium">{Number(o.total_commission_pct)}%</dd>
-                    </div>
-                  )}
-                  <div className="flex justify-between gap-2">
-                    <dt className="text-muted">{t("terms.payer")}</dt>
-                    <dd className="font-medium">{t(`payer.${o.payer}`)}</dd>
-                  </div>
-                  {o.max_marketing_agents !== null && (
-                    <div className="flex justify-between gap-2">
-                      <dt className="text-muted">{t("terms.maxAgents")}</dt>
-                      <dd className="font-medium">{o.max_marketing_agents}</dd>
-                    </div>
-                  )}
-                </dl>
-
-                {o.notes && (
-                  <p className="mt-3 rounded-lg bg-surface px-3 py-2 text-xs text-muted">
-                    {o.notes}
-                  </p>
-                )}
-
-                <div className="mt-4">
-                  {isOwn ? (
-                    <p className="rounded-lg bg-surface px-3 py-2.5 text-center text-sm font-medium text-muted">
-                      {t("state.yours")}
-                    </p>
-                  ) : mine ? (
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="text-sm font-medium text-success">
-                        {mine.status === "pending" ? t("state.pending") : t("state.marketing")}
-                      </span>
-                      <form action={dropListing}>
-                        <input type="hidden" name="engagementId" value={mine.id} />
-                        <button
-                          type="submit"
-                          className="rounded-lg border border-line px-3 py-2 text-xs font-semibold hover:border-danger hover:text-danger"
-                        >
-                          {t("drop")}
-                        </button>
-                      </form>
-                    </div>
-                  ) : (
-                    <form action={pickUpListing}>
-                      <input type="hidden" name="offerId" value={o.id} />
-                      <button
-                        type="submit"
-                        className="w-full rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
-                      >
-                        {t("pickUp")}
-                      </button>
-                      <p className="mt-1.5 text-center text-[11px] text-muted">
-                        {t("pickUpHelp", { share })}
-                      </p>
-                    </form>
-                  )}
-                </div>
-              </article>
+              <OfferCard
+                key={o.id}
+                offer={o}
+                propertyTypeLabel={p ? tt(p.property_type as never) : null}
+                isOwn={isOwn}
+                mine={engagements.get(o.id) ?? null}
+                pickUp={pickUpListing}
+                drop={dropListing}
+              />
             );
           })}
         </div>
