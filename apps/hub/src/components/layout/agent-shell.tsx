@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { ProfileAvatar } from "@/components/profile/profile-avatar";
+import { profilePhotoUrl } from "@/lib/card/data";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
@@ -139,23 +140,14 @@ export async function AgentShell({
             unverified agent cannot publish, and the reason should not be
             somewhere they have to go looking for. */}
         <div className="border-b border-line px-4 py-4 text-center">
-          {profile?.avatar_url ? (
-            <Image
-              src={profile.avatar_url}
-              alt=""
-              width={64}
-              height={64}
-              unoptimized
-              className="mx-auto h-16 w-16 rounded-full object-cover object-top"
-            />
-          ) : (
-            <span
-              aria-hidden
-              className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-crimson text-xl font-bold text-white"
-            >
-              {(profile?.display_name ?? "?").charAt(0).toUpperCase()}
-            </span>
-          )}
+          {/* `avatar_url` is a storage PATH in the public profile bucket, not a
+              URL; resolve it, and fall back to the initial if the file is gone. */}
+          <ProfileAvatar
+            src={profilePhotoUrl(profile?.avatar_url ?? null)}
+            name={profile?.display_name}
+            size={64}
+            className="mx-auto"
+          />
           <p className="mt-2 truncate text-sm font-bold">{profile?.display_name ?? "—"}</p>
           <p className="text-xs text-muted">{t("agentRole")}</p>
           <span
