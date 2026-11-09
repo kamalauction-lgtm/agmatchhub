@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { Badge } from "@/components/ui/badge";
 import { getStudioListings } from "@/lib/studio/listings";
 import { money, place } from "@/lib/listings/format";
 
@@ -20,25 +21,29 @@ export default async function StudioPickerPage() {
 
   return (
     <AgentShell wide>
-      <div className="flex flex-wrap items-start justify-between gap-3">
+      {/* Command band: fixed colours so the text stays legible in dark mode. */}
+      <header
+        className="flex flex-wrap items-start justify-between gap-3 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
+        style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
+      >
         <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted">{t("intro")}</p>
+          <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+          <p className="mt-1 text-sm text-[#c8d6f2]">{t("intro")}</p>
         </div>
         <p className="text-sm">
-          <Link href="/studio/plan" className="font-medium text-crimson hover:underline">
+          <Link href="/studio/plan" className="font-medium text-[#9fb8ff] hover:underline">
             {t("planLink")}
           </Link>
           {" · "}
-          <Link href="/studio/scheduled" className="font-medium text-crimson hover:underline">
+          <Link href="/studio/scheduled" className="font-medium text-[#9fb8ff] hover:underline">
             {t("queueLink")}
           </Link>
           {" · "}
-          <Link href="/studio/accounts" className="font-medium text-crimson hover:underline">
+          <Link href="/studio/accounts" className="font-medium text-[#9fb8ff] hover:underline">
             {t("accountsLink")}
           </Link>
         </p>
-      </div>
+      </header>
       <div className="mb-6" />
 
       {!listings.length ? (
@@ -67,11 +72,7 @@ export default async function StudioPickerPage() {
                   <span className="font-mono text-[11px] text-muted">
                     {l.human_readable_id}
                   </span>
-                  {l.borrowed && (
-                    <span className="rounded-full bg-crimson-soft px-2 py-0.5 text-xs font-semibold text-crimson">
-                      {t("borrowedBadge")}
-                    </span>
-                  )}
+                  {l.borrowed && <Badge tone="info">{t("borrowedBadge")}</Badge>}
                 </div>
                 <h3 className="mt-2 line-clamp-2 font-semibold group-hover:text-crimson">
                   {l.title}
