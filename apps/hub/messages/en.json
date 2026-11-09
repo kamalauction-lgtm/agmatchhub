@@ -97,7 +97,7 @@
       "training": "Training & guides",
       "trainingDesc": "Learn the platform and sharpen your sales skills.",
       "aiWorkforce": "AI Workforce",
-      "aiWorkforceDesc": "36 AI roles — six live for launch, the rest on the way.",
+      "aiWorkforceDesc": "36 AI Specialists in the catalogue — six verified for launch. All run rule-based today; AI-model features are not yet verified.",
       "tasks": "Tasks & viewings",
       "tasksDesc": "What you agreed to do, by when — proposed by AI, confirmed by you.",
       "tasksMeta": "{today, plural, =0 {nothing due today} one {1 due today} other {# due today}}"

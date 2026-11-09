@@ -1,5 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ProfileAvatar } from "@/components/profile/profile-avatar";
+import { profilePhotoUrl } from "@/lib/card/data";
 import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
@@ -43,7 +44,7 @@ export default async function PartnersPage() {
           {list.map((a) => (
             <article key={a.id} className="rounded-xl border border-line bg-card p-4 shadow-card">
               <div className="flex items-center gap-3">
-                {a.avatar_url ? <Image src={a.avatar_url} alt="" width={44} height={44} unoptimized className="h-11 w-11 rounded-full object-cover" /> : <span className="grid h-11 w-11 place-items-center rounded-full bg-surface text-lg">👤</span>}
+                <ProfileAvatar src={profilePhotoUrl(a.avatar_url)} name={a.display_name} size={44} className="shrink-0" />
                 <div className="min-w-0">
                   <p className="truncate font-semibold">{a.display_name}</p>
                   <p className="truncate text-xs text-muted">{[a.agency_name, a.city, a.country_code].filter(Boolean).join(" · ")}</p>
