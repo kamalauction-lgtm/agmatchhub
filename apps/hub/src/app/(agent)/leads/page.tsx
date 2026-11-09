@@ -5,6 +5,7 @@ import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/empty-state";
 import { markLeadResponded, updateLeadStatus } from "./actions";
 import { draftLeadReply, sendLeadEmail, qualifyLead, findLeadMatches, type LeadIntel } from "./ai-actions";
 import { ReplyPanel, type PlatformWhatsapp } from "@/components/leads/reply-panel";
@@ -215,9 +216,7 @@ export default async function LeadsPage({
       )}
 
       {!rows.length ? (
-        <p className="rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
-          {t("empty")}
-        </p>
+        <EmptyState title={t("empty")} />
       ) : (
         <div className="space-y-4">
           {rows.map((lead) => {
@@ -233,7 +232,7 @@ export default async function LeadsPage({
             return (
               <article
                 key={lead.id}
-                className={`rounded-xl border bg-background p-4 sm:p-5 ${
+                className={`rounded-2xl border bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue sm:p-5 ${
                   isOverdue ? "border-danger/50" : "border-line"
                 }`}
               >
