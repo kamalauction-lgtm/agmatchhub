@@ -7,6 +7,7 @@ import {
   getProvinceFacets,
   getBanners,
 } from "@/lib/listings";
+import { withBuildFallback } from "@/lib/build-fallback";
 import { routing } from "@/i18n/routing";
 import { market } from "@/config/market";
 import { MarketHome } from "@/markets";
@@ -44,45 +45,7 @@ type HomeData = [
   Awaited<ReturnType<typeof getBanners>>,
 ];
 
-/**
- * The homepage's reads, with one deliberate exception to "throw on error".
- *
- * This page is prerendered by `next build` (ISR, `revalidate = 300`). A CI
- * build runs against a placeholder Supabase host that does not resolve, so the
- * reads fail with "fetch failed" and, before this helper, the whole build
- * exited — on every run, for every branch. During the build phase only, a
- * failed read now yields the empty catalogue and the page renders its empty
- * states; a warning names the cause in the build log, so a production build
- * that could not reach its database is visible rather than silent.
- *
- * At runtime nothing changes: an error still throws, and ISR keeps serving the
- * last good page instead of replacing it with an empty one for five minutes.
- */
-async function loadHomeData(): Promise<HomeData> {
-  // One round of parallel reads. Every one is a bounded query against a
-  // public_* view, scoped to this market's country; none can reach a base table.
-  const reads = Promise.all([
-    searchListings({ sort: "newest", page: 1 }),
-    getPropertyTypeFacets(),
-    getLocationFacets(undefined, 12),
-    getPromotedListings(4),
-    getProvinceFacets(),
-    getBanners("home_top"),
-    getBanners("home_middle"),
-  ]) as Promise<HomeData>;
-
-  if (process.env.NEXT_PHASE !== "phase-production-build") return reads;
-
-  try {
-    return await reads;
-  } catch (err) {
-    console.warn(
-      `[www] homepage prerendered without data: ${err instanceof Error ? err.message : String(err)}. ` +
-        "The database was unreachable at build time; the page fills on its first revalidation.",
-    );
-    return [{ listings: [], total: 0, page: 1, pageCount: 1 }, [], [], [], [], [], []] as HomeData;
-  }
-}
+const EMPTY_HOME: HomeData = [{ listings: [], total: 0, page: 1, pageCount: 1 }, [], [], [], [], [], []];
 
 export default async function HomePage({
   params,
@@ -99,6 +62,11 @@ export default async function HomePage({
   const country =
     market.countryName[locale] ?? market.countryName[market.defaultLocale];
 
+  // One round of parallel reads. Every one is a bounded query against a
+  // public_* view, scoped to this market's country; none can reach a base table.
+  // A failure throws — at runtime always, and at build time unless this is a
+  // CI placeholder build (see lib/build-fallback.ts). A release build whose
+  // database is unreachable therefore fails instead of shipping an empty page.
   const [
     { listings, total },
     typeFacets,
@@ -107,7 +75,19 @@ export default async function HomePage({
     provinces,
     topBanners,
     middleBanners,
-  ] = await loadHomeData();
+  ] = await withBuildFallback(
+    Promise.all([
+      searchListings({ sort: "newest", page: 1 }),
+      getPropertyTypeFacets(),
+      getLocationFacets(undefined, 12),
+      getPromotedListings(4),
+      getProvinceFacets(),
+      getBanners("home_top"),
+      getBanners("home_middle"),
+    ]) as Promise<HomeData>,
+    EMPTY_HOME,
+    { NEXT_PHASE: process.env.NEXT_PHASE, WWW_CI_PLACEHOLDER_BUILD: process.env.WWW_CI_PLACEHOLDER_BUILD },
+  );
 
   return (
     <MarketHome
