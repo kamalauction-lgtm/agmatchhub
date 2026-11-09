@@ -3,6 +3,7 @@ import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { Badge } from "@/components/ui/badge";
 import { markLeadResponded, updateLeadStatus } from "./actions";
 import { draftLeadReply, sendLeadEmail, qualifyLead, findLeadMatches, type LeadIntel } from "./ai-actions";
 import { ReplyPanel, type PlatformWhatsapp } from "@/components/leads/reply-panel";
@@ -185,20 +186,24 @@ export default async function LeadsPage({
 
   return (
     <AgentShell wide>
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{t("title")}</h1>
-        <div className="flex items-center gap-3 text-sm text-muted">
+      {/* Command band: fixed colours so the text stays legible in dark mode. */}
+      <header
+        className="mb-6 flex flex-wrap items-end justify-between gap-3 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
+        style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
+      >
+        <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+        <div className="flex items-center gap-3 text-sm text-[#c8d6f2]">
           <p>{t("summary", { open: open.length, overdue: overdue.length })}</p>
-          <nav className="flex rounded-lg bg-surface p-0.5 text-xs font-semibold" aria-label={ti("sortLabel")}>
+          <nav className="flex rounded-lg bg-white/10 p-0.5 text-xs font-semibold" aria-label={ti("sortLabel")}>
             {[["newest", "/leads"], ["intent", "/leads?sort=intent"]].map(([k, href]) => (
               <a key={k} href={href} aria-current={(sort ?? "newest") === k ? "page" : undefined}
-                 className={`min-h-7 rounded-md px-3 leading-7 ${(sort ?? "newest") === k ? "bg-card text-blue shadow-card" : "text-muted hover:text-foreground"}`}>
+                 className={`min-h-7 rounded-md px-3 leading-7 ${(sort ?? "newest") === k ? "bg-white text-[#0b1b33] shadow-card" : "text-white/80 hover:text-white"}`}>
                 {ti(`sort.${k}` as never)}
               </a>
             ))}
           </nav>
         </div>
-      </div>
+      </header>
 
       {updated && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
@@ -240,28 +245,18 @@ export default async function LeadsPage({
                       <span className="font-mono text-xs text-muted">
                         {lead.human_readable_id}
                       </span>
-                      <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-medium">
-                        {ts(lead.status as never)}
-                      </span>
-                      {isOverdue && (
-                        <span className="rounded-full bg-danger/10 px-2 py-0.5 text-xs font-semibold text-danger">
-                          {t("slaOverdue")}
-                        </span>
-                      )}
-                      {!lead.first_responded_at && !isOverdue && (
-                        <span className="rounded-full bg-warning/10 px-2 py-0.5 text-xs font-semibold text-warning">
-                          {t("slaWaiting")}
-                        </span>
-                      )}
+                      <Badge tone="neutral">{ts(lead.status as never)}</Badge>
+                      {isOverdue && <Badge tone="danger">{t("slaOverdue")}</Badge>}
+                      {!lead.first_responded_at && !isOverdue && <Badge tone="warning">{t("slaWaiting")}</Badge>}
                       {(radarOf.get(lead.id)?.duplicate_count ?? 0) > 0 && (
-                        <span className="rounded-full bg-indigo-soft px-2 py-0.5 text-xs font-semibold text-indigo" title={ti("duplicateHint")}>
+                        <Badge tone="info" title={ti("duplicateHint")}>
                           {ti("duplicate", { count: radarOf.get(lead.id)!.duplicate_count })}
-                        </span>
+                        </Badge>
                       )}
                       {radarOf.get(lead.id)?.is_cold && (
-                        <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-semibold text-muted" title={ti("coldHint")}>
+                        <Badge tone="neutral" title={ti("coldHint")}>
                           {ti("cold", { days: Math.floor((radarOf.get(lead.id)!.hours_silent ?? 0) / 24) })}
-                        </span>
+                        </Badge>
                       )}
                     </div>
 
