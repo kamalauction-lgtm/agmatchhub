@@ -3332,7 +3332,56 @@
     "detailSkills": "Bantuan dalam",
     "statusNote": "Status menunjukkan apa yang tersedia untuk anda sekarang. Potret tidak menjadikan rakan sekerja aktif: hanya peranan bertanda Live membuka skrin yang berfungsi.",
     "specialists": "{count} Pakar AI",
-    "catalogueNote": "{count} peranan dalam katalog. Alat berasaskan peraturan berjalan tanpa kunci AI. Ciri berkuasa model hanya berjalan apabila AI diaktifkan untuk akaun anda, dan tiada apa di halaman ini disahkan berfungsi dari hujung ke hujung."
+    "catalogueNote": "{count} peranan dalam katalog. Alat berasaskan peraturan berjalan tanpa kunci AI. Ciri berkuasa model hanya berjalan apabila AI diaktifkan untuk akaun anda, dan tiada apa di halaman ini disahkan berfungsi dari hujung ke hujung.",
+    "detailWhat": "Apa yang dibuat",
+    "detailNeeds": "Perlu",
+    "detailGives": "Beri",
+    "detailLimits": "Had",
+    "detailEngine": "Cara ia berfungsi",
+    "detail": {
+      "ai_manager": {
+        "what": "Membaca angka semasa anda setiap pagi dan menyusun apa yang perlu dibuat dahulu. Apabila AI dihidupkan, menambah satu perenggan ringkas; jika tidak, senarai keutamaan berdiri sendiri.",
+        "needs": "Prospek, tugas dan penyenaraian anda.",
+        "gives": "Senarai tugasan berkeutamaan dengan pautan, dan label sumber satu baris.",
+        "limits": "Tidak pernah menghantar apa-apa. Menulis semula taklimat menggunakan satu tugas AI.",
+        "engine": "Berasaskan peraturan dan diuji. AI menambah padanya hanya apabila AI dihidupkan untuk akaun anda; laluan AI belum disahkan."
+      },
+      "lead_qualifier": {
+        "what": "Menilai setiap pertanyaan 1–5 berdasarkan apa yang ditulis dan ditanya, dengan sebab yang jelas, supaya anda membalas yang paling berpotensi dahulu.",
+        "needs": "Mesej pertanyaan dan penyenaraian berkaitan.",
+        "gives": "Skor, sebab, isyarat dan cadangan langkah seterusnya.",
+        "limits": "Menyusun, tidak menyembunyikan. Menilai semula dengan AI menggunakan satu tugas.",
+        "engine": "Berasaskan peraturan dan diuji. AI menambah padanya hanya apabila AI dihidupkan untuk akaun anda; laluan AI belum disahkan."
+      },
+      "property_matcher": {
+        "what": "Mencari sehingga tiga hartanah lain untuk satu pertanyaan, daripada penyenaraian anda dan kolam pemasaran bersama terbuka di negara yang sama, dengan sebab ia sesuai.",
+        "needs": "Satu pertanyaan tentang penyenaraian.",
+        "gives": "Sehingga tiga padanan dengan harga, kawasan dan sebab.",
+        "limits": "Hanya mencadangkan. Menghantar kepada klien adalah keputusan anda.",
+        "engine": "Berasaskan peraturan dan diuji. Tiada model AI digunakan."
+      },
+      "reply_drafter": {
+        "what": "Menggubal balasan mesra dan profesional untuk pertanyaan dalam bahasa penanya, untuk WhatsApp atau e-mel, sedia untuk anda sunting dan hantar.",
+        "needs": "Pertanyaan dan penyenaraiannya.",
+        "gives": "Balasan, langkah seterusnya dan soalan yang patut ditanya.",
+        "limits": "Tidak pernah menghantar sendiri. Hanya memetik harga yang anda senaraikan. Satu tugas AI bagi setiap draf AI.",
+        "engine": "Berasaskan peraturan dan diuji. AI menambah padanya hanya apabila AI dihidupkan untuk akaun anda; laluan AI belum disahkan."
+      },
+      "listing_copywriter": {
+        "what": "Menukar fakta yang anda taip kepada tajuk dan huraian penyenaraian, dengan ciri jualan, untuk anda sunting sebelum simpan.",
+        "needs": "Borang penyenaraian: jenis, lokasi, bilik, saiz, harga.",
+        "gives": "Sehingga tiga tajuk, huraian, ciri jualan dan nota.",
+        "limits": "Draf ke dalam borang; anda yang simpan. Hanya memetik pembanding yang ada dalam katalog.",
+        "engine": "Berasaskan peraturan; penulis hanya diliputi ujian struktur. AI menambah padanya hanya apabila AI dihidupkan; laluan AI belum disahkan."
+      },
+      "task_planner": {
+        "what": "Menukar pertanyaan atau taklimat hari ini kepada senarai tugas ringkas dengan masa akhir. Anda tandakan yang anda mahu dan ia disimpan.",
+        "needs": "Satu prospek, atau taklimat hari ini.",
+        "gives": "Sehingga lima tugas cadangan dengan jenis dan masa akhir.",
+        "limits": "Hanya mencadangkan; tiada yang disimpan sehingga anda tandakan.",
+        "engine": "Berasaskan peraturan dan diuji. AI menambah padanya hanya apabila AI dihidupkan untuk akaun anda; laluan AI belum disahkan."
+      }
+    }
   },
   "tasks": {
     "title": "Tugas & lawatan",

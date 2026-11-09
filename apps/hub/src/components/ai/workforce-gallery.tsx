@@ -33,6 +33,8 @@ export type WorkerItem = {
   unavailableHint: string;
   alsoHeroHref: string | null;
   alsoHeroLabel: string | null;
+  /** Owner-approved detail copy from messages/*, present for reviewed roles only. */
+  detail: { what: string; needs: string; gives: string; limits: string; engine: string } | null;
 };
 
 export type WorkforceLabels = {
@@ -42,6 +44,11 @@ export type WorkforceLabels = {
   close: string;
   detailStatus: string;
   detailSkills: string;
+  detailWhat: string;
+  detailNeeds: string;
+  detailGives: string;
+  detailLimits: string;
+  detailEngine: string;
   premium: string;
   alsoHero: string;
 };
@@ -182,6 +189,30 @@ export function WorkforceGallery({
               </div>
               {active.tagline && <p className="text-base font-medium leading-6 text-foreground">{active.tagline}</p>}
               <p className="text-sm leading-6 text-muted-strong">{active.description}</p>
+              {active.detail && (
+                <dl className="grid gap-3 rounded-2xl border border-line bg-surface/60 p-4 text-sm sm:grid-cols-2">
+                  <div className="sm:col-span-2">
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.detailWhat}</dt>
+                    <dd className="mt-1 leading-6 text-foreground">{active.detail.what}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.detailNeeds}</dt>
+                    <dd className="mt-1 leading-6 text-muted-strong">{active.detail.needs}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.detailGives}</dt>
+                    <dd className="mt-1 leading-6 text-muted-strong">{active.detail.gives}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.detailLimits}</dt>
+                    <dd className="mt-1 leading-6 text-muted-strong">{active.detail.limits}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{labels.detailEngine}</dt>
+                    <dd className="mt-1 leading-6 text-muted-strong">{active.detail.engine}</dd>
+                  </div>
+                </dl>
+              )}
               {active.skills.length > 0 && (
                 <div>
                   <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">{labels.detailSkills}</h3>

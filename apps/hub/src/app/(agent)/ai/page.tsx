@@ -102,6 +102,16 @@ export default async function AiWorkforcePage() {
         unavailableHint: r.external_url ? t("heroHint") : t("comingSoon"),
         alsoHeroHref: isLive && heroOpen ? r.external_url! : null,
         alsoHeroLabel: isLive && heroOpen ? t("alsoHero") : null,
+        // Owner-approved detail copy exists for reviewed roles only (batch 1: six roles).
+        detail: t.has(`detail.${r.key}.what` as never)
+          ? {
+              what: t(`detail.${r.key}.what` as never),
+              needs: t(`detail.${r.key}.needs` as never),
+              gives: t(`detail.${r.key}.gives` as never),
+              limits: t(`detail.${r.key}.limits` as never),
+              engine: t(`detail.${r.key}.engine` as never),
+            }
+          : null,
       };
     })
   );
@@ -114,6 +124,11 @@ export default async function AiWorkforcePage() {
     close: t("close"),
     detailStatus: t("detailStatus"),
     detailSkills: t("detailSkills"),
+    detailWhat: t("detailWhat"),
+    detailNeeds: t("detailNeeds"),
+    detailGives: t("detailGives"),
+    detailLimits: t("detailLimits"),
+    detailEngine: t("detailEngine"),
     premium: t("premium"),
     alsoHero: t("alsoHero"),
   };

@@ -3332,7 +3332,56 @@
     "detailSkills": "What they help with",
     "statusNote": "Status shows what is open to you now. A portrait does not make a colleague live: only roles marked Live open a working screen.",
     "specialists": "{count} AI Specialists",
-    "catalogueNote": "{count} roles in the catalogue. Rule-based tools run without AI keys. Model-powered features run only when AI is enabled for your account, and nothing on this page is verified as working end to end."
+    "catalogueNote": "{count} roles in the catalogue. Rule-based tools run without AI keys. Model-powered features run only when AI is enabled for your account, and nothing on this page is verified as working end to end.",
+    "detailWhat": "What they do",
+    "detailNeeds": "Needs",
+    "detailGives": "Gives",
+    "detailLimits": "Limits",
+    "detailEngine": "How it works",
+    "detail": {
+      "ai_manager": {
+        "what": "Reads your live numbers each morning and ranks what to do first. When AI is on, adds one short paragraph; otherwise the ranked list stands on its own.",
+        "needs": "Your leads, tasks and listings.",
+        "gives": "A ranked to-do list with links, and a one-line source label.",
+        "limits": "Never sends anything. Rewriting the brief uses one AI task.",
+        "engine": "Rule-based and tested. AI adds to it only when AI is enabled for your account; the AI path is not yet verified."
+      },
+      "lead_qualifier": {
+        "what": "Scores each enquiry 1–5 from what the enquirer wrote and asked, with the reason in plain words, so you reply to the hottest first.",
+        "needs": "The enquiry message and the listing it is about.",
+        "gives": "A score, the reason, the signals and a suggested next step.",
+        "limits": "Sorts, never hides. Re-scoring with AI uses one task.",
+        "engine": "Rule-based and tested. AI adds to it only when AI is enabled for your account; the AI path is not yet verified."
+      },
+      "property_matcher": {
+        "what": "Finds up to three other properties for an enquiry, from your own listings and the open co-marketing pool in the same country, with the reasons they fit.",
+        "needs": "An enquiry on a listing.",
+        "gives": "Up to three matches with price, area and a reason each.",
+        "limits": "Suggests only. Sending them to the client is your call.",
+        "engine": "Rule-based and tested. No AI model is used."
+      },
+      "reply_drafter": {
+        "what": "Drafts a friendly, professional reply to an enquiry in the enquirer's language, for WhatsApp or e-mail, ready for you to edit and send.",
+        "needs": "The enquiry and its listing.",
+        "gives": "A reply, a next step and questions worth asking.",
+        "limits": "Never sends on its own. Quotes only the price you listed. One AI task per AI draft.",
+        "engine": "Rule-based and tested. AI adds to it only when AI is enabled for your account; the AI path is not yet verified."
+      },
+      "listing_copywriter": {
+        "what": "Turns the facts you have typed into a listing title and description, with selling points, for you to edit before you save.",
+        "needs": "The listing form: type, location, rooms, sizes, price.",
+        "gives": "Up to three titles, a description, selling points and notes.",
+        "limits": "Drafts into the form; you save. Quotes only comparables the catalogue has.",
+        "engine": "Rule-based; the writer is covered by a structural test only. AI adds to it only when AI is enabled; the AI path is not yet verified."
+      },
+      "task_planner": {
+        "what": "Turns an enquiry or today's brief into a short task list with due times. You tick the ones you want and they are saved.",
+        "needs": "A lead, or today's brief.",
+        "gives": "Up to five proposed tasks with kind and due time.",
+        "limits": "Proposes only; nothing is saved until you tick it.",
+        "engine": "Rule-based and tested. AI adds to it only when AI is enabled for your account; the AI path is not yet verified."
+      }
+    }
   },
   "tasks": {
     "title": "Tasks & viewings",
