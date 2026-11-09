@@ -53,7 +53,7 @@ const TYPE_WORDS: Array<[RegExp, string]> = [
   [/\b(cluster|klaster)\b/i, "cluster_home"],
 ];
 
-const MAX_WORDS = /(di\s*bawah|dibawah|kurang\s+dari|maksimal|maksimum|maks|max|under|below|less\s+than|up\s+to|budget|anggaran|sampai|hingga|bajet|tidak\s+lebih\s+dari|≤|<=|<)\s*$/i;
+const MAX_WORDS = /((?:bajet|budget|anggaran|harga|price)?\s*(?:di\s*bawah|dibawah|bawah|kurang\s+dari|maksimal|maksimum|maks|max|under|below|less\s+than|up\s+to|sampai|hingga|tidak\s+lebih\s+dari|≤|<=|<)|bajet|budget|anggaran)\s*$/i;
 const MIN_WORDS = /(di\s*atas|diatas|lebih\s+dari|minimal|minimum|min|above|over|more\s+than|mulai\s+dari|mulai|from|starting|≥|>=|>)\s*$/i;
 
 /** Scale words → multiplier, per currency. "M" is miliar in rupiah, million in ringgit. */

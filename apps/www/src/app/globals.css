@@ -129,7 +129,9 @@
   100% { box-shadow: 0 0 0 14px rgb(37 99 235 / 0); }
 }
 .pulse-ring { animation: pg-pulse-ring 2.2s ease-out infinite; }
-@keyframes pg-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+/* Transform only, never opacity: a background tab may not run the animation,
+   and a hero whose text starts at opacity 0 would then stay invisible. */
+@keyframes pg-rise { from { transform: translateY(10px); } to { transform: none; } }
 .rise { animation: pg-rise 0.5s ease-out both; }
 .rise-2 { animation-delay: 0.08s; }
 .rise-3 { animation-delay: 0.16s; }

@@ -342,6 +342,7 @@
     "remove": "Hapus dari perbandingan",
     "ruleTitle": "Cara kerja penanda.",
     "ruleBody": "“Harga terendah”, “terluas”, dan “terbaru” adalah perbandingan angka sederhana dari data yang diberikan agen. Bukan saran investasi.",
+    "mixedNotice": "Perbandingan ini mencampur listing dijual dan disewa (atau periode sewa berbeda), jadi harga ditampilkan tetapi tidak diperingkatkan.",
     "best": {
       "lowestPrice": "Harga terendah",
       "lowestPerArea": "Termurah per m²",

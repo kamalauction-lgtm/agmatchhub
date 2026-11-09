@@ -66,17 +66,24 @@ export default async function ComparePage({
   };
 
   const str = (v: string | number | null | undefined) => (v == null || v === "" ? null : String(v));
+  // A sale price and a rent are not comparable quantities, and neither are a
+  // monthly and a yearly rent. Price highlights are only computed when every
+  // column is priced the same way; otherwise the table says so and ranks nothing.
+  const priceBasis = new Set(listings.map((l) => `${l.listing_type}:${l.rent_period ?? ""}`));
+  const comparablePrices = priceBasis.size <= 1;
   const rows: Row[] = listings.length
     ? [
         {
           key: "price", label: t("rows.price"),
           values: listings.map((l) => `${formatPriceExact(l.price, l.currency, locale)}${formatRentPeriod(l.rent_period, locale)}`),
-          best: argBest(listings.map((l) => l.price), "min"), bestLabel: t("best.lowestPrice"),
+          best: comparablePrices ? argBest(listings.map((l) => l.price), "min") : null, bestLabel: t("best.lowestPrice"),
         },
         {
           key: "ppa", label: t("rows.pricePerArea"),
           values: listings.map((l) => pricePerArea(l.price, l.building_size ?? l.land_size, l.currency)),
-          best: argBest(listings.map((l) => (l.price && (l.building_size ?? l.land_size) ? l.price / (l.building_size ?? l.land_size)! : null)), "min"),
+          best: comparablePrices
+            ? argBest(listings.map((l) => (l.price && (l.building_size ?? l.land_size) ? l.price / (l.building_size ?? l.land_size)! : null)), "min")
+            : null,
           bestLabel: t("best.lowestPerArea"),
         },
         { key: "tx", label: t("rows.transaction"), values: listings.map((l) => (l.listing_type === "sale" ? tl("forSale") : tl("forRent"))), best: null },
@@ -138,6 +145,11 @@ export default async function ComparePage({
         ) : (
           <>
             <RuleBasedNotice title={t("ruleTitle")} body={t("ruleBody")} />
+            {!comparablePrices && (
+              <p role="note" className="mt-3 rounded-xl border border-warning/40 bg-warning-soft px-4 py-3 text-sm text-foreground">
+                {t("mixedNotice")}
+              </p>
+            )}
 
             <div className="mt-6 overflow-x-auto rounded-2xl border border-line bg-surface-raised shadow-card">
               <table className="w-full min-w-[640px] border-collapse text-sm">

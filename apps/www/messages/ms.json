@@ -342,6 +342,7 @@
     "remove": "Buang daripada perbandingan",
     "ruleTitle": "Cara penanda berfungsi.",
     "ruleBody": "“Harga terendah”, “terluas” dan “terbaru” ialah perbandingan nombor mudah daripada data yang dibekalkan ejen. Bukan nasihat.",
+    "mixedNotice": "Perbandingan ini mencampurkan penyenaraian jualan dan sewaan (atau tempoh sewa berbeza), jadi harga dipaparkan tetapi tidak disusun kedudukannya.",
     "best": {
       "lowestPrice": "Harga terendah",
       "lowestPerArea": "Termurah per m²",

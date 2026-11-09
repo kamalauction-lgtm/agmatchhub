@@ -342,6 +342,7 @@
     "remove": "Remove from comparison",
     "ruleTitle": "How highlights work.",
     "ruleBody": "“Lowest price”, “largest” and “newest” are simple comparisons of the numbers the agents supplied. They are not advice.",
+    "mixedNotice": "This comparison mixes sale and rental listings (or different rent periods), so prices are shown but not ranked against each other.",
     "best": {
       "lowestPrice": "Lowest price",
       "lowestPerArea": "Lowest per m²",
