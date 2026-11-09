@@ -765,6 +765,29 @@
     "dataKeptNote": "Data yang anda masukkan masih ada — tiada yang hilang.",
     "editLog": {
       "title": "Sejarah suntingan"
+    },
+    "intro": "Hantar keperluan klien anda. Admin meluluskannya, ejen pembekal menghantar, anda membuat senarai pendek, dan hanya hartanah yang diluluskan sampai kepada klien.",
+    "emptyTab": "Tiada apa-apa dalam kumpulan ini.",
+    "band": {
+      "open": "terbuka",
+      "awaitingApproval": "menunggu kelulusan",
+      "withClient": "dengan klien"
+    },
+    "tabs": {
+      "label": "Tapis mengikut peringkat",
+      "all": "Semua",
+      "open": "Terbuka",
+      "approval": "Menunggu kelulusan",
+      "client": "Dengan klien",
+      "closed": "Ditutup"
+    },
+    "stages": {
+      "draft": "Draf",
+      "approval": "Kelulusan",
+      "receiving": "Menerima",
+      "reviewing": "Menyemak",
+      "client": "Klien",
+      "closed": "Ditutup"
     }
   },
   "adminRequests": {

@@ -7,6 +7,10 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { ClearFormDraft } from "@/components/forms/draft-guard";
+import { CommandHeader } from "@/components/ui/command-header";
+import { Badge } from "@/components/ui/badge";
+import { StageStrip } from "@/components/collab/stage-strip";
+import { STAGE_KEYS, stageIndex } from "@/lib/requests/stages";
 
 export default async function RequestDetailPage({
   params,
@@ -93,13 +97,23 @@ export default async function RequestDetailPage({
       <Link href="/requests" className="text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>
-      <div className="mt-2 mb-1 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-semibold">{r.title}</h1>
-        <span className="rounded-full bg-surface px-3 py-1 text-sm font-medium whitespace-nowrap">
+      {/* Command band: title, ID and the exact status; the strip below groups it into a stage. */}
+      <CommandHeader className="mt-2 mb-4 flex flex-wrap items-start justify-between gap-4">
+        <div className="min-w-0">
+          <p className="command-muted font-mono text-xs">{r.human_readable_id}</p>
+          <h1 className="mt-1 text-2xl font-semibold">{r.title}</h1>
+        </div>
+        <Badge tone={r.status === "successfully_closed" ? "success" : stageIndex(r.status) === 1 ? "warning" : stageIndex(r.status) === 5 ? "neutral" : "info"} className="whitespace-nowrap">
           {t(`status.${r.status}`)}
-        </span>
+        </Badge>
+      </CommandHeader>
+      <div className="mb-6">
+        <StageStrip
+          current={stageIndex(r.status)}
+          labels={Object.fromEntries(STAGE_KEYS.map((k) => [k, t(`stages.${k}` as never)])) as Record<(typeof STAGE_KEYS)[number], string>}
+          closedOk={r.status === "successfully_closed"}
+        />
       </div>
-      <p className="mb-6 font-mono text-xs text-muted">{r.human_readable_id}</p>
 
       {submitted && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">

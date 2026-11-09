@@ -765,6 +765,29 @@
     "dataKeptNote": "Your entered data is still here — nothing was lost.",
     "editLog": {
       "title": "Edit history"
+    },
+    "intro": "Post what your client needs. Admin approves it, supply agents submit, you shortlist, and only approved properties reach the client.",
+    "emptyTab": "Nothing in this group.",
+    "band": {
+      "open": "open",
+      "awaitingApproval": "awaiting approval",
+      "withClient": "with client"
+    },
+    "tabs": {
+      "label": "Filter by stage",
+      "all": "All",
+      "open": "Open",
+      "approval": "Awaiting approval",
+      "client": "With client",
+      "closed": "Closed"
+    },
+    "stages": {
+      "draft": "Draft",
+      "approval": "Approval",
+      "receiving": "Receiving",
+      "reviewing": "Reviewing",
+      "client": "Client",
+      "closed": "Closed"
     }
   },
   "adminRequests": {

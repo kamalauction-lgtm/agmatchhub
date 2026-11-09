@@ -765,6 +765,29 @@
     "dataKeptNote": "Data yang Anda masukkan masih ada — tidak ada yang hilang.",
     "editLog": {
       "title": "Riwayat perubahan"
+    },
+    "intro": "Ajukan kebutuhan klien Anda. Admin menyetujui, agen pemasok mengirim, Anda menyaring, dan hanya properti yang disetujui yang sampai ke klien.",
+    "emptyTab": "Tidak ada apa pun di grup ini.",
+    "band": {
+      "open": "terbuka",
+      "awaitingApproval": "menunggu persetujuan",
+      "withClient": "dengan klien"
+    },
+    "tabs": {
+      "label": "Saring menurut tahap",
+      "all": "Semua",
+      "open": "Terbuka",
+      "approval": "Menunggu persetujuan",
+      "client": "Dengan klien",
+      "closed": "Ditutup"
+    },
+    "stages": {
+      "draft": "Draf",
+      "approval": "Persetujuan",
+      "receiving": "Menerima",
+      "reviewing": "Meninjau",
+      "client": "Klien",
+      "closed": "Ditutup"
     }
   },
   "adminRequests": {
