@@ -144,7 +144,15 @@ export default async function AiWorkforcePage() {
             <p className="command-muted mt-1 text-sm">{t("intro")}</p>
             <p className="command-muted mt-3 text-xs">{t("catalogueNote", { count: roles.length })}</p>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            {/* AI Live Office: the same roles as a visual mission-control floor. */}
+            <Link
+              href="/ai/office"
+              className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold text-white transition-colors"
+              style={{ background: "var(--blue)" }}
+            >
+              ✦ {t("watchOffice")}
+            </Link>
             <Badge tone="info">{t("specialists", { count: roles.length })}</Badge>
             {countryCast && country && <Badge tone="accent">{t("castCountry", { country })}</Badge>}
             {quota && verified && (

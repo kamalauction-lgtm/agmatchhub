@@ -3330,6 +3330,7 @@
     }
   },
   "aiWorkforce": {
+    "watchOffice": "Watch my AI team working",
     "title": "AI Workforce",
     "intro": "Your AI colleagues. Each one works inside a screen you already use — it drafts, ranks and reminds; you decide and send.",
     "liveCount": "{count, plural, =0 {None live yet} one {1 live} other {# live}}",
@@ -3820,6 +3821,91 @@
       "duplicate": "A template with that name and language already exists for this number.",
       "invalid": "Invalid input.",
       "failed": "That action failed."
+    }
+  },
+  "aiOffice": {
+    "eyebrow": "AI Live Office",
+    "title": "Watch your AI team working",
+    "intro": "Twelve departments, one character per specialist. Every state you see comes from your own job and task records — nothing here is invented.",
+    "back": "Back to AI Workforce",
+    "ruleBasedBadge": "Rule-based during the pilot",
+    "legend": "Character states",
+    "lounge": "Lounge",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing…",
+    "updated": "Updated",
+    "demoToggle": "Demo mode",
+    "demoOn": "Demo mode on",
+    "demoBanner": "DEMO MODE — the activity below is simulated for demonstration. It is not your real AI work and nothing is saved.",
+    "demoBadge": "DEMO",
+    "truth": "Jobs are recorded after a tool runs, so no character is ever shown “working right now” from job data. Celebrations mean a job finished in the last five minutes; “needs you” means a proposed task is waiting in your task list.",
+    "offlineNotice": "Your account is not verified yet, so the office is offline. Complete verification to put your team to work.",
+    "mobileHint": "Tap a specialist to inspect their work. The animated floor is shown on tablets and desktops.",
+    "state": {
+      "active": "Worked today",
+      "finished": "Just finished",
+      "attention": "Needs you",
+      "idle": "On standby",
+      "error": "Last run failed",
+      "planned": "Planned",
+      "offline": "Offline"
+    },
+    "stateHint": {
+      "active": "At least one job ran today for this specialist’s engine.",
+      "finished": "A job finished within the last five minutes.",
+      "attention": "This specialist proposed work that is waiting for your decision.",
+      "idle": "Available now; nothing has been asked today.",
+      "error": "The most recent run ended in an error. Try again from the tool’s screen.",
+      "planned": "The screen for this role does not exist yet. It never does real work.",
+      "offline": "Verify your account to open this role."
+    },
+    "engine": {
+      "ai": "Model-powered (provider connected)",
+      "rules": "Rule-based (no AI provider connected)",
+      "rules_by_design": "Rule-based by design"
+    },
+    "access": {
+      "open": "Open to you now",
+      "unavailable": "Needs a verified account",
+      "planned": "Planned",
+      "hero": "Lives in AG Hero (link your account)",
+      "hero_open": "Open in AG Hero"
+    },
+    "jobStatus": {
+      "ok": "Completed",
+      "degraded": "Completed (fallback)",
+      "error": "Error",
+      "denied": "Rule-based answer"
+    },
+    "panel": {
+      "specialty": "Specialty",
+      "availability": "Availability",
+      "engine": "Engine",
+      "sharedEngine": "Shared engine with other roles:",
+      "current": "Current task",
+      "currentNone": "None. Tools run while you use them; there is no background queue.",
+      "currentPending": "Waiting for your decision on the proposals below.",
+      "last": "Last activity",
+      "never": "Never",
+      "outputs": "Outputs in the last 7 days",
+      "outputsNone": "No jobs recorded in the last 7 days.",
+      "pending": "Pending your approval",
+      "pendingNone": "Nothing waiting.",
+      "errors": "Errors",
+      "errorsNone": "No errors in the last 7 days.",
+      "open": "Open the tool",
+      "openTasks": "Open tasks",
+      "openWorkforce": "AI Workforce",
+      "close": "Close",
+      "due": "Due"
+    },
+    "totals": {
+      "workers": "Specialists",
+      "open": "Open to you",
+      "ai": "Model-powered",
+      "rules": "Rule-based",
+      "attention": "Need you",
+      "activeToday": "Worked today"
     }
   },
   "aiTools": {
