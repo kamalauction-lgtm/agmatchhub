@@ -999,7 +999,14 @@
       "price": "Harga",
       "status": "Status"
     },
-    "forRequest": "untuk"
+    "forRequest": "untuk",
+    "intro": "Hartanah yang anda kemukakan kepada klien ejen lain. Status datang daripada semakan ejen pemohon; anda hanya melihat serahan anda sendiri.",
+    "openWanted": "Buka Papan Dicari",
+    "band": {
+      "submitted": "diserahkan",
+      "shortlisted": "senarai pendek",
+      "withClient": "dengan klien"
+    }
   },
   "submissionStatus": {
     "draft": "Draf",

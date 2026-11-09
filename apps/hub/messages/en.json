@@ -999,7 +999,14 @@
       "price": "Price",
       "status": "Status"
     },
-    "forRequest": "for"
+    "forRequest": "for",
+    "intro": "Properties you have put forward to other agents' clients. Status comes from the requesting agent's review; you see your own submissions only.",
+    "openWanted": "Open Wanted board",
+    "band": {
+      "submitted": "submitted",
+      "shortlisted": "shortlisted",
+      "withClient": "with client"
+    }
   },
   "submissionStatus": {
     "draft": "Draft",

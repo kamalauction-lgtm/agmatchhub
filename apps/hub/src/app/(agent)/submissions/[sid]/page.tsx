@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { CollabPanels } from "@/components/collab/collab-panels";
+import { CommandHeader } from "@/components/ui/command-header";
+import { Badge } from "@/components/ui/badge";
 
 /** Supply Agent's view of one submission: status + collaboration (§24–27). */
 export default async function SASubmissionPage({
@@ -37,15 +39,16 @@ export default async function SASubmissionPage({
       <Link href="/submissions" className="text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>
-      <div className="mt-2 mb-1 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-semibold">{s.title}</h1>
-        <span className="rounded-full bg-surface px-3 py-1 text-sm font-medium whitespace-nowrap">
-          {ts(s.status)}
-        </span>
-      </div>
-      <p className="mb-6 font-mono text-xs text-muted">
-        {s.human_readable_id} · {t("forRequest")} {req?.human_readable_id} — {req?.title}
-      </p>
+      {/* Command band: ID, title and the exact status. Collaboration panels below are unchanged. */}
+      <CommandHeader className="mt-2 mb-6 flex flex-wrap items-start justify-between gap-4">
+        <div className="min-w-0">
+          <p className="command-muted font-mono text-xs">
+            {s.human_readable_id} · {t("forRequest")} {req?.human_readable_id} — {req?.title}
+          </p>
+          <h1 className="mt-1 text-2xl font-semibold">{s.title}</h1>
+        </div>
+        <Badge tone="info" className="whitespace-nowrap">{ts(s.status)}</Badge>
+      </CommandHeader>
 
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">

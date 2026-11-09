@@ -999,7 +999,14 @@
       "price": "Harga",
       "status": "Status"
     },
-    "forRequest": "untuk"
+    "forRequest": "untuk",
+    "intro": "Properti yang Anda ajukan ke klien agen lain. Status berasal dari tinjauan agen pemohon; Anda hanya melihat pengajuan Anda sendiri.",
+    "openWanted": "Buka Papan Dicari",
+    "band": {
+      "submitted": "diajukan",
+      "shortlisted": "masuk daftar pendek",
+      "withClient": "dengan klien"
+    }
   },
   "submissionStatus": {
     "draft": "Draf",
