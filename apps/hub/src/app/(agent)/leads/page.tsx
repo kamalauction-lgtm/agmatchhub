@@ -197,7 +197,7 @@ export default async function LeadsPage({
           <nav className="flex rounded-lg bg-white/10 p-0.5 text-xs font-semibold" aria-label={ti("sortLabel")}>
             {[["newest", "/leads"], ["intent", "/leads?sort=intent"]].map(([k, href]) => (
               <a key={k} href={href} aria-current={(sort ?? "newest") === k ? "page" : undefined}
-                 className={`min-h-7 rounded-md px-3 leading-7 ${(sort ?? "newest") === k ? "bg-white text-[#0b1b33] shadow-card" : "text-white/80 hover:text-white"}`}>
+                 className={`min-h-7 whitespace-nowrap rounded-md px-3 leading-7 ${(sort ?? "newest") === k ? "bg-white text-[#0b1b33] shadow-card" : "text-white/80 hover:text-white"}`}>
                 {ti(`sort.${k}` as never)}
               </a>
             ))}
