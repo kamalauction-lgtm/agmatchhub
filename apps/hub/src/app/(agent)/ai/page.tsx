@@ -131,7 +131,7 @@ export default async function AiWorkforcePage() {
             <p className="command-muted mt-3 text-xs">{t("catalogueNote", { count: roles.length })}</p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs">
-            <Badge tone="accent">{t("specialists", { count: roles.length })}</Badge>
+            <Badge tone="info">{t("specialists", { count: roles.length })}</Badge>
             {countryCast && country && <Badge tone="accent">{t("castCountry", { country })}</Badge>}
             {quota && verified && (
               <Badge tone="info">{t("quota", { remaining: quota.remaining, total: quota.monthly_allowance })}</Badge>
