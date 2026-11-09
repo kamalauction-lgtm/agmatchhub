@@ -338,7 +338,9 @@ export default async function PoolPage({
       {!offers.length ? (
         <EmptyState icon="✦" title={filtered ? t("emptyFiltered") : t("empty")} />
       ) : (
-        <div className="grid gap-4 lg:grid-cols-2">
+        {/* grid-cols-1 gives an explicit minmax(0,1fr) track, so a card's no-wrap
+            ID line cannot widen the column past the viewport on phones. */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {offers.map((o) => {
             const p = o.listings?.properties ?? null;
             // An agent's own offers are readable here (the pool policy does not

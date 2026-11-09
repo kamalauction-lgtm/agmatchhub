@@ -71,7 +71,7 @@ export async function OfferCard({
     : [];
 
   return (
-    <article className="flex flex-col rounded-2xl border border-line bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue sm:p-5">
+    <article className="flex min-w-0 flex-col rounded-2xl border border-line bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue sm:p-5">
       {/* Price tile: the projection has no photo, so the price and kind carry the card. */}
       <div className="flex items-end justify-between gap-3 rounded-xl bg-gradient-to-br from-blue-soft via-surface to-indigo-soft p-4">
         <div className="min-w-0">
