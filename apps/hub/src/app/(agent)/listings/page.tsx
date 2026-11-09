@@ -3,6 +3,7 @@ import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { Badge } from "@/components/ui/badge";
 import { SharePanel } from "@/components/listings/share-panel";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { shareCaption } from "@/lib/ai/listing-advisor";
@@ -200,10 +201,14 @@ export default async function MyListingsPage({
 
   return (
     <AgentShell wide>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      {/* Command band: fixed colours so the text stays legible in dark mode. */}
+      <header
+        className="mb-6 flex flex-wrap items-center justify-between gap-3 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
+        style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
+      >
         <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted">
+          <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+          <p className="mt-1 text-sm text-[#c8d6f2]">
             {t("quota", { active, max: activeLimit })}
             {borrowedRows.length > 0 && ` · ${t("borrowedCount", { count: borrowedRows.length })}`}
           </p>
@@ -213,7 +218,7 @@ export default async function MyListingsPage({
         <div className="flex flex-wrap gap-2">
           <Link
             href="/listings/import"
-            className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold hover:border-crimson hover:text-crimson"
+            className="rounded-lg border border-white/30 px-4 py-2.5 text-sm font-semibold text-white hover:border-white"
           >
             {t("importCta")}
           </Link>
@@ -224,7 +229,7 @@ export default async function MyListingsPage({
             {t("new")}
           </Link>
         </div>
-      </div>
+      </header>
 
       {notice && (
         <p
@@ -271,17 +276,9 @@ export default async function MyListingsPage({
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono text-xs text-muted">{l.human_readable_id}</span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                          l.status === "published"
-                            ? "bg-success/10 text-success"
-                            : l.status === "rejected"
-                              ? "bg-danger/10 text-danger"
-                              : "bg-surface"
-                        }`}
-                      >
+                      <Badge tone={l.status === "published" ? "success" : l.status === "rejected" ? "danger" : "neutral"}>
                         {ts(l.status as never)}
-                      </span>
+                      </Badge>
                       {boostEnd && (
                         <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-semibold text-warning">
                           ⚡ {t("boost.activeUntil", {
