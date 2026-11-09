@@ -5,6 +5,7 @@ import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/empty-state";
 import { SharePanel } from "@/components/listings/share-panel";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { shareCaption } from "@/lib/ai/listing-advisor";
@@ -249,9 +250,7 @@ export default async function MyListingsPage({
       </h2>
 
       {!ownRows.length ? (
-        <p className="rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
-          {t("empty")}
-        </p>
+        <EmptyState title={t("empty")} />
       ) : (
         <div className="space-y-4">
           {ownRows.map((l) => {
@@ -269,7 +268,7 @@ export default async function MyListingsPage({
             });
 
             return (
-              <article key={l.id} className="rounded-xl border border-line p-4 sm:p-5">
+              <article key={l.id} className="rounded-2xl border border-line bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue sm:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
@@ -390,7 +389,7 @@ export default async function MyListingsPage({
             const listing = e.comarketing_offers?.listings;
             const share = e.accepted_terms?.marketing_agent_share_pct;
             return (
-              <article key={e.id} className="rounded-xl border border-line p-4">
+              <article key={e.id} className="rounded-2xl border border-line bg-card p-4 shadow-card transition-colors duration-150 hover:border-blue">
                 <div className="flex items-start justify-between gap-2">
                   <span className="rounded-full bg-crimson-soft px-2 py-0.5 text-xs font-semibold text-crimson">
                     {t("borrowedBadge")}
