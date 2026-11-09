@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { AgentShell } from "@/components/layout/agent-shell";
+import { Badge } from "@/components/ui/badge";
 import { aiQuotaFor } from "@/lib/ai/engine";
 
 /**
@@ -75,22 +76,24 @@ export default async function AiWorkforcePage() {
   return (
     <AgentShell wide>
       <div className="space-y-8">
-        <header className="flex flex-wrap items-end justify-between gap-4">
-          <div className="min-w-0 max-w-2xl">
-            <h1>{t("title")}</h1>
-            <p className="mt-1 text-sm text-muted">{t("meet")}</p>
-            <p className="mt-1 text-sm text-muted">{t("intro")}</p>
-          </div>
-          <div className="flex flex-wrap gap-2 text-xs">
-            <span className="rounded-full bg-success/10 px-3 py-1 font-semibold text-success">{t("liveCount", { count: live })}</span>
-            {countryCast && country && (
-              <span className="rounded-full bg-indigo-soft px-3 py-1 font-semibold text-indigo">{t("castCountry", { country })}</span>
-            )}
-            {quota && verified && (
-              <span className="rounded-full bg-blue-soft px-3 py-1 font-semibold text-blue">
-                {t("quota", { remaining: quota.remaining, total: quota.monthly_allowance })}
-              </span>
-            )}
+        {/* Command band: fixed colours so the text stays legible in dark mode. */}
+        <header
+          className="relative overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
+          style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
+        >
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="min-w-0 max-w-2xl">
+              <h1 className="text-white">{t("title")}</h1>
+              <p className="mt-2 text-sm text-[#c8d6f2]">{t("meet")}</p>
+              <p className="mt-1 text-sm text-[#c8d6f2]">{t("intro")}</p>
+            </div>
+            <div className="flex flex-wrap gap-2 text-xs">
+              <Badge tone="success">{t("liveCount", { count: live })}</Badge>
+              {countryCast && country && <Badge tone="accent">{t("castCountry", { country })}</Badge>}
+              {quota && verified && (
+                <Badge tone="info">{t("quota", { remaining: quota.remaining, total: quota.monthly_allowance })}</Badge>
+              )}
+            </div>
           </div>
         </header>
 
@@ -110,9 +113,7 @@ export default async function AiWorkforcePage() {
                 const heroOpen = heroLinked && !!r.external_url;
                 const p = personaOf.get(r.key);
                 const skills = pickList(p?.skills).slice(0, 3);
-                const chip = isLive
-                  ? "bg-success text-white"
-                  : r.external_url ? "bg-indigo text-white" : "bg-card/90 text-muted";
+                const chipTone = isLive ? "success" : r.external_url ? "accent" : "neutral";
                 const card = (
                   <>
                     {/* Portrait ----------------------------------------------- */}
@@ -129,9 +130,9 @@ export default async function AiWorkforcePage() {
                       ) : (
                         <div className="grid h-full place-items-center text-4xl text-blue/40">✦</div>
                       )}
-                      <span className={`absolute right-3 top-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold shadow-card ${chip}`}>
+                      <Badge tone={chipTone} className="absolute right-3 top-3 shadow-card">
                         {isLive ? t("status.live") : r.external_url ? t("status.hero") : t("status.planned")}
-                      </span>
+                      </Badge>
                       {r.tier === "premium" && (
                         <span className="absolute left-3 top-3 rounded-full bg-warning-soft px-2.5 py-0.5 text-[11px] font-semibold text-warning shadow-card">{t("premium")}</span>
                       )}

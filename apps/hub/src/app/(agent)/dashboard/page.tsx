@@ -213,17 +213,21 @@ export default async function DashboardPage({
         <AnnouncementFeed />
 
         {/* Greeting -------------------------------------------------------- */}
-        <header className="flex flex-wrap items-start justify-between gap-4">
+        {/* Command band: fixed colours so the text stays legible in dark mode. */}
+        <header
+          className="flex flex-wrap items-start justify-between gap-4 overflow-hidden rounded-3xl p-6 text-white shadow-card sm:p-8"
+          style={{ background: "linear-gradient(120deg, #0b1b33 0%, #1c2f4f 60%, #243f6e 100%)" }}
+        >
           <div className="flex min-w-0 items-center gap-3">
             {manager?.avatar_path && (
               <Image src={manager.avatar_path} alt={manager.name} width={48} height={48} unoptimized
-                     className="h-12 w-12 shrink-0 rounded-full border-2 border-card object-cover shadow-card" title={t("brief.by", { name: manager.name })} />
+                     className="h-12 w-12 shrink-0 rounded-full border-2 border-white/30 object-cover shadow-card" title={t("brief.by", { name: manager.name })} />
             )}
             <div className="min-w-0">
-            <h1 className="truncate">
+            <h1 className="break-words text-white">
               {t(`brief.greeting.${brief?.greetingKey ?? "morning"}`, { name: firstName })}
             </h1>
-            <p className="mt-1 text-sm text-muted">
+            <p className="mt-1 text-sm text-[#c8d6f2]">
               {agentProfile?.agency_name ?? t("independentAgent")}
               {agentProfile?.city ? ` · ${agentProfile.city}` : ""}
               {manager ? ` · ${t("brief.by", { name: manager.name })}` : ""}
