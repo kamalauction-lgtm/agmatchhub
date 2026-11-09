@@ -27,7 +27,7 @@ export function SectionHeading({
     <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
       <div className="min-w-0">
         {eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-electric">
             {eyebrow}
           </p>
         )}
@@ -38,7 +38,7 @@ export function SectionHeading({
       {action && (
         <Link
           href={action.href}
-          className="group inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-1 py-1 text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="group inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-1 py-1 text-sm font-semibold text-electric transition-colors duration-200 hover:text-electric-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric"
         >
           {action.label}
           {/* Nudges on hover instead of scaling, so nothing around it shifts. */}

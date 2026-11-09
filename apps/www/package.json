@@ -5,6 +5,7 @@
   "description": "Public property marketplace (www.propertiguru.id). Anonymous traffic only \u2014 never holds a service-role key.",
   "scripts": {
     "dev": "next dev --port 8154",
+    "dev:staging": "node scripts/dev-staging.mjs",
     "build": "next build --webpack",
     "start": "next start --port 8154",
     "lint": "eslint",

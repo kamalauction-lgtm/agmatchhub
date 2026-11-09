@@ -138,14 +138,19 @@ export async function searchListings(params: SearchParams): Promise<SearchResult
 
   // Hierarchy filter: a province id matches every listing beneath it, because
   // properties carry their denormalised ancestor ids (migration 00030).
-  if (params.locationId) {
+  // The id is interpolated into a PostgREST filter string, so only a UUID is
+  // ever allowed through; anything else is dropped (SENTINEL, 9 Nov 2026).
+  if (params.locationId && /^[0-9a-f-]{36}$/i.test(params.locationId)) {
     query = query.or(
       `location_id.eq.${params.locationId},ancestor_location_ids.cs.{${params.locationId}}`
     );
   }
 
   if (params.q) {
-    const term = params.q.replace(/[%,()]/g, " ").trim();
+    // Strip every character PostgREST's filter grammar treats specially, not
+    // just the ones that open a new condition: a stray quote or backslash
+    // otherwise turns into a 400 and then a 500 (SENTINEL, 9 Nov 2026).
+    const term = params.q.replace(/[%,()"'\\.*:]/g, " ").replace(/\s+/g, " ").trim();
     if (term) {
       query = query.or(
         [
@@ -192,6 +197,52 @@ export async function searchListings(params: SearchParams): Promise<SearchResult
     page,
     pageCount: Math.max(1, Math.ceil(total / PAGE_SIZE)),
   };
+}
+
+/**
+ * Demo inventory is marked in the TITLE by the staging seed ("[DEMO] …"), so
+ * the marker travels with the row through every view and cannot be dropped by
+ * a projection change. The UI shows it as a badge and strips the prefix from
+ * the headline. Production never holds such rows; if it ever did, the badge
+ * would say so rather than hide it.
+ */
+export function isDemoListing(l: Pick<PublicListing, "title">): boolean {
+  return /^\s*\[DEMO\]/i.test(l.title);
+}
+export function displayTitle(title: string): string {
+  return title.replace(/^\s*\[DEMO\]\s*/i, "");
+}
+
+/** Up to four listings by id, for the compare table. Public view only. */
+export async function getListingsByIds(ids: string[]): Promise<PublicListing[]> {
+  const clean = [...new Set(ids)]
+    .filter((id) => /^[0-9a-f-]{36}$/i.test(id))
+    .slice(0, 4);
+  if (!clean.length) return [];
+  const { data, error } = await publicDb()
+    .from("public_listings")
+    .select("*")
+    .eq("country_code", market.country)
+    .in("id", clean);
+  if (error) throw new Error(`compare lookup failed: ${error.message}`);
+  const rows = await scrubAgency((data ?? []) as PublicListing[]);
+  // Preserve the order the visitor chose.
+  return clean.map((id) => rows.find((r) => r.id === id)).filter((r): r is PublicListing => !!r);
+}
+
+/**
+ * Resolve a place name the visitor typed to a location row, preferring the
+ * broadest administrative level that matches exactly (province, then
+ * regency), so "Depok" means the city and not a same-named village elsewhere.
+ */
+export async function findLocationByName(name: string): Promise<PublicLocation | null> {
+  const rows = await suggestLocations(name, 12);
+  const norm = (s: string) => s.toLowerCase().replace(/^(kota|kab\.?|kabupaten)\s+/, "").trim();
+  const target = norm(name);
+  const exact = rows.filter((r) => norm(r.name) === target);
+  const rank = (lvl: string) => (lvl === "province" ? 0 : lvl === "regency" ? 1 : 2);
+  const pick = (exact.length ? exact : rows).sort((a, b) => rank(a.level) - rank(b.level) || b.listing_count - a.listing_count);
+  return pick[0] ?? null;
 }
 
 export async function getListingBySlug(slug: string): Promise<PublicListing | null> {
@@ -242,13 +293,13 @@ export type PublicLocation = {
 
 /** Location suggestions for the search box. Bounded, and public data only. */
 export async function suggestLocations(term: string, limit = 8): Promise<PublicLocation[]> {
-  const cleaned = term.replace(/[%,()]/g, " ").trim();
+  const cleaned = term.replace(/[%,()"'\\.*:_]/g, " ").replace(/\s+/g, " ").trim();
   if (cleaned.length < 2) return [];
 
   const { data, error } = await publicDb()
     .from("locations")
     .select("id,name,level,slug,path_names,listing_count")
-    .eq("country_code", "ID")
+    .eq("country_code", market.country)
     .ilike("name_normalised", `%${cleaned.toLowerCase()}%`)
     .order("listing_count", { ascending: false })
     .limit(limit);

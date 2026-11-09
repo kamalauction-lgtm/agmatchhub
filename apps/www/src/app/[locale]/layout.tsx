@@ -92,7 +92,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={{}}>
           <SiteHeader locale={locale} />
           <main className="flex-1">{children}</main>
-          <SiteFooter />
+          <SiteFooter locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

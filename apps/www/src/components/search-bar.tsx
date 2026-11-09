@@ -50,7 +50,7 @@ export async function SearchBar({
      explicit colour they inherit white and render as blank boxes. Found on
      production the first time this form was put on the dark band. */
   const selectClass =
-    "rounded-lg border border-line bg-surface-raised px-3 py-2.5 text-sm text-foreground outline-none focus:border-brand";
+    "rounded-lg border border-line bg-surface-raised px-3 py-2.5 text-sm text-foreground outline-none focus:border-electric";
 
   return (
     <form action={action} method="get" className="w-full">
@@ -102,7 +102,7 @@ export async function SearchBar({
         />
         <button
           type="submit"
-          className={`rounded-lg bg-brand font-semibold text-white hover:bg-brand-strong ${
+          className={`cursor-pointer rounded-lg bg-electric font-semibold text-white transition-colors duration-200 hover:bg-electric-strong ${
             large ? "px-6 py-3" : "px-5 py-2.5 text-sm"
           }`}
         >

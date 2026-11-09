@@ -41,8 +41,8 @@ export type Market = {
   phoneCode: string;
   /** National number length range, excluding the country code. */
   phoneDigits: { min: number; max: number };
-  /** Public URL segments, per locale, for the two indexed page types. */
-  segments: { listing: string; search: string };
+  /** Public URL segments for the indexed page types and the 2.0 tools. */
+  segments: { listing: string; search: string; assistant: string; compare: string };
   /** What this market calls an agent — mirrors `countries.terminology`. */
   agentTerm: string;
   /**
@@ -84,7 +84,7 @@ const MARKETS: Record<MarketCode, Market> = {
     measurementUnit: "sqm",
     phoneCode: "+62",
     phoneDigits: { min: 9, max: 13 },
-    segments: { listing: "properti", search: "cari" },
+    segments: { listing: "properti", search: "cari", assistant: "asisten", compare: "bandingkan" },
     agentTerm: "Agen Properti",
     countryName: { id: "Indonesia", en: "Indonesia" },
     hubUrl: "https://hub.propertiguru.id",
@@ -114,7 +114,7 @@ const MARKETS: Record<MarketCode, Market> = {
     measurementUnit: "sqft",
     phoneCode: "+60",
     phoneDigits: { min: 8, max: 10 },
-    segments: { listing: "property", search: "search" },
+    segments: { listing: "property", search: "search", assistant: "assistant", compare: "compare" },
     // `countries.terminology` for MY says "Real Estate Negotiator" — the
     // regulated BOVAEP term, not a styling choice.
     agentTerm: "Real Estate Negotiator",
