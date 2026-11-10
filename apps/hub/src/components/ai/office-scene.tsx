@@ -324,14 +324,15 @@ export function OfficeScene({
 
 function Kpi({ label, value, color, demo, demoLabel, icon }: { label: string; value: number; color?: string; demo?: boolean; demoLabel?: string; icon: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur">
-      <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-base" style={{ background: color ? `${color}33` : "rgba(255,255,255,0.12)", color: color ?? "#c8d6f2" }}>{icon}</span>
+    <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-3 py-3 backdrop-blur sm:px-4">
+      <span aria-hidden className="hidden h-9 w-9 shrink-0 place-items-center rounded-xl text-base sm:grid" style={{ background: color ? `${color}33` : "rgba(255,255,255,0.12)", color: color ?? "#c8d6f2" }}>{icon}</span>
       <span className="min-w-0">
         <span className="flex items-baseline gap-2 text-2xl font-bold leading-none tabular-nums" style={{ color: color ?? "#ffffff" }}>
           {value}
           {demo && color && <span className="rounded bg-gold-light px-1 text-[10px] font-bold text-foreground">{demoLabel}</span>}
         </span>
-        <span className="mt-1 block truncate text-[11px] font-semibold uppercase tracking-wide text-white/70">{label}</span>
+        {/* Wraps rather than truncating: on a phone "SPECIAL…" told the agent nothing. */}
+        <span className="mt-1 block text-[10px] font-semibold uppercase leading-tight tracking-wide text-white/70 sm:text-[11px]">{label}</span>
       </span>
     </div>
   );
