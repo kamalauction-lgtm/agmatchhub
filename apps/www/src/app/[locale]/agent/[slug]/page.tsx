@@ -6,6 +6,7 @@ import { getAgentBySlug, getAgentListings } from "@/lib/listings";
 import { mediaUrl } from "@/lib/format";
 import { ListingCard } from "@/components/listing-card";
 import { CheckBadgeIcon, PinIcon } from "@/components/icons";
+import { requireLocale } from "@/i18n/require-locale";
 
 /**
  * An agent's own landing page: /agent/<slug>.
@@ -57,6 +58,7 @@ export default async function AgentPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  requireLocale(locale);
   setRequestLocale(locale);
 
   const agent = await getAgentBySlug(slug);

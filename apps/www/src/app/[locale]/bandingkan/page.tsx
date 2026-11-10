@@ -8,11 +8,13 @@ import { publicPath, routing } from "@/i18n/routing";
 import { DemoBadge } from "@/components/demo-badge";
 import { RuleBasedNotice } from "@/components/rule-based-notice";
 import { ArrowRightIcon, CheckBadgeIcon, CloseIcon, ImageOffIcon } from "@/components/icons";
+import { requireLocale } from "@/i18n/require-locale";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  requireLocale(locale);
   const t = await getTranslations({ locale, namespace: "compare" });
   return { title: t("title") };
 }
@@ -45,6 +47,7 @@ export default async function ComparePage({
   searchParams: Promise<{ ids?: string | string[] }>;
 }) {
   const { locale } = await params;
+  requireLocale(locale);
   setRequestLocale(locale);
   const [t, tl, tp, tOwn, tFurn, tCond, th] = await Promise.all([
     getTranslations("compare"), getTranslations("listing"), getTranslations("propertyType"),

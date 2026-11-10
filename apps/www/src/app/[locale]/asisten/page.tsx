@@ -11,12 +11,14 @@ import { RuleBasedNotice } from "@/components/rule-based-notice";
 import { CompareTray } from "@/components/compare-tray";
 import { SectionHeading } from "@/components/section-heading";
 import { ArrowRightIcon, CheckBadgeIcon, CloseIcon, SearchIcon, SparkIcon } from "@/components/icons";
+import { requireLocale } from "@/i18n/require-locale";
 
 // Results depend on the query string; render per request.
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  requireLocale(locale);
   const t = await getTranslations({ locale, namespace: "concierge" });
   return { title: t("title") };
 }
@@ -36,6 +38,7 @@ export default async function AssistantPage({
   searchParams: Promise<{ q?: string | string[] }>;
 }) {
   const { locale } = await params;
+  requireLocale(locale);
   setRequestLocale(locale);
   const t = await getTranslations("concierge");
   const tc = await getTranslations("compare");
