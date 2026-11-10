@@ -44,8 +44,17 @@ export async function setOrganisationPolicy(formData: FormData): Promise<void> {
 
   const supabase = await createClient();
   const { data: agency } = await supabase
-    .from("agencies").select("name").eq("id", agencyId).maybeSingle();
+    .from("agencies").select("name, country_code, countries(default_currency)").eq("id", agencyId).maybeSingle();
   if (!agency) redirect("/admin/organisations?notice=not_found");
+
+  /* D8: a fixed price is in the agency's own currency, never an assumed IDR.
+     Checked before anything is retired, so a refusal changes nothing. */
+  const market = (Array.isArray(agency.countries) ? agency.countries[0] : agency.countries) as
+    | { default_currency: string | null } | null | undefined;
+  const currency = market?.default_currency ?? null;
+  if (treatment === "fixed_price" && !currency) {
+    redirect(`/admin/organisations/${agencyId}?notice=needs_country`);
+  }
 
   // What is in force now, so the audit line can say what changed.
   const { data: existing } = await supabase
@@ -76,7 +85,7 @@ export async function setOrganisationPolicy(formData: FormData): Promise<void> {
       treatment,
       percent: treatment === "percent_discount" ? amount : null,
       amount: treatment === "fixed_price" ? amount : null,
-      currency: treatment === "fixed_price" ? "IDR" : null,
+      currency: treatment === "fixed_price" ? currency : null,
       // Above the platform-wide launch policy (50), below an individual
       // override, matching the precedence model in migration 00062.
       priority: 200,
@@ -111,7 +120,8 @@ export async function setOrganisationPolicy(formData: FormData): Promise<void> {
       ? { policy: previous.name, treatment: previous.treatment, percent: previous.percent, amount: previous.amount }
       : null,
     next: { treatment, percent: treatment === "percent_discount" ? amount : null,
-            amount: treatment === "fixed_price" ? amount : null, reason },
+            amount: treatment === "fixed_price" ? amount : null,
+            currency: treatment === "fixed_price" ? currency : null, reason },
   });
 
   revalidatePath(`/admin/organisations/${agencyId}`);

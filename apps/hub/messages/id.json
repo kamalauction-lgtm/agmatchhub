@@ -1870,7 +1870,7 @@
       "adTitle": "Judul listing",
       "adTitlePlaceholder": "mis. Apartemen 2BR di Jakarta Selatan, 5 menit ke MRT",
       "description": "Deskripsi",
-      "price": "Harga (IDR)",
+      "price": "Harga ({currency})",
       "priceHelp": "Angka saja, tanpa titik. Untuk sewa: harga per periode.",
       "certificate": "Sertifikat",
       "area": "Wilayah",
@@ -1879,8 +1879,8 @@
       "generalAddressHelp": "Publik - jangan pernah alamat unit persisnya.",
       "buildingName": "Nama gedung / kompleks",
       "postalCode": "Kode pos",
-      "landSize": "Tanah (m2)",
-      "buildingSize": "Bangunan (m2)",
+      "landSize": "Tanah ({unit})",
+      "buildingSize": "Bangunan ({unit})",
       "bedrooms": "Kamar tidur",
       "bathrooms": "Kamar mandi",
       "floors": "Lantai",
@@ -1907,8 +1907,10 @@
         "save_failed": "Gagal menyimpan listing. Silakan coba lagi.",
         "too_many_photos": "Maksimal 15 foto.",
         "bad_photo_type": "Foto harus JPG, PNG, atau WebP.",
-        "photo_too_large": "Setiap foto harus di bawah 10 MB."
-      }
+        "photo_too_large": "Setiap foto harus di bawah 10 MB.",
+        "market_unavailable": "Listing hanya dapat dibuat di pasar yang aktif, dan profil Anda belum memiliki pasar aktif. Hubungi dukungan."
+      },
+      "tenure": "Pegangan"
     },
     "sectionOwn": "Listing milik saya",
     "sectionBorrowed": "Dipinjam lewat pemasaran bersama",
@@ -2011,7 +2013,9 @@
         "unverified": "Disusun tanpa AI — AI terbuka setelah verifikasi.",
         "no_provider": "Disusun tanpa AI — belum ada penyedia AI yang terhubung.",
         "failed": "Disusun tanpa AI — AI tidak menjawab kali ini."
-      }
+      },
+      "catResidentialHintMY": "Rumah teres, berkembar, kondominium, serviced residence",
+      "catCommercialHintMY": "Shoplot, kantor, pabrik, tanah"
     },
     "offer": {
       "cta": "Izinkan agen lain memasarkannya",
@@ -2321,7 +2325,27 @@
     "hotel": "Hotel",
     "tanah": "Tanah",
     "kavling": "Kavling",
-    "lainnya": "Lainnya"
+    "lainnya": "Lainnya",
+    "terrace": "Rumah teres",
+    "semi_detached": "Berkembar",
+    "bungalow": "Banglo",
+    "townhouse": "Rumah bandar",
+    "cluster_home": "Rumah kluster",
+    "condominium": "Kondominium",
+    "serviced_residence": "Kediaman servis",
+    "apartment": "Apartmen",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Lot kedai",
+    "shop_office": "Kedai pejabat",
+    "retail_space": "Ruang runcit",
+    "office_space": "Ruang pejabat",
+    "factory": "Kilang",
+    "warehouse": "Gudang",
+    "agricultural_land": "Tanah pertanian",
+    "residential_land": "Tanah kediaman",
+    "commercial_land": "Tanah komersial"
   },
   "ownershipTypes": {
     "shm": "SHM",
@@ -2333,7 +2357,13 @@
     "strata": "Strata Title",
     "ppjb": "PPJB",
     "adat": "Tanah Adat",
-    "lainnya": "Lainnya"
+    "lainnya": "Lainnya",
+    "freehold": "Pegangan bebas",
+    "leasehold_99": "Pajakan (99 tahun)",
+    "leasehold_60": "Pajakan (60 tahun)",
+    "leasehold_other": "Pajakan",
+    "malay_reserve": "Tanah rizab Melayu",
+    "bumi_lot": "Lot Bumiputera"
   },
   "adminListings": {
     "title": "Moderasi listing",
@@ -2994,7 +3024,8 @@
       "invalid": "Data tidak valid.",
       "not_found": "Organisasi tidak ditemukan.",
       "needs_percent": "Masukkan persen 0-100.",
-      "needs_amount": "Masukkan jumlah harga."
+      "needs_amount": "Masukkan jumlah harga.",
+      "needs_country": "Organisasi ini belum memiliki negara, sehingga harga tetap tidak memiliki mata uang. Tetapkan negaranya terlebih dahulu."
     }
   },
   "commercial": {

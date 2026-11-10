@@ -1,4 +1,6 @@
 import "server-only";
+// Relative, not `@/`: unit tests import this module without the hub alias.
+import { unitSuffix, type SizeUnit } from "../listings/vocabulary";
 
 /**
  * Writes listing copy from the structured fields the agent already entered.
@@ -40,6 +42,9 @@ export type WriterInput = {
   price?: number | null;
   rentPeriod?: "monthly" | "yearly" | null;
   negotiable?: boolean;
+  /** The listing's market (D8). Absent means Indonesia, as before. */
+  currency?: string | null;
+  sizeUnit?: SizeUnit | null;
 };
 
 const FURNISHING: Record<string, string> = {
@@ -87,6 +92,18 @@ function rupiah(v: number): string {
     return `Rp${(n % 1 === 0 ? n : Number(n.toFixed(1))).toLocaleString("id-ID")} juta`;
   }
   return `Rp${v.toLocaleString("id-ID")}`;
+}
+
+/** Price in the listing's own currency: rupiah keeps its "miliar/juta" form. */
+function priceText(v: number, currency: string | null | undefined): string {
+  const c = currency ?? "IDR";
+  if (c === "IDR") return rupiah(v);
+  return new Intl.NumberFormat(c === "MYR" ? "en-MY" : "en-US", { style: "currency", currency: c, minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(v);
+}
+
+/** Size suffix in the listing's own unit. */
+function withUnit(text: string, unit: SizeUnit | null | undefined): string {
+  return unit === "sqft" ? text.replace(/ m²/g, ` ${unitSuffix("sqft")}`) : text;
 }
 
 /** Three title options, so the agent picks rather than accepts. */
@@ -227,7 +244,7 @@ function specLine(i: WriterInput, L: (typeof T)[Lang]): string {
   if (i.landSize && i.buildingSize) parts.push(`📐 ${L.landBuild(i.landSize, i.buildingSize)}`);
   else if (i.buildingSize) parts.push(`📐 ${L.build(i.buildingSize)}`);
   else if (i.landSize) parts.push(`📐 ${L.land(i.landSize)}`);
-  return parts.join(" · ");
+  return withUnit(parts.join(" · "), i.sizeUnit);
 }
 
 function priceLine(i: WriterInput, L: (typeof T)[Lang], long: boolean): string {
@@ -235,7 +252,7 @@ function priceLine(i: WriterInput, L: (typeof T)[Lang], long: boolean): string {
   const period =
     i.listingType === "rent" ? (i.rentPeriod === "yearly" ? L.perYear : L.perMonth) : "";
   const nego = i.negotiable === false ? "" : long ? L.negoLong : L.nego;
-  return `💰 ${rupiah(i.price)}${period}${nego}`;
+  return `💰 ${priceText(i.price, i.currency)}${period}${nego}`;
 }
 
 /** True by construction: only claimed when the agent's own fields say so. */
@@ -382,11 +399,11 @@ export function writeDescription(i: WriterInput): string {
   if (i.parking) specs.push(`🚗 Carport ${i.parking} mobil`);
   if (i.floors && i.floors > 1) specs.push(`🏢 ${i.floors} Lantai`);
   if (i.landSize && i.buildingSize) {
-    specs.push(`📐 LT ${i.landSize} m² / LB ${i.buildingSize} m²`);
+    specs.push(withUnit(`📐 LT ${i.landSize} m² / LB ${i.buildingSize} m²`, i.sizeUnit));
   } else if (i.buildingSize) {
-    specs.push(`📐 Luas bangunan ${i.buildingSize} m²`);
+    specs.push(withUnit(`📐 Luas bangunan ${i.buildingSize} m²`, i.sizeUnit));
   } else if (i.landSize) {
-    specs.push(`📐 Luas tanah ${i.landSize} m²`);
+    specs.push(withUnit(`📐 Luas tanah ${i.landSize} m²`, i.sizeUnit));
   }
   if (i.ownership && OWNERSHIP[i.ownership]) specs.push(`📜 Sertifikat ${OWNERSHIP[i.ownership]}`);
   if (i.furnishing && FURNISHING[i.furnishing]) specs.push(`🛋️ ${FURNISHING[i.furnishing]}`);
@@ -408,7 +425,7 @@ export function writeDescription(i: WriterInput): string {
     const period =
       i.listingType === "rent" ? (i.rentPeriod === "yearly" ? " / tahun" : " / bulan") : "";
     const nego = i.negotiable === false ? "" : " (nego untuk penawaran serius)";
-    blocks.push(`💰 HARGA\n• ${rupiah(i.price)}${period}${nego}`);
+    blocks.push(`💰 HARGA\n• ${priceText(i.price, i.currency)}${period}${nego}`);
   }
 
   // --- location --------------------------------------------------------------

@@ -5,6 +5,8 @@ import { requireUser } from "@/lib/authz";
 import { type WriterInput } from "@/lib/ai/listing-writer";
 import { adviseListing, type Advice } from "@/lib/ai/listing-advisor";
 import { draftListing, type ListingDraft } from "@/lib/ai/listing-assistant";
+import { getAgentMarket } from "@/lib/listings/market";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * Draft listing copy from the fields the agent has already filled in.
@@ -22,7 +24,18 @@ export async function draftListingCopy(
 ): Promise<DraftResult> {
   const user = await requireUser();
   const locale = await getLocale();
-  return draftListing(input, { userId: user.id, locale });
+  // The market comes from the agent's profile, never from the client (D8):
+  // comparables are searched in that country, and copy uses its currency and unit.
+  const market = await getAgentMarket(await createClient(), user.id);
+  return draftListing(
+    {
+      ...input,
+      countryCode: market?.country ?? "ID",
+      currency: market?.currency ?? null,
+      sizeUnit: market?.unit ?? null,
+    },
+    { userId: user.id, locale },
+  );
 }
 
 /** Advice on copy the agent wrote themselves. Rules only — instant and free. */

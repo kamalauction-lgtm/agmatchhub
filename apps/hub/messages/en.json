@@ -1870,7 +1870,7 @@
       "adTitle": "Listing title",
       "adTitlePlaceholder": "e.g. 2BR apartment in Jakarta Selatan, 5 min to MRT",
       "description": "Description",
-      "price": "Price (IDR)",
+      "price": "Price ({currency})",
       "priceHelp": "Numbers only, without dots. For rent: price per period.",
       "certificate": "Certificate",
       "area": "Area",
@@ -1879,8 +1879,8 @@
       "generalAddressHelp": "Public - never the exact unit address.",
       "buildingName": "Building / complex name",
       "postalCode": "Postal code",
-      "landSize": "Land (m2)",
-      "buildingSize": "Building (m2)",
+      "landSize": "Land ({unit})",
+      "buildingSize": "Building ({unit})",
       "bedrooms": "Bedrooms",
       "bathrooms": "Bathrooms",
       "floors": "Floors",
@@ -1907,8 +1907,10 @@
         "save_failed": "Could not save the listing. Please try again.",
         "too_many_photos": "Maximum 15 photos.",
         "bad_photo_type": "Photos must be JPG, PNG or WebP.",
-        "photo_too_large": "Each photo must be under 10 MB."
-      }
+        "photo_too_large": "Each photo must be under 10 MB.",
+        "market_unavailable": "Listings can only be created in an active market, and your profile has no active market. Contact support."
+      },
+      "tenure": "Tenure"
     },
     "sectionOwn": "My own listings",
     "sectionBorrowed": "Borrowed via co-marketing",
@@ -2011,7 +2013,9 @@
         "unverified": "Drafted without AI — AI opens after verification.",
         "no_provider": "Drafted without AI — no AI provider is connected yet.",
         "failed": "Drafted without AI — the AI did not answer this time."
-      }
+      },
+      "catResidentialHintMY": "Terrace, semi-D, condo, serviced residence",
+      "catCommercialHintMY": "Shoplot, office, factory, land"
     },
     "offer": {
       "cta": "Let other agents market this",
@@ -2321,7 +2325,27 @@
     "hotel": "Hotel",
     "tanah": "Land",
     "kavling": "Plot",
-    "lainnya": "Other"
+    "lainnya": "Other",
+    "terrace": "Terrace house",
+    "semi_detached": "Semi-detached",
+    "bungalow": "Bungalow",
+    "townhouse": "Townhouse",
+    "cluster_home": "Cluster home",
+    "condominium": "Condominium",
+    "serviced_residence": "Serviced residence",
+    "apartment": "Apartment",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Shoplot",
+    "shop_office": "Shop office",
+    "retail_space": "Retail space",
+    "office_space": "Office space",
+    "factory": "Factory",
+    "warehouse": "Warehouse",
+    "agricultural_land": "Agricultural land",
+    "residential_land": "Residential land",
+    "commercial_land": "Commercial land"
   },
   "ownershipTypes": {
     "shm": "SHM (freehold)",
@@ -2333,7 +2357,13 @@
     "strata": "Strata title",
     "ppjb": "PPJB",
     "adat": "Customary",
-    "lainnya": "Other"
+    "lainnya": "Other",
+    "freehold": "Freehold",
+    "leasehold_99": "Leasehold (99 years)",
+    "leasehold_60": "Leasehold (60 years)",
+    "leasehold_other": "Leasehold",
+    "malay_reserve": "Malay reserve land",
+    "bumi_lot": "Bumi lot"
   },
   "adminListings": {
     "title": "Listing moderation",
@@ -2994,7 +3024,8 @@
       "invalid": "Invalid input.",
       "not_found": "Organisation not found.",
       "needs_percent": "Enter a percentage between 0 and 100.",
-      "needs_amount": "Enter a price amount."
+      "needs_amount": "Enter a price amount.",
+      "needs_country": "This organisation has no country, so a fixed price has no currency. Set its country first."
     }
   },
   "commercial": {

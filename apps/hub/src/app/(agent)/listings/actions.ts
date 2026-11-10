@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
+import { getAgentMarket } from "@/lib/listings/market";
+import { categoryForType, isTenureAllowed, isTypeAllowed, WIZARD_LOCATION_LEVELS } from "@/lib/listings/vocabulary";
 
 /**
  * Marketplace listing creation (§28 steps 4–6). The agent's submission always
@@ -36,14 +38,10 @@ const schema = z.object({
   listingType: z.enum(["sale", "rent"]),
   rentPeriod: z.enum(["monthly", "yearly"]).optional().or(z.literal("")),
   propertyCategory: z.enum(["residential", "commercial", "industrial", "land", "other"]),
-  propertyType: z.enum([
-    "rumah", "apartemen", "ruko", "rukan", "kondominium", "villa", "kost",
-    "gudang", "pabrik", "kantor", "toko", "hotel", "tanah", "kavling", "lainnya",
-  ]),
-  ownershipType: z
-    .enum(["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", "adat", "lainnya"])
-    .optional()
-    .or(z.literal("")),
+  // Checked against the agent's own market below (D8): the database allows
+  // the union of both vocabularies, so the form must not choose the market.
+  propertyType: z.string().trim().min(1).max(40),
+  ownershipType: z.string().trim().max(40).optional().or(z.literal("")),
   title: z.string().trim().min(10).max(150),
   description: optText,
   // Newline-separated, from the assistant's chips the agent kept. Optional
@@ -104,6 +102,20 @@ export async function createListing(formData: FormData): Promise<void> {
     redirect("/listings/new?error=invalid&field=rentPeriod");
   }
 
+  /* D8 (P0-d-1b): the listing belongs to the agent's market. Country,
+     currency, unit and language come from the profile and `countries`, never
+     from the form, and a type, tenure or location from another market is
+     refused rather than stored under the wrong flag. */
+  const market = await getAgentMarket(supabase, user.id);
+  if (!market) redirect("/listings/new?error=market_unavailable");
+  if (!isTypeAllowed(market.country, d.propertyType)) {
+    redirect("/listings/new?error=invalid&field=propertyType");
+  }
+  if (d.ownershipType && !isTenureAllowed(market.country, d.ownershipType)) {
+    redirect("/listings/new?error=invalid&field=ownershipType");
+  }
+  const propertyCategory = categoryForType(d.propertyType, d.propertyCategory);
+
   /* Quota (§28 step 19), resolved from the entitlement engine rather than a
      constant: plan allowance plus referral bonuses plus admin grants. The
      same function backs the admin's "why does this agent have N slots"
@@ -137,9 +149,12 @@ export async function createListing(formData: FormData): Promise<void> {
   if (d.locationId) {
     const { data } = await supabase
       .from("locations")
-      .select("id, ancestor_ids, path_names, level, name")
+      .select("id, ancestor_ids, path_names, level, name, country_code")
       .eq("id", d.locationId)
       .single();
+    if (!data || data.country_code !== market.country || !WIZARD_LOCATION_LEVELS[market.country].includes(data.level)) {
+      redirect("/listings/new?error=invalid&field=locationId");
+    }
     if (data) {
       location = {
         id: data.id,
@@ -157,8 +172,8 @@ export async function createListing(formData: FormData): Promise<void> {
     .insert({
       human_readable_id: hidProp,
       agent_id: user.id,
-      country_code: "ID",
-      property_category: d.propertyCategory,
+      country_code: market.country,
+      property_category: propertyCategory,
       property_type: d.propertyType,
       ownership_type: d.ownershipType || null,
       location_id: location?.id ?? null,
@@ -172,7 +187,7 @@ export async function createListing(formData: FormData): Promise<void> {
       building_name: d.buildingName,
       land_size: d.landSize,
       building_size: d.buildingSize,
-      measurement_unit: "sqm",
+      measurement_unit: market.unit,
       bedrooms: d.bedrooms,
       bathrooms: d.bathrooms,
       floors: d.floors,
@@ -200,10 +215,10 @@ export async function createListing(formData: FormData): Promise<void> {
       listing_type: d.listingType,
       status: "pending_review",
       moderation_state: "pending",
-      currency: "IDR",
+      currency: market.currency,
       price: d.price,
       rent_period: d.listingType === "rent" ? d.rentPeriod || "monthly" : null,
-      language: "id",
+      language: market.language,
       title: d.title,
       description: d.description,
       key_selling_points: d.keySellingPoints,
