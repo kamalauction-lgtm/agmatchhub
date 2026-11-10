@@ -44,6 +44,9 @@ export const routing = defineRouting({
     "/": "/",
     "/cari": localisedPath("/cari", market.segments.search),
     "/properti/[slug]": localisedPath("/properti/[slug]", market.segments.listing),
+    // PropertiGuru 2.0 tools: the rule-based concierge and side-by-side compare.
+    "/asisten": localisedPath("/asisten", market.segments.assistant),
+    "/bandingkan": localisedPath("/bandingkan", market.segments.compare),
     // Agents keep `/agent` in both markets: it is already English, and the
     // Malay "ejen" would gain nothing an English-first site wants.
     "/agent/[slug]": "/agent/[slug]",
@@ -59,8 +62,11 @@ export type Locale = (typeof routing.locales)[number];
  * hand in several components), so this keeps the segment lookup in one place
  * rather than leaving `"/cari"` written out where it would not be rewritten.
  */
-export function publicPath(locale: string, internal: "search" | "listing", rest = ""): string {
+export function publicPath(
+  locale: string,
+  internal: "search" | "listing" | "assistant" | "compare",
+  rest = ""
+): string {
   const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-  const segment = internal === "search" ? market.segments.search : market.segments.listing;
-  return `${prefix}/${segment}${rest}`;
+  return `${prefix}/${market.segments[internal]}${rest}`;
 }

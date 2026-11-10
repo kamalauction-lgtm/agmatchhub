@@ -24,7 +24,8 @@
  * Runs through the direct Postgres connection (RLS bypassed, triggers still
  * fire — the same path seed-staging-comarketing.mjs uses). Refuses production.
  * None of these rows match the fixture markers, so the suite's sweep leaves
- * them alone.
+ * them alone. The two published listings carry the [DEMO] title prefix so the
+ * public marketplace badges them like the demo catalogue.
  */
 import { randomBytes } from "node:crypto";
 import pg from "pg";
@@ -246,10 +247,10 @@ try {
         price, price_negotiable, language, title, description, slug, published_at, expires_at,
         is_verified, quality_score, ranking_score, created_by)
      values ('LST-2026-900001', $1, $2, 'sale', 'published', 'approved', 'IDR', 3500000000, true, 'id',
-             'Rumah 4 kamar Cilandak Barat, carport 2 mobil',
+             '[DEMO] Rumah 4 kamar Cilandak Barat, carport 2 mobil',
              'Rumah dua lantai di lingkungan tenang, 10 menit ke Fatmawati MRT. Akun uji staging.',
              'rumah-4-kamar-cilandak-barat-900001', now(), now() + interval '90 days', true, 82, 0.78, $2)
-     on conflict (human_readable_id) do update set status = 'published', agent_id = excluded.agent_id
+     on conflict (human_readable_id) do update set status = 'published', agent_id = excluded.agent_id, title = excluded.title
      returning id`,
     [propertyId, ids.LA]
   );
@@ -338,10 +339,10 @@ try {
        (human_readable_id, property_id, agent_id, listing_type, status, moderation_state, currency, price, price_negotiable,
         language, title, description, slug, published_at, expires_at, is_verified, created_by)
      values ('LST-2026-900003', $1, $2, 'sale', 'published', 'approved', 'IDR', 3800000000, true, 'id',
-             'Rumah 4 kamar Pondok Indah, taman luas',
+             '[DEMO] Rumah 4 kamar Pondok Indah, taman luas',
              'Rumah keluarga dua lantai di Pondok Indah, dekat PIM dan sekolah internasional. Akun uji staging.',
              'rumah-4-kamar-pondok-indah-900003', now(), now() + interval '90 days', true, $2)
-     on conflict (human_readable_id) do update set status = 'published', agent_id = excluded.agent_id
+     on conflict (human_readable_id) do update set status = 'published', agent_id = excluded.agent_id, title = excluded.title
      returning id`,
     [maProp[0].id, ids.MA]
   );

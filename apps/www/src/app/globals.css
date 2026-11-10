@@ -37,6 +37,25 @@
   --radius: 0.875rem;
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
   --shadow-raised: 0 8px 24px rgb(15 23 42 / 0.1);
+
+  /* PropertiGuru 2.0 marketplace layer (9 Nov 2026). Mirrors the hub's
+     command-band tokens so both products read as one company: deep navy for
+     structure, electric blue for actions and AI, restrained gold for premium
+     highlights. Red stays the brand mark; it no longer leads the page. */
+  --electric: #2563eb;
+  --electric-strong: #1d4ed8;
+  --electric-soft: #eff6ff;
+  --electric-glow: rgb(37 99 235 / 0.35);
+  --gold: #a8842f;            /* decorative: rules, rings, icons */
+  --gold-light: #c9a64b;      /* badge fill, pair with --foreground text */
+  --gold-soft: #f6efdb;
+  --gold-ink: #7a5f1f;        /* gold text on light surfaces, 5.9:1 */
+  --command-from: #0b1b33;
+  --command-to: #16294a;
+  --command-ink: #ffffff;
+  --command-muted: #c8d6f2;
+  --command-link: #9fb8ff;
+  --command-gold: #c9a64b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,8 +86,55 @@
 
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.2);
     --shadow-raised: 0 8px 24px rgb(0 0 0 / 0.45);
+
+    --electric: #60a5fa;
+    --electric-strong: #3b82f6;
+    --electric-soft: #16243c;
+    --electric-glow: rgb(96 165 250 / 0.35);
+    --gold: #c9a64b;
+    --gold-light: #c9a64b;
+    --gold-soft: #2a2312;
+    --gold-ink: #e3c66f;
   }
 }
+
+/* Dark control surface, identical in both colour schemes. */
+.command-band {
+  background:
+    radial-gradient(ellipse 60% 80% at 85% 10%, rgb(37 99 235 / 0.45), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 10% 90%, rgb(201 166 75 / 0.18), transparent 55%),
+    linear-gradient(120deg, var(--command-from), var(--command-to));
+  color: var(--command-ink);
+}
+.command-band h1, .command-band h2 { color: var(--command-ink); }
+.command-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+/* Translucent panel on the band. */
+.glass {
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.glow-electric { box-shadow: 0 0 0 1px rgb(37 99 235 / 0.25), 0 12px 40px -12px var(--electric-glow); }
+.gold-rule { background: linear-gradient(90deg, transparent, var(--gold-light), transparent); height: 1px; }
+
+@keyframes pg-pulse-ring {
+  0% { box-shadow: 0 0 0 0 var(--electric-glow); }
+  100% { box-shadow: 0 0 0 14px rgb(37 99 235 / 0); }
+}
+.pulse-ring { animation: pg-pulse-ring 2.2s ease-out infinite; }
+/* Transform only, never opacity: a background tab may not run the animation,
+   and a hero whose text starts at opacity 0 would then stay invisible. */
+@keyframes pg-rise { from { transform: translateY(10px); } to { transform: none; } }
+.rise { animation: pg-rise 0.5s ease-out both; }
+.rise-2 { animation-delay: 0.08s; }
+.rise-3 { animation-delay: 0.16s; }
 
 @theme inline {
   --color-background: var(--background);
@@ -92,6 +158,17 @@
   --color-danger: var(--danger);
   --color-success-soft: var(--success-soft);
   --color-warning-soft: var(--warning-soft);
+  --color-electric: var(--electric);
+  --color-electric-strong: var(--electric-strong);
+  --color-electric-soft: var(--electric-soft);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-ink: var(--gold-ink);
+  --color-command-ink: var(--command-ink);
+  --color-command-muted: var(--command-muted);
+  --color-command-link: var(--command-link);
+  --color-command-gold: var(--command-gold);
   --font-sans: var(--font-inter);
   --radius-card: var(--radius);
   --shadow-card: var(--shadow-card);

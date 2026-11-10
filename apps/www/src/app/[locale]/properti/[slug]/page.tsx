@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
-import { getListingBySlug, getListingMedia, searchListings } from "@/lib/listings";
+import { displayTitle, getListingBySlug, getListingMedia, isDemoListing, searchListings } from "@/lib/listings";
+import { DemoBadge } from "@/components/demo-badge";
+import { CompareToggle } from "@/components/compare-toggle";
+import { CompareTray } from "@/components/compare-tray";
+import { publicPath } from "@/i18n/routing";
+import { SparkIcon } from "@/components/icons";
 import {
   bedroomLabel,
   formatArea,
@@ -37,7 +42,7 @@ export async function generateMetadata({
   const listing = await getListingBySlug(slug);
   if (!listing) return { title: "404" };
 
-  const title = locale === "en" && listing.title_en ? listing.title_en : listing.title;
+  const title = displayTitle(locale === "en" && listing.title_en ? listing.title_en : listing.title);
   const description =
     (locale === "en" && listing.description_en ? listing.description_en : listing.description)
       ?.slice(0, 160) ?? undefined;
@@ -75,7 +80,7 @@ export default async function ListingPage({
   const errorField = typeof sp.field === "string" ? sp.field.slice(0, 30) : undefined;
   const consent = await getBuyerConsent(locale);
 
-  const [media, similar, t, tType, tOwn, tFurn, tCond, tHome] = await Promise.all([
+  const [media, similar, t, tType, tOwn, tFurn, tCond, tHome, tCompare] = await Promise.all([
     getListingMedia(listing.id),
     /* Same type, same intent (sale or rent). Deliberately NOT filtered to the
        same city: six of thirty listings have no location at all, so a location
@@ -93,14 +98,18 @@ export default async function ListingPage({
     getTranslations("furnishing"),
     getTranslations("condition"),
     getTranslations("home"),
+    getTranslations("compare"),
   ]);
 
   const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
-  const searchHref = `${prefix}/cari`;
+  const searchHref = publicPath(locale, "search");
+  const assistantHref = publicPath(locale, "assistant");
+  const compareHref = publicPath(locale, "compare");
   const related = similar.listings.filter((l) => l.id !== listing.id).slice(0, 4);
+  const demo = isDemoListing(listing);
 
   const english = locale === "en";
-  const title = english && listing.title_en ? listing.title_en : listing.title;
+  const title = displayTitle(english && listing.title_en ? listing.title_en : listing.title);
   const description =
     english && listing.description_en ? listing.description_en : listing.description;
 
@@ -215,7 +224,9 @@ export default async function ListingPage({
         labels={{
           noPhoto: t("noPhoto"),
           noPhotoHelp: t("noPhotoHelp"),
-          photoCount: t("photoCountShort"),
+          // Raw: the gallery substitutes {n} itself, so formatting here would
+          // throw FORMATTING_ERROR for the missing variable (pre-existing).
+          photoCount: t.raw("photoCountShort") as string,
           openPhoto: t("openPhoto"),
           askForPhotos: t("askForPhotos"),
         }}
@@ -224,7 +235,7 @@ export default async function ListingPage({
       <div className="mt-7 grid gap-10 lg:grid-cols-[1fr_21rem]">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-            <span className="rounded-md bg-brand-soft px-2.5 py-1 text-brand">
+            <span className="rounded-md bg-electric-soft px-2.5 py-1 text-electric">
               {listing.listing_type === "sale" ? t("forSale") : t("forRent")}
             </span>
             {listing.is_verified && (
@@ -234,10 +245,11 @@ export default async function ListingPage({
               </span>
             )}
             {listing.is_featured && (
-              <span className="rounded-md bg-accent/15 px-2.5 py-1 text-accent">
+              <span className="rounded-md bg-gold-light/40 px-2.5 py-1 text-gold-ink">
                 {t("featured")}
               </span>
             )}
+            {demo && <DemoBadge label={t("demo")} />}
           </div>
 
           <h1 className="mt-3 text-2xl font-extrabold leading-tight tracking-tight sm:text-[2rem]">
@@ -252,7 +264,7 @@ export default async function ListingPage({
           )}
 
           <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <p className="text-3xl font-extrabold tracking-tight text-brand sm:text-4xl">
+            <p className="text-3xl font-extrabold tracking-tight text-electric sm:text-4xl">
               {priceText}
               <span className="text-base font-medium text-muted">
                 {formatRentPeriod(listing.rent_period, locale)}
@@ -267,6 +279,30 @@ export default async function ListingPage({
           </div>
 
           <KeyFacts facts={facts} />
+
+          {/* 2.0 actions: side-by-side compare, and a concierge query seeded
+              from this listing's type and place so "find me similar" is one tap. */}
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <CompareToggle
+              id={listing.id}
+              size="md"
+              labels={{ add: t("compareAdd"), remove: t("compareRemove"), full: t("compareFull") }}
+            />
+            <Link
+              href={`${assistantHref}?q=${encodeURIComponent(
+                [
+                  listing.listing_type === "rent" ? (locale === "en" ? "rent" : "sewa") : (locale === "en" ? "buy" : "beli"),
+                  typeLabel.toLowerCase(),
+                  listing.bedrooms ? `${listing.bedrooms} ${locale === "en" ? "bedroom" : "kamar"}` : "",
+                  listing.regency_name ?? listing.province_name ?? "",
+                ].filter(Boolean).join(" ")
+              )}`}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-electric/30 bg-electric-soft px-4 py-2.5 text-sm font-semibold text-electric transition-colors duration-200 hover:bg-electric hover:text-white"
+            >
+              <SparkIcon className="h-4 w-4" />
+              {t("askConcierge")}
+            </Link>
+          </div>
 
           <section className="mt-9 rounded-card border border-line bg-surface-raised p-5 shadow-card">
             <h2 className="text-lg font-bold">{t("specifications")}</h2>
@@ -390,16 +426,22 @@ export default async function ListingPage({
           have to hunt for it. */}
       <div className="fixed inset-x-0 bottom-0 z-20 flex items-center gap-3 border-t border-line bg-surface-raised px-4 py-3 shadow-[0_-2px_12px_rgba(0,0,0,0.06)] lg:hidden">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-lg font-extrabold leading-tight text-brand">{priceText}</p>
+          <p className="truncate text-lg font-extrabold leading-tight text-electric">{priceText}</p>
           {perArea && <p className="truncate text-xs text-muted">{perArea}</p>}
         </div>
         <a
           href="#enquiry"
-          className="shrink-0 cursor-pointer rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-brand-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="shrink-0 cursor-pointer rounded-lg bg-electric px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-electric-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric"
         >
           {t("contactCta")}
         </a>
       </div>
+
+      <CompareTray
+        compareHref={compareHref}
+        aboveMobileBar
+        labels={{ title: tCompare("tray.title"), cta: tCompare("tray.cta"), clear: tCompare("tray.clear"), of: tCompare("tray.of") }}
+      />
     </article>
   );
 }

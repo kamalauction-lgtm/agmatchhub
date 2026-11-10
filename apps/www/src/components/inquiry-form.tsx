@@ -160,7 +160,7 @@ export async function InquiryForm({
 
       <button
         type="submit"
-        className="w-full rounded-lg bg-brand py-3 text-sm font-semibold text-white hover:bg-brand-strong"
+        className="w-full cursor-pointer rounded-lg bg-electric py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-electric-strong"
       >
         {t("submit")}
       </button>

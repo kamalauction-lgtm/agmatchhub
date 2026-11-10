@@ -81,9 +81,9 @@ export function KprCalculator({
               step={market.loan.priceStep}
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="mt-2 w-full accent-brand"
+              className="mt-2 w-full accent-electric"
             />
-            <output className="mt-1 block text-sm font-semibold text-brand">
+            <output className="mt-1 block text-sm font-semibold text-electric">
               {fmtMoney(price)}
             </output>
           </label>
@@ -97,9 +97,9 @@ export function KprCalculator({
               step={5}
               value={dpPct}
               onChange={(e) => setDpPct(Number(e.target.value))}
-              className="mt-2 w-full accent-brand"
+              className="mt-2 w-full accent-electric"
             />
-            <output className="mt-1 block text-sm font-semibold text-brand">
+            <output className="mt-1 block text-sm font-semibold text-electric">
               {dpPct}% · {fmtMoney((price * dpPct) / 100)}
             </output>
           </label>
@@ -113,9 +113,9 @@ export function KprCalculator({
               step={0.25}
               value={rate}
               onChange={(e) => setRate(Number(e.target.value))}
-              className="mt-2 w-full accent-brand"
+              className="mt-2 w-full accent-electric"
             />
-            <output className="mt-1 block text-sm font-semibold text-brand">
+            <output className="mt-1 block text-sm font-semibold text-electric">
               {rate.toFixed(2)}%
             </output>
           </label>
@@ -129,9 +129,9 @@ export function KprCalculator({
               step={1}
               value={years}
               onChange={(e) => setYears(Number(e.target.value))}
-              className="mt-2 w-full accent-brand"
+              className="mt-2 w-full accent-electric"
             />
-            <output className="mt-1 block text-sm font-semibold text-brand">
+            <output className="mt-1 block text-sm font-semibold text-electric">
               {years}
             </output>
           </label>
@@ -142,7 +142,7 @@ export function KprCalculator({
         <p className="text-xs font-semibold uppercase tracking-wide text-muted">
           {labels.monthly}
         </p>
-        <p className="mt-2 text-3xl font-extrabold tracking-tight text-brand">
+        <p className="mt-2 text-3xl font-extrabold tracking-tight text-electric">
           {fmtMoney(monthly)}
         </p>
         <p className="mt-3 text-xs text-muted">
@@ -151,7 +151,7 @@ export function KprCalculator({
         <p className="mt-3 text-[11px] leading-relaxed text-muted">{labels.disclaimer}</p>
         <a
           href={`${searchHref}?type=sale&maxPrice=${searchMax}`}
-          className="mt-4 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-strong"
+          className="mt-4 rounded-lg bg-electric px-4 py-2.5 text-sm font-semibold text-white hover:bg-electric-strong"
         >
           {labels.cta}
         </a>
