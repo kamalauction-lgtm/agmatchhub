@@ -20,7 +20,10 @@ export function AgentDetailPanel({
   demo,
   onClose,
   onOpenWorker,
+  docked = false,
 }: {
+  /** Inline column on wide screens instead of a modal overlay. */
+  docked?: boolean;
   worker: Worker | null;
   department: Department | null;
   members: Worker[];
@@ -33,14 +36,14 @@ export function AgentDetailPanel({
   const due = (iso: string | null) =>
     iso ? new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) : null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/45 backdrop-blur-[2px]" onClick={onClose} role="presentation">
+  const aria = worker ? `${worker.persona} · ${worker.role}` : department ? labels.departments[department.key] : "";
+  const body = (
       <aside
-        role="dialog"
-        aria-modal="true"
-        aria-label={worker ? `${worker.persona} · ${worker.role}` : department ? labels.departments[department.key] : ""}
+        role={docked ? "region" : "dialog"}
+        aria-modal={docked ? undefined : true}
+        aria-label={aria}
         onClick={(e) => e.stopPropagation()}
-        className="office-panel flex h-full w-full max-w-md flex-col overflow-y-auto bg-card shadow-raised"
+        className={`office-panel flex flex-col overflow-y-auto bg-card ${docked ? "h-full rounded-2xl border border-line shadow-card" : "h-full w-full max-w-md shadow-raised"}`}
       >
         {worker ? (
           <>
@@ -166,6 +169,11 @@ export function AgentDetailPanel({
           </>
         ) : null}
       </aside>
+  );
+  if (docked) return body;
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/45 backdrop-blur-[2px]" onClick={onClose} role="presentation">
+      {body}
     </div>
   );
 }

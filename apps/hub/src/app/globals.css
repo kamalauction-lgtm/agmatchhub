@@ -218,7 +218,7 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
    AI Live Office (apps/hub/src/components/ai/office/*)
    Every motion is CSS so reduced-motion can switch it all off in one rule.
    ========================================================================== */
-.office-floor { min-height: 420px; overflow-x: auto; }
+.office-floor { height: clamp(420px, 62vh, 680px); }
 .office-grid {
   background-image:
     linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
@@ -266,6 +266,15 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 .office-error .office-body { animation: office-shake 3s ease-in-out infinite; }
 .office-planned .office-body, .office-offline .office-body { animation: none; }
 .office-glow { animation: office-glow 1.8s ease-in-out infinite; }
+.office-light { animation: office-glow 3s ease-in-out infinite; }
+.office-screen { animation: office-flicker 2.6s steps(6) infinite; }
+.office-orbit { transform-box: fill-box; transform-origin: center; animation: office-orbit 24s linear infinite; }
+.office-orbit-rev { transform-box: fill-box; transform-origin: center; animation: office-orbit 16s linear infinite reverse; }
+.office-pulse-svg { animation: office-glow 1.4s ease-in-out infinite; }
+.office-canvas { cursor: grab; }
+.office-canvas:active { cursor: grabbing; }
+@keyframes office-flicker { 0%,100% { opacity: .95 } 50% { opacity: .75 } }
+@keyframes office-orbit { from { transform: rotate(0) } to { transform: rotate(360deg) } }
 .office-panel { animation: office-slide .22s ease-out both; }
 
 @keyframes office-breathe { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-2px) } }
@@ -281,5 +290,5 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 .office-demo { outline: 3px dashed var(--gold-light); outline-offset: -3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .office-char, .office-char *, .office-glow, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel { animation: none !important; }
+  .office-char, .office-char *, .office-glow, .office-light, .office-screen, .office-orbit, .office-orbit-rev, .office-pulse-svg, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel { animation: none !important; }
 }

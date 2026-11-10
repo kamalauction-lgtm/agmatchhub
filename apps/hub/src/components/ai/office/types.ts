@@ -17,6 +17,11 @@ export type OfficeLabels = {
   kpi: { specialists: string; activeNow: string; waiting: string; completedToday: string; departments: string };
   view: { office: string; list: string; label: string };
   node: { tasksToday: string; queue: string; justRan: string };
+  hq: string;
+  canvas: { zoomIn: string; zoomOut: string; reset: string };
+  feed: { title: string; live: string; empty: string; demoLine: string };
+  queue: { title: string; empty: string; demoLine: string };
+  deptStatus: { title: string };
   legend: string;
   refresh: string;
   refreshing: string;

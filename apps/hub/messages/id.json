@@ -3937,6 +3937,26 @@
       "tasksToday": "tugas hari ini",
       "queue": "dalam antrean",
       "justRan": "baru berjalan"
+    },
+    "hq": "Astra · Manajer AI (Pusat)",
+    "canvas": {
+      "zoomIn": "Perbesar",
+      "zoomOut": "Perkecil",
+      "reset": "Atur ulang tampilan"
+    },
+    "feed": {
+      "title": "Aktivitas kantor",
+      "live": "Langsung",
+      "empty": "Belum ada aktivitas tercatat. Eksekusi muncul di sini begitu sebuah alat dipakai.",
+      "demoLine": "menyelesaikan pekerjaan simulasi"
+    },
+    "queue": {
+      "title": "Antrean tugas Anda",
+      "empty": "Tidak ada yang menunggu keputusan Anda.",
+      "demoLine": "Usulan simulasi menunggu keputusan Anda"
+    },
+    "deptStatus": {
+      "title": "Status tim"
     }
   },
   "aiTools": {

@@ -3937,6 +3937,26 @@
       "tasksToday": "tasks today",
       "queue": "in queue",
       "justRan": "just ran"
+    },
+    "hq": "Astra · AI Manager (HQ)",
+    "canvas": {
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "reset": "Reset view"
+    },
+    "feed": {
+      "title": "Office activity",
+      "live": "Live",
+      "empty": "No recorded activity yet. Runs appear here the moment a tool is used.",
+      "demoLine": "completed a simulated job"
+    },
+    "queue": {
+      "title": "Your task queue",
+      "empty": "Nothing waiting for your decision.",
+      "demoLine": "Simulated proposal awaiting your decision"
+    },
+    "deptStatus": {
+      "title": "Team status"
     }
   },
   "aiTools": {

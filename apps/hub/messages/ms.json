@@ -3937,6 +3937,26 @@
       "tasksToday": "tugas hari ini",
       "queue": "dalam giliran",
       "justRan": "baru berjalan"
+    },
+    "hq": "Astra · Pengurus AI (Ibu Pejabat)",
+    "canvas": {
+      "zoomIn": "Zum masuk",
+      "zoomOut": "Zum keluar",
+      "reset": "Set semula paparan"
+    },
+    "feed": {
+      "title": "Aktiviti pejabat",
+      "live": "Langsung",
+      "empty": "Belum ada aktiviti direkodkan. Larian muncul di sini sebaik alat digunakan.",
+      "demoLine": "menyelesaikan kerja simulasi"
+    },
+    "queue": {
+      "title": "Giliran tugas anda",
+      "empty": "Tiada yang menunggu keputusan anda.",
+      "demoLine": "Cadangan simulasi menunggu keputusan anda"
+    },
+    "deptStatus": {
+      "title": "Status pasukan"
     }
   },
   "aiTools": {
