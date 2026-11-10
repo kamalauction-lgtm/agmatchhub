@@ -72,10 +72,16 @@ jobs:
       # the local and CI paths are identical and no test ever needs to know
       # whether it is in CI. The service-role key is required: the fixture
       # sweep and the fixture-agent helper use it.
+      # The heredoc delimiter is QUOTED ('EOF') so the shell writes every value
+      # literally. GitHub substitutes ${{ secrets.* }} into the script text
+      # before bash runs; with an unquoted delimiter bash then expanded `$`,
+      # backticks and backslashes inside a secret, and the staging database
+      # password (which contains one) reached Postgres altered (28P01,
+      # 10 Nov 2026).
       - name: Write packages/db/.env.staging from secrets
         if: env.STAGING_SUPABASE_URL != ''
         run: |
-          cat > packages/db/.env.staging <<EOF
+          cat > packages/db/.env.staging <<'EOF'
           DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}
           NEXT_PUBLIC_SUPABASE_URL=${{ secrets.STAGING_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.STAGING_SUPABASE_ANON_KEY }}
