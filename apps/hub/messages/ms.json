@@ -3929,6 +3929,7 @@
       "departments": "Jabatan"
     },
     "view": {
+      "scene3d": "Pejabat 3D",
       "office": "Paparan pejabat",
       "list": "Paparan senarai",
       "label": "Mod paparan"
@@ -3957,6 +3958,13 @@
     },
     "deptStatus": {
       "title": "Status pasukan"
+    },
+    "scene3d": {
+      "loading": "Memuatkan pejabat 3D…",
+      "unavailable": "Pelayar ini tidak dapat memaparkan pejabat 3D, jadi pejabat 2D dipaparkan.",
+      "controls": "Seret untuk memutar · tatal untuk zum · klik pakar atau bilik",
+      "prototypes": "Badan prototaip 3D: Astra, Luna dan Kael. Pakar lain berdiri di meja masing-masing sebagai kad identiti holografik sehingga sistem badan 3D diperluas selepas prototaip diterima.",
+      "ambient": "Pakar yang berjalan ke plaza hanyalah suasana, bukan kerja. “Bekerja” hanya muncul apabila ada tugasan direkodkan dalam lima minit terakhir."
     }
   },
   "aiTools": {

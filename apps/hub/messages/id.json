@@ -3929,6 +3929,7 @@
       "departments": "Departemen"
     },
     "view": {
+      "scene3d": "Kantor 3D",
       "office": "Tampilan kantor",
       "list": "Tampilan daftar",
       "label": "Mode tampilan"
@@ -3957,6 +3958,13 @@
     },
     "deptStatus": {
       "title": "Status tim"
+    },
+    "scene3d": {
+      "loading": "Memuat kantor 3D…",
+      "unavailable": "Browser ini tidak dapat menampilkan kantor 3D, jadi kantor 2D yang ditampilkan.",
+      "controls": "Seret untuk memutar · gulir untuk zoom · klik spesialis atau ruangan",
+      "prototypes": "Tubuh prototipe 3D: Astra, Luna dan Kael. Spesialis lain berdiri di meja masing-masing sebagai kartu identitas holografik sampai sistem tubuh 3D diperluas setelah prototipe disetujui.",
+      "ambient": "Spesialis yang berjalan ke plaza hanyalah suasana, bukan pekerjaan. “Bekerja” hanya muncul bila ada pekerjaan tercatat dalam lima menit terakhir."
     }
   },
   "aiTools": {

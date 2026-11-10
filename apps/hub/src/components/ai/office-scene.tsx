@@ -13,6 +13,7 @@ import { AgentStatusBadge } from "./office/agent-status-badge";
 import { ActivityFeed, DepartmentStatus, TaskQueue } from "./office/office-panels";
 import { iso } from "./office/scene-art";
 import { CommandHeader } from "@/components/ui/command-header";
+import { Office3D } from "./office3d/office-3d";
 import Link from "next/link";
 
 export type { OfficeLabels } from "./office/types";
@@ -39,6 +40,13 @@ const subscribePhone = (cb: () => void) => {
   return () => mq.removeEventListener("change", cb);
 };
 const useIsPhone = () => useSyncExternalStore(subscribePhone, () => window.matchMedia(PHONE).matches, () => false);
+const REDUCED = "(prefers-reduced-motion: reduce)";
+const subscribeReduced = (cb: () => void) => {
+  const mq = window.matchMedia(REDUCED);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+const useReducedMotion = () => useSyncExternalStore(subscribeReduced, () => window.matchMedia(REDUCED).matches, () => true);
 
 export function OfficeScene({
   initial,
@@ -56,7 +64,9 @@ export function OfficeScene({
   const [data, setData] = useState<OfficeData>(initial);
   const isPhone = useIsPhone();
   const [viewChoice, setView] = useState<OfficeView | null>(null);
-  const view: OfficeView = viewChoice ?? (isPhone ? "list" : "office");
+  // Phones default to the list; everything else opens the 3D office.
+  const view: OfficeView = viewChoice ?? (isPhone ? "list" : "scene3d");
+  const reducedMotion = useReducedMotion();
   const [openKey, setOpenKey] = useState<string | null>(null);
   const [openDept, setOpenDept] = useState<string | null>(null);
   const [demo, setDemo] = useState(false);
@@ -225,7 +235,19 @@ export function OfficeScene({
       {/* Floor + docked inspector ------------------------------------------- */}
       {/* Sections 2 + 3 — the office and the inspector side by side ------- */}
       <div className={`grid gap-4 ${panelOpen ? "xl:grid-cols-[1fr_26rem]" : ""}`}>
-        {view === "office" ? (
+        {view === "scene3d" ? (
+          <div className={`office-floor-3d command-band relative overflow-hidden rounded-2xl ${demo ? "office-demo" : ""}`}>
+            <div aria-hidden className="office-grid pointer-events-none absolute inset-0" />
+            <div aria-hidden className="office-skyline pointer-events-none absolute inset-x-0 top-0 h-28" />
+            <Office3D
+              data={data} workers={workers} labels={labels} brand={labels.brand} demo={demo} motion={!reducedMotion}
+              selectedKey={openKey} selectedDept={openDept}
+              onOpenWorker={openWorker} onOpenRoom={(k) => { setOpenKey(null); setOpenDept(k); }} onClear={() => {}}
+              onUnavailable={() => setView("office")} loadingLabel={labels.scene3d.loading}
+            />
+            <p className="office3d-hint">{labels.scene3d.controls}</p>
+          </div>
+        ) : view === "office" ? (
           <div className={`office-floor command-band relative overflow-hidden rounded-2xl ${demo ? "office-demo" : ""}`}>
             <div aria-hidden className="office-grid pointer-events-none absolute inset-0" />
             <div aria-hidden className="office-skyline pointer-events-none absolute inset-x-0 top-0 h-28" />
@@ -295,6 +317,7 @@ export function OfficeScene({
         ))}
       </ul>
       <p className="text-xs text-muted">{labels.truth}</p>
+      {view === "scene3d" && <p className="text-xs text-muted">{labels.scene3d.prototypes} {labels.scene3d.ambient}</p>}
     </div>
   );
 }

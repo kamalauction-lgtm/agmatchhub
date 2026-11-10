@@ -3929,6 +3929,7 @@
       "departments": "Departments"
     },
     "view": {
+      "scene3d": "3D office",
       "office": "Office view",
       "list": "List view",
       "label": "Display mode"
@@ -3957,6 +3958,13 @@
     },
     "deptStatus": {
       "title": "Team status"
+    },
+    "scene3d": {
+      "loading": "Loading the 3D office…",
+      "unavailable": "This browser cannot show the 3D office, so the 2D office is shown instead.",
+      "controls": "Drag to orbit · scroll to zoom · click a specialist or a room",
+      "prototypes": "3D prototype bodies: Astra, Luna and Kael. Every other specialist stands at their own desk as a holographic identity card until the 3D body system is extended after prototype acceptance.",
+      "ambient": "A specialist strolling to the plaza is ambience, not work. “Working” appears only when a job was recorded in the last five minutes."
     }
   },
   "aiTools": {
