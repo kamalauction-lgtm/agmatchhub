@@ -51,7 +51,8 @@ export function Projector() {
       const behind = _v.z > 1;
       const x = (_v.x * 0.5 + 0.5) * size.width;
       const yy = (-_v.y * 0.5 + 0.5) * size.height;
-      const s = Math.min(1.1, Math.max(0.62, 34 / dist));
+      // Narrow canvases (phones) let labels shrink further so 36 plates stay legible as a crowd.
+      const s = Math.min(1.1, Math.max(size.width < 640 ? 0.42 : 0.62, 34 / dist));
       el.style.transform = `translate(-50%, -100%) translate(${x.toFixed(1)}px, ${yy.toFixed(1)}px) scale(${s.toFixed(3)})`;
       el.style.zIndex = String(Math.round((1 - Math.min(1, Math.max(0, _v.z))) * 100000));
       el.style.visibility = behind ? "hidden" : "visible";

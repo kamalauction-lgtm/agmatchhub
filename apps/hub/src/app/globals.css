@@ -299,7 +299,8 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 
 
 /* --- 3D office (apps/hub/src/components/ai/office3d/*) ----------------- */
-.office-floor-3d { height: clamp(520px, 72vh, 820px); }
+.office-floor-3d { height: clamp(520px, 72vh, 820px); container-type: inline-size; }
+
 .office3d-loading { position: absolute; inset: 0; display: grid; place-items: center; color: rgb(255 255 255 / 0.7); font-size: 0.8rem; font-weight: 600;
   background: radial-gradient(ellipse at center, rgb(37 99 235 / 0.18), transparent 70%); }
 .office3d-loading::before { content: ""; width: 42px; height: 42px; border-radius: 999px; border: 3px solid rgb(255 255 255 / 0.15); border-top-color: #60a5fa; animation: office-spin 0.9s linear infinite; position: absolute; }
@@ -327,3 +328,12 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 .office3d-label { position: absolute; left: 0; top: 0; will-change: transform; transform-origin: 50% 100%; }
 .office3d-plate-row { display: inline-flex; align-items: center; gap: 5px; }
 .office3d-plate-face { width: 20px; height: 20px; border-radius: 999px; object-fit: cover; border: 1px solid rgb(255 255 255 / 0.45); background: #13254a; }
+
+/* Phone-width canvas: name plates keep the face and name; the state line folds
+   away (the floor ring still shows the state colour, a tap opens the inspector). */
+@container (max-width: 640px) {
+  .office3d-plate { padding: 2px 6px 3px; }
+  .office3d-plate-state { display: none; }
+  .office3d-sign { font-size: 8px; padding: 2px 6px; letter-spacing: 0.04em; }
+  .office3d-hint { font-size: 10px; max-width: calc(100% - 24px); }
+}
