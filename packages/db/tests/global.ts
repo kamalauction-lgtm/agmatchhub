@@ -1,5 +1,6 @@
 import sweepFixtures from "./teardown";
 import { loadTestEnv } from "./env";
+import { acquireRunLock, releaseRunLock } from "./run-lock";
 
 /**
  * Runs once around the whole suite.
@@ -11,6 +12,10 @@ import { loadTestEnv } from "./env";
  *
  * `teardown` sweeps fixtures — see tests/teardown.ts for why it fails the run
  * rather than cleaning up quietly.
+ *
+ * Between the two, this run holds the database's suite lock (tests/run-lock.ts)
+ * so two runs — a laptop and CI, or CI on two branches — queue instead of
+ * corrupting each other's fixtures and global flags.
  */
 
 const PRODUCTION_REF = "jokyyhvtahiypuzmfydp";
@@ -25,6 +30,13 @@ export async function setup() {
   } else {
     console.log(`\n  RLS suite target: ${ref}  (${file})\n`);
   }
+  await acquireRunLock(ref);
 }
 
-export const teardown = sweepFixtures;
+export async function teardown() {
+  try {
+    await sweepFixtures();
+  } finally {
+    await releaseRunLock();
+  }
+}
