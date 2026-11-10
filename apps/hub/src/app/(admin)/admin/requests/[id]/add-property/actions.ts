@@ -1,6 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
@@ -14,18 +13,6 @@ import {
   propertyFieldsSchema, deriveRisk, buildSubmissionRow, hasSourceDetail,
   IMG_MIMES, MAX_IMG_BYTES,
 } from "@/lib/submissions/core";
-import { adminCreateAgent, emailAgentCredentials } from "@/lib/agents/admin-create";
-import { CRED_COOKIE } from "@/lib/agents/constants";
-
-const newAgentSchema = z.object({
-  displayName: z.string().trim().min(2).max(80),
-  email: z.string().trim().email(),
-  mobileNumber: z.string().trim().max(40).optional().or(z.literal("")),
-  whatsappNumber: z.string().trim().max(40).optional().or(z.literal("")),
-  agencyName: z.string().trim().max(160).optional().or(z.literal("")),
-  licenceType: z.string().trim().max(40).optional().or(z.literal("")),
-  licenceNumber: z.string().trim().max(80).optional().or(z.literal("")),
-});
 
 export async function addPropertyOnBehalf(formData: FormData) {
   const requestId = String(formData.get("requestId") ?? "");
@@ -48,39 +35,16 @@ export async function addPropertyOnBehalf(formData: FormData) {
   // write: a country admin for MY must not add property to an ID request.
   await requireCapabilityIn("request.manage", req.country_code, "/admin/requests");
 
-  // ---- Resolve the supply agent (existing pick or new account) ----------
-  const mode = String(formData.get("agentMode") ?? "existing");
+  // ---- Resolve the supply agent ------------------------------------------
+  // P0-b: an admin no longer creates agent accounts or passwords here. An
+  // agent who is not on the platform is invited (/admin/agents/invitations),
+  // registers with their own password, and is then picked from this list.
+  // A form from before this change that still posts agentMode=new is refused.
+  if (String(formData.get("agentMode") ?? "existing") === "new") {
+    redirect(`${back}?error=invite_first`);
+  }
   let agentId: string;
-  let newCred: { email: string; name: string; password: string } | null = null;
-
-  if (mode === "new") {
-    const parsed = newAgentSchema.safeParse({
-      displayName: formData.get("displayName") ?? "",
-      email: formData.get("email") ?? "",
-      mobileNumber: formData.get("mobileNumber") ?? "",
-      whatsappNumber: formData.get("whatsappNumber") ?? "",
-      agencyName: formData.get("agencyName") ?? "",
-      licenceType: formData.get("licenceType") ?? "",
-      licenceNumber: formData.get("licenceNumber") ?? "",
-    });
-    if (!parsed.success) redirect(`${back}?error=agent_invalid`);
-    const a = parsed.data;
-    const res = await adminCreateAgent({
-      displayName: a.displayName,
-      email: a.email,
-      mobileNumber: a.mobileNumber || null,
-      whatsappNumber: a.whatsappNumber || null,
-      agencyName: a.agencyName || null,
-      licenceType: a.licenceType || null,
-      licenceNumber: a.licenceNumber || null,
-      countryCode: req.country_code ?? null,
-      adminId: user.id,
-    });
-    if (!res.ok) redirect(`${back}?error=${res.error === "email_in_use" ? "email_in_use" : "agent_failed"}`);
-    agentId = res.userId;
-    newCred = { email: a.email, name: a.displayName, password: res.password };
-    await emailAgentCredentials({ to: a.email, displayName: a.displayName, password: res.password });
-  } else {
+  {
     const aid = z.string().uuid().safeParse(formData.get("agentId"));
     if (!aid.success) redirect(`${back}?error=agent_required`);
     const { data: prof } = await service.from("profiles").select("id").eq("id", aid.data).maybeSingle();
@@ -236,12 +200,5 @@ export async function addPropertyOnBehalf(formData: FormData) {
     href: "/submissions",
   });
 
-  // One-time credential reveal for a freshly created account (cookie, not URL).
-  if (newCred) {
-    (await cookies()).set(CRED_COOKIE, JSON.stringify(newCred), {
-      httpOnly: true, secure: true, sameSite: "lax", path: "/admin", maxAge: 300,
-    });
-    redirect(`/admin/requests/${requestId}?done=added_new_agent`);
-  }
   redirect(`/admin/requests/${requestId}?done=added`);
 }
