@@ -199,3 +199,79 @@ describe.skipIf(!hasEnv || !SERVICE)("a country admin is confined to their count
     expect(data!.actor_role).toBe("country_admin");
   });
 });
+
+/**
+ * Migration 00104 — verification files follow the same scope. Found in
+ * staging validation: the hub page refused a MY country admin, but the
+ * storage API still signed an ID agent's licence for them.
+ */
+describe.skipIf(!hasEnv || !SERVICE)("verification files are country-scoped (00104)", () => {
+  let service: SupabaseClient;
+  let scoped: SupabaseClient;
+  let grantId: string | null = null;
+  const made: { user: string; path: string }[] = [];
+  const png = Uint8Array.from(
+    atob("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgYGD4DwABBAEAwS2OUAAAAABJRU5ErkJggg=="),
+    (c) => c.charCodeAt(0),
+  );
+
+  const agentWithDoc = async (tag: string, country: string) => {
+    const user = await makeFixtureAgent(service, tag, { country_code: country });
+    const path = `${user}/licence-fixture-${Date.now()}.png`;
+    const { error } = await service.storage
+      .from("agent-verification-private")
+      .upload(path, png, { contentType: "image/png" });
+    if (error) throw new Error(`fixture upload failed: ${error.message}`);
+    made.push({ user, path });
+    return path;
+  };
+
+  beforeAll(async () => {
+    service = createClient(URL_, SERVICE!, { auth: { persistSession: false } });
+    scoped = await saClient();
+    const { data: role } = await service.from("roles").select("id").eq("key", "country_admin").single();
+    const { data, error } = await service
+      .from("user_roles")
+      .insert({ user_id: await uid(scoped), role_id: role!.id, country_codes: ["MY"] })
+      .select("id").single();
+    if (error) throw new Error(`could not grant test role: ${error.message}`);
+    grantId = data.id;
+  });
+
+  afterAll(async () => {
+    if (grantId) await service.from("user_roles").delete().eq("id", grantId);
+    for (const m of made) {
+      await service.storage.from("agent-verification-private").remove([m.path]);
+      await service.auth.admin.deleteUser(m.user);
+    }
+  });
+
+  it("a MY country admin cannot sign an ID agent's document", async () => {
+    const path = await agentWithDoc("p0a-doc-id", "ID");
+    const { data } = await scoped.storage.from("agent-verification-private").createSignedUrl(path, 60);
+    expect(data?.signedUrl ?? null).toBeNull();
+  });
+
+  it("but can sign a MY agent's document", async () => {
+    const path = await agentWithDoc("p0a-doc-my", "MY");
+    const { data, error } = await scoped.storage.from("agent-verification-private").createSignedUrl(path, 60);
+    expect(error).toBeNull();
+    expect(data?.signedUrl).toBeTruthy();
+  });
+
+  it.skipIf(!hasAdminEnv)("a global admin can sign either", async () => {
+    const admin = await adminClient();
+    for (const m of made) {
+      const { data } = await admin.storage.from("agent-verification-private").createSignedUrl(m.path, 60);
+      expect(data?.signedUrl, m.path).toBeTruthy();
+    }
+  });
+
+  it("anonymous still cannot sign anyone's document", async () => {
+    const other = anonClient();
+    const { data } = await other.storage
+      .from("agent-verification-private")
+      .createSignedUrl(made[0]?.path ?? "none/none.png", 60);
+    expect(data?.signedUrl ?? null).toBeNull();
+  });
+});

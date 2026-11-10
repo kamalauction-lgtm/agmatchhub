@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
-import { requireAdmin } from "@/lib/authz";
+import { requireAdmin, requireCapabilityIn } from "@/lib/authz";
 import { SOURCE_TYPES } from "@/lib/submissions/core";
 import { addPropertyOnBehalf } from "./actions";
 
@@ -41,6 +41,9 @@ export default async function AdminAddPropertyPage({
     .eq("id", id)
     .maybeSingle();
   if (!request) notFound();
+  // Read through the service client, so scope is checked here before anything
+  // about the request is rendered (P0-a; the action checks the same).
+  await requireCapabilityIn("request.manage", request.country_code, "/admin/requests");
 
   const [{ data: currencies }, { data: countries }, { data: profiles }] = await Promise.all([
     service.from("currencies").select("code").eq("active", true).order("code"),
