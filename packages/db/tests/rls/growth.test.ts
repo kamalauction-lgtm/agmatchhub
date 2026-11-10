@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { URL_, saClient, uid, hasEnv, fixtureEmail, fixtureName } from "./setup";
+import { URL_, saClient, uid, hasEnv, fixtureEmail, fixtureName, makeFixtureAgent } from "./setup";
 
 /**
  * The referral growth engine (migration 00063).
@@ -18,13 +18,20 @@ import { URL_, saClient, uid, hasEnv, fixtureEmail, fixtureName } from "./setup"
  * Fixtures are created and destroyed with the service key. The referral funnel
  * cannot be exercised read-only — there has to be a referred person who moves
  * through the stages.
+ *
+ * The REFERRER is a fixture of this run too. It used to be the standing SA
+ * account, so concurrent runs paid and reversed rewards on the same balance,
+ * and this suite's cleanup deleted every reward that account held — including
+ * another run's, mid-test. The authorization block still signs in as the SA,
+ * because what it proves is what a real signed-in agent may do for itself.
  */
 
 const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 describe.skipIf(!hasEnv || !SERVICE)("referral growth engine", () => {
   let service: SupabaseClient;
-  let referrerId: string;
+  let referrerId: string;   // this run's fixture referrer
+  let saId: string;         // the standing SA, for the signed-in authorization checks
   let campaignId: string;
 
   // Two throwaway agents to be referred.
@@ -92,7 +99,8 @@ describe.skipIf(!hasEnv || !SERVICE)("referral growth engine", () => {
 
   beforeAll(async () => {
     service = createClient(URL_, SERVICE!, { auth: { persistSession: false } });
-    referrerId = await uid(await saClient());
+    saId = await uid(await saClient());
+    referrerId = await makeFixtureAgent(service, "growth-referrer", { country_code: "ID" });
 
     const { data: camp } = await service
       .from("growth_campaigns").select("id").eq("key", "indonesia_free_launch").single();
@@ -111,6 +119,7 @@ describe.skipIf(!hasEnv || !SERVICE)("referral growth engine", () => {
       await service.from("referral_rewards").delete().eq("id", r.id);
     }
     for (const a of referred) await service.auth.admin.deleteUser(a.id);
+    await service.auth.admin.deleteUser(referrerId);
   });
 
   describe("the campaign ladder is configuration, not code", () => {
@@ -284,7 +293,7 @@ describe.skipIf(!hasEnv || !SERVICE)("referral growth engine", () => {
       const agent = await saClient();
       const target = await makeAgent("selfserve");
       const { error } = await agent.from("referrals").insert({
-        referrer_id: referrerId, referred_id: target, campaign_id: campaignId, stage: "ACTIVATED",
+        referrer_id: saId, referred_id: target, campaign_id: campaignId, stage: "ACTIVATED",
       });
       expect(error).not.toBeNull();
     });
@@ -294,7 +303,7 @@ describe.skipIf(!hasEnv || !SERVICE)("referral growth engine", () => {
       const { data: rule } = await service
         .from("referral_reward_rules").select("id").eq("campaign_id", campaignId).limit(1).single();
       const { error } = await agent.from("referral_rewards").insert({
-        user_id: referrerId, campaign_id: campaignId, rule_id: rule!.id, status: "GRANTED",
+        user_id: saId, campaign_id: campaignId, rule_id: rule!.id, status: "GRANTED",
       });
       expect(error).not.toBeNull();
     });
@@ -315,7 +324,7 @@ describe.skipIf(!hasEnv || !SERVICE)("referral growth engine", () => {
     it("an agent sees their own referrals only", async () => {
       const agent = await saClient();
       const { data } = await agent.from("referrals").select("referrer_id");
-      for (const r of data ?? []) expect(r.referrer_id).toBe(referrerId);
+      for (const r of data ?? []) expect(r.referrer_id).toBe(saId);
     });
   });
 });

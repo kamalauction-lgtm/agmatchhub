@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { hasEnv, anonClient, raClient, saClient } from "./setup";
+import { hasEnv, anonClient, raClient, saClient, uid } from "./setup";
 
 describe.skipIf(!hasEnv)("submissions & confidential fields (§16–18, §78)", () => {
   it("anon cannot read submissions", async () => {
@@ -21,9 +21,17 @@ describe.skipIf(!hasEnv)("submissions & confidential fields (§16–18, §78)", 
   });
 
   it("SA can read own confidential row", async () => {
+    // Every confidential row the SA can see must belong to one of the SA's own
+    // submissions, and the seeded one must be among them. An exact count was
+    // brittle: other suites create submissions for this SA while they run.
     const sa = await saClient();
-    const { data } = await sa.from("property_submission_private").select("min_acceptable_price");
-    expect((data ?? []).length).toBe(1);
+    const saId = await uid(sa);
+    const { data: own } = await sa.from("property_submissions").select("id").eq("supply_agent_id", saId);
+    const ownIds = new Set((own ?? []).map((r) => r.id));
+    const { data, error } = await sa.from("property_submission_private").select("submission_id, min_acceptable_price");
+    expect(error).toBeNull();
+    expect((data ?? []).length).toBeGreaterThanOrEqual(1);
+    for (const row of data ?? []) expect(ownIds.has(row.submission_id), `foreign confidential row ${row.submission_id}`).toBe(true);
   });
 
   it("SA cannot use the RA review function", async () => {

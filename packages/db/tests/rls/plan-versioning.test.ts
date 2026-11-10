@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { URL_, saClient, uid, hasEnv } from "./setup";
+import { URL_, hasEnv, makeFixtureAgent } from "./setup";
 
 /**
  * Repricing a plan, and granting capacity by hand.
@@ -27,7 +27,9 @@ describe.skipIf(!hasEnv || !SERVICE)("plan versioning and admin grants", () => {
 
   beforeAll(async () => {
     service = createClient(URL_, SERVICE!, { auth: { persistSession: false } });
-    agentId = await uid(await saClient());
+    // A per-run fixture, not the standing SA: concurrent runs moved the SA's
+    // listing capacity under this suite (main CI, 10 Nov: 360 ≠ 355).
+    agentId = await makeFixtureAgent(service, "plan-versioning", { country_code: "ID" });
 
     const { data: plan } = await service.from("plans").select("id").eq("key", "silver").single();
     planId = plan!.id;
@@ -40,6 +42,7 @@ describe.skipIf(!hasEnv || !SERVICE)("plan versioning and admin grants", () => {
 
   afterAll(async () => {
     for (const id of madeGrants) await service.from("entitlement_grants").delete().eq("id", id);
+    if (agentId) await service.auth.admin.deleteUser(agentId);
     for (const id of madeVersions) await service.from("plan_versions").delete().eq("id", id);
     // Restore the original as current, so the price book is left as found.
     await service
