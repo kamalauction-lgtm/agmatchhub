@@ -3963,7 +3963,7 @@
       "loading": "Loading the 3D office…",
       "unavailable": "This browser cannot show the 3D office, so the 2D office is shown instead.",
       "controls": "Drag to orbit · scroll to zoom · click a specialist or a room",
-      "prototypes": "3D prototype bodies: Astra, Luna and Kael. Every other specialist stands at their own desk as a holographic identity card until the 3D body system is extended after prototype acceptance.",
+      "prototypes": "All 36 specialists are 3D figures dressed from their own character sheet (hair, costume, accessories) and stand in their own department. Stylised bodies, not sculpted likenesses; the name plate carries each one's portrait.",
       "ambient": "A specialist strolling to the plaza is ambience, not work. “Working” appears only when a job was recorded in the last five minutes."
     }
   },

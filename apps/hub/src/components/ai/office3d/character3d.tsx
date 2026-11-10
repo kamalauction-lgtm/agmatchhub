@@ -104,11 +104,15 @@ export function Character3D({
     mouth: new THREE.MeshStandardMaterial({ color: "#c0607a", roughness: 0.5 }),
     gold: new THREE.MeshStandardMaterial({ color: "#e3c66f", metalness: 0.9, roughness: 0.25 }),
     glass: new THREE.MeshStandardMaterial({ color: "#1b2233", metalness: 0.8, roughness: 0.3 }),
+    visor: new THREE.MeshStandardMaterial({ color: id.accent, emissive: id.accent, emissiveIntensity: 0.5, transparent: true, opacity: 0.45, roughness: 0.1 }),
+    scarf: new THREE.MeshStandardMaterial({ color: "#2563eb", roughness: 0.7 }),
+    pack: new THREE.MeshStandardMaterial({ color: "#8a6a48", roughness: 0.8 }),
     shoe: new THREE.MeshStandardMaterial({ color: "#1e293b", roughness: 0.6 }),
     status: new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 1.6 }),
   }), [id, dim, color]);
 
-  const shoulderW = id.build === "slim" ? 0.26 : 0.3;
+  const shoulderW = id.build === "slim" ? 0.26 : id.build === "broad" ? 0.34 : 0.3;
+  const acc = (a: string) => id.accessories?.includes(a as never) ?? false;
 
   useFrame((_, dt) => {
     if (!motion) return;
@@ -268,6 +272,15 @@ export function Character3D({
           <mesh position={[0.12, 0.36, 0.2]} material={mats.accent}>
             <boxGeometry args={[0.07, 0.07, 0.02]} />
           </mesh>
+          {acc("tie") && (
+            <mesh position={[0, 0.42, 0.21]} material={mats.suitDark}><boxGeometry args={[0.06, 0.3, 0.02]} /></mesh>
+          )}
+          {acc("backpack") && (
+            <mesh castShadow position={[0, 0.3, -0.26]} material={mats.pack}><boxGeometry args={[0.34, 0.42, 0.16]} /></mesh>
+          )}
+          {acc("scarf") && (
+            <mesh position={[0, 0.6, 0.02]} rotation={[Math.PI / 2, 0, 0]} material={mats.scarf}><torusGeometry args={[0.14, 0.045, 8, 20]} /></mesh>
+          )}
           {/* Shoulder plates */}
           {([-1, 1] as const).map((side) => (
             <mesh key={side} position={[side * shoulderW, 0.5, 0]} material={mats.suitDark}>
@@ -326,6 +339,7 @@ function Capsule({ r, h, mat, pos = [0, 0, 0] }: { r: number; h: number; mat: TH
 /** Head with identity: hair style, eyes, brows, mouth, ear devices, extras. */
 function Head({ id, mats }: { id: Identity3D; mats: Record<string, THREE.Material> }) {
   const R = 0.245;
+  const acc = (a: string) => id.accessories?.includes(a as never) ?? false;
   return (
     <group>
       <mesh castShadow material={mats.skin}>
@@ -356,6 +370,31 @@ function Head({ id, mats }: { id: Identity3D; mats: Record<string, THREE.Materia
       {id.hairStyle === "short" && (
         <mesh position={[0, 0.1, -0.06]} material={mats.hair} scale={[1.02, 0.8, 1.02]}><sphereGeometry args={[R, 20, 16, 0, Math.PI * 2, 0, Math.PI * 0.5]} /></mesh>
       )}
+      {id.hairStyle === "swept" && (
+        <>
+          <mesh position={[0, 0.14, -0.05]} rotation={[0.25, 0, 0]} material={mats.hair} scale={[1.05, 1.0, 1.1]}><sphereGeometry args={[R, 20, 16, 0, Math.PI * 2, 0, Math.PI * 0.5]} /></mesh>
+          <mesh position={[0.06, 0.22, 0.1]} rotation={[0.9, 0, -0.3]} material={mats.hair}><capsuleGeometry args={[0.07, 0.18, 4, 8]} /></mesh>
+        </>
+      )}
+      {id.hairStyle === "bob" && (
+        <>
+          <mesh position={[0, -0.04, -0.05]} material={mats.hair} scale={[1.14, 1.0, 1.1]}><sphereGeometry args={[R, 20, 16, 0, Math.PI * 2, 0, Math.PI * 0.78]} /></mesh>
+          <mesh position={[0, -0.16, -0.08]} material={mats.hair} scale={[1.1, 0.5, 1.0]}><sphereGeometry args={[R, 20, 12]} /></mesh>
+        </>
+      )}
+      {id.hairStyle === "ponytail" && (
+        <>
+          <mesh position={[0, 0.22, -0.2]} material={mats.hair}><sphereGeometry args={[0.09, 12, 10]} /></mesh>
+          <mesh position={[0, -0.02, -0.3]} rotation={[0.35, 0, 0]} material={mats.hair}><capsuleGeometry args={[0.065, 0.42, 4, 8]} /></mesh>
+        </>
+      )}
+      {id.hairStyle === "curly" && (
+        <>
+          {[[-0.16, 0.14, -0.06], [0.16, 0.14, -0.06], [0, 0.24, -0.1], [-0.2, -0.02, -0.1], [0.2, -0.02, -0.1], [0, 0.1, -0.24]].map(([x, y, z], i) => (
+            <mesh key={i} position={[x, y, z]} material={mats.hair}><sphereGeometry args={[0.13, 12, 10]} /></mesh>
+          ))}
+        </>
+      )}
       {/* Eyes */}
       {([-1, 1] as const).map((s) => (
         <group key={s} position={[s * 0.09, 0.01, R - 0.035]}>
@@ -374,7 +413,26 @@ function Head({ id, mats }: { id: Identity3D; mats: Record<string, THREE.Materia
           <torusGeometry args={[0.05, 0.016, 8, 18]} />
         </mesh>
       ))}
-      {id.glasses && (
+      {acc("visor") && (
+        <mesh position={[0, 0.02, R - 0.02]} material={mats.visor}><boxGeometry args={[0.34, 0.09, 0.05]} /></mesh>
+      )}
+      {acc("goggles") && (
+        <group position={[0, 0.2, 0.1]} rotation={[-0.6, 0, 0]}>
+          {([-1, 1] as const).map((s) => (
+            <mesh key={s} position={[s * 0.08, 0, 0]} material={mats.glass}><torusGeometry args={[0.06, 0.016, 8, 18]} /></mesh>
+          ))}
+          <mesh position={[0, 0, -0.12]} material={mats.suitDark}><torusGeometry args={[R + 0.01, 0.014, 6, 24, Math.PI]} /></mesh>
+        </group>
+      )}
+      {acc("headphones") && (
+        <>
+          <mesh position={[0, 0.08, 0]} rotation={[0, 0, Math.PI / 2]} material={mats.suitDark}><torusGeometry args={[R + 0.03, 0.016, 6, 24, Math.PI]} /></mesh>
+          {([-1, 1] as const).map((s) => (
+            <mesh key={s} position={[s * (R + 0.03), -0.01, 0]} rotation={[0, Math.PI / 2, 0]} material={mats.suitDark}><cylinderGeometry args={[0.07, 0.07, 0.05, 16]} /></mesh>
+          ))}
+        </>
+      )}
+      {acc("glasses") && (
         <group position={[0, 0.012, R - 0.005]}>
           {([-1, 1] as const).map((s) => (
             <mesh key={s} position={[s * 0.075, 0, 0]} material={mats.glass}><torusGeometry args={[0.052, 0.007, 8, 20]} /></mesh>
@@ -382,7 +440,7 @@ function Head({ id, mats }: { id: Identity3D; mats: Record<string, THREE.Materia
           <mesh material={mats.glass}><boxGeometry args={[0.05, 0.008, 0.008]} /></mesh>
         </group>
       )}
-      {id.earrings && ([-1, 1] as const).map((s) => (
+      {acc("earrings") && ([-1, 1] as const).map((s) => (
         <mesh key={s} position={[s * (R + 0.01), -0.11, 0.01]} rotation={[0, Math.PI / 2, 0]} material={mats.gold}>
           <torusGeometry args={[0.045, 0.008, 8, 18]} />
         </mesh>

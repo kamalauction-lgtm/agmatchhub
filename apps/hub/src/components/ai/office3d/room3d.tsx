@@ -1,12 +1,14 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
 import * as THREE from "three";
 import type { Worker } from "@/lib/ai/office-state";
 import { STATE_COLOR } from "../office/types";
-import { IDENTITY_3D } from "./identity";
+import { IDENTITY_3D, type Identity3D } from "./identity";
+
+/** Only reachable if a role is added to the database without an identity sheet; the roster test guards this. */
+const FALLBACK_ID: Identity3D = { persona: "?", sheet: 1, skin: "#e9c0a2", hair: "#2a2230", hairStyle: "short", suit: "#f2f5fb", accent: "#64748b", eyes: "#2e2a36", build: "regular" };
 import { Character3D } from "./character3d";
-import { HoloStand } from "./holo-stand";
 import { useAnchor } from "./label-layer";
 
 /** World size of one grid cell; the floor is a 4 × 4 grid of cells. */
@@ -149,20 +151,11 @@ export function Room3D({ deptKey, u0, v0, workers, selected, motion, onOpenWorke
         return (
           <group key={w.key}>
             <group position={[x, 0, deskZ]} scale={1.4}><Workstation position={[0, 0, 0]} state={w.state} lit={lit} /></group>
-            {id ? (
-              <Character3D
-                w={w} id={id} position={pos} facing={0} seat route={route} motion={motion} scale={1.45}
-                selected={selectedKey === w.key}
-                onOpen={() => onOpenWorker(w.key)} index={index * 3 + i}
-              />
-            ) : (
-              <Suspense fallback={null}>
-                <HoloStand
-                  w={w} position={pos} motion={motion} scale={1.45}
-                  selected={selectedKey === w.key} onOpen={() => onOpenWorker(w.key)} index={index * 3 + i}
-                />
-              </Suspense>
-            )}
+            <Character3D
+              w={w} id={id ?? FALLBACK_ID} position={pos} facing={0} seat route={route} motion={motion} scale={1.45}
+              selected={selectedKey === w.key}
+              onOpen={() => onOpenWorker(w.key)} index={index * 3 + i}
+            />
           </group>
         );
       })}

@@ -8,7 +8,6 @@ import type { OfficeData, Worker } from "@/lib/ai/office-state";
 import type { OfficeLabels } from "../office/types";
 import { CELL3, PLAZA_C, Room3D } from "./room3d";
 import { Hub3D } from "./hub3d";
-import { IDENTITY_3D } from "./identity";
 import { Label, LabelLayer, LabelProvider, Projector } from "./label-layer";
 import { STATE_COLOR } from "../office/types";
 
@@ -66,7 +65,7 @@ export default function Office3DScene({ data, workers, labels, brand, demo, moti
   const stateLabel = (w: Worker) => labels.state[w.state];
   const [cx, cz] = PLAZA_C;
   const target: [number, number, number] = [cx, 0.5, cz];
-  const plate = (w: Worker, holo: boolean) => {
+  const plate = (w: Worker) => {
     const isDemo = demo && w.access === "open";
     return (
       <Label key={w.key} id={w.key} interactive>
@@ -74,7 +73,7 @@ export default function Office3DScene({ data, workers, labels, brand, demo, moti
           type="button"
           onClick={() => onOpenWorker(w.key)}
           aria-label={`${w.persona} · ${w.role} · ${stateLabel(w)}`}
-          className={`office3d-plate ${holo ? "office3d-plate-holo" : ""} ${selectedKey === w.key ? "office3d-plate-selected" : ""}`}
+          className={`office3d-plate ${selectedKey === w.key ? "office3d-plate-selected" : ""}`}
           style={{ ["--c" as string]: STATE_COLOR[w.state] } as React.CSSProperties}
         >
           <span className="office3d-plate-row">
@@ -149,7 +148,7 @@ export default function Office3DScene({ data, workers, labels, brand, demo, moti
       />
     </Canvas>
     <LabelLayer>
-      {workers.map((w) => plate(w, !IDENTITY_3D[w.key]))}
+      {workers.map(plate)}
       {data.departments.map((d) => (
         <Label key={d.key} id={`dept:${d.key}`}>
           <span className={`office3d-sign ${selectedDept === d.key ? "office3d-sign-selected" : ""}`}>{labels.departments[d.key] ?? d.key}</span>
