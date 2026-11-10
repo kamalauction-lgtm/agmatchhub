@@ -2672,7 +2672,27 @@
     },
     "refetch": "Re-fetch",
     "preparedByTeam": "Prepared by the platform team",
-    "preparedNotice": "The platform team prepared these listings for you. Check each one, then accept the declaration and import the ones that are right. Nothing is published until you import it and it passes review."
+    "preparedNotice": "The platform team prepared these listings for you. Check each one, then accept the declaration and import the ones that are right. Nothing is published until you import it and it passes review.",
+    "photos": {
+      "title": "Photos from the source",
+      "intro": "Photos found on your listing pages can be copied for you. They are kept privately and are not shown on the marketplace until processing is available.",
+      "disabled": "Copying photos from listing pages is not available on your account yet. Upload your own photos to each listing.",
+      "attachAll": "Copy photos",
+      "attaching": "Copying…",
+      "retry": "Retry photos",
+      "waiting": "{total} photos waiting to be copied",
+      "savedOf": "{saved} of {total} photos saved",
+      "privateNote": "Saved photos are kept privately until they can be processed.",
+      "exhausted": "Some photos could not be copied after three tries. Upload your own photos for this listing.",
+      "reason_blocked": "The website blocks automated copying. It was not tried another way.",
+      "reason_not_image": "The link did not lead to a JPEG, PNG or WebP photo.",
+      "reason_too_large": "A photo is larger than 10 MB.",
+      "reason_timeout": "The website took too long to respond.",
+      "reason_source_error": "The website returned an error for a photo.",
+      "reason_not_property": "A picture looked like a share card or logo, not a property photo, so it was skipped.",
+      "reason_unsafe_url": "A photo link was not a public web address.",
+      "reason_save_failed": "A photo could not be saved. Try again."
+    }
   },
   "adminUsers": {
     "title": "People and access",

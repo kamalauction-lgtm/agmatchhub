@@ -209,7 +209,14 @@ export async function importReadyItems(formData: FormData): Promise<void> {
       if (listErr || !listing) { failures.push(item.id); continue; }
 
       await supabase.from("import_items")
-        .update({ status: "imported", property_id: prop.id, listing_id: listing.id })
+        .update({
+          status: "imported", property_id: prop.id, listing_id: listing.id,
+          // Photos attach afterwards, one item at a time (00108); the listing
+          // is already complete without them.
+          ...(Array.isArray(src.imageUrls) && src.imageUrls.length
+            ? { media_state: "pending", media_total: Math.min(src.imageUrls.length, 12) }
+            : {}),
+        })
         .eq("id", item.id);
       imported++;
     } catch (e) {

@@ -2672,7 +2672,27 @@
     },
     "refetch": "Baca semula",
     "preparedByTeam": "Disediakan oleh pasukan platform",
-    "preparedNotice": "Pasukan platform menyediakan penyenaraian ini untuk anda. Semak satu per satu, kemudian terima perisytiharan dan import yang betul. Tiada yang disiarkan sebelum anda mengimportnya dan ia lulus semakan."
+    "preparedNotice": "Pasukan platform menyediakan penyenaraian ini untuk anda. Semak satu per satu, kemudian terima perisytiharan dan import yang betul. Tiada yang disiarkan sebelum anda mengimportnya dan ia lulus semakan.",
+    "photos": {
+      "title": "Foto daripada sumber",
+      "intro": "Foto yang ditemui di halaman penyenaraian anda boleh disalin untuk anda. Foto disimpan secara peribadi dan tidak dipaparkan di pasaran sehingga pemprosesan tersedia.",
+      "disabled": "Penyalinan foto daripada halaman penyenaraian belum tersedia untuk akaun anda. Muat naik foto anda sendiri ke setiap penyenaraian.",
+      "attachAll": "Salin foto",
+      "attaching": "Menyalin…",
+      "retry": "Cuba semula foto",
+      "waiting": "{total} foto menunggu untuk disalin",
+      "savedOf": "{saved} daripada {total} foto disimpan",
+      "privateNote": "Foto yang disimpan dikekalkan secara peribadi sehingga ia boleh diproses.",
+      "exhausted": "Sesetengah foto tidak dapat disalin selepas tiga cubaan. Muat naik foto anda sendiri untuk penyenaraian ini.",
+      "reason_blocked": "Laman web menyekat penyalinan automatik. Ia tidak dicuba dengan cara lain.",
+      "reason_not_image": "Pautan tidak membawa kepada foto JPEG, PNG atau WebP.",
+      "reason_too_large": "Ada foto yang lebih besar daripada 10 MB.",
+      "reason_timeout": "Laman web mengambil masa terlalu lama untuk bertindak balas.",
+      "reason_source_error": "Laman web memulangkan ralat untuk sebuah foto.",
+      "reason_not_property": "Sebuah gambar kelihatan seperti kad kongsi atau logo, bukan foto hartanah, jadi ia dilangkau.",
+      "reason_unsafe_url": "Sebuah pautan foto bukan alamat web awam.",
+      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Cuba lagi."
+    }
   },
   "adminUsers": {
     "title": "Orang dan akses",

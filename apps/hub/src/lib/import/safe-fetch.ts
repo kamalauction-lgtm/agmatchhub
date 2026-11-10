@@ -136,6 +136,40 @@ export type SafeResponse = {
  * public host reaches a private one.
  */
 export async function safeFetch(raw: string): Promise<SafeResponse> {
+  const r = await fetchVetted(raw, {
+    accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
+    contentTypeOk: (ct) => /text\/html|application\/xhtml|application\/json|text\/plain/.test(ct),
+    maxBytes: MAX_BYTES,
+  });
+  return { url: r.url, status: r.status, contentType: r.contentType, body: new TextDecoder("utf-8").decode(r.bytes) };
+}
+
+/** An image the importer may copy (00108): JPEG, PNG or WebP, at most 10 MB. */
+export const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+
+export type SafeImage = { url: string; contentType: string; bytes: Uint8Array };
+
+/**
+ * Fetch an image through the same vetting as a page: http(s) only, no private
+ * addresses, every redirect re-checked, a timeout and a size cap while reading.
+ * The declared content type is only a first filter — the caller confirms the
+ * format from the bytes themselves.
+ */
+export async function safeFetchImage(raw: string): Promise<SafeImage> {
+  const r = await fetchVetted(raw, {
+    accept: "image/jpeg,image/png,image/webp;q=0.9",
+    contentTypeOk: (ct) => /^image\/(jpeg|jpg|pjpeg|png|webp)\b/.test(ct),
+    maxBytes: MAX_IMAGE_BYTES,
+  });
+  return { url: r.url, contentType: r.contentType, bytes: r.bytes };
+}
+
+type VettedOptions = { accept: string; contentTypeOk: (contentType: string) => boolean; maxBytes: number };
+
+async function fetchVetted(
+  raw: string,
+  opts: VettedOptions,
+): Promise<{ url: string; status: number; contentType: string; bytes: Uint8Array }> {
   let url = assertSafeUrl(raw);
 
   for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
@@ -148,7 +182,7 @@ export async function safeFetch(raw: string): Promise<SafeResponse> {
           // Identify honestly. Pretending to be a browser to defeat bot
           // protection is exactly what the brief forbids.
           "User-Agent": "PropertiGuruImporter/1.0 (+https://www.propertiguru.id)",
-          Accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
+          Accept: opts.accept,
           "Accept-Language": "id-ID,id;q=0.9,en;q=0.8",
         },
       });
@@ -185,16 +219,16 @@ export async function safeFetch(raw: string): Promise<SafeResponse> {
     }
 
     const contentType = (res.headers.get("content-type") ?? "").toLowerCase();
-    if (!/text\/html|application\/xhtml|application\/json|text\/plain/.test(contentType)) {
+    if (!opts.contentTypeOk(contentType)) {
       throw new UnsafeUrlError("unsupported_content", contentType || "unknown");
     }
 
     const declared = Number(res.headers.get("content-length") ?? 0);
-    if (declared > MAX_BYTES) throw new UnsafeUrlError("too_large", `${declared} bytes`);
+    if (declared > opts.maxBytes) throw new UnsafeUrlError("too_large", `${declared} bytes`);
 
     // content-length can lie or be absent, so cap while reading too.
     const reader = res.body?.getReader();
-    if (!reader) return { url: url.toString(), status: res.status, contentType, body: "" };
+    if (!reader) return { url: url.toString(), status: res.status, contentType, bytes: new Uint8Array(0) };
 
     const chunks: Uint8Array[] = [];
     let total = 0;
@@ -202,9 +236,9 @@ export async function safeFetch(raw: string): Promise<SafeResponse> {
       const { done, value } = await reader.read();
       if (done) break;
       total += value.length;
-      if (total > MAX_BYTES) {
+      if (total > opts.maxBytes) {
         await reader.cancel();
-        throw new UnsafeUrlError("too_large", `>${MAX_BYTES} bytes`);
+        throw new UnsafeUrlError("too_large", `>${opts.maxBytes} bytes`);
       }
       chunks.push(value);
     }
@@ -213,12 +247,7 @@ export async function safeFetch(raw: string): Promise<SafeResponse> {
     let offset = 0;
     for (const c of chunks) { buf.set(c, offset); offset += c.length; }
 
-    return {
-      url: url.toString(),
-      status: res.status,
-      contentType,
-      body: new TextDecoder("utf-8").decode(buf),
-    };
+    return { url: url.toString(), status: res.status, contentType, bytes: buf };
   }
 
   throw new UnsafeUrlError("too_many_redirects");

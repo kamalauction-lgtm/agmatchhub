@@ -2672,7 +2672,27 @@
     },
     "refetch": "Baca ulang",
     "preparedByTeam": "Disiapkan oleh tim platform",
-    "preparedNotice": "Tim platform menyiapkan listing ini untuk Anda. Periksa satu per satu, lalu terima pernyataan dan impor yang sudah benar. Tidak ada yang tayang sebelum Anda mengimpornya dan lolos peninjauan."
+    "preparedNotice": "Tim platform menyiapkan listing ini untuk Anda. Periksa satu per satu, lalu terima pernyataan dan impor yang sudah benar. Tidak ada yang tayang sebelum Anda mengimpornya dan lolos peninjauan.",
+    "photos": {
+      "title": "Foto dari sumber",
+      "intro": "Foto yang ditemukan di halaman listing Anda dapat disalin untuk Anda. Foto disimpan secara privat dan tidak ditampilkan di marketplace sampai pemrosesan tersedia.",
+      "disabled": "Penyalinan foto dari halaman listing belum tersedia untuk akun Anda. Unggah foto Anda sendiri ke setiap listing.",
+      "attachAll": "Salin foto",
+      "attaching": "Menyalin…",
+      "retry": "Coba lagi foto",
+      "waiting": "{total} foto menunggu disalin",
+      "savedOf": "{saved} dari {total} foto tersimpan",
+      "privateNote": "Foto yang tersimpan disimpan secara privat sampai dapat diproses.",
+      "exhausted": "Beberapa foto tidak dapat disalin setelah tiga kali percobaan. Unggah foto Anda sendiri untuk listing ini.",
+      "reason_blocked": "Situs web memblokir penyalinan otomatis. Tidak dicoba dengan cara lain.",
+      "reason_not_image": "Tautan tidak mengarah ke foto JPEG, PNG, atau WebP.",
+      "reason_too_large": "Ada foto yang lebih besar dari 10 MB.",
+      "reason_timeout": "Situs web terlalu lama merespons.",
+      "reason_source_error": "Situs web mengembalikan galat untuk sebuah foto.",
+      "reason_not_property": "Sebuah gambar tampak seperti kartu bagikan atau logo, bukan foto properti, sehingga dilewati.",
+      "reason_unsafe_url": "Sebuah tautan foto bukan alamat web publik.",
+      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Coba lagi."
+    }
   },
   "adminUsers": {
     "title": "Orang dan akses",

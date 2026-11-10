@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { ImportReview } from "@/components/import/import-review";
+import { PhotoAttach, type PhotoItem } from "@/components/import/photo-attach";
+import { MAX_PHOTO_ATTEMPTS } from "@/lib/import/photos";
 
 /**
  * Review before anything becomes a listing.
@@ -59,7 +61,7 @@ export default async function BatchReviewPage({
 
   const { data: items } = await supabase
     .from("import_items")
-    .select("id, source_url, status, extracted, overrides, warnings, error, listing_id, duplicate_of_listing_id")
+    .select("id, source_url, status, extracted, overrides, warnings, error, listing_id, duplicate_of_listing_id, media_state, media_total, media_saved, media_attempts, media_results")
     .eq("batch_id", batchId)
     .order("created_at", { ascending: true });
 
@@ -87,6 +89,29 @@ export default async function BatchReviewPage({
   };
 
   const labels = Object.fromEntries(REVIEW_LABEL_KEYS.map((k) => [k, t(k)]));
+
+  // Photos (P0-e-1a): imported items that came with photo URLs.
+  const { data: photosEnabled } = await supabase.rpc("is_feature_enabled", { p_key: "import_photos", p_user: user.id });
+  const photoItems: PhotoItem[] = rows
+    .filter((r) => r.status === "imported" && (r.media_total ?? 0) > 0)
+    .map((r) => {
+      const src = { ...(r.extracted ?? {}), ...(r.overrides ?? {}) } as { title?: string };
+      return {
+        id: r.id,
+        title: src.title ?? r.id.slice(0, 8),
+        state: r.media_state as PhotoItem["state"],
+        saved: r.media_saved ?? 0,
+        total: r.media_total ?? 0,
+        attempts: r.media_attempts ?? 0,
+        reasons: ((r.media_results ?? []) as { s: string }[]).map((x) => x.s).filter((s) => s !== "saved"),
+      };
+    });
+  const PHOTO_LABEL_KEYS = [
+    "title", "intro", "disabled", "attachAll", "attaching", "retry", "waiting", "savedOf",
+    "privateNote", "exhausted", "reason_blocked", "reason_not_image", "reason_too_large",
+    "reason_timeout", "reason_source_error", "reason_not_property", "reason_unsafe_url", "reason_save_failed",
+  ] as const;
+  const photoLabels = Object.fromEntries(PHOTO_LABEL_KEYS.map((k) => [k, t(`photos.${k}`)]));
 
   /* A per-item failure is shown as its own sentence, not as a code. "Just a
      moment..." got imported once because a blocked fetch looked like a normal
@@ -148,6 +173,10 @@ export default async function BatchReviewPage({
           </div>
         ))}
       </section>
+
+      {photoItems.length > 0 && (
+        <PhotoAttach items={photoItems} enabled={!!photosEnabled} maxAttempts={MAX_PHOTO_ATTEMPTS} labels={photoLabels} />
+      )}
 
       {!rows.length ? (
         <p className="rounded-xl border border-dashed border-line p-10 text-center text-sm text-muted">
