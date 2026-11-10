@@ -100,7 +100,7 @@ export default async function AgentDetailPage({
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {t(`errors.${error === "notes_required" ? "notes_required" : "save_failed"}`)}
+          {t(`errors.${error === "notes_required" || error === "self_invited" ? error : "save_failed"}`)}
         </p>
       )}
 

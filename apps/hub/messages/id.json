@@ -272,7 +272,8 @@
       "ai": "Konsol AI",
       "hero": "AG Hero",
       "payments": "Pembayaran",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "invitations": "Undangan"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -324,7 +325,8 @@
     },
     "errors": {
       "notes_required": "Catatan wajib untuk keputusan ini.",
-      "save_failed": "Keputusan tidak dapat disimpan."
+      "save_failed": "Keputusan tidak dapat disimpan.",
+      "self_invited": "Anda yang mengundang agen ini, jadi admin lain harus menyetujui verifikasinya."
     },
     "overviewTitle": "Pusat kendali",
     "allClear": "Tidak ada antrean. Semua bersih.",
@@ -4375,6 +4377,63 @@
       "nextStep": "Langkah berikutnya",
       "copy": "Salin",
       "copied": "Tersalin"
+    }
+  },
+  "adminInvitations": {
+    "title": "Undangan agen",
+    "intro": "Undang agen lewat e-mail. Agen mendaftar dengan kata sandi mereka sendiri lalu menerima tautan; admin tidak pernah membuat atau melihat kata sandi. Anda hanya melihat undangan untuk negara yang boleh Anda undang.",
+    "createTitle": "Undangan baru",
+    "fullName": "Nama lengkap",
+    "email": "E-mail",
+    "phone": "Ponsel (WhatsApp)",
+    "country": "Negara",
+    "language": "Bahasa pilihan",
+    "agency": "Kantor agen (opsional)",
+    "createHint": "Tautan berlaku 7 hari dan hanya ditampilkan sekali. Kirimkan sendiri ke agen, misalnya lewat WhatsApp.",
+    "createCta": "Buat undangan",
+    "noCountries": "Anda tidak dapat mengundang agen di negara aktif mana pun.",
+    "linkTitle": "Tautan undangan",
+    "linkHint": "Salin sekarang. Tautan hanya ditampilkan sekali; kirim ulang membuat tautan baru dan tautan lama tidak berlaku lagi.",
+    "listTitle": "Undangan",
+    "person": "Agen",
+    "state": "Status",
+    "expires": "Berlaku sampai",
+    "sent": "Kali dikirim",
+    "action": "Tindakan",
+    "resend": "Kirim ulang",
+    "revoke": "Cabut",
+    "empty": "Belum ada undangan.",
+    "stateLabel": {
+      "pending": "Menunggu",
+      "expired": "Kedaluwarsa",
+      "redeemed": "Diterima",
+      "revoked": "Dicabut"
+    },
+    "notice": {
+      "created": "Undangan dibuat. Salin tautan di bawah.",
+      "resent": "Tautan baru dibuat. Tautan sebelumnya tidak berlaku lagi.",
+      "revoked": "Undangan dicabut.",
+      "denied": "Anda tidak dapat mengelola undangan untuk negara tersebut.",
+      "invalid": "Periksa data lalu coba lagi.",
+      "email_registered": "E-mail itu sudah punya akun. Minta agen untuk masuk saja.",
+      "already_invited": "E-mail itu sudah punya undangan aktif. Kirim ulang saja.",
+      "country_inactive": "Negara itu tidak aktif.",
+      "not_pending": "Hanya undangan yang menunggu yang dapat diubah.",
+      "failed": "Gagal menyimpan. Coba lagi."
+    }
+  },
+  "invite": {
+    "title": "Terima undangan Anda",
+    "intro": "Anda diundang bergabung ke platform agen. Terima untuk menautkan undangan ini ke akun yang sedang Anda gunakan.",
+    "accept": "Terima undangan",
+    "wrongAccount": "Masuk dengan akun yang salah?",
+    "checkAccount": "Periksa akun Anda",
+    "error": {
+      "invalid": "Tautan undangan ini tidak berlaku. Mungkin sudah kedaluwarsa, diganti, atau sudah dipakai. Minta tautan baru kepada pengundang Anda.",
+      "email_mismatch": "Undangan ini untuk alamat e-mail lain. Masuk dengan alamat yang menerima undangan.",
+      "rate_limited": "Terlalu banyak percobaan. Tunggu satu jam lalu coba lagi.",
+      "sign_in_required": "Masuk untuk menerima undangan.",
+      "failed": "Gagal menerima undangan. Coba lagi."
     }
   }
 }

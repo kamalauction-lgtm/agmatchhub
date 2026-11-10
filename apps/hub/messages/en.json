@@ -272,7 +272,8 @@
       "ai": "AI console",
       "hero": "AG Hero",
       "payments": "Payments",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "invitations": "Invitations"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -324,7 +325,8 @@
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
-      "save_failed": "Could not save the decision."
+      "save_failed": "Could not save the decision.",
+      "self_invited": "You invited this agent, so another admin must approve their verification."
     },
     "overviewTitle": "Command Center",
     "allClear": "Nothing is waiting. All queues are clear.",
@@ -4375,6 +4377,63 @@
       "nextStep": "Next step",
       "copy": "Copy",
       "copied": "Copied"
+    }
+  },
+  "adminInvitations": {
+    "title": "Agent invitations",
+    "intro": "Invite an agent by e-mail. They register with their own password and accept the link; no admin ever sets or sees a password. You see invitations only for countries you may invite in.",
+    "createTitle": "New invitation",
+    "fullName": "Full name",
+    "email": "E-mail",
+    "phone": "Mobile (WhatsApp)",
+    "country": "Country",
+    "language": "Preferred language",
+    "agency": "Agency (optional)",
+    "createHint": "The link is valid for 7 days and is shown to you once. Send it to the agent yourself, for example by WhatsApp.",
+    "createCta": "Create invitation",
+    "noCountries": "You cannot invite agents in any active country.",
+    "linkTitle": "Invitation link",
+    "linkHint": "Copy it now. It is shown only once; resend creates a new link and the old one stops working.",
+    "listTitle": "Invitations",
+    "person": "Agent",
+    "state": "Status",
+    "expires": "Expires",
+    "sent": "Times sent",
+    "action": "Action",
+    "resend": "Resend",
+    "revoke": "Revoke",
+    "empty": "No invitations yet.",
+    "stateLabel": {
+      "pending": "Waiting",
+      "expired": "Expired",
+      "redeemed": "Accepted",
+      "revoked": "Revoked"
+    },
+    "notice": {
+      "created": "Invitation created. Copy the link below.",
+      "resent": "New link created. The previous link no longer works.",
+      "revoked": "Invitation revoked.",
+      "denied": "You cannot manage invitations for that country.",
+      "invalid": "Check the details and try again.",
+      "email_registered": "That e-mail already has an account. Ask the agent to sign in instead.",
+      "already_invited": "That e-mail already has an open invitation. Resend it instead.",
+      "country_inactive": "That country is not active.",
+      "not_pending": "Only waiting invitations can be changed.",
+      "failed": "Could not save. Try again."
+    }
+  },
+  "invite": {
+    "title": "Accept your invitation",
+    "intro": "You were invited to join the agent platform. Accept to link this invitation to the account you are signed in with.",
+    "accept": "Accept invitation",
+    "wrongAccount": "Signed in with the wrong account?",
+    "checkAccount": "Check your account",
+    "error": {
+      "invalid": "This invitation link is not valid. It may have expired, been replaced or already been used. Ask the person who invited you for a new link.",
+      "email_mismatch": "This invitation is for a different e-mail address. Sign in with the address it was sent to.",
+      "rate_limited": "Too many attempts. Wait an hour and try again.",
+      "sign_in_required": "Sign in to accept the invitation.",
+      "failed": "Could not accept the invitation. Try again."
     }
   }
 }

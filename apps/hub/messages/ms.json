@@ -272,7 +272,8 @@
       "ai": "Konsol AI",
       "hero": "AG Hero",
       "payments": "Pembayaran",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "invitations": "Jemputan"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -324,7 +325,8 @@
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
-      "save_failed": "Keputusan tidak dapat disimpan."
+      "save_failed": "Keputusan tidak dapat disimpan.",
+      "self_invited": "Anda yang menjemput ejen ini, jadi admin lain mesti meluluskan pengesahannya."
     },
     "overviewTitle": "Pusat kawalan",
     "allClear": "Tiada apa menunggu. Semua barisan bersih.",
@@ -4375,6 +4377,63 @@
       "nextStep": "Langkah seterusnya",
       "copy": "Salin",
       "copied": "Disalin"
+    }
+  },
+  "adminInvitations": {
+    "title": "Jemputan ejen",
+    "intro": "Jemput ejen melalui e-mel. Ejen mendaftar dengan kata laluan mereka sendiri dan menerima pautan; admin tidak pernah menetapkan atau melihat kata laluan. Anda hanya melihat jemputan bagi negara yang boleh anda jemput.",
+    "createTitle": "Jemputan baharu",
+    "fullName": "Nama penuh",
+    "email": "E-mel",
+    "phone": "Telefon bimbit (WhatsApp)",
+    "country": "Negara",
+    "language": "Bahasa pilihan",
+    "agency": "Agensi (pilihan)",
+    "createHint": "Pautan sah selama 7 hari dan dipaparkan sekali sahaja. Hantar sendiri kepada ejen, contohnya melalui WhatsApp.",
+    "createCta": "Cipta jemputan",
+    "noCountries": "Anda tidak boleh menjemput ejen di mana-mana negara aktif.",
+    "linkTitle": "Pautan jemputan",
+    "linkHint": "Salin sekarang. Pautan dipaparkan sekali sahaja; hantar semula mencipta pautan baharu dan pautan lama tidak lagi sah.",
+    "listTitle": "Jemputan",
+    "person": "Ejen",
+    "state": "Status",
+    "expires": "Tamat",
+    "sent": "Kali dihantar",
+    "action": "Tindakan",
+    "resend": "Hantar semula",
+    "revoke": "Batal",
+    "empty": "Belum ada jemputan.",
+    "stateLabel": {
+      "pending": "Menunggu",
+      "expired": "Tamat tempoh",
+      "redeemed": "Diterima",
+      "revoked": "Dibatalkan"
+    },
+    "notice": {
+      "created": "Jemputan dicipta. Salin pautan di bawah.",
+      "resent": "Pautan baharu dicipta. Pautan sebelumnya tidak lagi sah.",
+      "revoked": "Jemputan dibatalkan.",
+      "denied": "Anda tidak boleh mengurus jemputan bagi negara tersebut.",
+      "invalid": "Semak butiran dan cuba lagi.",
+      "email_registered": "E-mel itu sudah mempunyai akaun. Minta ejen log masuk sahaja.",
+      "already_invited": "E-mel itu sudah mempunyai jemputan aktif. Hantar semula sahaja.",
+      "country_inactive": "Negara itu tidak aktif.",
+      "not_pending": "Hanya jemputan yang menunggu boleh diubah.",
+      "failed": "Tidak dapat menyimpan. Cuba lagi."
+    }
+  },
+  "invite": {
+    "title": "Terima jemputan anda",
+    "intro": "Anda dijemput menyertai platform ejen. Terima untuk memautkan jemputan ini kepada akaun yang sedang anda gunakan.",
+    "accept": "Terima jemputan",
+    "wrongAccount": "Log masuk dengan akaun yang salah?",
+    "checkAccount": "Semak akaun anda",
+    "error": {
+      "invalid": "Pautan jemputan ini tidak sah. Mungkin sudah tamat tempoh, diganti atau sudah digunakan. Minta pautan baharu daripada orang yang menjemput anda.",
+      "email_mismatch": "Jemputan ini untuk alamat e-mel lain. Log masuk dengan alamat yang menerima jemputan.",
+      "rate_limited": "Terlalu banyak cubaan. Tunggu sejam dan cuba lagi.",
+      "sign_in_required": "Log masuk untuk menerima jemputan.",
+      "failed": "Tidak dapat menerima jemputan. Cuba lagi."
     }
   }
 }

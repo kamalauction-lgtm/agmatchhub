@@ -103,6 +103,13 @@ export async function reviewAgent(formData: FormData) {
   if (!target) redirect("/admin/agents?error=not_found");
   await requireCapabilityIn("agent.verify", target.country_code, "/admin/agents");
 
+  // Separation of duties (00106): whoever invited this agent may not approve
+  // them. The database refuses it regardless; this gives a readable answer.
+  if (decision === "approve") {
+    const { data: invitedByMe } = await supabase.rpc("invited_by_me", { p_agent: userId });
+    if (invitedByMe) redirect(`/admin/agents/${userId}?error=self_invited`);
+  }
+
   const newStatus = STATUS_BY_DECISION[decision];
 
   const { error: statusErr } = await supabase
