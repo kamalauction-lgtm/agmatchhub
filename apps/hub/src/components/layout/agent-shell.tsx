@@ -37,7 +37,8 @@ export async function AgentShell({
   wide = false,
 }: {
   children: React.ReactNode;
-  wide?: boolean;
+  /** `true` widens to 6xl; "full" lets a page such as the Live Office use the whole viewport. */
+  wide?: boolean | "full";
 }) {
   const partnerIdentityPublic = await isPartnerIdentityPublic();
   const tc = await getTranslations("common");
@@ -217,7 +218,7 @@ export async function AgentShell({
 
         <main
           className={`mx-auto w-full flex-1 px-4 py-6 pb-24 sm:px-6 sm:py-8 sm:pb-10 ${
-            wide ? "max-w-6xl" : "max-w-3xl"
+            wide === "full" ? "max-w-[1700px]" : wide ? "max-w-6xl" : "max-w-3xl"
           }`}
         >
           {children}

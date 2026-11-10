@@ -3330,6 +3330,7 @@
     }
   },
   "aiWorkforce": {
+    "watchOffice": "Lihat pasukan AI saya bekerja",
     "title": "Tenaga Kerja AI",
     "intro": "Rakan sekerja AI anda. Setiap satu bekerja dalam skrin yang anda sudah guna — ia menggubal, menyusun dan mengingatkan; anda memutuskan dan menghantar.",
     "liveCount": "{count, plural, =0 {Belum ada yang hidup} one {1 hidup} other {# hidup}}",
@@ -3820,6 +3821,142 @@
       "duplicate": "Templat dengan nama dan bahasa itu sudah wujud untuk nombor ini.",
       "invalid": "Input tidak sah.",
       "failed": "Tindakan itu gagal."
+    }
+  },
+  "aiOffice": {
+    "eyebrow": "Pejabat AI Langsung",
+    "title": "Lihat pasukan AI anda bekerja",
+    "intro": "Dua belas jabatan, satu watak bagi setiap pakar. Setiap status yang anda lihat datang daripada rekod kerja dan tugas anda sendiri — tiada yang direka.",
+    "back": "Kembali ke Tenaga Kerja AI",
+    "ruleBasedBadge": "Berasaskan peraturan sepanjang pilot",
+    "legend": "Status watak",
+    "lounge": "Ruang rehat",
+    "refresh": "Segarkan",
+    "refreshing": "Menyegarkan…",
+    "updated": "Dikemas kini",
+    "demoToggle": "Mod demo",
+    "demoOn": "Mod demo aktif",
+    "demoBanner": "MOD DEMO — aktiviti di bawah disimulasikan untuk demonstrasi. Ia bukan kerja AI sebenar anda dan tiada apa yang disimpan.",
+    "demoBadge": "DEMO",
+    "truth": "Kerja direkodkan selepas alat selesai berjalan, jadi tiada watak dipaparkan “sedang bekerja” daripada data kerja. Raian bermaksud satu kerja selesai dalam lima minit terakhir; “perlukan anda” bermaksud satu cadangan tugas menunggu dalam senarai tugas anda.",
+    "offlineNotice": "Akaun anda belum disahkan, jadi pejabat masih luar talian. Lengkapkan pengesahan supaya pasukan anda boleh bekerja.",
+    "mobileHint": "Ketik seorang pakar untuk melihat kerjanya. Lantai beranimasi dipaparkan pada tablet dan desktop.",
+    "state": {
+      "active": "Selesai hari ini",
+      "finished": "Bekerja",
+      "attention": "Menunggu anda",
+      "idle": "Sedia",
+      "error": "Gagal",
+      "planned": "Dirancang",
+      "offline": "Luar talian"
+    },
+    "stateHint": {
+      "active": "Sekurang-kurangnya satu kerja berjalan hari ini untuk enjin pakar ini.",
+      "finished": "Satu kerja berjalan dalam lima minit terakhir — sehampir mungkin dengan “langsung” yang boleh dibuktikan rekod.",
+      "attention": "Pakar ini mencadangkan kerja yang menunggu keputusan anda.",
+      "idle": "Tersedia sekarang; tiada permintaan hari ini.",
+      "error": "Larian terakhir berakhir dengan ralat. Cuba lagi dari skrin alat itu.",
+      "planned": "Skrin untuk peranan ini belum wujud. Ia tidak pernah membuat kerja sebenar.",
+      "offline": "Sahkan akaun anda untuk membuka peranan ini."
+    },
+    "engine": {
+      "ai": "Berkuasa model (pembekal disambungkan)",
+      "rules": "Berasaskan peraturan (tiada pembekal AI disambungkan)",
+      "rules_by_design": "Berasaskan peraturan mengikut reka bentuk"
+    },
+    "access": {
+      "open": "Terbuka untuk anda sekarang",
+      "unavailable": "Perlukan akaun yang disahkan",
+      "planned": "Dirancang",
+      "hero": "Berada dalam AG Hero (pautkan akaun anda)",
+      "hero_open": "Buka dalam AG Hero"
+    },
+    "jobStatus": {
+      "ok": "Selesai",
+      "degraded": "Selesai (sandaran)",
+      "error": "Ralat",
+      "denied": "Jawapan berasaskan peraturan"
+    },
+    "panel": {
+      "specialty": "Kepakaran",
+      "availability": "Ketersediaan",
+      "engine": "Enjin",
+      "sharedEngine": "Enjin dikongsi dengan peranan lain:",
+      "current": "Tugas semasa",
+      "currentNone": "Tiada. Alat berjalan semasa anda menggunakannya; tiada baris gilir latar belakang.",
+      "currentPending": "Menunggu keputusan anda tentang cadangan di bawah.",
+      "last": "Aktiviti terakhir",
+      "never": "Belum pernah",
+      "outputs": "Hasil dalam 7 hari terakhir",
+      "outputsNone": "Tiada kerja direkodkan dalam 7 hari terakhir.",
+      "pending": "Menunggu kelulusan anda",
+      "pendingNone": "Tiada yang menunggu.",
+      "errors": "Ralat",
+      "errorsNone": "Tiada ralat dalam 7 hari terakhir.",
+      "open": "Buka alat",
+      "openTasks": "Buka tugas",
+      "openWorkforce": "Tenaga Kerja AI",
+      "close": "Tutup",
+      "due": "Tarikh akhir",
+      "recent": "Hasil terkini",
+      "recentNone": "Belum ada larian direkodkan.",
+      "tasksToday": "Tugas hari ini",
+      "needs": "Apa yang diperlukan daripada anda",
+      "needsNone": "Tiada buat masa ini.",
+      "needsPending": "Putuskan cadangan ini dalam senarai tugas anda:",
+      "department": "Jabatan",
+      "members": "pakar"
+    },
+    "totals": {
+      "workers": "Pakar",
+      "open": "Terbuka untuk anda",
+      "ai": "Berkuasa model",
+      "rules": "Berasaskan peraturan",
+      "attention": "Perlukan anda",
+      "activeToday": "Bekerja hari ini"
+    },
+    "subtitle": "Lihat apa yang sedang dilakukan setiap pakar AI di seluruh pejabat hartanah digital anda.",
+    "engineShort": {
+      "ai": "Berkuasa model",
+      "rules": "Berasaskan peraturan",
+      "rules_by_design": "Berasaskan peraturan"
+    },
+    "kpi": {
+      "specialists": "Pakar",
+      "activeNow": "Aktif sekarang",
+      "waiting": "Menunggu anda",
+      "completedToday": "Selesai hari ini",
+      "departments": "Jabatan"
+    },
+    "view": {
+      "office": "Paparan pejabat",
+      "list": "Paparan senarai",
+      "label": "Mod paparan"
+    },
+    "node": {
+      "tasksToday": "tugas hari ini",
+      "queue": "dalam giliran",
+      "justRan": "baru berjalan"
+    },
+    "hq": "Astra · Pengurus AI (Ibu Pejabat)",
+    "canvas": {
+      "zoomIn": "Zum masuk",
+      "zoomOut": "Zum keluar",
+      "reset": "Set semula paparan"
+    },
+    "feed": {
+      "title": "Aktiviti pejabat",
+      "live": "Langsung",
+      "empty": "Belum ada aktiviti direkodkan. Larian muncul di sini sebaik alat digunakan.",
+      "demoLine": "menyelesaikan kerja simulasi"
+    },
+    "queue": {
+      "title": "Giliran tugas anda",
+      "empty": "Tiada yang menunggu keputusan anda.",
+      "demoLine": "Cadangan simulasi menunggu keputusan anda"
+    },
+    "deptStatus": {
+      "title": "Status pasukan"
     }
   },
   "aiTools": {
