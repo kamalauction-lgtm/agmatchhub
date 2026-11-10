@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, requireCapabilityIn } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 import { notify } from "@/lib/notifications";
 
@@ -34,10 +34,14 @@ export async function moderateListing(formData: FormData): Promise<void> {
   const supabase = await createClient();
   const { data: listing } = await supabase
     .from("listings")
-    .select("id, human_readable_id, title, status, agent_id")
+    .select("id, human_readable_id, title, status, agent_id, properties(country_code)")
     .eq("id", listingId)
     .single();
   if (!listing) redirect("/admin/listings?error=not_found");
+  const property = (Array.isArray(listing.properties) ? listing.properties[0] : listing.properties) as
+    | { country_code: string | null }
+    | null;
+  await requireCapabilityIn("listing.moderate", property?.country_code, "/admin/listings");
   if (!["pending_review", "published"].includes(listing.status)) {
     redirect("/admin/listings?error=not_moderatable");
   }

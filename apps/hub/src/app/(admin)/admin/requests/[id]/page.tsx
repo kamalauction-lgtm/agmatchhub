@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, requireCapabilityIn } from "@/lib/authz";
 import { reviewRequest } from "../actions";
 import { CRED_COOKIE } from "@/lib/agents/constants";
 
@@ -42,6 +42,7 @@ export default async function AdminRequestDetail({
       .maybeSingle(),
   ]);
   if (!r) notFound();
+  await requireCapabilityIn("request.manage", r.country_code, "/admin/requests");
   const ra = Array.isArray(r.profiles) ? r.profiles[0] : r.profiles;
 
   // One-time credential reveal after creating an agent on the fly.

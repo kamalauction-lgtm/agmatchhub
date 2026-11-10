@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, capabilityCountries } from "@/lib/authz";
 
 const FILTERS = ["under_review", "additional_information_required", "verified", "rejected", "all"] as const;
 
@@ -22,6 +22,8 @@ export default async function AgentQueuePage({
     .order("created_at", { ascending: false })
     .limit(100);
   if (status !== "all") query = query.eq("agent_status", status);
+  const scope = await capabilityCountries("agent.verify");
+  if (scope) query = query.in("country_code", scope);
   const { data: rows } = await query;
 
   return (

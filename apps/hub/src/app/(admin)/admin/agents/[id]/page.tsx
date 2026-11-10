@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, requireCapabilityIn } from "@/lib/authz";
 import { reviewAgent, reviewSocialLink } from "../actions";
 import { Agent360 } from "@/components/admin/agent-360";
 import { GrantPanel } from "@/components/admin/grant-panel";
@@ -49,6 +49,9 @@ export default async function AgentDetailPage({
         .limit(10),
     ]);
   if (!profile) notFound();
+  // Before any signed document URL is minted: a country admin sees only
+  // agents in their own country.
+  await requireCapabilityIn("agent.verify", profile.country_code, "/admin/agents");
 
   const [licenceUrl, identityUrl, agencyUrl, cardFrontUrl, cardBackUrl] = await Promise.all([
     signedUrl(supabase, ap?.licence_document_path ?? null),

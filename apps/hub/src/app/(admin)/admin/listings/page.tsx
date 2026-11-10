@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, capabilityCountries } from "@/lib/authz";
 import { moderateListing } from "./actions";
 
 /**
@@ -52,12 +52,13 @@ export default async function ListingModerationPage({
   const supabase = await createClient();
   const t = await getTranslations("adminListings");
 
-  const { data } = await supabase
+  const scope = await capabilityCountries("listing.moderate");
+  let query = supabase
     .from("listings")
     .select(
       `id, human_readable_id, title, description, listing_type, price, currency,
        rent_period, status, created_at,
-       properties (property_type, ownership_type, general_address, regency_name,
+       properties!inner (country_code, property_type, ownership_type, general_address, regency_name,
                    province_name, bedrooms, bathrooms, building_size, land_size),
        profiles (display_name, agent_status),
        listing_media (processed_path, is_cover, position)`
@@ -65,6 +66,8 @@ export default async function ListingModerationPage({
     .eq("status", "pending_review")
     .order("created_at", { ascending: true })
     .limit(50);
+  if (scope) query = query.in("properties.country_code", scope);
+  const { data } = await query;
 
   const rows = (data ?? []) as unknown as QueueRow[];
 

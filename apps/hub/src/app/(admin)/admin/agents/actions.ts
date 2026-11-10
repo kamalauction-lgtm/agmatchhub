@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { requireCapabilityIn } from "@/lib/authz";
 
 const decisionSchema = z.object({
   userId: z.string().uuid(),
@@ -41,6 +42,21 @@ export async function reviewSocialLink(formData: FormData) {
     });
   if (!parsed.success) redirect("/admin/agents");
   const d = parsed.data;
+
+  // Scope by the agent who owns the link, read from the row — not from the
+  // form's userId, which only decides where to redirect.
+  const { data: link } = await supabase
+    .from("agent_social_links")
+    .select("user_id")
+    .eq("id", d.linkId)
+    .maybeSingle();
+  if (!link) redirect("/admin/agents?error=not_found");
+  const { data: owner } = await supabase
+    .from("profiles")
+    .select("country_code")
+    .eq("id", link.user_id)
+    .maybeSingle();
+  await requireCapabilityIn("agent.verify", owner?.country_code, "/admin/agents");
 
   const { error } = await supabase
     .from("agent_social_links")
@@ -81,10 +97,11 @@ export async function reviewAgent(formData: FormData) {
 
   const { data: target } = await supabase
     .from("profiles")
-    .select("agent_status")
+    .select("agent_status, country_code")
     .eq("id", userId)
     .single();
   if (!target) redirect("/admin/agents?error=not_found");
+  await requireCapabilityIn("agent.verify", target.country_code, "/admin/agents");
 
   const newStatus = STATUS_BY_DECISION[decision];
 

@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { getActiveDeclaration, recordConsent } from "@/lib/consents";
 import { logAudit } from "@/lib/audit";
+import { requireCapabilityIn } from "@/lib/authz";
 import { notify } from "@/lib/notifications";
 import { getLocale } from "next-intl/server";
 import {
@@ -43,6 +44,9 @@ export async function addPropertyOnBehalf(formData: FormData) {
     .eq("id", requestId)
     .maybeSingle();
   if (!req) redirect("/admin/requests");
+  // Read through the service client, so scope is checked here, before any
+  // write: a country admin for MY must not add property to an ID request.
+  await requireCapabilityIn("request.manage", req.country_code, "/admin/requests");
 
   // ---- Resolve the supply agent (existing pick or new account) ----------
   const mode = String(formData.get("agentMode") ?? "existing");
