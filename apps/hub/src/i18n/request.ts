@@ -18,22 +18,8 @@ import { createClient } from "@/lib/supabase/server";
  * first sign-in (pilot rehearsal, 9 Nov 2026). Cookie-based, no URL prefix —
  * the hub is a private tool, not an SEO surface. Never IP-based.
  */
-export const locales = ["en", "ms", "id"] as const;
-export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = "en";
-
-/** Default UI language per market, mirroring `countries` (id-first for ID). */
-const COUNTRY_DEFAULT: Record<string, Locale> = { ID: "id", MY: "en" };
-
-/** The agent's selectable UI languages are country-scoped. */
-const COUNTRY_LANGUAGES: Record<string, readonly Locale[]> = {
-  ID: ["id", "en"],
-  MY: ["en", "ms"],
-};
-export function allowedLocalesForCountry(countryCode: string | null | undefined): readonly Locale[] {
-  return COUNTRY_LANGUAGES[countryCode ?? ""] ?? locales;
-}
-const isLocale = (v: unknown): v is Locale => (locales as readonly string[]).includes(String(v));
+import { allowedLocalesForCountry, isLocale, locales, defaultLocale, resolveLocale, type Locale } from "./locale-rules";
+export { allowedLocalesForCountry, locales, defaultLocale, type Locale };
 
 type ProfileLocale = { preferred: Locale | null; countryCode: string | null };
 async function profileLocale(): Promise<ProfileLocale> {
@@ -56,23 +42,15 @@ async function profileLocale(): Promise<ProfileLocale> {
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
-  let locale: Locale;
-  if (isLocale(requested)) {
-    // Content Studio may explicitly request the listing's content language.
-    locale = requested;
-  } else {
-    const store = await cookies();
-    const cookieLocale = store.get("locale")?.value;
-    const profile = await profileLocale();
-    const allowed = allowedLocalesForCountry(profile.countryCode);
-    if (isLocale(cookieLocale) && allowed.includes(cookieLocale)) {
-      locale = cookieLocale;
-    } else if (profile.preferred && allowed.includes(profile.preferred)) {
-      locale = profile.preferred;
-    } else {
-      locale = COUNTRY_DEFAULT[profile.countryCode ?? ""] ?? defaultLocale;
-    }
-  }
+  // Profile lookups only when nothing explicit decides the language first.
+  const store = isLocale(requested) ? null : await cookies();
+  const profile = isLocale(requested) ? { preferred: null, countryCode: null } : await profileLocale();
+  const locale = resolveLocale({
+    requested,
+    cookie: store?.get("locale")?.value,
+    preferred: profile.preferred,
+    countryCode: profile.countryCode,
+  });
 
   return {
     locale,
