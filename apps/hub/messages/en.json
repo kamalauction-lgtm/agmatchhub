@@ -273,7 +273,8 @@
       "hero": "AG Hero",
       "payments": "Payments",
       "whatsapp": "WhatsApp",
-      "invitations": "Invitations"
+      "invitations": "Invitations",
+      "imports": "Assisted import"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -1385,7 +1386,8 @@
       "lead_overdue": "A lead is waiting past the response deadline",
       "task_due": "A task is due",
       "viewing_soon": "A viewing starts soon",
-      "whatsapp_received": "A WhatsApp message arrived on one of your leads"
+      "whatsapp_received": "A WhatsApp message arrived on one of your leads",
+      "listing_import_prepared": "Listings are ready for you to review"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -2350,7 +2352,8 @@
       "reason_required": "Rejection needs a reason the agent will see.",
       "not_found": "Listing not found.",
       "not_moderatable": "This listing is not awaiting review.",
-      "update_failed": "Update failed. Try again."
+      "update_failed": "Update failed. Try again.",
+      "self_prepared": "You prepared this listing's import, so another admin must approve it."
     }
   },
   "plans": {
@@ -2664,9 +2667,12 @@
       "columns_missing": "No Title and Price columns were found, so nothing was imported. These are the columns that were read:",
       "blocked_by_site": "That site blocks automated reading (it asks for browser verification). We do not work around that protection. Use the Excel/CSV upload, or add it manually.",
       "no_listing_data": "The page loaded, but it carried no readable property data.",
-      "import_failed": "Could not be saved as a listing. Check the required fields and try again."
+      "import_failed": "Could not be saved as a listing. Check the required fields and try again.",
+      "not_owner": "Only the agent this import belongs to can import it."
     },
-    "refetch": "Re-fetch"
+    "refetch": "Re-fetch",
+    "preparedByTeam": "Prepared by the platform team",
+    "preparedNotice": "The platform team prepared these listings for you. Check each one, then accept the declaration and import the ones that are right. Nothing is published until you import it and it passes review."
   },
   "adminUsers": {
     "title": "People and access",
@@ -4417,6 +4423,43 @@
       "rate_limited": "Too many attempts. Wait an hour and try again.",
       "sign_in_required": "Sign in to accept the invitation.",
       "failed": "Could not accept the invitation. Try again."
+    }
+  },
+  "adminImports": {
+    "title": "Assisted import",
+    "intro": "Prepare a listing import for an agent. The batch belongs to the agent: they review it, accept the import declaration themselves and import it. You cannot import it for them.",
+    "agent": "Agent",
+    "chooseAgent": "Choose an agent",
+    "noAgents": "There are no agents in your countries to prepare imports for.",
+    "fileTitle": "From a spreadsheet",
+    "fileHint": "Use the import template. Each row becomes an item for the agent to review.",
+    "file": "File",
+    "linksTitle": "From listing links",
+    "linksHint": "Paste the agent's own listing links, one per line. Pages that block automated reading are skipped, never bypassed.",
+    "portal": "Portal",
+    "links": "Links",
+    "startCta": "Prepare batch",
+    "listTitle": "Prepared batches",
+    "source": "Source",
+    "items": "Imported / found",
+    "state": "Status",
+    "created": "Created",
+    "empty": "No prepared batches yet.",
+    "stateLabel": {
+      "preparing": "Being prepared",
+      "handed_over": "With the agent",
+      "committed": "Imported by the agent"
+    },
+    "batchTitle": "Batch for {agent}",
+    "agentCommits": "You can fetch, correct and skip items. Only the agent can accept the declaration and import them.",
+    "handOver": "Send to the agent ({n} ready)",
+    "handOverAgain": "Notify the agent again ({n} ready)",
+    "nothingReady": "No items are ready yet.",
+    "handedOver": "The agent has been told the batch is ready for them.",
+    "errors": {
+      "invalid": "Check the details and try again.",
+      "not_permitted": "You cannot prepare imports for that agent.",
+      "failed": "Could not complete that. Try again."
     }
   }
 }

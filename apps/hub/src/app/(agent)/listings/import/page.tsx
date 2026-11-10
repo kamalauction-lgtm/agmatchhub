@@ -31,7 +31,7 @@ export default async function ImportPage({
 
   const { data: batches } = await supabase
     .from("import_batches")
-    .select("id, source_kind, source_portal, source_label, status, found_count, imported_count, failed_count, created_at")
+    .select("id, source_kind, source_portal, source_label, status, found_count, imported_count, failed_count, created_at, acting_admin_id")
     .eq("agent_id", user.id)
     .order("created_at", { ascending: false })
     .limit(10);
@@ -135,6 +135,9 @@ export default async function ImportPage({
                       {b.source_portal ?? b.source_kind}
                     </Link>
                     <span className="block truncate text-xs text-muted">{b.source_label}</span>
+                    {b.acting_admin_id && (
+                      <span className="mt-1 inline-block rounded bg-surface px-1.5 py-0.5 text-xs text-muted">{t("preparedByTeam")}</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-muted">{when.format(new Date(b.created_at))}</td>
                   <td className="px-4 py-3 text-right">{b.found_count}</td>

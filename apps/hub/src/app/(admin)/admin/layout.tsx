@@ -34,6 +34,7 @@ const NAV: { key: string; href: string; capability: string | null; icon: string;
   { key: "listings", href: "/admin/listings", capability: "listing.moderate", icon: "⌂", group: "work" },
   { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "work" },
   { key: "invitations", href: "/admin/agents/invitations", capability: "agent.invite", icon: "✉", group: "work" },
+  { key: "imports", href: "/admin/imports", capability: "listing.import_assisted", icon: "⇪", group: "work" },
   { key: "reports", href: "/admin/reports", capability: "report.manage", icon: "⚑", group: "work" },
 
   { key: "growth", href: "/admin/growth", capability: "growth.manage", icon: "↗", group: "grow" },

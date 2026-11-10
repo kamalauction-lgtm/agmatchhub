@@ -57,8 +57,8 @@ describe.skipIf(!hasEnv)("role capabilities", () => {
         .select("capability_key, roles!inner(key)")
         .eq("roles.key", "country_admin");
       const caps = (data ?? []).map((r) => r.capability_key).sort();
-      // agent.invite added by 00106 (P0-b, owner-approved Option B).
-      expect(caps).toEqual(["agent.invite", "agent.verify", "listing.moderate", "request.manage"]);
+      // agent.invite added by 00106 (P0-b) and listing.import_assisted by 00107 (P0-d-1), both owner-approved.
+      expect(caps).toEqual(["agent.invite", "agent.verify", "listing.import_assisted", "listing.moderate", "request.manage"]);
     });
 
     it("only super admin may hand out roles", async () => {

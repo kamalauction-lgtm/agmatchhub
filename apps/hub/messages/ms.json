@@ -273,7 +273,8 @@
       "hero": "AG Hero",
       "payments": "Pembayaran",
       "whatsapp": "WhatsApp",
-      "invitations": "Jemputan"
+      "invitations": "Jemputan",
+      "imports": "Import berbantu"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -1385,7 +1386,8 @@
       "lead_overdue": "Ada petunjuk menunggu melepasi tarikh akhir respons",
       "task_due": "Satu tugas perlu dibuat",
       "viewing_soon": "Lawatan bermula tidak lama lagi",
-      "whatsapp_received": "Mesej WhatsApp tiba pada salah satu lead anda"
+      "whatsapp_received": "Mesej WhatsApp tiba pada salah satu lead anda",
+      "listing_import_prepared": "Penyenaraian sedia untuk anda semak"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -2350,7 +2352,8 @@
       "reason_required": "Penolakan perlukan sebab yang akan dilihat ejen.",
       "not_found": "Iklan tidak dijumpai.",
       "not_moderatable": "Iklan ini tidak menunggu semakan.",
-      "update_failed": "Kemas kini gagal. Cuba lagi."
+      "update_failed": "Kemas kini gagal. Cuba lagi.",
+      "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya."
     }
   },
   "plans": {
@@ -2664,9 +2667,12 @@
       "columns_missing": "Lajur Judul dan Harga tidak ditemui, jadi tiada yang diimport. Ini lajur yang dibaca:",
       "blocked_by_site": "Laman itu menyekat pembacaan automatik (ia meminta pengesahan pelayar). Kami tidak memintas perlindungan itu. Gunakan muat naik Excel/CSV, atau tambah secara manual.",
       "no_listing_data": "Laman itu dibuka, tetapi tiada data hartanah yang boleh dibaca.",
-      "import_failed": "Gagal disimpan sebagai senarai. Semak medan wajib dan cuba lagi."
+      "import_failed": "Gagal disimpan sebagai senarai. Semak medan wajib dan cuba lagi.",
+      "not_owner": "Hanya ejen pemilik import ini boleh mengimportnya."
     },
-    "refetch": "Baca semula"
+    "refetch": "Baca semula",
+    "preparedByTeam": "Disediakan oleh pasukan platform",
+    "preparedNotice": "Pasukan platform menyediakan penyenaraian ini untuk anda. Semak satu per satu, kemudian terima perisytiharan dan import yang betul. Tiada yang disiarkan sebelum anda mengimportnya dan ia lulus semakan."
   },
   "adminUsers": {
     "title": "Orang dan akses",
@@ -4417,6 +4423,43 @@
       "rate_limited": "Terlalu banyak cubaan. Tunggu sejam dan cuba lagi.",
       "sign_in_required": "Log masuk untuk menerima jemputan.",
       "failed": "Tidak dapat menerima jemputan. Cuba lagi."
+    }
+  },
+  "adminImports": {
+    "title": "Import berbantu",
+    "intro": "Sediakan import penyenaraian untuk ejen. Kelompok ini milik ejen: mereka menyemaknya, menerima perisytiharan import sendiri dan mengimportnya. Anda tidak boleh mengimport bagi pihak mereka.",
+    "agent": "Ejen",
+    "chooseAgent": "Pilih ejen",
+    "noAgents": "Tiada ejen di negara anda untuk disediakan import.",
+    "fileTitle": "Daripada hamparan",
+    "fileHint": "Gunakan templat import. Setiap baris menjadi item untuk disemak oleh ejen.",
+    "file": "Fail",
+    "linksTitle": "Daripada pautan penyenaraian",
+    "linksHint": "Tampal pautan penyenaraian ejen sendiri, satu setiap baris. Halaman yang menyekat bacaan automatik dilangkau, tidak sekali-kali dipintas.",
+    "portal": "Portal",
+    "links": "Pautan",
+    "startCta": "Sediakan kelompok",
+    "listTitle": "Kelompok yang disediakan",
+    "source": "Sumber",
+    "items": "Diimport / ditemui",
+    "state": "Status",
+    "created": "Dicipta",
+    "empty": "Belum ada kelompok yang disediakan.",
+    "stateLabel": {
+      "preparing": "Sedang disediakan",
+      "handed_over": "Bersama ejen",
+      "committed": "Diimport oleh ejen"
+    },
+    "batchTitle": "Kelompok untuk {agent}",
+    "agentCommits": "Anda boleh mengambil, membetulkan dan melangkau item. Hanya ejen boleh menerima perisytiharan dan mengimportnya.",
+    "handOver": "Hantar kepada ejen ({n} sedia)",
+    "handOverAgain": "Maklumkan ejen sekali lagi ({n} sedia)",
+    "nothingReady": "Belum ada item yang sedia.",
+    "handedOver": "Ejen telah dimaklumkan bahawa kelompok sudah sedia.",
+    "errors": {
+      "invalid": "Semak butiran dan cuba lagi.",
+      "not_permitted": "Anda tidak boleh menyediakan import untuk ejen itu.",
+      "failed": "Tidak berjaya. Cuba lagi."
     }
   }
 }

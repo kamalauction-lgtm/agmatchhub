@@ -273,7 +273,8 @@
       "hero": "AG Hero",
       "payments": "Pembayaran",
       "whatsapp": "WhatsApp",
-      "invitations": "Undangan"
+      "invitations": "Undangan",
+      "imports": "Impor berbantuan"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -1385,7 +1386,8 @@
       "lead_overdue": "Ada prospek menunggu melewati batas waktu respons",
       "task_due": "Ada tugas yang jatuh tempo",
       "viewing_soon": "Kunjungan segera dimulai",
-      "whatsapp_received": "Pesan WhatsApp masuk di salah satu lead Anda"
+      "whatsapp_received": "Pesan WhatsApp masuk di salah satu lead Anda",
+      "listing_import_prepared": "Listing siap Anda tinjau"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -2350,7 +2352,8 @@
       "reason_required": "Penolakan butuh alasan yang akan dilihat agen.",
       "not_found": "Listing tidak ditemukan.",
       "not_moderatable": "Listing ini tidak sedang menunggu tinjauan.",
-      "update_failed": "Pembaruan gagal. Coba lagi."
+      "update_failed": "Pembaruan gagal. Coba lagi.",
+      "self_prepared": "Anda yang menyiapkan impor listing ini, jadi admin lain harus menyetujuinya."
     }
   },
   "plans": {
@@ -2664,9 +2667,12 @@
       "columns_missing": "Kolom Judul dan Harga tidak ditemukan, jadi tidak ada yang diimpor. Berikut kolom yang terbaca:",
       "blocked_by_site": "Situs itu memblokir pembacaan otomatis (perlu verifikasi browser). Kami tidak melewati perlindungan itu. Gunakan unggah Excel/CSV, atau tambah manual.",
       "no_listing_data": "Halaman itu terbuka, tetapi tidak memuat data properti yang bisa dibaca.",
-      "import_failed": "Gagal disimpan sebagai listing. Periksa isian wajib lalu coba lagi."
+      "import_failed": "Gagal disimpan sebagai listing. Periksa isian wajib lalu coba lagi.",
+      "not_owner": "Hanya agen pemilik impor ini yang dapat mengimpornya."
     },
-    "refetch": "Baca ulang"
+    "refetch": "Baca ulang",
+    "preparedByTeam": "Disiapkan oleh tim platform",
+    "preparedNotice": "Tim platform menyiapkan listing ini untuk Anda. Periksa satu per satu, lalu terima pernyataan dan impor yang sudah benar. Tidak ada yang tayang sebelum Anda mengimpornya dan lolos peninjauan."
   },
   "adminUsers": {
     "title": "Orang dan akses",
@@ -4417,6 +4423,43 @@
       "rate_limited": "Terlalu banyak percobaan. Tunggu satu jam lalu coba lagi.",
       "sign_in_required": "Masuk untuk menerima undangan.",
       "failed": "Gagal menerima undangan. Coba lagi."
+    }
+  },
+  "adminImports": {
+    "title": "Impor berbantuan",
+    "intro": "Siapkan impor listing untuk agen. Batch ini milik agen: mereka meninjaunya, menerima pernyataan impor sendiri, lalu mengimpornya. Anda tidak dapat mengimpor atas nama mereka.",
+    "agent": "Agen",
+    "chooseAgent": "Pilih agen",
+    "noAgents": "Tidak ada agen di negara Anda untuk disiapkan impornya.",
+    "fileTitle": "Dari spreadsheet",
+    "fileHint": "Gunakan templat impor. Setiap baris menjadi item untuk ditinjau agen.",
+    "file": "Berkas",
+    "linksTitle": "Dari tautan listing",
+    "linksHint": "Tempel tautan listing milik agen, satu per baris. Halaman yang memblokir pembacaan otomatis dilewati, tidak pernah diakali.",
+    "portal": "Portal",
+    "links": "Tautan",
+    "startCta": "Siapkan batch",
+    "listTitle": "Batch yang disiapkan",
+    "source": "Sumber",
+    "items": "Diimpor / ditemukan",
+    "state": "Status",
+    "created": "Dibuat",
+    "empty": "Belum ada batch yang disiapkan.",
+    "stateLabel": {
+      "preparing": "Sedang disiapkan",
+      "handed_over": "Di tangan agen",
+      "committed": "Diimpor oleh agen"
+    },
+    "batchTitle": "Batch untuk {agent}",
+    "agentCommits": "Anda dapat mengambil, memperbaiki, dan melewati item. Hanya agen yang dapat menerima pernyataan dan mengimpornya.",
+    "handOver": "Kirim ke agen ({n} siap)",
+    "handOverAgain": "Beri tahu agen lagi ({n} siap)",
+    "nothingReady": "Belum ada item yang siap.",
+    "handedOver": "Agen sudah diberi tahu bahwa batch siap.",
+    "errors": {
+      "invalid": "Periksa data lalu coba lagi.",
+      "not_permitted": "Anda tidak dapat menyiapkan impor untuk agen itu.",
+      "failed": "Gagal. Coba lagi."
     }
   }
 }

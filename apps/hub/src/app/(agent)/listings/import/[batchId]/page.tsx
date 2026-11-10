@@ -51,7 +51,7 @@ export default async function BatchReviewPage({
 
   const { data: batch } = await supabase
     .from("import_batches")
-    .select("id, source_portal, source_kind, source_label, status, found_count, imported_count, failed_count, error")
+    .select("id, source_portal, source_kind, source_label, status, found_count, imported_count, failed_count, error, acting_admin_id")
     .eq("id", batchId)
     .eq("agent_id", user.id)
     .maybeSingle();
@@ -110,6 +110,9 @@ export default async function BatchReviewPage({
       <p className="mb-6 text-sm text-muted">
         {batch.source_portal} · {batch.source_label}
       </p>
+      {batch.acting_admin_id && (
+        <p className="mb-6 max-w-2xl rounded-lg bg-surface px-4 py-3 text-sm text-muted">{t("preparedNotice")}</p>
+      )}
 
       {(error || batch.error) && (
         <p className="mb-6 rounded-lg bg-warning/10 px-4 py-3 text-sm font-medium text-warning">

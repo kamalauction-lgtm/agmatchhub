@@ -42,6 +42,13 @@ export async function moderateListing(formData: FormData): Promise<void> {
     | { country_code: string | null }
     | null;
   await requireCapabilityIn("listing.moderate", property?.country_code, "/admin/listings");
+
+  // Separation of duties (00107): whoever prepared this listing's import may
+  // not approve it. The database refuses it regardless.
+  if (decision === "approve") {
+    const { data: preparedByMe } = await supabase.rpc("prepared_by_me", { p_listing: listingId });
+    if (preparedByMe) redirect("/admin/listings?error=self_prepared");
+  }
   if (!["pending_review", "published"].includes(listing.status)) {
     redirect("/admin/listings?error=not_moderatable");
   }
