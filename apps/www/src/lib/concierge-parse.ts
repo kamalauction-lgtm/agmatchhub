@@ -22,6 +22,8 @@
 
 export type ParsedRequest = {
   type?: "sale" | "rent";
+  /** True when `type` was not said but inferred (see `inferIntent`). */
+  typeInferred?: boolean;
   propertyType?: string;
   bedrooms?: number;
   bathrooms?: number;
@@ -183,4 +185,23 @@ export function parseRequest(
     .filter((w) => w.length > 1 && !STOP.has(w) && !/^\d+$/.test(w));
 
   return out;
+}
+
+/**
+ * "Rumah 3 bilik di Depok, bajet bawah Rp2 miliar" says neither buy nor rent,
+ * but no monthly or yearly rent costs Rp2 billion. Without an intent the
+ * search ran unconstrained and, once relaxed, offered a Rp4.5 million/month
+ * apartment for a purchase budget (found in staging review, 10 Nov 2026).
+ *
+ * Rule: no explicit intent + a budget above the highest RENT rung the market
+ * itself offers → sale. The threshold is the market's own configuration, not
+ * a number in this file, so Malaysia (top rent rung RM10,000) and Indonesia
+ * (Rp500 million a year) each get the right line. An explicit word always
+ * wins; a budget within rent range stays ambiguous and unconstrained.
+ */
+export function inferIntent(parsed: ParsedRequest, highestRentBudget: number): ParsedRequest {
+  if (parsed.type) return parsed;
+  const budget = parsed.maxPrice ?? parsed.minPrice;
+  if (budget !== undefined && budget > highestRentBudget) return { ...parsed, type: "sale", typeInferred: true };
+  return parsed;
 }

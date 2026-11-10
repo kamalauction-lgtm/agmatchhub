@@ -8,7 +8,7 @@ import {
   type PublicListing,
   type SearchParams,
 } from "./listings";
-import { parseRequest, type KnownPlace, type ParsedRequest } from "./concierge-parse";
+import { inferIntent, parseRequest, type KnownPlace, type ParsedRequest } from "./concierge-parse";
 
 /**
  * The Smart Property Concierge — orchestration.
@@ -53,6 +53,8 @@ export type Criterion = {
   value: string | number;
   /** Still applied in the result shown, or dropped by relaxation. */
   applied: boolean;
+  /** Not said by the visitor; read from the budget (sale only). */
+  inferred?: boolean;
 };
 
 export type RelaxStep = { key: Criterion["key"]; from: string | number; to: string | number | null };
@@ -114,13 +116,13 @@ function toSearch(p: ParsedRequest, locationId?: string): SearchParams {
 export async function runConcierge(query: string): Promise<ConciergeResult> {
   const parser = getParser();
   const places = await knownPlaces();
-  const parsed = await parser.parse(query.slice(0, 300), places);
+  const parsed = inferIntent(await parser.parse(query.slice(0, 300), places), Math.max(...market.budgets.rent));
 
   const location = parsed.place ? await findLocationByName(parsed.place) : null;
   const base = toSearch(parsed, location?.id);
 
   const criteria: Criterion[] = [];
-  if (parsed.type) criteria.push({ key: "type", value: parsed.type, applied: true });
+  if (parsed.type) criteria.push({ key: "type", value: parsed.type, applied: true, inferred: parsed.typeInferred });
   if (parsed.propertyType) criteria.push({ key: "propertyType", value: parsed.propertyType, applied: true });
   if (parsed.bedrooms) criteria.push({ key: "bedrooms", value: parsed.bedrooms, applied: true });
   if (parsed.bathrooms) criteria.push({ key: "bathrooms", value: parsed.bathrooms, applied: true });

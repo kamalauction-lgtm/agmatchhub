@@ -311,6 +311,7 @@
     },
     "criteria": {
       "sale": "Dijual",
+      "saleInferred": "Dijual (berdasarkan bajet anda)",
       "rent": "Disewa",
       "propertyType": "Jenis: {type}",
       "bedrooms": "{n}+ bilik tidur",

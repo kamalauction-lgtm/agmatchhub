@@ -311,6 +311,7 @@
     },
     "criteria": {
       "sale": "For sale",
+      "saleInferred": "For sale (from your budget)",
       "rent": "For rent",
       "propertyType": "Type: {type}",
       "bedrooms": "{n}+ bedrooms",

@@ -53,7 +53,7 @@ export default async function AssistantPage({
 
   const criterionText = (c: Criterion): string => {
     switch (c.key) {
-      case "type": return c.value === "rent" ? t("criteria.rent") : t("criteria.sale");
+      case "type": return c.value === "rent" ? t("criteria.rent") : c.inferred ? t("criteria.saleInferred") : t("criteria.sale");
       case "propertyType": return t("criteria.propertyType", { type: tp(String(c.value) as never) || String(c.value) });
       case "bedrooms": return t("criteria.bedrooms", { n: Number(c.value) });
       case "bathrooms": return t("criteria.bathrooms", { n: Number(c.value) });
