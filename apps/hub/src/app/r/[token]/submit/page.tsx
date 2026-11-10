@@ -175,7 +175,7 @@ export default async function SubmitPropertyPage({
           <Section title={t("sectionPricing")}>
             <div className="grid gap-4 sm:grid-cols-5">
               {field("currency", t("f.currency"),
-                <select name="currency" defaultValue={request?.currency ?? "MYR"} className={inputCls}>
+                <select name="currency" defaultValue={request?.currency ?? (request?.country_code === "ID" ? "IDR" : "MYR")} className={inputCls}>
                   {(currencies ?? []).map((c) => <option key={c.code} value={c.code}>{c.code}</option>)}
                 </select>)}
               {field("askingPrice", t("f.askingPrice"),
@@ -204,7 +204,7 @@ export default async function SubmitPropertyPage({
               {field("builtUp", t("f.builtUp"),
                 <input type="number" min="0" step="0.01" name="builtUp" className={inputCls} />)}
               {field("measurementUnit", t("f.unit"),
-                <select name="measurementUnit" defaultValue="sqft" className={inputCls}>
+                <select name="measurementUnit" defaultValue={request?.country_code === "ID" ? "sqm" : "sqft"} className={inputCls}>
                   <option value="sqft">sqft</option><option value="sqm">sqm</option>
                 </select>)}
               {field("bedrooms", t("f.bedrooms"),
