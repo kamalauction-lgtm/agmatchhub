@@ -3842,17 +3842,17 @@
     "offlineNotice": "Akaun anda belum disahkan, jadi pejabat masih luar talian. Lengkapkan pengesahan supaya pasukan anda boleh bekerja.",
     "mobileHint": "Ketik seorang pakar untuk melihat kerjanya. Lantai beranimasi dipaparkan pada tablet dan desktop.",
     "state": {
-      "active": "Bekerja hari ini",
-      "finished": "Baru selesai",
-      "attention": "Perlukan anda",
+      "active": "Selesai hari ini",
+      "finished": "Bekerja",
+      "attention": "Menunggu anda",
       "idle": "Sedia",
-      "error": "Gagal kali terakhir",
+      "error": "Gagal",
       "planned": "Dirancang",
       "offline": "Luar talian"
     },
     "stateHint": {
       "active": "Sekurang-kurangnya satu kerja berjalan hari ini untuk enjin pakar ini.",
-      "finished": "Satu kerja selesai dalam lima minit terakhir.",
+      "finished": "Satu kerja berjalan dalam lima minit terakhir — sehampir mungkin dengan “langsung” yang boleh dibuktikan rekod.",
       "attention": "Pakar ini mencadangkan kerja yang menunggu keputusan anda.",
       "idle": "Tersedia sekarang; tiada permintaan hari ini.",
       "error": "Larian terakhir berakhir dengan ralat. Cuba lagi dari skrin alat itu.",
@@ -3897,7 +3897,15 @@
       "openTasks": "Buka tugas",
       "openWorkforce": "Tenaga Kerja AI",
       "close": "Tutup",
-      "due": "Tarikh akhir"
+      "due": "Tarikh akhir",
+      "recent": "Hasil terkini",
+      "recentNone": "Belum ada larian direkodkan.",
+      "tasksToday": "Tugas hari ini",
+      "needs": "Apa yang diperlukan daripada anda",
+      "needsNone": "Tiada buat masa ini.",
+      "needsPending": "Putuskan cadangan ini dalam senarai tugas anda:",
+      "department": "Jabatan",
+      "members": "pakar"
     },
     "totals": {
       "workers": "Pakar",
@@ -3906,6 +3914,29 @@
       "rules": "Berasaskan peraturan",
       "attention": "Perlukan anda",
       "activeToday": "Bekerja hari ini"
+    },
+    "subtitle": "Lihat apa yang sedang dilakukan setiap pakar AI di seluruh pejabat hartanah digital anda.",
+    "engineShort": {
+      "ai": "Berkuasa model",
+      "rules": "Berasaskan peraturan",
+      "rules_by_design": "Berasaskan peraturan"
+    },
+    "kpi": {
+      "specialists": "Pakar",
+      "activeNow": "Aktif sekarang",
+      "waiting": "Menunggu anda",
+      "completedToday": "Selesai hari ini",
+      "departments": "Jabatan"
+    },
+    "view": {
+      "office": "Paparan pejabat",
+      "list": "Paparan senarai",
+      "label": "Mod paparan"
+    },
+    "node": {
+      "tasksToday": "tugas hari ini",
+      "queue": "dalam giliran",
+      "justRan": "baru berjalan"
     }
   },
   "aiTools": {

@@ -3842,17 +3842,17 @@
     "offlineNotice": "Akun Anda belum terverifikasi, jadi kantor masih offline. Selesaikan verifikasi agar tim Anda bisa bekerja.",
     "mobileHint": "Ketuk spesialis untuk melihat pekerjaannya. Lantai animasi ditampilkan di tablet dan desktop.",
     "state": {
-      "active": "Bekerja hari ini",
-      "finished": "Baru selesai",
-      "attention": "Butuh Anda",
+      "active": "Selesai hari ini",
+      "finished": "Bekerja",
+      "attention": "Menunggu Anda",
       "idle": "Siaga",
-      "error": "Gagal terakhir kali",
+      "error": "Gagal",
       "planned": "Direncanakan",
       "offline": "Offline"
     },
     "stateHint": {
       "active": "Setidaknya satu pekerjaan berjalan hari ini untuk mesin spesialis ini.",
-      "finished": "Sebuah pekerjaan selesai dalam lima menit terakhir.",
+      "finished": "Sebuah pekerjaan berjalan dalam lima menit terakhir — sedekat mungkin dengan “langsung” yang bisa dibuktikan catatan.",
       "attention": "Spesialis ini mengusulkan pekerjaan yang menunggu keputusan Anda.",
       "idle": "Tersedia sekarang; belum ada permintaan hari ini.",
       "error": "Eksekusi terakhir berakhir dengan kesalahan. Coba lagi dari layar alatnya.",
@@ -3897,7 +3897,15 @@
       "openTasks": "Buka tugas",
       "openWorkforce": "Tenaga Kerja AI",
       "close": "Tutup",
-      "due": "Jatuh tempo"
+      "due": "Jatuh tempo",
+      "recent": "Hasil terbaru",
+      "recentNone": "Belum ada eksekusi tercatat.",
+      "tasksToday": "Tugas hari ini",
+      "needs": "Yang dibutuhkan dari Anda",
+      "needsNone": "Tidak ada saat ini.",
+      "needsPending": "Putuskan usulan berikut di daftar tugas Anda:",
+      "department": "Departemen",
+      "members": "spesialis"
     },
     "totals": {
       "workers": "Spesialis",
@@ -3906,6 +3914,29 @@
       "rules": "Berbasis aturan",
       "attention": "Butuh Anda",
       "activeToday": "Bekerja hari ini"
+    },
+    "subtitle": "Lihat apa yang sedang dikerjakan setiap spesialis AI di kantor properti digital Anda.",
+    "engineShort": {
+      "ai": "Bertenaga model",
+      "rules": "Berbasis aturan",
+      "rules_by_design": "Berbasis aturan"
+    },
+    "kpi": {
+      "specialists": "Spesialis",
+      "activeNow": "Aktif sekarang",
+      "waiting": "Menunggu Anda",
+      "completedToday": "Selesai hari ini",
+      "departments": "Departemen"
+    },
+    "view": {
+      "office": "Tampilan kantor",
+      "list": "Tampilan daftar",
+      "label": "Mode tampilan"
+    },
+    "node": {
+      "tasksToday": "tugas hari ini",
+      "queue": "dalam antrean",
+      "justRan": "baru berjalan"
     }
   },
   "aiTools": {

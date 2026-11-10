@@ -3842,17 +3842,17 @@
     "offlineNotice": "Your account is not verified yet, so the office is offline. Complete verification to put your team to work.",
     "mobileHint": "Tap a specialist to inspect their work. The animated floor is shown on tablets and desktops.",
     "state": {
-      "active": "Worked today",
-      "finished": "Just finished",
-      "attention": "Needs you",
-      "idle": "On standby",
-      "error": "Last run failed",
+      "active": "Done today",
+      "finished": "Working",
+      "attention": "Waiting for you",
+      "idle": "Idle",
+      "error": "Failed",
       "planned": "Planned",
       "offline": "Offline"
     },
     "stateHint": {
       "active": "At least one job ran today for this specialist’s engine.",
-      "finished": "A job finished within the last five minutes.",
+      "finished": "A job ran within the last five minutes — the closest thing to “live” the records allow.",
       "attention": "This specialist proposed work that is waiting for your decision.",
       "idle": "Available now; nothing has been asked today.",
       "error": "The most recent run ended in an error. Try again from the tool’s screen.",
@@ -3897,7 +3897,15 @@
       "openTasks": "Open tasks",
       "openWorkforce": "AI Workforce",
       "close": "Close",
-      "due": "Due"
+      "due": "Due",
+      "recent": "Recent output",
+      "recentNone": "No recorded runs yet.",
+      "tasksToday": "Tasks today",
+      "needs": "What it needs from you",
+      "needsNone": "Nothing right now.",
+      "needsPending": "Decide on these proposals in your task list:",
+      "department": "Department",
+      "members": "specialists"
     },
     "totals": {
       "workers": "Specialists",
@@ -3906,6 +3914,29 @@
       "rules": "Rule-based",
       "attention": "Need you",
       "activeToday": "Worked today"
+    },
+    "subtitle": "See what each AI specialist is doing across your digital property office.",
+    "engineShort": {
+      "ai": "Model-powered",
+      "rules": "Rule-based",
+      "rules_by_design": "Rule-based"
+    },
+    "kpi": {
+      "specialists": "Specialists",
+      "activeNow": "Active now",
+      "waiting": "Waiting for you",
+      "completedToday": "Completed today",
+      "departments": "Departments"
+    },
+    "view": {
+      "office": "Office view",
+      "list": "List view",
+      "label": "Display mode"
+    },
+    "node": {
+      "tasksToday": "tasks today",
+      "queue": "in queue",
+      "justRan": "just ran"
     }
   },
   "aiTools": {

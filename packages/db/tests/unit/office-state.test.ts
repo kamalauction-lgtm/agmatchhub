@@ -71,3 +71,19 @@ describe("AI Live Office state", () => {
     expect(w.engine).toBe("ai");
   });
 });
+
+describe("AI Live Office counters", () => {
+  it("counts today's jobs per role and across the office, and the queue is only pending approvals", () => {
+    const today = job({ created_at: new Date(now.getTime() - 3 * 3600_000).toISOString() });
+    const yesterday = job({ created_at: new Date(now.getTime() - 30 * 3600_000).toISOString() });
+    const data = buildOffice({ ...base, roles: [role({}), role({ key: "y", feature: "listing_copy" })], jobs: [today, yesterday], tasks: [] });
+    const [x, y] = data.departments[0].workers;
+    expect(x.todayCount).toBe(1);
+    expect(x.recent).toHaveLength(2);
+    expect(x.queueCount).toBe(0);
+    expect(y.todayCount).toBe(0);
+    expect(data.totals.completedToday).toBe(1);
+    expect(data.totals.activeNow).toBe(0);
+    expect(data.totals.departments).toBe(1);
+  });
+});

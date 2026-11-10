@@ -215,63 +215,71 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 }
 
 /* =============================================================================
-   AI Live Office (apps/hub/src/components/ai/office-scene.tsx)
+   AI Live Office (apps/hub/src/components/ai/office/*)
    Every motion is CSS so reduced-motion can switch it all off in one rule.
-   Characters are SVG <g> elements: transform-box makes transforms local.
    ========================================================================== */
-.office-floor { min-height: 360px; }
-.office-char [role="button"]:focus-visible > rect { stroke: var(--command-link); stroke-width: 2; rx: 8; }
+.office-floor { min-height: 420px; overflow-x: auto; }
 .office-grid {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 78%);
 }
-.office-char, .office-char * { transform-box: fill-box; transform-origin: center; }
-.office-char { transform-box: view-box; transform-origin: 0 0; }
-.office-body { transform-origin: 50% 90%; }
+/* A faint city skyline along the top edge: the office looks out over the market. */
+.office-skyline {
+  background:
+    linear-gradient(to top, transparent, rgb(159 184 255 / 0.10)),
+    repeating-linear-gradient(90deg, rgb(159 184 255 / 0.08) 0 18px, transparent 18px 26px, rgb(159 184 255 / 0.05) 26px 40px, transparent 40px 54px);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+}
+/* A slow scan line gives the floor a live, monitored feel. */
+.office-scan {
+  background: linear-gradient(180deg, transparent 0%, rgb(159 184 255 / 0.07) 50%, transparent 100%);
+  background-size: 100% 160px;
+  background-repeat: no-repeat;
+  animation: office-scan 9s linear infinite;
+}
+@keyframes office-scan { from { background-position: 0 -160px } to { background-position: 0 100% } }
 
-/* idle: breathe, and every so often wander to the lounge and back */
-.office-idle .office-body { animation: office-breathe 3.2s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.37s); }
-/* Only every fourth idle character wanders, on a long cycle, so a quiet office
-   stays legible instead of emptying every desk into the lounge at once. */
-.office-idle.office-wanderer { animation: office-wander 48s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -3.7s); }
-/* active: typing at the desk */
-.office-active .office-body { animation: office-type 0.55s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.13s); }
-.office-glow { animation: office-glow 1.8s ease-in-out infinite; }
-/* finished: a short celebration */
-.office-finished .office-body { animation: office-jump 1.1s ease-in-out infinite; }
-.office-sparkle { animation: office-sparkle 1.1s ease-in-out infinite; }
-/* attention: wave for the agent */
+.office-char, .office-char * { transform-box: fill-box; transform-origin: center; }
+.office-body { transform-origin: 50% 90%; }
+.office-room { transition: filter .2s ease; }
+.office-room:hover, .office-room-selected { filter: brightness(1.18) drop-shadow(0 0 10px rgb(159 184 255 / 0.35)); }
+.office-room-hot .office-window { animation: office-glow 2.4s ease-in-out infinite; }
+.office-hit:focus-visible > rect { stroke: var(--command-link); stroke-width: 2; rx: 10; }
+
+/* idle: breathe */
+.office-idle .office-body { animation: office-breathe 3.4s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.9s); }
+/* done today: calm, monitor lit */
+.office-active .office-monitor { animation: office-glow 2.2s ease-in-out infinite; }
+/* working (ran minutes ago): typing bob + dots + lit monitor */
+.office-finished .office-body { animation: office-type 0.6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.15s); }
+.office-finished .office-monitor { animation: office-glow 1.2s ease-in-out infinite; }
+.office-dot { animation: office-dots 1.1s ease-in-out infinite; }
+.office-dot-2 { animation-delay: .18s } .office-dot-3 { animation-delay: .36s }
+/* waiting for you: wave + ring */
 .office-attention .office-body { animation: office-wave 1.6s ease-in-out infinite; }
-.office-bubble { animation: office-bob 1.6s ease-in-out infinite; }
-/* error: one small shake per cycle */
+.office-ring { animation: office-ring 1.6s ease-out infinite; }
+.office-pulse { animation: office-pulse 1.6s ease-out infinite; }
+/* failed: one small shake per cycle */
 .office-error .office-body { animation: office-shake 3s ease-in-out infinite; }
-/* planned / offline: still */
 .office-planned .office-body, .office-offline .office-body { animation: none; }
+.office-glow { animation: office-glow 1.8s ease-in-out infinite; }
+.office-panel { animation: office-slide .22s ease-out both; }
 
 @keyframes office-breathe { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-2px) } }
 @keyframes office-type { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
 @keyframes office-glow { 0%,100% { opacity: .55 } 50% { opacity: 1 } }
-@keyframes office-jump { 0%,100% { transform: translateY(0) scale(1) } 40% { transform: translateY(-14px) scale(1.06) } 60% { transform: translateY(-10px) } }
-@keyframes office-sparkle { 0%,100% { opacity: 0; transform: scale(.6) } 50% { opacity: 1; transform: scale(1.15) } }
-@keyframes office-wave { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-6deg) } 75% { transform: rotate(6deg) } }
-@keyframes office-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }
+@keyframes office-dots { 0%,100% { opacity: .25; transform: translateY(0) } 50% { opacity: 1; transform: translateY(-2px) } }
+@keyframes office-wave { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-5deg) } 75% { transform: rotate(5deg) } }
+@keyframes office-ring { 0% { transform: scale(.7); opacity: .9 } 100% { transform: scale(1.6); opacity: 0 } }
+@keyframes office-pulse { 0% { box-shadow: 0 0 0 0 currentColor } 100% { box-shadow: 0 0 0 7px transparent } }
 @keyframes office-shake { 0%,88%,100% { transform: translateX(0) } 90% { transform: translateX(-3px) } 94% { transform: translateX(3px) } 97% { transform: translateX(-2px) } }
-/* The wander path: desk → lounge (pause) → desk. Only idle characters move. */
-@keyframes office-wander {
-  0%, 55%  { transform: translate(0, 0) }
-  65%, 80% { transform: translate(var(--walk-x, 0px), var(--walk-y, 0px)) }
-  90%, 100% { transform: translate(0, 0) }
-}
+@keyframes office-slide { from { transform: translateX(24px); opacity: 0 } to { transform: none; opacity: 1 } }
 /* Demo mode: a visible dashed gold frame around the whole floor. */
 .office-demo { outline: 3px dashed var(--gold-light); outline-offset: -3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .office-char, .office-char *, .office-glow, .office-sparkle, .office-bubble { animation: none !important; }
-}
-/* Phones never render the floor, but keep the rule for small tablets. */
-@media (max-width: 900px) {
-  .office-idle { animation: none; }
+  .office-char, .office-char *, .office-glow, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel { animation: none !important; }
 }

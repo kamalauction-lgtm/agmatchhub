@@ -78,6 +78,9 @@ export type WorkerState =
 
 export type PendingTask = { id: string; title: string; dueAt: string | null; kind: string; href: string };
 
+/** One recorded run, for the "recent output" list. Metadata only — never content. */
+export type RecentRun = { at: string; status: JobRow["status"]; reason: string | null; refType: string | null; href: string | null };
+
 export type Worker = {
   key: string;
   category: string;
@@ -95,6 +98,11 @@ export type Worker = {
   lastStatus: JobRow["status"] | null;
   lastReason: string | null;
   counts7d: { ok: number; degraded: number; error: number; denied: number };
+  /** Jobs recorded today on this role's engine. */
+  todayCount: number;
+  /** Items waiting on the agent — the only honest "queue" there is. */
+  queueCount: number;
+  recent: RecentRun[];
   pending: PendingTask[];
   href: string | null;
   external: boolean;
@@ -106,7 +114,14 @@ export type OfficeData = {
   generatedAt: string;
   verified: boolean;
   departments: Department[];
-  totals: { workers: number; open: number; ai: number; rules: number; planned: number; attention: number; activeToday: number };
+  totals: {
+    workers: number; open: number; ai: number; rules: number; planned: number; attention: number; activeToday: number;
+    /** Ran within the last few minutes. */
+    activeNow: number;
+    /** Job rows recorded today across all roles (deduplicated per job, not per role). */
+    completedToday: number;
+    departments: number;
+  };
 };
 
 export const FINISHED_WINDOW_MS = 5 * 60 * 1000;
@@ -161,7 +176,15 @@ export function buildOffice(input: {
       mine.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
       const last = mine[0] ?? null;
       const counts7d = { ok: 0, degraded: 0, error: 0, denied: 0 };
-      for (const j of mine) if (Date.parse(j.created_at) >= sevenDaysAgo) counts7d[j.status]++;
+      let todayCount = 0;
+      for (const j of mine) {
+        if (Date.parse(j.created_at) >= sevenDaysAgo) counts7d[j.status]++;
+        if (sameDay(new Date(j.created_at), now)) todayCount++;
+      }
+      const refHref = (t: string | null) => (t === "listing" ? "/listings" : t === "lead" ? "/leads" : t === "request" ? "/requests" : null);
+      const recent: RecentRun[] = mine.slice(0, 3).map((j) => ({
+        at: j.created_at, status: j.status, reason: j.denied_reason, refType: j.input_ref_type, href: refHref(j.input_ref_type),
+      }));
 
       const pending: PendingTask[] = openAiTasks
         .filter((t) => TASK_SOURCE_ROLES[t.source].includes(r.key))
@@ -195,6 +218,9 @@ export function buildOffice(input: {
         lastStatus: last?.status ?? null,
         lastReason: last?.denied_reason ?? null,
         counts7d,
+        todayCount,
+        queueCount: pending.length,
+        recent,
         pending,
         href,
         external: access === "hero_open",
@@ -222,6 +248,9 @@ export function buildOffice(input: {
       planned: workers.filter((w) => w.state === "planned").length,
       attention: workers.filter((w) => w.state === "attention").length,
       activeToday: workers.filter((w) => w.state === "active" || w.state === "finished").length,
+      activeNow: workers.filter((w) => w.state === "finished").length,
+      completedToday: jobs.filter((j) => sameDay(new Date(j.created_at), now)).length,
+      departments: departments.length,
     },
   };
 }
