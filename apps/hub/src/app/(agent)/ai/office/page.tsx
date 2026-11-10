@@ -1,9 +1,6 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { AgentShell } from "@/components/layout/agent-shell";
-import { CommandHeader } from "@/components/ui/command-header";
-import { Badge } from "@/components/ui/badge";
 import { OfficeScene, type OfficeLabels } from "@/components/ai/office-scene";
 import { loadOffice } from "@/lib/ai/office";
 import type { WorkerState } from "@/lib/ai/office-state";
@@ -79,22 +76,14 @@ export default async function AiOfficePage() {
   const demoAllowed = process.env.NEXT_PUBLIC_ENVIRONMENT === "staging" || process.env.NODE_ENV !== "production";
 
   return (
-    <AgentShell wide>
-      <div className="space-y-5">
-        <CommandHeader className="flex flex-wrap items-end justify-between gap-4">
-          <div className="min-w-0 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--command-gold)" }}>{t("eyebrow")}</p>
-            <h1 className="mt-1">{t("title")}</h1>
-            <p className="command-muted mt-2 text-sm">{t("subtitle")}</p>
-          </div>
-          <div className="flex flex-wrap items-center gap-2 text-xs">
-            <Badge tone="info">{t("ruleBasedBadge")}</Badge>
-            <Link href="/ai" className="command-link text-sm font-semibold hover:underline">{t("back")}</Link>
-          </div>
-        </CommandHeader>
-
-        <OfficeScene initial={data} labels={labels} locale={locale} demoAllowed={demoAllowed} />
-      </div>
+    <AgentShell wide="full">
+      <OfficeScene
+        initial={data}
+        labels={labels}
+        locale={locale}
+        demoAllowed={demoAllowed}
+        header={{ eyebrow: t("eyebrow"), title: t("title"), subtitle: t("subtitle"), badge: t("ruleBasedBadge"), back: t("back") }}
+      />
     </AgentShell>
   );
 }

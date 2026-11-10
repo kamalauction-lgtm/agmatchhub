@@ -12,6 +12,8 @@ import { OfficeViewToggle, type OfficeView } from "./office/office-view-toggle";
 import { AgentStatusBadge } from "./office/agent-status-badge";
 import { ActivityFeed, DepartmentStatus, TaskQueue } from "./office/office-panels";
 import { iso } from "./office/scene-art";
+import { CommandHeader } from "@/components/ui/command-header";
+import Link from "next/link";
 
 export type { OfficeLabels } from "./office/types";
 
@@ -43,11 +45,13 @@ export function OfficeScene({
   labels,
   locale,
   demoAllowed,
+  header,
 }: {
   initial: OfficeData;
   labels: OfficeLabels;
   locale: string;
   demoAllowed: boolean;
+  header: { eyebrow: string; title: string; subtitle: string; badge: string; back: string };
 }) {
   const [data, setData] = useState<OfficeData>(initial);
   const isPhone = useIsPhone();
@@ -104,8 +108,12 @@ export function OfficeScene({
   }, [data, demo, demoTick]);
   const byKey = useMemo(() => new Map(workers.map((w) => [w.key, w])), [workers]);
   const manager = byKey.get(MANAGER_KEY) ?? null;
-  const activeWorker = openKey ? byKey.get(openKey) ?? null : null;
+  // Desktop keeps the inspector open at all times (section 3 of the reference);
+  // with nothing selected it shows the AI Manager.
+  const effectiveKey = openKey ?? (!openDept && !isPhone ? MANAGER_KEY : null);
+  const activeWorker = effectiveKey ? byKey.get(effectiveKey) ?? null : null;
   const activeDept = openDept ? data.departments.find((d) => d.key === openDept) ?? null : null;
+  const explicitOpen = !!(openKey || openDept);
 
   const kpi = useMemo(() => ({
     specialists: data.totals.workers,
@@ -120,6 +128,11 @@ export function OfficeScene({
   const openWorker = (key: string) => { setOpenDept(null); setOpenKey(key); };
   const closePanel = () => { setOpenKey(null); setOpenDept(null); };
   const panelOpen = !!(activeWorker || activeDept);
+  const panelProps = {
+    worker: activeWorker, department: activeDept,
+    members: activeDept ? activeDept.workers.map((w) => byKey.get(w.key) ?? w) : [],
+    labels, locale, demo: demo && (activeWorker?.access === "open" || !!activeDept), onClose: closePanel, onOpenWorker: openWorker,
+  };
 
   // Floor geometry: 4 × 4 cells; rooms drawn back-to-front by depth.
   const rooms = data.departments.map((d, i) => {
@@ -167,31 +180,42 @@ export function OfficeScene({
 
   return (
     <div className="space-y-4">
-      {/* KPI band ------------------------------------------------------------ */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-        <Kpi label={labels.kpi.specialists} value={kpi.specialists} icon="👥" />
-        <Kpi label={labels.kpi.activeNow} value={kpi.activeNow} color={STATE_COLOR.finished} demo={demo} demoLabel={labels.demoBadge} icon="〰" />
-        <Kpi label={labels.kpi.waiting} value={kpi.waiting} color={STATE_COLOR.attention} demo={demo} demoLabel={labels.demoBadge} icon="⧗" />
-        <Kpi label={labels.kpi.completedToday} value={kpi.completedToday} color={STATE_COLOR.active} demo={demo} demoLabel={labels.demoBadge} icon="✓" />
-        <Kpi label={labels.kpi.departments} value={kpi.departments} icon="⬡" />
-      </div>
-
-      {/* Toolbar -------------------------------------------------------------- */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <OfficeViewToggle value={view} onChange={setView} labels={labels.view} />
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-muted">{labels.updated} {relTime(data.generatedAt, locale, "")}</span>
-          <button type="button" onClick={() => void refresh()} disabled={refreshing} className="rounded-lg border border-line px-3 py-1.5 text-xs font-semibold hover:border-blue hover:text-blue disabled:opacity-50">
-            {refreshing ? labels.refreshing : labels.refresh}
-          </button>
-          {demoAllowed && (
-            <label className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold ${demo ? "border-gold-light bg-gold-light text-foreground" : "border-gold-light/60 bg-accent-soft text-accent"}`}>
-              <input type="checkbox" checked={demo} onChange={(e) => setDemo(e.target.checked)} className="h-3.5 w-3.5" />
-              {labels.demoToggle}
-            </label>
-          )}
+      {/* Section 1 — command centre: title, KPIs, view + demo controls ----- */}
+      <CommandHeader className="space-y-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--command-gold)" }}>{header.eyebrow}</p>
+            <h1 className="mt-1">{header.title}</h1>
+            <p className="command-muted mt-2 text-sm">{header.subtitle}</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">{header.badge}</span>
+            {demoAllowed && (
+              <label className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${demo ? "border-gold-light bg-gold-light text-foreground" : "border-white/20 bg-white/10 text-white"}`}>
+                <input type="checkbox" checked={demo} onChange={(e) => setDemo(e.target.checked)} className="h-3.5 w-3.5" />
+                {labels.demoToggle}
+              </label>
+            )}
+            <OfficeViewToggle value={view} onChange={setView} labels={labels.view} dark />
+          </div>
         </div>
-      </div>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+          <Kpi label={labels.kpi.specialists} value={kpi.specialists} icon="👥" />
+          <Kpi label={labels.kpi.activeNow} value={kpi.activeNow} color={STATE_COLOR.finished} demo={demo} demoLabel={labels.demoBadge} icon="〰" />
+          <Kpi label={labels.kpi.waiting} value={kpi.waiting} color={STATE_COLOR.attention} demo={demo} demoLabel={labels.demoBadge} icon="⧗" />
+          <Kpi label={labels.kpi.completedToday} value={kpi.completedToday} color={STATE_COLOR.active} demo={demo} demoLabel={labels.demoBadge} icon="✓" />
+          <Kpi label={labels.kpi.departments} value={kpi.departments} icon="⬡" />
+        </div>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <Link href="/ai" className="command-link font-semibold hover:underline">{header.back}</Link>
+          <span className="inline-flex items-center gap-2 text-white/70">
+            {labels.updated} {relTime(data.generatedAt, locale, "")}
+            <button type="button" onClick={() => void refresh()} disabled={refreshing} className="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 font-semibold text-white hover:bg-white/20 disabled:opacity-50">
+              {refreshing ? labels.refreshing : labels.refresh}
+            </button>
+          </span>
+        </div>
+      </CommandHeader>
 
       {demo && (
         <p role="status" className="rounded-xl border-2 border-dashed border-gold-light bg-accent-soft px-4 py-3 text-sm font-semibold text-accent">{labels.demoBanner}</p>
@@ -199,13 +223,14 @@ export function OfficeScene({
       {!data.verified && <p className="rounded-xl border border-crimson/30 bg-crimson-soft px-4 py-3 text-sm">{labels.offline}</p>}
 
       {/* Floor + docked inspector ------------------------------------------- */}
-      <div className={`grid gap-4 ${panelOpen ? "xl:grid-cols-[1fr_22rem]" : ""}`}>
+      {/* Sections 2 + 3 — the office and the inspector side by side ------- */}
+      <div className={`grid gap-4 ${panelOpen ? "xl:grid-cols-[1fr_26rem]" : ""}`}>
         {view === "office" ? (
           <div className={`office-floor command-band relative overflow-hidden rounded-2xl ${demo ? "office-demo" : ""}`}>
             <div aria-hidden className="office-grid pointer-events-none absolute inset-0" />
             <div aria-hidden className="office-skyline pointer-events-none absolute inset-x-0 top-0 h-28" />
             <div aria-hidden className="office-scan pointer-events-none absolute inset-0" />
-            <OfficeCanvas base={base} initialZoom={0.9} defs={defs} labels={labels.canvas} ariaLabel={labels.legend} className="relative z-[1]">
+            <OfficeCanvas base={base} initialZoom={0.84} defs={defs} labels={labels.canvas} ariaLabel={labels.legend} className="relative z-[1]">
               <CommandHub
                 u0={CELL} v0={CELL} size={2 * CELL} manager={manager} hqLabel={labels.hq}
                 demo={demo && manager?.access === "open"} demoLabel={labels.demoBadge}
@@ -248,12 +273,8 @@ export function OfficeScene({
 
         {panelOpen && (
           <>
-            <div className="hidden xl:block">
-              <AgentDetailPanel docked worker={activeWorker} department={activeDept} members={activeDept ? activeDept.workers.map((w) => byKey.get(w.key) ?? w) : []} labels={labels} locale={locale} demo={demo && (activeWorker?.access === "open" || !!activeDept)} onClose={closePanel} onOpenWorker={openWorker} />
-            </div>
-            <div className="xl:hidden">
-              <AgentDetailPanel worker={activeWorker} department={activeDept} members={activeDept ? activeDept.workers.map((w) => byKey.get(w.key) ?? w) : []} labels={labels} locale={locale} demo={demo && (activeWorker?.access === "open" || !!activeDept)} onClose={closePanel} onOpenWorker={openWorker} />
-            </div>
+            <div className="hidden xl:block"><AgentDetailPanel docked {...panelProps} /></div>
+            {explicitOpen && <div className="xl:hidden"><AgentDetailPanel {...panelProps} /></div>}
           </>
         )}
       </div>
@@ -280,14 +301,14 @@ export function OfficeScene({
 
 function Kpi({ label, value, color, demo, demoLabel, icon }: { label: string; value: number; color?: string; demo?: boolean; demoLabel?: string; icon: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-line bg-card px-4 py-3 shadow-card">
-      <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-base" style={{ background: color ? `${color}22` : "var(--surface)", color: color ?? "var(--muted-strong)" }}>{icon}</span>
+    <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur">
+      <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-base" style={{ background: color ? `${color}33` : "rgba(255,255,255,0.12)", color: color ?? "#c8d6f2" }}>{icon}</span>
       <span className="min-w-0">
-        <span className="flex items-baseline gap-2 text-2xl font-bold leading-none tabular-nums" style={color ? { color } : undefined}>
+        <span className="flex items-baseline gap-2 text-2xl font-bold leading-none tabular-nums" style={{ color: color ?? "#ffffff" }}>
           {value}
           {demo && color && <span className="rounded bg-gold-light px-1 text-[10px] font-bold text-foreground">{demoLabel}</span>}
         </span>
-        <span className="mt-1 block truncate text-[11px] font-semibold uppercase tracking-wide text-muted">{label}</span>
+        <span className="mt-1 block truncate text-[11px] font-semibold uppercase tracking-wide text-white/70">{label}</span>
       </span>
     </div>
   );

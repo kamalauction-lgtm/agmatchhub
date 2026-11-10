@@ -266,6 +266,14 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 .office-error .office-body { animation: office-shake 3s ease-in-out infinite; }
 .office-planned .office-body, .office-offline .office-body { animation: none; }
 .office-glow { animation: office-glow 1.8s ease-in-out infinite; }
+/* Every third idle character walks to the plaza and back on a long cycle. The
+   walk is a translate on the positioning group; the body keeps breathing. */
+.office-walker { transform-box: view-box; transform-origin: 0 0; animation: office-wander 54s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -4.3s); }
+@keyframes office-wander {
+  0%, 58% { transform: translate(0, 0) }
+  66%, 80% { transform: translate(var(--walk-x, 0px), var(--walk-y, 0px)) }
+  88%, 100% { transform: translate(0, 0) }
+}
 .office-light { animation: office-glow 3s ease-in-out infinite; }
 .office-screen { animation: office-flicker 2.6s steps(6) infinite; }
 .office-orbit { transform-box: fill-box; transform-origin: center; animation: office-orbit 24s linear infinite; }
@@ -290,5 +298,5 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 .office-demo { outline: 3px dashed var(--gold-light); outline-offset: -3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .office-char, .office-char *, .office-glow, .office-light, .office-screen, .office-orbit, .office-orbit-rev, .office-pulse-svg, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel { animation: none !important; }
+  .office-char, .office-char *, .office-walker, .office-glow, .office-light, .office-screen, .office-orbit, .office-orbit-rev, .office-pulse-svg, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel { animation: none !important; }
 }

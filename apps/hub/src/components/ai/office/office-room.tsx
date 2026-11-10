@@ -54,19 +54,28 @@ export function OfficeRoom({
         const du = u0 + 26 + i * 64;
         const dv = v0 + 86;
         const lit = w.state === "finished" || w.state === "active";
-        const pos = iso(du + 23, dv + 58);
+        // Seated: the character sits between desk and chair, the chair is drawn
+        // in front. Every third idle character occasionally walks to the plaza.
+        const pos = iso(du + 23, dv + 44);
+        const plaza = iso(440, 470);
+        const walk = { x: (plaza.x - pos.x) * 0.9, y: (plaza.y - pos.y) * 0.9 };
+        const walker = w.state === "idle" && (index * 3 + i) % 3 === 0;
         return (
           <g key={w.key}>
             <Box u={du} v={dv} w={46} d={22} h={16} />
             <Monitor u={du + 6} v={dv + 3} h={16} lit={lit} color={STATE_COLOR[w.state]} />
             <Monitor u={du + 28} v={dv + 3} h={16} lit={lit} color={STATE_COLOR[w.state]} size={0.6} />
-            <Chair u={du + 17} v={dv + 30} />
-            <g transform={`translate(${pos.x} ${pos.y}) scale(1.22)`}>
+            <g
+              transform={`translate(${pos.x} ${pos.y}) scale(1.22)`}
+              className={walker ? "office-walker" : undefined}
+              style={{ ["--walk-x" as string]: `${walk.x / 1.22}px`, ["--walk-y" as string]: `${walk.y / 1.22}px`, ["--i" as string]: index * 3 + i } as React.CSSProperties}
+            >
               <Character
                 w={w} x={0} y={0} index={index * 3 + i} demo={demo} demoLabel={demoLabel}
                 label={w.persona} stateLabel={stateLabel(w)} title={titleOf(w)} onOpen={() => onOpenWorker(w.key)}
               />
             </g>
+            <Chair u={du + 17} v={dv + 30} />
           </g>
         );
       })}
