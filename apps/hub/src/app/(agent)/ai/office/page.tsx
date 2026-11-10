@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { brand } from "@/config/brand";
 import { getLocale, getTranslations } from "next-intl/server";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { OfficeScene, type OfficeLabels } from "@/components/ai/office-scene";
@@ -42,7 +43,9 @@ export default async function AiOfficePage() {
       specialists: t("kpi.specialists"), activeNow: t("kpi.activeNow"), waiting: t("kpi.waiting"),
       completedToday: t("kpi.completedToday"), departments: t("kpi.departments"),
     },
-    view: { office: t("view.office"), list: t("view.list"), label: t("view.label") },
+    view: { scene3d: t("view.scene3d"), office: t("view.office"), list: t("view.list"), label: t("view.label") },
+    scene3d: { loading: t("scene3d.loading"), unavailable: t("scene3d.unavailable"), controls: t("scene3d.controls"), prototypes: t("scene3d.prototypes"), ambient: t("scene3d.ambient") },
+    brand: brand.appShortName,
     node: { tasksToday: t("node.tasksToday"), queue: t("node.queue"), justRan: t("node.justRan") },
     hq: t("hq"),
     canvas: { zoomIn: t("canvas.zoomIn"), zoomOut: t("canvas.zoomOut"), reset: t("canvas.reset") },

@@ -297,6 +297,33 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
 /* Demo mode: a visible dashed gold frame around the whole floor. */
 .office-demo { outline: 3px dashed var(--gold-light); outline-offset: -3px; }
 
+
+/* --- 3D office (apps/hub/src/components/ai/office3d/*) ----------------- */
+.office-floor-3d { height: clamp(520px, 72vh, 820px); }
+.office3d-loading { position: absolute; inset: 0; display: grid; place-items: center; color: rgb(255 255 255 / 0.7); font-size: 0.8rem; font-weight: 600;
+  background: radial-gradient(ellipse at center, rgb(37 99 235 / 0.18), transparent 70%); }
+.office3d-loading::before { content: ""; width: 42px; height: 42px; border-radius: 999px; border: 3px solid rgb(255 255 255 / 0.15); border-top-color: #60a5fa; animation: office-spin 0.9s linear infinite; position: absolute; }
+@keyframes office-spin { to { transform: rotate(360deg); } }
+.office3d-plate { display: inline-flex; flex-direction: column; align-items: center; gap: 1px; padding: 3px 9px 4px; border-radius: 10px; border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(11 27 51 / 0.92); color: #fff; font: 600 11px/1.15 var(--font-sans, system-ui); white-space: nowrap; cursor: pointer; backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35); transition: transform 0.15s, border-color 0.15s; }
+.office3d-plate:hover, .office3d-plate:focus-visible { transform: scale(1.06); border-color: rgb(255 255 255 / 0.5); outline: none; }
+.office3d-plate-selected { border-color: #fff; box-shadow: 0 0 0 2px rgb(255 255 255 / 0.35), 0 2px 14px rgb(96 165 250 / 0.5); }
+.office3d-plate-name { font-size: 12px; letter-spacing: 0.01em; }
+.office3d-plate-state { display: inline-flex; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 600; color: rgb(255 255 255 / 0.78); text-transform: uppercase; letter-spacing: 0.06em; }
+.office3d-plate-state i { width: 6px; height: 6px; border-radius: 999px; background: var(--c, #60a5fa); box-shadow: 0 0 6px var(--c, #60a5fa); }
+.office3d-plate-state b { margin-left: 2px; padding: 0 4px; border-radius: 4px; background: var(--gold-light); color: var(--foreground); font-size: 8.5px; }
+.office3d-sign { display: inline-block; padding: 4px 10px; border-radius: 8px; border: 1px solid rgb(201 166 75 / 0.7); background: rgb(11 27 51 / 0.94); color: #e3c66f;
+  font: 700 10.5px/1 var(--font-sans, system-ui); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; box-shadow: 0 2px 10px rgb(0 0 0 / 0.4); }
+.office3d-sign-selected { border-color: #fff; color: #fff; }
+.office3d-sign-hq { font-size: 12px; padding: 6px 14px; border-width: 1.5px; }
+.office3d-brand { display: inline-block; padding: 6px 16px; border-radius: 999px; border: 1px solid rgb(96 165 250 / 0.5); background: rgb(11 27 51 / 0.85); color: #dbe7ff;
+  font: 800 13px/1 var(--font-sans, system-ui); letter-spacing: 0.04em; white-space: nowrap; }
+.office3d-hint { position: absolute; left: 12px; bottom: 12px; z-index: 2; padding: 6px 10px; border-radius: 10px; background: rgb(11 27 51 / 0.8); color: rgb(255 255 255 / 0.75); font-size: 11px; max-width: 46ch; pointer-events: none; }
+
 @media (prefers-reduced-motion: reduce) {
-  .office-char, .office-char *, .office-walker, .office-glow, .office-light, .office-screen, .office-orbit, .office-orbit-rev, .office-pulse-svg, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel { animation: none !important; }
+  .office-char, .office-char *, .office-walker, .office-glow, .office-light, .office-screen, .office-orbit, .office-orbit-rev, .office-pulse-svg, .office-dot, .office-ring, .office-pulse, .office-scan, .office-window, .office-panel, .office3d-loading::before { animation: none !important; }
 }
+.office3d-label { position: absolute; left: 0; top: 0; will-change: transform; transform-origin: 50% 100%; }
+.office3d-plate-row { display: inline-flex; align-items: center; gap: 5px; }
+.office3d-plate-face { width: 20px; height: 20px; border-radius: 999px; object-fit: cover; border: 1px solid rgb(255 255 255 / 0.45); background: #13254a; }

@@ -3929,6 +3929,7 @@
       "departments": "Departemen"
     },
     "view": {
+      "scene3d": "Kantor 3D",
       "office": "Tampilan kantor",
       "list": "Tampilan daftar",
       "label": "Mode tampilan"
@@ -3957,6 +3958,13 @@
     },
     "deptStatus": {
       "title": "Status tim"
+    },
+    "scene3d": {
+      "loading": "Memuat kantor 3D…",
+      "unavailable": "Browser ini tidak dapat menampilkan kantor 3D, jadi kantor 2D yang ditampilkan.",
+      "controls": "Seret untuk memutar · gulir untuk zoom · klik spesialis atau ruangan",
+      "prototypes": "Ke-36 spesialis adalah figur 3D yang didandani dari lembar karakter masing-masing (rambut, kostum, aksesori) dan berdiri di departemennya sendiri. Tubuh bergaya, bukan pahatan wajah; papan nama memuat potret masing-masing.",
+      "ambient": "Spesialis yang berjalan ke plaza hanyalah suasana, bukan pekerjaan. “Bekerja” hanya muncul bila ada pekerjaan tercatat dalam lima menit terakhir."
     }
   },
   "aiTools": {

@@ -1,4 +1,4 @@
-export type OfficeView = "office" | "list";
+export type OfficeView = "scene3d" | "office" | "list";
 
 export function OfficeViewToggle({
   value,
@@ -8,7 +8,7 @@ export function OfficeViewToggle({
 }: {
   value: OfficeView;
   onChange: (v: OfficeView) => void;
-  labels: { office: string; list: string; label: string };
+  labels: { scene3d: string; office: string; list: string; label: string };
   dark?: boolean;
 }) {
   const btn = (v: OfficeView, text: string, icon: string) => (
@@ -26,6 +26,7 @@ export function OfficeViewToggle({
   );
   return (
     <div role="group" aria-label={labels.label} className={`inline-flex gap-0.5 rounded-xl border p-0.5 ${dark ? "border-white/20 bg-white/10" : "border-line bg-surface"}`}>
+      {btn("scene3d", labels.scene3d, "◈")}
       {btn("office", labels.office, "⬡")}
       {btn("list", labels.list, "☰")}
     </div>

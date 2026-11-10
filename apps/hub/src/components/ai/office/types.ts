@@ -15,7 +15,10 @@ export type OfficeLabels = {
   jobStatus: Record<"ok" | "degraded" | "error" | "denied", string>;
   reason: Record<string, string>;
   kpi: { specialists: string; activeNow: string; waiting: string; completedToday: string; departments: string };
-  view: { office: string; list: string; label: string };
+  view: { scene3d: string; office: string; list: string; label: string };
+  scene3d: { loading: string; unavailable: string; controls: string; prototypes: string; ambient: string };
+  /** Brand short name for the floor sign — from config, never a literal. */
+  brand: string;
   node: { tasksToday: string; queue: string; justRan: string };
   hq: string;
   canvas: { zoomIn: string; zoomOut: string; reset: string };
