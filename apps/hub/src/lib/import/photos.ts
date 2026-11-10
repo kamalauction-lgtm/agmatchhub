@@ -62,3 +62,40 @@ export type PhotoFailure =
   | "not_property" | "unsafe_url" | "save_failed";
 
 export const MAX_PHOTO_ATTEMPTS = 3;
+
+/**
+ * Metadata left in a processed image (P0-e-2a). For WebP, the RIFF chunks
+ * that carry it are "EXIF" and "XMP "; for any format, the "Exif\0\0" header
+ * marks an EXIF block. A clean derivative returns an empty list.
+ */
+export function metadataFound(bytes: Uint8Array): string[] {
+  const found: string[] = [];
+  const isWebp = sniffImage(bytes)?.ext === "webp";
+  if (isWebp) {
+    let i = 12;
+    while (i + 8 <= bytes.length) {
+      const fourcc = String.fromCharCode(bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3]);
+      const size = bytes[i + 4] | (bytes[i + 5] << 8) | (bytes[i + 6] << 16) | (bytes[i + 7] << 24);
+      if (fourcc === "EXIF" || fourcc === "XMP ") found.push(fourcc.trim());
+      if (size < 0) break;
+      i += 8 + size + (size % 2);
+    }
+  }
+  for (let i = 0; i + 6 <= bytes.length; i++) {
+    if (bytes[i] === 0x45 && bytes[i + 1] === 0x78 && bytes[i + 2] === 0x69 && bytes[i + 3] === 0x66
+        && bytes[i + 4] === 0 && bytes[i + 5] === 0) { found.push("Exif header"); break; }
+  }
+  return found;
+}
+
+/** The derivative sizes, longest edge in pixels. */
+export const DERIVATIVES = [
+  { suffix: "1600", width: 1600 },
+  { suffix: "400", width: 400 },
+] as const;
+
+/** Where a derivative lives: inside the owner's intake folder, next to the original. */
+export function derivedPath(originalPath: string, mediaId: string, suffix: string): string {
+  const folder = originalPath.replace(/^listing-media-intake\//, "").split("/").slice(0, 2).join("/");
+  return `${folder}/derived-${mediaId}-${suffix}.webp`;
+}

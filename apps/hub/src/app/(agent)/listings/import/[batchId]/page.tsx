@@ -92,6 +92,12 @@ export default async function BatchReviewPage({
 
   // Photos (P0-e-1a): imported items that came with photo URLs.
   const { data: photosEnabled } = await supabase.rpc("is_feature_enabled", { p_key: "import_photos", p_user: user.id });
+  const listingIds = rows.filter((r) => r.listing_id).map((r) => r.listing_id as string);
+  const { data: failedMedia } = listingIds.length
+    ? await supabase.from("listing_media").select("listing_id").in("listing_id", listingIds).eq("processing_state", "failed")
+    : { data: [] as { listing_id: string }[] };
+  const failedBy = new Map<string, number>();
+  for (const f of failedMedia ?? []) failedBy.set(f.listing_id, (failedBy.get(f.listing_id) ?? 0) + 1);
   const photoItems: PhotoItem[] = rows
     .filter((r) => r.status === "imported" && (r.media_total ?? 0) > 0)
     .map((r) => {
@@ -104,11 +110,12 @@ export default async function BatchReviewPage({
         total: r.media_total ?? 0,
         attempts: r.media_attempts ?? 0,
         reasons: ((r.media_results ?? []) as { s: string }[]).map((x) => x.s).filter((s) => s !== "saved"),
+        processingFailed: failedBy.get(r.listing_id as string) ?? 0,
       };
     });
   const PHOTO_LABEL_KEYS = [
     "title", "intro", "disabled", "attachAll", "attaching", "retry", "waiting", "savedOf",
-    "privateNote", "exhausted", "reason_blocked", "reason_not_image", "reason_too_large",
+    "privateNote", "exhausted", "processingFailed", "reason_blocked", "reason_not_image", "reason_too_large",
     "reason_timeout", "reason_source_error", "reason_not_property", "reason_unsafe_url", "reason_save_failed",
   ] as const;
   const photoLabels = Object.fromEntries(PHOTO_LABEL_KEYS.map((k) => [k, t(`photos.${k}`)]));

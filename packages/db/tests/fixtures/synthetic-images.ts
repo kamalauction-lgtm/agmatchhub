@@ -78,3 +78,16 @@ export function syntheticJpegWithGps(seed = 0): Uint8Array {
 export function syntheticWebpHeader(): Uint8Array {
   return concat(new TextEncoder().encode("RIFF"), be32(4), new TextEncoder().encode("WEBPVP8 "));
 }
+
+/** A RIFF/WEBP container with the given extra chunks after a VP8X header. */
+export function syntheticWebpWithChunks(chunks: { fourcc: string; data: Uint8Array }[]): Uint8Array {
+  const enc = new TextEncoder();
+  const le = (n: number) => Uint8Array.of(n & 255, (n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255);
+  const body: Uint8Array[] = [enc.encode("WEBP"), enc.encode("VP8X"), le(10), new Uint8Array(10)];
+  for (const c of chunks) {
+    body.push(enc.encode(c.fourcc), le(c.data.length), c.data);
+    if (c.data.length % 2) body.push(Uint8Array.of(0));
+  }
+  const payload = concat(...body);
+  return concat(enc.encode("RIFF"), le(payload.length), payload);
+}

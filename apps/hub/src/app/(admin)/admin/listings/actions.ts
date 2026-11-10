@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 import { requireCapability, requireCapabilityIn } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 import { notify } from "@/lib/notifications";
+import { createServiceClient } from "@/lib/supabase/service";
+import { publishProcessedPhotos } from "@/lib/media/publish";
 
 /**
  * Listing moderation (§28 step 7). Publication is the moderator's act — the
@@ -73,6 +75,18 @@ export async function moderateListing(formData: FormData): Promise<void> {
           moderation_reason: reason,
         };
 
+  // Processed imported photos (00109) become public with the listing: copy
+  // the clean derivatives first so it is published with them. A copy failure
+  // is logged and the photo stays private; it never blocks the decision.
+  let photos: { published: number; failed: number } | null = null;
+  if (decision === "approve") {
+    try {
+      photos = await publishProcessedPhotos(listingId);
+    } catch (e) {
+      console.error("[moderation] photo publish failed:", e instanceof Error ? e.message : e);
+    }
+  }
+
   const { error } = await supabase.from("listings").update(patch).eq("id", listingId);
   if (error) redirect("/admin/listings?error=update_failed");
 
@@ -91,7 +105,7 @@ export async function moderateListing(formData: FormData): Promise<void> {
     action: decision === "approve" ? "listing.approved" : "listing.rejected",
     entityType: "listing",
     entityId: listingId,
-    next: { human_readable_id: listing.human_readable_id, reason: reason || null },
+    next: { human_readable_id: listing.human_readable_id, reason: reason || null, ...(photos ? { photos } : {}) },
   });
 
   // Full fan-out (in-app + push + email) needs the service client; on an
@@ -108,4 +122,46 @@ export async function moderateListing(formData: FormData): Promise<void> {
   }
 
   redirect(`/admin/listings?done=${decision}`);
+}
+
+const quarantineSchema = z.object({ mediaId: z.string().uuid() });
+
+/**
+ * Keep one imported photo out of publication (P0-e-2a). The moderator must
+ * hold listing.moderate for the listing's country; the state change runs on
+ * the operator path because client sessions cannot change an intake photo.
+ */
+export async function quarantinePhoto(formData: FormData): Promise<void> {
+  await requireCapability("listing.moderate");
+  const parsed = quarantineSchema.safeParse(Object.fromEntries(formData.entries()));
+  if (!parsed.success) redirect("/admin/listings?error=invalid");
+  const supabase = await createClient();
+  // RLS: the moderator only sees media of listings in their countries.
+  const { data: media } = await supabase
+    .from("listing_media")
+    .select("id, listing_id, processing_state, storage_path, listings(properties(country_code))")
+    .eq("id", parsed.data.mediaId)
+    .maybeSingle();
+  if (!media) redirect("/admin/listings?error=not_found");
+  const lst = (Array.isArray(media.listings) ? media.listings[0] : media.listings) as
+    | { properties: { country_code: string | null } | { country_code: string | null }[] | null }
+    | null;
+  const prop = Array.isArray(lst?.properties) ? lst?.properties[0] : lst?.properties;
+  await requireCapabilityIn("listing.moderate", prop?.country_code, "/admin/listings");
+  if (!["pending", "processing", "processed", "failed"].includes(media.processing_state as string)) {
+    redirect("/admin/listings?error=not_moderatable");
+  }
+  const { error } = await createServiceClient()
+    .from("listing_media")
+    .update({ processing_state: "quarantined" })
+    .eq("id", media.id);
+  if (error) redirect("/admin/listings?error=update_failed");
+  await logAudit({
+    action: "listing_media.quarantined",
+    entityType: "listing_media",
+    entityId: media.id,
+    previous: { processing_state: media.processing_state },
+    next: { processing_state: "quarantined", listing_id: media.listing_id },
+  });
+  redirect("/admin/listings?done=quarantined");
 }

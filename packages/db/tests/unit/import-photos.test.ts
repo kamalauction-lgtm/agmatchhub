@@ -71,3 +71,28 @@ describe("safeFetchImage", () => {
     await expect(safeFetchImage("http://127.0.0.1/a.png")).rejects.toMatchObject({ reason: expect.stringMatching(/private_address|blocked_host/) });
   });
 });
+
+describe("metadataFound (P0-e-2a derivative check)", () => {
+  it("a WebP with only image data is clean", async () => {
+    const { metadataFound } = await import("../../../../apps/hub/src/lib/import/photos");
+    const { syntheticWebpWithChunks } = await import("../fixtures/synthetic-images");
+    expect(metadataFound(syntheticWebpWithChunks([]))).toEqual([]);
+  });
+  it("finds an EXIF or XMP chunk in a WebP", async () => {
+    const { metadataFound } = await import("../../../../apps/hub/src/lib/import/photos");
+    const { syntheticWebpWithChunks } = await import("../fixtures/synthetic-images");
+    const exif = syntheticWebpWithChunks([{ fourcc: "EXIF", data: new TextEncoder().encode("Exif\0\0GPS") }]);
+    expect(metadataFound(exif)).toContain("EXIF");
+    const xmp = syntheticWebpWithChunks([{ fourcc: "XMP ", data: new TextEncoder().encode("<x:xmpmeta/>") }]);
+    expect(metadataFound(xmp)).toContain("XMP");
+  });
+  it("finds an EXIF header in any file, such as the GPS JPEG", async () => {
+    const { metadataFound } = await import("../../../../apps/hub/src/lib/import/photos");
+    expect(metadataFound(syntheticJpegWithGps())).toContain("Exif header");
+  });
+  it("derivatives live in the owner's folder, next to the original", async () => {
+    const { derivedPath } = await import("../../../../apps/hub/src/lib/import/photos");
+    expect(derivedPath("listing-media-intake/agent/listing/src-0123456789abcdef.jpg", "media", "1600"))
+      .toBe("agent/listing/derived-media-1600.webp");
+  });
+});

@@ -2354,7 +2354,20 @@
       "not_moderatable": "Listing ini tidak sedang menunggu tinjauan.",
       "update_failed": "Pembaruan gagal. Coba lagi.",
       "self_prepared": "Anda yang menyiapkan impor listing ini, jadi admin lain harus menyetujuinya."
-    }
+    },
+    "photos": {
+      "title": "Foto impor (privat sampai Anda setujui)",
+      "quarantine": "Tahan",
+      "note": "Menyetujui akan menyalin foto yang sudah diproses ke listing. Foto asli tidak pernah dipublikasikan.",
+      "state": {
+        "pending": "Menunggu diproses",
+        "processing": "Sedang diproses",
+        "processed": "Siap dipublikasikan",
+        "failed": "Tidak dapat diproses",
+        "quarantined": "Ditahan"
+      }
+    },
+    "quarantined": "Foto tidak akan dipublikasikan."
   },
   "plans": {
     "free": "Gratis",
@@ -2691,7 +2704,8 @@
       "reason_source_error": "Situs web mengembalikan galat untuk sebuah foto.",
       "reason_not_property": "Sebuah gambar tampak seperti kartu bagikan atau logo, bukan foto properti, sehingga dilewati.",
       "reason_unsafe_url": "Sebuah tautan foto bukan alamat web publik.",
-      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Coba lagi."
+      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Coba lagi.",
+      "processingFailed": "{n} foto tidak dapat diproses. Unggah foto pengganti untuk listing ini."
     }
   },
   "adminUsers": {

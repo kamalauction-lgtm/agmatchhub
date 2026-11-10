@@ -2354,7 +2354,20 @@
       "not_moderatable": "This listing is not awaiting review.",
       "update_failed": "Update failed. Try again.",
       "self_prepared": "You prepared this listing's import, so another admin must approve it."
-    }
+    },
+    "photos": {
+      "title": "Imported photos (private until you approve)",
+      "quarantine": "Keep out",
+      "note": "Approving copies the processed photos to the listing. Originals are never published.",
+      "state": {
+        "pending": "Waiting to process",
+        "processing": "Processing",
+        "processed": "Ready to publish",
+        "failed": "Could not be processed",
+        "quarantined": "Kept out"
+      }
+    },
+    "quarantined": "The photo will not be published."
   },
   "plans": {
     "free": "Free",
@@ -2691,7 +2704,8 @@
       "reason_source_error": "The website returned an error for a photo.",
       "reason_not_property": "A picture looked like a share card or logo, not a property photo, so it was skipped.",
       "reason_unsafe_url": "A photo link was not a public web address.",
-      "reason_save_failed": "A photo could not be saved. Try again."
+      "reason_save_failed": "A photo could not be saved. Try again.",
+      "processingFailed": "{n} photo(s) could not be processed. Upload a replacement for this listing."
     }
   },
   "adminUsers": {

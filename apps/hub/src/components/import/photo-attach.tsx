@@ -17,6 +17,8 @@ export type PhotoItem = {
   total: number;
   attempts: number;
   reasons: string[];
+  /** Photos saved but rejected by processing (P0-e-2a). */
+  processingFailed: number;
 };
 
 export function PhotoAttach({
@@ -86,6 +88,9 @@ export function PhotoAttach({
                 <p className="mt-1 text-xs text-muted">{labels.exhausted}</p>
               )}
               {i.saved > 0 && <p className="mt-1 text-xs text-muted">{labels.privateNote}</p>}
+              {i.processingFailed > 0 && (
+                <p className="mt-1 text-xs text-warning">{labels.processingFailed.replace("{n}", String(i.processingFailed))}</p>
+              )}
             </div>
             {enabled && i.state !== "done" && i.attempts < maxAttempts && (
               <form action={attachItemPhotosForm}>

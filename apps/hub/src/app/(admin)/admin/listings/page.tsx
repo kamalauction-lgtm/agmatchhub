@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
-import { moderateListing } from "./actions";
+import { moderateListing, quarantinePhoto } from "./actions";
 
 /**
  * Marketplace listing moderation queue (§28 step 7). Every field the
@@ -39,7 +39,14 @@ type QueueRow = {
     land_size: number | null;
   } | null;
   profiles: { display_name: string; agent_status: string } | null;
-  listing_media: { processed_path: string | null; is_cover: boolean; position: number }[];
+  listing_media: {
+    id: string;
+    processed_path: string | null;
+    derived_thumb_path: string | null;
+    processing_state: string;
+    is_cover: boolean;
+    position: number;
+  }[];
 };
 
 export default async function ListingModerationPage({
@@ -61,7 +68,7 @@ export default async function ListingModerationPage({
        properties!inner (country_code, property_type, ownership_type, general_address, regency_name,
                    province_name, bedrooms, bathrooms, building_size, land_size),
        profiles (display_name, agent_status),
-       listing_media (processed_path, is_cover, position)`
+       listing_media (id, processed_path, derived_thumb_path, processing_state, is_cover, position)`
     )
     .eq("status", "pending_review")
     .order("created_at", { ascending: true })
@@ -71,6 +78,20 @@ export default async function ListingModerationPage({
 
   const rows = (data ?? []) as unknown as QueueRow[];
 
+  // Processed imported photos are private until approval (00109): preview them
+  // through short-lived signed links, which the 00108 policy grants only to
+  // moderators of the listing's country.
+  const previews = new Map<string, string>();
+  const toSign = rows.flatMap((r) => r.listing_media)
+    .filter((m) => m.processing_state === "processed" && m.derived_thumb_path)
+    .map((m) => ({ id: m.id, path: m.derived_thumb_path!.replace(/^listing-media-intake\//, "") }));
+  if (toSign.length) {
+    const { data: signed } = await supabase.storage
+      .from("listing-media-intake")
+      .createSignedUrls(toSign.map((x) => x.path), 600);
+    (signed ?? []).forEach((s, i) => { if (s.signedUrl) previews.set(toSign[i].id, s.signedUrl); });
+  }
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
@@ -78,7 +99,7 @@ export default async function ListingModerationPage({
 
       {done && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
-          {t(done === "approve" ? "approved" : "rejected")}
+          {t(done === "approve" ? "approved" : done === "quarantined" ? "quarantined" : "rejected")}
         </p>
       )}
       {error && (
@@ -144,6 +165,30 @@ export default async function ListingModerationPage({
                 </div>
 
                 <div className="flex flex-col gap-2 border-t border-line bg-surface p-4 sm:flex-row sm:items-end">
+                  {l.listing_media.some((m) => previews.has(m.id) || ["pending", "processing", "failed"].includes(m.processing_state)) && (
+                    <div className="mb-3">
+                      <p className="mb-2 text-xs font-semibold text-muted">{t("photos.title")}</p>
+                      <ul className="flex flex-wrap gap-3">
+                        {l.listing_media.filter((m) => m.processing_state !== "ready").map((m) => (
+                          <li key={m.id} className="w-28 text-xs">
+                            {previews.has(m.id) ? (
+                              // eslint-disable-next-line @next/next/no-img-element -- short-lived signed URL
+                              <img src={previews.get(m.id)} alt="" className="h-20 w-28 rounded object-cover" />
+                            ) : (
+                              <div className="flex h-20 w-28 items-center justify-center rounded bg-surface text-muted">{t(`photos.state.${m.processing_state}` as never)}</div>
+                            )}
+                            {m.processing_state !== "quarantined" && (
+                              <form action={quarantinePhoto} className="mt-1">
+                                <input type="hidden" name="mediaId" value={m.id} />
+                                <button type="submit" className="cursor-pointer text-xs text-muted underline hover:text-danger">{t("photos.quarantine")}</button>
+                              </form>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-1 text-xs text-muted">{t("photos.note")}</p>
+                    </div>
+                  )}
                   <form action={moderateListing} className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-end">
                     <input type="hidden" name="listingId" value={l.id} />
                     <div className="flex-1">

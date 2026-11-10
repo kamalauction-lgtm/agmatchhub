@@ -2354,7 +2354,20 @@
       "not_moderatable": "Iklan ini tidak menunggu semakan.",
       "update_failed": "Kemas kini gagal. Cuba lagi.",
       "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya."
-    }
+    },
+    "photos": {
+      "title": "Foto import (peribadi sehingga anda luluskan)",
+      "quarantine": "Tahan",
+      "note": "Meluluskan akan menyalin foto yang telah diproses ke penyenaraian. Foto asal tidak pernah disiarkan.",
+      "state": {
+        "pending": "Menunggu diproses",
+        "processing": "Sedang diproses",
+        "processed": "Sedia untuk disiarkan",
+        "failed": "Tidak dapat diproses",
+        "quarantined": "Ditahan"
+      }
+    },
+    "quarantined": "Foto tidak akan disiarkan."
   },
   "plans": {
     "free": "Percuma",
@@ -2691,7 +2704,8 @@
       "reason_source_error": "Laman web memulangkan ralat untuk sebuah foto.",
       "reason_not_property": "Sebuah gambar kelihatan seperti kad kongsi atau logo, bukan foto hartanah, jadi ia dilangkau.",
       "reason_unsafe_url": "Sebuah pautan foto bukan alamat web awam.",
-      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Cuba lagi."
+      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Cuba lagi.",
+      "processingFailed": "{n} foto tidak dapat diproses. Muat naik foto gantian untuk penyenaraian ini."
     }
   },
   "adminUsers": {

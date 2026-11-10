@@ -10,6 +10,10 @@
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat"],
   "triggers": { "crons": ["*/15 * * * *", "0 23 * * *"] },
+  // Cloudflare Images binding for the photo processor (P0-e-2a, 00109).
+  // Images FREE plan: no purchase; transformations stop at 5,000 a month and
+  // the processor pauses itself at 4,500 (MEDIA_TRANSFORM_CAP).
+  "images": { "binding": "IMAGES" },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
