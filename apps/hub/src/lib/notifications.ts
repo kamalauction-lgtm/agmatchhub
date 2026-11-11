@@ -2,7 +2,7 @@ import "server-only";
 import { createServiceClient } from "@/lib/supabase/service";
 import { sendEmail } from "@/lib/email";
 import { sendPushToUser } from "@/lib/webpush";
-import { notificationTitle } from "@/lib/notification-titles";
+import { notificationOpenLabel, notificationTitle } from "@/lib/notification-titles";
 
 /** High-frequency kinds that stay in-app + push only (no inbox flooding). */
 const NO_EMAIL_KINDS = new Set(["message.new"]);
@@ -51,11 +51,12 @@ export async function notify(opts: {
     if (priv?.email && !NO_EMAIL_KINDS.has(opts.kind)) {
       await sendEmail({
         to: priv.email,
-        subject: `MatchHub: ${title}`,
+        // D10: the brand comes from brand_settings via the email template, never from code.
+        subject: title,
         heading: title,
         body: ref ? `Reference: ${ref}` : undefined,
         ctaUrl: opts.href ?? "/notifications",
-        ctaLabel: "Open MatchHub",
+        ctaLabel: notificationOpenLabel(locale),
       });
     }
   } catch (e) {

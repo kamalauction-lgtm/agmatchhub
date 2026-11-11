@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ActionQueue } from "@/components/admin/action-queue";
 import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, myCapabilities } from "@/lib/authz";
@@ -249,6 +250,9 @@ export default async function AdminHome({
           {t("deniedCapability", { capability: denied })}
         </p>
       )}
+
+      {/* Action queue (screen 1): everything waiting, by risk and age ------ */}
+      <ActionQueue />
 
       {/* Headline numbers ------------------------------------------------- */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

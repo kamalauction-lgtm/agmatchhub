@@ -419,8 +419,15 @@
     "navGroup": {
       "work": "Barisan",
       "grow": "Pertumbuhan",
-      "commerce": "Komersial",
-      "platform": "Platform"
+      "commerce": "Komersial dan pertumbuhan",
+      "platform": "Platform",
+      "agents": "Ejen",
+      "listings": "Penyenaraian dan import",
+      "demand": "Permintaan dan laporan",
+      "ai": "AI Workforce",
+      "comms": "Komunikasi",
+      "markets": "Pasaran dan kandungan",
+      "security": "Keselamatan dan audit"
     },
     "bucketLabel": "setiap lajur = {count} hari",
     "noQueues": "Anda tidak memegang sebarang barisan.",
@@ -500,6 +507,26 @@
       "country": "Negara",
       "allCountries": "Semua negara",
       "apply": "Guna"
+    },
+    "actionQueue": {
+      "title": "Baris gilir tindakan",
+      "hint": "Semua yang menunggu anda, yang paling mendesak dan paling lama dahulu.",
+      "empty": "Tiada yang menunggu. Syabas.",
+      "more": "Tunjuk {n} lagi",
+      "lessThanHour": "baru sahaja",
+      "hours": "{n} jam",
+      "days": "{n} hari",
+      "kind": {
+        "report_scam": "Laporan penipuan",
+        "report": "Laporan pembeli",
+        "lead_overdue": "Prospek lewat",
+        "listing_review": "Penyenaraian perlu disemak",
+        "agent_review": "Ejen perlu disahkan",
+        "change_answered": "Ejen membalas",
+        "request_review": "Keperluan perlu diluluskan",
+        "photo_failed": "Foto gagal",
+        "invite_expiring": "Jemputan hampir tamat"
+      }
     }
   },
   "adminLegal": {
@@ -1445,7 +1472,8 @@
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
-    "pushDenied": "Notifikasi disekat dalam tetapan pelayar"
+    "pushDenied": "Notifikasi disekat dalam tetapan pelayar",
+    "emailOpen": "Buka"
   },
   "commission": {
     "title": "Perjanjian komisen & co-broke",

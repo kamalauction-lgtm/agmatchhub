@@ -419,8 +419,15 @@
     "navGroup": {
       "work": "Queues",
       "grow": "Growth",
-      "commerce": "Commercial",
-      "platform": "Platform"
+      "commerce": "Commercial and growth",
+      "platform": "Platform",
+      "agents": "Agents",
+      "listings": "Listings and import",
+      "demand": "Demand and reports",
+      "ai": "AI Workforce",
+      "comms": "Communications",
+      "markets": "Markets and content",
+      "security": "Security and audit"
     },
     "bucketLabel": "each column = {count} days",
     "noQueues": "You have no queues assigned.",
@@ -500,6 +507,26 @@
       "country": "Country",
       "allCountries": "All countries",
       "apply": "Apply"
+    },
+    "actionQueue": {
+      "title": "Action queue",
+      "hint": "Everything waiting on you, the most urgent and oldest first.",
+      "empty": "Nothing is waiting. Well done.",
+      "more": "Show {n} more",
+      "lessThanHour": "just now",
+      "hours": "{n} h",
+      "days": "{n} d",
+      "kind": {
+        "report_scam": "Scam report",
+        "report": "Buyer report",
+        "lead_overdue": "Lead overdue",
+        "listing_review": "Listing to review",
+        "agent_review": "Agent to verify",
+        "change_answered": "Agent replied",
+        "request_review": "Request to approve",
+        "photo_failed": "Photo failed",
+        "invite_expiring": "Invitation expiring"
+      }
     }
   },
   "adminLegal": {
@@ -1445,7 +1472,8 @@
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
-    "pushDenied": "Notifications blocked in browser settings"
+    "pushDenied": "Notifications blocked in browser settings",
+    "emailOpen": "Open"
   },
   "commission": {
     "title": "Commission & co-broke agreement",

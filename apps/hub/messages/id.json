@@ -419,8 +419,15 @@
     "navGroup": {
       "work": "Antrean",
       "grow": "Pertumbuhan",
-      "commerce": "Komersial",
-      "platform": "Platform"
+      "commerce": "Komersial dan pertumbuhan",
+      "platform": "Platform",
+      "agents": "Agen",
+      "listings": "Listing dan impor",
+      "demand": "Permintaan dan laporan",
+      "ai": "AI Workforce",
+      "comms": "Komunikasi",
+      "markets": "Pasar dan konten",
+      "security": "Keamanan dan audit"
     },
     "bucketLabel": "tiap kolom = {count} hari",
     "noQueues": "Anda tidak memegang antrean apa pun.",
@@ -500,6 +507,26 @@
       "country": "Negara",
       "allCountries": "Semua negara",
       "apply": "Terapkan"
+    },
+    "actionQueue": {
+      "title": "Antrean tindakan",
+      "hint": "Semua yang menunggu Anda, yang paling mendesak dan paling lama lebih dulu.",
+      "empty": "Tidak ada yang menunggu. Bagus.",
+      "more": "Tampilkan {n} lagi",
+      "lessThanHour": "baru saja",
+      "hours": "{n} jam",
+      "days": "{n} hr",
+      "kind": {
+        "report_scam": "Laporan penipuan",
+        "report": "Laporan pembeli",
+        "lead_overdue": "Prospek terlambat",
+        "listing_review": "Listing perlu ditinjau",
+        "agent_review": "Agen perlu diverifikasi",
+        "change_answered": "Agen membalas",
+        "request_review": "Kebutuhan perlu disetujui",
+        "photo_failed": "Foto gagal",
+        "invite_expiring": "Undangan hampir kedaluwarsa"
+      }
     }
   },
   "adminLegal": {
@@ -1445,7 +1472,8 @@
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
-    "pushDenied": "Notifikasi diblokir di pengaturan browser"
+    "pushDenied": "Notifikasi diblokir di pengaturan browser",
+    "emailOpen": "Buka"
   },
   "commission": {
     "title": "Perjanjian komisi & co-broke",
