@@ -140,6 +140,10 @@ export default async function NewListingPage({
     comparables: tw("comparables"),
     sellingPoints: tw("sellingPoints"),
     sellingPointsHint: tw("sellingPointsHint"),
+    // P0-d-1c: which language a generated draft is in.
+    copyEnglish: tw("copyLanguage.english"),
+    copyEnglishFallback: tw("copyLanguage.englishFallback"),
+    copyIndonesian: tw("copyLanguage.indonesian"),
   };
   for (const r of ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"]) {
     labels[`aiReason_${r}`] = tw(`aiReason.${r}` as never);

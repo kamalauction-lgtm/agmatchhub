@@ -2015,7 +2015,12 @@
         "failed": "Disusun tanpa AI — AI tidak menjawab kali ini."
       },
       "catResidentialHintMY": "Rumah teres, berkembar, kondominium, serviced residence",
-      "catCommercialHintMY": "Shoplot, kantor, pabrik, tanah"
+      "catCommercialHintMY": "Shoplot, kantor, pabrik, tanah",
+      "copyLanguage": {
+        "english": "Draf ini dalam bahasa Inggris. Periksa dan sunting sebelum menyimpan.",
+        "englishFallback": "Draf ini dalam bahasa Inggris: kalimat bahasa Melayu yang sudah ditinjau belum tersedia. Bahasa listing Anda tetap bahasa Melayu. Periksa dan sunting draf sebelum menyimpan.",
+        "indonesian": "Draf ini dalam bahasa Indonesia. Periksa dan sunting sebelum menyimpan."
+      }
     },
     "offer": {
       "cta": "Izinkan agen lain memasarkannya",
@@ -2296,7 +2301,12 @@
       "shotList": "Daftar pengambilan",
       "seconds": "{n}d"
     },
-    "planLink": "Rencanakan seminggu"
+    "planLink": "Rencanakan seminggu",
+    "copyLanguage": {
+      "english": "Draf ini dalam bahasa Inggris. Periksa dan sunting sebelum menyimpan.",
+      "englishFallback": "Draf ini dalam bahasa Inggris: kalimat bahasa Melayu yang sudah ditinjau belum tersedia. Bahasa listing Anda tetap bahasa Melayu. Periksa dan sunting draf sebelum menyimpan.",
+      "indonesian": "Draf ini dalam bahasa Indonesia. Periksa dan sunting sebelum menyimpan."
+    }
   },
   "listingStatus": {
     "draft": "Draf",

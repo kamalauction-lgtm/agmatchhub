@@ -2015,7 +2015,12 @@
         "failed": "Digubal tanpa AI — AI tidak menjawab kali ini."
       },
       "catResidentialHintMY": "Rumah teres, berkembar, kondo, servis residen",
-      "catCommercialHintMY": "Rumah kedai, pejabat, kilang, tanah"
+      "catCommercialHintMY": "Rumah kedai, pejabat, kilang, tanah",
+      "copyLanguage": {
+        "english": "Draf ini dalam bahasa Inggeris. Semak dan sunting sebelum menyimpan.",
+        "englishFallback": "Draf ini dalam bahasa Inggeris: ayat bahasa Melayu yang telah disemak belum tersedia. Bahasa penyenaraian anda kekal bahasa Melayu. Semak dan sunting draf sebelum menyimpan.",
+        "indonesian": "Draf ini dalam bahasa Indonesia. Semak dan sunting sebelum menyimpan."
+      }
     },
     "offer": {
       "cta": "Benarkan ejen lain memasarkannya",
@@ -2296,7 +2301,12 @@
       "shotList": "Senarai syot",
       "seconds": "{n}s"
     },
-    "planLink": "Rancang seminggu"
+    "planLink": "Rancang seminggu",
+    "copyLanguage": {
+      "english": "Draf ini dalam bahasa Inggeris. Semak dan sunting sebelum menyimpan.",
+      "englishFallback": "Draf ini dalam bahasa Inggeris: ayat bahasa Melayu yang telah disemak belum tersedia. Bahasa penyenaraian anda kekal bahasa Melayu. Semak dan sunting draf sebelum menyimpan.",
+      "indonesian": "Draf ini dalam bahasa Indonesia. Semak dan sunting sebelum menyimpan."
+    }
   },
   "listingStatus": {
     "draft": "Draf",

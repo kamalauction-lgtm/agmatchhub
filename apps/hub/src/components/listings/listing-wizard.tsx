@@ -117,6 +117,9 @@ export function ListingWizard({
     sellingPoints: string[];
     notes: string[];
     comparables: { n: number; medianPrice: number | null } | null;
+    /** Language of the draft (P0-d-1c): "id" | "en", and whether it differs from the listing's. */
+    copyLang?: "id" | "en";
+    copyFallback?: boolean;
   }>({ source: null, sellingPoints: [], notes: [], comparables: null });
 
   const [f, setF] = useState({
@@ -276,6 +279,8 @@ export function ListingWizard({
         sellingPoints: r.sellingPoints,
         notes: r.notesForAgent,
         comparables: r.comparables ? { n: r.comparables.n, medianPrice: r.comparables.medianPrice } : null,
+        copyLang: r.copy.lang,
+        copyFallback: r.copy.fallback,
       });
       setDescMode("ai");
     } finally {
@@ -669,6 +674,13 @@ export function ListingWizard({
                         ? t.aiSource.replace("[model]", aiMeta.model ?? "AI")
                         : (t[`aiReason_${aiMeta.reason ?? "failed"}`] ?? t.rulesSource)}
                     </p>
+                    {aiMeta.copyLang && (
+                      <p className="mt-1 font-medium text-foreground" data-copy-language={aiMeta.copyLang}>
+                        {aiMeta.copyLang === "en"
+                          ? (aiMeta.copyFallback ? t.copyEnglishFallback : t.copyEnglish)
+                          : t.copyIndonesian}
+                      </p>
+                    )}
                     {aiMeta.comparables && (
                       <p className="mt-1">
                         {t.comparables

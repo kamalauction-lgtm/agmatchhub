@@ -1,6 +1,8 @@
 "use server";
 
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { copyLanguage } from "@/lib/ai/copy-language";
+import { isTypeAllowed } from "@/lib/listings/vocabulary";
 import { requireUser } from "@/lib/authz";
 import { type WriterInput } from "@/lib/ai/listing-writer";
 import { adviseListing, type Advice } from "@/lib/ai/listing-advisor";
@@ -23,18 +25,30 @@ export async function draftListingCopy(
   input: WriterInput & { propertyTypeSlug?: string | null },
 ): Promise<DraftResult> {
   const user = await requireUser();
-  const locale = await getLocale();
   // The market comes from the agent's profile, never from the client (D8):
   // comparables are searched in that country, and copy uses its currency and unit.
   const market = await getAgentMarket(await createClient(), user.id);
+  // P0-d-1c: the draft is written in the language the listing will be stored
+  // in (the market's listing language, which createListing saves), not in
+  // the UI locale. Malay is written in English for now and flagged as such.
+  const language = market?.language ?? "id";
+  const copy = copyLanguage(language);
+  // The type label is resolved again in the copy language, so an English
+  // draft never carries the UI's Indonesian or Malay word for the type.
+  const tt = await getTranslations({ locale: copy.lang, namespace: "propertyTypes" });
+  const slug = input.propertyTypeSlug ?? "";
+  const propertyTypeLabel =
+    slug && (!market || isTypeAllowed(market.country, slug)) && tt.has(slug as never) ? tt(slug as never) : input.propertyTypeLabel;
   return draftListing(
     {
       ...input,
+      propertyTypeLabel,
+      language,
       countryCode: market?.country ?? "ID",
       currency: market?.currency ?? null,
       sizeUnit: market?.unit ?? null,
     },
-    { userId: user.id, locale },
+    { userId: user.id },
   );
 }
 

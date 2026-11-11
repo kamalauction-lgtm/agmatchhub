@@ -2015,7 +2015,12 @@
         "failed": "Drafted without AI — the AI did not answer this time."
       },
       "catResidentialHintMY": "Terrace, semi-D, condo, serviced residence",
-      "catCommercialHintMY": "Shoplot, office, factory, land"
+      "catCommercialHintMY": "Shoplot, office, factory, land",
+      "copyLanguage": {
+        "english": "This draft is in English. Review and edit it before saving.",
+        "englishFallback": "This draft is in English: reviewed Malay wording is not available yet. Your listing stays in Malay. Review and edit the draft before saving.",
+        "indonesian": "This draft is in Indonesian. Review and edit it before saving."
+      }
     },
     "offer": {
       "cta": "Let other agents market this",
@@ -2296,7 +2301,12 @@
       "shotList": "Shot list",
       "seconds": "{n}s"
     },
-    "planLink": "Plan a week"
+    "planLink": "Plan a week",
+    "copyLanguage": {
+      "english": "This draft is in English. Review and edit it before saving.",
+      "englishFallback": "This draft is in English: reviewed Malay wording is not available yet. Your listing stays in Malay. Review and edit the draft before saving.",
+      "indonesian": "This draft is in Indonesian. Review and edit it before saving."
+    }
   },
   "listingStatus": {
     "draft": "Draft",
