@@ -277,7 +277,9 @@
       "imports": "Impor berbantuan",
       "media": "Kualitas foto",
       "handover": "Serah terima",
-      "leads": "Respons prospek"
+      "leads": "Respons prospek",
+      "pipeline": "Pipeline rekrutmen",
+      "sources": "Sumber"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -576,7 +578,8 @@
       "owner": "Istilah untuk pemilik",
       "tenant": "Istilah untuk penyewa"
     },
-    "invalidFields": "Periksa isian: zona waktu harus nama IANA yang valid dan istilah maksimal 60 karakter."
+    "invalidFields": "Periksa isian: zona waktu harus nama IANA yang valid dan istilah maksimal 60 karakter.",
+    "prospectRetention": "Retensi prospek (hari, 30–730)"
   },
   "nav": {
     "dashboard": "Dasbor",
@@ -5045,7 +5048,8 @@
     },
     "supplied": "Foto dari agen (privat)",
     "suppliedNote": "Menyelesaikan permintaan ini pada listing yang tayang akan menayangkan foto yang sudah diproses; foto yang masih diproses tetap privat.",
-    "openCentre": "Buka di Pusat Kualitas Foto"
+    "openCentre": "Buka di Pusat Kualitas Foto",
+    "openReport": "Laporan serah terima →"
   },
   "adminListingReports": {
     "back": "Moderasi",
@@ -5125,5 +5129,123 @@
     "subtitle": "Semua peran AI di seluruh agen selama tujuh hari terakhir, hanya dari metadata pekerjaan. Peran yang memerlukan penyedia AI tampil tidak tersedia sampai penyedia dikonfigurasi.",
     "badge": "Hanya baca",
     "back": "← AI Workforce"
+  },
+  "adminPipeline": {
+    "back": "Agen",
+    "title": "Pipeline akuisisi agen",
+    "hint": "Agen yang ingin direkrut tim, dari kontak pertama hingga undangan. Prospek belum menyetujui apa pun, jadi setiap negara hanya menyimpannya selama periode retensi yang ditetapkan pemilik, dan setiap kartu menunjukkan kapan akan dihapus.",
+    "retentionDays": "disimpan {n} hari",
+    "retentionNotSet": "retensi belum diatur",
+    "locked": "Belum ada negara yang Anda kelola dengan periode retensi prospek. Periode ini diatur per negara di Negara (keputusan pemilik 5); sebelum itu tidak ada prospek yang dapat disimpan.",
+    "add": "Tambah prospek",
+    "addButton": "Tambah prospek",
+    "moveTo": "Pindahkan ke tahap",
+    "move": "Pindahkan",
+    "delete": "Hapus sekarang",
+    "deletesOn": "Dihapus pada {date} kecuali dihubungi lagi",
+    "fields": {
+      "country": "Negara",
+      "name": "Nama lengkap",
+      "agency": "Agensi (opsional)",
+      "phone": "Telepon (+kode negara)",
+      "email": "Email",
+      "source": "Sumber",
+      "sourceNote": "Detail sumber (opsional)",
+      "purpose": "Alasan tim menghubungi"
+    },
+    "stage": {
+      "new": "Baru",
+      "contacted": "Dihubungi",
+      "interested": "Tertarik",
+      "invited": "Diundang",
+      "declined": "Menolak",
+      "converted": "Bergabung"
+    },
+    "source": {
+      "referral": "Referensi",
+      "event": "Acara",
+      "portal_listing": "Terlihat di portal",
+      "social": "Media sosial",
+      "inbound": "Menghubungi kami",
+      "other": "Lainnya"
+    },
+    "done": {
+      "added": "Prospek ditambahkan.",
+      "stage": "Tahap diperbarui.",
+      "deleted": "Prospek dihapus."
+    },
+    "errors": {
+      "invalid": "Periksa isian dan coba lagi.",
+      "contact_required": "Berikan nomor telepon atau email.",
+      "retention_not_set": "Negara itu belum memiliki periode retensi prospek.",
+      "not_permitted": "Anda hanya dapat mengelola prospek di negara Anda.",
+      "not_found": "Prospek tidak ditemukan."
+    }
+  },
+  "adminHandoverReport": {
+    "back": "Serah terima",
+    "title": "Laporan serah terima",
+    "hint": "Kinerja onboarding terbantu di negara Anda selama 90 hari terakhir: berapa lama tim menyiapkan portofolio, berapa lama agen mengambil kendali, berapa banyak agen yang diundang aktif dalam 14 hari, dan seberapa cepat permintaan perubahan dan moderasi dijawab.",
+    "days": "hari",
+    "week": "Minggu",
+    "count": "Jumlah",
+    "medianHours": "Median (jam)",
+    "kpi": {
+      "batches": "Batch yang disiapkan",
+      "batchesSub": "{handed} diserahkan · {complete} selesai",
+      "prep": "Median waktu persiapan",
+      "review": "Median tinjauan agen",
+      "within14": "{pct} selesai dalam 14 hari setelah serah terima",
+      "activation": "Aktivasi 14 hari",
+      "activationSub": "{activated} dari {decided} agen yang diundang aktif dalam 14 hari"
+    },
+    "answerTrend": "Permintaan perubahan: waktu hingga agen menjawab",
+    "moderationTrend": "Moderasi: waktu dari listing hingga keputusan",
+    "effortTitle": "Upaya admin per listing tayang",
+    "effortLine": "{per} tindakan admin per listing tayang ({actions} tindakan pada {live} listing tayang, dari jejak audit).",
+    "effortNeedsAudit": "Ditampilkan untuk admin yang memiliki audit.view."
+  },
+  "adminSources": {
+    "title": "Sumber dan pemetaan",
+    "hint": "Asal listing yang diimpor, apakah syarat setiap sumber mengizinkan penggunaan ulang (tinjauan hukum), dan bagaimana kolomnya dipetakan ke kolom kita. Sumber yang terlihat di impor tetapi belum terdaftar ditampilkan lebih dulu.",
+    "resyncBlocked": "Sinkronisasi ulang belum tersedia: memerlukan akses ke setiap sumber eksternal dan tinjauan hukum atas syaratnya (keputusan D-7). Sampai saat itu, sumber hanya dicatat dan dipetakan; tidak ada yang diambil atau ditimpa.",
+    "seenTitle": "Terlihat di impor, belum terdaftar",
+    "seenCount": "{n, plural, other {# batch}}",
+    "registryTitle": "Sumber terdaftar",
+    "empty": "Belum ada sumber yang terdaftar.",
+    "displayName": "Nama",
+    "kind": "Jenis",
+    "country": "Negara (opsional)",
+    "register": "Daftarkan",
+    "termsReview": "Tinjauan syarat",
+    "termsNote": "Catatan tinjauan",
+    "saveTerms": "Simpan tinjauan",
+    "mapping": "Pemetaan kolom (JSON: kolom sumber → kolom platform)",
+    "saveMapping": "Simpan pemetaan",
+    "terms": {
+      "unreviewed": "Syarat belum ditinjau",
+      "allowed": "Penggunaan ulang diizinkan",
+      "agent_supplied_only": "Hanya dari agen",
+      "forbidden": "Penggunaan ulang dilarang"
+    },
+    "kinds": {
+      "portal": "Portal",
+      "partner_feed": "Feed mitra",
+      "agent_file": "File milik agen",
+      "other": "Lainnya"
+    },
+    "done": {
+      "registered": "Sumber terdaftar.",
+      "mapping": "Pemetaan disimpan.",
+      "terms": "Tinjauan syarat disimpan."
+    },
+    "errors": {
+      "invalid": "Periksa isian dan coba lagi.",
+      "exists": "Sumber itu sudah terdaftar.",
+      "not_permitted": "Anda memerlukan izin global platform.configure untuk itu.",
+      "needs_legal": "Hanya peninjau hukum (legal.publish global) yang dapat mengubah status syarat.",
+      "mapping_json": "Pemetaan bukan JSON yang valid.",
+      "mapping_shape": "Gunakan pasangan pengenal pendek, misalnya luas_tanah → landSize."
+    }
   }
 }

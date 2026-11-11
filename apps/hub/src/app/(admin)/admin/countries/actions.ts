@@ -25,6 +25,8 @@ const schema = z.object({
   termAgent: z.string().trim().max(60).regex(/^[^<>]*$/),
   termOwner: z.string().trim().max(60).regex(/^[^<>]*$/),
   termTenant: z.string().trim().max(60).regex(/^[^<>]*$/),
+  /* Screen 2 / owner decision 5: how long a recruiting prospect is kept (30–730 days; empty = not set, so no prospects can be stored). */
+  prospectRetentionDays: z.union([z.literal(""), z.coerce.number().int().min(30).max(730)]),
 });
 
 export async function updateCountry(formData: FormData) {
@@ -44,9 +46,10 @@ export async function updateCountry(formData: FormData) {
     termAgent: formData.get("termAgent") ?? "",
     termOwner: formData.get("termOwner") ?? "",
     termTenant: formData.get("termTenant") ?? "",
+    prospectRetentionDays: String(formData.get("prospectRetentionDays") ?? "").trim(),
   });
   if (!parsed.success) redirect("/admin/countries?error=invalid");
-  const { code, active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId, ingestAgreementRef, timezone, termAgent, termOwner, termTenant } = parsed.data;
+  const { code, active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId, ingestAgreementRef, timezone, termAgent, termOwner, termTenant, prospectRetentionDays } = parsed.data;
 
   const { data: before } = await supabase
     .from("countries")
@@ -61,7 +64,8 @@ export async function updateCountry(formData: FormData) {
     if (!a || a.agent_status !== "verified" || a.country_code !== code) redirect("/admin/countries?error=ingest_agent");
   }
   const prevSettings = (before?.settings ?? {}) as Record<string, unknown>;
-  const settings = { ...prevSettings, ingest: { ...((prevSettings.ingest as object) ?? {}), agent_id: ingestAgentId || null, agreement_ref: ingestAgreementRef || null } };
+  const settings: Record<string, unknown> = { ...prevSettings, ingest: { ...((prevSettings.ingest as object) ?? {}), agent_id: ingestAgentId || null, agreement_ref: ingestAgreementRef || null } };
+  if (prospectRetentionDays === "") delete settings.prospect_retention_days; else settings.prospect_retention_days = prospectRetentionDays;
   // Terminology keeps any other keys (e.g. MY licence_fields); the three terms are set or cleared.
   const terminology: Record<string, unknown> = { ...((before?.terminology as Record<string, unknown> | null) ?? {}) };
   for (const [k, v] of [["agent", termAgent], ["owner", termOwner], ["tenant", termTenant]] as const) {
@@ -87,7 +91,7 @@ export async function updateCountry(formData: FormData) {
     entityType: "country",
     entityId: code,
     previous: before ?? undefined,
-    next: { active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId: ingestAgentId || null, ingestAgreementRef: ingestAgreementRef || null, timezone: timezone || null, terminology },
+    next: { active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId: ingestAgentId || null, ingestAgreementRef: ingestAgreementRef || null, timezone: timezone || null, terminology, prospectRetentionDays: prospectRetentionDays === "" ? null : prospectRetentionDays },
   });
 
   redirect("/admin/countries?saved=" + code);

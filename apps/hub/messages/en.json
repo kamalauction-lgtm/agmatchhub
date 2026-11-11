@@ -277,7 +277,9 @@
       "imports": "Assisted import",
       "media": "Photo quality",
       "handover": "Handover",
-      "leads": "Lead response"
+      "leads": "Lead response",
+      "pipeline": "Recruiting pipeline",
+      "sources": "Sources"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -576,7 +578,8 @@
       "owner": "Term for an owner",
       "tenant": "Term for a tenant"
     },
-    "invalidFields": "Check the values: the timezone must be a valid IANA name and terms at most 60 characters."
+    "invalidFields": "Check the values: the timezone must be a valid IANA name and terms at most 60 characters.",
+    "prospectRetention": "Prospect retention (days, 30–730)"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -5045,7 +5048,8 @@
     },
     "supplied": "Photo supplied by the agent (private)",
     "suppliedNote": "Resolving this request on a live listing publishes the processed photo; one still processing stays private.",
-    "openCentre": "Open in the Photo Quality Centre"
+    "openCentre": "Open in the Photo Quality Centre",
+    "openReport": "Handover report →"
   },
   "adminListingReports": {
     "back": "Moderation",
@@ -5125,5 +5129,123 @@
     "subtitle": "Every AI role across all agents over the last seven days, from job metadata only. Roles that need an AI provider show as unavailable until one is configured.",
     "badge": "Read-only",
     "back": "← AI Workforce"
+  },
+  "adminPipeline": {
+    "back": "Agents",
+    "title": "Agent acquisition pipeline",
+    "hint": "Agents the team wants to recruit, from first contact to invitation. Prospects have not agreed to anything yet, so each country keeps them only for the retention period the owner sets, and each card shows when it will be deleted.",
+    "retentionDays": "kept {n} days",
+    "retentionNotSet": "retention not set",
+    "locked": "No country you manage has a prospect retention period yet. It is set per country on Countries (owner decision 5); until then no prospect can be stored.",
+    "add": "Add a prospect",
+    "addButton": "Add prospect",
+    "moveTo": "Move to stage",
+    "move": "Move",
+    "delete": "Delete now",
+    "deletesOn": "Deleted on {date} unless contacted again",
+    "fields": {
+      "country": "Country",
+      "name": "Full name",
+      "agency": "Agency (optional)",
+      "phone": "Phone (+country code)",
+      "email": "Email",
+      "source": "Source",
+      "sourceNote": "Source detail (optional)",
+      "purpose": "Why the team is contacting them"
+    },
+    "stage": {
+      "new": "New",
+      "contacted": "Contacted",
+      "interested": "Interested",
+      "invited": "Invited",
+      "declined": "Declined",
+      "converted": "Converted"
+    },
+    "source": {
+      "referral": "Referral",
+      "event": "Event",
+      "portal_listing": "Seen on a portal",
+      "social": "Social media",
+      "inbound": "Contacted us",
+      "other": "Other"
+    },
+    "done": {
+      "added": "Prospect added.",
+      "stage": "Stage updated.",
+      "deleted": "Prospect deleted."
+    },
+    "errors": {
+      "invalid": "Check the fields and try again.",
+      "contact_required": "Give a phone number or an email.",
+      "retention_not_set": "That country has no prospect retention period yet.",
+      "not_permitted": "You can manage prospects only in your own countries.",
+      "not_found": "That prospect was not found."
+    }
+  },
+  "adminHandoverReport": {
+    "back": "Handover",
+    "title": "Handover report",
+    "hint": "How assisted onboarding performs in your countries over the last 90 days: how long the team takes to prepare a portfolio, how long agents take to take control, how many invited agents activate within 14 days, and how fast change requests and moderation are answered.",
+    "days": "days",
+    "week": "Week of",
+    "count": "Count",
+    "medianHours": "Median (hours)",
+    "kpi": {
+      "batches": "Prepared batches",
+      "batchesSub": "{handed} handed over · {complete} complete",
+      "prep": "Median preparation time",
+      "review": "Median agent review",
+      "within14": "{pct} completed within 14 days of handover",
+      "activation": "14-day activation",
+      "activationSub": "{activated} of {decided} invited agents activated within 14 days"
+    },
+    "answerTrend": "Change requests: time to the agent's answer",
+    "moderationTrend": "Moderation: time from listing to decision",
+    "effortTitle": "Admin effort per live listing",
+    "effortLine": "{per} admin actions per live listing ({actions} actions on {live} live listings, from the audit trail).",
+    "effortNeedsAudit": "Shown to admins who hold audit.view."
+  },
+  "adminSources": {
+    "title": "Sources and mapping",
+    "hint": "Where imported listings come from, whether each source's terms allow reuse (a legal review), and how its fields map to ours. Sources seen in imports but not yet registered are listed first.",
+    "resyncBlocked": "Re-sync is not available yet: it needs access to each external source and a legal review of its terms (decision D-7). Until then, sources are recorded and mapped only; nothing is fetched or overwritten.",
+    "seenTitle": "Seen in imports, not yet registered",
+    "seenCount": "{n, plural, one {# batch} other {# batches}}",
+    "registryTitle": "Registered sources",
+    "empty": "No source is registered yet.",
+    "displayName": "Name",
+    "kind": "Kind",
+    "country": "Country (optional)",
+    "register": "Register",
+    "termsReview": "Terms review",
+    "termsNote": "Review note",
+    "saveTerms": "Save review",
+    "mapping": "Field mapping (JSON: source field → platform field)",
+    "saveMapping": "Save mapping",
+    "terms": {
+      "unreviewed": "Terms not reviewed",
+      "allowed": "Reuse allowed",
+      "agent_supplied_only": "Agent-supplied only",
+      "forbidden": "Reuse forbidden"
+    },
+    "kinds": {
+      "portal": "Portal",
+      "partner_feed": "Partner feed",
+      "agent_file": "Agent's own file",
+      "other": "Other"
+    },
+    "done": {
+      "registered": "Source registered.",
+      "mapping": "Mapping saved.",
+      "terms": "Terms review saved."
+    },
+    "errors": {
+      "invalid": "Check the fields and try again.",
+      "exists": "That source is already registered.",
+      "not_permitted": "You need a global platform.configure grant to do that.",
+      "needs_legal": "Only a legal reviewer (global legal.publish) can change the terms status.",
+      "mapping_json": "The mapping is not valid JSON.",
+      "mapping_shape": "Use pairs of short identifiers, for example luas_tanah → landSize."
+    }
   }
 }
