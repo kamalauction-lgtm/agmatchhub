@@ -1597,7 +1597,7 @@
     "intro": "Your professional identity shown to collaborating agents. Clients only ever see what you approve on your own presentations.",
     "savedNotice": "Profile saved.",
     "photo": "Professional photo",
-    "photoHint": "JPG/PNG/WebP, max 3 MB. Visible to collaborating agents.",
+    "photoHint": "JPG/PNG/WebP, max 3 MB. Visible to collaborating agents and on your public listings. It is resized and its hidden data (location, camera, editing app) is removed before it is shown.",
     "displayName": "Display name",
     "agency": "Agency & licence (from verification)",
     "mobile": "Mobile",
@@ -1648,7 +1648,8 @@
       "file_too_large": "File exceeds the size limit.",
       "upload_failed": "Upload failed. Please try again.",
       "save_failed": "Could not save. Please try again.",
-      "invalid_url": "Enter a valid http(s) link."
+      "invalid_url": "Enter a valid http(s) link.",
+      "photo_paused": "Photo uploads are paused for now. Your other changes were not saved; try again later."
     },
     "photoChoose": "Choose a photo",
     "photoChange": "Change photo",

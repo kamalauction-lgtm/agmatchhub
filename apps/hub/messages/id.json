@@ -1597,7 +1597,7 @@
     "intro": "Identitas profesional Anda yang ditampilkan ke agen mitra. Klien hanya melihat apa yang Anda setujui pada presentasi Anda sendiri.",
     "savedNotice": "Profil disimpan.",
     "photo": "Foto profesional",
-    "photoHint": "JPG/PNG/WebP, maksimal 3 MB. Terlihat oleh agen mitra.",
+    "photoHint": "JPG/PNG/WebP, maksimal 3 MB. Terlihat oleh agen mitra dan di listing publik Anda. Foto diubah ukurannya dan data tersembunyinya (lokasi, kamera, aplikasi edit) dihapus sebelum ditampilkan.",
     "displayName": "Nama tampilan",
     "agency": "Agensi & lisensi (dari verifikasi)",
     "mobile": "Ponsel",
@@ -1648,7 +1648,8 @@
       "file_too_large": "File melebihi batas ukuran.",
       "upload_failed": "Unggahan gagal. Silakan coba lagi.",
       "save_failed": "Tidak dapat menyimpan. Silakan coba lagi.",
-      "invalid_url": "Masukkan tautan http(s) yang valid."
+      "invalid_url": "Masukkan tautan http(s) yang valid.",
+      "photo_paused": "Unggah foto sedang dijeda. Perubahan lain Anda belum disimpan; coba lagi nanti."
     },
     "photoChoose": "Pilih foto",
     "photoChange": "Ganti foto",

@@ -1597,7 +1597,7 @@
     "intro": "Identiti profesional anda yang dipaparkan kepada ejen kerjasama. Pelanggan hanya melihat apa yang anda luluskan pada pembentangan anda sendiri.",
     "savedNotice": "Profil disimpan.",
     "photo": "Foto profesional",
-    "photoHint": "JPG/PNG/WebP, maksimum 3 MB. Dipaparkan kepada ejen kerjasama.",
+    "photoHint": "JPG/PNG/WebP, maksimum 3 MB. Dipaparkan kepada ejen kerjasama dan pada penyenaraian awam anda. Saiznya diubah dan data tersembunyinya (lokasi, kamera, aplikasi suntingan) dibuang sebelum dipaparkan.",
     "displayName": "Nama paparan",
     "agency": "Agensi & lesen (daripada pengesahan)",
     "mobile": "Telefon",
@@ -1648,7 +1648,8 @@
       "file_too_large": "Fail melebihi had saiz.",
       "upload_failed": "Muat naik gagal. Sila cuba lagi.",
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
-      "invalid_url": "Masukkan pautan http(s) yang sah."
+      "invalid_url": "Masukkan pautan http(s) yang sah.",
+      "photo_paused": "Muat naik foto dijeda buat masa ini. Perubahan lain anda tidak disimpan; cuba lagi kemudian."
     },
     "photoChoose": "Pilih foto",
     "photoChange": "Tukar foto",

@@ -38,7 +38,8 @@ type ImagesBinding = {
 
 type Claimed = { id: string; listing_id: string; storage_path: string; processing_attempts: number };
 
-function images(): ImagesBinding | null {
+/** The Cloudflare Images binding, or null outside the Worker (local dev, tests). */
+export function images(): ImagesBinding | null {
   try {
     const { env } = getCloudflareContext();
     return ((env as unknown as { IMAGES?: ImagesBinding }).IMAGES) ?? null;
