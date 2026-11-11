@@ -4747,11 +4747,13 @@
       "not_permitted": "Anda tidak dapat menyiapkan impor untuk agen itu.",
       "failed": "Gagal. Coba lagi.",
       "nothing_selected": "Pilih setidaknya satu item.",
-      "agent_in_control": "Agen memegang kendali atas batch ini, sehingga batch tidak dapat diubah lagi."
+      "agent_in_control": "Agen memegang kendali atas batch ini, sehingga batch tidak dapat diubah lagi.",
+      "nothing_to_set": "Pilih tipe atau jual/sewa untuk diterapkan.",
+      "type_not_in_market": "Tipe properti itu tidak tersedia di pasar agen ini."
     },
     "review": {
       "title": "Tinjauan batch",
-      "hint": "Kualitas, foto, dan setiap perubahan dalam satu tampilan. Centang item untuk melewati atau memulihkannya bersama; item yang sudah diimpor tidak dapat diubah.",
+      "hint": "Kualitas, foto, dan setiap perubahan sekilas. Centang item untuk melewati atau memulihkannya bersama-sama, atau atur tipe atau jual/sewa sekaligus; item yang sudah diimpor tidak dapat diubah.",
       "skipSelected": "Lewati yang dipilih",
       "restoreSelected": "Pulihkan yang dipilih",
       "select": "Pilih",
@@ -4788,7 +4790,12 @@
         "imported": "Diimpor",
         "failed": "Gagal",
         "skipped": "Dilewati"
-      }
+      },
+      "setType": "Atur tipe…",
+      "setListingType": "Jual atau sewa…",
+      "sale": "Dijual",
+      "rent": "Disewa",
+      "applySelected": "Terapkan ke yang dipilih"
     },
     "inControl": "Agen telah menangani semua item dan kini memegang kendali. Tim tidak dapat lagi mengubah batch ini atau listing yang dihasilkannya; moderasi tetap berjalan seperti biasa."
   },

@@ -4,7 +4,8 @@ import { getTranslations } from "next-intl/server";
 import { requireCapability } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { ImportReview } from "@/components/import/import-review";
-import { bulkItemStatus, handoverBatch } from "../actions";
+import { bulkItemFields, bulkItemStatus, handoverBatch } from "../actions";
+import { asMarketCountry, TYPES_BY_CATEGORY } from "@/lib/listings/vocabulary";
 import { itemChanges, itemQuality } from "@/lib/import/quality";
 
 /**
@@ -45,12 +46,13 @@ export default async function AdminImportBatchPage({
   const { error, done, n } = await searchParams;
   const t = await getTranslations("adminImports");
   const ti = await getTranslations("listingImport");
+  const tp = await getTranslations("propertyTypes");
   const supabase = await createClient();
 
   // RLS: only batches of agents in the admin's countries are visible at all.
   const { data: batch } = await supabase
     .from("import_batches")
-    .select("id, agent_id, acting_admin_id, source_portal, source_label, status, error, handed_over_at, imported_count, agent_review_state, profiles(display_name)")
+    .select("id, agent_id, acting_admin_id, source_portal, source_label, status, error, handed_over_at, imported_count, agent_review_state, profiles(display_name, country_code)")
     .eq("id", batchId)
     .maybeSingle();
   if (!batch) notFound();
@@ -65,7 +67,11 @@ export default async function AdminImportBatchPage({
     .eq("batch_id", batchId)
     .order("created_at", { ascending: true });
 
-  const agent = (Array.isArray(batch.profiles) ? batch.profiles[0] : batch.profiles) as { display_name: string | null } | null;
+  const agent = (Array.isArray(batch.profiles) ? batch.profiles[0] : batch.profiles) as { display_name: string | null; country_code?: string | null } | null;
+  // Screen 6 bulk editing offers only the property types of the agent's market.
+  const market = asMarketCountry(agent?.country_code);
+  const marketTypes = market ? [...new Set([...TYPES_BY_CATEGORY[market].residential, ...TYPES_BY_CATEGORY[market].commercial])] : [];
+  const typeLabel = (k: string) => (tp.has(k) ? tp(k as never) : k);
   const rows = items ?? [];
   // P1-a: committed items show the listing's own database quality score (00083).
   const listingIds = rows.map((r) => r.listing_id).filter(Boolean) as string[];
@@ -136,6 +142,22 @@ export default async function AdminImportBatchPage({
               <>
                 <button type="submit" name="status" value="skipped" className="min-h-10 cursor-pointer rounded-lg border border-line px-3 text-sm font-medium hover:border-crimson hover:text-crimson">{t("review.skipSelected")}</button>
                 <button type="submit" name="status" value="restore" className="min-h-10 cursor-pointer rounded-lg border border-line px-3 text-sm font-medium hover:border-crimson hover:text-crimson">{t("review.restoreSelected")}</button>
+                {marketTypes.length > 0 && (
+                  <span className="flex flex-wrap items-center gap-2 border-l border-line pl-2" data-bulk-edit="1">
+                    <label className="sr-only" htmlFor="bulk-type">{t("review.setType")}</label>
+                    <select id="bulk-type" name="setPropertyType" defaultValue="" className="min-h-10 rounded-lg border border-line bg-bg px-2 text-sm">
+                      <option value="">{t("review.setType")}</option>
+                      {marketTypes.map((k) => <option key={k} value={k}>{typeLabel(k)}</option>)}
+                    </select>
+                    <label className="sr-only" htmlFor="bulk-listing-type">{t("review.setListingType")}</label>
+                    <select id="bulk-listing-type" name="setListingType" defaultValue="" className="min-h-10 rounded-lg border border-line bg-bg px-2 text-sm">
+                      <option value="">{t("review.setListingType")}</option>
+                      <option value="sale">{t("review.sale")}</option>
+                      <option value="rent">{t("review.rent")}</option>
+                    </select>
+                    <button type="submit" formAction={bulkItemFields} className="min-h-10 cursor-pointer rounded-lg bg-crimson px-3 text-sm font-semibold text-white hover:bg-crimson-strong">{t("review.applySelected")}</button>
+                  </span>
+                )}
               </>
             )}
           </form>

@@ -4747,11 +4747,13 @@
       "not_permitted": "You cannot prepare imports for that agent.",
       "failed": "Could not complete that. Try again.",
       "nothing_selected": "Select at least one item.",
-      "agent_in_control": "The agent is in control of this batch, so it can no longer be edited."
+      "agent_in_control": "The agent is in control of this batch, so it can no longer be edited.",
+      "nothing_to_set": "Choose a type or sale/rent to apply.",
+      "type_not_in_market": "That property type is not offered in this agent's market."
     },
     "review": {
       "title": "Batch review",
-      "hint": "Quality, photos and every edit at a glance. Tick items to skip or restore them together; imported items cannot change.",
+      "hint": "Quality, photos and every edit at a glance. Tick items to skip or restore them together, or set their type or sale/rent in one go; imported items cannot change.",
       "skipSelected": "Skip selected",
       "restoreSelected": "Restore selected",
       "select": "Select",
@@ -4788,7 +4790,12 @@
         "imported": "Imported",
         "failed": "Failed",
         "skipped": "Skipped"
-      }
+      },
+      "setType": "Set type…",
+      "setListingType": "Sale or rent…",
+      "sale": "For sale",
+      "rent": "For rent",
+      "applySelected": "Apply to selected"
     },
     "inControl": "The agent has handled every item and is now in control. The team can no longer edit this batch or the listings it produced; moderation continues as usual."
   },

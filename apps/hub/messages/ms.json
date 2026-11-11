@@ -4747,11 +4747,13 @@
       "not_permitted": "Anda tidak boleh menyediakan import untuk ejen itu.",
       "failed": "Tidak berjaya. Cuba lagi.",
       "nothing_selected": "Pilih sekurang-kurangnya satu item.",
-      "agent_in_control": "Ejen mengawal kelompok ini, jadi ia tidak boleh diubah lagi."
+      "agent_in_control": "Ejen mengawal kelompok ini, jadi ia tidak boleh diubah lagi.",
+      "nothing_to_set": "Pilih jenis atau jual/sewa untuk digunakan.",
+      "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini."
     },
     "review": {
       "title": "Semakan kelompok",
-      "hint": "Kualiti, foto dan setiap perubahan dalam satu paparan. Tandakan item untuk melangkau atau memulihkannya bersama; item yang telah diimport tidak boleh diubah.",
+      "hint": "Kualiti, foto dan setiap suntingan sepintas lalu. Tandakan item untuk melangkau atau memulihkannya bersama, atau tetapkan jenis atau jual/sewa sekali gus; item yang telah diimport tidak boleh diubah.",
       "skipSelected": "Langkau yang dipilih",
       "restoreSelected": "Pulihkan yang dipilih",
       "select": "Pilih",
@@ -4788,7 +4790,12 @@
         "imported": "Diimport",
         "failed": "Gagal",
         "skipped": "Dilangkau"
-      }
+      },
+      "setType": "Tetapkan jenis…",
+      "setListingType": "Jual atau sewa…",
+      "sale": "Untuk dijual",
+      "rent": "Untuk disewa",
+      "applySelected": "Guna pada yang dipilih"
     },
     "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa."
   },
