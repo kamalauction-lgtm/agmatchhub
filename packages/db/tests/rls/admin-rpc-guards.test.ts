@@ -119,14 +119,28 @@ describe.skipIf(!hasEnv || !SERVICE)("admin action queues count real statuses (0
   });
 });
 
-describe.skipIf(!hasEnv || !SERVICE)("log_audit stamps the actor's role (00103)", () => {
+describe.skipIf(!hasEnv || !SERVICE)("log_audit stamps the actor's role (00103), and only the server writes it (00123)", () => {
+  it("anon and signed-in users can no longer write audit rows directly (00123)", async () => {
+    const service = createClient(URL_, SERVICE!, { auth: { persistSession: false } });
+    const agent = await saClient();
+    const marker = `test.audit_forged.${Date.now()}`;
+    const anon = anonClient();
+    expect((await anon.rpc("log_audit", { p_action: marker, p_entity_type: "test" })).error).not.toBeNull();
+    expect((await agent.rpc("log_audit", { p_action: marker, p_entity_type: "test" })).error).not.toBeNull();
+    expect((await agent.rpc("log_audit_as", { p_actor: await uid(agent), p_action: marker, p_entity_type: "test" })).error).not.toBeNull();
+    const { data } = await service.from("audit_logs").select("id").eq("action", marker);
+    expect(data ?? []).toHaveLength(0);
+  });
+
   it("an agent's own audit row cannot pass as an admin's", async () => {
     const service = createClient(URL_, SERVICE!, { auth: { persistSession: false } });
     const agent = await saClient();
     const agentId = await uid(agent);
     const marker = `test.audit_role_stamp.${Date.now()}`;
 
-    const { error } = await agent.rpc("log_audit", {
+    // The Hub writes on the agent's behalf with the verified session user (00123).
+    const { error } = await service.rpc("log_audit_as", {
+      p_actor: agentId,
       p_action: marker,
       p_entity_type: "test",
     });
@@ -193,7 +207,7 @@ describe.skipIf(!hasEnv || !SERVICE)("a country admin is confined to their count
 
   it("and its audit rows are stamped country_admin", async () => {
     const marker = `test.audit_role_stamp.scoped.${Date.now()}`;
-    await scoped.rpc("log_audit", { p_action: marker, p_entity_type: "test" });
+    await service.rpc("log_audit_as", { p_actor: await uid(scoped), p_action: marker, p_entity_type: "test" });
     const { data } = await service
       .from("audit_logs").select("actor_role").eq("action", marker).single();
     expect(data!.actor_role).toBe("country_admin");

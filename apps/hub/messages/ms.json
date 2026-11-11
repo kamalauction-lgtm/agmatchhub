@@ -561,14 +561,22 @@
       "language": "Bahasa lalai",
       "currency": "Mata wang",
       "unit": "Unit",
-      "ingestAgent": "Ejen ingest"
+      "ingestAgent": "Ejen ingest",
+      "local": "Zon waktu dan istilah"
     },
     "save": "Simpan",
     "ingestAgentNone": "— tiada —",
     "ingestAgentHint": "Profil syarikat yang disahkan, tempat draf pelayan-ke-pelayan (Hero → ingest) diletakkan bagi negara ini.",
     "ingestAgentInvalid": "Ejen ingest mesti ejen yang disahkan dari negara itu.",
     "ingestAgreementPlaceholder": "Rujukan perjanjian rakan kongsi",
-    "ingestAgreementHint": "Perjanjian bertulis yang menjadi asas penggunaan foto suapan rakan kongsi. Ia direkodkan bersama setiap foto rakan kongsi. Jika kosong, foto rakan kongsi tidak disimpan."
+    "ingestAgreementHint": "Perjanjian bertulis yang menjadi asas penggunaan foto suapan rakan kongsi. Ia direkodkan bersama setiap foto rakan kongsi. Jika kosong, foto rakan kongsi tidak disimpan.",
+    "timezone": "Zon waktu (IANA, cth. Asia/Kuala_Lumpur)",
+    "term": {
+      "agent": "Istilah untuk ejen",
+      "owner": "Istilah untuk pemilik",
+      "tenant": "Istilah untuk penyewa"
+    },
+    "invalidFields": "Semak nilai: zon waktu mesti nama IANA yang sah dan istilah maksimum 60 aksara."
   },
   "nav": {
     "dashboard": "Papan pemuka",
@@ -1591,7 +1599,19 @@
       "entity": "Entiti",
       "result": "Keputusan"
     },
-    "appendOnlyNote": "Tambah sahaja: rekod audit tidak boleh diedit atau dipadam, termasuk oleh pentadbir."
+    "appendOnlyNote": "Tambah sahaja: rekod audit tidak boleh diedit atau dipadam, termasuk oleh pentadbir.",
+    "export": "Eksport CSV",
+    "showing": "{n, plural, other {# rekod}} (terbaru dahulu, maksimum 200 dipaparkan; eksport memuatkan sehingga 5,000)",
+    "filters": {
+      "action": "Tindakan mengandungi",
+      "entity": "Jenis entiti",
+      "role": "Peranan pelaku",
+      "anyRole": "Semua peranan",
+      "result": "Keputusan",
+      "anyResult": "Semua keputusan",
+      "from": "Dari",
+      "to": "Hingga"
+    }
   },
   "disclosures": {
     "title": "Pendedahan undang-undang & material",

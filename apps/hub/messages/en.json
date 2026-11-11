@@ -561,14 +561,22 @@
       "language": "Default language",
       "currency": "Currency",
       "unit": "Unit",
-      "ingestAgent": "Ingest agent"
+      "ingestAgent": "Ingest agent",
+      "local": "Timezone and terms"
     },
     "save": "Save",
     "ingestAgentNone": "— none —",
     "ingestAgentHint": "The verified company profile that server-to-server drafts (Hero → ingest) belong to in this country.",
     "ingestAgentInvalid": "The ingest agent must be a verified agent of that country.",
     "ingestAgreementPlaceholder": "Partner agreement reference",
-    "ingestAgreementHint": "The written agreement partner-feed photos are used under. It is recorded with every partner photo. Leave empty and partner photos are not stored."
+    "ingestAgreementHint": "The written agreement partner-feed photos are used under. It is recorded with every partner photo. Leave empty and partner photos are not stored.",
+    "timezone": "Timezone (IANA, e.g. Asia/Jakarta)",
+    "term": {
+      "agent": "Term for an agent",
+      "owner": "Term for an owner",
+      "tenant": "Term for a tenant"
+    },
+    "invalidFields": "Check the values: the timezone must be a valid IANA name and terms at most 60 characters."
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -1591,7 +1599,19 @@
       "entity": "Entity",
       "result": "Result"
     },
-    "appendOnlyNote": "Append-only: audit records cannot be edited or deleted, including by administrators."
+    "appendOnlyNote": "Append-only: audit records cannot be edited or deleted, including by administrators.",
+    "export": "Export CSV",
+    "showing": "{n, plural, one {# record} other {# records}} (newest first, up to 200 shown; the export holds up to 5,000)",
+    "filters": {
+      "action": "Action contains",
+      "entity": "Entity type",
+      "role": "Actor role",
+      "anyRole": "Any role",
+      "result": "Result",
+      "anyResult": "Any result",
+      "from": "From",
+      "to": "To"
+    }
   },
   "disclosures": {
     "title": "Legal & material disclosures",

@@ -60,7 +60,7 @@ const NAV: { key: string; href: string; capability: string | null; icon: string;
 
   { key: "users", href: "/admin/users", capability: "roles.manage", icon: "◑", group: "security" },
   { key: "flags", href: "/admin/flags", capability: "platform.configure", icon: "⚙", group: "security" },
-  { key: "audit", href: "/admin/audit", capability: null, icon: "◷", group: "security" },
+  { key: "audit", href: "/admin/audit", capability: "audit.view", icon: "◷", group: "security" },
 ];
 
 /** The nine workspaces (approved plan); "main" is the Command Centre, shown without a heading. */

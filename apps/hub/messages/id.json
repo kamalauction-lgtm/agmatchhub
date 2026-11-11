@@ -561,14 +561,22 @@
       "language": "Bahasa default",
       "currency": "Mata uang",
       "unit": "Satuan",
-      "ingestAgent": "Agen ingest"
+      "ingestAgent": "Agen ingest",
+      "local": "Zona waktu dan istilah"
     },
     "save": "Simpan",
     "ingestAgentNone": "— tidak ada —",
     "ingestAgentHint": "Profil perusahaan terverifikasi tempat draf server-ke-server (Hero → ingest) dimiliki di negara ini.",
     "ingestAgentInvalid": "Agen ingest harus agen terverifikasi dari negara itu.",
     "ingestAgreementPlaceholder": "Referensi perjanjian mitra",
-    "ingestAgreementHint": "Perjanjian tertulis yang menjadi dasar penggunaan foto dari feed mitra. Dicatat pada setiap foto mitra. Jika kosong, foto mitra tidak disimpan."
+    "ingestAgreementHint": "Perjanjian tertulis yang menjadi dasar penggunaan foto dari feed mitra. Dicatat pada setiap foto mitra. Jika kosong, foto mitra tidak disimpan.",
+    "timezone": "Zona waktu (IANA, mis. Asia/Jakarta)",
+    "term": {
+      "agent": "Istilah untuk agen",
+      "owner": "Istilah untuk pemilik",
+      "tenant": "Istilah untuk penyewa"
+    },
+    "invalidFields": "Periksa isian: zona waktu harus nama IANA yang valid dan istilah maksimal 60 karakter."
   },
   "nav": {
     "dashboard": "Dasbor",
@@ -1591,7 +1599,19 @@
       "entity": "Entitas",
       "result": "Hasil"
     },
-    "appendOnlyNote": "Hanya-tambah: catatan audit tidak dapat diedit atau dihapus, termasuk oleh administrator."
+    "appendOnlyNote": "Hanya-tambah: catatan audit tidak dapat diedit atau dihapus, termasuk oleh administrator.",
+    "export": "Ekspor CSV",
+    "showing": "{n, plural, other {# catatan}} (terbaru dulu, maksimal 200 ditampilkan; ekspor memuat hingga 5.000)",
+    "filters": {
+      "action": "Aksi berisi",
+      "entity": "Jenis entitas",
+      "role": "Peran pelaku",
+      "anyRole": "Semua peran",
+      "result": "Hasil",
+      "anyResult": "Semua hasil",
+      "from": "Dari",
+      "to": "Sampai"
+    }
   },
   "disclosures": {
     "title": "Pengungkapan hukum & material",
