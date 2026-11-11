@@ -50,11 +50,14 @@ export default async function AdminImportBatchPage({
   // RLS: only batches of agents in the admin's countries are visible at all.
   const { data: batch } = await supabase
     .from("import_batches")
-    .select("id, agent_id, acting_admin_id, source_portal, source_label, status, error, handed_over_at, imported_count, profiles(display_name)")
+    .select("id, agent_id, acting_admin_id, source_portal, source_label, status, error, handed_over_at, imported_count, agent_review_state, profiles(display_name)")
     .eq("id", batchId)
     .maybeSingle();
   if (!batch) notFound();
-  const { data: canWrite } = await supabase.rpc("admin_can_import_batch", { p_batch: batchId });
+  const { data: canImport } = await supabase.rpc("admin_can_import_batch", { p_batch: batchId });
+  // P1-b-5 (00119): once the agent has handled every item the team has no edit path.
+  const inControl = (batch as { agent_review_state?: string | null } | null)?.agent_review_state === "complete";
+  const canWrite = !!canImport && !inControl;
 
   const { data: items } = await supabase
     .from("import_items")
@@ -103,6 +106,10 @@ export default async function AdminImportBatchPage({
             : ti.has(`errors.${error ?? batch.error}`) ? ti(`errors.${error ?? batch.error}` as never)
             : batch.error ?? t("errors.failed")}
         </p>
+      )}
+
+      {inControl && (
+        <p className="mb-6 max-w-2xl rounded-lg bg-success/10 px-4 py-3 text-sm text-success-ink" data-in-control="1">{t("inControl")}</p>
       )}
 
       {canWrite && batch.acting_admin_id && batch.imported_count === 0 && (

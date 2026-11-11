@@ -53,7 +53,7 @@ export default async function BatchReviewPage({
 
   const { data: batch } = await supabase
     .from("import_batches")
-    .select("id, source_portal, source_kind, source_label, status, found_count, imported_count, failed_count, error, acting_admin_id")
+    .select("id, source_portal, source_kind, source_label, status, found_count, imported_count, failed_count, error, acting_admin_id, agent_review_state")
     .eq("id", batchId)
     .eq("agent_id", user.id)
     .maybeSingle();
@@ -142,9 +142,18 @@ export default async function BatchReviewPage({
       <p className="mb-6 text-sm text-muted">
         {batch.source_portal} · {batch.source_label}
       </p>
-      {batch.acting_admin_id && (
+      {batch.acting_admin_id && batch.agent_review_state === "complete" ? (
+        <div className="mb-6 max-w-2xl rounded-lg bg-success/10 px-4 py-3 text-sm text-success-ink" data-in-control="1">
+          <p className="font-semibold">{t("inControl.title")}</p>
+          <p className="mt-1">{t("inControl.body")}</p>
+          <p className="mt-2 flex flex-wrap gap-4 font-medium">
+            <Link href="/studio" className="underline">{t("inControl.studio")}</Link>
+            <Link href="/leads" className="underline">{t("inControl.leads")}</Link>
+          </p>
+        </div>
+      ) : batch.acting_admin_id ? (
         <p className="mb-6 max-w-2xl rounded-lg bg-surface px-4 py-3 text-sm text-muted">{t("preparedNotice")}</p>
-      )}
+      ) : null}
 
       {(error || batch.error) && (
         <p className="mb-6 rounded-lg bg-warning/10 px-4 py-3 text-sm font-medium text-warning">

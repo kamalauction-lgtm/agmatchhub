@@ -1396,7 +1396,8 @@
       "listing_photo_original_requested": "Moderator meminta foto asli",
       "listing_change_answered": "Agen menjawab permintaan perubahan Anda",
       "listing_change_resolved": "Permintaan perubahan Anda telah diselesaikan",
-      "generic": "Notifikasi"
+      "generic": "Notifikasi",
+      "listing_import_handover_complete": "Kini Anda memegang kendali atas listing yang disiapkan"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -2950,6 +2951,12 @@
       "reason_unsafe_url": "Sebuah tautan foto bukan alamat web publik.",
       "reason_save_failed": "Sebuah foto tidak dapat disimpan. Coba lagi.",
       "processingFailed": "{n} foto tidak dapat diproses. Unggah foto pengganti untuk listing ini."
+    },
+    "inControl": {
+      "title": "Kini Anda memegang kendali",
+      "body": "Anda telah menangani semua listing yang disiapkan tim. Mulai sekarang hanya Anda yang dapat mengubahnya; tim hanya melakukan moderasi, seperti listing lainnya.",
+      "studio": "Buka Studio",
+      "leads": "Ke Leads"
     }
   },
   "adminUsers": {
@@ -4739,7 +4746,8 @@
       "invalid": "Periksa data lalu coba lagi.",
       "not_permitted": "Anda tidak dapat menyiapkan impor untuk agen itu.",
       "failed": "Gagal. Coba lagi.",
-      "nothing_selected": "Pilih setidaknya satu item."
+      "nothing_selected": "Pilih setidaknya satu item.",
+      "agent_in_control": "Agen memegang kendali atas batch ini, sehingga batch tidak dapat diubah lagi."
     },
     "review": {
       "title": "Tinjauan batch",
@@ -4781,7 +4789,8 @@
         "failed": "Gagal",
         "skipped": "Dilewati"
       }
-    }
+    },
+    "inControl": "Agen telah menangani semua item dan kini memegang kendali. Tim tidak dapat lagi mengubah batch ini atau listing yang dihasilkannya; moderasi tetap berjalan seperti biasa."
   },
   "adminMedia": {
     "title": "Pusat Kualitas Foto",
@@ -4898,7 +4907,8 @@
       "progress": "Kemajuan",
       "counts": "{waiting} menunggu · {imported} diimpor · {skipped} dilewati",
       "done": "Agen selesai",
-      "open": "Buka batch"
+      "open": "Buka batch",
+      "inControl": "Agen memegang kendali"
     },
     "done": {
       "change_requested": "Permintaan dikirim ke agen.",

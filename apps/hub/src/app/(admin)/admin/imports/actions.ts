@@ -22,6 +22,7 @@ export async function handoverBatch(formData: FormData): Promise<void> {
 
   const supabase = await createClient();
   const { data: agentId, error } = await supabase.rpc("admin_import_batch_handover", { p_batch: batchId });
+  if (error && /handover_lock/.test(error.message)) redirect(`/admin/imports/${batchId}?error=agent_in_control`);
   if (error || !agentId) redirect(`/admin/imports/${batchId}?error=not_permitted`);
 
   await notify({
@@ -58,6 +59,8 @@ export async function bulkItemStatus(formData: FormData): Promise<void> {
   const supabase = await createClient();
   const { data: canWrite } = await supabase.rpc("admin_can_import_batch", { p_batch: batchId });
   if (!canWrite) redirect(`/admin/imports/${batchId}?error=not_permitted`);
+  const { data: state } = await supabase.from("import_batches").select("agent_review_state").eq("id", batchId).maybeSingle();
+  if (state?.agent_review_state === "complete") redirect(`/admin/imports/${batchId}?error=agent_in_control`);
 
   const { data: items } = await supabase
     .from("import_items").select("id, status, extracted").eq("batch_id", batchId).in("id", ids);

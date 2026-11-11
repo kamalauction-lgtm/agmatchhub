@@ -1396,7 +1396,8 @@
       "listing_photo_original_requested": "A moderator asked for an original photo",
       "listing_change_answered": "An agent answered your change request",
       "listing_change_resolved": "Your change request was resolved",
-      "generic": "Notification"
+      "generic": "Notification",
+      "listing_import_handover_complete": "You are now in control of your prepared listings"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -2950,6 +2951,12 @@
       "reason_unsafe_url": "A photo link was not a public web address.",
       "reason_save_failed": "A photo could not be saved. Try again.",
       "processingFailed": "{n} photo(s) could not be processed. Upload a replacement for this listing."
+    },
+    "inControl": {
+      "title": "You are now in control",
+      "body": "You have handled every listing the team prepared. From now on only you can edit them; the team only moderates, as for any listing.",
+      "studio": "Open Studio",
+      "leads": "Go to Leads"
     }
   },
   "adminUsers": {
@@ -4739,7 +4746,8 @@
       "invalid": "Check the details and try again.",
       "not_permitted": "You cannot prepare imports for that agent.",
       "failed": "Could not complete that. Try again.",
-      "nothing_selected": "Select at least one item."
+      "nothing_selected": "Select at least one item.",
+      "agent_in_control": "The agent is in control of this batch, so it can no longer be edited."
     },
     "review": {
       "title": "Batch review",
@@ -4781,7 +4789,8 @@
         "failed": "Failed",
         "skipped": "Skipped"
       }
-    }
+    },
+    "inControl": "The agent has handled every item and is now in control. The team can no longer edit this batch or the listings it produced; moderation continues as usual."
   },
   "adminMedia": {
     "title": "Photo Quality Centre",
@@ -4898,7 +4907,8 @@
       "progress": "Progress",
       "counts": "{waiting} waiting · {imported} imported · {skipped} skipped",
       "done": "Agent finished",
-      "open": "Open batch"
+      "open": "Open batch",
+      "inControl": "Agent in control"
     },
     "done": {
       "change_requested": "Request sent to the agent.",

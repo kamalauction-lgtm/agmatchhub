@@ -74,7 +74,7 @@ export default async function HandoverPage({ searchParams }: { searchParams: Pro
   const { data: batchRows } = canSeeBatches
     ? await supabase
         .from("import_batches")
-        .select("id, source_label, handed_over_at, imported_count, profiles (display_name), import_items (status)")
+        .select("id, source_label, handed_over_at, imported_count, agent_review_state, profiles (display_name), import_items (status)")
         .not("acting_admin_id", "is", null)
         .not("handed_over_at", "is", null)
         .order("handed_over_at", { ascending: false })
@@ -181,7 +181,9 @@ export default async function HandoverPage({ searchParams }: { searchParams: Pro
                         <td className="px-3 py-2">{agent?.display_name ?? "—"}<span className="block text-xs text-muted">{b.source_label}</span></td>
                         <td className="px-3 py-2 text-xs">{t("age", { days: b.ageDays })}</td>
                         <td className="px-3 py-2 text-xs">
-                          {waiting === 0 && items.length > 0
+                          {(b as { agent_review_state?: string | null }).agent_review_state === "complete"
+                            ? <span className={`${chip} bg-success/15 text-success-ink`} data-in-control="1">{t("batches.inControl")}</span>
+                            : waiting === 0 && items.length > 0
                             ? <span className={`${chip} bg-success/15 text-success-ink`}>{t("batches.done")}</span>
                             : t("batches.counts", { waiting, imported, skipped })}
                         </td>

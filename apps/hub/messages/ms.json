@@ -1396,7 +1396,8 @@
       "listing_photo_original_requested": "Moderator meminta foto asal",
       "listing_change_answered": "Ejen menjawab permintaan perubahan anda",
       "listing_change_resolved": "Permintaan perubahan anda telah diselesaikan",
-      "generic": "Pemberitahuan"
+      "generic": "Pemberitahuan",
+      "listing_import_handover_complete": "Anda kini mengawal penyenaraian yang disediakan"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -2950,6 +2951,12 @@
       "reason_unsafe_url": "Sebuah pautan foto bukan alamat web awam.",
       "reason_save_failed": "Sebuah foto tidak dapat disimpan. Cuba lagi.",
       "processingFailed": "{n} foto tidak dapat diproses. Muat naik foto gantian untuk penyenaraian ini."
+    },
+    "inControl": {
+      "title": "Anda kini mengawal",
+      "body": "Anda telah mengendalikan setiap penyenaraian yang disediakan oleh pasukan. Mulai sekarang hanya anda yang boleh mengubahnya; pasukan hanya membuat moderasi, seperti mana-mana penyenaraian.",
+      "studio": "Buka Studio",
+      "leads": "Pergi ke Leads"
     }
   },
   "adminUsers": {
@@ -4739,7 +4746,8 @@
       "invalid": "Semak butiran dan cuba lagi.",
       "not_permitted": "Anda tidak boleh menyediakan import untuk ejen itu.",
       "failed": "Tidak berjaya. Cuba lagi.",
-      "nothing_selected": "Pilih sekurang-kurangnya satu item."
+      "nothing_selected": "Pilih sekurang-kurangnya satu item.",
+      "agent_in_control": "Ejen mengawal kelompok ini, jadi ia tidak boleh diubah lagi."
     },
     "review": {
       "title": "Semakan kelompok",
@@ -4781,7 +4789,8 @@
         "failed": "Gagal",
         "skipped": "Dilangkau"
       }
-    }
+    },
+    "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa."
   },
   "adminMedia": {
     "title": "Pusat Kualiti Foto",
@@ -4898,7 +4907,8 @@
       "progress": "Kemajuan",
       "counts": "{waiting} menunggu · {imported} diimport · {skipped} dilangkau",
       "done": "Ejen selesai",
-      "open": "Buka kelompok"
+      "open": "Buka kelompok",
+      "inControl": "Ejen mengawal"
     },
     "done": {
       "change_requested": "Permintaan dihantar kepada ejen.",
