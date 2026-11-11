@@ -13,6 +13,8 @@ import { checkListingPhotos } from "@/lib/ai/photo-check";
 import { getCompanions } from "@/lib/ai/cast";
 import { AI_REASON_KEYS } from "@/components/ai/ai-status";
 import { getLocale } from "next-intl/server";
+import { getGallery } from "@/lib/listings/gallery";
+import { GalleryEditor } from "@/components/listings/gallery-editor";
 
 /**
  * Edit a listing.
@@ -33,11 +35,11 @@ export default async function EditListingPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; gallery?: string }>;
 }) {
   const user = await requireUser();
   const { id } = await params;
-  const { error } = await searchParams;
+  const { error, gallery: galleryNotice } = await searchParams;
   const t = await getTranslations("listings");
   const supabase = await createClient();
 
@@ -70,6 +72,9 @@ export default async function EditListingPage({
     getTranslations("aiTools.translate"),
     getTranslations("aiTools"),
   ]);
+  // P0-e-3a: the gallery editor (cover, order, remove), rules in 00112.
+  const [gallery, tg] = await Promise.all([getGallery(supabase, listing.id), getTranslations("listings.edit.gallery")]);
+  const GALLERY_NOTICES = ["cover_set", "moved", "removed", "not_eligible", "not_public_yet", "bad_order", "not_found", "failed"];
   const aiReasons = Object.fromEntries(AI_REASON_KEYS.map((k) => [k, tr(`reason.${k}`)]));
   // The EN fields are the "other language" for id/ms listings; an EN listing translates into its market's language.
   const translateTarget = listing.language === "en" ? "id" : "en";
@@ -123,6 +128,18 @@ export default async function EditListingPage({
           allGood: tp("allGood"), bestCover: tp.raw("bestCover") as string, duplicateOf: tp.raw("duplicateOf") as string, summary: tp("summary"),
           rule: { low_res: tp("rule.low_res"), tiny_file: tp("rule.tiny_file"), duplicate: tp("rule.duplicate") },
           issue: Object.fromEntries(["blur", "dark", "face", "plate", "document", "watermark", "not_property", "other"].map((k) => [k, tp(`issue.${k}` as never)])),
+        }}
+      />
+
+      <GalleryEditor
+        listingId={listing.id}
+        items={gallery}
+        published={listing.status === "published"}
+        labels={{
+          title: tg("title"), hint: tg("hint"), empty: tg("empty"), cover: tg("cover"), makeCover: tg("makeCover"),
+          moveUp: tg("moveUp"), moveDown: tg("moveDown"), remove: tg("remove"), removeImportedNote: tg("removeImportedNote"),
+          state: Object.fromEntries(["pending", "processing", "processed", "ready", "failed", "quarantined"].map((k) => [k, tg(`state.${k}` as never)])),
+          notice: galleryNotice && GALLERY_NOTICES.includes(galleryNotice) ? tg(`notice.${galleryNotice}` as never) : undefined,
         }}
       />
 

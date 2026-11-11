@@ -2087,6 +2087,35 @@
       "errors": {
         "invalid": "Please check the highlighted fields.",
         "save_failed": "That did not save. Please try again."
+      },
+      "gallery": {
+        "title": "Photos",
+        "hint": "Choose the cover, change the order or remove a photo. Changes apply straight away and do not send a published listing back for review. To add photos, use the listing wizard or import.",
+        "empty": "No photos yet.",
+        "cover": "Cover",
+        "makeCover": "Make cover",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "remove": "Remove",
+        "removeImportedNote": "Removes it from this listing. The original you imported is kept privately as a record of where it came from.",
+        "state": {
+          "pending": "Waiting to be processed",
+          "processing": "Being processed",
+          "processed": "Processed, awaiting approval",
+          "ready": "Live",
+          "failed": "Could not be processed",
+          "quarantined": "Kept out by a moderator"
+        },
+        "notice": {
+          "cover_set": "Cover updated.",
+          "moved": "Order updated.",
+          "removed": "Photo removed.",
+          "not_eligible": "That photo cannot be the cover.",
+          "not_public_yet": "On a published listing the cover must be a live photo.",
+          "bad_order": "The order could not be saved. Please try again.",
+          "not_found": "That photo was not found.",
+          "failed": "Something went wrong. Please try again."
+        }
       }
     },
     "importCta": "Import my listings",

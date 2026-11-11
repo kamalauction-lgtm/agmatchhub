@@ -76,7 +76,11 @@ export default async function ListingModerationPage({
   if (scope) query = query.in("properties.country_code", scope);
   const { data } = await query;
 
-  const rows = (data ?? []) as unknown as QueueRow[];
+  // Photos the agent removed (00112) are kept as evidence but are not part of the listing.
+  const rows = ((data ?? []) as unknown as QueueRow[]).map((r) => ({
+    ...r,
+    listing_media: r.listing_media.filter((m) => m.processing_state !== "removed"),
+  }));
 
   // Processed imported photos are private until approval (00109): preview them
   // through short-lived signed links, which the 00108 policy grants only to

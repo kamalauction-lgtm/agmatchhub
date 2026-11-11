@@ -2087,6 +2087,35 @@
       "errors": {
         "invalid": "Mohon periksa kolom yang ditandai.",
         "save_failed": "Gagal menyimpan. Silakan coba lagi."
+      },
+      "gallery": {
+        "title": "Foto",
+        "hint": "Pilih foto sampul, ubah urutan, atau hapus foto. Perubahan langsung berlaku dan tidak mengirim listing yang sudah tayang kembali untuk ditinjau. Untuk menambah foto, gunakan wizard listing atau impor.",
+        "empty": "Belum ada foto.",
+        "cover": "Sampul",
+        "makeCover": "Jadikan sampul",
+        "moveUp": "Naikkan",
+        "moveDown": "Turunkan",
+        "remove": "Hapus",
+        "removeImportedNote": "Menghapusnya dari listing ini. Foto asli yang Anda impor tetap disimpan secara privat sebagai catatan asal-usulnya.",
+        "state": {
+          "pending": "Menunggu diproses",
+          "processing": "Sedang diproses",
+          "processed": "Sudah diproses, menunggu persetujuan",
+          "ready": "Tayang",
+          "failed": "Tidak dapat diproses",
+          "quarantined": "Ditahan oleh moderator"
+        },
+        "notice": {
+          "cover_set": "Sampul diperbarui.",
+          "moved": "Urutan diperbarui.",
+          "removed": "Foto dihapus.",
+          "not_eligible": "Foto itu tidak bisa dijadikan sampul.",
+          "not_public_yet": "Pada listing yang tayang, sampul harus foto yang sudah tayang.",
+          "bad_order": "Urutan tidak dapat disimpan. Silakan coba lagi.",
+          "not_found": "Foto tidak ditemukan.",
+          "failed": "Terjadi kesalahan. Silakan coba lagi."
+        }
       }
     },
     "importCta": "Tarik listing saya",

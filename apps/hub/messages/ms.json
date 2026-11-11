@@ -2087,6 +2087,35 @@
       "errors": {
         "invalid": "Sila semak medan yang ditandakan.",
         "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
+      },
+      "gallery": {
+        "title": "Foto",
+        "hint": "Pilih foto muka depan, ubah susunan atau buang foto. Perubahan berkuat kuasa serta-merta dan tidak menghantar penyenaraian yang telah diterbitkan untuk disemak semula. Untuk menambah foto, gunakan wizard penyenaraian atau import.",
+        "empty": "Belum ada foto.",
+        "cover": "Muka depan",
+        "makeCover": "Jadikan muka depan",
+        "moveUp": "Naikkan",
+        "moveDown": "Turunkan",
+        "remove": "Buang",
+        "removeImportedNote": "Membuangnya daripada penyenaraian ini. Foto asal yang anda import disimpan secara peribadi sebagai rekod asal usulnya.",
+        "state": {
+          "pending": "Menunggu diproses",
+          "processing": "Sedang diproses",
+          "processed": "Telah diproses, menunggu kelulusan",
+          "ready": "Diterbitkan",
+          "failed": "Tidak dapat diproses",
+          "quarantined": "Ditahan oleh moderator"
+        },
+        "notice": {
+          "cover_set": "Muka depan dikemas kini.",
+          "moved": "Susunan dikemas kini.",
+          "removed": "Foto dibuang.",
+          "not_eligible": "Foto itu tidak boleh dijadikan muka depan.",
+          "not_public_yet": "Bagi penyenaraian yang diterbitkan, muka depan mesti foto yang telah diterbitkan.",
+          "bad_order": "Susunan tidak dapat disimpan. Sila cuba lagi.",
+          "not_found": "Foto tidak ditemui.",
+          "failed": "Sesuatu tidak kena. Sila cuba lagi."
+        }
       }
     },
     "importCta": "Tarik senarai saya",
