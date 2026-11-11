@@ -13,6 +13,9 @@ export function notificationTitle(kind: string, locale: string): string {
   return (
     dict.notificationsPage.kinds[key] ??
     dicts.en.notificationsPage.kinds[key] ??
-    "IQI AG MatchHub"
+    // D10: never a hard-coded brand name; a neutral, translated fallback.
+    dict.notificationsPage.kinds.generic ??
+    dicts.en.notificationsPage.kinds.generic ??
+    "Notification"
   );
 }

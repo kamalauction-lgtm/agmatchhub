@@ -275,7 +275,8 @@
       "whatsapp": "WhatsApp",
       "invitations": "Undangan",
       "imports": "Impor berbantuan",
-      "media": "Kualitas foto"
+      "media": "Kualitas foto",
+      "handover": "Serah terima"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -1390,7 +1391,12 @@
       "task_due": "Ada tugas yang jatuh tempo",
       "viewing_soon": "Kunjungan segera dimulai",
       "whatsapp_received": "Pesan WhatsApp masuk di salah satu lead Anda",
-      "listing_import_prepared": "Listing siap Anda tinjau"
+      "listing_import_prepared": "Listing siap Anda tinjau",
+      "listing_change_requested": "Moderator meminta perubahan pada listing Anda",
+      "listing_photo_original_requested": "Moderator meminta foto asli",
+      "listing_change_answered": "Agen menjawab permintaan perubahan Anda",
+      "listing_change_resolved": "Permintaan perubahan Anda telah diselesaikan",
+      "generic": "Notifikasi"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -2170,6 +2176,42 @@
       "prohibited_content": "Tidak diizinkan di marketplace",
       "other": "Lainnya (lihat catatan)",
       "resubmitHint": "Sunting listing untuk memperbaikinya; menyimpan akan mengirimnya kembali untuk ditinjau."
+    },
+    "changes": {
+      "title": "Perubahan yang diminta",
+      "hint": "Moderasi meminta ini sebelum listing dapat tayang, atau agar tetap tayang. Balas di sini; perbaiki listing di bawah lalu simpan.",
+      "kind": {
+        "correction": "Perbaikan",
+        "photo_original": "Foto asli"
+      },
+      "field": {
+        "title": "Judul",
+        "description": "Deskripsi",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Detail properti",
+        "photos": "Foto",
+        "other": "Lainnya"
+      },
+      "status": {
+        "open": "Menunggu agen",
+        "answered": "Agen menjawab",
+        "resolved": "Selesai",
+        "withdrawn": "Ditarik"
+      },
+      "yourAnswer": "Jawaban Anda",
+      "placeholder": "Balasan Anda untuk moderator",
+      "send": "Kirim balasan",
+      "update": "Perbarui balasan",
+      "badge": "{n} perubahan diminta",
+      "notice": {
+        "answered": "Balasan dikirim ke moderator.",
+        "invalid": "Tulis balasan terlebih dahulu.",
+        "closed": "Permintaan ini sudah ditutup.",
+        "answer_required": "Tulis balasan terlebih dahulu.",
+        "not_found": "Permintaan tidak ditemukan.",
+        "failed": "Tidak berhasil. Coba lagi."
+      }
     }
   },
   "studio": {
@@ -2437,7 +2479,11 @@
       "not_moderatable": "Listing ini tidak sedang menunggu tinjauan.",
       "update_failed": "Pembaruan gagal. Coba lagi.",
       "self_prepared": "Anda yang menyiapkan impor listing ini, jadi admin lain harus menyetujuinya.",
-      "bulk_empty": "Pilih setidaknya satu listing."
+      "bulk_empty": "Pilih setidaknya satu listing.",
+      "change_invalid": "Tulis pesan singkat untuk agen.",
+      "body_required": "Tulis pesan singkat untuk agen.",
+      "not_open": "Listing ini tidak dapat menerima permintaan sekarang.",
+      "closed": "Permintaan ini sudah ditutup."
     },
     "photos": {
       "title": "Foto impor (privat sampai Anda setujui)",
@@ -2526,6 +2572,29 @@
       "prev": "Sebelumnya",
       "next": "Berikutnya",
       "of": "Halaman {page} dari {pages}"
+    },
+    "changes": {
+      "request": "Minta perubahan saja",
+      "kind": "Yang dibutuhkan",
+      "field": "Bagian mana",
+      "message": "Pesan untuk agen",
+      "placeholder": "mis. mohon konfirmasi luas tanah; harga tampak kurang satu nol",
+      "send": "Kirim permintaan",
+      "sent": "Permintaan dikirim ke agen. Listing tetap di antrean ini.",
+      "count": "{open} terbuka, {answered} dijawab",
+      "kinds": {
+        "correction": "Perbaikan",
+        "photo_original": "Foto asli"
+      },
+      "fields": {
+        "title": "Judul",
+        "description": "Deskripsi",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Detail properti",
+        "photos": "Foto",
+        "other": "Lainnya"
+      }
     }
   },
   "plans": {
@@ -4763,5 +4832,71 @@
     "retryAt": "Percobaan {n} gagal; dicoba lagi {at} UTC",
     "release": "Lepaskan",
     "retry": "Proses ulang"
+  },
+  "adminHandover": {
+    "title": "Serah terima",
+    "intro": "Apa yang diminta moderasi untuk diubah atau dilengkapi agen, jawaban mereka, dan batch yang disiapkan untuk agen beserta kemajuannya.",
+    "requests": {
+      "title": "Permintaan perubahan",
+      "view": {
+        "open": "Terbuka",
+        "closed": "Ditutup"
+      },
+      "empty": {
+        "open": "Tidak ada permintaan perubahan yang terbuka.",
+        "closed": "Belum ada permintaan perubahan yang ditutup."
+      }
+    },
+    "status": {
+      "open": "Menunggu agen",
+      "answered": "Agen menjawab",
+      "resolved": "Selesai",
+      "withdrawn": "Ditarik"
+    },
+    "kind": {
+      "correction": "Perbaikan",
+      "photo_original": "Foto asli"
+    },
+    "field": {
+      "title": "Judul",
+      "description": "Deskripsi",
+      "price": "Harga",
+      "location": "Lokasi",
+      "property_details": "Detail properti",
+      "photos": "Foto",
+      "other": "Lainnya"
+    },
+    "age": "{days} hari lalu",
+    "asked": "Diminta",
+    "answered": "Jawaban",
+    "resolve": "Selesaikan",
+    "withdraw": "Tarik",
+    "openListing": "Buka di moderasi",
+    "batches": {
+      "title": "Batch yang disiapkan",
+      "hint": "Impor berbantuan yang diserahkan ke agen. Menyimpan tetap tindakan agen.",
+      "empty": "Belum ada batch yang diserahkan.",
+      "agent": "Agen",
+      "handedOver": "Diserahkan",
+      "progress": "Kemajuan",
+      "counts": "{waiting} menunggu · {imported} diimpor · {skipped} dilewati",
+      "done": "Agen selesai",
+      "open": "Buka batch"
+    },
+    "done": {
+      "change_requested": "Permintaan dikirim ke agen.",
+      "change_resolved": "Ditandai selesai. Agen telah diberi tahu.",
+      "change_withdrawn": "Permintaan ditarik.",
+      "ok": "Selesai."
+    },
+    "errors": {
+      "update_failed": "Tidak berhasil. Coba lagi.",
+      "not_found": "Tidak ditemukan.",
+      "closed": "Permintaan ini sudah ditutup.",
+      "invalid": "Permintaan tidak valid.",
+      "change_invalid": "Tulis pesan singkat untuk agen.",
+      "body_required": "Tulis pesan singkat untuk agen.",
+      "not_open": "Listing ini tidak dapat menerima permintaan sekarang."
+    }
   }
 }

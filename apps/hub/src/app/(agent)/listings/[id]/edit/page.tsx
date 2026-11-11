@@ -15,6 +15,7 @@ import { AI_REASON_KEYS } from "@/components/ai/ai-status";
 import { getLocale } from "next-intl/server";
 import { getGallery } from "@/lib/listings/gallery";
 import { GalleryEditor } from "@/components/listings/gallery-editor";
+import { answerChange } from "./change-actions";
 
 /**
  * Edit a listing.
@@ -35,11 +36,11 @@ export default async function EditListingPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ error?: string; gallery?: string }>;
+  searchParams: Promise<{ error?: string; gallery?: string; changes?: string }>;
 }) {
   const user = await requireUser();
   const { id } = await params;
-  const { error, gallery: galleryNotice } = await searchParams;
+  const { error, gallery: galleryNotice, changes: changesNotice } = await searchParams;
   const t = await getTranslations("listings");
   const supabase = await createClient();
 
@@ -74,6 +75,10 @@ export default async function EditListingPage({
   ]);
   // P0-e-3a: the gallery editor (cover, order, remove), rules in 00112.
   const [gallery, tg] = await Promise.all([getGallery(supabase, listing.id), getTranslations("listings.edit.gallery")]);
+  const [{ data: changeReqs }, tc] = await Promise.all([
+    supabase.from("listing_change_requests").select("id, kind, field, body, status, answer").eq("listing_id", listing.id).in("status", ["open", "answered"]).order("opened_at"),
+    getTranslations("listings.changes"),
+  ]);
   const GALLERY_NOTICES = ["cover_set", "moved", "removed", "not_eligible", "not_public_yet", "bad_order", "not_found", "failed"];
   const aiReasons = Object.fromEntries(AI_REASON_KEYS.map((k) => [k, tr(`reason.${k}`)]));
   // The EN fields are the "other language" for id/ms listings; an EN listing translates into its market's language.
@@ -130,6 +135,30 @@ export default async function EditListingPage({
           issue: Object.fromEntries(["blur", "dark", "face", "plate", "document", "watermark", "not_property", "other"].map((k) => [k, tp(`issue.${k}` as never)])),
         }}
       />
+
+      {/* P1-b: what moderation asked the agent to change (00115). */}
+      {(changeReqs ?? []).length > 0 && (
+        <section id="changes" className="mb-8 rounded-xl border border-warning/40 bg-warning/5 p-4" aria-labelledby="changes-title">
+          <h2 id="changes-title" className="text-lg font-semibold">{tc("title")}</h2>
+          <p className="mt-1 text-sm text-muted">{tc("hint")}</p>
+          {changesNotice && <p className="mt-2 rounded-lg bg-surface px-3 py-2 text-sm" role="status">{tc.has(`notice.${changesNotice}` as never) ? tc(`notice.${changesNotice}` as never) : tc("notice.failed")}</p>}
+          <ul className="mt-3 space-y-3">
+            {(changeReqs ?? []).map((r) => (
+              <li key={r.id} className="rounded-lg border border-line bg-background p-3" data-request={r.id} data-status={r.status}>
+                <p className="text-xs font-semibold text-muted">{tc(`kind.${r.kind}` as never)}{r.field ? ` · ${tc(`field.${r.field}` as never)}` : ""} · {tc(`status.${r.status}` as never)}</p>
+                <p className="mt-1 text-sm">{r.body}</p>
+                {r.answer && <p className="mt-2 rounded bg-surface px-2 py-1 text-sm"><strong className="text-xs text-muted">{tc("yourAnswer")}:</strong> {r.answer}</p>}
+                <form action={answerChange} className="mt-2 flex flex-col gap-2 sm:flex-row">
+                  <input type="hidden" name="listingId" value={listing.id} />
+                  <input type="hidden" name="requestId" value={r.id} />
+                  <input name="answer" required maxLength={2000} placeholder={tc("placeholder")} className="min-w-0 flex-1 rounded-lg border border-line bg-background px-3 py-2 text-sm" />
+                  <button className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">{r.answer ? tc("update") : tc("send")}</button>
+                </form>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <GalleryEditor
         listingId={listing.id}

@@ -275,7 +275,8 @@
       "whatsapp": "WhatsApp",
       "invitations": "Jemputan",
       "imports": "Import berbantu",
-      "media": "Kualiti foto"
+      "media": "Kualiti foto",
+      "handover": "Serahan"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -1390,7 +1391,12 @@
       "task_due": "Satu tugas perlu dibuat",
       "viewing_soon": "Lawatan bermula tidak lama lagi",
       "whatsapp_received": "Mesej WhatsApp tiba pada salah satu lead anda",
-      "listing_import_prepared": "Penyenaraian sedia untuk anda semak"
+      "listing_import_prepared": "Penyenaraian sedia untuk anda semak",
+      "listing_change_requested": "Moderator meminta perubahan pada penyenaraian anda",
+      "listing_photo_original_requested": "Moderator meminta foto asal",
+      "listing_change_answered": "Ejen menjawab permintaan perubahan anda",
+      "listing_change_resolved": "Permintaan perubahan anda telah diselesaikan",
+      "generic": "Pemberitahuan"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -2170,6 +2176,42 @@
       "prohibited_content": "Tidak dibenarkan di pasaran",
       "other": "Lain-lain (lihat nota)",
       "resubmitHint": "Sunting penyenaraian untuk membetulkannya; menyimpan akan menghantarnya semula untuk disemak."
+    },
+    "changes": {
+      "title": "Perubahan diminta",
+      "hint": "Moderasi meminta ini sebelum penyenaraian boleh diterbitkan, atau untuk kekal diterbitkan. Balas di sini; betulkan penyenaraian di bawah dan simpan.",
+      "kind": {
+        "correction": "Pembetulan",
+        "photo_original": "Foto asal"
+      },
+      "field": {
+        "title": "Tajuk",
+        "description": "Penerangan",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Butiran hartanah",
+        "photos": "Foto",
+        "other": "Lain-lain"
+      },
+      "status": {
+        "open": "Menunggu ejen",
+        "answered": "Ejen menjawab",
+        "resolved": "Selesai",
+        "withdrawn": "Ditarik balik"
+      },
+      "yourAnswer": "Jawapan anda",
+      "placeholder": "Balasan anda kepada moderator",
+      "send": "Hantar balasan",
+      "update": "Kemas kini balasan",
+      "badge": "{n} perubahan diminta",
+      "notice": {
+        "answered": "Balasan dihantar kepada moderator.",
+        "invalid": "Tulis balasan dahulu.",
+        "closed": "Permintaan ini sudah ditutup.",
+        "answer_required": "Tulis balasan dahulu.",
+        "not_found": "Permintaan tidak ditemui.",
+        "failed": "Tidak berjaya. Cuba lagi."
+      }
     }
   },
   "studio": {
@@ -2437,7 +2479,11 @@
       "not_moderatable": "Iklan ini tidak menunggu semakan.",
       "update_failed": "Kemas kini gagal. Cuba lagi.",
       "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya.",
-      "bulk_empty": "Pilih sekurang-kurangnya satu penyenaraian."
+      "bulk_empty": "Pilih sekurang-kurangnya satu penyenaraian.",
+      "change_invalid": "Tulis mesej ringkas untuk ejen.",
+      "body_required": "Tulis mesej ringkas untuk ejen.",
+      "not_open": "Penyenaraian ini tidak boleh menerima permintaan sekarang.",
+      "closed": "Permintaan ini sudah ditutup."
     },
     "photos": {
       "title": "Foto import (peribadi sehingga anda luluskan)",
@@ -2526,6 +2572,29 @@
       "prev": "Sebelumnya",
       "next": "Seterusnya",
       "of": "Halaman {page} daripada {pages}"
+    },
+    "changes": {
+      "request": "Minta perubahan sahaja",
+      "kind": "Apa yang diperlukan",
+      "field": "Bahagian mana",
+      "message": "Mesej kepada ejen",
+      "placeholder": "cth. sila sahkan keluasan tanah; harga kelihatan kurang satu sifar",
+      "send": "Hantar permintaan",
+      "sent": "Permintaan dihantar kepada ejen. Penyenaraian kekal dalam baris gilir ini.",
+      "count": "{open} terbuka, {answered} dijawab",
+      "kinds": {
+        "correction": "Pembetulan",
+        "photo_original": "Foto asal"
+      },
+      "fields": {
+        "title": "Tajuk",
+        "description": "Penerangan",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Butiran hartanah",
+        "photos": "Foto",
+        "other": "Lain-lain"
+      }
     }
   },
   "plans": {
@@ -4763,5 +4832,71 @@
     "retryAt": "Cubaan {n} gagal; cuba lagi {at} UTC",
     "release": "Lepaskan",
     "retry": "Proses semula"
+  },
+  "adminHandover": {
+    "title": "Serahan",
+    "intro": "Apa yang diminta moderasi untuk diubah atau dibekalkan oleh ejen, jawapan mereka, dan kelompok yang disediakan untuk ejen bersama kemajuannya.",
+    "requests": {
+      "title": "Permintaan perubahan",
+      "view": {
+        "open": "Terbuka",
+        "closed": "Ditutup"
+      },
+      "empty": {
+        "open": "Tiada permintaan perubahan terbuka.",
+        "closed": "Belum ada permintaan perubahan ditutup."
+      }
+    },
+    "status": {
+      "open": "Menunggu ejen",
+      "answered": "Ejen menjawab",
+      "resolved": "Selesai",
+      "withdrawn": "Ditarik balik"
+    },
+    "kind": {
+      "correction": "Pembetulan",
+      "photo_original": "Foto asal"
+    },
+    "field": {
+      "title": "Tajuk",
+      "description": "Penerangan",
+      "price": "Harga",
+      "location": "Lokasi",
+      "property_details": "Butiran hartanah",
+      "photos": "Foto",
+      "other": "Lain-lain"
+    },
+    "age": "{days} hari lalu",
+    "asked": "Diminta",
+    "answered": "Jawapan",
+    "resolve": "Selesaikan",
+    "withdraw": "Tarik balik",
+    "openListing": "Buka dalam moderasi",
+    "batches": {
+      "title": "Kelompok disediakan",
+      "hint": "Import berbantu yang diserahkan kepada ejen. Menyimpan kekal tindakan ejen.",
+      "empty": "Belum ada kelompok diserahkan.",
+      "agent": "Ejen",
+      "handedOver": "Diserahkan",
+      "progress": "Kemajuan",
+      "counts": "{waiting} menunggu · {imported} diimport · {skipped} dilangkau",
+      "done": "Ejen selesai",
+      "open": "Buka kelompok"
+    },
+    "done": {
+      "change_requested": "Permintaan dihantar kepada ejen.",
+      "change_resolved": "Ditanda selesai. Ejen telah dimaklumkan.",
+      "change_withdrawn": "Permintaan ditarik balik.",
+      "ok": "Selesai."
+    },
+    "errors": {
+      "update_failed": "Tidak berjaya. Cuba lagi.",
+      "not_found": "Tidak ditemui.",
+      "closed": "Permintaan ini sudah ditutup.",
+      "invalid": "Permintaan tidak sah.",
+      "change_invalid": "Tulis mesej ringkas untuk ejen.",
+      "body_required": "Tulis mesej ringkas untuk ejen.",
+      "not_open": "Penyenaraian ini tidak boleh menerima permintaan sekarang."
+    }
   }
 }

@@ -275,7 +275,8 @@
       "whatsapp": "WhatsApp",
       "invitations": "Invitations",
       "imports": "Assisted import",
-      "media": "Photo quality"
+      "media": "Photo quality",
+      "handover": "Handover"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -1390,7 +1391,12 @@
       "task_due": "A task is due",
       "viewing_soon": "A viewing starts soon",
       "whatsapp_received": "A WhatsApp message arrived on one of your leads",
-      "listing_import_prepared": "Listings are ready for you to review"
+      "listing_import_prepared": "Listings are ready for you to review",
+      "listing_change_requested": "A moderator asked for a change to your listing",
+      "listing_photo_original_requested": "A moderator asked for an original photo",
+      "listing_change_answered": "An agent answered your change request",
+      "listing_change_resolved": "Your change request was resolved",
+      "generic": "Notification"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -2170,6 +2176,42 @@
       "prohibited_content": "Not allowed on the marketplace",
       "other": "Other (see note)",
       "resubmitHint": "Edit the listing to fix this; saving sends it back for review."
+    },
+    "changes": {
+      "title": "Changes requested",
+      "hint": "Moderation asked for these before the listing can go live, or to keep it live. Reply here; fix the listing below and save.",
+      "kind": {
+        "correction": "Correction",
+        "photo_original": "Original photo"
+      },
+      "field": {
+        "title": "Title",
+        "description": "Description",
+        "price": "Price",
+        "location": "Location",
+        "property_details": "Property details",
+        "photos": "Photos",
+        "other": "Other"
+      },
+      "status": {
+        "open": "Waiting for the agent",
+        "answered": "Agent answered",
+        "resolved": "Resolved",
+        "withdrawn": "Withdrawn"
+      },
+      "yourAnswer": "Your answer",
+      "placeholder": "Your reply to the moderator",
+      "send": "Send reply",
+      "update": "Update reply",
+      "badge": "{n, plural, one {# change requested} other {# changes requested}}",
+      "notice": {
+        "answered": "Reply sent to the moderator.",
+        "invalid": "Write a reply first.",
+        "closed": "This request was already closed.",
+        "answer_required": "Write a reply first.",
+        "not_found": "Request not found.",
+        "failed": "That did not work. Try again."
+      }
     }
   },
   "studio": {
@@ -2437,7 +2479,11 @@
       "not_moderatable": "This listing is not awaiting review.",
       "update_failed": "Update failed. Try again.",
       "self_prepared": "You prepared this listing's import, so another admin must approve it.",
-      "bulk_empty": "Select at least one listing."
+      "bulk_empty": "Select at least one listing.",
+      "change_invalid": "Write a short message for the agent.",
+      "body_required": "Write a short message for the agent.",
+      "not_open": "This listing cannot take requests now.",
+      "closed": "This request is already closed."
     },
     "photos": {
       "title": "Imported photos (private until you approve)",
@@ -2526,6 +2572,29 @@
       "prev": "Previous",
       "next": "Next",
       "of": "Page {page} of {pages}"
+    },
+    "changes": {
+      "request": "Request a change instead",
+      "kind": "What you need",
+      "field": "Which part",
+      "message": "Message to the agent",
+      "placeholder": "e.g. please confirm the land size; the price looks one zero short",
+      "send": "Send request",
+      "sent": "Request sent to the agent. The listing stays in this queue.",
+      "count": "{open} open, {answered} answered change request(s)",
+      "kinds": {
+        "correction": "Correction",
+        "photo_original": "Original photo"
+      },
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "price": "Price",
+        "location": "Location",
+        "property_details": "Property details",
+        "photos": "Photos",
+        "other": "Other"
+      }
     }
   },
   "plans": {
@@ -4763,5 +4832,71 @@
     "retryAt": "Attempt {n} failed; next try {at} UTC",
     "release": "Release",
     "retry": "Retry"
+  },
+  "adminHandover": {
+    "title": "Handover",
+    "intro": "What moderation has asked agents to change or supply, their answers, and the batches prepared for agents with how far each has got.",
+    "requests": {
+      "title": "Change requests",
+      "view": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "empty": {
+        "open": "No open change requests.",
+        "closed": "No closed change requests yet."
+      }
+    },
+    "status": {
+      "open": "Waiting for the agent",
+      "answered": "Agent answered",
+      "resolved": "Resolved",
+      "withdrawn": "Withdrawn"
+    },
+    "kind": {
+      "correction": "Correction",
+      "photo_original": "Original photo"
+    },
+    "field": {
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "location": "Location",
+      "property_details": "Property details",
+      "photos": "Photos",
+      "other": "Other"
+    },
+    "age": "{days, plural, one {# day ago} other {# days ago}}",
+    "asked": "Asked",
+    "answered": "Answer",
+    "resolve": "Resolve",
+    "withdraw": "Withdraw",
+    "openListing": "Open in moderation",
+    "batches": {
+      "title": "Prepared batches",
+      "hint": "Assisted imports handed to agents. Committing stays the agent's act.",
+      "empty": "No batches handed over yet.",
+      "agent": "Agent",
+      "handedOver": "Handed over",
+      "progress": "Progress",
+      "counts": "{waiting} waiting · {imported} imported · {skipped} skipped",
+      "done": "Agent finished",
+      "open": "Open batch"
+    },
+    "done": {
+      "change_requested": "Request sent to the agent.",
+      "change_resolved": "Marked resolved. The agent has been told.",
+      "change_withdrawn": "Request withdrawn.",
+      "ok": "Done."
+    },
+    "errors": {
+      "update_failed": "That did not work. Try again.",
+      "not_found": "Not found.",
+      "closed": "This request is already closed.",
+      "invalid": "Invalid request.",
+      "change_invalid": "Write a short message for the agent.",
+      "body_required": "Write a short message for the agent.",
+      "not_open": "This listing cannot take requests now."
+    }
   }
 }

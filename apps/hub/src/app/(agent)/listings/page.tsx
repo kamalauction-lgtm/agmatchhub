@@ -101,7 +101,8 @@ export default async function MyListingsPage({
         `id, human_readable_id, title, slug, listing_type, status, moderation_reason, moderation_reason_code,
          price, currency, rent_period,
          properties (regency_name, province_name, bedrooms, bathrooms, building_size, land_size),
-         listing_boosts (ends_at, status)`
+         listing_boosts (ends_at, status),
+         listing_change_requests (status)`
       )
       .eq("agent_id", user.id)
       .order("created_at", { ascending: false }),
@@ -292,6 +293,14 @@ export default async function MyListingsPage({
                       {money(l.currency, l.price, l.rent_period)}
                     </p>
 
+                    {(() => {
+                      const n = ((l as unknown as { listing_change_requests?: { status: string }[] }).listing_change_requests ?? []).filter((c) => c.status === "open").length;
+                      return n > 0 ? (
+                        <a href={`/listings/${l.id}/edit#changes`} className="mt-2 inline-block rounded-full bg-warning/15 px-2.5 py-1 text-xs font-semibold text-warning" data-open-changes={n}>
+                          {t("changes.badge", { n })}
+                        </a>
+                      ) : null;
+                    })()}
                     {l.status === "rejected" && (l.moderation_reason || l.moderation_reason_code) && (
                       <p className="mt-2 max-w-lg rounded-lg bg-danger/5 px-3 py-2 text-xs text-muted" data-reason-code={l.moderation_reason_code ?? ""}>
                         {l.moderation_reason_code && t.has(`rejection.${l.moderation_reason_code}` as never) && (

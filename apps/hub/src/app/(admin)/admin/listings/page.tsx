@@ -8,6 +8,7 @@ import { unitSuffix } from "@/lib/listings/vocabulary";
 import { REJECTION_CODES, photoStatus, summarisePhotos, type PhotoRow } from "@/lib/listings/moderation";
 import { rightsBasis, type ProvenanceFacts } from "@/lib/media/rights";
 import { moderateBulk, moderateListing, quarantinePhoto } from "./actions";
+import { requestChange } from "../handover/actions";
 
 /**
  * Marketplace listing moderation (§28 step 7; P1-a, storyboard screen 9).
@@ -119,6 +120,16 @@ export default async function ListingModerationPage({
       : Promise.resolve({ data: [] as { media_id: string; consent_record_id: string | null; licence_note: string | null }[] }),
   ]);
   const qualityOf = new Map((quality ?? []).map((q) => [q.listing_id, q]));
+  // P1-b: open change requests per listing (00115, RLS-scoped).
+  const { data: openReqs } = ids.length
+    ? await supabase.from("listing_change_requests").select("listing_id, status").in("listing_id", ids).in("status", ["open", "answered"])
+    : { data: [] as { listing_id: string; status: string }[] };
+  const reqCount = new Map<string, { open: number; answered: number }>();
+  for (const r of openReqs ?? []) {
+    const c = reqCount.get(r.listing_id) ?? { open: 0, answered: 0 };
+    if (r.status === "answered") c.answered++; else c.open++;
+    reqCount.set(r.listing_id, c);
+  }
   const provOf = new Map<string, ProvenanceFacts>((prov ?? []).map((p) => [p.media_id, p]));
 
   // Processed imported photos are private until approval (00109): preview them
@@ -142,7 +153,7 @@ export default async function ListingModerationPage({
   const doneText =
     sp.done === "bulk"
       ? t("bulk.done", { ok: Number(sp.ok) || 0, skipped: Number(sp.skipped) || 0 })
-      : sp.done === "approve" ? t("approved") : sp.done === "quarantined" ? t("quarantined") : sp.done === "reject" ? t("rejected") : null;
+      : sp.done === "approve" ? t("approved") : sp.done === "quarantined" ? t("quarantined") : sp.done === "reject" ? t("rejected") : sp.done === "change_requested" ? t("changes.sent") : null;
   const why = (sp.why ?? "").split(",").filter(Boolean).map((x) => x.split(":")).filter(([k]) => t.has(`errors.${k}` as never));
 
   return (
@@ -273,6 +284,13 @@ export default async function ListingModerationPage({
                         {t("photos.willPublish", { publish: summary.willPublish, total: summary.total })}
                       </p>
                     )}
+                    {reqCount.has(l.id) && (
+                      <p className="mt-2 text-xs" data-change-requests={reqCount.get(l.id)!.open + reqCount.get(l.id)!.answered}>
+                        <Link href="/admin/handover" className="font-medium text-crimson hover:underline">
+                          {t("changes.count", { open: reqCount.get(l.id)!.open, answered: reqCount.get(l.id)!.answered })}
+                        </Link>
+                      </p>
+                    )}
                     {tab !== "pending_review" && l.moderation_reason_code && (
                       <p className="mt-2 rounded-lg bg-danger/5 px-3 py-2 text-xs">
                         <strong>{codeLabel(l.moderation_reason_code)}</strong>{l.moderation_reason ? ` — ${l.moderation_reason}` : ""}
@@ -313,6 +331,29 @@ export default async function ListingModerationPage({
                       <Link href={`/admin/media?listing=${l.id}`} className="mt-1 inline-block text-xs font-medium text-crimson hover:underline">{t("photos.openCentre")}</Link>
                     </div>
                   )}
+                  <details className="rounded-lg border border-line bg-background p-3" data-request-change={l.id}>
+                    <summary className="cursor-pointer text-sm font-medium">{t("changes.request")}</summary>
+                    <form action={requestChange} className="mt-3 grid gap-2 sm:grid-cols-[auto_auto_1fr_auto] sm:items-end">
+                      <input type="hidden" name="listingId" value={l.id} />
+                      <input type="hidden" name="back" value={here} />
+                      <label className="text-xs font-semibold">{t("changes.kind")}
+                        <select name="kind" className={select} defaultValue="correction">
+                          <option value="correction">{t("changes.kinds.correction")}</option>
+                          <option value="photo_original">{t("changes.kinds.photo_original")}</option>
+                        </select>
+                      </label>
+                      <label className="text-xs font-semibold">{t("changes.field")}
+                        <select name="field" className={select} defaultValue="">
+                          <option value="">—</option>
+                          {["title", "description", "price", "location", "property_details", "photos", "other"].map((f) => <option key={f} value={f}>{t(`changes.fields.${f}` as never)}</option>)}
+                        </select>
+                      </label>
+                      <label className="text-xs font-semibold">{t("changes.message")}
+                        <input name="body" required minLength={3} maxLength={2000} className={select} placeholder={t("changes.placeholder")} />
+                      </label>
+                      <button type="submit" className="rounded-lg border border-crimson px-4 py-2.5 text-sm font-semibold text-crimson hover:bg-crimson-soft">{t("changes.send")}</button>
+                    </form>
+                  </details>
                   {tab !== "rejected" && (
                     <form action={moderateListing} className="grid gap-2 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
                       <input type="hidden" name="listingId" value={l.id} />
