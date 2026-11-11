@@ -17,6 +17,8 @@
 --      looked up here, never taken from the caller.
 --
 --   3. audit.view (global grants only) gates reading audit_logs; see below.
+--   4. The three 00112 gallery functions run as owner (they called log_audit
+--      with the caller's privileges); see below.
 --
 -- Requires 00122 (has_global_capability).
 --
@@ -78,3 +80,17 @@ on conflict do nothing;
 drop policy if exists "audit read admin" on public.audit_logs;
 create policy "audit read admin" on public.audit_logs
   for select to authenticated using (public.has_global_capability('audit.view'));
+-- -----------------------------------------------------------------------------
+-- 4. The three gallery functions from 00112 ran as SECURITY INVOKER, so their
+--    log_audit call ran with the agent's own privileges, which item 1
+--    removes. They now run as the owner (like the other 23 audited functions).
+--    Each one already checks owns_listing() on the target listing before it
+--    writes, and every write is confined to that listing, so dropping RLS from
+--    their own path does not widen what a caller can touch. auth.uid() is still
+--    the caller, so the 00119 lock and the 00110 intake guard see the agent.
+--    (Found by CI on #33: listing-gallery.test.ts.)
+-- -----------------------------------------------------------------------------
+
+alter function public.listing_media_set_cover(uuid) security definer set search_path = public;
+alter function public.listing_media_reorder(uuid, uuid[]) security definer set search_path = public;
+alter function public.listing_media_remove(uuid) security definer set search_path = public;
