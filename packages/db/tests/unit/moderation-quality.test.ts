@@ -15,6 +15,9 @@ describe("rights evidence", () => {
     expect(rightsBasis(intake, { consent_record_id: null, licence_note: "partner_agreement:HERO-2026-01" })).toBe("partner_agreement");
     expect(rightsBasis(intake, { consent_record_id: null, licence_note: "partner_agreement:" })).toBe("missing");
     expect(rightsBasis(intake, { consent_record_id: null, licence_note: "fixture" })).toBe("missing");
+    // P1-b-2: a photo the agent supplied privately on a change request.
+    expect(rightsBasis(intake, { consent_record_id: null, licence_note: "agent_upload:request:0b3f3c1e-9c1a-4c55-9a0b-4f0f2a1d2c3e" })).toBe("agent_supplied");
+    expect(rightsBasis(intake, { consent_record_id: null, licence_note: "agent_upload:request:not-an-id" })).toBe("missing");
     expect(agreementRef({ consent_record_id: null, licence_note: "partner_agreement:HERO-2026-01" })).toBe("HERO-2026-01");
   });
 });

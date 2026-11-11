@@ -2210,7 +2210,22 @@
         "closed": "Permintaan ini sudah ditutup.",
         "answer_required": "Tulis balasan dahulu.",
         "not_found": "Permintaan tidak ditemui.",
-        "failed": "Tidak berjaya. Cuba lagi."
+        "failed": "Tidak berjaya. Cuba lagi.",
+        "photo_supplied": "Foto dimuat naik. Ia kekal peribadi sehingga moderator meluluskannya.",
+        "photo_already": "Foto ini telah pun dihantar.",
+        "photo_required": "Pilih foto dahulu.",
+        "photo_too_large": "Fail itu melebihi 10 MB.",
+        "not_image": "Fail itu bukan foto JPEG, PNG atau WebP.",
+        "save_failed": "Foto tidak dapat disimpan. Cuba lagi.",
+        "not_photo_request": "Permintaan ini tidak meminta foto.",
+        "bad_path": "Foto tidak dapat disimpan. Cuba lagi.",
+        "bad_hash": "Foto tidak dapat disimpan. Cuba lagi."
+      },
+      "photo": {
+        "label": "Muat naik foto",
+        "note": "Nota pilihan kepada moderator",
+        "hint": "JPEG, PNG atau WebP, sehingga 10 MB. Ia kekal peribadi: diproses (data lokasi dan kamera dibuang) dan hanya diterbitkan selepas moderator meluluskannya.",
+        "send": "Muat naik foto"
       }
     }
   },
@@ -4818,7 +4833,8 @@
       "partner_agreement": "Perjanjian rakan kongsi",
       "agent_upload": "Muat naik ejen",
       "missing": "Tiada rekod hak",
-      "missingNote": "Tanpa rekod hak, foto ini tidak pernah diterbitkan."
+      "missingNote": "Tanpa rekod hak, foto ini tidak pernah diterbitkan.",
+      "agent_supplied": "Dihantar oleh ejen atas permintaan"
     },
     "rule": {
       "low_res": "Resolusi rendah",
@@ -4887,7 +4903,8 @@
       "change_requested": "Permintaan dihantar kepada ejen.",
       "change_resolved": "Ditanda selesai. Ejen telah dimaklumkan.",
       "change_withdrawn": "Permintaan ditarik balik.",
-      "ok": "Selesai."
+      "ok": "Selesai.",
+      "change_resolved_published": "Selesai, dan foto ejen yang telah diproses kini diterbitkan."
     },
     "errors": {
       "update_failed": "Tidak berjaya. Cuba lagi.",
@@ -4897,6 +4914,9 @@
       "change_invalid": "Tulis mesej ringkas untuk ejen.",
       "body_required": "Tulis mesej ringkas untuk ejen.",
       "not_open": "Penyenaraian ini tidak boleh menerima permintaan sekarang."
-    }
+    },
+    "supplied": "Foto daripada ejen (peribadi)",
+    "suppliedNote": "Menyelesaikan permintaan ini pada penyenaraian yang diterbitkan akan menerbitkan foto yang telah diproses; foto yang masih diproses kekal peribadi.",
+    "openCentre": "Buka di Pusat Kualiti Foto"
   }
 }

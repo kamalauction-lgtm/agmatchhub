@@ -2210,7 +2210,22 @@
         "closed": "This request was already closed.",
         "answer_required": "Write a reply first.",
         "not_found": "Request not found.",
-        "failed": "That did not work. Try again."
+        "failed": "That did not work. Try again.",
+        "photo_supplied": "Photo uploaded. It stays private until a moderator approves it.",
+        "photo_already": "This photo was already supplied.",
+        "photo_required": "Choose a photo first.",
+        "photo_too_large": "That file is larger than 10 MB.",
+        "not_image": "That file is not a JPEG, PNG or WebP photo.",
+        "save_failed": "The photo could not be saved. Try again.",
+        "not_photo_request": "This request does not ask for a photo.",
+        "bad_path": "The photo could not be saved. Try again.",
+        "bad_hash": "The photo could not be saved. Try again."
+      },
+      "photo": {
+        "label": "Upload the photo",
+        "note": "Optional note to the moderator",
+        "hint": "JPEG, PNG or WebP, up to 10 MB. It stays private: it is processed (location and camera data removed) and goes live only when a moderator approves it.",
+        "send": "Upload photo"
       }
     }
   },
@@ -4818,7 +4833,8 @@
       "partner_agreement": "Partner agreement",
       "agent_upload": "Agent upload",
       "missing": "No rights record",
-      "missingNote": "Without a rights record this photo is never published."
+      "missingNote": "Without a rights record this photo is never published.",
+      "agent_supplied": "Supplied by the agent on request"
     },
     "rule": {
       "low_res": "Low resolution",
@@ -4887,7 +4903,8 @@
       "change_requested": "Request sent to the agent.",
       "change_resolved": "Marked resolved. The agent has been told.",
       "change_withdrawn": "Request withdrawn.",
-      "ok": "Done."
+      "ok": "Done.",
+      "change_resolved_published": "Resolved, and the agent's processed photo is now live."
     },
     "errors": {
       "update_failed": "That did not work. Try again.",
@@ -4897,6 +4914,9 @@
       "change_invalid": "Write a short message for the agent.",
       "body_required": "Write a short message for the agent.",
       "not_open": "This listing cannot take requests now."
-    }
+    },
+    "supplied": "Photo supplied by the agent (private)",
+    "suppliedNote": "Resolving this request on a live listing publishes the processed photo; one still processing stays private.",
+    "openCentre": "Open in the Photo Quality Centre"
   }
 }

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
 import { closeChange } from "./actions";
+import { photoStatus } from "@/lib/listings/moderation";
 
 /**
  * Handover (P1-b, storyboard screen 14).
@@ -44,6 +45,31 @@ export default async function HandoverPage({ searchParams }: { searchParams: Pro
     .order(view === "open" ? "opened_at" : "closed_at", { ascending: view === "open" })
     .limit(100);
   const rows = withAges((reqs ?? []) as unknown as Req[], "opened_at");
+
+  // P1-b-2: photos the agent supplied on a request (00116), privately previewed.
+  const keys = rows.filter((r) => r.kind === "photo_original").map((r) => `change-request:${r.id}`);
+  const { data: supplied } = keys.length
+    ? await supabase.from("listing_media_source")
+        .select("page_url, listing_media (id, processing_state, processing_error, storage_path, derived_thumb_path)")
+        .in("page_url", keys)
+    : { data: [] as { page_url: string; listing_media: unknown }[] };
+  const photosOf = new Map<string, { id: string; state: string; error: string | null; path: string }[]>();
+  for (const s of supplied ?? []) {
+    const m = (Array.isArray(s.listing_media) ? s.listing_media[0] : s.listing_media) as
+      { id: string; processing_state: string; processing_error: string | null; storage_path: string; derived_thumb_path: string | null } | null;
+    if (!m || m.processing_state === "removed") continue;
+    const reqId = String(s.page_url).replace("change-request:", "");
+    const list = photosOf.get(reqId) ?? [];
+    list.push({ id: m.id, state: m.processing_state, error: m.processing_error, path: (m.derived_thumb_path ?? m.storage_path).replace("listing-media-intake/", "") });
+    photosOf.set(reqId, list);
+  }
+  const allPhotos = [...photosOf.values()].flat();
+  const previews = new Map<string, string>();
+  if (allPhotos.length) {
+    const { data: signed } = await supabase.storage.from("listing-media-intake").createSignedUrls(allPhotos.map((p) => p.path), 600);
+    (signed ?? []).forEach((x, i) => { if (x.signedUrl) previews.set(allPhotos[i].id, x.signedUrl); });
+  }
+  const tl = await getTranslations("adminListings");
 
   const { data: batchRows } = canSeeBatches
     ? await supabase
@@ -95,6 +121,23 @@ export default async function HandoverPage({ searchParams }: { searchParams: Pro
                 <p className="mt-1 text-sm font-medium">{r.listings?.title}</p>
                 <p className="mt-2 rounded-lg bg-surface px-3 py-2 text-sm"><strong className="text-xs text-muted">{t("asked")}:</strong> {r.body}</p>
                 {r.answer && <p className="mt-2 rounded-lg bg-success/5 px-3 py-2 text-sm"><strong className="text-xs text-muted">{t("answered")}:</strong> {r.answer}</p>}
+                {(photosOf.get(r.id) ?? []).length > 0 && (
+                  <div className="mt-2" data-supplied={photosOf.get(r.id)!.length}>
+                    <p className="text-xs font-semibold text-muted">{t("supplied")}</p>
+                    <ul className="mt-1 flex flex-wrap gap-3">
+                      {photosOf.get(r.id)!.map((p) => (
+                        <li key={p.id} className="w-28 text-xs" data-media={p.id} data-status={photoStatus({ processing_state: p.state, processing_error: p.error })}>
+                          {previews.has(p.id)
+                            // eslint-disable-next-line @next/next/no-img-element -- short-lived signed URL of a private photo
+                            ? <img src={previews.get(p.id)} alt="" className="h-20 w-28 rounded object-cover" />
+                            : <div className="grid h-20 w-28 place-items-center rounded bg-surface text-muted">—</div>}
+                          <span className="mt-0.5 block text-muted">{tl(`photoStatus.${photoStatus({ processing_state: p.state, processing_error: p.error })}` as never)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-1 text-xs text-muted">{t("suppliedNote")} <Link href={`/admin/media?listing=${r.listing_id}&view=all`} className="font-medium text-crimson hover:underline">{t("openCentre")}</Link></p>
+                  </div>
+                )}
                 {view === "open" && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     <form action={closeChange}>

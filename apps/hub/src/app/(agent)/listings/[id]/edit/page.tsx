@@ -15,7 +15,7 @@ import { AI_REASON_KEYS } from "@/components/ai/ai-status";
 import { getLocale } from "next-intl/server";
 import { getGallery } from "@/lib/listings/gallery";
 import { GalleryEditor } from "@/components/listings/gallery-editor";
-import { answerChange } from "./change-actions";
+import { answerChange, uploadRequestPhoto } from "./change-actions";
 
 /**
  * Edit a listing.
@@ -154,6 +154,18 @@ export default async function EditListingPage({
                   <input name="answer" required maxLength={2000} placeholder={tc("placeholder")} className="min-w-0 flex-1 rounded-lg border border-line bg-background px-3 py-2 text-sm" />
                   <button className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">{r.answer ? tc("update") : tc("send")}</button>
                 </form>
+                {r.kind === "photo_original" && (
+                  // P1-b-2 (owner decision): the photo goes private, through the processor, and is published by moderation.
+                  <form action={uploadRequestPhoto} className="mt-3 rounded-lg border border-dashed border-line p-3" data-photo-upload={r.id}>
+                    <input type="hidden" name="listingId" value={listing.id} />
+                    <input type="hidden" name="requestId" value={r.id} />
+                    <label className="block text-xs font-semibold" htmlFor={`ph-${r.id}`}>{tc("photo.label")}</label>
+                    <input id={`ph-${r.id}`} type="file" name="photo" required accept="image/jpeg,image/png,image/webp" className="mt-1 block w-full text-sm" />
+                    <input name="answer" maxLength={2000} placeholder={tc("photo.note")} className="mt-2 w-full rounded-lg border border-line bg-background px-3 py-2 text-sm" />
+                    <p className="mt-1 text-xs text-muted">{tc("photo.hint")}</p>
+                    <button className="mt-2 rounded-lg border border-crimson px-4 py-2 text-sm font-semibold text-crimson hover:bg-crimson-soft">{tc("photo.send")}</button>
+                  </form>
+                )}
               </li>
             ))}
           </ul>

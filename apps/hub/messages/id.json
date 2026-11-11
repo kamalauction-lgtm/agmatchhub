@@ -2210,7 +2210,22 @@
         "closed": "Permintaan ini sudah ditutup.",
         "answer_required": "Tulis balasan terlebih dahulu.",
         "not_found": "Permintaan tidak ditemukan.",
-        "failed": "Tidak berhasil. Coba lagi."
+        "failed": "Tidak berhasil. Coba lagi.",
+        "photo_supplied": "Foto diunggah. Foto tetap privat hingga disetujui moderator.",
+        "photo_already": "Foto ini sudah pernah dikirim.",
+        "photo_required": "Pilih foto terlebih dahulu.",
+        "photo_too_large": "File lebih besar dari 10 MB.",
+        "not_image": "File ini bukan foto JPEG, PNG, atau WebP.",
+        "save_failed": "Foto tidak dapat disimpan. Coba lagi.",
+        "not_photo_request": "Permintaan ini tidak meminta foto.",
+        "bad_path": "Foto tidak dapat disimpan. Coba lagi.",
+        "bad_hash": "Foto tidak dapat disimpan. Coba lagi."
+      },
+      "photo": {
+        "label": "Unggah foto",
+        "note": "Catatan opsional untuk moderator",
+        "hint": "JPEG, PNG, atau WebP, hingga 10 MB. Foto tetap privat: diproses (data lokasi dan kamera dihapus) dan baru tayang setelah disetujui moderator.",
+        "send": "Unggah foto"
       }
     }
   },
@@ -4818,7 +4833,8 @@
       "partner_agreement": "Perjanjian mitra",
       "agent_upload": "Unggahan agen",
       "missing": "Tanpa catatan hak",
-      "missingNote": "Tanpa catatan hak, foto ini tidak pernah ditayangkan."
+      "missingNote": "Tanpa catatan hak, foto ini tidak pernah ditayangkan.",
+      "agent_supplied": "Dikirim agen atas permintaan"
     },
     "rule": {
       "low_res": "Resolusi rendah",
@@ -4887,7 +4903,8 @@
       "change_requested": "Permintaan dikirim ke agen.",
       "change_resolved": "Ditandai selesai. Agen telah diberi tahu.",
       "change_withdrawn": "Permintaan ditarik.",
-      "ok": "Selesai."
+      "ok": "Selesai.",
+      "change_resolved_published": "Selesai, dan foto agen yang sudah diproses kini tayang."
     },
     "errors": {
       "update_failed": "Tidak berhasil. Coba lagi.",
@@ -4897,6 +4914,9 @@
       "change_invalid": "Tulis pesan singkat untuk agen.",
       "body_required": "Tulis pesan singkat untuk agen.",
       "not_open": "Listing ini tidak dapat menerima permintaan sekarang."
-    }
+    },
+    "supplied": "Foto dari agen (privat)",
+    "suppliedNote": "Menyelesaikan permintaan ini pada listing yang tayang akan menayangkan foto yang sudah diproses; foto yang masih diproses tetap privat.",
+    "openCentre": "Buka di Pusat Kualitas Foto"
   }
 }

@@ -6,6 +6,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability } from "@/lib/authz";
 import { notify } from "@/lib/notifications";
+import { publishProcessedPhotos } from "@/lib/media/publish";
 
 /**
  * Change requests, moderator side (P1-b, screen 14). Each is one 00115
@@ -61,9 +62,26 @@ export async function closeChange(formData: FormData): Promise<void> {
   const p = closeSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!p.success) to(undefined, "error", "change_invalid");
   const supabase = await createClient();
+  // Read before closing (RLS: only requests in the moderator's countries are visible).
+  const { data: before } = await supabase
+    .from("listing_change_requests").select("listing_id, kind, listings (status)").eq("id", p.data.requestId).maybeSingle();
   const { data, error } = await supabase.rpc("admin_close_change", { p_request: p.data.requestId, p_outcome: p.data.outcome });
   const r = data as { ok?: boolean; error?: string; agent?: string } | null;
   if (error || !r?.ok) to(p.data.back, "error", r?.error ?? "update_failed");
+  // P1-b-2: resolving an original-photo request on a LIVE listing publishes the
+  // agent's processed photo — the moderator's act, after the database checked
+  // their country. Only processed photos with rights evidence are copied
+  // (lib/media/publish.ts); one still processing stays private until a later
+  // approval. Listings awaiting review publish on approval as before.
+  let published = 0;
+  const listingStatus = (Array.isArray(before?.listings) ? before?.listings[0] : before?.listings) as { status?: string } | null | undefined;
+  if (p.data.outcome === "resolved" && before?.kind === "photo_original" && listingStatus?.status === "published") {
+    try {
+      published = (await publishProcessedPhotos(before.listing_id)).published;
+    } catch (e) {
+      console.error("[change request] photo publish failed:", e instanceof Error ? e.message : e);
+    }
+  }
   if (p.data.outcome === "resolved" && r?.agent) {
     try {
       await notify({ userId: r.agent, kind: "listing.change_resolved", payload: {}, href: "/listings" });
@@ -72,5 +90,5 @@ export async function closeChange(formData: FormData): Promise<void> {
     }
   }
   revalidatePath("/admin/handover");
-  to(p.data.back, "done", `change_${p.data.outcome}`);
+  to(p.data.back, "done", published > 0 ? "change_resolved_published" : `change_${p.data.outcome}`);
 }

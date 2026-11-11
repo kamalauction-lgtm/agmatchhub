@@ -5,6 +5,8 @@
  *                      listing-import authority consent (P0-e-1a)
  *   partner_agreement  a partner-feed photo recorded under the written partner
  *                      agreement (P0-e-3b, licence_note "partner_agreement:<ref>")
+ *   agent_supplied     a photo the agent supplied privately on a moderator's
+ *                      change request (P1-b-2, licence_note "agent_upload:request:<id>")
  *   agent_upload       a photo the agent uploaded through the wizard; there is
  *                      no provenance row by design
  *   missing            an imported or partner photo with no usable record —
@@ -14,7 +16,7 @@
  * publication and by unit tests.
  */
 
-export type RightsBasis = "import_authority" | "partner_agreement" | "agent_upload" | "missing";
+export type RightsBasis = "import_authority" | "partner_agreement" | "agent_supplied" | "agent_upload" | "missing";
 
 export type ProvenanceFacts = { consent_record_id: string | null; licence_note: string | null } | null | undefined;
 
@@ -24,6 +26,7 @@ export function rightsBasis(storagePath: string, provenance: ProvenanceFacts): R
   if (provenance.consent_record_id) return "import_authority";
   const note = provenance.licence_note ?? "";
   if (/^partner_agreement:\S/.test(note)) return "partner_agreement";
+  if (/^agent_upload:request:[0-9a-f-]{36}$/.test(note)) return "agent_supplied";
   return "missing";
 }
 
