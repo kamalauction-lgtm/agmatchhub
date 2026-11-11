@@ -276,7 +276,8 @@
       "invitations": "Invitations",
       "imports": "Assisted import",
       "media": "Photo quality",
-      "handover": "Handover"
+      "handover": "Handover",
+      "leads": "Lead response"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -4974,5 +4975,34 @@
       "offensive": "Inappropriate content",
       "other": "Other"
     }
+  },
+  "adminLeads": {
+    "title": "Lead response times",
+    "hint": "How fast agents answer buyer inquiries in your countries. A lead is on time when it is answered before its due time. No buyer contact details are shown here.",
+    "period": "Period",
+    "lastDays": "Last {n} days",
+    "minutes": "{n} min",
+    "hours": "{n} h",
+    "days": "{n} d",
+    "kpi": {
+      "leads": "Leads",
+      "onTime": "Answered on time",
+      "median": "Median first answer",
+      "overdue": "Overdue now"
+    },
+    "byAgent": "By agent",
+    "empty": "No leads in this period.",
+    "cols": {
+      "agent": "Agent",
+      "leads": "Leads",
+      "answered": "Answered",
+      "onTime": "On time",
+      "median": "Median",
+      "overdue": "Overdue"
+    },
+    "overdueTitle": "Waiting past their due time",
+    "overdueHint": "Unanswered leads, the longest overdue first.",
+    "noOverdue": "Nothing is overdue.",
+    "lateBy": "{time} late"
   }
 }

@@ -276,7 +276,8 @@
       "invitations": "Jemputan",
       "imports": "Import berbantu",
       "media": "Kualiti foto",
-      "handover": "Serahan"
+      "handover": "Serahan",
+      "leads": "Respons prospek"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -4974,5 +4975,34 @@
       "offensive": "Kandungan tidak sesuai",
       "other": "Lain-lain"
     }
+  },
+  "adminLeads": {
+    "title": "Masa respons prospek",
+    "hint": "Seberapa pantas ejen menjawab pertanyaan pembeli di negara anda. Prospek dikira tepat pada masanya apabila dijawab sebelum tarikh akhirnya. Butiran hubungan pembeli tidak dipaparkan di sini.",
+    "period": "Tempoh",
+    "lastDays": "{n} hari terakhir",
+    "minutes": "{n} min",
+    "hours": "{n} jam",
+    "days": "{n} hari",
+    "kpi": {
+      "leads": "Prospek",
+      "onTime": "Dijawab tepat pada masa",
+      "median": "Median jawapan pertama",
+      "overdue": "Lewat sekarang"
+    },
+    "byAgent": "Mengikut ejen",
+    "empty": "Tiada prospek dalam tempoh ini.",
+    "cols": {
+      "agent": "Ejen",
+      "leads": "Prospek",
+      "answered": "Dijawab",
+      "onTime": "Tepat masa",
+      "median": "Median",
+      "overdue": "Lewat"
+    },
+    "overdueTitle": "Menunggu melepasi tarikh akhir",
+    "overdueHint": "Prospek yang belum dijawab, yang paling lama lewat dahulu.",
+    "noOverdue": "Tiada yang lewat.",
+    "lateBy": "lewat {time}"
   }
 }

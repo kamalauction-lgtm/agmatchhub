@@ -276,7 +276,8 @@
       "invitations": "Undangan",
       "imports": "Impor berbantuan",
       "media": "Kualitas foto",
-      "handover": "Serah terima"
+      "handover": "Serah terima",
+      "leads": "Respons prospek"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -4974,5 +4975,34 @@
       "offensive": "Konten tidak pantas",
       "other": "Lainnya"
     }
+  },
+  "adminLeads": {
+    "title": "Waktu respons prospek",
+    "hint": "Seberapa cepat agen menjawab pertanyaan pembeli di negara Anda. Prospek dianggap tepat waktu bila dijawab sebelum tenggatnya. Kontak pembeli tidak ditampilkan di sini.",
+    "period": "Periode",
+    "lastDays": "{n} hari terakhir",
+    "minutes": "{n} mnt",
+    "hours": "{n} jam",
+    "days": "{n} hr",
+    "kpi": {
+      "leads": "Prospek",
+      "onTime": "Dijawab tepat waktu",
+      "median": "Median jawaban pertama",
+      "overdue": "Terlambat sekarang"
+    },
+    "byAgent": "Per agen",
+    "empty": "Tidak ada prospek pada periode ini.",
+    "cols": {
+      "agent": "Agen",
+      "leads": "Prospek",
+      "answered": "Dijawab",
+      "onTime": "Tepat waktu",
+      "median": "Median",
+      "overdue": "Terlambat"
+    },
+    "overdueTitle": "Menunggu melewati tenggat",
+    "overdueHint": "Prospek yang belum dijawab, yang paling lama terlambat lebih dulu.",
+    "noOverdue": "Tidak ada yang terlambat.",
+    "lateBy": "terlambat {time}"
   }
 }

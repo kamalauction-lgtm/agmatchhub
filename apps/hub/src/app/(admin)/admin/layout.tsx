@@ -31,6 +31,7 @@ const NAV: { key: string; href: string; capability: string | null; icon: string;
   { key: "search", href: "/admin/search", capability: null, icon: "⌕", group: "main" },
 
   { key: "requests", href: "/admin/requests", capability: "request.manage", icon: "☰", group: "work" },
+  { key: "leads", href: "/admin/leads", capability: "request.manage", icon: "◷", group: "work" },
   { key: "listings", href: "/admin/listings", capability: "listing.moderate", icon: "⌂", group: "work" },
   { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "work" },
   { key: "invitations", href: "/admin/agents/invitations", capability: "agent.invite", icon: "✉", group: "work" },
