@@ -1,6 +1,6 @@
 import "server-only";
 import { createServiceClient } from "@/lib/supabase/service";
-import { rightsBasis } from "./rights";
+import { rightsBasis, type RightsBasis } from "./rights";
 
 /**
  * Publication of processed photos (P0-e-2a, 00109).
@@ -16,7 +16,10 @@ import { rightsBasis } from "./rights";
  * with neither the agent's import consent nor a partner agreement) is HELD:
  * it stays private and is counted, never published.
  */
-export async function publishProcessedPhotos(listingId: string): Promise<{ published: number; failed: number; heldNoRights: number }> {
+export async function publishProcessedPhotos(
+  listingId: string,
+  opts: { onlyBasis?: RightsBasis[] } = {},
+): Promise<{ published: number; failed: number; heldNoRights: number }> {
   const service = createServiceClient();
   const { data: rows } = await service
     .from("listing_media")
@@ -32,10 +35,12 @@ export async function publishProcessedPhotos(listingId: string): Promise<{ publi
 
   let published = 0, failed = 0, heldNoRights = 0;
   for (const m of rows ?? []) {
-    if (rightsBasis(m.storage_path, provOf.get(m.id)) === "missing") {
+    const basis = rightsBasis(m.storage_path, provOf.get(m.id));
+    if (basis === "missing") {
       heldNoRights++;
       continue;
     }
+    if (opts.onlyBasis && !opts.onlyBasis.includes(basis)) continue;
     try {
       const out: Record<"full" | "thumb", string> = { full: "", thumb: "" };
       for (const [key, from] of [["full", m.derived_path], ["thumb", m.derived_thumb_path]] as const) {

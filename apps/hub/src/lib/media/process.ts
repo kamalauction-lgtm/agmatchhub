@@ -2,6 +2,7 @@ import "server-only";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { createServiceClient } from "@/lib/supabase/service";
 import { DERIVATIVES, derivedPath, metadataFound, sniffImage } from "@/lib/import/photos";
+import { publishProcessedPhotos } from "./publish";
 
 /**
  * P0-e-2a photo processor (00109). Runs from the hub cron, on the operator
@@ -35,7 +36,7 @@ type ImagesBinding = {
   };
 };
 
-type Claimed = { id: string; storage_path: string; processing_attempts: number };
+type Claimed = { id: string; listing_id: string; storage_path: string; processing_attempts: number };
 
 function images(): ImagesBinding | null {
   try {
@@ -66,14 +67,24 @@ export async function processIntakeMedia(limit = 10): Promise<Record<string, unk
   if (error) return { error: error.message };
 
   let processed = 0, failed = 0, retrying = 0, paused = 0;
+  const done = new Set<string>();
   for (const m of (claimed ?? []) as Claimed[]) {
     const outcome = await processOne(service, binding, m);
-    if (outcome === "processed") processed++;
+    if (outcome === "processed") { processed++; done.add(m.listing_id); }
     else if (outcome === "failed") failed++;
     else if (outcome === "paused") paused++;
     else retrying++;
   }
-  return { claimed: (claimed ?? []).length, processed, retrying, failed, paused, cap };
+  // A moderator may approve a wizard listing before its photos finish
+  // processing (P1-b-3). The approval covered those photos, so once clean they
+  // publish — wizard photos ONLY: change-request photos still wait for the
+  // moderator to resolve the request (P1-b-2), and imports for approval.
+  let latePublished = 0;
+  if (done.size) {
+    const { data: live } = await service.from("listings").select("id").in("id", [...done]).eq("status", "published");
+    for (const l of live ?? []) latePublished += (await publishProcessedPhotos(l.id, { onlyBasis: ["agent_upload"] })).published;
+  }
+  return { claimed: (claimed ?? []).length, processed, retrying, failed, paused, latePublished, cap };
 }
 
 async function processOne(

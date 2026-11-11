@@ -1907,7 +1907,7 @@
       "condConstruction": "Dalam pembangunan",
       "facilities": "Fasilitas",
       "facilitiesPlaceholder": "kolam renang, gym, keamanan 24 jam (pisahkan dengan koma)",
-      "photosHelp": "Hingga 15 foto, JPG/PNG/WebP, maks 10 MB per foto. Foto pertama jadi sampul.",
+      "photosHelp": "Hingga 15 foto, JPG/PNG/WebP, maks. 10 MB per foto. Foto pertama menjadi sampul. Foto tetap privat selama diproses (data lokasi dan kamera dihapus) dan tayang setelah moderator menyetujui listing.",
       "submit": "Kirim untuk ditinjau",
       "submitHelp": "Moderator meninjau setiap listing sebelum tayang.",
       "draftRestored": "Draf Anda yang belum tersimpan telah dipulihkan.",

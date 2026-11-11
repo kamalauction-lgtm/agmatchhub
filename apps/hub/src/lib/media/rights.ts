@@ -7,8 +7,10 @@
  *                      agreement (P0-e-3b, licence_note "partner_agreement:<ref>")
  *   agent_supplied     a photo the agent supplied privately on a moderator's
  *                      change request (P1-b-2, licence_note "agent_upload:request:<id>")
- *   agent_upload       a photo the agent uploaded through the wizard; there is
- *                      no provenance row by design
+ *   agent_upload       a photo the agent uploaded through the wizard: since
+ *                      P1-b-3 (00117) privately, licence_note "agent_upload:wizard";
+ *                      before that, straight to the public bucket with no
+ *                      provenance row
  *   missing            an imported or partner photo with no usable record —
  *                      it is never published (lib/media/publish.ts)
  *
@@ -27,6 +29,7 @@ export function rightsBasis(storagePath: string, provenance: ProvenanceFacts): R
   const note = provenance.licence_note ?? "";
   if (/^partner_agreement:\S/.test(note)) return "partner_agreement";
   if (/^agent_upload:request:[0-9a-f-]{36}$/.test(note)) return "agent_supplied";
+  if (note === "agent_upload:wizard") return "agent_upload";
   return "missing";
 }
 

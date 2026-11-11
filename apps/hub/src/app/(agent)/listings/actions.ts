@@ -8,6 +8,8 @@ import { logAudit } from "@/lib/audit";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
 import { getAgentMarket } from "@/lib/listings/market";
 import { categoryForType, isTenureAllowed, isTypeAllowed, WIZARD_LOCATION_LEVELS } from "@/lib/listings/vocabulary";
+import { intakePath, sha256Hex, sniffImage } from "@/lib/import/photos";
+import { createServiceClient } from "@/lib/supabase/service";
 
 /**
  * Marketplace listing creation (§28 steps 4–6). The agent's submission always
@@ -135,9 +137,14 @@ export async function createListing(formData: FormData): Promise<void> {
     .getAll("photos")
     .filter((f): f is File => f instanceof File && f.size > 0);
   if (photos.length > IMG_MAX_COUNT) redirect("/listings/new?error=too_many_photos");
+  const photoBytes: { bytes: Uint8Array; image: NonNullable<ReturnType<typeof sniffImage>> }[] = [];
   for (const p of photos) {
     if (!IMG_TYPES.has(p.type)) redirect("/listings/new?error=bad_photo_type");
     if (p.size > IMG_MAX_BYTES) redirect("/listings/new?error=photo_too_large");
+    const bytes = new Uint8Array(await p.arrayBuffer());
+    const image = sniffImage(bytes);            // judged by its bytes, not its claimed type
+    if (!image) redirect("/listings/new?error=bad_photo_type");
+    photoBytes.push({ bytes, image: image! });
   }
 
   // Location: denormalised names + ancestor ids come from the chosen row.
@@ -229,30 +236,34 @@ export async function createListing(formData: FormData): Promise<void> {
     .single();
   if (lstErr || !listing) redirect(`/listings/new?error=save_failed`);
 
-  // 3. Photos — owner-folder path; first one is the cover.
-  // MVP: stored as-is and marked ready. EXIF/GPS strip + thumbnails are a
-  // documented pre-launch requirement (00036 header).
+  // 3. Photos — PRIVATE (owner decision, 11 Nov 2026; 00117). Each original
+  // goes into the agent's own intake folder, is recorded as pending with its
+  // provenance, and is processed by the $0 processor (GPS and EXIF removed).
+  // Only the clean derivatives are published, when a moderator approves.
+  // The first one becomes the cover.
   let position = 0;
-  for (const photo of photos) {
-    const ext = photo.type === "image/png" ? "png" : photo.type === "image/webp" ? "webp" : "jpg";
-    const path = `${user.id}/${listing.id}/${position}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
+  for (const { bytes, image } of photoBytes) {
+    const hash = await sha256Hex(bytes);
+    const path = intakePath(user.id, listing.id, hash, image.ext);
     const { error: upErr } = await supabase.storage
-      .from("listing-media-public")
-      .upload(path, photo, { contentType: photo.type, upsert: false });
-    if (upErr) continue; // a failed photo must not lose the listing
+      .from("listing-media-intake")
+      .upload(path, bytes, { contentType: image.mime, upsert: false });
+    if (upErr && !/exist|duplicate/i.test(upErr.message)) continue; // a failed photo must not lose the listing
 
-    await supabase.from("listing_media").insert({
-      listing_id: listing.id,
-      kind: "image",
-      storage_path: `listing-media-public/${path}`,
-      processed_path: `listing-media-public/${path}`,
-      thumbnail_path: `listing-media-public/${path}`,
-      position,
-      is_cover: position === 0,
-      byte_size: photo.size,
-      processing_state: "ready",
+    const { data, error } = await supabase.rpc("agent_attach_listing_photo", {
+      p_listing: listing.id, p_storage_path: path, p_content_hash: hash,
+      p_byte_size: bytes.byteLength, p_width: image.width, p_height: image.height,
     });
-    position++;
+    const r = data as { ok?: boolean; created?: boolean } | null;
+    if (error || !r?.ok) {
+      // Refused: do not leave the original behind (agents have no delete on
+      // the intake bucket). Only this file, in the agent's own folder.
+      if (!upErr && path.startsWith(`${user.id}/`)) {
+        await createServiceClient().storage.from("listing-media-intake").remove([path]);
+      }
+      continue;
+    }
+    if (r.created) position++;
   }
 
   await logAudit({

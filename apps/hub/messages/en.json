@@ -1907,7 +1907,7 @@
       "condConstruction": "Under construction",
       "facilities": "Facilities",
       "facilitiesPlaceholder": "swimming pool, gym, 24h security (comma-separated)",
-      "photosHelp": "Up to 15 photos, JPG/PNG/WebP, max 10 MB each. The first photo becomes the cover.",
+      "photosHelp": "Up to 15 photos, JPG/PNG/WebP, max 10 MB each. The first photo becomes the cover. Photos stay private while they are processed (location and camera data removed) and go live when a moderator approves the listing.",
       "submit": "Submit for review",
       "submitHelp": "A moderator reviews every listing before it goes live.",
       "draftRestored": "Your unsaved draft was restored.",
