@@ -7,6 +7,12 @@
  *   node scripts/db-migrate.mjs --env=staging              # apply pending
  *   node scripts/db-migrate.mjs --env=staging --status     # list applied/pending
  *   node scripts/db-migrate.mjs --env=production           # only after staging
+ *   node scripts/db-migrate.mjs --env=production --to=00117   # stop after 00117
+ *
+ * --to=NNNNN applies pending migrations up to and including that version and
+ * leaves later ones pending. It exists for releases where a migration must
+ * follow a code deploy (00118 after the Hub upload code; see
+ * docs/release/p1b4-profile-photos-release.md). An unknown version is refused.
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -35,7 +41,12 @@ const applied = new Set(
 );
 
 const dir = join(root, "supabase", "migrations");
-const files = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
+const allFiles = readdirSync(dir).filter(f => f.endsWith(".sql")).sort();
+const toArg = process.argv.find(a => a.startsWith("--to="))?.slice(5);
+if (toArg !== undefined && !/^\d{5}$/.test(toArg)) { console.error("--to must be a 5-digit version, e.g. --to=00117"); process.exit(1); }
+if (toArg && !allFiles.some(f => f.startsWith(toArg + "_"))) { console.error(`--to=${toArg}: no such migration`); process.exit(1); }
+const files = toArg ? allFiles.filter(f => f.split("_")[0] <= toArg) : allFiles;
+const held = allFiles.length - files.length;
 
 let ran = 0;
 for (const file of files) {
@@ -66,5 +77,5 @@ for (const file of files) {
   }
 }
 
-if (!process.argv.includes("--status")) console.log(`${ran} migration(s) applied.`);
+if (!process.argv.includes("--status")) console.log(`${ran} migration(s) applied.${held ? ` ${held} later migration(s) held by --to.` : ""}`);
 await client.end();
