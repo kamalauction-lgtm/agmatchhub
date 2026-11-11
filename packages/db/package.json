@@ -16,6 +16,8 @@
     "seed:admin:production": "node scripts/seed-admin.mjs --env=production",
     "seed:locations:production": "node scripts/seed-locations-id.mjs --env=production",
     "ghl-drain:production": "node scripts/ghl-drain.mjs --env=production",
+    "scan:photos:staging": "node scripts/scan-public-photo-metadata.mjs --env=staging",
+    "scan:photos:production": "node scripts/scan-public-photo-metadata.mjs --env=production",
     "test": "node scripts/test.mjs --env=staging",
     "test:unit": "vitest run --config vitest.unit.config.ts",
     "test:production": "node scripts/test.mjs --env=production --i-mean-production"
