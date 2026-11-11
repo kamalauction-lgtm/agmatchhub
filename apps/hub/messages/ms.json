@@ -3711,7 +3711,10 @@
       "draft": "Draf",
       "verified": "Disahkan",
       "retired": "Dibersarakan"
-    }
+    },
+    "costUnavailable": "Belum tersedia",
+    "costUnavailableHint": "Harga model belum dikonfigurasi",
+    "openOffice": "Buka paparan Office →"
   },
   "aiWorkforce": {
     "watchOffice": "Lihat pasukan AI saya bekerja",
@@ -5115,5 +5118,12 @@
     "body": "Semasa akaun digantung, anda tidak boleh mencipta atau mengubah penyenaraian, dan penyenaraian aktif anda dijeda. Hubungi pasukan platform jika ada pertanyaan.",
     "reason": "Sebab",
     "listings": "Penyenaraian anda kembali secara automatik apabila akaun dipulihkan, jika masih diluluskan."
+  },
+  "adminAiOffice": {
+    "eyebrow": "Paparan platform",
+    "title": "Pejabat AI Workforce",
+    "subtitle": "Setiap peranan AI merentas semua ejen dalam tujuh hari lepas, daripada metadata tugas sahaja. Peranan yang memerlukan penyedia AI dipaparkan tidak tersedia sehingga penyedia dikonfigurasi.",
+    "badge": "Baca sahaja",
+    "back": "← AI Workforce"
   }
 }

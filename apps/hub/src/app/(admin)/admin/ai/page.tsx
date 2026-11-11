@@ -52,6 +52,10 @@ export default async function AiAdminPage({
 
   type Day = { day: string; jobs: number; ok: number; denied: number; errors: number; cost_micros: number; tokens: number };
   const days = ((daily ?? []) as Day[]).map((d) => ({ ...d, jobs: +d.jobs, ok: +d.ok, denied: +d.denied, errors: +d.errors, cost_micros: +d.cost_micros }));
+  // Screen 12: a cost is only shown once real pricing exists. With no rate
+  // configured (they default to 0) every $0 would be a fiction, not a fact.
+  const costKnown = (models ?? []).some((m: { input_cost_micros_per_1k?: number | null; output_cost_micros_per_1k?: number | null }) => Number(m.input_cost_micros_per_1k ?? 0) > 0 || Number(m.output_cost_micros_per_1k ?? 0) > 0);
+  const costOf = (micros: number) => (costKnown ? usd(micros) : t("costUnavailable"));
   const total = days.reduce((a, d) => ({ jobs: a.jobs + d.jobs, cost: a.cost + d.cost_micros, errors: a.errors + d.errors, denied: a.denied + d.denied }), { jobs: 0, cost: 0, errors: 0, denied: 0 });
 
   // Which provider keys THIS deployment carries. Presence only — never the value.
@@ -96,7 +100,10 @@ export default async function AiAdminPage({
 
   return (
     <>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h1 className="text-2xl font-semibold">{t("title")}</h1>
+        <a href="/admin/ai/office" className="text-sm font-semibold text-crimson hover:underline" data-office-link="1">{t("openOffice")}</a>
+      </div>
       <p className="mb-6 mt-1 max-w-3xl text-sm text-muted">{t("intro")}</p>
 
       {notice && (
@@ -119,7 +126,7 @@ export default async function AiAdminPage({
       {/* KPIs ------------------------------------------------------------- */}
       <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard value={total.jobs} label={t("kpi.jobs")} icon="✦" tone="blue" caption={t("caption30d")} series={days.map((d) => d.jobs)} />
-        <StatCard value={usd(total.cost)} label={t("kpi.cost")} icon="$" tone="indigo" caption={t("caption30d")} series={days.map((d) => d.cost_micros)} />
+        <StatCard value={costOf(total.cost)} label={t("kpi.cost")} icon="$" tone="indigo" caption={costKnown ? t("caption30d") : t("costUnavailableHint")} series={costKnown ? days.map((d) => d.cost_micros) : []} />
         <StatCard value={total.errors} label={t("kpi.errors")} icon="!" tone="red" caption={t("caption30d")} series={days.map((d) => d.errors)} invert />
         <StatCard value={total.denied} label={t("kpi.denied")} icon="⊘" tone="orange" caption={t("caption30d")} series={days.map((d) => d.denied)} invert />
       </div>
@@ -154,7 +161,7 @@ export default async function AiAdminPage({
                     <td className="px-2 py-2 text-right tabular-nums">{r.jobs}</td>
                     <td className="px-2 py-2 text-right tabular-nums">{r.denied}</td>
                     <td className="px-2 py-2 text-right tabular-nums">{r.errors}</td>
-                    <td className="px-2 py-2 text-right tabular-nums">{usd(+r.cost_micros)}</td>
+                    <td className="px-2 py-2 text-right tabular-nums" data-cost-known={costKnown ? "1" : "0"}>{costOf(+r.cost_micros)}</td>
                     <td className="px-2 py-2 text-right tabular-nums">{r.users}</td>
                   </tr>
                 ))}
@@ -370,7 +377,7 @@ export default async function AiAdminPage({
                   </td>
                   <td className="px-2 py-2 font-mono text-muted">{j.model ? `${j.provider}/${j.model}` : "—"}</td>
                   <td className="px-2 py-2 text-right tabular-nums">{j.tokens_in + j.tokens_out}</td>
-                  <td className="px-2 py-2 text-right tabular-nums">{usd(+j.cost_micros)}</td>
+                  <td className="px-2 py-2 text-right tabular-nums">{costOf(+j.cost_micros)}</td>
                   <td className="px-2 py-2 text-right tabular-nums">{j.latency_ms ?? "—"}</td>
                 </tr>
               ))}

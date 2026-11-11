@@ -3711,7 +3711,10 @@
       "draft": "Draf",
       "verified": "Terverifikasi",
       "retired": "Dipensiunkan"
-    }
+    },
+    "costUnavailable": "Belum tersedia",
+    "costUnavailableHint": "Harga model belum dikonfigurasi",
+    "openOffice": "Buka tampilan Office →"
   },
   "aiWorkforce": {
     "watchOffice": "Lihat tim AI saya bekerja",
@@ -5115,5 +5118,12 @@
     "body": "Selama akun ditangguhkan, Anda tidak dapat membuat atau mengubah listing, dan listing yang tayang dijeda. Hubungi tim platform jika ada pertanyaan.",
     "reason": "Alasan",
     "listings": "Listing Anda kembali tayang otomatis saat akun dipulihkan, jika masih disetujui."
+  },
+  "adminAiOffice": {
+    "eyebrow": "Tampilan platform",
+    "title": "Kantor AI Workforce",
+    "subtitle": "Semua peran AI di seluruh agen selama tujuh hari terakhir, hanya dari metadata pekerjaan. Peran yang memerlukan penyedia AI tampil tidak tersedia sampai penyedia dikonfigurasi.",
+    "badge": "Hanya baca",
+    "back": "← AI Workforce"
   }
 }

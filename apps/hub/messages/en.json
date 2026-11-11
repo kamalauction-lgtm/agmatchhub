@@ -3711,7 +3711,10 @@
       "draft": "Draft",
       "verified": "Verified",
       "retired": "Retired"
-    }
+    },
+    "costUnavailable": "Not yet available",
+    "costUnavailableHint": "No model pricing is configured yet",
+    "openOffice": "Open the Office view →"
   },
   "aiWorkforce": {
     "watchOffice": "Watch my AI team working",
@@ -5115,5 +5118,12 @@
     "body": "While your account is suspended you cannot create or edit listings, and your live listings are paused. Contact the platform team if you have questions.",
     "reason": "Reason given",
     "listings": "Your listings come back automatically when your account is restored, if they are still approved."
+  },
+  "adminAiOffice": {
+    "eyebrow": "Platform view",
+    "title": "AI Workforce Office",
+    "subtitle": "Every AI role across all agents over the last seven days, from job metadata only. Roles that need an AI provider show as unavailable until one is configured.",
+    "badge": "Read-only",
+    "back": "← AI Workforce"
   }
 }
