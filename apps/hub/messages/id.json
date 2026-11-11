@@ -3339,7 +3339,21 @@
       "not_found": "Organisasi tidak ditemukan.",
       "needs_percent": "Masukkan persen 0-100.",
       "needs_amount": "Masukkan jumlah harga.",
-      "needs_country": "Organisasi ini belum memiliki negara, sehingga harga tetap tidak memiliki mata uang. Tetapkan negaranya terlebih dahulu."
+      "needs_country": "Organisasi ini belum memiliki negara, sehingga harga tetap tidak memiliki mata uang. Tetapkan negaranya terlebih dahulu.",
+      "agency_invalid": "Periksa nama (2–160 karakter) dan pilih negara.",
+      "agency_not_permitted": "Anda hanya dapat mengelola organisasi di negara Anda.",
+      "agency_saved": "Organisasi disimpan.",
+      "agency_created": "Organisasi dibuat."
+    },
+    "agencyForm": {
+      "create": "Organisasi baru",
+      "createButton": "Buat organisasi",
+      "edit": "Ubah organisasi",
+      "save": "Simpan perubahan",
+      "name": "Nama",
+      "registration": "Nomor registrasi (opsional)",
+      "country": "Negara",
+      "chooseCountry": "Pilih negara"
     }
   },
   "commercial": {

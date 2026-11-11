@@ -3339,7 +3339,21 @@
       "not_found": "Organisation not found.",
       "needs_percent": "Enter a percentage between 0 and 100.",
       "needs_amount": "Enter a price amount.",
-      "needs_country": "This organisation has no country, so a fixed price has no currency. Set its country first."
+      "needs_country": "This organisation has no country, so a fixed price has no currency. Set its country first.",
+      "agency_invalid": "Check the name (2–160 characters) and choose a country.",
+      "agency_not_permitted": "You can manage organisations only in your own countries.",
+      "agency_saved": "Organisation saved.",
+      "agency_created": "Organisation created."
+    },
+    "agencyForm": {
+      "create": "New organisation",
+      "createButton": "Create organisation",
+      "edit": "Edit organisation",
+      "save": "Save changes",
+      "name": "Name",
+      "registration": "Registration number (optional)",
+      "country": "Country",
+      "chooseCountry": "Choose a country"
     }
   },
   "commercial": {
