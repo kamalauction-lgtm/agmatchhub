@@ -274,7 +274,8 @@
       "payments": "Pembayaran",
       "whatsapp": "WhatsApp",
       "invitations": "Undangan",
-      "imports": "Impor berbantuan"
+      "imports": "Impor berbantuan",
+      "media": "Kualitas foto"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -2158,7 +2159,18 @@
         "other": "detail yang kurang"
       }
     },
-    "ownerReport": "Laporan pemilik"
+    "ownerReport": "Laporan pemilik",
+    "rejection": {
+      "incomplete_details": "Detail belum lengkap",
+      "photos_quality": "Foto tidak layak",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga tampak keliru",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Listing ganda",
+      "prohibited_content": "Tidak diizinkan di marketplace",
+      "other": "Lainnya (lihat catatan)",
+      "resubmitHint": "Sunting listing untuk memperbaikinya; menyimpan akan mengirimnya kembali untuk ditinjau."
+    }
   },
   "studio": {
     "title": "Studio konten",
@@ -2424,7 +2436,8 @@
       "not_found": "Listing tidak ditemukan.",
       "not_moderatable": "Listing ini tidak sedang menunggu tinjauan.",
       "update_failed": "Pembaruan gagal. Coba lagi.",
-      "self_prepared": "Anda yang menyiapkan impor listing ini, jadi admin lain harus menyetujuinya."
+      "self_prepared": "Anda yang menyiapkan impor listing ini, jadi admin lain harus menyetujuinya.",
+      "bulk_empty": "Pilih setidaknya satu listing."
     },
     "photos": {
       "title": "Foto impor (privat sampai Anda setujui)",
@@ -2436,9 +2449,84 @@
         "processed": "Siap dipublikasikan",
         "failed": "Tidak dapat diproses",
         "quarantined": "Ditahan"
+      },
+      "willPublish": "Menyetujui akan menayangkan {publish} dari {total} foto. Sisanya tetap privat: masih diproses, dijeda, gagal, ditahan, atau tanpa catatan hak.",
+      "openCentre": "Buka di Pusat Kualitas Foto"
+    },
+    "quarantined": "Foto tidak akan dipublikasikan.",
+    "tabs": {
+      "label": "Antrean moderasi",
+      "pending_review": "Menunggu tinjauan",
+      "rejected": "Ditolak",
+      "published": "Tayang"
+    },
+    "count": {
+      "pending_review": "{count} listing menunggu tinjauan",
+      "rejected": "{count} listing ditolak",
+      "published": "{count} listing tayang"
+    },
+    "emptyTab": {
+      "pending_review": "Antrean kosong - tidak ada yang menunggu tinjauan.",
+      "rejected": "Tidak ada listing yang ditolak.",
+      "published": "Tidak ada listing tayang di negara Anda."
+    },
+    "bulk": {
+      "title": "Putuskan sekaligus",
+      "hint": "Centang listing di bawah, lalu setujui atau tolak bersama. Setiap listing tetap melewati semua pemeriksaan sendiri: negara Anda, pemisahan tugas, dan statusnya. Penolakan membutuhkan kode alasan.",
+      "approve": "Setujui yang dipilih",
+      "reject": "Tolak yang dipilih",
+      "select": "Pilih {id}",
+      "done": "{ok} selesai, {skipped} dilewati."
+    },
+    "reasonCode": "Alasan (wajib untuk menolak)",
+    "note": "Catatan untuk agen (wajib untuk Lainnya)",
+    "takeDown": "Turunkan",
+    "codes": {
+      "incomplete_details": "Detail belum lengkap",
+      "photos_quality": "Foto tidak layak",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga tampak keliru",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Listing ganda",
+      "prohibited_content": "Tidak diizinkan di marketplace",
+      "other": "Lainnya (lihat catatan)"
+    },
+    "quality": {
+      "score": "Kualitas {score}/100",
+      "parts": "Kelengkapan {complete} · foto {photos}",
+      "rec": {
+        "add_field": "Ada kolom kosong",
+        "add_photos": "Foto sedikit",
+        "describe_more": "Deskripsi pendek",
+        "possible_duplicate": "Mungkin ganda",
+        "price_above_comparables": "Harga di atas pembanding",
+        "price_below_comparables": "Harga di bawah pembanding",
+        "refine_location": "Lokasi kurang jelas",
+        "remove_phone": "Nomor telepon di teks",
+        "title_location": "Judul tanpa lokasi"
       }
     },
-    "quarantined": "Foto tidak akan dipublikasikan."
+    "photoStatus": {
+      "live": "Tayang",
+      "awaiting_approval": "Sudah diproses, menunggu persetujuan",
+      "processing": "Sedang diproses",
+      "queued": "Menunggu diproses",
+      "paused_quota": "Dijeda: kuota gambar habis",
+      "paused_cap": "Dijeda: batas bulanan tercapai",
+      "failed": "Tidak dapat diproses",
+      "kept_out": "Ditahan",
+      "removed": "Dihapus oleh agen"
+    },
+    "rights": {
+      "missing": "{n} foto tanpa catatan hak — tidak akan ditayangkan",
+      "missingOne": "Tanpa catatan hak"
+    },
+    "pager": {
+      "label": "Halaman",
+      "prev": "Sebelumnya",
+      "next": "Berikutnya",
+      "of": "Halaman {page} dari {pages}"
+    }
   },
   "plans": {
     "free": "Gratis",
@@ -4565,7 +4653,115 @@
     "errors": {
       "invalid": "Periksa data lalu coba lagi.",
       "not_permitted": "Anda tidak dapat menyiapkan impor untuk agen itu.",
-      "failed": "Gagal. Coba lagi."
+      "failed": "Gagal. Coba lagi.",
+      "nothing_selected": "Pilih setidaknya satu item."
+    },
+    "review": {
+      "title": "Tinjauan batch",
+      "hint": "Kualitas, foto, dan setiap perubahan dalam satu tampilan. Centang item untuk melewati atau memulihkannya bersama; item yang sudah diimpor tidak dapat diubah.",
+      "skipSelected": "Lewati yang dipilih",
+      "restoreSelected": "Pulihkan yang dipilih",
+      "select": "Pilih",
+      "selectOne": "Pilih {title}",
+      "item": "Item",
+      "status": "Status",
+      "quality": "Kualitas",
+      "photos": "Foto",
+      "changes": "Diubah dari sumber",
+      "listingScore": "Skor kualitas listing",
+      "scoreListing": "Listing {score}/100",
+      "scoreItem": "Kolom {score}%",
+      "missing": "Kurang",
+      "field": {
+        "title": "judul",
+        "price": "harga",
+        "listingType": "jual atau sewa",
+        "propertyType": "jenis",
+        "location": "lokasi",
+        "size": "luas",
+        "bedrooms": "kamar tidur",
+        "description": "deskripsi",
+        "photos": "foto"
+      },
+      "photosState": "{saved} dari {total} tersimpan",
+      "noChanges": "Sesuai impor",
+      "bulkDone": "{n} item diperbarui.",
+      "itemStatus": {
+        "found": "Ditemukan",
+        "processing": "Mengambil",
+        "ready": "Siap",
+        "needs_review": "Perlu ditinjau",
+        "duplicate": "Ganda",
+        "imported": "Diimpor",
+        "failed": "Gagal",
+        "skipped": "Dilewati"
+      }
     }
+  },
+  "adminMedia": {
+    "title": "Pusat Kualitas Foto",
+    "intro": "Setiap foto impor dan foto mitra di negara Anda, seperti yang dilihat pemroses: menunggu, diproses, dijeda, gagal, menunggu persetujuan, tayang, atau ditahan, beserta catatan haknya. Tidak ada yang membuat foto publik di sini; itu terjadi saat listing disetujui.",
+    "usage": {
+      "title": "Pemrosesan gambar bulan ini",
+      "value": "{used} dari {cap} transformasi",
+      "note": "Paket gratis, $0: pemroses berhenti di batas dan tidak pernah mengeluarkan biaya."
+    },
+    "checks": {
+      "title": "Pemeriksaan yang berjalan di sini",
+      "rules": "Hanya aturan: di bawah {w}×{h} piksel, atau di bawah {kb} KB, ditandai.",
+      "noAi": "Tidak ada model AI yang meninjau foto di layar ini."
+    },
+    "views": {
+      "label": "Tampilan",
+      "attention": "Perlu perhatian",
+      "processing": "Diproses",
+      "awaiting": "Menunggu persetujuan",
+      "kept_out": "Ditahan",
+      "all": "Semua"
+    },
+    "clearListing": "Semua listing",
+    "done": {
+      "released": "Dilepas. Foto dapat ditayangkan bersama listingnya lagi.",
+      "retried": "Diantrekan untuk diproses ulang.",
+      "quarantined": "Ditahan. Foto tidak akan ditayangkan.",
+      "ok": "Selesai."
+    },
+    "errors": {
+      "invalid": "Permintaan tidak valid.",
+      "update_failed": "Tidak berhasil. Coba lagi.",
+      "not_found": "Foto tidak ditemukan.",
+      "not_moderatable": "Foto ini tidak dapat ditahan sekarang.",
+      "not_quarantined": "Foto ini tidak sedang ditahan.",
+      "self_prepared": "Anda menyiapkan impor listing ini, jadi peninjau lain yang harus melepasnya.",
+      "not_retryable": "Hanya foto yang gagal atau dijeda yang dapat diproses ulang."
+    },
+    "count": "{count} foto",
+    "empty": {
+      "attention": "Tidak ada yang perlu perhatian.",
+      "processing": "Tidak ada yang sedang diproses.",
+      "awaiting": "Tidak ada foto terproses yang menunggu.",
+      "kept_out": "Tidak ada foto yang ditahan.",
+      "all": "Belum ada foto impor atau foto mitra."
+    },
+    "noPreview": "Tanpa pratinjau",
+    "rights": {
+      "import_authority": "Kuasa impor agen",
+      "partner_agreement": "Perjanjian mitra",
+      "agent_upload": "Unggahan agen",
+      "missing": "Tanpa catatan hak",
+      "missingNote": "Tanpa catatan hak, foto ini tidak pernah ditayangkan."
+    },
+    "rule": {
+      "low_res": "Resolusi rendah",
+      "tiny_file": "File sangat kecil"
+    },
+    "failedWhy": "Gagal setelah {n} percobaan: {why}",
+    "paused": {
+      "paused_quota": "Dijeda: kuota Images tercapai. Coba lagi setelah diatur ulang.",
+      "paused_cap": "Dijeda: batas bulanan tercapai. Berlanjut bulan depan, atau coba lagi setelah batas dinaikkan."
+    },
+    "retryAt": "Percobaan {n} gagal; dicoba lagi {at} UTC",
+    "release": "Lepaskan",
+    "retry": "Proses ulang"
   }
 }

@@ -20,7 +20,12 @@ import { DERIVATIVES, derivedPath, metadataFound, sniffImage } from "@/lib/impor
 
 const BACKOFF_MINUTES = [15, 60, 360];
 /** Owner-approved pilot cap: pause at 4,500, below the free plan's 5,000 stop. */
-const DEFAULT_CAP = 4500;
+export const DEFAULT_CAP = 4500;
+
+/** The cap in force: MEDIA_TRANSFORM_CAP, or the owner-approved default. */
+export function transformCap(): number {
+  return Number(process.env.MEDIA_TRANSFORM_CAP ?? DEFAULT_CAP);
+}
 
 type ImagesBinding = {
   input(stream: ReadableStream): {
@@ -46,7 +51,7 @@ export async function processIntakeMedia(limit = 10): Promise<Record<string, unk
   if (!binding) return { skipped: "no_images_binding" };
 
   const service = createServiceClient();
-  const cap = Number(process.env.MEDIA_TRANSFORM_CAP ?? DEFAULT_CAP);
+  const cap = transformCap();
   const { data: used } = await service.rpc("media_processing_usage_now");
   const perPhoto = DERIVATIVES.length;
   if (Number(used ?? 0) + perPhoto > cap) {

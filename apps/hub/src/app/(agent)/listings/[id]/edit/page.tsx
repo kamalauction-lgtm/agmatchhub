@@ -109,7 +109,7 @@ export default async function EditListingPage({
 
       {/* Editing something already public sends it back for review, so say so
           before they start typing rather than after they press save. */}
-      {listing.status === "published" && (
+      {(listing.status === "published" || listing.status === "rejected") && (
         <p className="mb-6 rounded-lg bg-surface px-4 py-3 text-sm text-muted">
           {t("edit.willReturnToReview")}
         </p>

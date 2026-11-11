@@ -274,7 +274,8 @@
       "payments": "Pembayaran",
       "whatsapp": "WhatsApp",
       "invitations": "Jemputan",
-      "imports": "Import berbantu"
+      "imports": "Import berbantu",
+      "media": "Kualiti foto"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -2158,7 +2159,18 @@
         "other": "butiran yang tertinggal"
       }
     },
-    "ownerReport": "Laporan pemilik"
+    "ownerReport": "Laporan pemilik",
+    "rejection": {
+      "incomplete_details": "Butiran tidak lengkap",
+      "photos_quality": "Foto tidak boleh digunakan",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga kelihatan salah",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Penyenaraian berganda",
+      "prohibited_content": "Tidak dibenarkan di pasaran",
+      "other": "Lain-lain (lihat nota)",
+      "resubmitHint": "Sunting penyenaraian untuk membetulkannya; menyimpan akan menghantarnya semula untuk disemak."
+    }
   },
   "studio": {
     "title": "Studio kandungan",
@@ -2424,7 +2436,8 @@
       "not_found": "Iklan tidak dijumpai.",
       "not_moderatable": "Iklan ini tidak menunggu semakan.",
       "update_failed": "Kemas kini gagal. Cuba lagi.",
-      "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya."
+      "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya.",
+      "bulk_empty": "Pilih sekurang-kurangnya satu penyenaraian."
     },
     "photos": {
       "title": "Foto import (peribadi sehingga anda luluskan)",
@@ -2436,9 +2449,84 @@
         "processed": "Sedia untuk disiarkan",
         "failed": "Tidak dapat diproses",
         "quarantined": "Ditahan"
+      },
+      "willPublish": "Meluluskan akan menerbitkan {publish} daripada {total} foto. Selebihnya kekal peribadi: masih diproses, dijeda, gagal, ditahan atau tiada rekod hak.",
+      "openCentre": "Buka di Pusat Kualiti Foto"
+    },
+    "quarantined": "Foto tidak akan disiarkan.",
+    "tabs": {
+      "label": "Baris gilir moderasi",
+      "pending_review": "Menunggu semakan",
+      "rejected": "Ditolak",
+      "published": "Diterbitkan"
+    },
+    "count": {
+      "pending_review": "{count} penyenaraian menunggu semakan",
+      "rejected": "{count} penyenaraian ditolak",
+      "published": "{count} penyenaraian diterbitkan"
+    },
+    "emptyTab": {
+      "pending_review": "Baris gilir kosong - tiada yang menunggu semakan.",
+      "rejected": "Tiada penyenaraian ditolak.",
+      "published": "Tiada penyenaraian diterbitkan di negara anda."
+    },
+    "bulk": {
+      "title": "Putuskan beberapa sekali gus",
+      "hint": "Tandakan penyenaraian di bawah, kemudian luluskan atau tolak bersama. Setiap penyenaraian tetap melalui setiap semakan sendiri: negara anda, pengasingan tugas dan statusnya. Penolakan memerlukan kod sebab.",
+      "approve": "Luluskan yang dipilih",
+      "reject": "Tolak yang dipilih",
+      "select": "Pilih {id}",
+      "done": "{ok} selesai, {skipped} dilangkau."
+    },
+    "reasonCode": "Sebab (perlu untuk menolak)",
+    "note": "Nota kepada ejen (perlu untuk Lain-lain)",
+    "takeDown": "Turunkan",
+    "codes": {
+      "incomplete_details": "Butiran tidak lengkap",
+      "photos_quality": "Foto tidak boleh digunakan",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga kelihatan salah",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Penyenaraian berganda",
+      "prohibited_content": "Tidak dibenarkan di pasaran",
+      "other": "Lain-lain (lihat nota)"
+    },
+    "quality": {
+      "score": "Kualiti {score}/100",
+      "parts": "Lengkap {complete} · foto {photos}",
+      "rec": {
+        "add_field": "Medan tidak diisi",
+        "add_photos": "Foto sedikit",
+        "describe_more": "Penerangan pendek",
+        "possible_duplicate": "Mungkin berganda",
+        "price_above_comparables": "Harga melebihi setara",
+        "price_below_comparables": "Harga di bawah setara",
+        "refine_location": "Lokasi kurang jelas",
+        "remove_phone": "Nombor telefon dalam teks",
+        "title_location": "Tajuk tanpa lokasi"
       }
     },
-    "quarantined": "Foto tidak akan disiarkan."
+    "photoStatus": {
+      "live": "Diterbitkan",
+      "awaiting_approval": "Telah diproses, menunggu kelulusan",
+      "processing": "Sedang diproses",
+      "queued": "Menunggu diproses",
+      "paused_quota": "Dijeda: kuota imej habis",
+      "paused_cap": "Dijeda: had bulanan dicapai",
+      "failed": "Tidak dapat diproses",
+      "kept_out": "Ditahan",
+      "removed": "Dibuang oleh ejen"
+    },
+    "rights": {
+      "missing": "{n} foto tiada rekod hak — tidak akan diterbitkan",
+      "missingOne": "Tiada rekod hak"
+    },
+    "pager": {
+      "label": "Halaman",
+      "prev": "Sebelumnya",
+      "next": "Seterusnya",
+      "of": "Halaman {page} daripada {pages}"
+    }
   },
   "plans": {
     "free": "Percuma",
@@ -4565,7 +4653,115 @@
     "errors": {
       "invalid": "Semak butiran dan cuba lagi.",
       "not_permitted": "Anda tidak boleh menyediakan import untuk ejen itu.",
-      "failed": "Tidak berjaya. Cuba lagi."
+      "failed": "Tidak berjaya. Cuba lagi.",
+      "nothing_selected": "Pilih sekurang-kurangnya satu item."
+    },
+    "review": {
+      "title": "Semakan kelompok",
+      "hint": "Kualiti, foto dan setiap perubahan dalam satu paparan. Tandakan item untuk melangkau atau memulihkannya bersama; item yang telah diimport tidak boleh diubah.",
+      "skipSelected": "Langkau yang dipilih",
+      "restoreSelected": "Pulihkan yang dipilih",
+      "select": "Pilih",
+      "selectOne": "Pilih {title}",
+      "item": "Item",
+      "status": "Status",
+      "quality": "Kualiti",
+      "photos": "Foto",
+      "changes": "Diubah daripada sumber",
+      "listingScore": "Skor kualiti penyenaraian",
+      "scoreListing": "Penyenaraian {score}/100",
+      "scoreItem": "Medan {score}%",
+      "missing": "Kurang",
+      "field": {
+        "title": "tajuk",
+        "price": "harga",
+        "listingType": "jual atau sewa",
+        "propertyType": "jenis",
+        "location": "lokasi",
+        "size": "keluasan",
+        "bedrooms": "bilik tidur",
+        "description": "penerangan",
+        "photos": "foto"
+      },
+      "photosState": "{saved} daripada {total} disimpan",
+      "noChanges": "Seperti diimport",
+      "bulkDone": "{n} item dikemas kini.",
+      "itemStatus": {
+        "found": "Ditemui",
+        "processing": "Mengambil",
+        "ready": "Sedia",
+        "needs_review": "Perlu disemak",
+        "duplicate": "Berganda",
+        "imported": "Diimport",
+        "failed": "Gagal",
+        "skipped": "Dilangkau"
+      }
     }
+  },
+  "adminMedia": {
+    "title": "Pusat Kualiti Foto",
+    "intro": "Setiap foto import dan foto rakan kongsi di negara anda, seperti yang dilihat oleh pemproses: menunggu, diproses, dijeda, gagal, menunggu kelulusan, diterbitkan atau ditahan, bersama rekod haknya. Tiada apa di sini menjadikan foto awam; itu berlaku apabila penyenaraian diluluskan.",
+    "usage": {
+      "title": "Pemprosesan imej bulan ini",
+      "value": "{used} daripada {cap} transformasi",
+      "note": "Pelan percuma, $0: pemproses berhenti pada had dan tidak pernah berbelanja."
+    },
+    "checks": {
+      "title": "Semakan yang dijalankan di sini",
+      "rules": "Peraturan sahaja: di bawah {w}×{h} piksel, atau di bawah {kb} KB, ditanda.",
+      "noAi": "Tiada model AI menyemak foto pada skrin ini."
+    },
+    "views": {
+      "label": "Paparan",
+      "attention": "Perlu perhatian",
+      "processing": "Diproses",
+      "awaiting": "Menunggu kelulusan",
+      "kept_out": "Ditahan",
+      "all": "Semua"
+    },
+    "clearListing": "Semua penyenaraian",
+    "done": {
+      "released": "Dilepaskan. Foto boleh diterbitkan bersama penyenaraiannya semula.",
+      "retried": "Dibaris gilir untuk diproses semula.",
+      "quarantined": "Ditahan. Foto tidak akan diterbitkan.",
+      "ok": "Selesai."
+    },
+    "errors": {
+      "invalid": "Permintaan tidak sah.",
+      "update_failed": "Tidak berjaya. Cuba lagi.",
+      "not_found": "Foto tidak ditemui.",
+      "not_moderatable": "Foto ini tidak boleh ditahan sekarang.",
+      "not_quarantined": "Foto ini tidak ditahan.",
+      "self_prepared": "Anda menyediakan import penyenaraian ini, jadi penyemak lain mesti melepaskannya.",
+      "not_retryable": "Hanya foto yang gagal atau dijeda boleh diproses semula."
+    },
+    "count": "{count} foto",
+    "empty": {
+      "attention": "Tiada yang perlu perhatian.",
+      "processing": "Tiada yang sedang diproses.",
+      "awaiting": "Tiada foto diproses yang menunggu.",
+      "kept_out": "Tiada foto ditahan.",
+      "all": "Belum ada foto import atau foto rakan kongsi."
+    },
+    "noPreview": "Tiada pratonton",
+    "rights": {
+      "import_authority": "Kuasa import ejen",
+      "partner_agreement": "Perjanjian rakan kongsi",
+      "agent_upload": "Muat naik ejen",
+      "missing": "Tiada rekod hak",
+      "missingNote": "Tanpa rekod hak, foto ini tidak pernah diterbitkan."
+    },
+    "rule": {
+      "low_res": "Resolusi rendah",
+      "tiny_file": "Fail sangat kecil"
+    },
+    "failedWhy": "Gagal selepas {n} cubaan: {why}",
+    "paused": {
+      "paused_quota": "Dijeda: kuota Images dicapai. Cuba lagi selepas ia ditetapkan semula.",
+      "paused_cap": "Dijeda: had bulanan dicapai. Ia bersambung bulan depan, atau cuba lagi selepas had dinaikkan."
+    },
+    "retryAt": "Cubaan {n} gagal; cuba lagi {at} UTC",
+    "release": "Lepaskan",
+    "retry": "Proses semula"
   }
 }

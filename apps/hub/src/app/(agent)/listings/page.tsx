@@ -33,6 +33,7 @@ type OwnRow = {
   listing_type: string;
   status: string;
   moderation_reason: string | null;
+  moderation_reason_code: string | null;
   price: number;
   currency: string;
   rent_period: string | null;
@@ -97,7 +98,7 @@ export default async function MyListingsPage({
     supabase
       .from("listings")
       .select(
-        `id, human_readable_id, title, slug, listing_type, status, moderation_reason,
+        `id, human_readable_id, title, slug, listing_type, status, moderation_reason, moderation_reason_code,
          price, currency, rent_period,
          properties (regency_name, province_name, bedrooms, bathrooms, building_size, land_size),
          listing_boosts (ends_at, status)`
@@ -291,9 +292,14 @@ export default async function MyListingsPage({
                       {money(l.currency, l.price, l.rent_period)}
                     </p>
 
-                    {l.status === "rejected" && l.moderation_reason && (
-                      <p className="mt-2 max-w-lg rounded-lg bg-danger/5 px-3 py-2 text-xs text-muted">
+                    {l.status === "rejected" && (l.moderation_reason || l.moderation_reason_code) && (
+                      <p className="mt-2 max-w-lg rounded-lg bg-danger/5 px-3 py-2 text-xs text-muted" data-reason-code={l.moderation_reason_code ?? ""}>
+                        {l.moderation_reason_code && t.has(`rejection.${l.moderation_reason_code}` as never) && (
+                          <strong className="text-foreground">{t(`rejection.${l.moderation_reason_code}` as never)}</strong>
+                        )}
+                        {l.moderation_reason_code && l.moderation_reason ? " — " : ""}
                         {l.moderation_reason}
+                        <span className="mt-1 block">{t("rejection.resubmitHint")}</span>
                       </p>
                     )}
                   </div>

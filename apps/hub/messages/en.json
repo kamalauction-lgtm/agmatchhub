@@ -274,7 +274,8 @@
       "payments": "Payments",
       "whatsapp": "WhatsApp",
       "invitations": "Invitations",
-      "imports": "Assisted import"
+      "imports": "Assisted import",
+      "media": "Photo quality"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -2158,7 +2159,18 @@
         "other": "the missing detail"
       }
     },
-    "ownerReport": "Owner report"
+    "ownerReport": "Owner report",
+    "rejection": {
+      "incomplete_details": "Details incomplete",
+      "photos_quality": "Photos not usable",
+      "photos_rights": "Photo rights unclear",
+      "price_unrealistic": "Price looks wrong",
+      "wrong_location": "Wrong location",
+      "duplicate": "Duplicate listing",
+      "prohibited_content": "Not allowed on the marketplace",
+      "other": "Other (see note)",
+      "resubmitHint": "Edit the listing to fix this; saving sends it back for review."
+    }
   },
   "studio": {
     "title": "Content studio",
@@ -2424,7 +2436,8 @@
       "not_found": "Listing not found.",
       "not_moderatable": "This listing is not awaiting review.",
       "update_failed": "Update failed. Try again.",
-      "self_prepared": "You prepared this listing's import, so another admin must approve it."
+      "self_prepared": "You prepared this listing's import, so another admin must approve it.",
+      "bulk_empty": "Select at least one listing."
     },
     "photos": {
       "title": "Imported photos (private until you approve)",
@@ -2436,9 +2449,84 @@
         "processed": "Ready to publish",
         "failed": "Could not be processed",
         "quarantined": "Kept out"
+      },
+      "willPublish": "Approving publishes {publish} of {total} photos. The rest stay private: still processing, paused, failed, kept out or without a rights record.",
+      "openCentre": "Open in the Photo Quality Centre"
+    },
+    "quarantined": "The photo will not be published.",
+    "tabs": {
+      "label": "Moderation queues",
+      "pending_review": "Awaiting review",
+      "rejected": "Rejected",
+      "published": "Live"
+    },
+    "count": {
+      "pending_review": "{count, plural, one {# listing} other {# listings}} awaiting review",
+      "rejected": "{count, plural, one {# rejected listing} other {# rejected listings}}",
+      "published": "{count, plural, one {# live listing} other {# live listings}}"
+    },
+    "emptyTab": {
+      "pending_review": "Queue clear - nothing awaiting review.",
+      "rejected": "No rejected listings.",
+      "published": "No live listings in your countries."
+    },
+    "bulk": {
+      "title": "Decide several at once",
+      "hint": "Tick listings below, then approve or reject them together. Each listing still goes through every check on its own: your countries, separation of duties and its status. A rejection needs a reason code.",
+      "approve": "Approve selected",
+      "reject": "Reject selected",
+      "select": "Select {id}",
+      "done": "{ok} done, {skipped} skipped."
+    },
+    "reasonCode": "Reason (needed to reject)",
+    "note": "Note to the agent (needed for Other)",
+    "takeDown": "Take down",
+    "codes": {
+      "incomplete_details": "Details incomplete",
+      "photos_quality": "Photos not usable",
+      "photos_rights": "Photo rights unclear",
+      "price_unrealistic": "Price looks wrong",
+      "wrong_location": "Wrong location",
+      "duplicate": "Duplicate listing",
+      "prohibited_content": "Not allowed on the marketplace",
+      "other": "Other (see note)"
+    },
+    "quality": {
+      "score": "Quality {score}/100",
+      "parts": "Complete {complete} · photos {photos}",
+      "rec": {
+        "add_field": "Fields missing",
+        "add_photos": "Few photos",
+        "describe_more": "Short description",
+        "possible_duplicate": "Possible duplicate",
+        "price_above_comparables": "Price above similar",
+        "price_below_comparables": "Price below similar",
+        "refine_location": "Location vague",
+        "remove_phone": "Phone in text",
+        "title_location": "No place in title"
       }
     },
-    "quarantined": "The photo will not be published."
+    "photoStatus": {
+      "live": "Live",
+      "awaiting_approval": "Processed, awaiting approval",
+      "processing": "Processing",
+      "queued": "Waiting to process",
+      "paused_quota": "Paused: image quota reached",
+      "paused_cap": "Paused: monthly cap reached",
+      "failed": "Could not be processed",
+      "kept_out": "Kept out",
+      "removed": "Removed by the agent"
+    },
+    "rights": {
+      "missing": "{n, plural, one {# photo has} other {# photos have}} no rights record — will not be published",
+      "missingOne": "No rights record"
+    },
+    "pager": {
+      "label": "Pages",
+      "prev": "Previous",
+      "next": "Next",
+      "of": "Page {page} of {pages}"
+    }
   },
   "plans": {
     "free": "Free",
@@ -4565,7 +4653,115 @@
     "errors": {
       "invalid": "Check the details and try again.",
       "not_permitted": "You cannot prepare imports for that agent.",
-      "failed": "Could not complete that. Try again."
+      "failed": "Could not complete that. Try again.",
+      "nothing_selected": "Select at least one item."
+    },
+    "review": {
+      "title": "Batch review",
+      "hint": "Quality, photos and every edit at a glance. Tick items to skip or restore them together; imported items cannot change.",
+      "skipSelected": "Skip selected",
+      "restoreSelected": "Restore selected",
+      "select": "Select",
+      "selectOne": "Select {title}",
+      "item": "Item",
+      "status": "Status",
+      "quality": "Quality",
+      "photos": "Photos",
+      "changes": "Changed from source",
+      "listingScore": "The listing's quality score",
+      "scoreListing": "Listing {score}/100",
+      "scoreItem": "Fields {score}%",
+      "missing": "Missing",
+      "field": {
+        "title": "title",
+        "price": "price",
+        "listingType": "sale or rent",
+        "propertyType": "type",
+        "location": "location",
+        "size": "size",
+        "bedrooms": "bedrooms",
+        "description": "description",
+        "photos": "photos"
+      },
+      "photosState": "{saved} of {total} saved",
+      "noChanges": "As imported",
+      "bulkDone": "{n, plural, one {# item} other {# items}} updated.",
+      "itemStatus": {
+        "found": "Found",
+        "processing": "Fetching",
+        "ready": "Ready",
+        "needs_review": "Needs review",
+        "duplicate": "Duplicate",
+        "imported": "Imported",
+        "failed": "Failed",
+        "skipped": "Skipped"
+      }
     }
+  },
+  "adminMedia": {
+    "title": "Photo Quality Centre",
+    "intro": "Every imported and partner photo in your countries, as the processor sees it: waiting, processing, paused, failed, awaiting approval, live or kept out, with its rights record. Nothing here makes a photo public; that is the listing's approval.",
+    "usage": {
+      "title": "Image processing this month",
+      "value": "{used} of {cap} transformations",
+      "note": "Free plan, $0: the processor pauses at the cap and never spends."
+    },
+    "checks": {
+      "title": "Checks that run here",
+      "rules": "Rules only: under {w}×{h} pixels, or under {kb} KB, is flagged.",
+      "noAi": "No AI model reviews photos on this screen."
+    },
+    "views": {
+      "label": "Views",
+      "attention": "Needs attention",
+      "processing": "Processing",
+      "awaiting": "Awaiting approval",
+      "kept_out": "Kept out",
+      "all": "All"
+    },
+    "clearListing": "All listings",
+    "done": {
+      "released": "Released. The photo can be published with its listing again.",
+      "retried": "Queued for a fresh processing run.",
+      "quarantined": "Kept out. It will not be published.",
+      "ok": "Done."
+    },
+    "errors": {
+      "invalid": "Invalid request.",
+      "update_failed": "That did not work. Try again.",
+      "not_found": "Photo not found.",
+      "not_moderatable": "This photo cannot be kept out now.",
+      "not_quarantined": "This photo is not kept out.",
+      "self_prepared": "You prepared this listing's import, so another reviewer must release it.",
+      "not_retryable": "Only failed or paused photos can be retried."
+    },
+    "count": "{count, plural, one {# photo} other {# photos}}",
+    "empty": {
+      "attention": "Nothing needs attention.",
+      "processing": "Nothing is processing.",
+      "awaiting": "No processed photos are waiting.",
+      "kept_out": "No photos are kept out.",
+      "all": "No imported or partner photos yet."
+    },
+    "noPreview": "No preview",
+    "rights": {
+      "import_authority": "Agent's import authority",
+      "partner_agreement": "Partner agreement",
+      "agent_upload": "Agent upload",
+      "missing": "No rights record",
+      "missingNote": "Without a rights record this photo is never published."
+    },
+    "rule": {
+      "low_res": "Low resolution",
+      "tiny_file": "Very small file"
+    },
+    "failedWhy": "Failed after {n} attempts: {why}",
+    "paused": {
+      "paused_quota": "Paused: the Images quota was reached. Retry when it resets.",
+      "paused_cap": "Paused: the monthly cap was reached. It resumes next month, or retry after the cap is raised."
+    },
+    "retryAt": "Attempt {n} failed; next try {at} UTC",
+    "release": "Release",
+    "retry": "Retry"
   }
 }
