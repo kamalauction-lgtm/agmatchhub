@@ -144,6 +144,8 @@ export default async function ListingModerationPage({
     (signed ?? []).forEach((s, i) => { if (s.signedUrl) previews.set(toSign[i].id, s.signedUrl); });
   }
 
+  // D9 (00120): open buyer reports in the moderator's countries (RLS-scoped).
+  const { count: openReports } = await supabase.from("listing_reports").select("id", { count: "exact", head: true }).eq("status", "open");
   const total = count ?? rows.length;
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const here = `/admin/listings?status=${tab}${page > 1 ? `&page=${page}` : ""}`;
@@ -166,6 +168,10 @@ export default async function ListingModerationPage({
             {t(`tabs.${s}` as never)}
           </Link>
         ))}
+        <Link href="/admin/listings/reports" data-reports-link={openReports ?? 0}
+          className="rounded-full border border-line px-3 py-1.5 text-sm text-muted hover:text-foreground">
+          {t("tabs.reported", { n: openReports ?? 0 })}
+        </Link>
       </nav>
       <p className="mb-6 text-sm text-muted" data-total={total}>{tab === "pending_review" ? t("count.pending_review", { count: total }) : tab === "rejected" ? t("count.rejected", { count: total }) : t("count.published", { count: total })}</p>
 

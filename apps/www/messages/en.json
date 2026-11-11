@@ -390,5 +390,33 @@
     "verified": "Verified",
     "inventory": "{count} properties",
     "empty": "No properties listed yet."
+  },
+  "report": {
+    "open": "Report this listing",
+    "intro": "Something wrong with this listing? Reports are anonymous and reviewed by the moderation team.",
+    "reason": "Reason",
+    "choose": "Choose a reason",
+    "details": "Details (optional)",
+    "detailsHint": "What is wrong? Required if you choose Other.",
+    "send": "Send report",
+    "sent": "Thank you. Your report has been sent and will be reviewed by the moderation team.",
+    "reasons": {
+      "wrong_info": "Inaccurate information",
+      "already_sold": "Already sold or rented",
+      "duplicate": "Duplicate listing",
+      "wrong_photos": "Photos do not match",
+      "scam_or_fraud": "Suspected scam",
+      "offensive": "Inappropriate content",
+      "other": "Other"
+    },
+    "errors": {
+      "details_required": "Add details when you choose Other.",
+      "details_too_long": "Details can be at most 1,000 characters.",
+      "rate_limited": "Too many reports in a short time. Try again later.",
+      "listing_not_found": "This listing is no longer available.",
+      "invalid_reason": "Choose a reason.",
+      "invalid": "Check the form and try again.",
+      "error": "The report could not be sent. Try again."
+    }
   }
 }

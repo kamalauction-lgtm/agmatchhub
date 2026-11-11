@@ -2521,7 +2521,8 @@
       "label": "Baris gilir moderasi",
       "pending_review": "Menunggu semakan",
       "rejected": "Ditolak",
-      "published": "Diterbitkan"
+      "published": "Diterbitkan",
+      "reported": "Dilaporkan ({n})"
     },
     "count": {
       "pending_review": "{count} penyenaraian menunggu semakan",
@@ -4936,5 +4937,42 @@
     "supplied": "Foto daripada ejen (peribadi)",
     "suppliedNote": "Menyelesaikan permintaan ini pada penyenaraian yang diterbitkan akan menerbitkan foto yang telah diproses; foto yang masih diproses kekal peribadi.",
     "openCentre": "Buka di Pusat Kualiti Foto"
+  },
+  "adminListingReports": {
+    "back": "Moderasi",
+    "title": "Laporan pembeli",
+    "hint": "Laporan yang dihantar pembeli dari pasaran tentang penyenaraian di negara anda. Pelapor adalah tanpa nama. Uruskan penyenaraian dalam moderasi (tolak atau minta perubahan), kemudian tutup laporan.",
+    "empty": "Tiada laporan terbuka.",
+    "count": "{n, plural, other {# laporan}}",
+    "openModeration": "Buka dalam moderasi",
+    "note": "Nota (pilihan)",
+    "actioned": "Tanda sudah diuruskan",
+    "dismiss": "Abaikan",
+    "recent": "Baru ditutup",
+    "status": {
+      "dismissed": "Diabaikan",
+      "actioned": "Diuruskan"
+    },
+    "done": {
+      "dismissed": "Laporan diabaikan.",
+      "actioned": "Laporan ditanda sudah diuruskan."
+    },
+    "errors": {
+      "invalid": "Semak butiran dan cuba lagi.",
+      "not_found": "Laporan itu tiada dalam negara anda.",
+      "closed": "Laporan itu sudah ditutup.",
+      "invalid_outcome": "Pilih keputusan.",
+      "note_too_long": "Nota maksimum 1,000 aksara.",
+      "failed": "Tidak dapat diselesaikan. Cuba lagi."
+    },
+    "reasons": {
+      "wrong_info": "Maklumat tidak tepat",
+      "already_sold": "Sudah dijual atau disewa",
+      "duplicate": "Penyenaraian berganda",
+      "wrong_photos": "Foto tidak sepadan",
+      "scam_or_fraud": "Disyaki penipuan",
+      "offensive": "Kandungan tidak sesuai",
+      "other": "Lain-lain"
+    }
   }
 }

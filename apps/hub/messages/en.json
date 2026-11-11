@@ -2521,7 +2521,8 @@
       "label": "Moderation queues",
       "pending_review": "Awaiting review",
       "rejected": "Rejected",
-      "published": "Live"
+      "published": "Live",
+      "reported": "Reported ({n})"
     },
     "count": {
       "pending_review": "{count, plural, one {# listing} other {# listings}} awaiting review",
@@ -4936,5 +4937,42 @@
     "supplied": "Photo supplied by the agent (private)",
     "suppliedNote": "Resolving this request on a live listing publishes the processed photo; one still processing stays private.",
     "openCentre": "Open in the Photo Quality Centre"
+  },
+  "adminListingReports": {
+    "back": "Moderation",
+    "title": "Buyer reports",
+    "hint": "Reports buyers sent from the marketplace about listings in your countries. Reporters are anonymous. Deal with the listing in moderation (reject or request a change), then close the report.",
+    "empty": "No open reports.",
+    "count": "{n, plural, one {# report} other {# reports}}",
+    "openModeration": "Open in moderation",
+    "note": "Note (optional)",
+    "actioned": "Mark actioned",
+    "dismiss": "Dismiss",
+    "recent": "Recently closed",
+    "status": {
+      "dismissed": "Dismissed",
+      "actioned": "Actioned"
+    },
+    "done": {
+      "dismissed": "Report dismissed.",
+      "actioned": "Report marked as actioned."
+    },
+    "errors": {
+      "invalid": "Check the details and try again.",
+      "not_found": "That report is not in your countries.",
+      "closed": "That report is already closed.",
+      "invalid_outcome": "Choose an outcome.",
+      "note_too_long": "The note can be at most 1,000 characters.",
+      "failed": "Could not complete that. Try again."
+    },
+    "reasons": {
+      "wrong_info": "Inaccurate information",
+      "already_sold": "Already sold or rented",
+      "duplicate": "Duplicate listing",
+      "wrong_photos": "Photos do not match",
+      "scam_or_fraud": "Suspected scam",
+      "offensive": "Inappropriate content",
+      "other": "Other"
+    }
   }
 }

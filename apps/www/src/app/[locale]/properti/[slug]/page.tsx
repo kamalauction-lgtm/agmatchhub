@@ -20,6 +20,7 @@ import {
 } from "@/lib/format";
 import { getBuyerConsent } from "@/lib/inquiry";
 import { InquiryForm } from "@/components/inquiry-form";
+import { ReportListing } from "@/components/report-listing";
 import { AgentCard } from "@/components/agent-card";
 import { ListingGallery, type GalleryImage } from "@/components/listing-gallery";
 import { KeyFacts, type Fact } from "@/components/key-facts";
@@ -78,6 +79,7 @@ export default async function ListingPage({
   const leadRef =
     typeof sp.ref === "string" && /^[A-Z-]+-[0-9-]+$/.test(sp.ref) ? sp.ref : undefined;
   const errorField = typeof sp.field === "string" ? sp.field.slice(0, 30) : undefined;
+  const reportStatus = typeof sp.report === "string" ? sp.report.slice(0, 30) : undefined;
   const consent = await getBuyerConsent(locale);
 
   const [media, similar, t, tType, tOwn, tFurn, tCond, tHome, tCompare] = await Promise.all([
@@ -400,6 +402,7 @@ export default async function ListingPage({
                 {t("contactAgent")}
               </p>
             )}
+            <ReportListing slug={slug} locale={locale} status={reportStatus} />
           </AgentCard>
         </aside>
       </div>

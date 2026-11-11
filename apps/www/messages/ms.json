@@ -390,5 +390,33 @@
     "verified": "Disahkan",
     "inventory": "{count} hartanah",
     "empty": "Ejen ini belum mempunyai hartanah yang disiarkan."
+  },
+  "report": {
+    "open": "Laporkan penyenaraian ini",
+    "intro": "Ada yang tidak kena dengan penyenaraian ini? Laporan adalah tanpa nama dan disemak oleh pasukan moderasi.",
+    "reason": "Sebab",
+    "choose": "Pilih sebab",
+    "details": "Butiran (pilihan)",
+    "detailsHint": "Apa yang tidak kena? Wajib jika anda memilih Lain-lain.",
+    "send": "Hantar laporan",
+    "sent": "Terima kasih. Laporan anda telah dihantar dan akan disemak oleh pasukan moderasi.",
+    "reasons": {
+      "wrong_info": "Maklumat tidak tepat",
+      "already_sold": "Sudah dijual atau disewa",
+      "duplicate": "Penyenaraian berganda",
+      "wrong_photos": "Foto tidak sepadan",
+      "scam_or_fraud": "Disyaki penipuan",
+      "offensive": "Kandungan tidak sesuai",
+      "other": "Lain-lain"
+    },
+    "errors": {
+      "details_required": "Tambah butiran apabila anda memilih Lain-lain.",
+      "details_too_long": "Butiran maksimum 1,000 aksara.",
+      "rate_limited": "Terlalu banyak laporan dalam masa singkat. Cuba lagi kemudian.",
+      "listing_not_found": "Penyenaraian ini tidak lagi tersedia.",
+      "invalid_reason": "Pilih sebab.",
+      "invalid": "Semak borang dan cuba lagi.",
+      "error": "Laporan tidak dapat dihantar. Cuba lagi."
+    }
   }
 }

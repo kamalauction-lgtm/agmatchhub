@@ -2521,7 +2521,8 @@
       "label": "Antrean moderasi",
       "pending_review": "Menunggu tinjauan",
       "rejected": "Ditolak",
-      "published": "Tayang"
+      "published": "Tayang",
+      "reported": "Dilaporkan ({n})"
     },
     "count": {
       "pending_review": "{count} listing menunggu tinjauan",
@@ -4936,5 +4937,42 @@
     "supplied": "Foto dari agen (privat)",
     "suppliedNote": "Menyelesaikan permintaan ini pada listing yang tayang akan menayangkan foto yang sudah diproses; foto yang masih diproses tetap privat.",
     "openCentre": "Buka di Pusat Kualitas Foto"
+  },
+  "adminListingReports": {
+    "back": "Moderasi",
+    "title": "Laporan pembeli",
+    "hint": "Laporan yang dikirim pembeli dari marketplace tentang listing di negara Anda. Pelapor bersifat anonim. Tangani listing di moderasi (tolak atau minta perubahan), lalu tutup laporannya.",
+    "empty": "Tidak ada laporan terbuka.",
+    "count": "{n, plural, other {# laporan}}",
+    "openModeration": "Buka di moderasi",
+    "note": "Catatan (opsional)",
+    "actioned": "Tandai sudah ditangani",
+    "dismiss": "Abaikan",
+    "recent": "Baru ditutup",
+    "status": {
+      "dismissed": "Diabaikan",
+      "actioned": "Ditangani"
+    },
+    "done": {
+      "dismissed": "Laporan diabaikan.",
+      "actioned": "Laporan ditandai sudah ditangani."
+    },
+    "errors": {
+      "invalid": "Periksa isian dan coba lagi.",
+      "not_found": "Laporan itu tidak berada di negara Anda.",
+      "closed": "Laporan itu sudah ditutup.",
+      "invalid_outcome": "Pilih hasil.",
+      "note_too_long": "Catatan maksimal 1.000 karakter.",
+      "failed": "Tidak dapat diselesaikan. Coba lagi."
+    },
+    "reasons": {
+      "wrong_info": "Informasi tidak akurat",
+      "already_sold": "Sudah terjual atau tersewa",
+      "duplicate": "Listing ganda",
+      "wrong_photos": "Foto tidak sesuai",
+      "scam_or_fraud": "Dugaan penipuan",
+      "offensive": "Konten tidak pantas",
+      "other": "Lainnya"
+    }
   }
 }
