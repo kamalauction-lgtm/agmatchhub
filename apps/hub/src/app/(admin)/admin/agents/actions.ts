@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
 import { requireCapabilityIn } from "@/lib/authz";
+import { notify } from "@/lib/notifications";
 
 const decisionSchema = z.object({
   userId: z.string().uuid(),
@@ -143,5 +144,64 @@ export async function reviewAgent(formData: FormData) {
     reason: notes || undefined,
   });
 
+  try {
+    await notify({ userId, kind: `agent.verification_${ACTION_BY_DECISION[decision]}`, payload: {}, href: "/verification" });
+  } catch (e) {
+    console.error("[verification] notify failed:", e instanceof Error ? e.message : e);
+  }
   redirect(`/admin/agents/${userId}?done=${decision}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Agent 360: suspend and restore (P1-d-1, 00121)                              */
+/* -------------------------------------------------------------------------- */
+
+const suspendSchema = z.object({
+  userId: z.string().uuid(),
+  reason: z.string().trim().min(3).max(2000),
+});
+const restoreSchema = z.object({
+  userId: z.string().uuid(),
+  note: z.string().trim().max(2000).optional().or(z.literal("")),
+});
+
+/**
+ * Suspend an agent. admin_suspend_agent checks agent.verify in the agent's
+ * country, refuses yourself and a second suspension, pauses the agent's
+ * published listings (and records which), audits, and notifies the agent
+ * in-app; the push/email copy goes out here.
+ */
+export async function suspendAgent(formData: FormData) {
+  const p = suspendSchema.safeParse({ userId: formData.get("userId"), reason: formData.get("reason") });
+  if (!p.success) redirect(`/admin/agents/${String(formData.get("userId") ?? "")}?error=reason_required`);
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_suspend_agent", { p_agent: p.data.userId, p_reason: p.data.reason });
+  const r = data as { ok?: boolean; error?: string; listings_paused?: number } | null;
+  if (error || !r?.ok) redirect(`/admin/agents/${p.data.userId}?error=${r?.error ?? "save_failed"}`);
+  await pushCopy(p.data.userId, "agent.suspended");
+  redirect(`/admin/agents/${p.data.userId}?done=suspended&n=${r?.listings_paused ?? 0}`);
+}
+
+export async function restoreAgent(formData: FormData) {
+  const p = restoreSchema.safeParse({ userId: formData.get("userId"), note: formData.get("note") ?? "" });
+  if (!p.success) redirect(`/admin/agents/${String(formData.get("userId") ?? "")}?error=save_failed`);
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_restore_agent", { p_agent: p.data.userId, p_note: p.data.note || null });
+  const r = data as { ok?: boolean; error?: string; listings_republished?: number } | null;
+  if (error || !r?.ok) redirect(`/admin/agents/${p.data.userId}?error=${r?.error ?? "save_failed"}`);
+  await pushCopy(p.data.userId, "agent.restored");
+  redirect(`/admin/agents/${p.data.userId}?done=restored&n=${r?.listings_republished ?? 0}`);
+}
+
+/**
+ * The database already wrote the in-app notification; this sends the push
+ * and email copies through the normal channel. A delivery failure never
+ * undoes the decision.
+ */
+async function pushCopy(userId: string, kind: string) {
+  try {
+    await notify({ userId, kind, payload: {}, href: "/dashboard", inApp: false });
+  } catch (e) {
+    console.error(`[${kind}] notify failed:`, e instanceof Error ? e.message : e);
+  }
 }

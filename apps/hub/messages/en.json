@@ -325,12 +325,18 @@
     "doneNotice": {
       "approve": "Agent approved and verified.",
       "reject": "Agent rejected.",
-      "request_info": "Information requested from the agent."
+      "request_info": "Information requested from the agent.",
+      "suspended": "Agent suspended. {n, plural, one {# live listing was} other {# live listings were}} paused.",
+      "restored": "Agent restored. {n, plural, one {# listing was} other {# listings were}} republished."
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
       "save_failed": "Could not save the decision.",
-      "self_invited": "You invited this agent, so another admin must approve their verification."
+      "self_invited": "You invited this agent, so another admin must approve their verification.",
+      "reason_required": "Give a reason of at least 3 characters.",
+      "already_suspended": "This agent is already suspended.",
+      "not_suspended": "This agent is not suspended.",
+      "self": "You cannot suspend or restore yourself."
     },
     "overviewTitle": "Command Center",
     "allClear": "Nothing is waiting. All queues are clear.",
@@ -462,6 +468,38 @@
       "media": "{count} published without a photo",
       "trust": "oldest open {count}h",
       "rewards": "{count} awaiting a decision"
+    },
+    "a360": {
+      "portfolioTitle": "Portfolio",
+      "noListings": "No listings yet.",
+      "consentTitle": "Consents and declarations",
+      "noConsent": "No consent records.",
+      "accountTitle": "Account",
+      "suspendHint": "Suspending pauses this agent's {n, plural, one {# live listing} other {# live listings}} and stops them editing listings until restored. They are told why.",
+      "suspendReason": "Reason (the agent sees it)",
+      "suspend": "Suspend agent",
+      "suspendedSince": "Suspended since {date}.",
+      "restoreNote": "Note (optional)",
+      "restoreHint": "Restoring returns the previous status and republishes the {n, plural, one {# listing} other {# listings}} the suspension paused, if they are still approved.",
+      "restore": "Restore agent",
+      "listingStatus": {
+        "draft": "Draft",
+        "pending_review": "Awaiting review",
+        "published": "Live",
+        "rejected": "Rejected",
+        "paused": "Paused",
+        "expired": "Expired",
+        "sold": "Sold",
+        "rented": "Rented",
+        "withdrawn": "Withdrawn",
+        "archived": "Archived"
+      }
+    },
+    "agentQueue": {
+      "search": "Search by name",
+      "country": "Country",
+      "allCountries": "All countries",
+      "apply": "Apply"
     }
   },
   "adminLegal": {
@@ -1398,7 +1436,12 @@
       "listing_change_answered": "An agent answered your change request",
       "listing_change_resolved": "Your change request was resolved",
       "generic": "Notification",
-      "listing_import_handover_complete": "You are now in control of your prepared listings"
+      "listing_import_handover_complete": "You are now in control of your prepared listings",
+      "agent_suspended": "Your account has been suspended",
+      "agent_restored": "Your account has been restored",
+      "agent_verification_approved": "Your verification was approved",
+      "agent_verification_rejected": "Your verification was not approved",
+      "agent_verification_info_requested": "More information is needed for your verification"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -5004,5 +5047,11 @@
     "overdueHint": "Unanswered leads, the longest overdue first.",
     "noOverdue": "Nothing is overdue.",
     "lateBy": "{time} late"
+  },
+  "suspension": {
+    "title": "Your account is suspended",
+    "body": "While your account is suspended you cannot create or edit listings, and your live listings are paused. Contact the platform team if you have questions.",
+    "reason": "Reason given",
+    "listings": "Your listings come back automatically when your account is restored, if they are still approved."
   }
 }

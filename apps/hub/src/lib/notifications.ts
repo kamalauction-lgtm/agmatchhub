@@ -18,15 +18,19 @@ export async function notify(opts: {
   kind: string;               // e.g. "message.new", "offer.received"
   payload?: Record<string, string | number>;
   href?: string;
+  /** false when the database already wrote the in-app row (e.g. 00121); push and email still go out. */
+  inApp?: boolean;
 }): Promise<void> {
   const service = createServiceClient();
-  const { error } = await service.from("notifications").insert({
-    user_id: opts.userId,
-    kind: opts.kind,
-    payload: opts.payload ?? {},
-    href: opts.href ?? null,
-  });
-  if (error) console.error("[notify] failed:", opts.kind, error.message);
+  if (opts.inApp !== false) {
+    const { error } = await service.from("notifications").insert({
+      user_id: opts.userId,
+      kind: opts.kind,
+      payload: opts.payload ?? {},
+      href: opts.href ?? null,
+    });
+    if (error) console.error("[notify] failed:", opts.kind, error.message);
+  }
 
   // Delivery channels are best-effort; never break the triggering action.
   try {

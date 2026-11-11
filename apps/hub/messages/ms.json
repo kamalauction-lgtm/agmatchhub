@@ -325,12 +325,18 @@
     "doneNotice": {
       "approve": "Ejen diluluskan dan disahkan.",
       "reject": "Ejen ditolak.",
-      "request_info": "Maklumat diminta daripada ejen."
+      "request_info": "Maklumat diminta daripada ejen.",
+      "suspended": "Ejen digantung. {n, plural, other {# penyenaraian aktif}} dijeda.",
+      "restored": "Ejen dipulihkan. {n, plural, other {# penyenaraian}} diterbitkan semula."
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
       "save_failed": "Keputusan tidak dapat disimpan.",
-      "self_invited": "Anda yang menjemput ejen ini, jadi admin lain mesti meluluskan pengesahannya."
+      "self_invited": "Anda yang menjemput ejen ini, jadi admin lain mesti meluluskan pengesahannya.",
+      "reason_required": "Berikan sebab sekurang-kurangnya 3 aksara.",
+      "already_suspended": "Ejen ini sudah digantung.",
+      "not_suspended": "Ejen ini tidak digantung.",
+      "self": "Anda tidak boleh menggantung atau memulihkan diri sendiri."
     },
     "overviewTitle": "Pusat kawalan",
     "allClear": "Tiada apa menunggu. Semua barisan bersih.",
@@ -462,6 +468,38 @@
       "media": "{count} terbit tanpa foto",
       "trust": "terbuka terlama {count} jam",
       "rewards": "{count} menunggu keputusan"
+    },
+    "a360": {
+      "portfolioTitle": "Portfolio",
+      "noListings": "Belum ada penyenaraian.",
+      "consentTitle": "Persetujuan dan akuan",
+      "noConsent": "Tiada rekod persetujuan.",
+      "accountTitle": "Akaun",
+      "suspendHint": "Penggantungan menjeda {n, plural, other {# penyenaraian aktif}} ejen ini dan menghalang mereka mengubah penyenaraian sehingga dipulihkan. Ejen dimaklumkan sebabnya.",
+      "suspendReason": "Sebab (dilihat oleh ejen)",
+      "suspend": "Gantung ejen",
+      "suspendedSince": "Digantung sejak {date}.",
+      "restoreNote": "Nota (pilihan)",
+      "restoreHint": "Pemulihan mengembalikan status sebelumnya dan menerbitkan semula {n, plural, other {# penyenaraian}} yang dijeda oleh penggantungan, jika masih diluluskan.",
+      "restore": "Pulihkan ejen",
+      "listingStatus": {
+        "draft": "Draf",
+        "pending_review": "Menunggu semakan",
+        "published": "Diterbitkan",
+        "rejected": "Ditolak",
+        "paused": "Dijeda",
+        "expired": "Tamat tempoh",
+        "sold": "Dijual",
+        "rented": "Disewa",
+        "withdrawn": "Ditarik balik",
+        "archived": "Diarkibkan"
+      }
+    },
+    "agentQueue": {
+      "search": "Cari mengikut nama",
+      "country": "Negara",
+      "allCountries": "Semua negara",
+      "apply": "Guna"
     }
   },
   "adminLegal": {
@@ -1398,7 +1436,12 @@
       "listing_change_answered": "Ejen menjawab permintaan perubahan anda",
       "listing_change_resolved": "Permintaan perubahan anda telah diselesaikan",
       "generic": "Pemberitahuan",
-      "listing_import_handover_complete": "Anda kini mengawal penyenaraian yang disediakan"
+      "listing_import_handover_complete": "Anda kini mengawal penyenaraian yang disediakan",
+      "agent_suspended": "Akaun anda telah digantung",
+      "agent_restored": "Akaun anda telah dipulihkan",
+      "agent_verification_approved": "Pengesahan anda diluluskan",
+      "agent_verification_rejected": "Pengesahan anda tidak diluluskan",
+      "agent_verification_info_requested": "Pengesahan anda memerlukan maklumat tambahan"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -5004,5 +5047,11 @@
     "overdueHint": "Prospek yang belum dijawab, yang paling lama lewat dahulu.",
     "noOverdue": "Tiada yang lewat.",
     "lateBy": "lewat {time}"
+  },
+  "suspension": {
+    "title": "Akaun anda digantung",
+    "body": "Semasa akaun digantung, anda tidak boleh mencipta atau mengubah penyenaraian, dan penyenaraian aktif anda dijeda. Hubungi pasukan platform jika ada pertanyaan.",
+    "reason": "Sebab",
+    "listings": "Penyenaraian anda kembali secara automatik apabila akaun dipulihkan, jika masih diluluskan."
   }
 }

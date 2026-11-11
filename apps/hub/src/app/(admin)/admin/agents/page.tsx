@@ -3,15 +3,20 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
 
-const FILTERS = ["under_review", "additional_information_required", "verified", "rejected", "all"] as const;
+const FILTERS = ["under_review", "additional_information_required", "verified", "rejected", "suspended", "all"] as const;
 
 export default async function AgentQueuePage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; q?: string; country?: string }>;
 }) {
   await requireCapability("agent.verify");
-  const { status = "under_review" } = await searchParams;
+  const sp = await searchParams;
+  const status = sp.status ?? "under_review";
+  // Agent 360 queue search and filter (P1-d-1). The name is matched literally:
+  // PostgREST pattern characters are stripped before use.
+  const q = (sp.q ?? "").replace(/[%_,()*\\]/g, " ").trim().slice(0, 80);
+  const country = /^[A-Z]{2}$/.test(sp.country ?? "") ? sp.country! : "";
   const supabase = await createClient();
   const t = await getTranslations("admin");
   const td = await getTranslations("dashboard");
@@ -24,6 +29,13 @@ export default async function AgentQueuePage({
   if (status !== "all") query = query.eq("agent_status", status);
   const scope = await capabilityCountries("agent.verify");
   if (scope) query = query.in("country_code", scope);
+  if (country) query = query.eq("country_code", country);
+  if (q) query = query.ilike("display_name", `%${q}%`);
+  const countries = scope ?? ["ID", "MY"];
+  const keep = (extra: Record<string, string>) => {
+    const u = new URLSearchParams({ status, ...(q ? { q } : {}), ...(country ? { country } : {}), ...extra });
+    return `/admin/agents?${u.toString()}`;
+  };
   const { data: rows } = await query;
 
   return (
@@ -34,7 +46,7 @@ export default async function AgentQueuePage({
         {FILTERS.map((f) => (
           <Link
             key={f}
-            href={`/admin/agents?status=${f}`}
+            href={keep({ status: f })}
             className={`rounded-full border px-3 py-1 ${
               f === status
                 ? "border-crimson bg-crimson-soft font-semibold text-crimson"
@@ -45,6 +57,22 @@ export default async function AgentQueuePage({
           </Link>
         ))}
       </div>
+
+      <form method="get" action="/admin/agents" className="mb-6 flex flex-wrap items-end gap-2 text-sm" data-agent-search="1">
+        <input type="hidden" name="status" value={status} />
+        <label className="block">
+          <span className="mb-1 block text-xs text-muted">{t("agentQueue.search")}</span>
+          <input name="q" defaultValue={q} maxLength={80} className="min-h-10 rounded-lg border border-line bg-background px-3" />
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-xs text-muted">{t("agentQueue.country")}</span>
+          <select name="country" defaultValue={country} className="min-h-10 rounded-lg border border-line bg-background px-2">
+            <option value="">{t("agentQueue.allCountries")}</option>
+            {countries.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </label>
+        <button type="submit" className="min-h-10 cursor-pointer rounded-lg border border-line px-3 font-medium hover:border-crimson hover:text-crimson">{t("agentQueue.apply")}</button>
+      </form>
 
       {!rows?.length ? (
         <p className="rounded-xl border border-line bg-surface p-8 text-center text-sm text-muted">
