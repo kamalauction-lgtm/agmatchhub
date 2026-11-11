@@ -11,9 +11,11 @@ import { ChevronLeftIcon, ChevronRightIcon, SearchIcon, SparkIcon } from "@/comp
 import { publicPath } from "@/i18n/routing";
 import { market } from "@/config/market";
 import { formatPriceExact } from "@/lib/format";
+import { requireLocale } from "@/i18n/require-locale";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  requireLocale(locale);
   const t = await getTranslations({ locale, namespace: "search" });
   return { title: t("title") };
 }
@@ -64,6 +66,7 @@ export default async function SearchPage({
   searchParams: Promise<RawParams>;
 }) {
   const { locale } = await params;
+  requireLocale(locale);
   setRequestLocale(locale);
 
   const t = await getTranslations("search");

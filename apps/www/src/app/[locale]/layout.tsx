@@ -9,6 +9,7 @@ import { brand } from "@/config/brand";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import "../globals.css";
+import { requireLocale } from "@/i18n/require-locale";
 
 /**
  * Inter, per the design system sheet — the same face as the agent platform, so
@@ -37,6 +38,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  requireLocale(locale);
   const t = await getTranslations({ locale, namespace: "brand" });
   const country = market.countryName[locale] ?? market.countryName[market.defaultLocale];
 
@@ -78,6 +80,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  requireLocale(locale);
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale);

@@ -11,6 +11,7 @@ import { withBuildFallback } from "@/lib/build-fallback";
 import { routing } from "@/i18n/routing";
 import { market } from "@/config/market";
 import { MarketHome } from "@/markets";
+import { requireLocale } from "@/i18n/require-locale";
 
 /**
  * The marketplace homepage — a dispatcher, not a page.
@@ -53,6 +54,7 @@ export default async function HomePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  requireLocale(locale);
   setRequestLocale(locale);
 
   const t = await getTranslations("home");

@@ -20,7 +20,10 @@ import { market } from "@/config/market";
  * is correct for Malaysia and wrong for Indonesia.
  */
 export function numberLocaleFor(locale: string): string {
-  return `${locale}-${market.country}`;
+  // An unknown value (a stray path segment, a bad cookie) falls back to the
+  // market's default rather than producing an invalid Intl tag and a 500.
+  const safe = (market.locales as readonly string[]).includes(locale) ? locale : market.defaultLocale;
+  return `${safe}-${market.country}`;
 }
 
 function money(currency: string, locale: string): Intl.NumberFormat {

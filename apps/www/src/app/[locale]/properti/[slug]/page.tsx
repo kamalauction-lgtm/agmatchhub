@@ -29,6 +29,7 @@ import { KprCalculator } from "@/components/kpr-calculator";
 import { ListingCard } from "@/components/listing-card";
 import { SectionHeading } from "@/components/section-heading";
 import { routing } from "@/i18n/routing";
+import { requireLocale } from "@/i18n/require-locale";
 
 // The page carries per-buyer inquiry feedback in its query string, so it is
 // rendered per request; the data reads underneath stay cacheable.
@@ -40,6 +41,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { slug, locale } = await params;
+  requireLocale(locale);
   const listing = await getListingBySlug(slug);
   if (!listing) return { title: "404" };
 
@@ -69,6 +71,7 @@ export default async function ListingPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale, slug } = await params;
+  requireLocale(locale);
   setRequestLocale(locale);
 
   const listing = await getListingBySlug(slug);
