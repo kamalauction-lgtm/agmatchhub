@@ -9,7 +9,9 @@ import { getStudioListing, publicMediaUrl } from "@/lib/studio/listings";
 import { schedulePost } from "../social-actions";
 import { draftStudioCopy, draftVideoScript } from "../ai-actions";
 import { writeWhatsappBroadcast, writeSocialCaption } from "@/lib/ai/listing-writer";
-import { buildStudioInput, copyLocaleFor } from "@/lib/studio/input";
+import { buildStudioInput } from "@/lib/studio/input";
+import { copyLanguage } from "@/lib/ai/copy-language";
+import { unitSuffix } from "@/lib/listings/vocabulary";
 import { aiQuotaFor } from "@/lib/ai/engine";
 import { money, place } from "@/lib/listings/format";
 import { StudioWorkspace } from "@/components/studio/studio-workspace";
@@ -38,7 +40,11 @@ export default async function StudioWorkspacePage({
   const listing = await getStudioListing(user.id, listingId);
   if (!listing) notFound();
 
-  const copyLocale = copyLocaleFor(listing);
+  // P0-d-1c: copy, labels and the poster follow the listing's stored
+  // language; Malay is written in English for now, and the page says so.
+  const copy = copyLanguage(listing.language);
+  const copyLocale = copy.lang;
+  const unit = unitSuffix(listing.measurement_unit);
   const [t, tt] = await Promise.all([
     getTranslations("studio"),
     getTranslations({ locale: copyLocale, namespace: "propertyTypes" }),
@@ -73,12 +79,12 @@ export default async function StudioWorkspacePage({
     listing.bathrooms ? `${listing.bathrooms} ${en ? "BA" : "KM"}` : null,
     listing.land_size && listing.building_size
       ? en
-        ? `Land ${listing.land_size} / build ${listing.building_size} m²`
-        : `LT ${listing.land_size} / LB ${listing.building_size} m²`
+        ? `Land ${listing.land_size} / build ${listing.building_size} ${unit}`
+        : `LT ${listing.land_size} / LB ${listing.building_size} ${unit}`
       : listing.building_size
-        ? `${en ? "Build" : "LB"} ${listing.building_size} m²`
+        ? `${en ? "Build" : "LB"} ${listing.building_size} ${unit}`
         : listing.land_size
-          ? `${en ? "Land" : "LT"} ${listing.land_size} m²`
+          ? `${en ? "Land" : "LT"} ${listing.land_size} ${unit}`
           : null,
   ].filter(Boolean);
 
@@ -160,6 +166,7 @@ export default async function StudioWorkspacePage({
         videoAction={draftVideoScript}
         quota={quota ? { remaining: quota.remaining, total: quota.monthly_allowance } : null}
         labels={{
+          copyNotice: copy.lang === "en" ? (copy.fallback ? t("copyLanguage.englishFallback") : t("copyLanguage.english")) : t("copyLanguage.indonesian"),
           tabWhatsapp: t("tabWhatsapp"),
           tabCaption: t("tabCaption"),
           tabFacebook: t("tabFacebook"),

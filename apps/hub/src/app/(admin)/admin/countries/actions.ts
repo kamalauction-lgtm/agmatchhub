@@ -14,6 +14,17 @@ const schema = z.object({
   /* The verified, company-owned profile that server-to-server drafts (Hero →
    * ingest) belong to in this country. Empty = none configured. */
   ingestAgentId: z.union([z.string().uuid(), z.literal("")]),
+  /* The written partner agreement that partner-feed photos are used under
+   * (P0-e-3b). Recorded on every partner photo's provenance row; empty means
+   * partner photos are not stored for this country. */
+  ingestAgreementRef: z.string().trim().max(200).regex(/^[^<>]*$/),
+  /* Screen 13: editable timezone and terminology. The timezone must be an
+   * IANA name the runtime knows; the terms are what the product calls an
+   * agent, an owner and a tenant in this country (empty keeps none). */
+  timezone: z.union([z.literal(""), z.string().refine((tz) => { try { new Intl.DateTimeFormat("en", { timeZone: tz }); return /^[A-Za-z_]+\/[A-Za-z_\/+-]+$/.test(tz); } catch { return false; } })]),
+  termAgent: z.string().trim().max(60).regex(/^[^<>]*$/),
+  termOwner: z.string().trim().max(60).regex(/^[^<>]*$/),
+  termTenant: z.string().trim().max(60).regex(/^[^<>]*$/),
 });
 
 export async function updateCountry(formData: FormData) {
@@ -28,13 +39,18 @@ export async function updateCountry(formData: FormData) {
     defaultCurrency: formData.get("defaultCurrency"),
     measurementUnit: formData.get("measurementUnit"),
     ingestAgentId: formData.get("ingestAgentId") ?? "",
+    ingestAgreementRef: formData.get("ingestAgreementRef") ?? "",
+    timezone: String(formData.get("timezone") ?? "").trim(),
+    termAgent: formData.get("termAgent") ?? "",
+    termOwner: formData.get("termOwner") ?? "",
+    termTenant: formData.get("termTenant") ?? "",
   });
   if (!parsed.success) redirect("/admin/countries?error=invalid");
-  const { code, active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId } = parsed.data;
+  const { code, active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId, ingestAgreementRef, timezone, termAgent, termOwner, termTenant } = parsed.data;
 
   const { data: before } = await supabase
     .from("countries")
-    .select("active, default_language, default_currency, measurement_unit, settings")
+    .select("active, default_language, default_currency, measurement_unit, settings, timezone, terminology")
     .eq("code", code)
     .single();
 
@@ -45,7 +61,12 @@ export async function updateCountry(formData: FormData) {
     if (!a || a.agent_status !== "verified" || a.country_code !== code) redirect("/admin/countries?error=ingest_agent");
   }
   const prevSettings = (before?.settings ?? {}) as Record<string, unknown>;
-  const settings = { ...prevSettings, ingest: { ...((prevSettings.ingest as object) ?? {}), agent_id: ingestAgentId || null } };
+  const settings = { ...prevSettings, ingest: { ...((prevSettings.ingest as object) ?? {}), agent_id: ingestAgentId || null, agreement_ref: ingestAgreementRef || null } };
+  // Terminology keeps any other keys (e.g. MY licence_fields); the three terms are set or cleared.
+  const terminology: Record<string, unknown> = { ...((before?.terminology as Record<string, unknown> | null) ?? {}) };
+  for (const [k, v] of [["agent", termAgent], ["owner", termOwner], ["tenant", termTenant]] as const) {
+    if (v) terminology[k] = v; else delete terminology[k];
+  }
 
   const { error } = await supabase
     .from("countries")
@@ -55,6 +76,8 @@ export async function updateCountry(formData: FormData) {
       default_currency: defaultCurrency,
       measurement_unit: measurementUnit,
       settings,
+      timezone: timezone || null,
+      terminology,
     })
     .eq("code", code);
   if (error) redirect("/admin/countries?error=save_failed");
@@ -64,7 +87,7 @@ export async function updateCountry(formData: FormData) {
     entityType: "country",
     entityId: code,
     previous: before ?? undefined,
-    next: { active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId: ingestAgentId || null },
+    next: { active, defaultLanguage, defaultCurrency, measurementUnit, ingestAgentId: ingestAgentId || null, ingestAgreementRef: ingestAgreementRef || null, timezone: timezone || null, terminology },
   });
 
   redirect("/admin/countries?saved=" + code);

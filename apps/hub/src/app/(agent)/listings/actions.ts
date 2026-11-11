@@ -6,6 +6,10 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
+import { getAgentMarket } from "@/lib/listings/market";
+import { categoryForType, isTenureAllowed, isTypeAllowed, WIZARD_LOCATION_LEVELS } from "@/lib/listings/vocabulary";
+import { intakePath, sha256Hex, sniffImage } from "@/lib/import/photos";
+import { createServiceClient } from "@/lib/supabase/service";
 
 /**
  * Marketplace listing creation (§28 steps 4–6). The agent's submission always
@@ -36,14 +40,10 @@ const schema = z.object({
   listingType: z.enum(["sale", "rent"]),
   rentPeriod: z.enum(["monthly", "yearly"]).optional().or(z.literal("")),
   propertyCategory: z.enum(["residential", "commercial", "industrial", "land", "other"]),
-  propertyType: z.enum([
-    "rumah", "apartemen", "ruko", "rukan", "kondominium", "villa", "kost",
-    "gudang", "pabrik", "kantor", "toko", "hotel", "tanah", "kavling", "lainnya",
-  ]),
-  ownershipType: z
-    .enum(["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", "adat", "lainnya"])
-    .optional()
-    .or(z.literal("")),
+  // Checked against the agent's own market below (D8): the database allows
+  // the union of both vocabularies, so the form must not choose the market.
+  propertyType: z.string().trim().min(1).max(40),
+  ownershipType: z.string().trim().max(40).optional().or(z.literal("")),
   title: z.string().trim().min(10).max(150),
   description: optText,
   // Newline-separated, from the assistant's chips the agent kept. Optional
@@ -104,6 +104,20 @@ export async function createListing(formData: FormData): Promise<void> {
     redirect("/listings/new?error=invalid&field=rentPeriod");
   }
 
+  /* D8 (P0-d-1b): the listing belongs to the agent's market. Country,
+     currency, unit and language come from the profile and `countries`, never
+     from the form, and a type, tenure or location from another market is
+     refused rather than stored under the wrong flag. */
+  const market = await getAgentMarket(supabase, user.id);
+  if (!market) redirect("/listings/new?error=market_unavailable");
+  if (!isTypeAllowed(market.country, d.propertyType)) {
+    redirect("/listings/new?error=invalid&field=propertyType");
+  }
+  if (d.ownershipType && !isTenureAllowed(market.country, d.ownershipType)) {
+    redirect("/listings/new?error=invalid&field=ownershipType");
+  }
+  const propertyCategory = categoryForType(d.propertyType, d.propertyCategory);
+
   /* Quota (§28 step 19), resolved from the entitlement engine rather than a
      constant: plan allowance plus referral bonuses plus admin grants. The
      same function backs the admin's "why does this agent have N slots"
@@ -123,9 +137,14 @@ export async function createListing(formData: FormData): Promise<void> {
     .getAll("photos")
     .filter((f): f is File => f instanceof File && f.size > 0);
   if (photos.length > IMG_MAX_COUNT) redirect("/listings/new?error=too_many_photos");
+  const photoBytes: { bytes: Uint8Array; image: NonNullable<ReturnType<typeof sniffImage>> }[] = [];
   for (const p of photos) {
     if (!IMG_TYPES.has(p.type)) redirect("/listings/new?error=bad_photo_type");
     if (p.size > IMG_MAX_BYTES) redirect("/listings/new?error=photo_too_large");
+    const bytes = new Uint8Array(await p.arrayBuffer());
+    const image = sniffImage(bytes);            // judged by its bytes, not its claimed type
+    if (!image) redirect("/listings/new?error=bad_photo_type");
+    photoBytes.push({ bytes, image: image! });
   }
 
   // Location: denormalised names + ancestor ids come from the chosen row.
@@ -137,9 +156,12 @@ export async function createListing(formData: FormData): Promise<void> {
   if (d.locationId) {
     const { data } = await supabase
       .from("locations")
-      .select("id, ancestor_ids, path_names, level, name")
+      .select("id, ancestor_ids, path_names, level, name, country_code")
       .eq("id", d.locationId)
       .single();
+    if (!data || data.country_code !== market.country || !WIZARD_LOCATION_LEVELS[market.country].includes(data.level)) {
+      redirect("/listings/new?error=invalid&field=locationId");
+    }
     if (data) {
       location = {
         id: data.id,
@@ -157,8 +179,8 @@ export async function createListing(formData: FormData): Promise<void> {
     .insert({
       human_readable_id: hidProp,
       agent_id: user.id,
-      country_code: "ID",
-      property_category: d.propertyCategory,
+      country_code: market.country,
+      property_category: propertyCategory,
       property_type: d.propertyType,
       ownership_type: d.ownershipType || null,
       location_id: location?.id ?? null,
@@ -172,7 +194,7 @@ export async function createListing(formData: FormData): Promise<void> {
       building_name: d.buildingName,
       land_size: d.landSize,
       building_size: d.buildingSize,
-      measurement_unit: "sqm",
+      measurement_unit: market.unit,
       bedrooms: d.bedrooms,
       bathrooms: d.bathrooms,
       floors: d.floors,
@@ -200,10 +222,10 @@ export async function createListing(formData: FormData): Promise<void> {
       listing_type: d.listingType,
       status: "pending_review",
       moderation_state: "pending",
-      currency: "IDR",
+      currency: market.currency,
       price: d.price,
       rent_period: d.listingType === "rent" ? d.rentPeriod || "monthly" : null,
-      language: "id",
+      language: market.language,
       title: d.title,
       description: d.description,
       key_selling_points: d.keySellingPoints,
@@ -214,30 +236,34 @@ export async function createListing(formData: FormData): Promise<void> {
     .single();
   if (lstErr || !listing) redirect(`/listings/new?error=save_failed`);
 
-  // 3. Photos — owner-folder path; first one is the cover.
-  // MVP: stored as-is and marked ready. EXIF/GPS strip + thumbnails are a
-  // documented pre-launch requirement (00036 header).
+  // 3. Photos — PRIVATE (owner decision, 11 Nov 2026; 00117). Each original
+  // goes into the agent's own intake folder, is recorded as pending with its
+  // provenance, and is processed by the $0 processor (GPS and EXIF removed).
+  // Only the clean derivatives are published, when a moderator approves.
+  // The first one becomes the cover.
   let position = 0;
-  for (const photo of photos) {
-    const ext = photo.type === "image/png" ? "png" : photo.type === "image/webp" ? "webp" : "jpg";
-    const path = `${user.id}/${listing.id}/${position}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
+  for (const { bytes, image } of photoBytes) {
+    const hash = await sha256Hex(bytes);
+    const path = intakePath(user.id, listing.id, hash, image.ext);
     const { error: upErr } = await supabase.storage
-      .from("listing-media-public")
-      .upload(path, photo, { contentType: photo.type, upsert: false });
-    if (upErr) continue; // a failed photo must not lose the listing
+      .from("listing-media-intake")
+      .upload(path, bytes, { contentType: image.mime, upsert: false });
+    if (upErr && !/exist|duplicate/i.test(upErr.message)) continue; // a failed photo must not lose the listing
 
-    await supabase.from("listing_media").insert({
-      listing_id: listing.id,
-      kind: "image",
-      storage_path: `listing-media-public/${path}`,
-      processed_path: `listing-media-public/${path}`,
-      thumbnail_path: `listing-media-public/${path}`,
-      position,
-      is_cover: position === 0,
-      byte_size: photo.size,
-      processing_state: "ready",
+    const { data, error } = await supabase.rpc("agent_attach_listing_photo", {
+      p_listing: listing.id, p_storage_path: path, p_content_hash: hash,
+      p_byte_size: bytes.byteLength, p_width: image.width, p_height: image.height,
     });
-    position++;
+    const r = data as { ok?: boolean; created?: boolean } | null;
+    if (error || !r?.ok) {
+      // Refused: do not leave the original behind (agents have no delete on
+      // the intake bucket). Only this file, in the agent's own folder.
+      if (!upErr && path.startsWith(`${user.id}/`)) {
+        await createServiceClient().storage.from("listing-media-intake").remove([path]);
+      }
+      continue;
+    }
+    if (r.created) position++;
   }
 
   await logAudit({

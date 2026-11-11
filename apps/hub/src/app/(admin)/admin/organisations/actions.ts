@@ -44,8 +44,17 @@ export async function setOrganisationPolicy(formData: FormData): Promise<void> {
 
   const supabase = await createClient();
   const { data: agency } = await supabase
-    .from("agencies").select("name").eq("id", agencyId).maybeSingle();
+    .from("agencies").select("name, country_code, countries(default_currency)").eq("id", agencyId).maybeSingle();
   if (!agency) redirect("/admin/organisations?notice=not_found");
+
+  /* D8: a fixed price is in the agency's own currency, never an assumed IDR.
+     Checked before anything is retired, so a refusal changes nothing. */
+  const market = (Array.isArray(agency.countries) ? agency.countries[0] : agency.countries) as
+    | { default_currency: string | null } | null | undefined;
+  const currency = market?.default_currency ?? null;
+  if (treatment === "fixed_price" && !currency) {
+    redirect(`/admin/organisations/${agencyId}?notice=needs_country`);
+  }
 
   // What is in force now, so the audit line can say what changed.
   const { data: existing } = await supabase
@@ -76,7 +85,7 @@ export async function setOrganisationPolicy(formData: FormData): Promise<void> {
       treatment,
       percent: treatment === "percent_discount" ? amount : null,
       amount: treatment === "fixed_price" ? amount : null,
-      currency: treatment === "fixed_price" ? "IDR" : null,
+      currency: treatment === "fixed_price" ? currency : null,
       // Above the platform-wide launch policy (50), below an individual
       // override, matching the precedence model in migration 00062.
       priority: 200,
@@ -111,9 +120,56 @@ export async function setOrganisationPolicy(formData: FormData): Promise<void> {
       ? { policy: previous.name, treatment: previous.treatment, percent: previous.percent, amount: previous.amount }
       : null,
     next: { treatment, percent: treatment === "percent_discount" ? amount : null,
-            amount: treatment === "fixed_price" ? amount : null, reason },
+            amount: treatment === "fixed_price" ? amount : null,
+            currency: treatment === "fixed_price" ? currency : null, reason },
   });
 
   revalidatePath(`/admin/organisations/${agencyId}`);
   redirect(`/admin/organisations/${agencyId}?notice=applied`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Screen 11: create and edit agencies (P1-g-1, 00125)                         */
+/* -------------------------------------------------------------------------- */
+
+const agencySchema = z.object({
+  agencyId: z.string().uuid().optional().or(z.literal("")),
+  name: z.string().trim().min(2).max(160).regex(/^[^<>]*$/),
+  registrationNumber: z.string().trim().max(80).regex(/^[^<>]*$/).optional().or(z.literal("")),
+  countryCode: z.string().regex(/^[A-Z]{2}$/),
+});
+
+/**
+ * Create (no agencyId) or edit an agency. The 00125 policies decide: only
+ * commercial.manage in the agency's country, and an agency always has a
+ * country. Both are audited with the before and after values.
+ */
+export async function saveAgency(formData: FormData): Promise<void> {
+  await requireCapability("commercial.manage");
+  const p = agencySchema.safeParse({
+    agencyId: formData.get("agencyId") ?? "",
+    name: formData.get("name"),
+    registrationNumber: formData.get("registrationNumber") ?? "",
+    countryCode: formData.get("countryCode"),
+  });
+  const back = p.success && p.data.agencyId ? `/admin/organisations/${p.data.agencyId}` : "/admin/organisations";
+  if (!p.success) redirect(`${back}?notice=agency_invalid`);
+  const { agencyId, name, registrationNumber, countryCode } = p.data;
+  const row = { name, registration_number: registrationNumber || null, country_code: countryCode };
+  const supabase = await createClient();
+
+  if (agencyId) {
+    const { data: before } = await supabase.from("agencies").select("name, registration_number, country_code").eq("id", agencyId).maybeSingle();
+    if (!before) redirect("/admin/organisations?notice=not_found");
+    const { data, error } = await supabase.from("agencies").update(row).eq("id", agencyId).select("id");
+    if (error || !(data ?? []).length) redirect(`${back}?notice=agency_not_permitted`);
+    await logAudit({ action: "agency.updated", entityType: "agency", entityId: agencyId, previous: before, next: row });
+    revalidatePath(back);
+    redirect(`${back}?notice=agency_saved`);
+  }
+  const { data: created, error } = await supabase.from("agencies").insert(row).select("id").single();
+  if (error || !created) redirect(`${back}?notice=agency_not_permitted`);
+  await logAudit({ action: "agency.created", entityType: "agency", entityId: created.id, next: row });
+  revalidatePath("/admin/organisations");
+  redirect(`/admin/organisations/${created.id}?notice=agency_created`);
 }

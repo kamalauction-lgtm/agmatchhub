@@ -60,7 +60,9 @@ export async function updateListing(formData: FormData): Promise<void> {
 
   if (!before) redirect("/listings?error=not_found");
 
-  const backToReview = before.status === "published";
+  // A published listing goes back for review when edited; so does a REJECTED
+  // one (P1-a): fixing what the moderator asked for is how it is resubmitted.
+  const backToReview = before.status === "published" || before.status === "rejected";
 
   const { error } = await supabase
     .from("listings")

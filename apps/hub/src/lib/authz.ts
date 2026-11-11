@@ -47,6 +47,64 @@ export async function requireCapability(capability: string): Promise<User> {
   return user;
 }
 
+/**
+ * Capability gate for one country — use it wherever the thing being acted on
+ * has a country (an agent, a listing, a request).
+ *
+ * `requireCapability` answers "may this person verify agents at all". A
+ * country admin holds that for {MY} only, but until this helper existed every
+ * admin action asked only the global question, so `user_roles.country_codes`
+ * was stored and never enforced. `has_capability_in` (00060) treats an empty
+ * country list as global, so super admins and admins are unaffected.
+ *
+ * A null country is allowed only for global holders: an entity with no
+ * country is not inside anyone's scope.
+ */
+export async function requireCapabilityIn(
+  capability: string,
+  country: string | null | undefined,
+  deniedPath = "/admin",
+): Promise<User> {
+  const user = await requireUser();
+  const supabase = await createClient();
+  const { data: allowed } = await supabase.rpc("has_capability_in", {
+    p_capability: capability,
+    p_country: country ?? null,
+  });
+  if (!allowed) {
+    const sep = deniedPath.includes("?") ? "&" : "?";
+    redirect(`${deniedPath}${sep}denied=${encodeURIComponent(capability)}`);
+  }
+  return user;
+}
+
+/**
+ * The countries the signed-in user may act on for one capability, for
+ * filtering list pages: `null` = every country (a global grant), `[]` = none.
+ * Mirrors `has_capability_in`: a role row that carries the capability with an
+ * empty country list makes the holder global.
+ */
+export async function capabilityCountries(capability: string): Promise<string[] | null> {
+  const user = await requireUser();
+  const supabase = await createClient();
+  const { data: grants } = await supabase
+    .from("user_roles")
+    .select("role_id, country_codes")
+    .eq("user_id", user.id);
+  if (!grants?.length) return [];
+  const { data: caps } = await supabase
+    .from("role_capabilities")
+    .select("role_id")
+    .eq("capability_key", capability)
+    .in("role_id", grants.map((g) => g.role_id as string));
+  const holding = new Set((caps ?? []).map((c) => c.role_id as string));
+  const relevant = grants.filter((g) => holding.has(g.role_id as string));
+  if (!relevant.length) return [];
+  const codes = relevant.map((g) => (g.country_codes ?? []) as string[]);
+  if (codes.some((c) => c.length === 0)) return null;
+  return [...new Set(codes.flat())];
+}
+
 /** Every capability the signed-in user holds, for greying out what they cannot do. */
 export async function myCapabilities(): Promise<Set<string>> {
   const supabase = await createClient();

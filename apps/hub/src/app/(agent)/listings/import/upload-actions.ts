@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
+import { createImportBatch, forAgentFrom, importBase } from "@/lib/import/batches";
 import { logAudit } from "@/lib/audit";
 import { sanitiseText } from "@/lib/import/safe-fetch";
 import {
@@ -28,13 +29,17 @@ const MAX_ITEMS = 500;
 
 export async function uploadSpreadsheet(formData: FormData): Promise<void> {
   const user = await requireUser();
+  // An admin preparing a batch for an agent (00107) posts forAgentId.
+  const forAgentId = forAgentFrom(formData);
+  if (forAgentId === "invalid") redirect("/admin/imports?error=invalid");
+  const base = importBase(forAgentId);
 
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) {
-    redirect("/listings/import?error=empty_file");
+    redirect(`${base}?error=empty_file`);
   }
   if (file.size > MAX_UPLOAD_BYTES) {
-    redirect("/listings/import?error=too_large");
+    redirect(`${base}?error=too_large`);
   }
 
   const supabase = await createClient();
@@ -44,7 +49,7 @@ export async function uploadSpreadsheet(formData: FormData): Promise<void> {
     grid = await readSpreadsheet(file.name, bytes);
   } catch (e) {
     const reason = e instanceof SpreadsheetError ? e.reason : "corrupt";
-    redirect(`/listings/import?error=${reason}`);
+    redirect(`${base}?error=${reason}`);
   }
 
   const { headerRow, map, headers } = detectColumns(grid);
@@ -58,20 +63,16 @@ export async function uploadSpreadsheet(formData: FormData): Promise<void> {
       .filter(Boolean).slice(0, 12)
       .map((h) => sanitiseText(h, 40))
       .filter(Boolean).join(", ");
-    const { data: failed } = await supabase
-      .from("import_batches")
-      .insert({
-        agent_id: user.id,
-        source_kind: file.name.toLowerCase().endsWith(".csv") ? "csv" : "excel",
-        source_portal: "spreadsheet",
-        source_label: sanitiseText(file.name, 200),
-        status: "failed",
-        error: `columns_missing${found ? `: ${found}` : ""}`,
-      })
-      .select("id").single();
+    const failed = await createImportBatch(supabase, user.id, forAgentId, {
+      source_kind: file.name.toLowerCase().endsWith(".csv") ? "csv" : "excel",
+      source_portal: "spreadsheet",
+      source_label: sanitiseText(file.name, 200) ?? "spreadsheet",
+      status: "failed",
+      error: `columns_missing${found ? `: ${found}` : ""}`,
+    });
     redirect(failed
-      ? `/listings/import/${failed.id}?error=columns_missing`
-      : "/listings/import?error=columns_missing");
+      ? `${base}/${failed.id}?error=columns_missing`
+      : `${base}?error=columns_missing`);
   }
 
   const dataRows = grid.slice(headerRow + 1).slice(0, MAX_ITEMS);
@@ -79,19 +80,15 @@ export async function uploadSpreadsheet(formData: FormData): Promise<void> {
     .map((row) => rowToDraft(row, map))
     .filter((d) => d.title || d.price !== undefined);   // a blank row is not an item
 
-  if (!drafts.length) redirect("/listings/import?error=no_rows");
+  if (!drafts.length) redirect(`${base}?error=no_rows`);
 
-  const { data: batch, error: batchError } = await supabase
-    .from("import_batches")
-    .insert({
-      agent_id: user.id,
-      source_kind: file.name.toLowerCase().endsWith(".csv") ? "csv" : "excel",
-      source_portal: "spreadsheet",
-      source_label: sanitiseText(file.name, 200),
-      status: "ready",
-    })
-    .select("id").single();
-  if (batchError || !batch) redirect("/listings/import?error=save_failed");
+  const batch = await createImportBatch(supabase, user.id, forAgentId, {
+    source_kind: file.name.toLowerCase().endsWith(".csv") ? "csv" : "excel",
+    source_portal: "spreadsheet",
+    source_label: sanitiseText(file.name, 200) ?? "spreadsheet",
+    status: "ready",
+  });
+  if (!batch) redirect(`${base}?error=${forAgentId ? "not_permitted" : "save_failed"}`);
 
   /* Straight to `ready` or `needs_review` — there is nothing to fetch. The
    * same warning vocabulary as the portal route, so the review screen does not
@@ -118,21 +115,22 @@ export async function uploadSpreadsheet(formData: FormData): Promise<void> {
     if (error) {
       await supabase.from("import_batches")
         .update({ status: "failed", error: "save_failed" }).eq("id", batch.id);
-      redirect(`/listings/import/${batch.id}?error=save_failed`);
+      redirect(`${base}/${batch.id}?error=save_failed`);
     }
   }
 
   await logAudit({
-    action: "listing_import.file_uploaded",
+    action: forAgentId ? "listing_import.assisted_items_added" : "listing_import.file_uploaded",
     entityType: "import_batch",
     entityId: batch.id,
     next: {
       filename: sanitiseText(file.name, 200),
       rows: items.length,
       mapped: Object.keys(map),
+      ...(forAgentId ? { agent_id: forAgentId } : {}),
     },
   });
 
-  revalidatePath("/listings/import");
-  redirect(`/listings/import/${batch.id}`);
+  revalidatePath(base);
+  redirect(`${base}/${batch.id}`);
 }

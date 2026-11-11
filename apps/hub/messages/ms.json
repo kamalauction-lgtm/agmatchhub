@@ -272,7 +272,12 @@
       "ai": "Konsol AI",
       "hero": "AG Hero",
       "payments": "Pembayaran",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "invitations": "Jemputan",
+      "imports": "Import berbantu",
+      "media": "Kualiti foto",
+      "handover": "Serahan",
+      "leads": "Respons prospek"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -320,11 +325,18 @@
     "doneNotice": {
       "approve": "Ejen diluluskan dan disahkan.",
       "reject": "Ejen ditolak.",
-      "request_info": "Maklumat diminta daripada ejen."
+      "request_info": "Maklumat diminta daripada ejen.",
+      "suspended": "Ejen digantung. {n, plural, other {# penyenaraian aktif}} dijeda.",
+      "restored": "Ejen dipulihkan. {n, plural, other {# penyenaraian}} diterbitkan semula."
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
-      "save_failed": "Keputusan tidak dapat disimpan."
+      "save_failed": "Keputusan tidak dapat disimpan.",
+      "self_invited": "Anda yang menjemput ejen ini, jadi admin lain mesti meluluskan pengesahannya.",
+      "reason_required": "Berikan sebab sekurang-kurangnya 3 aksara.",
+      "already_suspended": "Ejen ini sudah digantung.",
+      "not_suspended": "Ejen ini tidak digantung.",
+      "self": "Anda tidak boleh menggantung atau memulihkan diri sendiri."
     },
     "overviewTitle": "Pusat kawalan",
     "allClear": "Tiada apa menunggu. Semua barisan bersih.",
@@ -407,8 +419,15 @@
     "navGroup": {
       "work": "Barisan",
       "grow": "Pertumbuhan",
-      "commerce": "Komersial",
-      "platform": "Platform"
+      "commerce": "Komersial dan pertumbuhan",
+      "platform": "Platform",
+      "agents": "Ejen",
+      "listings": "Penyenaraian dan import",
+      "demand": "Permintaan dan laporan",
+      "ai": "AI Workforce",
+      "comms": "Komunikasi",
+      "markets": "Pasaran dan kandungan",
+      "security": "Keselamatan dan audit"
     },
     "bucketLabel": "setiap lajur = {count} hari",
     "noQueues": "Anda tidak memegang sebarang barisan.",
@@ -456,6 +475,58 @@
       "media": "{count} terbit tanpa foto",
       "trust": "terbuka terlama {count} jam",
       "rewards": "{count} menunggu keputusan"
+    },
+    "a360": {
+      "portfolioTitle": "Portfolio",
+      "noListings": "Belum ada penyenaraian.",
+      "consentTitle": "Persetujuan dan akuan",
+      "noConsent": "Tiada rekod persetujuan.",
+      "accountTitle": "Akaun",
+      "suspendHint": "Penggantungan menjeda {n, plural, other {# penyenaraian aktif}} ejen ini dan menghalang mereka mengubah penyenaraian sehingga dipulihkan. Ejen dimaklumkan sebabnya.",
+      "suspendReason": "Sebab (dilihat oleh ejen)",
+      "suspend": "Gantung ejen",
+      "suspendedSince": "Digantung sejak {date}.",
+      "restoreNote": "Nota (pilihan)",
+      "restoreHint": "Pemulihan mengembalikan status sebelumnya dan menerbitkan semula {n, plural, other {# penyenaraian}} yang dijeda oleh penggantungan, jika masih diluluskan.",
+      "restore": "Pulihkan ejen",
+      "listingStatus": {
+        "draft": "Draf",
+        "pending_review": "Menunggu semakan",
+        "published": "Diterbitkan",
+        "rejected": "Ditolak",
+        "paused": "Dijeda",
+        "expired": "Tamat tempoh",
+        "sold": "Dijual",
+        "rented": "Disewa",
+        "withdrawn": "Ditarik balik",
+        "archived": "Diarkibkan"
+      }
+    },
+    "agentQueue": {
+      "search": "Cari mengikut nama",
+      "country": "Negara",
+      "allCountries": "Semua negara",
+      "apply": "Guna"
+    },
+    "actionQueue": {
+      "title": "Baris gilir tindakan",
+      "hint": "Semua yang menunggu anda, yang paling mendesak dan paling lama dahulu.",
+      "empty": "Tiada yang menunggu. Syabas.",
+      "more": "Tunjuk {n} lagi",
+      "lessThanHour": "baru sahaja",
+      "hours": "{n} jam",
+      "days": "{n} hari",
+      "kind": {
+        "report_scam": "Laporan penipuan",
+        "report": "Laporan pembeli",
+        "lead_overdue": "Prospek lewat",
+        "listing_review": "Penyenaraian perlu disemak",
+        "agent_review": "Ejen perlu disahkan",
+        "change_answered": "Ejen membalas",
+        "request_review": "Keperluan perlu diluluskan",
+        "photo_failed": "Foto gagal",
+        "invite_expiring": "Jemputan hampir tamat"
+      }
     }
   },
   "adminLegal": {
@@ -490,12 +561,22 @@
       "language": "Bahasa lalai",
       "currency": "Mata wang",
       "unit": "Unit",
-      "ingestAgent": "Ejen ingest"
+      "ingestAgent": "Ejen ingest",
+      "local": "Zon waktu dan istilah"
     },
     "save": "Simpan",
     "ingestAgentNone": "— tiada —",
     "ingestAgentHint": "Profil syarikat yang disahkan, tempat draf pelayan-ke-pelayan (Hero → ingest) diletakkan bagi negara ini.",
-    "ingestAgentInvalid": "Ejen ingest mesti ejen yang disahkan dari negara itu."
+    "ingestAgentInvalid": "Ejen ingest mesti ejen yang disahkan dari negara itu.",
+    "ingestAgreementPlaceholder": "Rujukan perjanjian rakan kongsi",
+    "ingestAgreementHint": "Perjanjian bertulis yang menjadi asas penggunaan foto suapan rakan kongsi. Ia direkodkan bersama setiap foto rakan kongsi. Jika kosong, foto rakan kongsi tidak disimpan.",
+    "timezone": "Zon waktu (IANA, cth. Asia/Kuala_Lumpur)",
+    "term": {
+      "agent": "Istilah untuk ejen",
+      "owner": "Istilah untuk pemilik",
+      "tenant": "Istilah untuk penyewa"
+    },
+    "invalidFields": "Semak nilai: zon waktu mesti nama IANA yang sah dan istilah maksimum 60 aksara."
   },
   "nav": {
     "dashboard": "Papan pemuka",
@@ -815,23 +896,14 @@
       "approve": "Diluluskan. Pautan selamat dijana dan aktif.",
       "amendment": "Pindaan diminta daripada ejen.",
       "cancel": "Permintaan dibatalkan.",
-      "added": "Hartanah ditambah bagi pihak ejen.",
-      "added_new_agent": "Akaun ejen dicipta dan hartanah ditambah."
+      "added": "Hartanah ditambah bagi pihak ejen."
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
       "wrong_status": "Permintaan ini tidak menunggu semakan.",
       "save_failed": "Keputusan tidak dapat disimpan."
     },
-    "addPropertyForAgent": "Tambah hartanah untuk ejen",
-    "cred": {
-      "title": "Akaun ejen dicipta",
-      "body": "Kongsi butiran log masuk ini dengan {name} (cth. melalui WhatsApp). Mereka boleh log masuk sekarang dan sahkan profil kemudian.",
-      "email": "E-mel",
-      "password": "Kata laluan",
-      "link": "Pautan log masuk",
-      "note": "Ini dipaparkan sekali sahaja. Ia juga dihantar ke e-mel ejen."
-    }
+    "addPropertyForAgent": "Tambah hartanah untuk ejen"
   },
   "requestLink": {
     "invalidTitle": "Pautan tidak tersedia",
@@ -1392,11 +1464,24 @@
       "lead_overdue": "Ada petunjuk menunggu melepasi tarikh akhir respons",
       "task_due": "Satu tugas perlu dibuat",
       "viewing_soon": "Lawatan bermula tidak lama lagi",
-      "whatsapp_received": "Mesej WhatsApp tiba pada salah satu lead anda"
+      "whatsapp_received": "Mesej WhatsApp tiba pada salah satu lead anda",
+      "listing_import_prepared": "Penyenaraian sedia untuk anda semak",
+      "listing_change_requested": "Moderator meminta perubahan pada penyenaraian anda",
+      "listing_photo_original_requested": "Moderator meminta foto asal",
+      "listing_change_answered": "Ejen menjawab permintaan perubahan anda",
+      "listing_change_resolved": "Permintaan perubahan anda telah diselesaikan",
+      "generic": "Pemberitahuan",
+      "listing_import_handover_complete": "Anda kini mengawal penyenaraian yang disediakan",
+      "agent_suspended": "Akaun anda telah digantung",
+      "agent_restored": "Akaun anda telah dipulihkan",
+      "agent_verification_approved": "Pengesahan anda diluluskan",
+      "agent_verification_rejected": "Pengesahan anda tidak diluluskan",
+      "agent_verification_info_requested": "Pengesahan anda memerlukan maklumat tambahan"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
-    "pushDenied": "Notifikasi disekat dalam tetapan pelayar"
+    "pushDenied": "Notifikasi disekat dalam tetapan pelayar",
+    "emailOpen": "Buka"
   },
   "commission": {
     "title": "Perjanjian komisen & co-broke",
@@ -1514,7 +1599,19 @@
       "entity": "Entiti",
       "result": "Keputusan"
     },
-    "appendOnlyNote": "Tambah sahaja: rekod audit tidak boleh diedit atau dipadam, termasuk oleh pentadbir."
+    "appendOnlyNote": "Tambah sahaja: rekod audit tidak boleh diedit atau dipadam, termasuk oleh pentadbir.",
+    "export": "Eksport CSV",
+    "showing": "{n, plural, other {# rekod}} (terbaru dahulu, maksimum 200 dipaparkan; eksport memuatkan sehingga 5,000)",
+    "filters": {
+      "action": "Tindakan mengandungi",
+      "entity": "Jenis entiti",
+      "role": "Peranan pelaku",
+      "anyRole": "Semua peranan",
+      "result": "Keputusan",
+      "anyResult": "Semua keputusan",
+      "from": "Dari",
+      "to": "Hingga"
+    }
   },
   "disclosures": {
     "title": "Pendedahan undang-undang & material",
@@ -1593,7 +1690,7 @@
     "intro": "Identiti profesional anda yang dipaparkan kepada ejen kerjasama. Pelanggan hanya melihat apa yang anda luluskan pada pembentangan anda sendiri.",
     "savedNotice": "Profil disimpan.",
     "photo": "Foto profesional",
-    "photoHint": "JPG/PNG/WebP, maksimum 3 MB. Dipaparkan kepada ejen kerjasama.",
+    "photoHint": "JPG/PNG/WebP, maksimum 3 MB. Dipaparkan kepada ejen kerjasama dan pada penyenaraian awam anda. Saiznya diubah dan data tersembunyinya (lokasi, kamera, aplikasi suntingan) dibuang sebelum dipaparkan.",
     "displayName": "Nama paparan",
     "agency": "Agensi & lesen (daripada pengesahan)",
     "mobile": "Telefon",
@@ -1644,7 +1741,8 @@
       "file_too_large": "Fail melebihi had saiz.",
       "upload_failed": "Muat naik gagal. Sila cuba lagi.",
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
-      "invalid_url": "Masukkan pautan http(s) yang sah."
+      "invalid_url": "Masukkan pautan http(s) yang sah.",
+      "photo_paused": "Muat naik foto dijeda buat masa ini. Perubahan lain anda tidak disimpan; cuba lagi kemudian."
     },
     "photoChoose": "Pilih foto",
     "photoChange": "Tukar foto",
@@ -1684,27 +1782,19 @@
     "agentSection": "Hartanah ini daripada ejen yang mana?",
     "existingAgent": "Pilih ejen sedia ada",
     "chooseAgent": "— pilih ejen —",
-    "newAgent": "Cipta akaun ejen baharu",
-    "newAgentHint": "Ejen mendapat log masuk (dipaparkan kepada anda + e-mel) dan boleh sahkan profil kemudian. Hanya nama dan e-mel diperlukan.",
-    "na_name": "Nama penuh",
-    "na_email": "E-mel",
-    "na_phone": "Telefon",
-    "na_whatsapp": "WhatsApp",
-    "na_agency": "Agensi",
-    "na_licenceNumber": "No. lesen",
     "declarationNote": "Dengan menambah hartanah ini anda menerima perisytiharan co-broke ejen bekalan bagi pihak ejen. Ejen dimaklumkan dan boleh menyemaknya.",
     "submit": "Tambah hartanah untuk ejen ini",
     "errors": {
       "invalid_fields": "Sila semak medan yang ditanda.",
       "agent_required": "Sila pilih seorang ejen.",
-      "agent_invalid": "Sila masukkan nama ejen baharu dan e-mel yang sah.",
-      "email_in_use": "E-mel itu sudah mempunyai akaun — pilih mereka dari senarai sedia ada.",
-      "agent_failed": "Tidak dapat mencipta akaun ejen. Sila cuba lagi.",
       "invalid_file_type": "Jenis imej tidak disokong.",
       "file_too_large": "Imej terlalu besar (maks 10MB).",
       "upload_failed": "Muat naik imej gagal. Sila cuba lagi.",
-      "save_failed": "Tidak dapat menyimpan. Sila cuba lagi."
-    }
+      "save_failed": "Tidak dapat menyimpan. Sila cuba lagi.",
+      "invite_first": "Ejen baharu dijemput terlebih dahulu. Hantar jemputan, dan selepas mereka menerimanya, pilih mereka di sini."
+    },
+    "notOnPlatform": "Ejen belum ada di platform?",
+    "inviteCta": "Jemput mereka dahulu"
   },
   "leads": {
     "title": "Prospek",
@@ -1883,7 +1973,7 @@
       "adTitle": "Tajuk iklan",
       "adTitlePlaceholder": "cth. Apartmen 2BK di Jakarta Selatan, 5 min ke MRT",
       "description": "Keterangan",
-      "price": "Harga (IDR)",
+      "price": "Harga ({currency})",
       "priceHelp": "Nombor sahaja, tanpa titik. Untuk sewa: harga setiap tempoh.",
       "certificate": "Sijil",
       "area": "Kawasan",
@@ -1892,8 +1982,8 @@
       "generalAddressHelp": "Awam - jangan sesekali alamat unit sebenar.",
       "buildingName": "Nama bangunan / kompleks",
       "postalCode": "Poskod",
-      "landSize": "Tanah (m2)",
-      "buildingSize": "Bangunan (m2)",
+      "landSize": "Tanah ({unit})",
+      "buildingSize": "Bangunan ({unit})",
       "bedrooms": "Bilik tidur",
       "bathrooms": "Bilik air",
       "floors": "Tingkat",
@@ -1911,7 +2001,7 @@
       "condConstruction": "Dalam pembinaan",
       "facilities": "Kemudahan",
       "facilitiesPlaceholder": "kolam renang, gim, keselamatan 24 jam (dipisahkan koma)",
-      "photosHelp": "Sehingga 15 foto, JPG/PNG/WebP, maks 10 MB setiap satu. Foto pertama menjadi muka depan.",
+      "photosHelp": "Sehingga 15 foto, JPG/PNG/WebP, maksimum 10 MB setiap satu. Foto pertama menjadi muka depan. Foto kekal peribadi semasa diproses (data lokasi dan kamera dibuang) dan diterbitkan apabila moderator meluluskan penyenaraian.",
       "submit": "Hantar untuk semakan",
       "submitHelp": "Moderator menyemak setiap iklan sebelum disiarkan.",
       "draftRestored": "Draf anda yang belum disimpan telah dipulihkan.",
@@ -1920,8 +2010,10 @@
         "save_failed": "Iklan gagal disimpan. Sila cuba lagi.",
         "too_many_photos": "Maksimum 15 foto.",
         "bad_photo_type": "Foto mesti JPG, PNG atau WebP.",
-        "photo_too_large": "Setiap foto mesti bawah 10 MB."
-      }
+        "photo_too_large": "Setiap foto mesti bawah 10 MB.",
+        "market_unavailable": "Penyenaraian hanya boleh dibuat dalam pasaran yang aktif, dan profil anda tiada pasaran aktif. Hubungi sokongan."
+      },
+      "tenure": "Pegangan"
     },
     "sectionOwn": "Iklan saya sendiri",
     "sectionBorrowed": "Dipinjam melalui pemasaran bersama",
@@ -2024,6 +2116,13 @@
         "unverified": "Digubal tanpa AI — AI dibuka selepas pengesahan.",
         "no_provider": "Digubal tanpa AI — belum ada pembekal AI disambungkan.",
         "failed": "Digubal tanpa AI — AI tidak menjawab kali ini."
+      },
+      "catResidentialHintMY": "Rumah teres, berkembar, kondo, servis residen",
+      "catCommercialHintMY": "Rumah kedai, pejabat, kilang, tanah",
+      "copyLanguage": {
+        "english": "Draf ini dalam bahasa Inggeris. Semak dan sunting sebelum menyimpan.",
+        "englishFallback": "Draf ini dalam bahasa Inggeris: ayat bahasa Melayu yang telah disemak belum tersedia. Bahasa penyenaraian anda kekal bahasa Melayu. Semak dan sunting draf sebelum menyimpan.",
+        "indonesian": "Draf ini dalam bahasa Indonesia. Semak dan sunting sebelum menyimpan."
       }
     },
     "offer": {
@@ -2091,6 +2190,35 @@
       "errors": {
         "invalid": "Sila semak medan yang ditandakan.",
         "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
+      },
+      "gallery": {
+        "title": "Foto",
+        "hint": "Pilih foto muka depan, ubah susunan atau buang foto. Perubahan berkuat kuasa serta-merta dan tidak menghantar penyenaraian yang telah diterbitkan untuk disemak semula. Untuk menambah foto, gunakan wizard penyenaraian atau import.",
+        "empty": "Belum ada foto.",
+        "cover": "Muka depan",
+        "makeCover": "Jadikan muka depan",
+        "moveUp": "Naikkan",
+        "moveDown": "Turunkan",
+        "remove": "Buang",
+        "removeImportedNote": "Membuangnya daripada penyenaraian ini. Foto asal yang anda import disimpan secara peribadi sebagai rekod asal usulnya.",
+        "state": {
+          "pending": "Menunggu diproses",
+          "processing": "Sedang diproses",
+          "processed": "Telah diproses, menunggu kelulusan",
+          "ready": "Diterbitkan",
+          "failed": "Tidak dapat diproses",
+          "quarantined": "Ditahan oleh moderator"
+        },
+        "notice": {
+          "cover_set": "Muka depan dikemas kini.",
+          "moved": "Susunan dikemas kini.",
+          "removed": "Foto dibuang.",
+          "not_eligible": "Foto itu tidak boleh dijadikan muka depan.",
+          "not_public_yet": "Bagi penyenaraian yang diterbitkan, muka depan mesti foto yang telah diterbitkan.",
+          "bad_order": "Susunan tidak dapat disimpan. Sila cuba lagi.",
+          "not_found": "Foto tidak ditemui.",
+          "failed": "Sesuatu tidak kena. Sila cuba lagi."
+        }
       }
     },
     "importCta": "Tarik senarai saya",
@@ -2131,7 +2259,69 @@
         "other": "butiran yang tertinggal"
       }
     },
-    "ownerReport": "Laporan pemilik"
+    "ownerReport": "Laporan pemilik",
+    "rejection": {
+      "incomplete_details": "Butiran tidak lengkap",
+      "photos_quality": "Foto tidak boleh digunakan",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga kelihatan salah",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Penyenaraian berganda",
+      "prohibited_content": "Tidak dibenarkan di pasaran",
+      "other": "Lain-lain (lihat nota)",
+      "resubmitHint": "Sunting penyenaraian untuk membetulkannya; menyimpan akan menghantarnya semula untuk disemak."
+    },
+    "changes": {
+      "title": "Perubahan diminta",
+      "hint": "Moderasi meminta ini sebelum penyenaraian boleh diterbitkan, atau untuk kekal diterbitkan. Balas di sini; betulkan penyenaraian di bawah dan simpan.",
+      "kind": {
+        "correction": "Pembetulan",
+        "photo_original": "Foto asal"
+      },
+      "field": {
+        "title": "Tajuk",
+        "description": "Penerangan",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Butiran hartanah",
+        "photos": "Foto",
+        "other": "Lain-lain"
+      },
+      "status": {
+        "open": "Menunggu ejen",
+        "answered": "Ejen menjawab",
+        "resolved": "Selesai",
+        "withdrawn": "Ditarik balik"
+      },
+      "yourAnswer": "Jawapan anda",
+      "placeholder": "Balasan anda kepada moderator",
+      "send": "Hantar balasan",
+      "update": "Kemas kini balasan",
+      "badge": "{n} perubahan diminta",
+      "notice": {
+        "answered": "Balasan dihantar kepada moderator.",
+        "invalid": "Tulis balasan dahulu.",
+        "closed": "Permintaan ini sudah ditutup.",
+        "answer_required": "Tulis balasan dahulu.",
+        "not_found": "Permintaan tidak ditemui.",
+        "failed": "Tidak berjaya. Cuba lagi.",
+        "photo_supplied": "Foto dimuat naik. Ia kekal peribadi sehingga moderator meluluskannya.",
+        "photo_already": "Foto ini telah pun dihantar.",
+        "photo_required": "Pilih foto dahulu.",
+        "photo_too_large": "Fail itu melebihi 10 MB.",
+        "not_image": "Fail itu bukan foto JPEG, PNG atau WebP.",
+        "save_failed": "Foto tidak dapat disimpan. Cuba lagi.",
+        "not_photo_request": "Permintaan ini tidak meminta foto.",
+        "bad_path": "Foto tidak dapat disimpan. Cuba lagi.",
+        "bad_hash": "Foto tidak dapat disimpan. Cuba lagi."
+      },
+      "photo": {
+        "label": "Muat naik foto",
+        "note": "Nota pilihan kepada moderator",
+        "hint": "JPEG, PNG atau WebP, sehingga 10 MB. Ia kekal peribadi: diproses (data lokasi dan kamera dibuang) dan hanya diterbitkan selepas moderator meluluskannya.",
+        "send": "Muat naik foto"
+      }
+    }
   },
   "studio": {
     "title": "Studio kandungan",
@@ -2305,7 +2495,12 @@
       "shotList": "Senarai syot",
       "seconds": "{n}s"
     },
-    "planLink": "Rancang seminggu"
+    "planLink": "Rancang seminggu",
+    "copyLanguage": {
+      "english": "Draf ini dalam bahasa Inggeris. Semak dan sunting sebelum menyimpan.",
+      "englishFallback": "Draf ini dalam bahasa Inggeris: ayat bahasa Melayu yang telah disemak belum tersedia. Bahasa penyenaraian anda kekal bahasa Melayu. Semak dan sunting draf sebelum menyimpan.",
+      "indonesian": "Draf ini dalam bahasa Indonesia. Semak dan sunting sebelum menyimpan."
+    }
   },
   "listingStatus": {
     "draft": "Draf",
@@ -2334,7 +2529,27 @@
     "hotel": "Hotel",
     "tanah": "Tanah",
     "kavling": "Lot",
-    "lainnya": "Lain-lain"
+    "lainnya": "Lain-lain",
+    "terrace": "Rumah teres",
+    "semi_detached": "Berkembar",
+    "bungalow": "Banglo",
+    "townhouse": "Rumah bandar",
+    "cluster_home": "Rumah kluster",
+    "condominium": "Kondominium",
+    "serviced_residence": "Kediaman servis",
+    "apartment": "Apartmen",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Lot kedai",
+    "shop_office": "Kedai pejabat",
+    "retail_space": "Ruang runcit",
+    "office_space": "Ruang pejabat",
+    "factory": "Kilang",
+    "warehouse": "Gudang",
+    "agricultural_land": "Tanah pertanian",
+    "residential_land": "Tanah kediaman",
+    "commercial_land": "Tanah komersial"
   },
   "ownershipTypes": {
     "shm": "SHM (pegangan bebas)",
@@ -2346,7 +2561,13 @@
     "strata": "Hak milik strata",
     "ppjb": "PPJB",
     "adat": "Tanah adat",
-    "lainnya": "Lain-lain"
+    "lainnya": "Lain-lain",
+    "freehold": "Pegangan bebas",
+    "leasehold_99": "Pajakan (99 tahun)",
+    "leasehold_60": "Pajakan (60 tahun)",
+    "leasehold_other": "Pajakan",
+    "malay_reserve": "Tanah rizab Melayu",
+    "bumi_lot": "Lot Bumiputera"
   },
   "adminListings": {
     "title": "Moderasi iklan",
@@ -2365,7 +2586,125 @@
       "reason_required": "Penolakan perlukan sebab yang akan dilihat ejen.",
       "not_found": "Iklan tidak dijumpai.",
       "not_moderatable": "Iklan ini tidak menunggu semakan.",
-      "update_failed": "Kemas kini gagal. Cuba lagi."
+      "update_failed": "Kemas kini gagal. Cuba lagi.",
+      "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya.",
+      "bulk_empty": "Pilih sekurang-kurangnya satu penyenaraian.",
+      "change_invalid": "Tulis mesej ringkas untuk ejen.",
+      "body_required": "Tulis mesej ringkas untuk ejen.",
+      "not_open": "Penyenaraian ini tidak boleh menerima permintaan sekarang.",
+      "closed": "Permintaan ini sudah ditutup."
+    },
+    "photos": {
+      "title": "Foto import (peribadi sehingga anda luluskan)",
+      "quarantine": "Tahan",
+      "note": "Meluluskan akan menyalin foto yang telah diproses ke penyenaraian. Foto asal tidak pernah disiarkan.",
+      "state": {
+        "pending": "Menunggu diproses",
+        "processing": "Sedang diproses",
+        "processed": "Sedia untuk disiarkan",
+        "failed": "Tidak dapat diproses",
+        "quarantined": "Ditahan"
+      },
+      "willPublish": "Meluluskan akan menerbitkan {publish} daripada {total} foto. Selebihnya kekal peribadi: masih diproses, dijeda, gagal, ditahan atau tiada rekod hak.",
+      "openCentre": "Buka di Pusat Kualiti Foto"
+    },
+    "quarantined": "Foto tidak akan disiarkan.",
+    "tabs": {
+      "label": "Baris gilir moderasi",
+      "pending_review": "Menunggu semakan",
+      "rejected": "Ditolak",
+      "published": "Diterbitkan",
+      "reported": "Dilaporkan ({n})"
+    },
+    "count": {
+      "pending_review": "{count} penyenaraian menunggu semakan",
+      "rejected": "{count} penyenaraian ditolak",
+      "published": "{count} penyenaraian diterbitkan"
+    },
+    "emptyTab": {
+      "pending_review": "Baris gilir kosong - tiada yang menunggu semakan.",
+      "rejected": "Tiada penyenaraian ditolak.",
+      "published": "Tiada penyenaraian diterbitkan di negara anda."
+    },
+    "bulk": {
+      "title": "Putuskan beberapa sekali gus",
+      "hint": "Tandakan penyenaraian di bawah, kemudian luluskan atau tolak bersama. Setiap penyenaraian tetap melalui setiap semakan sendiri: negara anda, pengasingan tugas dan statusnya. Penolakan memerlukan kod sebab.",
+      "approve": "Luluskan yang dipilih",
+      "reject": "Tolak yang dipilih",
+      "select": "Pilih {id}",
+      "done": "{ok} selesai, {skipped} dilangkau."
+    },
+    "reasonCode": "Sebab (perlu untuk menolak)",
+    "note": "Nota kepada ejen (perlu untuk Lain-lain)",
+    "takeDown": "Turunkan",
+    "codes": {
+      "incomplete_details": "Butiran tidak lengkap",
+      "photos_quality": "Foto tidak boleh digunakan",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga kelihatan salah",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Penyenaraian berganda",
+      "prohibited_content": "Tidak dibenarkan di pasaran",
+      "other": "Lain-lain (lihat nota)"
+    },
+    "quality": {
+      "score": "Kualiti {score}/100",
+      "parts": "Lengkap {complete} · foto {photos}",
+      "rec": {
+        "add_field": "Medan tidak diisi",
+        "add_photos": "Foto sedikit",
+        "describe_more": "Penerangan pendek",
+        "possible_duplicate": "Mungkin berganda",
+        "price_above_comparables": "Harga melebihi setara",
+        "price_below_comparables": "Harga di bawah setara",
+        "refine_location": "Lokasi kurang jelas",
+        "remove_phone": "Nombor telefon dalam teks",
+        "title_location": "Tajuk tanpa lokasi"
+      }
+    },
+    "photoStatus": {
+      "live": "Diterbitkan",
+      "awaiting_approval": "Telah diproses, menunggu kelulusan",
+      "processing": "Sedang diproses",
+      "queued": "Menunggu diproses",
+      "paused_quota": "Dijeda: kuota imej habis",
+      "paused_cap": "Dijeda: had bulanan dicapai",
+      "failed": "Tidak dapat diproses",
+      "kept_out": "Ditahan",
+      "removed": "Dibuang oleh ejen"
+    },
+    "rights": {
+      "missing": "{n} foto tiada rekod hak — tidak akan diterbitkan",
+      "missingOne": "Tiada rekod hak"
+    },
+    "pager": {
+      "label": "Halaman",
+      "prev": "Sebelumnya",
+      "next": "Seterusnya",
+      "of": "Halaman {page} daripada {pages}"
+    },
+    "changes": {
+      "request": "Minta perubahan sahaja",
+      "kind": "Apa yang diperlukan",
+      "field": "Bahagian mana",
+      "message": "Mesej kepada ejen",
+      "placeholder": "cth. sila sahkan keluasan tanah; harga kelihatan kurang satu sifar",
+      "send": "Hantar permintaan",
+      "sent": "Permintaan dihantar kepada ejen. Penyenaraian kekal dalam baris gilir ini.",
+      "count": "{open} terbuka, {answered} dijawab",
+      "kinds": {
+        "correction": "Pembetulan",
+        "photo_original": "Foto asal"
+      },
+      "fields": {
+        "title": "Tajuk",
+        "description": "Penerangan",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Butiran hartanah",
+        "photos": "Foto",
+        "other": "Lain-lain"
+      }
     }
   },
   "plans": {
@@ -2679,9 +3018,39 @@
       "columns_missing": "Lajur Judul dan Harga tidak ditemui, jadi tiada yang diimport. Ini lajur yang dibaca:",
       "blocked_by_site": "Laman itu menyekat pembacaan automatik (ia meminta pengesahan pelayar). Kami tidak memintas perlindungan itu. Gunakan muat naik Excel/CSV, atau tambah secara manual.",
       "no_listing_data": "Laman itu dibuka, tetapi tiada data hartanah yang boleh dibaca.",
-      "import_failed": "Gagal disimpan sebagai senarai. Semak medan wajib dan cuba lagi."
+      "import_failed": "Gagal disimpan sebagai senarai. Semak medan wajib dan cuba lagi.",
+      "not_owner": "Hanya ejen pemilik import ini boleh mengimportnya."
     },
-    "refetch": "Baca semula"
+    "refetch": "Baca semula",
+    "preparedByTeam": "Disediakan oleh pasukan platform",
+    "preparedNotice": "Pasukan platform menyediakan penyenaraian ini untuk anda. Semak satu per satu, kemudian terima perisytiharan dan import yang betul. Tiada yang disiarkan sebelum anda mengimportnya dan ia lulus semakan.",
+    "photos": {
+      "title": "Foto daripada sumber",
+      "intro": "Foto yang ditemui di halaman penyenaraian anda boleh disalin untuk anda. Foto disimpan secara peribadi dan tidak dipaparkan di pasaran sehingga pemprosesan tersedia.",
+      "disabled": "Penyalinan foto daripada halaman penyenaraian belum tersedia untuk akaun anda. Muat naik foto anda sendiri ke setiap penyenaraian.",
+      "attachAll": "Salin foto",
+      "attaching": "Menyalin…",
+      "retry": "Cuba semula foto",
+      "waiting": "{total} foto menunggu untuk disalin",
+      "savedOf": "{saved} daripada {total} foto disimpan",
+      "privateNote": "Foto yang disimpan dikekalkan secara peribadi sehingga ia boleh diproses.",
+      "exhausted": "Sesetengah foto tidak dapat disalin selepas tiga cubaan. Muat naik foto anda sendiri untuk penyenaraian ini.",
+      "reason_blocked": "Laman web menyekat penyalinan automatik. Ia tidak dicuba dengan cara lain.",
+      "reason_not_image": "Pautan tidak membawa kepada foto JPEG, PNG atau WebP.",
+      "reason_too_large": "Ada foto yang lebih besar daripada 10 MB.",
+      "reason_timeout": "Laman web mengambil masa terlalu lama untuk bertindak balas.",
+      "reason_source_error": "Laman web memulangkan ralat untuk sebuah foto.",
+      "reason_not_property": "Sebuah gambar kelihatan seperti kad kongsi atau logo, bukan foto hartanah, jadi ia dilangkau.",
+      "reason_unsafe_url": "Sebuah pautan foto bukan alamat web awam.",
+      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Cuba lagi.",
+      "processingFailed": "{n} foto tidak dapat diproses. Muat naik foto gantian untuk penyenaraian ini."
+    },
+    "inControl": {
+      "title": "Anda kini mengawal",
+      "body": "Anda telah mengendalikan setiap penyenaraian yang disediakan oleh pasukan. Mulai sekarang hanya anda yang boleh mengubahnya; pasukan hanya membuat moderasi, seperti mana-mana penyenaraian.",
+      "studio": "Buka Studio",
+      "leads": "Pergi ke Leads"
+    }
   },
   "adminUsers": {
     "title": "Orang dan akses",
@@ -2969,7 +3338,22 @@
       "invalid": "Input tidak sah.",
       "not_found": "Organisasi tidak dijumpai.",
       "needs_percent": "Masukkan peratus 0-100.",
-      "needs_amount": "Masukkan jumlah harga."
+      "needs_amount": "Masukkan jumlah harga.",
+      "needs_country": "Organisasi ini tiada negara, jadi harga tetap tiada mata wang. Tetapkan negaranya dahulu.",
+      "agency_invalid": "Semak nama (2–160 aksara) dan pilih negara.",
+      "agency_not_permitted": "Anda hanya boleh mengurus organisasi di negara anda sendiri.",
+      "agency_saved": "Organisasi disimpan.",
+      "agency_created": "Organisasi dicipta."
+    },
+    "agencyForm": {
+      "create": "Organisasi baharu",
+      "createButton": "Cipta organisasi",
+      "edit": "Ubah organisasi",
+      "save": "Simpan perubahan",
+      "name": "Nama",
+      "registration": "Nombor pendaftaran (pilihan)",
+      "country": "Negara",
+      "chooseCountry": "Pilih negara"
     }
   },
   "commercial": {
@@ -3327,7 +3711,10 @@
       "draft": "Draf",
       "verified": "Disahkan",
       "retired": "Dibersarakan"
-    }
+    },
+    "costUnavailable": "Belum tersedia",
+    "costUnavailableHint": "Harga model belum dikonfigurasi",
+    "openOffice": "Buka paparan Office →"
   },
   "aiWorkforce": {
     "watchOffice": "Lihat pasukan AI saya bekerja",
@@ -4376,5 +4763,367 @@
       "copy": "Salin",
       "copied": "Disalin"
     }
+  },
+  "adminInvitations": {
+    "title": "Jemputan ejen",
+    "intro": "Jemput ejen melalui e-mel. Ejen mendaftar dengan kata laluan mereka sendiri dan menerima pautan; admin tidak pernah menetapkan atau melihat kata laluan. Anda hanya melihat jemputan bagi negara yang boleh anda jemput.",
+    "createTitle": "Jemputan baharu",
+    "fullName": "Nama penuh",
+    "email": "E-mel",
+    "phone": "Telefon bimbit (WhatsApp)",
+    "country": "Negara",
+    "language": "Bahasa pilihan",
+    "agency": "Agensi (pilihan)",
+    "createHint": "Pautan sah selama 7 hari dan dipaparkan sekali sahaja. Hantar sendiri kepada ejen, contohnya melalui WhatsApp.",
+    "createCta": "Cipta jemputan",
+    "noCountries": "Anda tidak boleh menjemput ejen di mana-mana negara aktif.",
+    "linkTitle": "Pautan jemputan",
+    "linkHint": "Salin sekarang. Pautan dipaparkan sekali sahaja; hantar semula mencipta pautan baharu dan pautan lama tidak lagi sah.",
+    "listTitle": "Jemputan",
+    "person": "Ejen",
+    "state": "Status",
+    "expires": "Tamat",
+    "sent": "Kali dihantar",
+    "action": "Tindakan",
+    "resend": "Hantar semula",
+    "revoke": "Batal",
+    "empty": "Belum ada jemputan.",
+    "stateLabel": {
+      "pending": "Menunggu",
+      "expired": "Tamat tempoh",
+      "redeemed": "Diterima",
+      "revoked": "Dibatalkan"
+    },
+    "notice": {
+      "created": "Jemputan dicipta. Salin pautan di bawah.",
+      "resent": "Pautan baharu dicipta. Pautan sebelumnya tidak lagi sah.",
+      "revoked": "Jemputan dibatalkan.",
+      "denied": "Anda tidak boleh mengurus jemputan bagi negara tersebut.",
+      "invalid": "Semak butiran dan cuba lagi.",
+      "email_registered": "E-mel itu sudah mempunyai akaun. Minta ejen log masuk sahaja.",
+      "already_invited": "E-mel itu sudah mempunyai jemputan aktif. Hantar semula sahaja.",
+      "country_inactive": "Negara itu tidak aktif.",
+      "not_pending": "Hanya jemputan yang menunggu boleh diubah.",
+      "failed": "Tidak dapat menyimpan. Cuba lagi."
+    }
+  },
+  "invite": {
+    "title": "Terima jemputan anda",
+    "intro": "Anda dijemput menyertai platform ejen. Terima untuk memautkan jemputan ini kepada akaun yang sedang anda gunakan.",
+    "accept": "Terima jemputan",
+    "wrongAccount": "Log masuk dengan akaun yang salah?",
+    "checkAccount": "Semak akaun anda",
+    "error": {
+      "invalid": "Pautan jemputan ini tidak sah. Mungkin sudah tamat tempoh, diganti atau sudah digunakan. Minta pautan baharu daripada orang yang menjemput anda.",
+      "email_mismatch": "Jemputan ini untuk alamat e-mel lain. Log masuk dengan alamat yang menerima jemputan.",
+      "rate_limited": "Terlalu banyak cubaan. Tunggu sejam dan cuba lagi.",
+      "sign_in_required": "Log masuk untuk menerima jemputan.",
+      "failed": "Tidak dapat menerima jemputan. Cuba lagi."
+    }
+  },
+  "adminImports": {
+    "title": "Import berbantu",
+    "intro": "Sediakan import penyenaraian untuk ejen. Kelompok ini milik ejen: mereka menyemaknya, menerima perisytiharan import sendiri dan mengimportnya. Anda tidak boleh mengimport bagi pihak mereka.",
+    "agent": "Ejen",
+    "chooseAgent": "Pilih ejen",
+    "noAgents": "Tiada ejen di negara anda untuk disediakan import.",
+    "fileTitle": "Daripada hamparan",
+    "fileHint": "Gunakan templat import. Setiap baris menjadi item untuk disemak oleh ejen.",
+    "file": "Fail",
+    "linksTitle": "Daripada pautan penyenaraian",
+    "linksHint": "Tampal pautan penyenaraian ejen sendiri, satu setiap baris. Halaman yang menyekat bacaan automatik dilangkau, tidak sekali-kali dipintas.",
+    "portal": "Portal",
+    "links": "Pautan",
+    "startCta": "Sediakan kelompok",
+    "listTitle": "Kelompok yang disediakan",
+    "source": "Sumber",
+    "items": "Diimport / ditemui",
+    "state": "Status",
+    "created": "Dicipta",
+    "empty": "Belum ada kelompok yang disediakan.",
+    "stateLabel": {
+      "preparing": "Sedang disediakan",
+      "handed_over": "Bersama ejen",
+      "committed": "Diimport oleh ejen"
+    },
+    "batchTitle": "Kelompok untuk {agent}",
+    "agentCommits": "Anda boleh mengambil, membetulkan dan melangkau item. Hanya ejen boleh menerima perisytiharan dan mengimportnya.",
+    "handOver": "Hantar kepada ejen ({n} sedia)",
+    "handOverAgain": "Maklumkan ejen sekali lagi ({n} sedia)",
+    "nothingReady": "Belum ada item yang sedia.",
+    "handedOver": "Ejen telah dimaklumkan bahawa kelompok sudah sedia.",
+    "errors": {
+      "invalid": "Semak butiran dan cuba lagi.",
+      "not_permitted": "Anda tidak boleh menyediakan import untuk ejen itu.",
+      "failed": "Tidak berjaya. Cuba lagi.",
+      "nothing_selected": "Pilih sekurang-kurangnya satu item.",
+      "agent_in_control": "Ejen mengawal kelompok ini, jadi ia tidak boleh diubah lagi.",
+      "nothing_to_set": "Pilih jenis atau jual/sewa untuk digunakan.",
+      "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini."
+    },
+    "review": {
+      "title": "Semakan kelompok",
+      "hint": "Kualiti, foto dan setiap suntingan sepintas lalu. Tandakan item untuk melangkau atau memulihkannya bersama, atau tetapkan jenis atau jual/sewa sekali gus; item yang telah diimport tidak boleh diubah.",
+      "skipSelected": "Langkau yang dipilih",
+      "restoreSelected": "Pulihkan yang dipilih",
+      "select": "Pilih",
+      "selectOne": "Pilih {title}",
+      "item": "Item",
+      "status": "Status",
+      "quality": "Kualiti",
+      "photos": "Foto",
+      "changes": "Diubah daripada sumber",
+      "listingScore": "Skor kualiti penyenaraian",
+      "scoreListing": "Penyenaraian {score}/100",
+      "scoreItem": "Medan {score}%",
+      "missing": "Kurang",
+      "field": {
+        "title": "tajuk",
+        "price": "harga",
+        "listingType": "jual atau sewa",
+        "propertyType": "jenis",
+        "location": "lokasi",
+        "size": "keluasan",
+        "bedrooms": "bilik tidur",
+        "description": "penerangan",
+        "photos": "foto"
+      },
+      "photosState": "{saved} daripada {total} disimpan",
+      "noChanges": "Seperti diimport",
+      "bulkDone": "{n} item dikemas kini.",
+      "itemStatus": {
+        "found": "Ditemui",
+        "processing": "Mengambil",
+        "ready": "Sedia",
+        "needs_review": "Perlu disemak",
+        "duplicate": "Berganda",
+        "imported": "Diimport",
+        "failed": "Gagal",
+        "skipped": "Dilangkau"
+      },
+      "setType": "Tetapkan jenis…",
+      "setListingType": "Jual atau sewa…",
+      "sale": "Untuk dijual",
+      "rent": "Untuk disewa",
+      "applySelected": "Guna pada yang dipilih"
+    },
+    "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa."
+  },
+  "adminMedia": {
+    "title": "Pusat Kualiti Foto",
+    "intro": "Setiap foto import dan foto rakan kongsi di negara anda, seperti yang dilihat oleh pemproses: menunggu, diproses, dijeda, gagal, menunggu kelulusan, diterbitkan atau ditahan, bersama rekod haknya. Tiada apa di sini menjadikan foto awam; itu berlaku apabila penyenaraian diluluskan.",
+    "usage": {
+      "title": "Pemprosesan imej bulan ini",
+      "value": "{used} daripada {cap} transformasi",
+      "note": "Pelan percuma, $0: pemproses berhenti pada had dan tidak pernah berbelanja."
+    },
+    "checks": {
+      "title": "Semakan yang dijalankan di sini",
+      "rules": "Peraturan sahaja: di bawah {w}×{h} piksel, atau di bawah {kb} KB, ditanda.",
+      "noAi": "Tiada model AI menyemak foto pada skrin ini."
+    },
+    "views": {
+      "label": "Paparan",
+      "attention": "Perlu perhatian",
+      "processing": "Diproses",
+      "awaiting": "Menunggu kelulusan",
+      "kept_out": "Ditahan",
+      "all": "Semua"
+    },
+    "clearListing": "Semua penyenaraian",
+    "done": {
+      "released": "Dilepaskan. Foto boleh diterbitkan bersama penyenaraiannya semula.",
+      "retried": "Dibaris gilir untuk diproses semula.",
+      "quarantined": "Ditahan. Foto tidak akan diterbitkan.",
+      "ok": "Selesai."
+    },
+    "errors": {
+      "invalid": "Permintaan tidak sah.",
+      "update_failed": "Tidak berjaya. Cuba lagi.",
+      "not_found": "Foto tidak ditemui.",
+      "not_moderatable": "Foto ini tidak boleh ditahan sekarang.",
+      "not_quarantined": "Foto ini tidak ditahan.",
+      "self_prepared": "Anda menyediakan import penyenaraian ini, jadi penyemak lain mesti melepaskannya.",
+      "not_retryable": "Hanya foto yang gagal atau dijeda boleh diproses semula."
+    },
+    "count": "{count} foto",
+    "empty": {
+      "attention": "Tiada yang perlu perhatian.",
+      "processing": "Tiada yang sedang diproses.",
+      "awaiting": "Tiada foto diproses yang menunggu.",
+      "kept_out": "Tiada foto ditahan.",
+      "all": "Belum ada foto import atau foto rakan kongsi."
+    },
+    "noPreview": "Tiada pratonton",
+    "rights": {
+      "import_authority": "Kuasa import ejen",
+      "partner_agreement": "Perjanjian rakan kongsi",
+      "agent_upload": "Muat naik ejen",
+      "missing": "Tiada rekod hak",
+      "missingNote": "Tanpa rekod hak, foto ini tidak pernah diterbitkan.",
+      "agent_supplied": "Dihantar oleh ejen atas permintaan"
+    },
+    "rule": {
+      "low_res": "Resolusi rendah",
+      "tiny_file": "Fail sangat kecil"
+    },
+    "failedWhy": "Gagal selepas {n} cubaan: {why}",
+    "paused": {
+      "paused_quota": "Dijeda: kuota Images dicapai. Cuba lagi selepas ia ditetapkan semula.",
+      "paused_cap": "Dijeda: had bulanan dicapai. Ia bersambung bulan depan, atau cuba lagi selepas had dinaikkan."
+    },
+    "retryAt": "Cubaan {n} gagal; cuba lagi {at} UTC",
+    "release": "Lepaskan",
+    "retry": "Proses semula"
+  },
+  "adminHandover": {
+    "title": "Serahan",
+    "intro": "Apa yang diminta moderasi untuk diubah atau dibekalkan oleh ejen, jawapan mereka, dan kelompok yang disediakan untuk ejen bersama kemajuannya.",
+    "requests": {
+      "title": "Permintaan perubahan",
+      "view": {
+        "open": "Terbuka",
+        "closed": "Ditutup"
+      },
+      "empty": {
+        "open": "Tiada permintaan perubahan terbuka.",
+        "closed": "Belum ada permintaan perubahan ditutup."
+      }
+    },
+    "status": {
+      "open": "Menunggu ejen",
+      "answered": "Ejen menjawab",
+      "resolved": "Selesai",
+      "withdrawn": "Ditarik balik"
+    },
+    "kind": {
+      "correction": "Pembetulan",
+      "photo_original": "Foto asal"
+    },
+    "field": {
+      "title": "Tajuk",
+      "description": "Penerangan",
+      "price": "Harga",
+      "location": "Lokasi",
+      "property_details": "Butiran hartanah",
+      "photos": "Foto",
+      "other": "Lain-lain"
+    },
+    "age": "{days} hari lalu",
+    "asked": "Diminta",
+    "answered": "Jawapan",
+    "resolve": "Selesaikan",
+    "withdraw": "Tarik balik",
+    "openListing": "Buka dalam moderasi",
+    "batches": {
+      "title": "Kelompok disediakan",
+      "hint": "Import berbantu yang diserahkan kepada ejen. Menyimpan kekal tindakan ejen.",
+      "empty": "Belum ada kelompok diserahkan.",
+      "agent": "Ejen",
+      "handedOver": "Diserahkan",
+      "progress": "Kemajuan",
+      "counts": "{waiting} menunggu · {imported} diimport · {skipped} dilangkau",
+      "done": "Ejen selesai",
+      "open": "Buka kelompok",
+      "inControl": "Ejen mengawal"
+    },
+    "done": {
+      "change_requested": "Permintaan dihantar kepada ejen.",
+      "change_resolved": "Ditanda selesai. Ejen telah dimaklumkan.",
+      "change_withdrawn": "Permintaan ditarik balik.",
+      "ok": "Selesai.",
+      "change_resolved_published": "Selesai, dan foto ejen yang telah diproses kini diterbitkan."
+    },
+    "errors": {
+      "update_failed": "Tidak berjaya. Cuba lagi.",
+      "not_found": "Tidak ditemui.",
+      "closed": "Permintaan ini sudah ditutup.",
+      "invalid": "Permintaan tidak sah.",
+      "change_invalid": "Tulis mesej ringkas untuk ejen.",
+      "body_required": "Tulis mesej ringkas untuk ejen.",
+      "not_open": "Penyenaraian ini tidak boleh menerima permintaan sekarang."
+    },
+    "supplied": "Foto daripada ejen (peribadi)",
+    "suppliedNote": "Menyelesaikan permintaan ini pada penyenaraian yang diterbitkan akan menerbitkan foto yang telah diproses; foto yang masih diproses kekal peribadi.",
+    "openCentre": "Buka di Pusat Kualiti Foto"
+  },
+  "adminListingReports": {
+    "back": "Moderasi",
+    "title": "Laporan pembeli",
+    "hint": "Laporan yang dihantar pembeli dari pasaran tentang penyenaraian di negara anda. Pelapor adalah tanpa nama. Uruskan penyenaraian dalam moderasi (tolak atau minta perubahan), kemudian tutup laporan.",
+    "empty": "Tiada laporan terbuka.",
+    "count": "{n, plural, other {# laporan}}",
+    "openModeration": "Buka dalam moderasi",
+    "note": "Nota (pilihan)",
+    "actioned": "Tanda sudah diuruskan",
+    "dismiss": "Abaikan",
+    "recent": "Baru ditutup",
+    "status": {
+      "dismissed": "Diabaikan",
+      "actioned": "Diuruskan"
+    },
+    "done": {
+      "dismissed": "Laporan diabaikan.",
+      "actioned": "Laporan ditanda sudah diuruskan."
+    },
+    "errors": {
+      "invalid": "Semak butiran dan cuba lagi.",
+      "not_found": "Laporan itu tiada dalam negara anda.",
+      "closed": "Laporan itu sudah ditutup.",
+      "invalid_outcome": "Pilih keputusan.",
+      "note_too_long": "Nota maksimum 1,000 aksara.",
+      "failed": "Tidak dapat diselesaikan. Cuba lagi."
+    },
+    "reasons": {
+      "wrong_info": "Maklumat tidak tepat",
+      "already_sold": "Sudah dijual atau disewa",
+      "duplicate": "Penyenaraian berganda",
+      "wrong_photos": "Foto tidak sepadan",
+      "scam_or_fraud": "Disyaki penipuan",
+      "offensive": "Kandungan tidak sesuai",
+      "other": "Lain-lain"
+    }
+  },
+  "adminLeads": {
+    "title": "Masa respons prospek",
+    "hint": "Seberapa pantas ejen menjawab pertanyaan pembeli di negara anda. Prospek dikira tepat pada masanya apabila dijawab sebelum tarikh akhirnya. Butiran hubungan pembeli tidak dipaparkan di sini.",
+    "period": "Tempoh",
+    "lastDays": "{n} hari terakhir",
+    "minutes": "{n} min",
+    "hours": "{n} jam",
+    "days": "{n} hari",
+    "kpi": {
+      "leads": "Prospek",
+      "onTime": "Dijawab tepat pada masa",
+      "median": "Median jawapan pertama",
+      "overdue": "Lewat sekarang"
+    },
+    "byAgent": "Mengikut ejen",
+    "empty": "Tiada prospek dalam tempoh ini.",
+    "cols": {
+      "agent": "Ejen",
+      "leads": "Prospek",
+      "answered": "Dijawab",
+      "onTime": "Tepat masa",
+      "median": "Median",
+      "overdue": "Lewat"
+    },
+    "overdueTitle": "Menunggu melepasi tarikh akhir",
+    "overdueHint": "Prospek yang belum dijawab, yang paling lama lewat dahulu.",
+    "noOverdue": "Tiada yang lewat.",
+    "lateBy": "lewat {time}"
+  },
+  "suspension": {
+    "title": "Akaun anda digantung",
+    "body": "Semasa akaun digantung, anda tidak boleh mencipta atau mengubah penyenaraian, dan penyenaraian aktif anda dijeda. Hubungi pasukan platform jika ada pertanyaan.",
+    "reason": "Sebab",
+    "listings": "Penyenaraian anda kembali secara automatik apabila akaun dipulihkan, jika masih diluluskan."
+  },
+  "adminAiOffice": {
+    "eyebrow": "Paparan platform",
+    "title": "Pejabat AI Workforce",
+    "subtitle": "Setiap peranan AI merentas semua ejen dalam tujuh hari lepas, daripada metadata tugas sahaja. Peranan yang memerlukan penyedia AI dipaparkan tidak tersedia sehingga penyedia dikonfigurasi.",
+    "badge": "Baca sahaja",
+    "back": "← AI Workforce"
   }
 }

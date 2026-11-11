@@ -37,6 +37,8 @@ export type StudioListing = {
   regency_name: string | null;
   district_name: string | null;
   land_size: number | null;
+  /** The unit both sizes are stored in (the market's: sqm or sqft). */
+  measurement_unit: "sqm" | "sqft";
   building_size: number | null;
   bedrooms: number | null;
   bathrooms: number | null;
@@ -108,6 +110,7 @@ function toStudioListing(
     regency_name: (row.regency_name as string | null) ?? null,
     district_name: (row.district_name as string | null) ?? null,
     land_size: num(row.land_size),
+    measurement_unit: row.measurement_unit === "sqft" ? "sqft" : "sqm",
     building_size: num(row.building_size),
     bedrooms: num(row.bedrooms),
     bathrooms: num(row.bathrooms),

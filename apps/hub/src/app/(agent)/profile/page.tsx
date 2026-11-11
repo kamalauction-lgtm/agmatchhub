@@ -14,7 +14,7 @@ const btnPri =
 const PLATFORMS = ["facebook", "instagram", "linkedin", "tiktok", "youtube",
   "whatsapp", "telegram", "website", "agency_profile", "other"] as const;
 const KNOWN_ERRORS = ["invalid_fields", "invalid_file_type", "file_too_large",
-  "upload_failed", "save_failed", "invalid_url"];
+  "upload_failed", "save_failed", "invalid_url", "photo_paused"];
 
 export default async function ProfilePage({
   searchParams,

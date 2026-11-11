@@ -28,34 +28,43 @@ import { signOut } from "@/app/(auth)/actions";
 /** Each section, the capability that makes it usable, and its group. */
 const NAV: { key: string; href: string; capability: string | null; icon: string; group: string }[] = [
   { key: "overview", href: "/admin", capability: null, icon: "◈", group: "main" },
-  { key: "search", href: "/admin/search", capability: null, icon: "⌕", group: "main" },
 
-  { key: "requests", href: "/admin/requests", capability: "request.manage", icon: "☰", group: "work" },
-  { key: "listings", href: "/admin/listings", capability: "listing.moderate", icon: "⌂", group: "work" },
-  { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "work" },
-  { key: "reports", href: "/admin/reports", capability: "report.manage", icon: "⚑", group: "work" },
+  { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "agents" },
+  { key: "invitations", href: "/admin/agents/invitations", capability: "agent.invite", icon: "✉", group: "agents" },
+  { key: "organisations", href: "/admin/organisations", capability: "commercial.manage", icon: "▣", group: "agents" },
 
-  { key: "growth", href: "/admin/growth", capability: "growth.manage", icon: "↗", group: "grow" },
-  { key: "banners", href: "/admin/banners", capability: "commercial.manage", icon: "▤", group: "grow" },
-  { key: "announcements", href: "/admin/announcements", capability: "platform.configure", icon: "◎", group: "grow" },
-  { key: "training", href: "/admin/training", capability: "content.manage", icon: "◇", group: "grow" },
+  { key: "listings", href: "/admin/listings", capability: "listing.moderate", icon: "⌂", group: "listings" },
+  { key: "imports", href: "/admin/imports", capability: "listing.import_assisted", icon: "⇪", group: "listings" },
+  { key: "media", href: "/admin/media", capability: "media.review", icon: "▦", group: "listings" },
 
-  { key: "organisations", href: "/admin/organisations", capability: "commercial.manage", icon: "▣", group: "commerce" },
+  { key: "requests", href: "/admin/requests", capability: "request.manage", icon: "☰", group: "demand" },
+  { key: "leads", href: "/admin/leads", capability: "request.manage", icon: "◷", group: "demand" },
+  { key: "reports", href: "/admin/reports", capability: "report.manage", icon: "⚑", group: "demand" },
+
+  { key: "growth", href: "/admin/growth", capability: "growth.manage", icon: "↗", group: "commerce" },
+  { key: "banners", href: "/admin/banners", capability: "commercial.manage", icon: "▤", group: "commerce" },
   { key: "commercial", href: "/admin/commercial", capability: "commercial.manage", icon: "₪", group: "commerce" },
-  { key: "users", href: "/admin/users", capability: "roles.manage", icon: "◑", group: "commerce" },
   { key: "hero", href: "/admin/hero", capability: "commercial.manage", icon: "⬢", group: "commerce" },
   { key: "payments", href: "/admin/payments", capability: "commercial.manage", icon: "◎", group: "commerce" },
 
-  { key: "countries", href: "/admin/countries", capability: "platform.configure", icon: "⊕", group: "platform" },
-  { key: "identity", href: "/admin/identity", capability: "platform.configure", icon: "◐", group: "platform" },
-  { key: "flags", href: "/admin/flags", capability: "platform.configure", icon: "⚙", group: "platform" },
-  { key: "ai", href: "/admin/ai", capability: "ai.manage", icon: "✦", group: "platform" },
-  { key: "whatsapp", href: "/admin/whatsapp", capability: "platform.configure", icon: "◍", group: "platform" },
-  { key: "legal", href: "/admin/legal", capability: "legal.publish", icon: "§", group: "platform" },
-  { key: "audit", href: "/admin/audit", capability: null, icon: "◷", group: "platform" },
+  { key: "ai", href: "/admin/ai", capability: "ai.manage", icon: "✦", group: "ai" },
+
+  { key: "handover", href: "/admin/handover", capability: "listing.moderate", icon: "⇄", group: "comms" },
+  { key: "announcements", href: "/admin/announcements", capability: "platform.configure", icon: "◎", group: "comms" },
+  { key: "whatsapp", href: "/admin/whatsapp", capability: "platform.configure", icon: "◍", group: "comms" },
+
+  { key: "training", href: "/admin/training", capability: "content.manage", icon: "◇", group: "markets" },
+  { key: "countries", href: "/admin/countries", capability: "platform.configure", icon: "⊕", group: "markets" },
+  { key: "identity", href: "/admin/identity", capability: "platform.configure", icon: "◐", group: "markets" },
+  { key: "legal", href: "/admin/legal", capability: "legal.publish", icon: "§", group: "markets" },
+
+  { key: "users", href: "/admin/users", capability: "roles.manage", icon: "◑", group: "security" },
+  { key: "flags", href: "/admin/flags", capability: "platform.configure", icon: "⚙", group: "security" },
+  { key: "audit", href: "/admin/audit", capability: "audit.view", icon: "◷", group: "security" },
 ];
 
-const GROUP_ORDER = ["main", "work", "grow", "commerce", "platform"] as const;
+/** The nine workspaces (approved plan); "main" is the Command Centre, shown without a heading. */
+const GROUP_ORDER = ["main", "agents", "listings", "demand", "commerce", "ai", "comms", "markets", "security"] as const;
 
 export default async function AdminLayout({
   children,

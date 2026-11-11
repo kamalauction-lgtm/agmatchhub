@@ -57,7 +57,11 @@ describe.skipIf(!hasEnv)("role capabilities", () => {
         .select("capability_key, roles!inner(key)")
         .eq("roles.key", "country_admin");
       const caps = (data ?? []).map((r) => r.capability_key).sort();
-      expect(caps).toEqual(["agent.verify", "listing.moderate", "request.manage"]);
+      // agent.invite added by 00106 (P0-b), listing.import_assisted by 00107 (P0-d-1) and
+      // media.review by 00114 (P1-a, to exactly the roles holding listing.moderate), all owner-approved.
+      expect(caps).toEqual(["agent.invite", "agent.verify", "listing.import_assisted", "listing.moderate", "media.review", "request.manage"]);
+      // Audit rows carry no country, so a country admin does not read them (00123).
+      expect(caps).not.toContain("audit.view");
     });
 
     it("only super admin may hand out roles", async () => {
@@ -231,7 +235,9 @@ describe.skipIf(!hasEnv || !SERVICE)("a granted role actually works", () => {
   it("gives them exactly the compliance capabilities", async () => {
     const { data } = await agent.rpc("my_capabilities");
     const keys = ((data ?? []) as { capability_key: string }[]).map((r) => r.capability_key).sort();
-    expect(keys).toEqual(["agent.verify", "legal.publish", "listing.moderate", "report.manage"]);
+    // media.review (00114) follows listing.moderate.
+    // audit.view added by 00123 (screen 13): reading the audit trail, global roles only.
+    expect(keys).toEqual(["agent.verify", "audit.view", "legal.publish", "listing.moderate", "media.review", "report.manage"]);
   });
 
   it("and NOT the commercial one — the fault this migration exists to fix", async () => {

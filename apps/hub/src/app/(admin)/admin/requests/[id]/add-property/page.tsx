@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createServiceClient } from "@/lib/supabase/service";
-import { requireAdmin } from "@/lib/authz";
+import { requireAdmin, requireCapabilityIn } from "@/lib/authz";
 import { SOURCE_TYPES } from "@/lib/submissions/core";
 import { addPropertyOnBehalf } from "./actions";
 
@@ -10,8 +10,8 @@ const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
 
 const KNOWN_ERRORS = [
-  "invalid_fields", "agent_required", "agent_invalid", "email_in_use",
-  "agent_failed", "invalid_file_type", "file_too_large", "upload_failed", "save_failed",
+  "invalid_fields", "agent_required", "invite_first",
+  "invalid_file_type", "file_too_large", "upload_failed", "save_failed",
 ];
 
 function Fieldset({ title, children }: { title: string; children: React.ReactNode }) {
@@ -41,6 +41,9 @@ export default async function AdminAddPropertyPage({
     .eq("id", id)
     .maybeSingle();
   if (!request) notFound();
+  // Read through the service client, so scope is checked here before anything
+  // about the request is rendered (P0-a; the action checks the same).
+  await requireCapabilityIn("request.manage", request.country_code, "/admin/requests");
 
   const [{ data: currencies }, { data: countries }, { data: profiles }] = await Promise.all([
     service.from("currencies").select("code").eq("active", true).order("code"),
@@ -92,9 +95,9 @@ export default async function AdminAddPropertyPage({
 
         {/* Which agent -------------------------------------------------- */}
         <Fieldset title={ta("agentSection")}>
-          <label className="flex items-start gap-3 text-sm">
-            <input type="radio" name="agentMode" value="existing" defaultChecked className="mt-1 h-4 w-4 accent-crimson" />
-            <span className="flex-1">
+          <input type="hidden" name="agentMode" value="existing" />
+          <label className="block text-sm">
+            <span className="block">
               <span className="mb-1 block font-medium">{ta("existingAgent")}</span>
               <select name="agentId" className={inputCls} defaultValue="">
                 <option value="">{ta("chooseAgent")}</option>
@@ -108,21 +111,12 @@ export default async function AdminAddPropertyPage({
             </span>
           </label>
 
-          <label className="flex items-start gap-3 border-t border-line pt-4 text-sm">
-            <input type="radio" name="agentMode" value="new" className="mt-1 h-4 w-4 accent-crimson" />
-            <span className="flex-1">
-              <span className="mb-2 block font-medium">{ta("newAgent")}</span>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {field("displayName", ta("na_name"), <input name="displayName" className={inputCls} />)}
-                {field("email", ta("na_email"), <input type="email" name="email" className={inputCls} />)}
-                {field("mobileNumber", ta("na_phone"), <input name="mobileNumber" className={inputCls} />)}
-                {field("whatsappNumber", ta("na_whatsapp"), <input name="whatsappNumber" className={inputCls} />)}
-                {field("agencyName", ta("na_agency"), <input name="agencyName" className={inputCls} />)}
-                {field("licenceNumber", ta("na_licenceNumber"), <input name="licenceNumber" className={inputCls} />)}
-              </div>
-              <p className="mt-2 text-xs text-muted">{ta("newAgentHint")}</p>
-            </span>
-          </label>
+          <p className="border-t border-line pt-4 text-sm text-muted">
+            {ta("notOnPlatform")}{" "}
+            <Link href="/admin/agents/invitations" className="font-medium text-crimson underline">
+              {ta("inviteCta")}
+            </Link>
+          </p>
         </Fieldset>
 
         {/* Property ----------------------------------------------------- */}

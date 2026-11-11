@@ -61,12 +61,18 @@ export async function checkListingPhotos(input: { listingId: string; userId: str
   // RLS: the owner (or a borrowing marketer) sees these rows; anyone else sees none.
   const [{ data: media }, { data: listing }] = await Promise.all([
     supabase.from("listing_media").select("id, position, is_cover, width, height, byte_size, phash, thumbnail_path, processed_path, storage_path, kind")
-      .eq("listing_id", input.listingId).eq("kind", "image").order("position"),
+      .eq("listing_id", input.listingId).eq("kind", "image").neq("processing_state", "removed").order("position"),
     supabase.from("listings").select("title, listing_type, properties (property_type, regency_name)").eq("id", input.listingId).maybeSingle(),
   ]);
   const rows = (media ?? []) as (MediaFacts & { thumbnail_path: string | null; processed_path: string | null; storage_path: string })[];
   const rules = ruleCheckPhotos(rows);
-  const urlOf = (m: (typeof rows)[number]) => publicMediaUrl(m.thumbnail_path ?? m.processed_path ?? m.storage_path);
+  // Only public files have a public URL. An imported photo still in the
+  // private intake bucket has none (P0-e-3a): building one produced a broken
+  // link, and the model could not fetch it either.
+  const urlOf = (m: (typeof rows)[number]) => {
+    const path = m.thumbnail_path ?? m.processed_path ?? m.storage_path;
+    return path && !path.startsWith("listing-media-intake/") ? publicMediaUrl(path) : null;
+  };
   const base: PhotoCheckResult = {
     count: rules.count, hasCover: rules.hasCover, tooFew: rules.tooFew, ruleFlags: rules.flags,
     photos: rows.map((m, i) => ({ index: i + 1, id: m.id, url: urlOf(m), ok: true, issues: [], note: "" })),

@@ -390,5 +390,33 @@
     "verified": "Terverifikasi",
     "inventory": "{count} properti",
     "empty": "Belum ada properti yang ditampilkan."
+  },
+  "report": {
+    "open": "Laporkan listing ini",
+    "intro": "Ada yang salah dengan listing ini? Laporan bersifat anonim dan ditinjau oleh tim moderasi.",
+    "reason": "Alasan",
+    "choose": "Pilih alasan",
+    "details": "Detail (opsional)",
+    "detailsHint": "Apa yang salah? Wajib diisi jika memilih Lainnya.",
+    "send": "Kirim laporan",
+    "sent": "Terima kasih. Laporan Anda telah dikirim dan akan ditinjau oleh tim moderasi.",
+    "reasons": {
+      "wrong_info": "Informasi tidak akurat",
+      "already_sold": "Sudah terjual atau tersewa",
+      "duplicate": "Listing ganda",
+      "wrong_photos": "Foto tidak sesuai",
+      "scam_or_fraud": "Dugaan penipuan",
+      "offensive": "Konten tidak pantas",
+      "other": "Lainnya"
+    },
+    "errors": {
+      "details_required": "Tuliskan detail jika memilih Lainnya.",
+      "details_too_long": "Detail maksimal 1.000 karakter.",
+      "rate_limited": "Terlalu banyak laporan dalam waktu singkat. Coba lagi nanti.",
+      "listing_not_found": "Listing ini tidak lagi tersedia.",
+      "invalid_reason": "Pilih alasan.",
+      "invalid": "Periksa isian dan coba lagi.",
+      "error": "Laporan tidak dapat dikirim. Coba lagi."
+    }
   }
 }

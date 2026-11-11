@@ -25,6 +25,8 @@ export default async function CountriesPage({
   ]);
   const ingestAgentOf = (c: { settings: unknown }) =>
     ((c.settings as { ingest?: { agent_id?: string | null } } | null)?.ingest?.agent_id ?? "") as string;
+  const agreementOf = (c: { settings: unknown }) =>
+    ((c.settings as { ingest?: { agreement_ref?: string | null } } | null)?.ingest?.agreement_ref ?? "") as string;
 
   return (
     <div>
@@ -38,7 +40,7 @@ export default async function CountriesPage({
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {error === "ingest_agent" ? t("ingestAgentInvalid") : t("saveFailed")}
+          {error === "ingest_agent" ? t("ingestAgentInvalid") : error === "invalid" ? t("invalidFields") : t("saveFailed")}
         </p>
       )}
 
@@ -52,6 +54,7 @@ export default async function CountriesPage({
               <th className="px-4 py-3">{t("cols.currency")}</th>
               <th className="px-4 py-3">{t("cols.unit")}</th>
               <th className="px-4 py-3">{t("cols.ingestAgent")}</th>
+              <th className="px-4 py-3">{t("cols.local")}</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
@@ -98,6 +101,20 @@ export default async function CountriesPage({
                       <option key={a.id} value={a.id}>{a.display_name ?? a.id.slice(0, 8)}</option>
                     ))}
                   </select>
+                  {/* P0-e-3b: partner photos are stored only under a recorded agreement. */}
+                  <input form={`country-${c.code}`} name="ingestAgreementRef" defaultValue={agreementOf(c)} maxLength={200}
+                    placeholder={t("ingestAgreementPlaceholder")} title={t("ingestAgreementHint")} aria-label={t("ingestAgreementHint")}
+                    className={`mt-1 block w-full ${selectCls}`} />
+                </td>
+                <td className="px-4 py-3" data-country-local={c.code}>
+                  {/* Screen 13: timezone and terminology, editable per country. */}
+                  <input form={`country-${c.code}`} name="timezone" defaultValue={c.timezone ?? ""} maxLength={60}
+                    placeholder="Asia/Kuala_Lumpur" aria-label={t("timezone")} title={t("timezone")} className={`block w-full ${selectCls}`} />
+                  {(["agent", "owner", "tenant"] as const).map((k) => (
+                    <input key={k} form={`country-${c.code}`} name={`term${k[0].toUpperCase()}${k.slice(1)}`}
+                      defaultValue={String(((c.terminology ?? {}) as Record<string, unknown>)[k] ?? "")} maxLength={60}
+                      placeholder={t(`term.${k}`)} aria-label={t(`term.${k}`)} title={t(`term.${k}`)} className={`mt-1 block w-full ${selectCls}`} />
+                  ))}
                 </td>
                 <td className="px-4 py-3 text-right">
                   <form id={`country-${c.code}`} action={updateCountry}>

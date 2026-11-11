@@ -4,13 +4,13 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { removeOldAvatar, storeCleanAvatar } from "@/lib/media/avatar";
 
 const IMAGE_MIMES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
 };
-const MAX_PHOTO_BYTES = 3 * 1024 * 1024;
 const MAX_CARD_BYTES = 5 * 1024 * 1024;
 
 export async function updateTrustProfile(formData: FormData) {
@@ -36,18 +36,19 @@ export async function updateTrustProfile(formData: FormData) {
   if (!parsed.success) redirect("/profile?error=invalid_fields");
   const d = parsed.data;
 
-  // Profile photo → public bucket (client-facing per §71 visibility rules)
+  // Profile photo → public bucket (client-facing per §71 visibility rules),
+  // but never the agent's original (P1-b-4, 00118): it is re-encoded to one
+  // metadata-free WebP and only that is stored, by the service client.
   const photo = formData.get("photo") as File | null;
   let photoPath: string | null = null;
+  let previousPhoto: string | null = null;
   if (photo && photo.size > 0) {
-    const ext = IMAGE_MIMES[photo.type];
-    if (!ext) redirect("/profile?error=invalid_file_type");
-    if (photo.size > MAX_PHOTO_BYTES) redirect("/profile?error=file_too_large");
-    photoPath = `${user.id}/photo-${Date.now()}.${ext}`;
-    const { error } = await supabase.storage
-      .from("agent-profile-public")
-      .upload(photoPath, photo, { contentType: photo.type });
-    if (error) redirect("/profile?error=upload_failed");
+    if (!IMAGE_MIMES[photo.type]) redirect("/profile?error=invalid_file_type");
+    const stored = await storeCleanAvatar(user.id, new Uint8Array(await photo.arrayBuffer()));
+    if (!stored.ok) redirect(`/profile?error=${stored.error}`);
+    photoPath = stored.path;
+    const { data: before } = await supabase.from("profiles").select("avatar_url").eq("id", user.id).single();
+    previousPhoto = before?.avatar_url ?? null;
   }
 
   // Name card images → private bucket (§71: controlled, never public)
@@ -75,6 +76,16 @@ export async function updateTrustProfile(formData: FormData) {
     })
     .eq("id", user.id);
   if (profErr) redirect("/profile?error=save_failed");
+  if (photoPath) {
+    await removeOldAvatar(user.id, previousPhoto, photoPath);
+    await logAudit({
+      action: "profile.avatar_updated",
+      entityType: "profile",
+      entityId: user.id,
+      previous: { avatar_url: previousPhoto },
+      next: { avatar_url: photoPath, format: "webp", cleaned: true },
+    });
+  }
 
   await supabase
     .from("users_private")

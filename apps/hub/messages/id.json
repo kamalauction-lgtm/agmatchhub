@@ -272,7 +272,12 @@
       "ai": "Konsol AI",
       "hero": "AG Hero",
       "payments": "Pembayaran",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "invitations": "Undangan",
+      "imports": "Impor berbantuan",
+      "media": "Kualitas foto",
+      "handover": "Serah terima",
+      "leads": "Respons prospek"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -320,11 +325,18 @@
     "doneNotice": {
       "approve": "Agen disetujui dan terverifikasi.",
       "reject": "Agen ditolak.",
-      "request_info": "Informasi diminta dari agen."
+      "request_info": "Informasi diminta dari agen.",
+      "suspended": "Agen ditangguhkan. {n, plural, other {# listing tayang}} dijeda.",
+      "restored": "Agen dipulihkan. {n, plural, other {# listing}} ditayangkan kembali."
     },
     "errors": {
       "notes_required": "Catatan wajib untuk keputusan ini.",
-      "save_failed": "Keputusan tidak dapat disimpan."
+      "save_failed": "Keputusan tidak dapat disimpan.",
+      "self_invited": "Anda yang mengundang agen ini, jadi admin lain harus menyetujui verifikasinya.",
+      "reason_required": "Berikan alasan minimal 3 karakter.",
+      "already_suspended": "Agen ini sudah ditangguhkan.",
+      "not_suspended": "Agen ini tidak sedang ditangguhkan.",
+      "self": "Anda tidak dapat menangguhkan atau memulihkan diri sendiri."
     },
     "overviewTitle": "Pusat kendali",
     "allClear": "Tidak ada antrean. Semua bersih.",
@@ -407,8 +419,15 @@
     "navGroup": {
       "work": "Antrean",
       "grow": "Pertumbuhan",
-      "commerce": "Komersial",
-      "platform": "Platform"
+      "commerce": "Komersial dan pertumbuhan",
+      "platform": "Platform",
+      "agents": "Agen",
+      "listings": "Listing dan impor",
+      "demand": "Permintaan dan laporan",
+      "ai": "AI Workforce",
+      "comms": "Komunikasi",
+      "markets": "Pasar dan konten",
+      "security": "Keamanan dan audit"
     },
     "bucketLabel": "tiap kolom = {count} hari",
     "noQueues": "Anda tidak memegang antrean apa pun.",
@@ -456,6 +475,58 @@
       "media": "{count} terbit tanpa foto",
       "trust": "terbuka terlama {count} jam",
       "rewards": "{count} menunggu keputusan"
+    },
+    "a360": {
+      "portfolioTitle": "Portofolio",
+      "noListings": "Belum ada listing.",
+      "consentTitle": "Persetujuan dan pernyataan",
+      "noConsent": "Tidak ada catatan persetujuan.",
+      "accountTitle": "Akun",
+      "suspendHint": "Penangguhan menjeda {n, plural, other {# listing tayang}} milik agen ini dan menghentikan mereka mengubah listing sampai dipulihkan. Agen diberi tahu alasannya.",
+      "suspendReason": "Alasan (terlihat oleh agen)",
+      "suspend": "Tangguhkan agen",
+      "suspendedSince": "Ditangguhkan sejak {date}.",
+      "restoreNote": "Catatan (opsional)",
+      "restoreHint": "Pemulihan mengembalikan status sebelumnya dan menayangkan kembali {n, plural, other {# listing}} yang dijeda oleh penangguhan, jika masih disetujui.",
+      "restore": "Pulihkan agen",
+      "listingStatus": {
+        "draft": "Draf",
+        "pending_review": "Menunggu tinjauan",
+        "published": "Tayang",
+        "rejected": "Ditolak",
+        "paused": "Dijeda",
+        "expired": "Kedaluwarsa",
+        "sold": "Terjual",
+        "rented": "Tersewa",
+        "withdrawn": "Ditarik",
+        "archived": "Diarsipkan"
+      }
+    },
+    "agentQueue": {
+      "search": "Cari berdasarkan nama",
+      "country": "Negara",
+      "allCountries": "Semua negara",
+      "apply": "Terapkan"
+    },
+    "actionQueue": {
+      "title": "Antrean tindakan",
+      "hint": "Semua yang menunggu Anda, yang paling mendesak dan paling lama lebih dulu.",
+      "empty": "Tidak ada yang menunggu. Bagus.",
+      "more": "Tampilkan {n} lagi",
+      "lessThanHour": "baru saja",
+      "hours": "{n} jam",
+      "days": "{n} hr",
+      "kind": {
+        "report_scam": "Laporan penipuan",
+        "report": "Laporan pembeli",
+        "lead_overdue": "Prospek terlambat",
+        "listing_review": "Listing perlu ditinjau",
+        "agent_review": "Agen perlu diverifikasi",
+        "change_answered": "Agen membalas",
+        "request_review": "Kebutuhan perlu disetujui",
+        "photo_failed": "Foto gagal",
+        "invite_expiring": "Undangan hampir kedaluwarsa"
+      }
     }
   },
   "adminLegal": {
@@ -490,12 +561,22 @@
       "language": "Bahasa default",
       "currency": "Mata uang",
       "unit": "Satuan",
-      "ingestAgent": "Agen ingest"
+      "ingestAgent": "Agen ingest",
+      "local": "Zona waktu dan istilah"
     },
     "save": "Simpan",
     "ingestAgentNone": "— tidak ada —",
     "ingestAgentHint": "Profil perusahaan terverifikasi tempat draf server-ke-server (Hero → ingest) dimiliki di negara ini.",
-    "ingestAgentInvalid": "Agen ingest harus agen terverifikasi dari negara itu."
+    "ingestAgentInvalid": "Agen ingest harus agen terverifikasi dari negara itu.",
+    "ingestAgreementPlaceholder": "Referensi perjanjian mitra",
+    "ingestAgreementHint": "Perjanjian tertulis yang menjadi dasar penggunaan foto dari feed mitra. Dicatat pada setiap foto mitra. Jika kosong, foto mitra tidak disimpan.",
+    "timezone": "Zona waktu (IANA, mis. Asia/Jakarta)",
+    "term": {
+      "agent": "Istilah untuk agen",
+      "owner": "Istilah untuk pemilik",
+      "tenant": "Istilah untuk penyewa"
+    },
+    "invalidFields": "Periksa isian: zona waktu harus nama IANA yang valid dan istilah maksimal 60 karakter."
   },
   "nav": {
     "dashboard": "Dasbor",
@@ -815,23 +896,14 @@
       "approve": "Disetujui. Tautan aman dibuat dan aktif.",
       "amendment": "Perbaikan diminta dari agen.",
       "cancel": "Permintaan dibatalkan.",
-      "added": "Properti ditambahkan atas nama agen.",
-      "added_new_agent": "Akun agen dibuat dan properti ditambahkan."
+      "added": "Properti ditambahkan atas nama agen."
     },
     "errors": {
       "notes_required": "Catatan wajib untuk keputusan ini.",
       "wrong_status": "Permintaan ini tidak sedang menunggu tinjauan.",
       "save_failed": "Keputusan tidak dapat disimpan."
     },
-    "addPropertyForAgent": "Tambah properti untuk agen",
-    "cred": {
-      "title": "Akun agen dibuat",
-      "body": "Bagikan detail login ini kepada {name} (mis. via WhatsApp). Mereka bisa masuk sekarang dan verifikasi profil nanti.",
-      "email": "Email",
-      "password": "Kata sandi",
-      "link": "Tautan login",
-      "note": "Ini hanya ditampilkan sekali. Juga dikirim ke email agen."
-    }
+    "addPropertyForAgent": "Tambah properti untuk agen"
   },
   "requestLink": {
     "invalidTitle": "Tautan tidak tersedia",
@@ -1392,11 +1464,24 @@
       "lead_overdue": "Ada prospek menunggu melewati batas waktu respons",
       "task_due": "Ada tugas yang jatuh tempo",
       "viewing_soon": "Kunjungan segera dimulai",
-      "whatsapp_received": "Pesan WhatsApp masuk di salah satu lead Anda"
+      "whatsapp_received": "Pesan WhatsApp masuk di salah satu lead Anda",
+      "listing_import_prepared": "Listing siap Anda tinjau",
+      "listing_change_requested": "Moderator meminta perubahan pada listing Anda",
+      "listing_photo_original_requested": "Moderator meminta foto asli",
+      "listing_change_answered": "Agen menjawab permintaan perubahan Anda",
+      "listing_change_resolved": "Permintaan perubahan Anda telah diselesaikan",
+      "generic": "Notifikasi",
+      "listing_import_handover_complete": "Kini Anda memegang kendali atas listing yang disiapkan",
+      "agent_suspended": "Akun Anda telah ditangguhkan",
+      "agent_restored": "Akun Anda telah dipulihkan",
+      "agent_verification_approved": "Verifikasi Anda disetujui",
+      "agent_verification_rejected": "Verifikasi Anda tidak disetujui",
+      "agent_verification_info_requested": "Verifikasi Anda memerlukan informasi tambahan"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
-    "pushDenied": "Notifikasi diblokir di pengaturan browser"
+    "pushDenied": "Notifikasi diblokir di pengaturan browser",
+    "emailOpen": "Buka"
   },
   "commission": {
     "title": "Perjanjian komisi & co-broke",
@@ -1514,7 +1599,19 @@
       "entity": "Entitas",
       "result": "Hasil"
     },
-    "appendOnlyNote": "Hanya-tambah: catatan audit tidak dapat diedit atau dihapus, termasuk oleh administrator."
+    "appendOnlyNote": "Hanya-tambah: catatan audit tidak dapat diedit atau dihapus, termasuk oleh administrator.",
+    "export": "Ekspor CSV",
+    "showing": "{n, plural, other {# catatan}} (terbaru dulu, maksimal 200 ditampilkan; ekspor memuat hingga 5.000)",
+    "filters": {
+      "action": "Aksi berisi",
+      "entity": "Jenis entitas",
+      "role": "Peran pelaku",
+      "anyRole": "Semua peran",
+      "result": "Hasil",
+      "anyResult": "Semua hasil",
+      "from": "Dari",
+      "to": "Sampai"
+    }
   },
   "disclosures": {
     "title": "Pengungkapan hukum & material",
@@ -1593,7 +1690,7 @@
     "intro": "Identitas profesional Anda yang ditampilkan ke agen mitra. Klien hanya melihat apa yang Anda setujui pada presentasi Anda sendiri.",
     "savedNotice": "Profil disimpan.",
     "photo": "Foto profesional",
-    "photoHint": "JPG/PNG/WebP, maksimal 3 MB. Terlihat oleh agen mitra.",
+    "photoHint": "JPG/PNG/WebP, maksimal 3 MB. Terlihat oleh agen mitra dan di listing publik Anda. Foto diubah ukurannya dan data tersembunyinya (lokasi, kamera, aplikasi edit) dihapus sebelum ditampilkan.",
     "displayName": "Nama tampilan",
     "agency": "Agensi & lisensi (dari verifikasi)",
     "mobile": "Ponsel",
@@ -1644,7 +1741,8 @@
       "file_too_large": "File melebihi batas ukuran.",
       "upload_failed": "Unggahan gagal. Silakan coba lagi.",
       "save_failed": "Tidak dapat menyimpan. Silakan coba lagi.",
-      "invalid_url": "Masukkan tautan http(s) yang valid."
+      "invalid_url": "Masukkan tautan http(s) yang valid.",
+      "photo_paused": "Unggah foto sedang dijeda. Perubahan lain Anda belum disimpan; coba lagi nanti."
     },
     "photoChoose": "Pilih foto",
     "photoChange": "Ganti foto",
@@ -1684,27 +1782,19 @@
     "agentSection": "Properti ini dari agen yang mana?",
     "existingAgent": "Pilih agen yang ada",
     "chooseAgent": "— pilih agen —",
-    "newAgent": "Buat akun agen baru",
-    "newAgentHint": "Agen mendapat login (ditampilkan ke Anda + email) dan bisa verifikasi profil nanti. Hanya nama dan email yang wajib.",
-    "na_name": "Nama lengkap",
-    "na_email": "Email",
-    "na_phone": "Telepon",
-    "na_whatsapp": "WhatsApp",
-    "na_agency": "Agensi",
-    "na_licenceNumber": "No. lisensi",
     "declarationNote": "Dengan menambahkan properti ini Anda menerima deklarasi co-broke agen pemasok atas nama agen. Agen diberi tahu dan dapat meninjaunya.",
     "submit": "Tambah properti untuk agen ini",
     "errors": {
       "invalid_fields": "Periksa kolom yang ditandai.",
       "agent_required": "Silakan pilih agen.",
-      "agent_invalid": "Masukkan nama agen baru dan email yang valid.",
-      "email_in_use": "Email itu sudah punya akun — pilih dari daftar yang ada.",
-      "agent_failed": "Tidak dapat membuat akun agen. Coba lagi.",
       "invalid_file_type": "Tipe gambar tidak didukung.",
       "file_too_large": "Gambar terlalu besar (maks 10MB).",
       "upload_failed": "Unggah gambar gagal. Coba lagi.",
-      "save_failed": "Tidak dapat menyimpan. Coba lagi."
-    }
+      "save_failed": "Tidak dapat menyimpan. Coba lagi.",
+      "invite_first": "Agen baru diundang terlebih dahulu. Kirim undangan, lalu setelah mereka menerimanya, pilih mereka di sini."
+    },
+    "notOnPlatform": "Agen belum ada di platform?",
+    "inviteCta": "Undang mereka dulu"
   },
   "leads": {
     "title": "Prospek",
@@ -1883,7 +1973,7 @@
       "adTitle": "Judul listing",
       "adTitlePlaceholder": "mis. Apartemen 2BR di Jakarta Selatan, 5 menit ke MRT",
       "description": "Deskripsi",
-      "price": "Harga (IDR)",
+      "price": "Harga ({currency})",
       "priceHelp": "Angka saja, tanpa titik. Untuk sewa: harga per periode.",
       "certificate": "Sertifikat",
       "area": "Wilayah",
@@ -1892,8 +1982,8 @@
       "generalAddressHelp": "Publik - jangan pernah alamat unit persisnya.",
       "buildingName": "Nama gedung / kompleks",
       "postalCode": "Kode pos",
-      "landSize": "Tanah (m2)",
-      "buildingSize": "Bangunan (m2)",
+      "landSize": "Tanah ({unit})",
+      "buildingSize": "Bangunan ({unit})",
       "bedrooms": "Kamar tidur",
       "bathrooms": "Kamar mandi",
       "floors": "Lantai",
@@ -1911,7 +2001,7 @@
       "condConstruction": "Dalam pembangunan",
       "facilities": "Fasilitas",
       "facilitiesPlaceholder": "kolam renang, gym, keamanan 24 jam (pisahkan dengan koma)",
-      "photosHelp": "Hingga 15 foto, JPG/PNG/WebP, maks 10 MB per foto. Foto pertama jadi sampul.",
+      "photosHelp": "Hingga 15 foto, JPG/PNG/WebP, maks. 10 MB per foto. Foto pertama menjadi sampul. Foto tetap privat selama diproses (data lokasi dan kamera dihapus) dan tayang setelah moderator menyetujui listing.",
       "submit": "Kirim untuk ditinjau",
       "submitHelp": "Moderator meninjau setiap listing sebelum tayang.",
       "draftRestored": "Draf Anda yang belum tersimpan telah dipulihkan.",
@@ -1920,8 +2010,10 @@
         "save_failed": "Gagal menyimpan listing. Silakan coba lagi.",
         "too_many_photos": "Maksimal 15 foto.",
         "bad_photo_type": "Foto harus JPG, PNG, atau WebP.",
-        "photo_too_large": "Setiap foto harus di bawah 10 MB."
-      }
+        "photo_too_large": "Setiap foto harus di bawah 10 MB.",
+        "market_unavailable": "Listing hanya dapat dibuat di pasar yang aktif, dan profil Anda belum memiliki pasar aktif. Hubungi dukungan."
+      },
+      "tenure": "Pegangan"
     },
     "sectionOwn": "Listing milik saya",
     "sectionBorrowed": "Dipinjam lewat pemasaran bersama",
@@ -2024,6 +2116,13 @@
         "unverified": "Disusun tanpa AI — AI terbuka setelah verifikasi.",
         "no_provider": "Disusun tanpa AI — belum ada penyedia AI yang terhubung.",
         "failed": "Disusun tanpa AI — AI tidak menjawab kali ini."
+      },
+      "catResidentialHintMY": "Rumah teres, berkembar, kondominium, serviced residence",
+      "catCommercialHintMY": "Shoplot, kantor, pabrik, tanah",
+      "copyLanguage": {
+        "english": "Draf ini dalam bahasa Inggris. Periksa dan sunting sebelum menyimpan.",
+        "englishFallback": "Draf ini dalam bahasa Inggris: kalimat bahasa Melayu yang sudah ditinjau belum tersedia. Bahasa listing Anda tetap bahasa Melayu. Periksa dan sunting draf sebelum menyimpan.",
+        "indonesian": "Draf ini dalam bahasa Indonesia. Periksa dan sunting sebelum menyimpan."
       }
     },
     "offer": {
@@ -2091,6 +2190,35 @@
       "errors": {
         "invalid": "Mohon periksa kolom yang ditandai.",
         "save_failed": "Gagal menyimpan. Silakan coba lagi."
+      },
+      "gallery": {
+        "title": "Foto",
+        "hint": "Pilih foto sampul, ubah urutan, atau hapus foto. Perubahan langsung berlaku dan tidak mengirim listing yang sudah tayang kembali untuk ditinjau. Untuk menambah foto, gunakan wizard listing atau impor.",
+        "empty": "Belum ada foto.",
+        "cover": "Sampul",
+        "makeCover": "Jadikan sampul",
+        "moveUp": "Naikkan",
+        "moveDown": "Turunkan",
+        "remove": "Hapus",
+        "removeImportedNote": "Menghapusnya dari listing ini. Foto asli yang Anda impor tetap disimpan secara privat sebagai catatan asal-usulnya.",
+        "state": {
+          "pending": "Menunggu diproses",
+          "processing": "Sedang diproses",
+          "processed": "Sudah diproses, menunggu persetujuan",
+          "ready": "Tayang",
+          "failed": "Tidak dapat diproses",
+          "quarantined": "Ditahan oleh moderator"
+        },
+        "notice": {
+          "cover_set": "Sampul diperbarui.",
+          "moved": "Urutan diperbarui.",
+          "removed": "Foto dihapus.",
+          "not_eligible": "Foto itu tidak bisa dijadikan sampul.",
+          "not_public_yet": "Pada listing yang tayang, sampul harus foto yang sudah tayang.",
+          "bad_order": "Urutan tidak dapat disimpan. Silakan coba lagi.",
+          "not_found": "Foto tidak ditemukan.",
+          "failed": "Terjadi kesalahan. Silakan coba lagi."
+        }
       }
     },
     "importCta": "Tarik listing saya",
@@ -2131,7 +2259,69 @@
         "other": "detail yang kurang"
       }
     },
-    "ownerReport": "Laporan pemilik"
+    "ownerReport": "Laporan pemilik",
+    "rejection": {
+      "incomplete_details": "Detail belum lengkap",
+      "photos_quality": "Foto tidak layak",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga tampak keliru",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Listing ganda",
+      "prohibited_content": "Tidak diizinkan di marketplace",
+      "other": "Lainnya (lihat catatan)",
+      "resubmitHint": "Sunting listing untuk memperbaikinya; menyimpan akan mengirimnya kembali untuk ditinjau."
+    },
+    "changes": {
+      "title": "Perubahan yang diminta",
+      "hint": "Moderasi meminta ini sebelum listing dapat tayang, atau agar tetap tayang. Balas di sini; perbaiki listing di bawah lalu simpan.",
+      "kind": {
+        "correction": "Perbaikan",
+        "photo_original": "Foto asli"
+      },
+      "field": {
+        "title": "Judul",
+        "description": "Deskripsi",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Detail properti",
+        "photos": "Foto",
+        "other": "Lainnya"
+      },
+      "status": {
+        "open": "Menunggu agen",
+        "answered": "Agen menjawab",
+        "resolved": "Selesai",
+        "withdrawn": "Ditarik"
+      },
+      "yourAnswer": "Jawaban Anda",
+      "placeholder": "Balasan Anda untuk moderator",
+      "send": "Kirim balasan",
+      "update": "Perbarui balasan",
+      "badge": "{n} perubahan diminta",
+      "notice": {
+        "answered": "Balasan dikirim ke moderator.",
+        "invalid": "Tulis balasan terlebih dahulu.",
+        "closed": "Permintaan ini sudah ditutup.",
+        "answer_required": "Tulis balasan terlebih dahulu.",
+        "not_found": "Permintaan tidak ditemukan.",
+        "failed": "Tidak berhasil. Coba lagi.",
+        "photo_supplied": "Foto diunggah. Foto tetap privat hingga disetujui moderator.",
+        "photo_already": "Foto ini sudah pernah dikirim.",
+        "photo_required": "Pilih foto terlebih dahulu.",
+        "photo_too_large": "File lebih besar dari 10 MB.",
+        "not_image": "File ini bukan foto JPEG, PNG, atau WebP.",
+        "save_failed": "Foto tidak dapat disimpan. Coba lagi.",
+        "not_photo_request": "Permintaan ini tidak meminta foto.",
+        "bad_path": "Foto tidak dapat disimpan. Coba lagi.",
+        "bad_hash": "Foto tidak dapat disimpan. Coba lagi."
+      },
+      "photo": {
+        "label": "Unggah foto",
+        "note": "Catatan opsional untuk moderator",
+        "hint": "JPEG, PNG, atau WebP, hingga 10 MB. Foto tetap privat: diproses (data lokasi dan kamera dihapus) dan baru tayang setelah disetujui moderator.",
+        "send": "Unggah foto"
+      }
+    }
   },
   "studio": {
     "title": "Studio konten",
@@ -2305,7 +2495,12 @@
       "shotList": "Daftar pengambilan",
       "seconds": "{n}d"
     },
-    "planLink": "Rencanakan seminggu"
+    "planLink": "Rencanakan seminggu",
+    "copyLanguage": {
+      "english": "Draf ini dalam bahasa Inggris. Periksa dan sunting sebelum menyimpan.",
+      "englishFallback": "Draf ini dalam bahasa Inggris: kalimat bahasa Melayu yang sudah ditinjau belum tersedia. Bahasa listing Anda tetap bahasa Melayu. Periksa dan sunting draf sebelum menyimpan.",
+      "indonesian": "Draf ini dalam bahasa Indonesia. Periksa dan sunting sebelum menyimpan."
+    }
   },
   "listingStatus": {
     "draft": "Draf",
@@ -2334,7 +2529,27 @@
     "hotel": "Hotel",
     "tanah": "Tanah",
     "kavling": "Kavling",
-    "lainnya": "Lainnya"
+    "lainnya": "Lainnya",
+    "terrace": "Rumah teres",
+    "semi_detached": "Berkembar",
+    "bungalow": "Banglo",
+    "townhouse": "Rumah bandar",
+    "cluster_home": "Rumah kluster",
+    "condominium": "Kondominium",
+    "serviced_residence": "Kediaman servis",
+    "apartment": "Apartmen",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Lot kedai",
+    "shop_office": "Kedai pejabat",
+    "retail_space": "Ruang runcit",
+    "office_space": "Ruang pejabat",
+    "factory": "Kilang",
+    "warehouse": "Gudang",
+    "agricultural_land": "Tanah pertanian",
+    "residential_land": "Tanah kediaman",
+    "commercial_land": "Tanah komersial"
   },
   "ownershipTypes": {
     "shm": "SHM",
@@ -2346,7 +2561,13 @@
     "strata": "Strata Title",
     "ppjb": "PPJB",
     "adat": "Tanah Adat",
-    "lainnya": "Lainnya"
+    "lainnya": "Lainnya",
+    "freehold": "Pegangan bebas",
+    "leasehold_99": "Pajakan (99 tahun)",
+    "leasehold_60": "Pajakan (60 tahun)",
+    "leasehold_other": "Pajakan",
+    "malay_reserve": "Tanah rizab Melayu",
+    "bumi_lot": "Lot Bumiputera"
   },
   "adminListings": {
     "title": "Moderasi listing",
@@ -2365,7 +2586,125 @@
       "reason_required": "Penolakan butuh alasan yang akan dilihat agen.",
       "not_found": "Listing tidak ditemukan.",
       "not_moderatable": "Listing ini tidak sedang menunggu tinjauan.",
-      "update_failed": "Pembaruan gagal. Coba lagi."
+      "update_failed": "Pembaruan gagal. Coba lagi.",
+      "self_prepared": "Anda yang menyiapkan impor listing ini, jadi admin lain harus menyetujuinya.",
+      "bulk_empty": "Pilih setidaknya satu listing.",
+      "change_invalid": "Tulis pesan singkat untuk agen.",
+      "body_required": "Tulis pesan singkat untuk agen.",
+      "not_open": "Listing ini tidak dapat menerima permintaan sekarang.",
+      "closed": "Permintaan ini sudah ditutup."
+    },
+    "photos": {
+      "title": "Foto impor (privat sampai Anda setujui)",
+      "quarantine": "Tahan",
+      "note": "Menyetujui akan menyalin foto yang sudah diproses ke listing. Foto asli tidak pernah dipublikasikan.",
+      "state": {
+        "pending": "Menunggu diproses",
+        "processing": "Sedang diproses",
+        "processed": "Siap dipublikasikan",
+        "failed": "Tidak dapat diproses",
+        "quarantined": "Ditahan"
+      },
+      "willPublish": "Menyetujui akan menayangkan {publish} dari {total} foto. Sisanya tetap privat: masih diproses, dijeda, gagal, ditahan, atau tanpa catatan hak.",
+      "openCentre": "Buka di Pusat Kualitas Foto"
+    },
+    "quarantined": "Foto tidak akan dipublikasikan.",
+    "tabs": {
+      "label": "Antrean moderasi",
+      "pending_review": "Menunggu tinjauan",
+      "rejected": "Ditolak",
+      "published": "Tayang",
+      "reported": "Dilaporkan ({n})"
+    },
+    "count": {
+      "pending_review": "{count} listing menunggu tinjauan",
+      "rejected": "{count} listing ditolak",
+      "published": "{count} listing tayang"
+    },
+    "emptyTab": {
+      "pending_review": "Antrean kosong - tidak ada yang menunggu tinjauan.",
+      "rejected": "Tidak ada listing yang ditolak.",
+      "published": "Tidak ada listing tayang di negara Anda."
+    },
+    "bulk": {
+      "title": "Putuskan sekaligus",
+      "hint": "Centang listing di bawah, lalu setujui atau tolak bersama. Setiap listing tetap melewati semua pemeriksaan sendiri: negara Anda, pemisahan tugas, dan statusnya. Penolakan membutuhkan kode alasan.",
+      "approve": "Setujui yang dipilih",
+      "reject": "Tolak yang dipilih",
+      "select": "Pilih {id}",
+      "done": "{ok} selesai, {skipped} dilewati."
+    },
+    "reasonCode": "Alasan (wajib untuk menolak)",
+    "note": "Catatan untuk agen (wajib untuk Lainnya)",
+    "takeDown": "Turunkan",
+    "codes": {
+      "incomplete_details": "Detail belum lengkap",
+      "photos_quality": "Foto tidak layak",
+      "photos_rights": "Hak foto tidak jelas",
+      "price_unrealistic": "Harga tampak keliru",
+      "wrong_location": "Lokasi salah",
+      "duplicate": "Listing ganda",
+      "prohibited_content": "Tidak diizinkan di marketplace",
+      "other": "Lainnya (lihat catatan)"
+    },
+    "quality": {
+      "score": "Kualitas {score}/100",
+      "parts": "Kelengkapan {complete} · foto {photos}",
+      "rec": {
+        "add_field": "Ada kolom kosong",
+        "add_photos": "Foto sedikit",
+        "describe_more": "Deskripsi pendek",
+        "possible_duplicate": "Mungkin ganda",
+        "price_above_comparables": "Harga di atas pembanding",
+        "price_below_comparables": "Harga di bawah pembanding",
+        "refine_location": "Lokasi kurang jelas",
+        "remove_phone": "Nomor telepon di teks",
+        "title_location": "Judul tanpa lokasi"
+      }
+    },
+    "photoStatus": {
+      "live": "Tayang",
+      "awaiting_approval": "Sudah diproses, menunggu persetujuan",
+      "processing": "Sedang diproses",
+      "queued": "Menunggu diproses",
+      "paused_quota": "Dijeda: kuota gambar habis",
+      "paused_cap": "Dijeda: batas bulanan tercapai",
+      "failed": "Tidak dapat diproses",
+      "kept_out": "Ditahan",
+      "removed": "Dihapus oleh agen"
+    },
+    "rights": {
+      "missing": "{n} foto tanpa catatan hak — tidak akan ditayangkan",
+      "missingOne": "Tanpa catatan hak"
+    },
+    "pager": {
+      "label": "Halaman",
+      "prev": "Sebelumnya",
+      "next": "Berikutnya",
+      "of": "Halaman {page} dari {pages}"
+    },
+    "changes": {
+      "request": "Minta perubahan saja",
+      "kind": "Yang dibutuhkan",
+      "field": "Bagian mana",
+      "message": "Pesan untuk agen",
+      "placeholder": "mis. mohon konfirmasi luas tanah; harga tampak kurang satu nol",
+      "send": "Kirim permintaan",
+      "sent": "Permintaan dikirim ke agen. Listing tetap di antrean ini.",
+      "count": "{open} terbuka, {answered} dijawab",
+      "kinds": {
+        "correction": "Perbaikan",
+        "photo_original": "Foto asli"
+      },
+      "fields": {
+        "title": "Judul",
+        "description": "Deskripsi",
+        "price": "Harga",
+        "location": "Lokasi",
+        "property_details": "Detail properti",
+        "photos": "Foto",
+        "other": "Lainnya"
+      }
     }
   },
   "plans": {
@@ -2679,9 +3018,39 @@
       "columns_missing": "Kolom Judul dan Harga tidak ditemukan, jadi tidak ada yang diimpor. Berikut kolom yang terbaca:",
       "blocked_by_site": "Situs itu memblokir pembacaan otomatis (perlu verifikasi browser). Kami tidak melewati perlindungan itu. Gunakan unggah Excel/CSV, atau tambah manual.",
       "no_listing_data": "Halaman itu terbuka, tetapi tidak memuat data properti yang bisa dibaca.",
-      "import_failed": "Gagal disimpan sebagai listing. Periksa isian wajib lalu coba lagi."
+      "import_failed": "Gagal disimpan sebagai listing. Periksa isian wajib lalu coba lagi.",
+      "not_owner": "Hanya agen pemilik impor ini yang dapat mengimpornya."
     },
-    "refetch": "Baca ulang"
+    "refetch": "Baca ulang",
+    "preparedByTeam": "Disiapkan oleh tim platform",
+    "preparedNotice": "Tim platform menyiapkan listing ini untuk Anda. Periksa satu per satu, lalu terima pernyataan dan impor yang sudah benar. Tidak ada yang tayang sebelum Anda mengimpornya dan lolos peninjauan.",
+    "photos": {
+      "title": "Foto dari sumber",
+      "intro": "Foto yang ditemukan di halaman listing Anda dapat disalin untuk Anda. Foto disimpan secara privat dan tidak ditampilkan di marketplace sampai pemrosesan tersedia.",
+      "disabled": "Penyalinan foto dari halaman listing belum tersedia untuk akun Anda. Unggah foto Anda sendiri ke setiap listing.",
+      "attachAll": "Salin foto",
+      "attaching": "Menyalin…",
+      "retry": "Coba lagi foto",
+      "waiting": "{total} foto menunggu disalin",
+      "savedOf": "{saved} dari {total} foto tersimpan",
+      "privateNote": "Foto yang tersimpan disimpan secara privat sampai dapat diproses.",
+      "exhausted": "Beberapa foto tidak dapat disalin setelah tiga kali percobaan. Unggah foto Anda sendiri untuk listing ini.",
+      "reason_blocked": "Situs web memblokir penyalinan otomatis. Tidak dicoba dengan cara lain.",
+      "reason_not_image": "Tautan tidak mengarah ke foto JPEG, PNG, atau WebP.",
+      "reason_too_large": "Ada foto yang lebih besar dari 10 MB.",
+      "reason_timeout": "Situs web terlalu lama merespons.",
+      "reason_source_error": "Situs web mengembalikan galat untuk sebuah foto.",
+      "reason_not_property": "Sebuah gambar tampak seperti kartu bagikan atau logo, bukan foto properti, sehingga dilewati.",
+      "reason_unsafe_url": "Sebuah tautan foto bukan alamat web publik.",
+      "reason_save_failed": "Sebuah foto tidak dapat disimpan. Coba lagi.",
+      "processingFailed": "{n} foto tidak dapat diproses. Unggah foto pengganti untuk listing ini."
+    },
+    "inControl": {
+      "title": "Kini Anda memegang kendali",
+      "body": "Anda telah menangani semua listing yang disiapkan tim. Mulai sekarang hanya Anda yang dapat mengubahnya; tim hanya melakukan moderasi, seperti listing lainnya.",
+      "studio": "Buka Studio",
+      "leads": "Ke Leads"
+    }
   },
   "adminUsers": {
     "title": "Orang dan akses",
@@ -2969,7 +3338,22 @@
       "invalid": "Data tidak valid.",
       "not_found": "Organisasi tidak ditemukan.",
       "needs_percent": "Masukkan persen 0-100.",
-      "needs_amount": "Masukkan jumlah harga."
+      "needs_amount": "Masukkan jumlah harga.",
+      "needs_country": "Organisasi ini belum memiliki negara, sehingga harga tetap tidak memiliki mata uang. Tetapkan negaranya terlebih dahulu.",
+      "agency_invalid": "Periksa nama (2–160 karakter) dan pilih negara.",
+      "agency_not_permitted": "Anda hanya dapat mengelola organisasi di negara Anda.",
+      "agency_saved": "Organisasi disimpan.",
+      "agency_created": "Organisasi dibuat."
+    },
+    "agencyForm": {
+      "create": "Organisasi baru",
+      "createButton": "Buat organisasi",
+      "edit": "Ubah organisasi",
+      "save": "Simpan perubahan",
+      "name": "Nama",
+      "registration": "Nomor registrasi (opsional)",
+      "country": "Negara",
+      "chooseCountry": "Pilih negara"
     }
   },
   "commercial": {
@@ -3327,7 +3711,10 @@
       "draft": "Draf",
       "verified": "Terverifikasi",
       "retired": "Dipensiunkan"
-    }
+    },
+    "costUnavailable": "Belum tersedia",
+    "costUnavailableHint": "Harga model belum dikonfigurasi",
+    "openOffice": "Buka tampilan Office →"
   },
   "aiWorkforce": {
     "watchOffice": "Lihat tim AI saya bekerja",
@@ -4376,5 +4763,367 @@
       "copy": "Salin",
       "copied": "Tersalin"
     }
+  },
+  "adminInvitations": {
+    "title": "Undangan agen",
+    "intro": "Undang agen lewat e-mail. Agen mendaftar dengan kata sandi mereka sendiri lalu menerima tautan; admin tidak pernah membuat atau melihat kata sandi. Anda hanya melihat undangan untuk negara yang boleh Anda undang.",
+    "createTitle": "Undangan baru",
+    "fullName": "Nama lengkap",
+    "email": "E-mail",
+    "phone": "Ponsel (WhatsApp)",
+    "country": "Negara",
+    "language": "Bahasa pilihan",
+    "agency": "Kantor agen (opsional)",
+    "createHint": "Tautan berlaku 7 hari dan hanya ditampilkan sekali. Kirimkan sendiri ke agen, misalnya lewat WhatsApp.",
+    "createCta": "Buat undangan",
+    "noCountries": "Anda tidak dapat mengundang agen di negara aktif mana pun.",
+    "linkTitle": "Tautan undangan",
+    "linkHint": "Salin sekarang. Tautan hanya ditampilkan sekali; kirim ulang membuat tautan baru dan tautan lama tidak berlaku lagi.",
+    "listTitle": "Undangan",
+    "person": "Agen",
+    "state": "Status",
+    "expires": "Berlaku sampai",
+    "sent": "Kali dikirim",
+    "action": "Tindakan",
+    "resend": "Kirim ulang",
+    "revoke": "Cabut",
+    "empty": "Belum ada undangan.",
+    "stateLabel": {
+      "pending": "Menunggu",
+      "expired": "Kedaluwarsa",
+      "redeemed": "Diterima",
+      "revoked": "Dicabut"
+    },
+    "notice": {
+      "created": "Undangan dibuat. Salin tautan di bawah.",
+      "resent": "Tautan baru dibuat. Tautan sebelumnya tidak berlaku lagi.",
+      "revoked": "Undangan dicabut.",
+      "denied": "Anda tidak dapat mengelola undangan untuk negara tersebut.",
+      "invalid": "Periksa data lalu coba lagi.",
+      "email_registered": "E-mail itu sudah punya akun. Minta agen untuk masuk saja.",
+      "already_invited": "E-mail itu sudah punya undangan aktif. Kirim ulang saja.",
+      "country_inactive": "Negara itu tidak aktif.",
+      "not_pending": "Hanya undangan yang menunggu yang dapat diubah.",
+      "failed": "Gagal menyimpan. Coba lagi."
+    }
+  },
+  "invite": {
+    "title": "Terima undangan Anda",
+    "intro": "Anda diundang bergabung ke platform agen. Terima untuk menautkan undangan ini ke akun yang sedang Anda gunakan.",
+    "accept": "Terima undangan",
+    "wrongAccount": "Masuk dengan akun yang salah?",
+    "checkAccount": "Periksa akun Anda",
+    "error": {
+      "invalid": "Tautan undangan ini tidak berlaku. Mungkin sudah kedaluwarsa, diganti, atau sudah dipakai. Minta tautan baru kepada pengundang Anda.",
+      "email_mismatch": "Undangan ini untuk alamat e-mail lain. Masuk dengan alamat yang menerima undangan.",
+      "rate_limited": "Terlalu banyak percobaan. Tunggu satu jam lalu coba lagi.",
+      "sign_in_required": "Masuk untuk menerima undangan.",
+      "failed": "Gagal menerima undangan. Coba lagi."
+    }
+  },
+  "adminImports": {
+    "title": "Impor berbantuan",
+    "intro": "Siapkan impor listing untuk agen. Batch ini milik agen: mereka meninjaunya, menerima pernyataan impor sendiri, lalu mengimpornya. Anda tidak dapat mengimpor atas nama mereka.",
+    "agent": "Agen",
+    "chooseAgent": "Pilih agen",
+    "noAgents": "Tidak ada agen di negara Anda untuk disiapkan impornya.",
+    "fileTitle": "Dari spreadsheet",
+    "fileHint": "Gunakan templat impor. Setiap baris menjadi item untuk ditinjau agen.",
+    "file": "Berkas",
+    "linksTitle": "Dari tautan listing",
+    "linksHint": "Tempel tautan listing milik agen, satu per baris. Halaman yang memblokir pembacaan otomatis dilewati, tidak pernah diakali.",
+    "portal": "Portal",
+    "links": "Tautan",
+    "startCta": "Siapkan batch",
+    "listTitle": "Batch yang disiapkan",
+    "source": "Sumber",
+    "items": "Diimpor / ditemukan",
+    "state": "Status",
+    "created": "Dibuat",
+    "empty": "Belum ada batch yang disiapkan.",
+    "stateLabel": {
+      "preparing": "Sedang disiapkan",
+      "handed_over": "Di tangan agen",
+      "committed": "Diimpor oleh agen"
+    },
+    "batchTitle": "Batch untuk {agent}",
+    "agentCommits": "Anda dapat mengambil, memperbaiki, dan melewati item. Hanya agen yang dapat menerima pernyataan dan mengimpornya.",
+    "handOver": "Kirim ke agen ({n} siap)",
+    "handOverAgain": "Beri tahu agen lagi ({n} siap)",
+    "nothingReady": "Belum ada item yang siap.",
+    "handedOver": "Agen sudah diberi tahu bahwa batch siap.",
+    "errors": {
+      "invalid": "Periksa data lalu coba lagi.",
+      "not_permitted": "Anda tidak dapat menyiapkan impor untuk agen itu.",
+      "failed": "Gagal. Coba lagi.",
+      "nothing_selected": "Pilih setidaknya satu item.",
+      "agent_in_control": "Agen memegang kendali atas batch ini, sehingga batch tidak dapat diubah lagi.",
+      "nothing_to_set": "Pilih tipe atau jual/sewa untuk diterapkan.",
+      "type_not_in_market": "Tipe properti itu tidak tersedia di pasar agen ini."
+    },
+    "review": {
+      "title": "Tinjauan batch",
+      "hint": "Kualitas, foto, dan setiap perubahan sekilas. Centang item untuk melewati atau memulihkannya bersama-sama, atau atur tipe atau jual/sewa sekaligus; item yang sudah diimpor tidak dapat diubah.",
+      "skipSelected": "Lewati yang dipilih",
+      "restoreSelected": "Pulihkan yang dipilih",
+      "select": "Pilih",
+      "selectOne": "Pilih {title}",
+      "item": "Item",
+      "status": "Status",
+      "quality": "Kualitas",
+      "photos": "Foto",
+      "changes": "Diubah dari sumber",
+      "listingScore": "Skor kualitas listing",
+      "scoreListing": "Listing {score}/100",
+      "scoreItem": "Kolom {score}%",
+      "missing": "Kurang",
+      "field": {
+        "title": "judul",
+        "price": "harga",
+        "listingType": "jual atau sewa",
+        "propertyType": "jenis",
+        "location": "lokasi",
+        "size": "luas",
+        "bedrooms": "kamar tidur",
+        "description": "deskripsi",
+        "photos": "foto"
+      },
+      "photosState": "{saved} dari {total} tersimpan",
+      "noChanges": "Sesuai impor",
+      "bulkDone": "{n} item diperbarui.",
+      "itemStatus": {
+        "found": "Ditemukan",
+        "processing": "Mengambil",
+        "ready": "Siap",
+        "needs_review": "Perlu ditinjau",
+        "duplicate": "Ganda",
+        "imported": "Diimpor",
+        "failed": "Gagal",
+        "skipped": "Dilewati"
+      },
+      "setType": "Atur tipe…",
+      "setListingType": "Jual atau sewa…",
+      "sale": "Dijual",
+      "rent": "Disewa",
+      "applySelected": "Terapkan ke yang dipilih"
+    },
+    "inControl": "Agen telah menangani semua item dan kini memegang kendali. Tim tidak dapat lagi mengubah batch ini atau listing yang dihasilkannya; moderasi tetap berjalan seperti biasa."
+  },
+  "adminMedia": {
+    "title": "Pusat Kualitas Foto",
+    "intro": "Setiap foto impor dan foto mitra di negara Anda, seperti yang dilihat pemroses: menunggu, diproses, dijeda, gagal, menunggu persetujuan, tayang, atau ditahan, beserta catatan haknya. Tidak ada yang membuat foto publik di sini; itu terjadi saat listing disetujui.",
+    "usage": {
+      "title": "Pemrosesan gambar bulan ini",
+      "value": "{used} dari {cap} transformasi",
+      "note": "Paket gratis, $0: pemroses berhenti di batas dan tidak pernah mengeluarkan biaya."
+    },
+    "checks": {
+      "title": "Pemeriksaan yang berjalan di sini",
+      "rules": "Hanya aturan: di bawah {w}×{h} piksel, atau di bawah {kb} KB, ditandai.",
+      "noAi": "Tidak ada model AI yang meninjau foto di layar ini."
+    },
+    "views": {
+      "label": "Tampilan",
+      "attention": "Perlu perhatian",
+      "processing": "Diproses",
+      "awaiting": "Menunggu persetujuan",
+      "kept_out": "Ditahan",
+      "all": "Semua"
+    },
+    "clearListing": "Semua listing",
+    "done": {
+      "released": "Dilepas. Foto dapat ditayangkan bersama listingnya lagi.",
+      "retried": "Diantrekan untuk diproses ulang.",
+      "quarantined": "Ditahan. Foto tidak akan ditayangkan.",
+      "ok": "Selesai."
+    },
+    "errors": {
+      "invalid": "Permintaan tidak valid.",
+      "update_failed": "Tidak berhasil. Coba lagi.",
+      "not_found": "Foto tidak ditemukan.",
+      "not_moderatable": "Foto ini tidak dapat ditahan sekarang.",
+      "not_quarantined": "Foto ini tidak sedang ditahan.",
+      "self_prepared": "Anda menyiapkan impor listing ini, jadi peninjau lain yang harus melepasnya.",
+      "not_retryable": "Hanya foto yang gagal atau dijeda yang dapat diproses ulang."
+    },
+    "count": "{count} foto",
+    "empty": {
+      "attention": "Tidak ada yang perlu perhatian.",
+      "processing": "Tidak ada yang sedang diproses.",
+      "awaiting": "Tidak ada foto terproses yang menunggu.",
+      "kept_out": "Tidak ada foto yang ditahan.",
+      "all": "Belum ada foto impor atau foto mitra."
+    },
+    "noPreview": "Tanpa pratinjau",
+    "rights": {
+      "import_authority": "Kuasa impor agen",
+      "partner_agreement": "Perjanjian mitra",
+      "agent_upload": "Unggahan agen",
+      "missing": "Tanpa catatan hak",
+      "missingNote": "Tanpa catatan hak, foto ini tidak pernah ditayangkan.",
+      "agent_supplied": "Dikirim agen atas permintaan"
+    },
+    "rule": {
+      "low_res": "Resolusi rendah",
+      "tiny_file": "File sangat kecil"
+    },
+    "failedWhy": "Gagal setelah {n} percobaan: {why}",
+    "paused": {
+      "paused_quota": "Dijeda: kuota Images tercapai. Coba lagi setelah diatur ulang.",
+      "paused_cap": "Dijeda: batas bulanan tercapai. Berlanjut bulan depan, atau coba lagi setelah batas dinaikkan."
+    },
+    "retryAt": "Percobaan {n} gagal; dicoba lagi {at} UTC",
+    "release": "Lepaskan",
+    "retry": "Proses ulang"
+  },
+  "adminHandover": {
+    "title": "Serah terima",
+    "intro": "Apa yang diminta moderasi untuk diubah atau dilengkapi agen, jawaban mereka, dan batch yang disiapkan untuk agen beserta kemajuannya.",
+    "requests": {
+      "title": "Permintaan perubahan",
+      "view": {
+        "open": "Terbuka",
+        "closed": "Ditutup"
+      },
+      "empty": {
+        "open": "Tidak ada permintaan perubahan yang terbuka.",
+        "closed": "Belum ada permintaan perubahan yang ditutup."
+      }
+    },
+    "status": {
+      "open": "Menunggu agen",
+      "answered": "Agen menjawab",
+      "resolved": "Selesai",
+      "withdrawn": "Ditarik"
+    },
+    "kind": {
+      "correction": "Perbaikan",
+      "photo_original": "Foto asli"
+    },
+    "field": {
+      "title": "Judul",
+      "description": "Deskripsi",
+      "price": "Harga",
+      "location": "Lokasi",
+      "property_details": "Detail properti",
+      "photos": "Foto",
+      "other": "Lainnya"
+    },
+    "age": "{days} hari lalu",
+    "asked": "Diminta",
+    "answered": "Jawaban",
+    "resolve": "Selesaikan",
+    "withdraw": "Tarik",
+    "openListing": "Buka di moderasi",
+    "batches": {
+      "title": "Batch yang disiapkan",
+      "hint": "Impor berbantuan yang diserahkan ke agen. Menyimpan tetap tindakan agen.",
+      "empty": "Belum ada batch yang diserahkan.",
+      "agent": "Agen",
+      "handedOver": "Diserahkan",
+      "progress": "Kemajuan",
+      "counts": "{waiting} menunggu · {imported} diimpor · {skipped} dilewati",
+      "done": "Agen selesai",
+      "open": "Buka batch",
+      "inControl": "Agen memegang kendali"
+    },
+    "done": {
+      "change_requested": "Permintaan dikirim ke agen.",
+      "change_resolved": "Ditandai selesai. Agen telah diberi tahu.",
+      "change_withdrawn": "Permintaan ditarik.",
+      "ok": "Selesai.",
+      "change_resolved_published": "Selesai, dan foto agen yang sudah diproses kini tayang."
+    },
+    "errors": {
+      "update_failed": "Tidak berhasil. Coba lagi.",
+      "not_found": "Tidak ditemukan.",
+      "closed": "Permintaan ini sudah ditutup.",
+      "invalid": "Permintaan tidak valid.",
+      "change_invalid": "Tulis pesan singkat untuk agen.",
+      "body_required": "Tulis pesan singkat untuk agen.",
+      "not_open": "Listing ini tidak dapat menerima permintaan sekarang."
+    },
+    "supplied": "Foto dari agen (privat)",
+    "suppliedNote": "Menyelesaikan permintaan ini pada listing yang tayang akan menayangkan foto yang sudah diproses; foto yang masih diproses tetap privat.",
+    "openCentre": "Buka di Pusat Kualitas Foto"
+  },
+  "adminListingReports": {
+    "back": "Moderasi",
+    "title": "Laporan pembeli",
+    "hint": "Laporan yang dikirim pembeli dari marketplace tentang listing di negara Anda. Pelapor bersifat anonim. Tangani listing di moderasi (tolak atau minta perubahan), lalu tutup laporannya.",
+    "empty": "Tidak ada laporan terbuka.",
+    "count": "{n, plural, other {# laporan}}",
+    "openModeration": "Buka di moderasi",
+    "note": "Catatan (opsional)",
+    "actioned": "Tandai sudah ditangani",
+    "dismiss": "Abaikan",
+    "recent": "Baru ditutup",
+    "status": {
+      "dismissed": "Diabaikan",
+      "actioned": "Ditangani"
+    },
+    "done": {
+      "dismissed": "Laporan diabaikan.",
+      "actioned": "Laporan ditandai sudah ditangani."
+    },
+    "errors": {
+      "invalid": "Periksa isian dan coba lagi.",
+      "not_found": "Laporan itu tidak berada di negara Anda.",
+      "closed": "Laporan itu sudah ditutup.",
+      "invalid_outcome": "Pilih hasil.",
+      "note_too_long": "Catatan maksimal 1.000 karakter.",
+      "failed": "Tidak dapat diselesaikan. Coba lagi."
+    },
+    "reasons": {
+      "wrong_info": "Informasi tidak akurat",
+      "already_sold": "Sudah terjual atau tersewa",
+      "duplicate": "Listing ganda",
+      "wrong_photos": "Foto tidak sesuai",
+      "scam_or_fraud": "Dugaan penipuan",
+      "offensive": "Konten tidak pantas",
+      "other": "Lainnya"
+    }
+  },
+  "adminLeads": {
+    "title": "Waktu respons prospek",
+    "hint": "Seberapa cepat agen menjawab pertanyaan pembeli di negara Anda. Prospek dianggap tepat waktu bila dijawab sebelum tenggatnya. Kontak pembeli tidak ditampilkan di sini.",
+    "period": "Periode",
+    "lastDays": "{n} hari terakhir",
+    "minutes": "{n} mnt",
+    "hours": "{n} jam",
+    "days": "{n} hr",
+    "kpi": {
+      "leads": "Prospek",
+      "onTime": "Dijawab tepat waktu",
+      "median": "Median jawaban pertama",
+      "overdue": "Terlambat sekarang"
+    },
+    "byAgent": "Per agen",
+    "empty": "Tidak ada prospek pada periode ini.",
+    "cols": {
+      "agent": "Agen",
+      "leads": "Prospek",
+      "answered": "Dijawab",
+      "onTime": "Tepat waktu",
+      "median": "Median",
+      "overdue": "Terlambat"
+    },
+    "overdueTitle": "Menunggu melewati tenggat",
+    "overdueHint": "Prospek yang belum dijawab, yang paling lama terlambat lebih dulu.",
+    "noOverdue": "Tidak ada yang terlambat.",
+    "lateBy": "terlambat {time}"
+  },
+  "suspension": {
+    "title": "Akun Anda ditangguhkan",
+    "body": "Selama akun ditangguhkan, Anda tidak dapat membuat atau mengubah listing, dan listing yang tayang dijeda. Hubungi tim platform jika ada pertanyaan.",
+    "reason": "Alasan",
+    "listings": "Listing Anda kembali tayang otomatis saat akun dipulihkan, jika masih disetujui."
+  },
+  "adminAiOffice": {
+    "eyebrow": "Tampilan platform",
+    "title": "Kantor AI Workforce",
+    "subtitle": "Semua peran AI di seluruh agen selama tujuh hari terakhir, hanya dari metadata pekerjaan. Peran yang memerlukan penyedia AI tampil tidak tersedia sampai penyedia dikonfigurasi.",
+    "badge": "Hanya baca",
+    "back": "← AI Workforce"
   }
 }

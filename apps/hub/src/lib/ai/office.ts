@@ -58,3 +58,41 @@ export async function loadOffice(): Promise<OfficeData | null> {
     categoryOrder: OFFICE_CATEGORY_ORDER,
   });
 }
+
+/**
+ * The platform view of the Live Office for /admin/ai/office (screen 12): the
+ * same rooms and characters, drawn from the last seven days of job METADATA
+ * across all agents (no prompt or output, no agent identity), with no agent
+ * tasks. The caller must hold ai.manage; RLS on ai_jobs applies as well.
+ */
+export async function loadPlatformOffice(): Promise<OfficeData | null> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+  const locale = await getLocale();
+  const since = new Date(Date.now() - 7 * 86_400_000).toISOString();
+  const [{ data: roles }, { data: personas }, models, { data: jobs }] = await Promise.all([
+    supabase.from("ai_roles").select("key, category, sort, status, route, external_url, feature, name").neq("status", "hidden"),
+    supabase.from("ai_role_personas").select("role_key, country_code, name, avatar_path, portrait_path"),
+    loadWorkforceModels(supabase),
+    supabase
+      .from("ai_jobs")
+      .select("feature, status, denied_reason, created_at, latency_ms")
+      .gte("created_at", since)
+      .order("created_at", { ascending: false })
+      .limit(1000),
+  ]);
+  return buildOffice({
+    roles: (roles ?? []) as RoleRow[],
+    personas: (personas ?? []) as PersonaRow[],
+    models,
+    jobs: ((jobs ?? []) as JobRow[]).map((j) => ({ ...j, input_ref_type: null, input_ref_id: null })) as JobRow[],
+    tasks: [],
+    ctx: { verified: true, heroLinked: true },
+    country: null,
+    locale,
+    now: new Date(),
+    keyPresent: providerKeyPresent,
+    categoryOrder: OFFICE_CATEGORY_ORDER,
+  });
+}

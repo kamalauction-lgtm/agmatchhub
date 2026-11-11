@@ -35,6 +35,9 @@ export function buildStudioInput(listing: StudioListing, labelOf: (slug: string)
     price: listing.price,
     rentPeriod: listing.rent_period,
     negotiable: listing.price_negotiable,
+    // P0-d-1c: the listing's own currency and unit, so copy never says Rp or m² for RM and sq ft.
+    currency: listing.currency,
+    sizeUnit: listing.measurement_unit,
   };
 }
 

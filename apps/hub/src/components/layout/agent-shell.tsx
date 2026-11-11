@@ -68,6 +68,14 @@ export async function AgentShell({
       : Promise.resolve({ data: null }),
   ]);
 
+  // P1-d-1 (00121): a suspended or banned agent sees why, not the workspace.
+  // The database refuses their listing writes regardless.
+  const blocked = profile?.agent_status === "suspended" || profile?.agent_status === "banned";
+  const { data: suspension } = blocked && user
+    ? await supabase.from("agent_suspensions").select("reason, suspended_at").eq("agent_id", user.id).is("restored_at", null).maybeSingle()
+    : { data: null };
+  const ts = blocked ? await getTranslations("suspension") : null;
+
   const sections: RailGroup[] = [
     {
       title: null,
@@ -221,7 +229,18 @@ export async function AgentShell({
             wide === "full" ? "max-w-[1700px]" : wide ? "max-w-6xl" : "max-w-3xl"
           }`}
         >
-          {children}
+          {blocked && ts ? (
+            <div className="mx-auto max-w-xl rounded-xl border border-danger/40 bg-danger/5 p-6" role="alert" data-suspended-notice="1">
+              <h1 className="text-xl font-semibold text-danger">{ts("title")}</h1>
+              <p className="mt-2 text-sm">{ts("body")}</p>
+              {suspension?.reason && (
+                <p className="mt-3 rounded-lg bg-surface px-3 py-2 text-sm"><span className="block text-xs text-muted">{ts("reason")}</span>{suspension.reason}</p>
+              )}
+              <p className="mt-3 text-xs text-muted">{ts("listings")}</p>
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
 

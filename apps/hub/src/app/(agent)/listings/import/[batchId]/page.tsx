@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { ImportReview } from "@/components/import/import-review";
+import { PhotoAttach, type PhotoItem } from "@/components/import/photo-attach";
+import { MAX_PHOTO_ATTEMPTS } from "@/lib/import/photos";
 
 /**
  * Review before anything becomes a listing.
@@ -51,7 +53,7 @@ export default async function BatchReviewPage({
 
   const { data: batch } = await supabase
     .from("import_batches")
-    .select("id, source_portal, source_kind, source_label, status, found_count, imported_count, failed_count, error")
+    .select("id, source_portal, source_kind, source_label, status, found_count, imported_count, failed_count, error, acting_admin_id, agent_review_state")
     .eq("id", batchId)
     .eq("agent_id", user.id)
     .maybeSingle();
@@ -59,7 +61,7 @@ export default async function BatchReviewPage({
 
   const { data: items } = await supabase
     .from("import_items")
-    .select("id, source_url, status, extracted, overrides, warnings, error, listing_id, duplicate_of_listing_id")
+    .select("id, source_url, status, extracted, overrides, warnings, error, listing_id, duplicate_of_listing_id, media_state, media_total, media_saved, media_attempts, media_results")
     .eq("batch_id", batchId)
     .order("created_at", { ascending: true });
 
@@ -88,6 +90,36 @@ export default async function BatchReviewPage({
 
   const labels = Object.fromEntries(REVIEW_LABEL_KEYS.map((k) => [k, t(k)]));
 
+  // Photos (P0-e-1a): imported items that came with photo URLs.
+  const { data: photosEnabled } = await supabase.rpc("is_feature_enabled", { p_key: "import_photos", p_user: user.id });
+  const listingIds = rows.filter((r) => r.listing_id).map((r) => r.listing_id as string);
+  const { data: failedMedia } = listingIds.length
+    ? await supabase.from("listing_media").select("listing_id").in("listing_id", listingIds).eq("processing_state", "failed")
+    : { data: [] as { listing_id: string }[] };
+  const failedBy = new Map<string, number>();
+  for (const f of failedMedia ?? []) failedBy.set(f.listing_id, (failedBy.get(f.listing_id) ?? 0) + 1);
+  const photoItems: PhotoItem[] = rows
+    .filter((r) => r.status === "imported" && (r.media_total ?? 0) > 0)
+    .map((r) => {
+      const src = { ...(r.extracted ?? {}), ...(r.overrides ?? {}) } as { title?: string };
+      return {
+        id: r.id,
+        title: src.title ?? r.id.slice(0, 8),
+        state: r.media_state as PhotoItem["state"],
+        saved: r.media_saved ?? 0,
+        total: r.media_total ?? 0,
+        attempts: r.media_attempts ?? 0,
+        reasons: ((r.media_results ?? []) as { s: string }[]).map((x) => x.s).filter((s) => s !== "saved"),
+        processingFailed: failedBy.get(r.listing_id as string) ?? 0,
+      };
+    });
+  const PHOTO_LABEL_KEYS = [
+    "title", "intro", "disabled", "attachAll", "attaching", "retry", "waiting", "savedOf",
+    "privateNote", "exhausted", "processingFailed", "reason_blocked", "reason_not_image", "reason_too_large",
+    "reason_timeout", "reason_source_error", "reason_not_property", "reason_unsafe_url", "reason_save_failed",
+  ] as const;
+  const photoLabels = Object.fromEntries(PHOTO_LABEL_KEYS.map((k) => [k, t(`photos.${k}`)]));
+
   /* A per-item failure is shown as its own sentence, not as a code. "Just a
      moment..." got imported once because a blocked fetch looked like a normal
      result; when it is blocked now, the row has to SAY it is blocked and what
@@ -110,6 +142,18 @@ export default async function BatchReviewPage({
       <p className="mb-6 text-sm text-muted">
         {batch.source_portal} · {batch.source_label}
       </p>
+      {batch.acting_admin_id && batch.agent_review_state === "complete" ? (
+        <div className="mb-6 max-w-2xl rounded-lg bg-success/10 px-4 py-3 text-sm text-success-ink" data-in-control="1">
+          <p className="font-semibold">{t("inControl.title")}</p>
+          <p className="mt-1">{t("inControl.body")}</p>
+          <p className="mt-2 flex flex-wrap gap-4 font-medium">
+            <Link href="/studio" className="underline">{t("inControl.studio")}</Link>
+            <Link href="/leads" className="underline">{t("inControl.leads")}</Link>
+          </p>
+        </div>
+      ) : batch.acting_admin_id ? (
+        <p className="mb-6 max-w-2xl rounded-lg bg-surface px-4 py-3 text-sm text-muted">{t("preparedNotice")}</p>
+      ) : null}
 
       {(error || batch.error) && (
         <p className="mb-6 rounded-lg bg-warning/10 px-4 py-3 text-sm font-medium text-warning">
@@ -145,6 +189,10 @@ export default async function BatchReviewPage({
           </div>
         ))}
       </section>
+
+      {photoItems.length > 0 && (
+        <PhotoAttach items={photoItems} enabled={!!photosEnabled} maxAttempts={MAX_PHOTO_ATTEMPTS} labels={photoLabels} />
+      )}
 
       {!rows.length ? (
         <p className="rounded-xl border border-dashed border-line p-10 text-center text-sm text-muted">

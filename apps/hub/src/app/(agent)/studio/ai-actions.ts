@@ -7,6 +7,7 @@ import { getStudioListing } from "@/lib/studio/listings";
 import { buildStudioInput, copyLocaleFor } from "@/lib/studio/input";
 import { writeSocialCaption, writeWhatsappBroadcast } from "@/lib/ai/listing-writer";
 import { runAi, type DeniedReason } from "@/lib/ai/engine";
+import { copyLanguage, type CopyLanguage } from "@/lib/ai/copy-language";
 
 /**
  * The AI Marketing Studio: one listing → copy for every channel at once.
@@ -23,6 +24,8 @@ export type StudioAiResult = {
   reason?: DeniedReason | "failed";
   model?: string;
   texts: { whatsapp: string; caption: string; facebook: string; tiktok: string; brochure: string };
+  /** The language the copy is written in, and whether it differs from the listing's (P0-d-1c). */
+  copy: CopyLanguage;
 };
 
 const schema = z.object({
@@ -40,8 +43,10 @@ export async function draftStudioCopy(listingId: string): Promise<StudioAiResult
   const listing = await getStudioListing(user.id, listingId);
   if (!listing) throw new Error("listing not found");
 
-  const locale = copyLocaleFor(listing);
-  const tt = await getTranslations({ locale, namespace: "propertyTypes" });
+  // P0-d-1c: copy follows the listing's stored language; Malay is written in
+  // English until reviewed Malay phrases exist, and the result says so.
+  const copy = copyLanguage(listing.language);
+  const tt = await getTranslations({ locale: copy.lang, namespace: "propertyTypes" });
   const input = buildStudioInput(listing, (slug) => (tt.has(slug as never) ? tt(slug as never) : slug));
 
   const floor = {
@@ -56,7 +61,7 @@ export async function draftStudioCopy(listingId: string): Promise<StudioAiResult
         title: input.title, listing_type: input.listingType, property_type: input.propertyTypeLabel,
         province: input.province, regency: input.regency, area: input.area, building: input.buildingName,
         bedrooms: input.bedrooms, bathrooms: input.bathrooms, parking: input.parking, floors: input.floors,
-        land_size_sqm: input.landSize, building_size_sqm: input.buildingSize, year_built: input.yearBuilt,
+        land_size: input.landSize, building_size: input.buildingSize, size_unit: listing.measurement_unit, year_built: input.yearBuilt,
         furnishing: input.furnishing, condition: input.condition, ownership: input.ownership,
         facilities: input.facilities ?? [], price: input.price, currency: listing.currency,
         rent_period: input.rentPeriod, negotiable: input.negotiable ?? false,
@@ -66,7 +71,7 @@ export async function draftStudioCopy(listingId: string): Promise<StudioAiResult
       deterministic_drafts: floor,
     },
     schema,
-    { userId: user.id, locale, refType: "listing", refId: listing.id, redactInput: false },
+    { userId: user.id, locale: copy.lang, refType: "listing", refId: listing.id, redactInput: false },
   );
 
   if (res.ok) {
@@ -75,12 +80,14 @@ export async function draftStudioCopy(listingId: string): Promise<StudioAiResult
       source: "ai",
       model: `${res.provider}/${res.model}`,
       texts: { whatsapp: o.whatsapp_broadcast, caption: o.instagram, facebook: o.facebook, tiktok: o.tiktok_script, brochure: o.brochure_blurb },
+      copy,
     };
   }
   return {
     source: "rules",
     reason: res.kind === "denied" ? res.reason : "failed",
     texts: { whatsapp: floor.whatsapp, caption: floor.caption, facebook: floor.caption, tiktok: "", brochure: "" },
+    copy,
   };
 }
 

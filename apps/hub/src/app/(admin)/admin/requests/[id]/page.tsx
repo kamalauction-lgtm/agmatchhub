@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, requireCapabilityIn } from "@/lib/authz";
 import { reviewRequest } from "../actions";
-import { CRED_COOKIE } from "@/lib/agents/constants";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -42,14 +40,8 @@ export default async function AdminRequestDetail({
       .maybeSingle(),
   ]);
   if (!r) notFound();
+  await requireCapabilityIn("request.manage", r.country_code, "/admin/requests");
   const ra = Array.isArray(r.profiles) ? r.profiles[0] : r.profiles;
-
-  // One-time credential reveal after creating an agent on the fly.
-  let cred: { email: string; name: string; password: string } | null = null;
-  if (done === "added_new_agent") {
-    const raw = (await cookies()).get(CRED_COOKIE)?.value;
-    if (raw) { try { cred = JSON.parse(raw); } catch { cred = null; } }
-  }
 
   const reviewable = ["pending_admin_approval", "resubmitted", "under_admin_review"].includes(r.status);
   const canAddProperty = !["draft", "pending_admin_approval", "cancelled", "archived"].includes(r.status);
@@ -87,22 +79,10 @@ export default async function AdminRequestDetail({
       </div>
       <p className="mb-6 font-mono text-xs text-muted">{r.human_readable_id}</p>
 
-      {done && (
+      {done && ["approve", "amendment", "cancel", "added"].includes(done) && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
           {t(`doneNotice.${done}`)}
         </p>
-      )}
-      {cred && (
-        <div className="mb-6 rounded-xl border border-crimson/40 bg-crimson-soft/40 p-5">
-          <h2 className="mb-1 font-semibold">{t("cred.title")}</h2>
-          <p className="mb-3 text-sm text-muted">{t("cred.body", { name: cred.name })}</p>
-          <dl className="space-y-1 text-sm">
-            <div className="flex gap-2"><dt className="w-28 text-muted">{t("cred.email")}</dt><dd className="font-mono font-medium select-all">{cred.email}</dd></div>
-            <div className="flex gap-2"><dt className="w-28 text-muted">{t("cred.password")}</dt><dd className="font-mono font-bold select-all">{cred.password}</dd></div>
-            <div className="flex gap-2"><dt className="w-28 text-muted">{t("cred.link")}</dt><dd className="font-mono select-all break-all">{(process.env.APP_BASE_URL ?? "") + "/login"}</dd></div>
-          </dl>
-          <p className="mt-3 text-xs text-muted">{t("cred.note")}</p>
-        </div>
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">

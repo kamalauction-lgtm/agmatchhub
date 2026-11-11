@@ -2,8 +2,8 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
-import { reviewAgent, reviewSocialLink } from "../actions";
+import { requireCapability, requireCapabilityIn } from "@/lib/authz";
+import { restoreAgent, reviewAgent, reviewSocialLink, suspendAgent } from "../actions";
 import { Agent360 } from "@/components/admin/agent-360";
 import { GrantPanel } from "@/components/admin/grant-panel";
 
@@ -26,11 +26,11 @@ export default async function AgentDetailPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ done?: string; error?: string }>;
+  searchParams: Promise<{ done?: string; error?: string; n?: string }>;
 }) {
   await requireCapability("agent.verify");
   const { id } = await params;
-  const { done, error } = await searchParams;
+  const { done, error, n } = await searchParams;
   const supabase = await createClient();
   const t = await getTranslations("admin");
   const td = await getTranslations("dashboard");
@@ -49,6 +49,9 @@ export default async function AgentDetailPage({
         .limit(10),
     ]);
   if (!profile) notFound();
+  // Before any signed document URL is minted: a country admin sees only
+  // agents in their own country.
+  await requireCapabilityIn("agent.verify", profile.country_code, "/admin/agents");
 
   const [licenceUrl, identityUrl, agencyUrl, cardFrontUrl, cardBackUrl] = await Promise.all([
     signedUrl(supabase, ap?.licence_document_path ?? null),
@@ -57,6 +60,18 @@ export default async function AgentDetailPage({
     signedUrl(supabase, ap?.name_card_front_path ?? null),
     signedUrl(supabase, ap?.name_card_back_path ?? null),
   ]);
+
+  // Agent 360 (P1-d-1): consent, portfolio and the open suspension, RLS-scoped.
+  const [{ data: consents }, { data: portfolio }, { data: openSuspension }] = await Promise.all([
+    supabase.from("consent_records")
+      .select("id, created_at, status, country_code, declaration_versions(version_number, locale, declarations(key))")
+      .eq("user_id", id).order("created_at", { ascending: false }).limit(20),
+    supabase.from("listings").select("status").eq("agent_id", id).limit(2000),
+    supabase.from("agent_suspensions").select("reason, suspended_at, paused_listing_ids").eq("agent_id", id).is("restored_at", null).maybeSingle(),
+  ]);
+  const byStatus = new Map<string, number>();
+  for (const l of portfolio ?? []) byStatus.set(l.status, (byStatus.get(l.status) ?? 0) + 1);
+  const suspended = profile.agent_status === "suspended";
 
   const { data: socialLinks } = await supabase
     .from("agent_social_links")
@@ -92,12 +107,12 @@ export default async function AgentDetailPage({
 
       {done && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
-          {t(`doneNotice.${done}`)}
+          {done === "suspended" || done === "restored" ? t(`doneNotice.${done}`, { n: Number(n) || 0 }) : t(`doneNotice.${done}`)}
         </p>
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {t(`errors.${error === "notes_required" ? "notes_required" : "save_failed"}`)}
+          {t(`errors.${["notes_required", "self_invited", "reason_required", "already_suspended", "not_suspended", "self"].includes(error) ? error : "save_failed"}`)}
         </p>
       )}
 
@@ -185,6 +200,42 @@ export default async function AgentDetailPage({
           {/* Commercial, entitlements and referral — the operational half of
               this screen. Verification answers "may they work"; this answers
               "what may they do, why, and what have they brought in". */}
+          <section className="rounded-xl border border-line p-6" data-panel="portfolio">
+            <h2 className="mb-4 font-semibold">{t("a360.portfolioTitle")}</h2>
+            {!(portfolio ?? []).length ? (
+              <p className="text-sm text-muted">{t("a360.noListings")}</p>
+            ) : (
+              <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {[...byStatus.entries()].sort((a, b) => b[1] - a[1]).map(([st, c]) => (
+                  <div key={st} className="rounded-lg bg-surface px-3 py-2" data-portfolio={st}>
+                    <dt className="text-xs text-muted">{t.has(`a360.listingStatus.${st}` as never) ? t(`a360.listingStatus.${st}` as never) : st}</dt>
+                    <dd className="text-lg font-semibold">{c}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </section>
+
+          <section className="rounded-xl border border-line p-6" data-panel="consent">
+            <h2 className="mb-4 font-semibold">{t("a360.consentTitle")}</h2>
+            {!(consents ?? []).length ? (
+              <p className="text-sm text-muted">{t("a360.noConsent")}</p>
+            ) : (
+              <ul className="space-y-2 text-sm">
+                {(consents ?? []).map((c) => {
+                  const dv = (Array.isArray(c.declaration_versions) ? c.declaration_versions[0] : c.declaration_versions) as { version_number?: number; locale?: string; declarations?: { key?: string } | { key?: string }[] } | null;
+                  const dk = Array.isArray(dv?.declarations) ? dv?.declarations[0]?.key : dv?.declarations?.key;
+                  return (
+                    <li key={c.id} className="flex flex-wrap items-baseline justify-between gap-2 rounded-lg bg-surface px-4 py-2" data-consent={dk ?? ""}>
+                      <span><span className="font-medium">{dk ?? "—"}</span> <span className="text-xs text-muted">v{dv?.version_number ?? "?"} · {dv?.locale ?? ""} · {c.country_code ?? ""}</span></span>
+                      <span className="text-xs text-muted">{c.status} · {new Date(c.created_at).toISOString().slice(0, 10)}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </section>
+
           <Agent360 userId={id} />
           <GrantPanel userId={id} />
 
@@ -196,7 +247,7 @@ export default async function AgentDetailPage({
               <ul className="space-y-2 text-sm">
                 {history.map((h, i) => (
                   <li key={i} className="flex items-center justify-between border-b border-line pb-2 last:border-0">
-                    <span className="font-medium">{t(`history.${h.action}`)}</span>
+                    <span className="min-w-0 flex-1"><span className="font-medium">{t(`history.${h.action}`)}</span>{h.notes && <span className="block break-words text-xs text-muted">{h.notes}</span>}</span>
                     <span className="text-xs text-muted">
                       {new Date(h.created_at).toLocaleString()}
                     </span>
@@ -230,6 +281,37 @@ export default async function AgentDetailPage({
               </button>
             </div>
           </form>
+
+          <div className="mt-8 border-t border-line pt-6" data-panel="account">
+            <h2 className="mb-2 font-semibold">{t("a360.accountTitle")}</h2>
+            {suspended ? (
+              <>
+                <p className="mb-3 rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger" data-suspended="1">
+                  {t("a360.suspendedSince", { date: openSuspension?.suspended_at ? new Date(openSuspension.suspended_at).toISOString().slice(0, 10) : "—" })}
+                  {openSuspension?.reason && <span className="mt-1 block break-words text-xs text-foreground">{openSuspension.reason}</span>}
+                </p>
+                <form action={restoreAgent} className="space-y-3">
+                  <input type="hidden" name="userId" value={id} />
+                  <label className="block text-sm">
+                    <span className="mb-1 block font-medium">{t("a360.restoreNote")}</span>
+                    <textarea name="note" rows={2} maxLength={2000} className={inputCls} />
+                  </label>
+                  <p className="text-xs text-muted">{t("a360.restoreHint", { n: openSuspension?.paused_listing_ids?.length ?? 0 })}</p>
+                  <button type="submit" className="w-full rounded-lg bg-success px-4 py-2.5 font-semibold text-white hover:opacity-90">{t("a360.restore")}</button>
+                </form>
+              </>
+            ) : (
+              <form action={suspendAgent} className="space-y-3">
+                <input type="hidden" name="userId" value={id} />
+                <p className="text-xs text-muted">{t("a360.suspendHint", { n: byStatus.get("published") ?? 0 })}</p>
+                <label className="block text-sm">
+                  <span className="mb-1 block font-medium">{t("a360.suspendReason")}</span>
+                  <textarea name="reason" required minLength={3} maxLength={2000} rows={3} className={inputCls} />
+                </label>
+                <button type="submit" className="w-full rounded-lg border border-danger px-4 py-2.5 font-semibold text-danger hover:bg-danger/10">{t("a360.suspend")}</button>
+              </form>
+            )}
+          </div>
         </aside>
       </div>
     </div>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { draftListingCopy, reviewListingCopy } from "@/app/(agent)/listings/ai-actions";
 import { CompanionBadge, type Companion } from "@/components/ai/companion";
+import { TYPES_BY_CATEGORY, TENURES, categoryForType, type MarketCountry } from "@/lib/listings/vocabulary";
 
 /**
  * Multi-step listing wizard.
@@ -27,33 +28,11 @@ export type WizardLabels = Record<string, string>;
 const STEPS = ["type", "location", "unit", "price", "description", "photos", "review"] as const;
 type Step = (typeof STEPS)[number];
 
-/**
- * Property types offered per category. An agent choosing "Residensial" must
- * not be shown Gudang or Pabrik — the old list showed all fifteen regardless,
- * which let a warehouse be filed as a home.
- *
- * Land appears under both because a plot is sold as residential or commercial
- * depending on its zoning, and the agent is the one who knows which.
+/*
+ * Property types offered per category, and the tenures, come from the agent's
+ * own market (lib/listings/vocabulary.ts). An agent choosing residential is
+ * never shown a warehouse, and a Malaysian agent is never offered an SHM.
  */
-const TYPES_BY_CATEGORY: Record<string, readonly string[]> = {
-  residential: ["rumah", "apartemen", "kondominium", "villa", "kost", "tanah", "kavling", "lainnya"],
-  commercial: ["ruko", "rukan", "kantor", "toko", "hotel", "gudang", "pabrik", "tanah", "kavling", "lainnya"],
-};
-
-/**
- * The stored category is derived from the chosen TYPE, not from the card.
- * Two cards keep the choice simple for the agent while the database still
- * gets precise values, which is what marketplace filters read.
- */
-function categoryForType(type: string, picked: string): string {
-  if (["gudang", "pabrik"].includes(type)) return "industrial";
-  if (["tanah", "kavling"].includes(type)) return "land";
-  if (["rumah", "apartemen", "kondominium", "villa", "kost"].includes(type)) return "residential";
-  if (["ruko", "rukan", "kantor", "toko", "hotel"].includes(type)) return "commercial";
-  return picked === "commercial" ? "commercial" : "other";
-}
-
-const OWNERSHIP = ["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", "adat", "lainnya"] as const;
 
 /**
  * Draft persistence.
@@ -68,7 +47,8 @@ const OWNERSHIP = ["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", 
  * receive from a user gesture. So the banner says so plainly rather than
  * letting an agent submit a listing they believe still has pictures.
  */
-const DRAFT_KEY = "pg_listing_wizard_v1";
+/** Per market, so a draft never restores another country's keys. */
+const DRAFT_KEY_BASE = "pg_listing_wizard_v1";
 const DRAFT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
 type DraftShape = {
@@ -88,6 +68,9 @@ export function ListingWizard({
   t,
   typeLabels,
   ownershipLabels,
+  country,
+  currency,
+  unit,
 }: {
   action: (fd: FormData) => void;
   locations: Loc[];
@@ -96,7 +79,23 @@ export function ListingWizard({
   companion?: Companion;
   typeLabels: Record<string, string>;
   ownershipLabels: Record<string, string>;
+  /** The agent's market, resolved on the server from their profile. */
+  country: MarketCountry;
+  currency: string;
+  unit: "sqm" | "sqft";
 }) {
+  const typesByCategory = TYPES_BY_CATEGORY[country];
+  // Memoised: the restore effect depends on it and must run once, not per render.
+  const allTypes = useMemo(
+    () => [...TYPES_BY_CATEGORY[country].residential, ...TYPES_BY_CATEGORY[country].commercial],
+    [country],
+  );
+  const tenures: readonly string[] = TENURES[country];
+  const draftKey = `${DRAFT_KEY_BASE}_${country}`;
+  const money = (v: number) =>
+    new Intl.NumberFormat(currency === "IDR" ? "id-ID" : currency === "MYR" ? "en-MY" : "en-US", {
+      style: "currency", currency, minimumFractionDigits: 0, maximumFractionDigits: currency === "IDR" ? 0 : 2,
+    }).format(v);
   const [step, setStep] = useState<Step>("type");
   /**
    * Furthest step reached. Without it, stepping BACK re-disabled every step
@@ -118,13 +117,16 @@ export function ListingWizard({
     sellingPoints: string[];
     notes: string[];
     comparables: { n: number; medianPrice: number | null } | null;
+    /** Language of the draft (P0-d-1c): "id" | "en", and whether it differs from the listing's. */
+    copyLang?: "id" | "en";
+    copyFallback?: boolean;
   }>({ source: null, sellingPoints: [], notes: [], comparables: null });
 
   const [f, setF] = useState({
     listingType: "sale" as "sale" | "rent",
     rentPeriod: "monthly" as "monthly" | "yearly",
     propertyCategory: "residential",
-    propertyType: "rumah",
+    propertyType: TYPES_BY_CATEGORY[country].residential[0],
     ownershipType: "",
     locationId: "",
     generalAddress: "",
@@ -160,29 +162,35 @@ export function ListingWizard({
       await Promise.resolve();
       if (cancelled) return;
       try {
-        const raw = localStorage.getItem(DRAFT_KEY);
+        const raw = localStorage.getItem(draftKey);
         if (raw) {
           const d = JSON.parse(raw) as DraftShape;
           if (d?.savedAt && Date.now() - d.savedAt < DRAFT_MAX_AGE_MS && d.fields) {
-            setF((prev) => ({ ...prev, ...(d.fields as typeof prev) }));
+            // A restored type or tenure must still belong to this market.
+            const fields = { ...(d.fields as Record<string, unknown>) };
+            if (typeof fields.propertyType === "string" && !allTypes.includes(fields.propertyType)) delete fields.propertyType;
+            if (typeof fields.ownershipType === "string" && fields.ownershipType && !tenures.includes(fields.ownershipType)) delete fields.ownershipType;
+            if (typeof fields.locationId === "string" && fields.locationId && !locations.some((l) => l.id === fields.locationId)) delete fields.locationId;
+            setF((prev) => ({ ...prev, ...(fields as Partial<typeof prev>) }));
             if ((STEPS as readonly string[]).includes(d.step)) {
               setStep(d.step);
               setFurthest(Math.max(d.furthest ?? 0, STEPS.indexOf(d.step)));
             }
             setRestored({ savedAt: d.savedAt, hadPhotos: !!d.hadPhotos });
           } else {
-            localStorage.removeItem(DRAFT_KEY);
+            localStorage.removeItem(draftKey);
           }
         }
       } catch {
-        localStorage.removeItem(DRAFT_KEY);
+        localStorage.removeItem(draftKey);
       }
       setHydrated(true);
     })();
     return () => {
       cancelled = true;
     };
-  }, []);
+    // All stable for the life of the page: country and locations come from the server.
+  }, [allTypes, draftKey, locations, tenures]);
 
   // Save on every change — but only after hydration, or the empty initial
   // state would overwrite the draft we are about to restore.
@@ -196,15 +204,15 @@ export function ListingWizard({
         fields: f,
         hadPhotos: !!photos && photos.length > 0,
       };
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      localStorage.setItem(draftKey, JSON.stringify(draft));
     } catch {
       // Quota or private mode — losing the draft is bad, breaking the form is worse.
     }
-  }, [hydrated, f, step, furthest, photos]);
+  }, [hydrated, f, step, furthest, photos, draftKey]);
 
   function discardDraft() {
     try {
-      localStorage.removeItem(DRAFT_KEY);
+      localStorage.removeItem(draftKey);
     } catch {
       /* nothing to do */
     }
@@ -248,6 +256,8 @@ export function ListingWizard({
       facilities: f.facilities ? f.facilities.split(",").map((s) => s.trim()).filter(Boolean) : [],
       price: f.price ? Number(f.price) : null,
       rentPeriod: f.listingType === "rent" ? f.rentPeriod : null,
+      currency,
+      sizeUnit: unit,
     };
   }
 
@@ -269,6 +279,8 @@ export function ListingWizard({
         sellingPoints: r.sellingPoints,
         notes: r.notesForAgent,
         comparables: r.comparables ? { n: r.comparables.n, medianPrice: r.comparables.medianPrice } : null,
+        copyLang: r.copy.lang,
+        copyFallback: r.copy.fallback,
       });
       setDescMode("ai");
     } finally {
@@ -416,7 +428,7 @@ export function ListingWizard({
                     key={v}
                     type="button"
                     onClick={() => {
-                      const list = TYPES_BY_CATEGORY[v] ?? [];
+                      const list = typesByCategory[v as "residential" | "commercial"] ?? [];
                       setF((prev) => ({
                         ...prev,
                         propertyCategory: v,
@@ -478,7 +490,7 @@ export function ListingWizard({
               <label className={label} htmlFor="pt">{t.propertyType}</label>
               <select id="pt" value={f.propertyType} className={`mt-1 ${input}`}
                 onChange={(e) => set("propertyType", e.target.value)}>
-                {(TYPES_BY_CATEGORY[f.propertyCategory] ?? []).map((p) => (
+                {(typesByCategory[f.propertyCategory as "residential" | "commercial"] ?? []).map((p) => (
                   <option key={p} value={p}>{typeLabels[p] ?? p}</option>
                 ))}
               </select>
@@ -568,7 +580,7 @@ export function ListingWizard({
                 <select id="ow" value={f.ownershipType} className={`mt-1 ${input}`}
                   onChange={(e) => set("ownershipType", e.target.value)}>
                   <option value="">—</option>
-                  {OWNERSHIP.map((o) => (
+                  {tenures.map((o) => (
                     <option key={o} value={o}>{ownershipLabels[o] ?? o}</option>
                   ))}
                 </select>
@@ -617,8 +629,8 @@ export function ListingWizard({
               <p className="mt-1 text-xs text-muted">{t.priceHelp}</p>
               {Number(f.price) > 0 && (
                 <p className="mt-2 rounded-lg bg-surface px-3 py-2 text-sm font-semibold">
-                  IDR {Number(f.price).toLocaleString("id-ID")}
-                  {f.listingType === "rent" && (f.rentPeriod === "monthly" ? " /bln" : " /thn")}
+                  {money(Number(f.price))}
+                  {f.listingType === "rent" && ` / ${f.rentPeriod === "monthly" ? t.monthly : t.yearly}`}
                 </p>
               )}
             </div>
@@ -662,11 +674,18 @@ export function ListingWizard({
                         ? t.aiSource.replace("[model]", aiMeta.model ?? "AI")
                         : (t[`aiReason_${aiMeta.reason ?? "failed"}`] ?? t.rulesSource)}
                     </p>
+                    {aiMeta.copyLang && (
+                      <p className="mt-1 font-medium text-foreground" data-copy-language={aiMeta.copyLang}>
+                        {aiMeta.copyLang === "en"
+                          ? (aiMeta.copyFallback ? t.copyEnglishFallback : t.copyEnglish)
+                          : t.copyIndonesian}
+                      </p>
+                    )}
                     {aiMeta.comparables && (
                       <p className="mt-1">
                         {t.comparables
                           .replace("[n]", String(aiMeta.comparables.n))
-                          .replace("[median]", aiMeta.comparables.medianPrice ? `IDR ${Math.round(aiMeta.comparables.medianPrice).toLocaleString("id-ID")}` : "—")}
+                          .replace("[median]", aiMeta.comparables.medianPrice ? money(Math.round(aiMeta.comparables.medianPrice)) : "—")}
                       </p>
                     )}
                     {aiMeta.notes.length > 0 && (
@@ -785,7 +804,7 @@ export function ListingWizard({
                 [t.propertyType, typeLabels[f.propertyType] ?? f.propertyType],
                 [t.forQ, f.listingType === "sale" ? t.forSale : t.forRent],
                 [t.area, location ? (location.path_names ?? []).join(" › ") : "—"],
-                [t.price, f.price ? `IDR ${Number(f.price).toLocaleString("id-ID")}` : "—"],
+                [t.price, f.price ? money(Number(f.price)) : "—"],
                 [t.adTitle, f.title || "—"],
                 [t.step_photos, photos ? String(photos.length) : "0"],
               ].map(([k, v]) => (

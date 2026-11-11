@@ -56,6 +56,25 @@ export async function importReadyItems(formData: FormData): Promise<void> {
     .eq("id", batchId)
     .maybeSingle();
   if (!batch) redirect("/listings/import?error=not_found");
+  // D15 (00107): the batch's owner commits it, nobody else. An admin can see
+  // an agent's batch, and before this check committing it would have created
+  // the listings — and recorded the authority declaration — as the admin.
+  if (batch.agent_id !== user.id) redirect(`/listings/import/${batchId}?error=not_owner`);
+
+  // D8: the agent's market decides country, currency and listing language.
+  const { data: me } = await supabase
+    .from("profiles")
+    .select("country_code, countries(default_currency, default_language, measurement_unit)")
+    .eq("id", user.id)
+    .maybeSingle();
+  const market = (Array.isArray(me?.countries) ? me?.countries[0] : me?.countries) as
+    | { default_currency: string | null; default_language: string | null; measurement_unit: string | null }
+    | null
+    | undefined;
+  const countryCode = (me?.country_code as string | null) ?? "ID";
+  const defaultCurrency = market?.default_currency ?? (countryCode === "MY" ? "MYR" : "IDR");
+  const listingLanguage = market?.default_language ?? (countryCode === "MY" ? "en" : "id");
+  const measurementUnit = market?.measurement_unit ?? "sqm";
 
   /* --- authority declaration ------------------------------------------------
    * Recorded through the existing versioned framework, not as a boolean on the
@@ -123,9 +142,9 @@ export async function importReadyItems(formData: FormData): Promise<void> {
       let regencyName: string | null = null;
       const cityText = [src.city, src.province, src.addressText].filter(Boolean).join(" ");
       if (cityText) {
-        const { data: loc } = await supabase.rpc("match_regency", { p_text: cityText });
+        const { data: loc } = await supabase.rpc("match_location", { p_country: countryCode, p_text: cityText });
         if (loc && Array.isArray(loc) && loc[0]) {
-          locationId = loc[0].id; provinceName = loc[0].province; regencyName = loc[0].regency;
+          locationId = loc[0].id; provinceName = loc[0].province_name; regencyName = loc[0].regency_name;
         }
       }
 
@@ -141,7 +160,7 @@ export async function importReadyItems(formData: FormData): Promise<void> {
         .insert({
           human_readable_id: hidProp,
           agent_id: user.id,
-          country_code: "ID",
+          country_code: countryCode,
           property_category: category,
           property_type: propertyType,
           location_id: locationId,
@@ -151,7 +170,7 @@ export async function importReadyItems(formData: FormData): Promise<void> {
           land_size: Number.isFinite(Number(src.landSize)) ? Number(src.landSize) : null,
           bedrooms: Number.isFinite(Number(src.bedrooms)) ? Number(src.bedrooms) : null,
           bathrooms: Number.isFinite(Number(src.bathrooms)) ? Number(src.bathrooms) : null,
-          measurement_unit: "sqm",
+          measurement_unit: measurementUnit,
           created_by: user.id,
         })
         .select("id")
@@ -176,9 +195,9 @@ export async function importReadyItems(formData: FormData): Promise<void> {
           listing_type: src.listingType === "rent" ? "rent" : "sale",
           status: "draft",              // never auto-published
           moderation_state: "pending",
-          currency: typeof src.currency === "string" ? src.currency : "IDR",
+          currency: typeof src.currency === "string" ? src.currency : defaultCurrency,
           price,
-          language: "id",
+          language: listingLanguage,
           title,
           description: sanitiseText(src.description as string, 4000) ?? title,
           slug,
@@ -190,7 +209,14 @@ export async function importReadyItems(formData: FormData): Promise<void> {
       if (listErr || !listing) { failures.push(item.id); continue; }
 
       await supabase.from("import_items")
-        .update({ status: "imported", property_id: prop.id, listing_id: listing.id })
+        .update({
+          status: "imported", property_id: prop.id, listing_id: listing.id,
+          // Photos attach afterwards, one item at a time (00108); the listing
+          // is already complete without them.
+          ...(Array.isArray(src.imageUrls) && src.imageUrls.length
+            ? { media_state: "pending", media_total: Math.min(src.imageUrls.length, 12) }
+            : {}),
+        })
         .eq("id", item.id);
       imported++;
     } catch (e) {
