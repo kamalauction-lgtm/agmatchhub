@@ -498,7 +498,9 @@
     "save": "Simpan",
     "ingestAgentNone": "— tiada —",
     "ingestAgentHint": "Profil syarikat yang disahkan, tempat draf pelayan-ke-pelayan (Hero → ingest) diletakkan bagi negara ini.",
-    "ingestAgentInvalid": "Ejen ingest mesti ejen yang disahkan dari negara itu."
+    "ingestAgentInvalid": "Ejen ingest mesti ejen yang disahkan dari negara itu.",
+    "ingestAgreementPlaceholder": "Rujukan perjanjian rakan kongsi",
+    "ingestAgreementHint": "Perjanjian bertulis yang menjadi asas penggunaan foto suapan rakan kongsi. Ia direkodkan bersama setiap foto rakan kongsi. Jika kosong, foto rakan kongsi tidak disimpan."
   },
   "nav": {
     "dashboard": "Papan pemuka",

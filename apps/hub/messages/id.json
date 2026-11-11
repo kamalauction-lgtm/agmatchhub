@@ -498,7 +498,9 @@
     "save": "Simpan",
     "ingestAgentNone": "— tidak ada —",
     "ingestAgentHint": "Profil perusahaan terverifikasi tempat draf server-ke-server (Hero → ingest) dimiliki di negara ini.",
-    "ingestAgentInvalid": "Agen ingest harus agen terverifikasi dari negara itu."
+    "ingestAgentInvalid": "Agen ingest harus agen terverifikasi dari negara itu.",
+    "ingestAgreementPlaceholder": "Referensi perjanjian mitra",
+    "ingestAgreementHint": "Perjanjian tertulis yang menjadi dasar penggunaan foto dari feed mitra. Dicatat pada setiap foto mitra. Jika kosong, foto mitra tidak disimpan."
   },
   "nav": {
     "dashboard": "Dasbor",

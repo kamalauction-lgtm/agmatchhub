@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createServiceClient } from "@/lib/supabase/service";
 import { sanitiseText } from "@/lib/import/safe-fetch";
+import { attachPartnerPhotos } from "@/lib/ingest/partner-photos";
 import {
   normalisePropertyType, convertSize, inferCountry, applyCountryDefaults,
   type IngestCountry, type SizeUnit,
@@ -92,7 +93,7 @@ export async function POST(request: Request) {
   if (parsed.data.country && parsed.data.country !== country) {
     return NextResponse.json({ error: "country_mismatch", detail: `agent is ${country}, payload says ${parsed.data.country}` }, { status: 422 });
   }
-  const { data: countryRow } = await supabase.from("countries").select("default_currency, default_language, measurement_unit").eq("code", country).single();
+  const { data: countryRow } = await supabase.from("countries").select("default_currency, default_language, measurement_unit, settings").eq("code", country).single();
   const defaults = applyCountryDefaults(L, {
     default_currency: countryRow?.default_currency ?? (country === "MY" ? "MYR" : "IDR"),
     default_language: countryRow?.default_language ?? (country === "MY" ? "en" : "id"),
@@ -158,36 +159,25 @@ export async function POST(request: Request) {
     });
   }
 
-  // photos: copy into the public media bucket under the agent's own prefix (storage RLS convention), first one is the cover
-  let stored = 0;
-  if (images.length) {
-    const { data: existing } = await supabase.from("listing_media").select("id").eq("listing_id", listingId);
-    if (!existing?.length) {
-      for (let i = 0; i < images.length; i++) {
-        try {
-          const res = await fetch(images[i].url);
-          if (!res.ok) continue;
-          const bytes = await res.arrayBuffer();
-          const type = res.headers.get("content-type") || "image/jpeg";
-          const ext = type.includes("png") ? "png" : type.includes("webp") ? "webp" : "jpg";
-          const path = `${agentId}/${listingId}/${String(i + 1).padStart(2, "0")}.${ext}`;
-          const up = await supabase.storage.from("listing-media-public").upload(path, bytes, { contentType: type, upsert: true });
-          if (up.error) continue;
-          await supabase.from("listing_media").insert({ listing_id: listingId, kind: "image", storage_path: path, position: i, is_cover: images[i].is_cover ?? i === 0, byte_size: bytes.byteLength, processing_state: "ready" });
-          stored++;
-        } catch { /* skip this image */ }
-      }
-    }
-  }
+  // photos (D6, P0-e-3b): fetched safely into the agent's PRIVATE intake
+  // folder as `pending`, under the partner agreement recorded for this
+  // country; the processor makes clean derivatives and moderation publishes
+  // them. Before, they went straight to the public bucket unprocessed.
+  const agreementRef = (countryRow?.settings as { ingest?: { agreement_ref?: string | null } } | null)?.ingest?.agreement_ref ?? null;
+  const photos = await attachPartnerPhotos(supabase, {
+    agentId, listingId, agreementRef, images,
+    pageUrl: /^https?:\/\//i.test(source_url) ? source_url : null,
+  });
+  const stored = photos.stored;
 
   await supabase.rpc("log_audit", {
     p_action: created ? "listing.ingested" : "listing.ingest_updated", p_entity_type: "listing", p_entity_id: listingId, p_previous: null,
-    p_new: { external_id, source_url, human_readable_id: humanId, images: stored, agent_id: agentId, country, location: placeName },
+    p_new: { external_id, source_url, human_readable_id: humanId, images: stored, images_existing: photos.existing, images_skipped: photos.skipped, rights_basis: photos.basis, agent_id: agentId, country, location: placeName },
     p_reason: "server-to-server ingest from IQI AG Hero", p_result: "success",
   });
   const base = process.env.APP_BASE_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? "";
   return NextResponse.json({
     ok: true, created, country, listing_id: listingId, property_id: propertyId, human_readable_id: humanId, status: "draft",
-    property_type: propertyType, location: placeName, images: stored, url: `${base}/listings/${listingId}`,
+    property_type: propertyType, location: placeName, images: stored, images_existing: photos.existing, images_skipped: photos.skipped, url: `${base}/listings/${listingId}`,
   });
 }

@@ -25,6 +25,8 @@ export default async function CountriesPage({
   ]);
   const ingestAgentOf = (c: { settings: unknown }) =>
     ((c.settings as { ingest?: { agent_id?: string | null } } | null)?.ingest?.agent_id ?? "") as string;
+  const agreementOf = (c: { settings: unknown }) =>
+    ((c.settings as { ingest?: { agreement_ref?: string | null } } | null)?.ingest?.agreement_ref ?? "") as string;
 
   return (
     <div>
@@ -98,6 +100,10 @@ export default async function CountriesPage({
                       <option key={a.id} value={a.id}>{a.display_name ?? a.id.slice(0, 8)}</option>
                     ))}
                   </select>
+                  {/* P0-e-3b: partner photos are stored only under a recorded agreement. */}
+                  <input form={`country-${c.code}`} name="ingestAgreementRef" defaultValue={agreementOf(c)} maxLength={200}
+                    placeholder={t("ingestAgreementPlaceholder")} title={t("ingestAgreementHint")} aria-label={t("ingestAgreementHint")}
+                    className={`mt-1 block w-full ${selectCls}`} />
                 </td>
                 <td className="px-4 py-3 text-right">
                   <form id={`country-${c.code}`} action={updateCountry}>

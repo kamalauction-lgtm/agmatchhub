@@ -498,7 +498,9 @@
     "save": "Save",
     "ingestAgentNone": "— none —",
     "ingestAgentHint": "The verified company profile that server-to-server drafts (Hero → ingest) belong to in this country.",
-    "ingestAgentInvalid": "The ingest agent must be a verified agent of that country."
+    "ingestAgentInvalid": "The ingest agent must be a verified agent of that country.",
+    "ingestAgreementPlaceholder": "Partner agreement reference",
+    "ingestAgreementHint": "The written agreement partner-feed photos are used under. It is recorded with every partner photo. Leave empty and partner photos are not stored."
   },
   "nav": {
     "dashboard": "Dashboard",
