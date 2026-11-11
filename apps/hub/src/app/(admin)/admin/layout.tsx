@@ -30,12 +30,14 @@ const NAV: { key: string; href: string; capability: string | null; icon: string;
   { key: "overview", href: "/admin", capability: null, icon: "◈", group: "main" },
 
   { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "agents" },
+  { key: "pipeline", href: "/admin/agents/pipeline", capability: "agent.invite", icon: "⇢", group: "agents" },
   { key: "invitations", href: "/admin/agents/invitations", capability: "agent.invite", icon: "✉", group: "agents" },
   { key: "organisations", href: "/admin/organisations", capability: "commercial.manage", icon: "▣", group: "agents" },
 
   { key: "listings", href: "/admin/listings", capability: "listing.moderate", icon: "⌂", group: "listings" },
   { key: "imports", href: "/admin/imports", capability: "listing.import_assisted", icon: "⇪", group: "listings" },
   { key: "media", href: "/admin/media", capability: "media.review", icon: "▦", group: "listings" },
+  { key: "sources", href: "/admin/sources", capability: null, icon: "⇄", group: "listings" },
 
   { key: "requests", href: "/admin/requests", capability: "request.manage", icon: "☰", group: "demand" },
   { key: "leads", href: "/admin/leads", capability: "request.manage", icon: "◷", group: "demand" },

@@ -110,6 +110,9 @@ export default async function CountriesPage({
                   {/* Screen 13: timezone and terminology, editable per country. */}
                   <input form={`country-${c.code}`} name="timezone" defaultValue={c.timezone ?? ""} maxLength={60}
                     placeholder="Asia/Kuala_Lumpur" aria-label={t("timezone")} title={t("timezone")} className={`block w-full ${selectCls}`} />
+                  <input form={`country-${c.code}`} name="prospectRetentionDays" type="number" min={30} max={730}
+                    defaultValue={String(((c.settings ?? {}) as Record<string, unknown>).prospect_retention_days ?? "")}
+                    placeholder={t("prospectRetention")} aria-label={t("prospectRetention")} title={t("prospectRetention")} className={`mt-1 block w-full ${selectCls}`} />
                   {(["agent", "owner", "tenant"] as const).map((k) => (
                     <input key={k} form={`country-${c.code}`} name={`term${k[0].toUpperCase()}${k.slice(1)}`}
                       defaultValue={String(((c.terminology ?? {}) as Record<string, unknown>)[k] ?? "")} maxLength={60}

@@ -277,7 +277,9 @@
       "imports": "Import berbantu",
       "media": "Kualiti foto",
       "handover": "Serahan",
-      "leads": "Respons prospek"
+      "leads": "Respons prospek",
+      "pipeline": "Saluran pengambilan",
+      "sources": "Sumber"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -576,7 +578,8 @@
       "owner": "Istilah untuk pemilik",
       "tenant": "Istilah untuk penyewa"
     },
-    "invalidFields": "Semak nilai: zon waktu mesti nama IANA yang sah dan istilah maksimum 60 aksara."
+    "invalidFields": "Semak nilai: zon waktu mesti nama IANA yang sah dan istilah maksimum 60 aksara.",
+    "prospectRetention": "Tempoh simpanan prospek (hari, 30–730)"
   },
   "nav": {
     "dashboard": "Papan pemuka",
@@ -5045,7 +5048,8 @@
     },
     "supplied": "Foto daripada ejen (peribadi)",
     "suppliedNote": "Menyelesaikan permintaan ini pada penyenaraian yang diterbitkan akan menerbitkan foto yang telah diproses; foto yang masih diproses kekal peribadi.",
-    "openCentre": "Buka di Pusat Kualiti Foto"
+    "openCentre": "Buka di Pusat Kualiti Foto",
+    "openReport": "Laporan serahan →"
   },
   "adminListingReports": {
     "back": "Moderasi",
@@ -5125,5 +5129,123 @@
     "subtitle": "Setiap peranan AI merentas semua ejen dalam tujuh hari lepas, daripada metadata tugas sahaja. Peranan yang memerlukan penyedia AI dipaparkan tidak tersedia sehingga penyedia dikonfigurasi.",
     "badge": "Baca sahaja",
     "back": "← AI Workforce"
+  },
+  "adminPipeline": {
+    "back": "Ejen",
+    "title": "Saluran pemerolehan ejen",
+    "hint": "Ejen yang ingin diambil oleh pasukan, dari hubungan pertama hingga jemputan. Prospek belum bersetuju dengan apa-apa, jadi setiap negara menyimpannya hanya untuk tempoh yang ditetapkan oleh pemilik, dan setiap kad menunjukkan bila ia akan dipadam.",
+    "retentionDays": "disimpan {n} hari",
+    "retentionNotSet": "tempoh simpanan belum ditetapkan",
+    "locked": "Tiada negara yang anda urus mempunyai tempoh simpanan prospek. Ia ditetapkan setiap negara di Negara (keputusan pemilik 5); sehingga itu tiada prospek boleh disimpan.",
+    "add": "Tambah prospek",
+    "addButton": "Tambah prospek",
+    "moveTo": "Pindah ke peringkat",
+    "move": "Pindah",
+    "delete": "Padam sekarang",
+    "deletesOn": "Dipadam pada {date} kecuali dihubungi semula",
+    "fields": {
+      "country": "Negara",
+      "name": "Nama penuh",
+      "agency": "Agensi (pilihan)",
+      "phone": "Telefon (+kod negara)",
+      "email": "E-mel",
+      "source": "Sumber",
+      "sourceNote": "Butiran sumber (pilihan)",
+      "purpose": "Sebab pasukan menghubungi"
+    },
+    "stage": {
+      "new": "Baharu",
+      "contacted": "Dihubungi",
+      "interested": "Berminat",
+      "invited": "Dijemput",
+      "declined": "Menolak",
+      "converted": "Menyertai"
+    },
+    "source": {
+      "referral": "Rujukan",
+      "event": "Acara",
+      "portal_listing": "Dilihat di portal",
+      "social": "Media sosial",
+      "inbound": "Menghubungi kami",
+      "other": "Lain-lain"
+    },
+    "done": {
+      "added": "Prospek ditambah.",
+      "stage": "Peringkat dikemas kini.",
+      "deleted": "Prospek dipadam."
+    },
+    "errors": {
+      "invalid": "Semak medan dan cuba lagi.",
+      "contact_required": "Berikan nombor telefon atau e-mel.",
+      "retention_not_set": "Negara itu belum mempunyai tempoh simpanan prospek.",
+      "not_permitted": "Anda hanya boleh mengurus prospek di negara anda sendiri.",
+      "not_found": "Prospek tidak dijumpai."
+    }
+  },
+  "adminHandoverReport": {
+    "back": "Serahan",
+    "title": "Laporan serahan",
+    "hint": "Prestasi onboarding berbantu di negara anda dalam 90 hari lepas: berapa lama pasukan menyediakan portfolio, berapa lama ejen mengambil kawalan, berapa ramai ejen yang dijemput aktif dalam 14 hari, dan berapa pantas permintaan perubahan dan moderasi dijawab.",
+    "days": "hari",
+    "week": "Minggu",
+    "count": "Bilangan",
+    "medianHours": "Median (jam)",
+    "kpi": {
+      "batches": "Kelompok disediakan",
+      "batchesSub": "{handed} diserahkan · {complete} selesai",
+      "prep": "Median masa penyediaan",
+      "review": "Median semakan ejen",
+      "within14": "{pct} selesai dalam 14 hari selepas serahan",
+      "activation": "Pengaktifan 14 hari",
+      "activationSub": "{activated} daripada {decided} ejen yang dijemput aktif dalam 14 hari"
+    },
+    "answerTrend": "Permintaan perubahan: masa hingga ejen menjawab",
+    "moderationTrend": "Moderasi: masa dari penyenaraian hingga keputusan",
+    "effortTitle": "Usaha admin bagi setiap penyenaraian aktif",
+    "effortLine": "{per} tindakan admin bagi setiap penyenaraian aktif ({actions} tindakan pada {live} penyenaraian aktif, daripada jejak audit).",
+    "effortNeedsAudit": "Dipaparkan kepada admin yang memegang audit.view."
+  },
+  "adminSources": {
+    "title": "Sumber dan pemetaan",
+    "hint": "Dari mana penyenaraian yang diimport datang, sama ada terma setiap sumber membenarkan guna semula (semakan undang-undang), dan bagaimana medannya dipetakan kepada medan kita. Sumber yang dilihat dalam import tetapi belum didaftarkan disenaraikan dahulu.",
+    "resyncBlocked": "Penyegerakan semula belum tersedia: ia memerlukan akses kepada setiap sumber luar dan semakan undang-undang terhadap termanya (keputusan D-7). Sehingga itu, sumber hanya direkod dan dipetakan; tiada yang diambil atau ditulis ganti.",
+    "seenTitle": "Dilihat dalam import, belum didaftarkan",
+    "seenCount": "{n, plural, other {# kelompok}}",
+    "registryTitle": "Sumber berdaftar",
+    "empty": "Belum ada sumber didaftarkan.",
+    "displayName": "Nama",
+    "kind": "Jenis",
+    "country": "Negara (pilihan)",
+    "register": "Daftar",
+    "termsReview": "Semakan terma",
+    "termsNote": "Nota semakan",
+    "saveTerms": "Simpan semakan",
+    "mapping": "Pemetaan medan (JSON: medan sumber → medan platform)",
+    "saveMapping": "Simpan pemetaan",
+    "terms": {
+      "unreviewed": "Terma belum disemak",
+      "allowed": "Guna semula dibenarkan",
+      "agent_supplied_only": "Dibekalkan ejen sahaja",
+      "forbidden": "Guna semula dilarang"
+    },
+    "kinds": {
+      "portal": "Portal",
+      "partner_feed": "Suapan rakan kongsi",
+      "agent_file": "Fail ejen sendiri",
+      "other": "Lain-lain"
+    },
+    "done": {
+      "registered": "Sumber didaftarkan.",
+      "mapping": "Pemetaan disimpan.",
+      "terms": "Semakan terma disimpan."
+    },
+    "errors": {
+      "invalid": "Semak medan dan cuba lagi.",
+      "exists": "Sumber itu sudah didaftarkan.",
+      "not_permitted": "Anda memerlukan kebenaran global platform.configure untuk itu.",
+      "needs_legal": "Hanya penyemak undang-undang (legal.publish global) boleh mengubah status terma.",
+      "mapping_json": "Pemetaan bukan JSON yang sah.",
+      "mapping_shape": "Gunakan pasangan pengecam pendek, contohnya luas_tanah → landSize."
+    }
   }
 }
