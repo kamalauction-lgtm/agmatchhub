@@ -1,6 +1,13 @@
 # Release brief: Admin Platform 2.0 PR stack
 
-**Status, 11 Nov 2026:** #10, #12–#24 and #26–#35 are **merged into `main` as `12cbfab`** (owner-approved). CI on `main` is green. **Nothing is in production.** [PR #36](https://github.com/kamalauction-lgtm/agmatchhub/pull/36), for screens 2, 8 and 14 with migrations 00126 and 00127, is open. If it is merged before the release, its migrations join the `--hold=00118,00123` run: they only add tables and policies, and the old Hub never touches them.
+**Status, 11 Nov 2026:**
+- #10, #12–#24 and #26–#35 are **merged into `main` as `12cbfab`** (owner-approved).
+- [PR #36](https://github.com/kamalauction-lgtm/agmatchhub/pull/36) is merged as `3d6c67a`. It covers screens 2, 8 and 14, with migrations 00126 and 00127.
+- The DEMO seed (#37) and the acceptance checklist (#38) followed, and CI on `main` is green.
+- Staging runs `3d6c67a` as version `562c2512`, with schema `00127`.
+- **Nothing is in production.**
+
+00126 and 00127 join the `--hold=00118,00123` run: they only add tables and policies, and the old Hub never touches them.
 - Every merge and the production release need the owner's approval.
 - This brief covers the stacked Admin PRs only.
 - PR #25 (photo metadata scan) is separate; see the last section.
@@ -33,6 +40,7 @@
 | 22 | #33 | `0a8bbb1` | P1-f-1: permissions and security (screen 13): D14, audit, search scope | 00122, **00123**, 00124 | ✓ ✓ |
 | 23 | #34 | `f906eeb` | P1-g-1: create and edit agencies (screen 11) | 00125 | ✓ ✓ |
 | 24 | #35 | `00aed85` | P1-h-1: AI Workforce Office view in admin; costs shown only when real (screen 12) | — | ✓ ✓ |
+| 25 | #36 | `3d6c67a` | P2: acquisition pipeline, sources and mapping, handover report (screens 2, 8, 14); Import Assistant contract | 00126, 00127 | ✓ ✓ |
 
 - The CI results above were read from GitHub on 11 Nov.
 - Every Admin PR's `rls` job ran the full suite against staging; for example, 77 of 78 files at #26 before the documented rehearsal re-run, then green.
@@ -101,7 +109,7 @@ Merge in the order of the table, **with merge commits, not squash**. Each PR's b
 
 ### 4.1 Read-only baseline
 Run `npm run status:production -w @pg/db` and record the following:
-- applied through `00102`, with `00103`–`00125` pending;
+- applied through `00102`, with `00103`–`00127` pending;
 - the current Hub Worker version (`npx wrangler deployments list --name ag-matchhub`), which is the rollback target;
 - the marketplace Worker version, the rollback target for the marketplace deploy;
 - the photo scan for both public buckets: listing photos 0 files; profile photos 2 files, both clean.
@@ -111,10 +119,12 @@ From the merged `main`, build and verify the bundle using the deploy procedure's
 
 ### 4.3 Migrate everything except 00118
 ```bash
-node scripts/db-migrate.mjs --env=production --hold=00118,00123 --status   # expect 00118 and 00123 HELD; 00125 pending
+node scripts/db-migrate.mjs --env=production --hold=00118,00123 --status   # expect 00118 and 00123 HELD; 00127 pending
 node scripts/db-migrate.mjs --env=production --hold=00118,00123
 ```
-- This applies `00103`–`00117`, `00119`–`00122`, `00124` and `00125`. I ran `--status --hold=00118` read-only against production on 11 Nov and it listed exactly the plan of that time; re-run it with both holds.
+- This applies `00103`–`00117`, `00119`–`00122` and `00124`–`00127`.
+- I ran `--status --hold=00118` read-only against production on 11 Nov, before #36 was merged. It listed exactly the plan of that time.
+- Re-run it with both holds, and expect 00126 and 00127 to appear too.
 - **Why hold 00118 and 00123:**
   - the new Hub pages read `import_batches.agent_review_state`, so 00119 must exist before the new Hub is live;
   - 00118 removes the agents' direct writes to the profile bucket, which the **old** Hub's profile upload still uses. It must come after the deploy.
@@ -215,7 +225,7 @@ Only 00118 and 00123 should be pending. Then check read-only:
   - **Result: 5/6, with database evidence for the wizard step.** Staging was then restored: 00118 and 00123 were re-applied through the runner, the 2.0 Hub was redeployed (version `69d58f88`), and the result was checked. Schema is at `00125` with 23 stack migrations, `anon` cannot execute `log_audit`, and the profile-photo check passes 16/16.
   - **Still to do, at the next controlled staging rehearsal:** submit the old wizard **through its real form in a browser**, with a photo, as an Indonesian agent, against the same pre-deploy schema.
     - If it fails, record the exact error from the Worker log (`wrangler tail`) and its effect on the release order.
-    - If the old wizard cannot create listings while 00103–00117, 00119–00122, 00124 and 00125 are applied, the 4.3 to 4.4 window becomes a short **listing-creation outage**. The mitigation would then be to apply 4.3 and deploy 4.4 back to back with a pre-built bundle (already the plan), or to pause agent listing creation for those minutes.
+    - If the old wizard cannot create listings while 00103–00117, 00119–00122 and 00124–00127 are applied, the 4.3 to 4.4 window becomes a short **listing-creation outage**. The mitigation would then be to apply 4.3 and deploy 4.4 back to back with a pre-built bundle (already the plan), or to pause agent listing creation for those minutes.
 - **Production Images behaviour:** the account entitlement is proven through staging, which uses the same Cloudflare account. The production binding, the first transform and the shared-quota headroom can only be verified after deployment; see section 2a.
 - **Shared staging:**
   - each PR's CI `rls` job runs against the shared staging database. Rehearsals that change the schema must not overlap a CI run; one did on 11 Nov and was re-run;

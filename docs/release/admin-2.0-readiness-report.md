@@ -1,10 +1,11 @@
 # Admin Platform 2.0: readiness report and open decisions
 
 **11 Nov 2026, updated after the merge.**
-- `main` at `12cbfab` holds #10–#35, and its CI is green.
-- [PR #36](https://github.com/kamalauction-lgtm/agmatchhub/pull/36) builds screens 2, 8 and 14 and the Import Assistant contract.
+- `main` holds #10–#38, and its CI is green.
+- [PR #36](https://github.com/kamalauction-lgtm/agmatchhub/pull/36), merged as `3d6c67a`, built screens 2, 8 and 14 and the Import Assistant contract.
+- Staging runs that commit as version `562c2512`, with DEMO data for MY and ID.
 - The staging acceptance checklist is `docs/release/admin-2.0-acceptance-checklist.md`.
-- **Status:** prepared, nothing merged or in production. Merge and production deploy are **two separate owner approvals**.
+- **Status:** merged to `main`; **nothing is in production**. Merge and production deploy are **two separate owner approvals**.
 - **Sources:** the 14-screen tracker (`docs/design/admin-platform-2.0-review-and-proposal.md`), the release brief (`docs/release/admin-2.0-release-brief.md`), and the read-only route sweep of all 14 screens on staging (global admin, Malaysia-only country admin and agent).
 
 ## 1. The 14 screens
@@ -12,22 +13,22 @@
 | # | Screen | Status | PRs | Staging evidence |
 |---|---|---|---|---|
 | 1 | Command Centre | **Ready for acceptance** | #10, #32 | Queue order equals an independent ranking; no cross-country items; nine-workspace nav (8/8) |
-| 2 | Agent Acquisition Pipeline | **Blocked: owner decision** | — | `/admin/agents/pipeline` does not exist (404). Not built. |
+| 2 | Agent Acquisition Pipeline | Ready, **except storing real prospects (D-6 retention)** | #36 | Locked until a country has a retention period; country-scoped (RLS 5/5; end to end 17/17); DEMO data 18/18 |
 | 3 | Invitation and Onboarding | Ready, **except steps held by counsel** | #13 | Invitations scoped and audited (P0-b tests); route 200 |
 | 4 | Agent 360 | **Ready for acceptance** | #31 | Suspend and restore, panels, notifications, queue search (16/16; 5 RLS tests) |
 | 5 | Import Workbench | Ready, **except steps held by counsel** | #14, #15 | Admin prepares, agent commits (20/20) |
 | 6 | Batch Review | **Ready for acceptance** | #21, #28 | Bulk skip, restore and edit (13/13) |
 | 7 | Photo Quality Centre | Ready, **except AI review (provider)** | #15, #16, #19, #20, #21, #23, #24, #26 | Private intake, $0 processor, keep-out, profile photos (multiple checks, all green) |
-| 8 | Source Mapping and Sync | **Blocked: P2 and legal review** | — | `/admin/sources` does not exist (404). Not built. |
+| 8 | Source Mapping and Sync | Ready, **except re-sync (D-7 legal review)** | #36 | Register, map and terms review; terms need `legal.publish` (RLS 3/3; 17/17) |
 | 9 | Moderation | **Ready for acceptance** | #21, #29 | Reason codes, bulk, rights hold (35/35); buyer reports (17/17) |
 | 10 | Leads and Requests Ops | **Ready for acceptance** | #12, #29, #30 | Lead response view (9/9, plus 8/8 with synthetic MY and ID leads) |
 | 11 | Commercial and Growth | **Ready for acceptance** | #32 (nav), #33 (D14), #34 | Agencies created and edited within country, cross-country refused, MYR shown (9/9; 3 RLS tests) |
 | 12 | AI Workforce | Ready, **except provider-dependent items** | #35 | Admin Office view in admin scope; agent Office unchanged; costs "not yet available" (8/8) |
 | 13 | Countries and permissions | Ready, **except held location items** | #10, #12, #33 | D14, audit hardening, search scope (9/9; 5 RLS tests) |
-| 14 | Handover and notifications | Ready, **except reporting (P2-b, deferred)** | #22, #23, #27 | Change requests, Handover, lock (20/20, 11/11) |
+| 14 | Handover and notifications | **Ready for acceptance** | #22, #23, #27, #36 | Change requests, Handover, lock (20/20, 11/11); report with batch times, activation and trends (17/17) |
 
 **CI:**
-- `checks` and `rls` are green on every Admin PR, #10 and #12 to #35.
+- `checks` and `rls` are green on every Admin PR, #10, #12 to #24 and #26 to #38.
 - #25 is a separate PR against `main`. Its `rls` job fails only because shared staging is ahead of `main`. It has no dependency on the Admin release.
 
 **Route sweep:** every built screen loads for the global admin. The Malaysia-only admin is turned away exactly where they lack the capability (commercial, AI, platform, audit, legal), and gets 404 on another country's request. Agents are redirected. No screen errors.
@@ -73,7 +74,7 @@
 - **Approval 2, production release:** brief §4.
   1. Baseline.
   2. Pre-built bundle.
-  3. `db-migrate --hold=00118,00123`, applying 00103–00117, 00119–00122, 00124 and 00125.
+  3. `db-migrate --hold=00118,00123`, applying 00103–00117, 00119–00122 and 00124–00127.
   4. Hub deploy.
   5. Marketplace deploy.
   6. Checks.
