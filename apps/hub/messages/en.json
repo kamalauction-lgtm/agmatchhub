@@ -50,7 +50,12 @@
       "weak_password": "Password must be at least 8 characters.",
       "email_in_use": "An account with this email may already exist.",
       "generic": "Something went wrong. Please try again."
-    }
+    },
+    "activateTitle": "Activate your account",
+    "activateBody": "Continue to choose your password. You will be signed in straight after.",
+    "activateCta": "Continue",
+    "activateExpired": "This activation link has expired or was already used. Ask your administrator to send a new one.",
+    "welcomeTitle": "Choose your password"
   },
   "dashboard": {
     "title": "Agent dashboard",
@@ -3087,8 +3092,28 @@
       "denied": "That change was refused.",
       "invalid": "Something in that form was not valid.",
       "not_found": "That grant no longer exists.",
-      "unknown_role": "That role does not exist."
-    }
+      "unknown_role": "That role does not exist.",
+      "registered": "Account created and activation email sent.",
+      "activation_resent": "They had not activated yet. A new activation email has been sent.",
+      "registered_email_failed": "Account created, but the email could not be sent. Submit the same email again to retry.",
+      "registered_role_failed": "Account created and email sent, but the role was not granted. Grant it below.",
+      "email_registered": "That email already has an active account. Grant them a role below instead.",
+      "register_failed": "The account could not be created. Nothing was changed."
+    },
+    "registerTitle": "Register a person",
+    "registerIntro": "Creates the account now, so they do not have to sign up first, and can give them a role in the same step. They receive an email to activate the account by choosing their own password; until then they cannot sign in. Submitting the same email again re-sends the email if they have not activated yet.",
+    "registerName": "Full name",
+    "registerEmail": {
+      "subject": "Your account is ready: set your password",
+      "heading": "Welcome, {name}",
+      "body": "An administrator has created an account for you. Choose your password to activate it. If the link has expired, ask your administrator to send it again.",
+      "cta": "Activate my account"
+    },
+    "registerLanguage": "Email language",
+    "registerNoRole": "No role yet",
+    "registerCta": "Register and send email",
+    "registerAgentsHint": "Agents are invited from Agents → Invitations, not registered here.",
+    "registerEmailField": "Email"
   },
   "growth": {
     "title": "My Growth",

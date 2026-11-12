@@ -50,7 +50,12 @@
       "weak_password": "Kata sandi minimal 8 karakter.",
       "email_in_use": "Akun dengan email ini mungkin sudah ada.",
       "generic": "Terjadi kesalahan. Silakan coba lagi."
-    }
+    },
+    "activateTitle": "Aktifkan akun Anda",
+    "activateBody": "Lanjutkan untuk memilih kata sandi. Anda akan langsung masuk setelahnya.",
+    "activateCta": "Lanjutkan",
+    "activateExpired": "Tautan aktivasi ini sudah kedaluwarsa atau sudah digunakan. Minta administrator Anda mengirim yang baru.",
+    "welcomeTitle": "Pilih kata sandi Anda"
   },
   "dashboard": {
     "title": "Dasbor agen",
@@ -3087,8 +3092,28 @@
       "denied": "Perubahan itu ditolak.",
       "invalid": "Ada isian yang tidak valid.",
       "not_found": "Pemberian peran itu sudah tidak ada.",
-      "unknown_role": "Peran itu tidak ada."
-    }
+      "unknown_role": "Peran itu tidak ada.",
+      "registered": "Akun dibuat dan email aktivasi terkirim.",
+      "activation_resent": "Akun belum diaktifkan. Email aktivasi baru telah dikirim.",
+      "registered_email_failed": "Akun dibuat, tetapi email gagal dikirim. Kirim email yang sama lagi untuk mencoba ulang.",
+      "registered_role_failed": "Akun dibuat dan email terkirim, tetapi peran tidak diberikan. Berikan di bawah.",
+      "email_registered": "Email itu sudah memiliki akun aktif. Berikan peran di bawah.",
+      "register_failed": "Akun tidak dapat dibuat. Tidak ada yang diubah."
+    },
+    "registerTitle": "Daftarkan seseorang",
+    "registerIntro": "Membuat akun sekarang, jadi mereka tidak perlu mendaftar sendiri, dan dapat langsung diberi peran. Mereka menerima email untuk mengaktifkan akun dengan memilih kata sandi sendiri; sebelum itu mereka tidak bisa masuk. Mengirim email yang sama lagi akan mengirim ulang email jika belum diaktifkan.",
+    "registerName": "Nama lengkap",
+    "registerEmail": {
+      "subject": "Akun Anda siap: atur kata sandi Anda",
+      "heading": "Selamat datang, {name}",
+      "body": "Seorang administrator telah membuatkan akun untuk Anda. Pilih kata sandi untuk mengaktifkannya. Jika tautan sudah kedaluwarsa, minta administrator Anda mengirimkannya lagi.",
+      "cta": "Aktifkan akun saya"
+    },
+    "registerLanguage": "Bahasa email",
+    "registerNoRole": "Belum ada peran",
+    "registerCta": "Daftarkan dan kirim email",
+    "registerAgentsHint": "Agen diundang melalui Agen → Undangan, bukan didaftarkan di sini.",
+    "registerEmailField": "Email"
   },
   "growth": {
     "title": "Pertumbuhan saya",

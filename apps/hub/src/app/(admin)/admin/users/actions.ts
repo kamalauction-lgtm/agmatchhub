@@ -5,7 +5,10 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability } from "@/lib/authz";
+import { getTranslations } from "next-intl/server";
 import { logAudit } from "@/lib/audit";
+import { sendEmail } from "@/lib/email";
+import { createOrRefreshActivation } from "@/lib/admin/register-person";
 
 /**
  * Granting and revoking roles.
@@ -125,6 +128,93 @@ export async function revokeRole(formData: FormData): Promise<void> {
 
   revalidatePath("/admin/users");
   redirectTo("revoked");
+}
+
+const registerSchema = z.object({
+  fullName: z.string().trim().min(2).max(80),
+  email: z.string().trim().toLowerCase().email().max(200),
+  roleKey: z.enum(["none", "admin", "country_admin", "compliance_admin", "super_admin"]),
+  countryCodes: z.string().trim().max(200).optional(),
+  language: z.enum(["id", "en", "ms"]).default("id"),
+});
+
+/**
+ * Super admin registers a person directly (owner request, 12 Nov 2026).
+ *
+ * The account exists straight away and can be given a role in the same step,
+ * so the person does not have to sign up first. They still get an email and
+ * activate the account themselves by choosing a password; until then they
+ * cannot sign in. Agents are not registered here: they go through
+ * Invitations, which carries the activation declarations (D-1).
+ */
+export async function registerPerson(formData: FormData): Promise<void> {
+  await requireCapability("roles.manage");
+  const parsed = registerSchema.safeParse(Object.fromEntries(formData.entries()));
+  if (!parsed.success) redirectTo("invalid");
+  const { fullName, email, roleKey, countryCodes, language } = parsed.data;
+
+  const countries = parseCountries(countryCodes);
+  if (countries.length && roleKey !== "country_admin") redirectTo("scope_not_supported");
+
+  const supabase = await createClient();
+  let roleId: string | null = null;
+  if (roleKey !== "none") {
+    const { data: role } = await supabase.from("roles").select("id").eq("key", roleKey).maybeSingle();
+    if (!role) redirectTo("unknown_role");
+    roleId = role.id;
+  }
+
+  const result = await createOrRefreshActivation(email, fullName);
+  if (!result.ok) redirectTo(result.reason === "email_registered" ? "email_registered" : "register_failed");
+
+  // Written with the admin's own session, so the 00060 guards still apply.
+  // 23505: they already hold it (a re-send) — not a failure, and not a new grant.
+  let roleGranted = false;
+  let roleFailed = false;
+  if (roleId) {
+    const { error } = await supabase.from("user_roles").insert({
+      user_id: result.userId,
+      role_id: roleId,
+      country_codes: countries,
+    });
+    if (error && error.code !== "23505") {
+      console.error("registerPerson role grant failed", error.code, error.message, error.details);
+      roleFailed = true;
+    } else if (!error) {
+      roleGranted = true;
+    }
+  }
+
+  const t = await getTranslations({ locale: language, namespace: "adminUsers.registerEmail" });
+  const sent = await sendEmail({
+    to: email,
+    subject: t("subject"),
+    heading: t("heading", { name: fullName }),
+    body: t("body"),
+    ctaLabel: t("cta"),
+    ctaUrl: result.link,
+  });
+
+  await logAudit({
+    action: result.created ? "user.registered_by_admin" : "user.activation_resent",
+    entityType: "user",
+    entityId: result.userId,
+    next: { role: roleKey === "none" ? null : roleKey, country_codes: countries, email_sent: sent },
+    result: sent ? "success" : "failure",
+  });
+  if (roleGranted) {
+    await logAudit({
+      action: "role.granted",
+      entityType: "user",
+      entityId: result.userId,
+      next: { role: roleKey, country_codes: countries },
+    });
+  }
+
+  revalidatePath("/admin/users");
+  if (roleFailed) redirectTo("registered_role_failed");
+  if (!sent) redirectTo("registered_email_failed");
+  redirectTo(result.created ? "registered" : "activation_resent");
 }
 
 /** `redirect` throws, so this never returns — typed that way so callers know. */

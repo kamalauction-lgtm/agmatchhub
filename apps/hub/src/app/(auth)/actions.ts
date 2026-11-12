@@ -108,3 +108,30 @@ export async function resetPassword(formData: FormData) {
   if (error) redirect("/reset-password?error=generic");
   redirect("/dashboard");
 }
+
+/**
+ * Activation of an account a super admin registered (/activate). The link's
+ * one-time token is used only here, on a button press, never on the GET that
+ * opens the page, so a mail scanner fetching the link does not spend it.
+ * Success signs the person in; they then choose their password.
+ */
+const activateSchema = z.object({
+  tokenHash: z.string().min(10).max(200),
+  type: z.enum(["invite", "recovery"]),
+});
+
+export async function activateAccount(formData: FormData) {
+  const parsed = activateSchema.safeParse({
+    tokenHash: formData.get("tokenHash"),
+    type: formData.get("type"),
+  });
+  if (!parsed.success) redirect("/activate?error=expired");
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({
+    type: parsed.data.type,
+    token_hash: parsed.data.tokenHash,
+  });
+  if (error) redirect("/activate?error=expired");
+  redirect("/reset-password?welcome=1");
+}
