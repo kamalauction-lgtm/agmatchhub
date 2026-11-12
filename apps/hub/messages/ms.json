@@ -50,7 +50,12 @@
       "weak_password": "Kata laluan mestilah sekurang-kurangnya 8 aksara.",
       "email_in_use": "Akaun dengan e-mel ini mungkin sudah wujud.",
       "generic": "Berlaku ralat. Sila cuba lagi."
-    }
+    },
+    "activateTitle": "Aktifkan akaun anda",
+    "activateBody": "Teruskan untuk memilih kata laluan. Anda akan log masuk sejurus selepas itu.",
+    "activateCta": "Teruskan",
+    "activateExpired": "Pautan pengaktifan ini telah tamat tempoh atau sudah digunakan. Minta pentadbir anda menghantar yang baharu.",
+    "welcomeTitle": "Pilih kata laluan anda"
   },
   "dashboard": {
     "title": "Papan pemuka ejen",
@@ -3087,8 +3092,28 @@
       "denied": "Perubahan itu ditolak.",
       "invalid": "Ada isian yang tidak sah.",
       "not_found": "Pemberian peranan itu sudah tiada.",
-      "unknown_role": "Peranan itu tidak wujud."
-    }
+      "unknown_role": "Peranan itu tidak wujud.",
+      "registered": "Akaun dicipta dan e-mel pengaktifan dihantar.",
+      "activation_resent": "Akaun belum diaktifkan. E-mel pengaktifan baharu telah dihantar.",
+      "registered_email_failed": "Akaun dicipta, tetapi e-mel gagal dihantar. Hantar e-mel yang sama sekali lagi untuk mencuba semula.",
+      "registered_role_failed": "Akaun dicipta dan e-mel dihantar, tetapi peranan tidak diberikan. Berikan di bawah.",
+      "email_registered": "E-mel itu sudah mempunyai akaun aktif. Berikan peranan di bawah.",
+      "register_failed": "Akaun tidak dapat dicipta. Tiada apa-apa diubah."
+    },
+    "registerTitle": "Daftarkan seseorang",
+    "registerIntro": "Mencipta akaun sekarang, jadi mereka tidak perlu mendaftar sendiri, dan boleh diberi peranan serta-merta. Mereka menerima e-mel untuk mengaktifkan akaun dengan memilih kata laluan sendiri; sebelum itu mereka tidak boleh log masuk. Menghantar e-mel yang sama sekali lagi akan menghantar semula e-mel jika belum diaktifkan.",
+    "registerName": "Nama penuh",
+    "registerEmail": {
+      "subject": "Akaun anda sedia: tetapkan kata laluan anda",
+      "heading": "Selamat datang, {name}",
+      "body": "Seorang pentadbir telah mencipta akaun untuk anda. Pilih kata laluan untuk mengaktifkannya. Jika pautan telah tamat tempoh, minta pentadbir anda menghantarnya semula.",
+      "cta": "Aktifkan akaun saya"
+    },
+    "registerLanguage": "Bahasa e-mel",
+    "registerNoRole": "Tiada peranan lagi",
+    "registerCta": "Daftar dan hantar e-mel",
+    "registerAgentsHint": "Ejen dijemput melalui Ejen → Jemputan, bukan didaftarkan di sini.",
+    "registerEmailField": "E-mel"
   },
   "growth": {
     "title": "Pertumbuhan saya",
