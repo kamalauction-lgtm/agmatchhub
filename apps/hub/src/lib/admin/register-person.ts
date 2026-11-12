@@ -33,45 +33,45 @@ export function activationUrl(tokenHash: string, type: "invite" | "recovery"): s
 export async function createOrRefreshActivation(email: string, fullName: string): Promise<ActivationLink> {
   const svc = createServiceClient();
 
+  // Look first: Supabase also answers an invite for an existing, unconfirmed
+  // account, which would make a re-send look like a new registration.
+  // ilike: older rows keep the case the person typed. Escape its wildcards.
+  const pattern = email.replace(/[\\%_]/g, (c) => "\\" + c);
+  const { data: row } = await svc
+    .from("users_private").select("user_id").ilike("email", pattern).limit(1).maybeSingle();
+
+  if (row?.user_id) {
+    const { data: existing } = await svc.auth.admin.getUserById(row.user_id);
+    if (!existing?.user || existing.user.last_sign_in_at) return { ok: false, reason: "email_registered" };
+    const recovery = await svc.auth.admin.generateLink({ type: "recovery", email: existing.user.email ?? email });
+    if (recovery.error || !recovery.data.properties?.hashed_token) {
+      console.error("registerPerson: generateLink(recovery) failed", recovery.error?.code, recovery.error?.message);
+      return { ok: false, reason: "failed" };
+    }
+    return {
+      ok: true,
+      created: false,
+      userId: row.user_id,
+      link: activationUrl(recovery.data.properties.hashed_token, "recovery"),
+    };
+  }
+
   const invite = await svc.auth.admin.generateLink({
     type: "invite",
     email,
     options: { data: { display_name: fullName } },
   });
-  if (!invite.error && invite.data.user && invite.data.properties?.hashed_token) {
-    return {
-      ok: true,
-      created: true,
-      userId: invite.data.user.id,
-      link: activationUrl(invite.data.properties.hashed_token, "invite"),
-    };
-  }
-
-  const exists =
-    invite.error?.code === "email_exists" ||
-    /already (been )?registered/i.test(invite.error?.message ?? "");
-  if (!exists) {
-    console.error("registerPerson: generateLink(invite) failed", invite.error?.code, invite.error?.message);
-    return { ok: false, reason: "failed" };
-  }
-
-  // ilike: older rows keep the case the person typed. Escape its wildcards.
-  const pattern = email.replace(/[\\%_]/g, (c) => "\\" + c);
-  const { data: row } = await svc
-    .from("users_private").select("user_id").ilike("email", pattern).limit(1).maybeSingle();
-  if (!row?.user_id) return { ok: false, reason: "email_registered" };
-  const { data: existing } = await svc.auth.admin.getUserById(row.user_id);
-  if (!existing?.user || existing.user.last_sign_in_at) return { ok: false, reason: "email_registered" };
-
-  const recovery = await svc.auth.admin.generateLink({ type: "recovery", email });
-  if (recovery.error || !recovery.data.properties?.hashed_token) {
-    console.error("registerPerson: generateLink(recovery) failed", recovery.error?.code, recovery.error?.message);
-    return { ok: false, reason: "failed" };
+  if (invite.error || !invite.data.user || !invite.data.properties?.hashed_token) {
+    const exists =
+      invite.error?.code === "email_exists" ||
+      /already (been )?registered/i.test(invite.error?.message ?? "");
+    if (!exists) console.error("registerPerson: generateLink(invite) failed", invite.error?.code, invite.error?.message);
+    return { ok: false, reason: exists ? "email_registered" : "failed" };
   }
   return {
     ok: true,
-    created: false,
-    userId: row.user_id,
-    link: activationUrl(recovery.data.properties.hashed_token, "recovery"),
+    created: true,
+    userId: invite.data.user.id,
+    link: activationUrl(invite.data.properties.hashed_token, "invite"),
   };
 }

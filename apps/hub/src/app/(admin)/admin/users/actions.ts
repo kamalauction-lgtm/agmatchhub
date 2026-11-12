@@ -168,7 +168,9 @@ export async function registerPerson(formData: FormData): Promise<void> {
   if (!result.ok) redirectTo(result.reason === "email_registered" ? "email_registered" : "register_failed");
 
   // Written with the admin's own session, so the 00060 guards still apply.
+  // 23505: they already hold it (a re-send) — not a failure, and not a new grant.
   let roleGranted = false;
+  let roleFailed = false;
   if (roleId) {
     const { error } = await supabase.from("user_roles").insert({
       user_id: result.userId,
@@ -177,6 +179,7 @@ export async function registerPerson(formData: FormData): Promise<void> {
     });
     if (error && error.code !== "23505") {
       console.error("registerPerson role grant failed", error.code, error.message, error.details);
+      roleFailed = true;
     } else if (!error) {
       roleGranted = true;
     }
@@ -209,7 +212,7 @@ export async function registerPerson(formData: FormData): Promise<void> {
   }
 
   revalidatePath("/admin/users");
-  if (roleId && !roleGranted) redirectTo("registered_role_failed");
+  if (roleFailed) redirectTo("registered_role_failed");
   if (!sent) redirectTo("registered_email_failed");
   redirectTo(result.created ? "registered" : "activation_resent");
 }
