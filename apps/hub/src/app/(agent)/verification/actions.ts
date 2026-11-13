@@ -6,15 +6,16 @@ import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { logAudit } from "@/lib/audit";
 import { notifyAdmins } from "@/lib/notifications";
+import { LICENCE_TYPE_RE, licenceTypesFor } from "@/lib/countries/licence";
 
 const fieldsSchema = z.object({
   fullLegalName: z.string().trim().min(3).max(160),
   agencyName: z.string().trim().min(2).max(160),
   agencyRegistrationNumber: z.string().trim().max(80).optional().or(z.literal("")),
-  licenceType: z.enum(["REN", "REA", "PEA", "AGEN_PROPERTI", "BROKER", "OTHER"]),
+  licenceType: z.string().regex(LICENCE_TYPE_RE),
   licenceNumber: z.string().trim().min(2).max(80),
   licenceExpiry: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal("")),
-  countryCode: z.string().length(2),
+  countryCode: z.string().regex(/^[A-Z]{2}$/),
   stateRegion: z.string().trim().min(2).max(120),
   city: z.string().trim().min(2).max(120),
   categories: z.array(z.string()).min(1),
@@ -74,11 +75,21 @@ export async function submitVerification(formData: FormData) {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("agent_status")
+    .select("agent_status, country_code")
     .eq("id", user.id)
     .single();
   if (!profile || !SUBMITTABLE.has(profile.agent_status)) {
     redirect("/verification?error=not_allowed");
+  }
+
+  // The profile's country, once set, is the one that counts (admin scoping
+  // reads it); the form cannot move an agent to another country. The licence
+  // type must be one that country offers (00128), so REN stays Malaysian.
+  const countryCode = profile.country_code ?? parsed.data.countryCode;
+  const { data: country } = await supabase
+    .from("countries").select("terminology").eq("code", countryCode).eq("active", true).maybeSingle();
+  if (!country || !licenceTypesFor(country.terminology).includes(parsed.data.licenceType)) {
+    redirect("/verification?error=invalid_fields");
   }
 
   const { data: existing } = await supabase
@@ -122,11 +133,11 @@ export async function submitVerification(formData: FormData) {
     licence_type: parsed.data.licenceType,
     licence_number: parsed.data.licenceNumber,
     licence_expiry: parsed.data.licenceExpiry || null,
-    country_code: parsed.data.countryCode,
+    country_code: countryCode,
     state_region: parsed.data.stateRegion,
     city: parsed.data.city,
     property_categories: parsed.data.categories,
-    markets_served: [parsed.data.countryCode],
+    markets_served: [countryCode],
     licence_document_path: licencePath,
     identity_document_path: identityPath,
     ...(agencyPath ? { agency_document_path: agencyPath } : {}),
@@ -148,7 +159,7 @@ export async function submitVerification(formData: FormData) {
   const service = createServiceClient();
   await service
     .from("profiles")
-    .update({ agent_status: "under_review" })
+    .update({ agent_status: "under_review", ...(profile.country_code ? {} : { country_code: countryCode }) })
     .eq("id", user.id);
 
   await logAudit({

@@ -55,7 +55,10 @@
     "activateBody": "Lanjutkan untuk memilih kata sandi. Anda akan langsung masuk setelahnya.",
     "activateCta": "Lanjutkan",
     "activateExpired": "Tautan aktivasi ini sudah kedaluwarsa atau sudah digunakan. Minta administrator Anda mengirim yang baru.",
-    "welcomeTitle": "Pilih kata sandi Anda"
+    "welcomeTitle": "Pilih kata sandi Anda",
+    "country": "Negara tempat Anda bekerja",
+    "countryChoose": "Pilih negara Anda",
+    "countryHint": "Ini menentukan jenis lisensi yang Anda lihat dan tim yang mendukung Anda."
   },
   "dashboard": {
     "title": "Dasbor agen",
@@ -250,7 +253,8 @@
       "upload_failed": "Unggahan gagal. Silakan coba lagi.",
       "save_failed": "Tidak dapat menyimpan. Silakan coba lagi.",
       "not_allowed": "Status Anda saat ini tidak mengizinkan pengajuan."
-    }
+    },
+    "countryFixedHint": "Ditetapkan saat Anda mendaftar. Hubungi admin jika perlu diubah."
   },
   "admin": {
     "badge": "Admin",

@@ -55,7 +55,10 @@
     "activateBody": "Continue to choose your password. You will be signed in straight after.",
     "activateCta": "Continue",
     "activateExpired": "This activation link has expired or was already used. Ask your administrator to send a new one.",
-    "welcomeTitle": "Choose your password"
+    "welcomeTitle": "Choose your password",
+    "country": "Country where you work",
+    "countryChoose": "Choose your country",
+    "countryHint": "This decides which licence types you see and which team supports you."
   },
   "dashboard": {
     "title": "Agent dashboard",
@@ -250,7 +253,8 @@
       "upload_failed": "Upload failed. Please try again.",
       "save_failed": "Could not save. Please try again.",
       "not_allowed": "Your current status does not allow submission."
-    }
+    },
+    "countryFixedHint": "Set when you registered. Ask an admin if it needs to change."
   },
   "admin": {
     "badge": "Admin",

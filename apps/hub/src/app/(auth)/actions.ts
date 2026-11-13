@@ -11,6 +11,8 @@ const credentialsSchema = z.object({
 
 const registerSchema = credentialsSchema.extend({
   displayName: z.string().trim().min(2).max(80),
+  // Checked again by handle_new_user (00128): only an active country is kept.
+  countryCode: z.string().regex(/^[A-Z]{2}$/),
   confirmPassword: z.string(),
 });
 
@@ -32,6 +34,7 @@ export async function signIn(formData: FormData) {
 export async function signUp(formData: FormData) {
   const parsed = registerSchema.safeParse({
     displayName: formData.get("displayName"),
+    countryCode: formData.get("countryCode"),
     email: formData.get("email"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
@@ -53,7 +56,7 @@ export async function signUp(formData: FormData) {
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      data: { display_name: parsed.data.displayName },
+      data: { display_name: parsed.data.displayName, country_code: parsed.data.countryCode },
       emailRedirectTo: process.env.AUTH_CALLBACK_URL,
     },
   });
