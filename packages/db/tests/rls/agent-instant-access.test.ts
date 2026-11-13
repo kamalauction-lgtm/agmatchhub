@@ -70,7 +70,18 @@ describe.skipIf(!hasEnv || !SERVICE)("agent instant access (00129)", () => {
     await service.from("feature_flags").update({ enabled: false }).eq("key", FLAG);
     if (props.length) await service.from("properties").delete().in("id", props);
     for (const g of grants) await service.from("user_roles").delete().eq("id", g);
-    for (const u of users) await service.auth.admin.deleteUser(u);
+    // Suspension and ban records point at both the agent and the admin who
+    // acted; they must go before the accounts or deleteUser fails.
+    if (users.length) {
+      await service.from("agent_suspensions").delete().in("agent_id", users);
+      await service.from("agent_suspensions").delete().in("suspended_by", users);
+      await service.from("agent_verifications").delete().in("user_id", users);
+      await service.from("agent_verifications").delete().in("acted_by", users);
+    }
+    for (const u of users) {
+      const { error } = await service.auth.admin.deleteUser(u);
+      if (error) console.error(`agent-instant-access cleanup: ${u}: ${error.message}`);
+    }
   });
 
   it("the approval switch exists and is off by default", async () => {
