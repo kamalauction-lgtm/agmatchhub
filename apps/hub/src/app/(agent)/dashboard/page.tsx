@@ -16,6 +16,7 @@ import { BarChart, type Series } from "@/components/admin/charts";
 import { getDashboard } from "@/lib/dashboard/brief";
 import { planFor } from "@/config/plans";
 import { ENTITLEMENT, entitlementInt } from "@/lib/entitlements";
+import { agentHasAccess } from "@/lib/agents/access";
 
 /**
  * The agent OS home (§20).
@@ -117,7 +118,10 @@ export default async function DashboardPage({
   const status = (STATUS_KEYS as readonly string[]).includes(profile?.agent_status ?? "")
     ? (profile!.agent_status as (typeof STATUS_KEYS)[number])
     : "draft";
-  const isVerified = status === "verified";
+  // "May use the platform" (00129), not the Verified badge. The name stays for
+  // the many uses below.
+  const isVerified = await agentHasAccess(supabase);
+  const hasBadge = status === "verified";
   const plan = await planFor(user.id);
 
   // Unverified agents have no inventory and no leads; skip the whole query set.
@@ -236,7 +240,7 @@ export default async function DashboardPage({
           {isVerified && rangeTabs}
         </CommandHeader>
 
-        {/* Verification gate ---------------------------------------------- */}
+        {/* No access (approval on and still waiting, or suspended) --------- */}
         {!isVerified && (
           <section className="rounded-xl border border-crimson/30 bg-crimson-soft p-6">
             <h2 className="text-lg font-semibold">{t("statusLabel")}</h2>
@@ -247,6 +251,22 @@ export default async function DashboardPage({
               className="mt-4 inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-crimson-strong"
             >
               {t("startVerification")}
+            </Link>
+          </section>
+        )}
+
+        {/* Voluntary Verified Agent badge ------------------------------------ */}
+        {isVerified && !hasBadge && (
+          <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-card px-5 py-4">
+            <div>
+              <h2 className="text-sm font-semibold">{t("badgeTitle")}</h2>
+              <p className="mt-0.5 text-sm text-muted">{t("badgeNote")}</p>
+            </div>
+            <Link
+              href="/verification"
+              className="rounded-lg border border-line px-4 py-2 text-sm font-semibold transition-colors duration-150 hover:border-crimson hover:text-crimson"
+            >
+              {t("badgeCta")}
             </Link>
           </section>
         )}

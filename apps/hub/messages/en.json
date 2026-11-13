@@ -64,7 +64,7 @@
     "title": "Agent dashboard",
     "welcome": "Welcome, {name}",
     "statusLabel": "Verification status",
-    "statusNote": "Complete your agent verification to create requirements and submit properties.",
+    "statusNote": "Your account is not active yet, or it has been paused. You will be notified when this changes.",
     "status": {
       "draft": "Profile incomplete",
       "email_verification_pending": "Email verification pending",
@@ -80,7 +80,7 @@
       "expired_licence": "Licence expired",
       "archived": "Archived"
     },
-    "startVerification": "Complete verification",
+    "startVerification": "Open verification",
     "adminConsole": "Admin console",
     "myRequests": "My requests",
     "modules": {
@@ -143,7 +143,7 @@
         "circuit_open": "Rules-only brief — AI is resting for a few minutes after errors.",
         "disabled": "Rules-only brief — AI is switched off by the platform.",
         "feature_off": "Rules-only brief — AI features are not enabled for your account yet.",
-        "unverified": "Rules-only brief — AI opens after verification.",
+        "unverified": "Rules-only brief — AI opens once your account is active.",
         "no_provider": "Rules-only brief — no AI provider is connected yet.",
         "failed": "Rules-only brief — the AI did not answer this time."
       },
@@ -205,15 +205,18 @@
       "expired": "Expired",
       "archived": "Archived",
       "paused": "Paused"
-    }
+    },
+    "badgeTitle": "Get your ✓ Verified Agent badge",
+    "badgeNote": "Optional. Verified agents earn more trust from buyers and rank higher in listing quality.",
+    "badgeCta": "Apply"
   },
   "verification": {
-    "title": "Agent verification",
-    "intro": "Provide your professional details and documents. An administrator will review your submission before you can create requirements or submit properties.",
-    "submittedNotice": "Submitted. Your verification is now under review.",
+    "title": "Verified Agent badge",
+    "intro": "Optional. Verify your licence and identity to get the ✓ Verified Agent badge on your listings, digital card and profile. You can keep using the platform while an administrator reviews it.",
+    "submittedNotice": "Submitted. An administrator will review it, and the badge appears once approved.",
     "adminNotes": "Admin notes",
     "currentStatus": "Current status",
-    "lockedNotice": "Your submission is being processed. You will be notified when the review is complete.",
+    "lockedNotice": "Your badge application is being reviewed. You will be notified when it is done.",
     "fullLegalName": "Full legal name",
     "agencyName": "Agency name",
     "agencyRegistrationNumber": "Agency registration no.",
@@ -244,7 +247,7 @@
     "identityDocument": "Identity document",
     "agencyDocument": "Agency confirmation (optional)",
     "alreadyUploaded": "already uploaded",
-    "submit": "Submit for review",
+    "submit": "Apply for the badge",
     "errors": {
       "invalid_fields": "Please check the highlighted fields and try again.",
       "missing_documents": "Licence and identity documents are required.",
@@ -338,7 +341,8 @@
       "reject": "Agent rejected.",
       "request_info": "Information requested from the agent.",
       "suspended": "Agent suspended. {n, plural, one {# live listing was} other {# live listings were}} paused.",
-      "restored": "Agent restored. {n, plural, one {# listing was} other {# listings were}} republished."
+      "restored": "Agent restored. {n, plural, one {# listing was} other {# listings were}} republished.",
+      "banned": "Agent banned. {n, plural, one {# live listing was} other {# live listings were}} paused."
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
@@ -347,7 +351,8 @@
       "reason_required": "Give a reason of at least 3 characters.",
       "already_suspended": "This agent is already suspended.",
       "not_suspended": "This agent is not suspended.",
-      "self": "You cannot suspend or restore yourself."
+      "self": "You cannot suspend or restore yourself.",
+      "already_banned": "This agent is already banned."
     },
     "overviewTitle": "Command Center",
     "allClear": "Nothing is waiting. All queues are clear.",
@@ -511,13 +516,22 @@
         "rented": "Rented",
         "withdrawn": "Withdrawn",
         "archived": "Archived"
-      }
+      },
+      "bannedNotice": "This agent is banned. Their listings are paused and they cannot work on the platform.",
+      "banTitle": "Ban this agent",
+      "banHint": "For scams. Pauses their live listings and stops all work. Unlike a suspension, it cannot be restored here.",
+      "ban": "Ban agent"
     },
     "agentQueue": {
       "search": "Search by name",
       "country": "Country",
       "allCountries": "All countries",
-      "apply": "Apply"
+      "apply": "Apply",
+      "newAgents": "New agents",
+      "window": "Joined in the last",
+      "hours": "{n} h",
+      "newHint": "New agents can use the platform straight away. Check them here and suspend or ban any that look like a scam.",
+      "joined": "Joined"
     },
     "actionQueue": {
       "title": "Action queue",
@@ -611,8 +625,8 @@
     "importListings": "Import listings",
     "growth": "My growth",
     "agentRole": "Property agent",
-    "verifiedBadge": "Verified",
-    "unverifiedBadge": "Not yet verified",
+    "verifiedBadge": "Verified Agent",
+    "unverifiedBadge": "Get verified",
     "aiWorkforce": "AI Workforce",
     "tasks": "Tasks",
     "plan": "Plan & credits"
@@ -708,7 +722,7 @@
     "detailTitle": "Requirement details",
     "edit": "Edit",
     "empty": "No requirements yet. Create your first one.",
-    "verifyFirst": "Only verified agents can create requirements.",
+    "verifyFirst": "Requirements open once your account is active.",
     "verifyLink": "Complete verification",
     "submittedNotice": "Submitted for admin approval. You will see the secure share link here once approved.",
     "amendmentRequired": "Amendment required",
@@ -1875,7 +1889,7 @@
         "circuit_open": "Drafted without AI — AI is resting for a few minutes after errors.",
         "disabled": "Drafted without AI — AI is switched off by the platform.",
         "feature_off": "Drafted without AI — AI features are not enabled for your account yet.",
-        "unverified": "Drafted without AI — AI opens after verification.",
+        "unverified": "Drafted without AI — AI opens once your account is active.",
         "no_provider": "Drafted without AI — no AI provider is connected yet.",
         "failed": "Drafted without AI — the AI did not answer this time."
       },
@@ -2125,7 +2139,7 @@
         "circuit_open": "Drafted without AI — AI is resting for a few minutes after errors.",
         "disabled": "Drafted without AI — AI is switched off by the platform.",
         "feature_off": "Drafted without AI — AI features are not enabled for your account yet.",
-        "unverified": "Drafted without AI — AI opens after verification.",
+        "unverified": "Drafted without AI — AI opens once your account is active.",
         "no_provider": "Drafted without AI — no AI provider is connected yet.",
         "failed": "Drafted without AI — the AI did not answer this time."
       },
@@ -2490,7 +2504,7 @@
         "circuit_open": "Written without AI — AI is resting for a few minutes after errors.",
         "disabled": "Written without AI — AI is switched off by the platform.",
         "feature_off": "Written without AI — AI features are not enabled for your account yet.",
-        "unverified": "Written without AI — AI opens after verification.",
+        "unverified": "Written without AI — AI opens once your account is active.",
         "no_provider": "Written without AI — no AI provider is connected yet.",
         "failed": "Written without AI — the AI did not answer this time."
       }
@@ -3754,7 +3768,7 @@
     "intro": "Your AI colleagues. Each one works inside a screen you already use — it drafts, ranks and reminds; you decide and send.",
     "liveCount": "{count, plural, =0 {None live yet} one {1 live} other {# live}}",
     "quota": "{remaining} of {total} AI tasks left this month",
-    "verifyFirst": "AI roles start working once your account is verified.",
+    "verifyFirst": "AI roles start working once your account is active.",
     "verifyLink": "Complete verification",
     "status": {
       "live": "Live",
@@ -4398,7 +4412,7 @@
       "circuit_open": "Without AI — AI is resting for a few minutes after errors.",
       "disabled": "Without AI — AI is switched off by the platform.",
       "feature_off": "Without AI — AI features are not enabled for your account yet.",
-      "unverified": "Without AI — AI opens after verification.",
+      "unverified": "Without AI — AI opens once your account is active.",
       "no_provider": "Without AI — no AI provider is connected yet.",
       "failed": "Without AI — the AI did not answer this time."
     },
@@ -4597,7 +4611,7 @@
     "review": {
       "title": "Performance Reviewer",
       "intro": "Your last seven days against the seven before — your own past first. Peers appear only as anonymised medians, and only when at least five were active.",
-      "verifyFirst": "The weekly review starts once your account is verified.",
+      "verifyFirst": "The weekly review starts once your account is active.",
       "again": "Write it again",
       "numbersOnly": "The numbers are below. The written insight needs an AI task.",
       "metric": "Metric",

@@ -11,6 +11,7 @@ import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { submitProperty } from "./actions";
 import { FormDraftGuard } from "@/components/forms/draft-guard";
+import { agentHasAccess } from "@/lib/agents/access";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -76,9 +77,7 @@ export default async function SubmitPropertyPage({
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect(`/login?next=${encodeURIComponent(`/r/${token}/submit`)}`);
-  const { data: profile } = await supabase
-    .from("profiles").select("agent_status").eq("id", user.id).single();
-  if (profile?.agent_status !== "verified") redirect("/verification");
+  if (!(await agentHasAccess(supabase))) redirect("/dashboard");
 
   const { data: request } = await service
     .from("property_requests")
