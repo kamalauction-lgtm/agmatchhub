@@ -71,3 +71,23 @@
 - **Not yet verified on production:**
   - an email delivered to a real inbox, and how it looks;
   - how long the activation link stays valid.
+
+## Follow-up release, 13 Nov 2026: country at signup; licence types per country
+
+**Approved by the owner in chat ("Yes, release it"), 13 Nov 2026.**
+
+- **Code:** PR #46, merged as `48fe50a`. CI (checks and the full RLS suite on staging) passed.
+- **Migration:** `00128_signup_country_licence.sql` applied to production at 01:07 UTC, after staging. Production is at **00128** (128 applied).
+- **Hub:** deployed as **`145de9f6-cbdd-4355-9b5d-75132ef9f434`**; build target verified as `jokyyhvtahiypuzmfydp`. **Rollback target: `0e4ad37f`.** To roll back the migration, restore `handle_new_user` from 00001 and drop `trg_profiles_country_guard` and `guard_profile_country()`.
+- **Production checks:**
+  - login 200;
+  - `/register` offered AE, ID and MY at release. The UAE was switched off afterwards on the owner's decision (audited as `country.updated`), so it now offers **ID and MY**;
+  - `licence_fields` are MY REN/REA/PEA and ID AGEN_PROPERTI/BROKER;
+  - the guard trigger is present and `handle_new_user` reads the signup country;
+  - the backfill filled 3 profiles: profiles without a country went from 11 to 8 of 12.
+- **Staging before release:**
+  - RLS test `signup-country` 5/5, including the negative test: an agent cannot move or clear their country;
+  - end to end 8/8.
+- **Not yet verified:**
+  - a real signup through the form, end to end (staging's auth email rate limit refused the confirmation email during testing);
+  - the 8 profiles still without a country choose one on Verification.

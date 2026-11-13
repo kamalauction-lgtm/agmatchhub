@@ -182,6 +182,22 @@ export async function suspendAgent(formData: FormData) {
   redirect(`/admin/agents/${p.data.userId}?done=suspended&n=${r?.listings_paused ?? 0}`);
 }
 
+/**
+ * Ban an agent (00129): a permanent stop for scams. Same effects as a
+ * suspension (listings paused, writes blocked) but admin_restore_agent will not
+ * undo it. Country-scoped and audited in the database.
+ */
+export async function banAgent(formData: FormData) {
+  const p = suspendSchema.safeParse({ userId: formData.get("userId"), reason: formData.get("reason") });
+  if (!p.success) redirect(`/admin/agents/${String(formData.get("userId") ?? "")}?error=reason_required`);
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_ban_agent", { p_agent: p.data.userId, p_reason: p.data.reason });
+  const r = data as { ok?: boolean; error?: string; listings_paused?: number } | null;
+  if (error || !r?.ok) redirect(`/admin/agents/${p.data.userId}?error=${r?.error ?? "save_failed"}`);
+  await pushCopy(p.data.userId, "agent.suspended");
+  redirect(`/admin/agents/${p.data.userId}?done=banned&n=${r?.listings_paused ?? 0}`);
+}
+
 export async function restoreAgent(formData: FormData) {
   const p = restoreSchema.safeParse({ userId: formData.get("userId"), note: formData.get("note") ?? "" });
   if (!p.success) redirect(`/admin/agents/${String(formData.get("userId") ?? "")}?error=save_failed`);

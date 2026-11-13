@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { loadWorkforceModels, providerKeyPresent } from "./workforce-status";
 import { buildOffice, type JobRow, type OfficeData, type PersonaRow, type RoleRow, type TaskRow } from "./office-state";
+import { agentHasAccess } from "@/lib/agents/access";
 
 /**
  * Loads everything the Live Office needs AS THE SIGNED-IN AGENT, so RLS
@@ -50,7 +51,7 @@ export async function loadOffice(): Promise<OfficeData | null> {
     models,
     jobs: (jobs ?? []) as JobRow[],
     tasks: (tasks ?? []) as TaskRow[],
-    ctx: { verified: profile?.agent_status === "verified", heroLinked: heroLink?.status === "linked" },
+    ctx: { verified: await agentHasAccess(supabase), heroLinked: heroLink?.status === "linked" },
     country: profile?.country_code ?? null,
     locale,
     now: new Date(),

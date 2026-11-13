@@ -64,7 +64,7 @@
     "title": "Papan pemuka ejen",
     "welcome": "Selamat datang, {name}",
     "statusLabel": "Status pengesahan",
-    "statusNote": "Lengkapkan pengesahan ejen anda untuk mencipta keperluan dan menghantar hartanah.",
+    "statusNote": "Akaun anda belum aktif, atau sedang dijeda. Anda akan dimaklumkan jika ada perubahan.",
     "status": {
       "draft": "Profil belum lengkap",
       "email_verification_pending": "Pengesahan e-mel belum selesai",
@@ -80,7 +80,7 @@
       "expired_licence": "Lesen tamat tempoh",
       "archived": "Diarkibkan"
     },
-    "startVerification": "Lengkapkan pengesahan",
+    "startVerification": "Buka pengesahan",
     "adminConsole": "Konsol admin",
     "myRequests": "Keperluan saya",
     "modules": {
@@ -143,7 +143,7 @@
         "circuit_open": "Taklimat peraturan sahaja — AI berehat seketika selepas ralat.",
         "disabled": "Taklimat peraturan sahaja — AI dimatikan oleh platform.",
         "feature_off": "Taklimat peraturan sahaja — ciri AI belum dihidupkan untuk akaun anda.",
-        "unverified": "Taklimat peraturan sahaja — AI dibuka selepas pengesahan.",
+        "unverified": "Ringkasan berasaskan peraturan — AI dibuka selepas akaun anda aktif.",
         "no_provider": "Taklimat peraturan sahaja — belum ada pembekal AI disambungkan.",
         "failed": "Taklimat peraturan sahaja — AI tidak menjawab kali ini."
       },
@@ -205,15 +205,18 @@
       "expired": "Tamat tempoh",
       "archived": "Diarkib",
       "paused": "Dijeda"
-    }
+    },
+    "badgeTitle": "Dapatkan lencana ✓ Ejen Disahkan",
+    "badgeNote": "Pilihan. Ejen disahkan lebih dipercayai pembeli dan mendapat skor kualiti iklan lebih tinggi.",
+    "badgeCta": "Mohon"
   },
   "verification": {
-    "title": "Pengesahan ejen",
-    "intro": "Berikan maklumat profesional dan dokumen anda. Pentadbir akan menyemak penyerahan anda sebelum anda boleh mencipta keperluan atau menghantar hartanah.",
-    "submittedNotice": "Dihantar. Pengesahan anda kini dalam semakan.",
+    "title": "Lencana Ejen Disahkan",
+    "intro": "Pilihan. Sahkan lesen dan identiti anda untuk mendapatkan lencana ✓ Ejen Disahkan pada iklan, kad digital dan profil anda. Anda boleh terus menggunakan platform sementara pentadbir menyemaknya.",
+    "submittedNotice": "Dihantar. Pentadbir akan menyemaknya, dan lencana dipaparkan selepas diluluskan.",
     "adminNotes": "Nota admin",
     "currentStatus": "Status semasa",
-    "lockedNotice": "Penyerahan anda sedang diproses. Anda akan dimaklumkan setelah semakan selesai.",
+    "lockedNotice": "Permohonan lencana anda sedang disemak. Anda akan dimaklumkan apabila selesai.",
     "fullLegalName": "Nama penuh (sah)",
     "agencyName": "Nama agensi",
     "agencyRegistrationNumber": "No. pendaftaran agensi",
@@ -244,7 +247,7 @@
     "identityDocument": "Dokumen pengenalan",
     "agencyDocument": "Pengesahan agensi (pilihan)",
     "alreadyUploaded": "telah dimuat naik",
-    "submit": "Hantar untuk semakan",
+    "submit": "Mohon lencana",
     "errors": {
       "invalid_fields": "Sila semak medan yang ditanda dan cuba lagi.",
       "missing_documents": "Dokumen lesen dan pengenalan diperlukan.",
@@ -338,7 +341,8 @@
       "reject": "Ejen ditolak.",
       "request_info": "Maklumat diminta daripada ejen.",
       "suspended": "Ejen digantung. {n, plural, other {# penyenaraian aktif}} dijeda.",
-      "restored": "Ejen dipulihkan. {n, plural, other {# penyenaraian}} diterbitkan semula."
+      "restored": "Ejen dipulihkan. {n, plural, other {# penyenaraian}} diterbitkan semula.",
+      "banned": "Ejen disekat. {n} iklan aktif dijeda."
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
@@ -347,7 +351,8 @@
       "reason_required": "Berikan sebab sekurang-kurangnya 3 aksara.",
       "already_suspended": "Ejen ini sudah digantung.",
       "not_suspended": "Ejen ini tidak digantung.",
-      "self": "Anda tidak boleh menggantung atau memulihkan diri sendiri."
+      "self": "Anda tidak boleh menggantung atau memulihkan diri sendiri.",
+      "already_banned": "Ejen ini sudah disekat."
     },
     "overviewTitle": "Pusat kawalan",
     "allClear": "Tiada apa menunggu. Semua barisan bersih.",
@@ -511,13 +516,22 @@
         "rented": "Disewa",
         "withdrawn": "Ditarik balik",
         "archived": "Diarkibkan"
-      }
+      },
+      "bannedNotice": "Ejen ini disekat. Iklan mereka dijeda dan mereka tidak boleh bekerja di platform.",
+      "banTitle": "Sekat ejen ini",
+      "banHint": "Untuk penipuan. Menjeda iklan aktif dan menghentikan semua kerja. Tidak seperti penggantungan, ia tidak boleh dipulihkan di sini.",
+      "ban": "Sekat ejen"
     },
     "agentQueue": {
       "search": "Cari mengikut nama",
       "country": "Negara",
       "allCountries": "Semua negara",
-      "apply": "Guna"
+      "apply": "Guna",
+      "newAgents": "Ejen baharu",
+      "window": "Menyertai dalam tempoh",
+      "hours": "{n} jam",
+      "newHint": "Ejen baharu boleh terus menggunakan platform. Semak di sini dan gantung atau sekat yang kelihatan seperti penipuan.",
+      "joined": "Menyertai"
     },
     "actionQueue": {
       "title": "Baris gilir tindakan",
@@ -611,8 +625,8 @@
     "importListings": "Import listing",
     "growth": "Pertumbuhan",
     "agentRole": "Ejen hartanah",
-    "verifiedBadge": "Disahkan",
-    "unverifiedBadge": "Belum disahkan",
+    "verifiedBadge": "Ejen Disahkan",
+    "unverifiedBadge": "Dapatkan pengesahan",
     "aiWorkforce": "Tenaga Kerja AI",
     "tasks": "Tugas",
     "plan": "Pelan & kredit"
@@ -708,7 +722,7 @@
     "detailTitle": "Butiran keperluan",
     "edit": "Sunting",
     "empty": "Belum ada keperluan. Cipta yang pertama.",
-    "verifyFirst": "Hanya ejen disahkan boleh mencipta keperluan.",
+    "verifyFirst": "Keperluan boleh dibuat selepas akaun anda aktif.",
     "verifyLink": "Lengkapkan pengesahan",
     "submittedNotice": "Dihantar untuk kelulusan admin. Pautan kongsi selamat akan dipaparkan di sini selepas diluluskan.",
     "amendmentRequired": "Pindaan diperlukan",
@@ -1875,7 +1889,7 @@
         "circuit_open": "Digubal tanpa AI — AI berehat seketika selepas ralat.",
         "disabled": "Digubal tanpa AI — AI dimatikan oleh platform.",
         "feature_off": "Digubal tanpa AI — ciri AI belum dihidupkan untuk akaun anda.",
-        "unverified": "Digubal tanpa AI — AI dibuka selepas pengesahan.",
+        "unverified": "Didraf tanpa AI — AI dibuka selepas akaun anda aktif.",
         "no_provider": "Digubal tanpa AI — belum ada pembekal AI disambungkan.",
         "failed": "Digubal tanpa AI — AI tidak menjawab kali ini."
       },
@@ -2125,7 +2139,7 @@
         "circuit_open": "Digubal tanpa AI — AI berehat seketika selepas ralat.",
         "disabled": "Digubal tanpa AI — AI dimatikan oleh platform.",
         "feature_off": "Digubal tanpa AI — ciri AI belum dihidupkan untuk akaun anda.",
-        "unverified": "Digubal tanpa AI — AI dibuka selepas pengesahan.",
+        "unverified": "Didraf tanpa AI — AI dibuka selepas akaun anda aktif.",
         "no_provider": "Digubal tanpa AI — belum ada pembekal AI disambungkan.",
         "failed": "Digubal tanpa AI — AI tidak menjawab kali ini."
       },
@@ -2490,7 +2504,7 @@
         "circuit_open": "Ditulis tanpa AI — AI berehat seketika selepas ralat.",
         "disabled": "Ditulis tanpa AI — AI dimatikan oleh platform.",
         "feature_off": "Ditulis tanpa AI — ciri AI belum dihidupkan untuk akaun anda.",
-        "unverified": "Ditulis tanpa AI — AI dibuka selepas pengesahan.",
+        "unverified": "Ditulis tanpa AI — AI dibuka selepas akaun anda aktif.",
         "no_provider": "Ditulis tanpa AI — belum ada pembekal AI disambungkan.",
         "failed": "Ditulis tanpa AI — AI tidak menjawab kali ini."
       }
@@ -3754,7 +3768,7 @@
     "intro": "Rakan sekerja AI anda. Setiap satu bekerja dalam skrin yang anda sudah guna — ia menggubal, menyusun dan mengingatkan; anda memutuskan dan menghantar.",
     "liveCount": "{count, plural, =0 {Belum ada yang hidup} one {1 hidup} other {# hidup}}",
     "quota": "{remaining} daripada {total} tugas AI berbaki bulan ini",
-    "verifyFirst": "Peranan AI mula bekerja setelah akaun anda disahkan.",
+    "verifyFirst": "Peranan AI mula bekerja selepas akaun anda aktif.",
     "verifyLink": "Lengkapkan pengesahan",
     "status": {
       "live": "Hidup",
@@ -4398,7 +4412,7 @@
       "circuit_open": "Tanpa AI — AI berehat beberapa minit selepas ralat.",
       "disabled": "Tanpa AI — AI dimatikan oleh platform.",
       "feature_off": "Tanpa AI — ciri AI belum diaktifkan untuk akaun anda.",
-      "unverified": "Tanpa AI — AI dibuka selepas pengesahan.",
+      "unverified": "Tanpa AI — AI dibuka selepas akaun anda aktif.",
       "no_provider": "Tanpa AI — tiada penyedia AI disambungkan lagi.",
       "failed": "Tanpa AI — AI tidak menjawab kali ini."
     },
@@ -4597,7 +4611,7 @@
     "review": {
       "title": "Penilai Prestasi",
       "intro": "Tujuh hari terakhir anda berbanding tujuh hari sebelumnya — masa lalu anda sendiri dahulu. Rakan sebaya muncul hanya sebagai median tanpa nama, dan hanya apabila sekurang-kurangnya lima orang aktif.",
-      "verifyFirst": "Ulasan mingguan bermula selepas akaun anda disahkan.",
+      "verifyFirst": "Semakan mingguan bermula selepas akaun anda aktif.",
       "again": "Tulis semula",
       "numbersOnly": "Angkanya di bawah. Ulasan bertulis memerlukan satu tugasan AI.",
       "metric": "Metrik",

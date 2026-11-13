@@ -9,6 +9,7 @@ import { verifyLinkSession, linkCookieName } from "@/lib/request-links";
 import { getActiveDeclaration, recordConsent } from "@/lib/consents";
 import { logAudit } from "@/lib/audit";
 import { getLocale } from "next-intl/server";
+import { agentHasAccess } from "@/lib/agents/access";
 import {
   propertyFieldsSchema, deriveRisk, buildSubmissionRow, hasSourceDetail,
   IMG_MIMES, MAX_IMG_BYTES,
@@ -29,9 +30,7 @@ export async function submitProperty(formData: FormData) {
   } = await supabase.auth.getUser();
   if (!user) redirect(`/login?next=${encodeURIComponent(back)}`);
 
-  const { data: profile } = await supabase
-    .from("profiles").select("agent_status").eq("id", user.id).single();
-  if (profile?.agent_status !== "verified") redirect("/verification");
+  if (!(await agentHasAccess(supabase))) redirect("/dashboard");
 
   // Link must be valid AND this browser must have passed the password gate
   const service = createServiceClient();

@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability, requireCapabilityIn } from "@/lib/authz";
-import { restoreAgent, reviewAgent, reviewSocialLink, suspendAgent } from "../actions";
+import { banAgent, restoreAgent, reviewAgent, reviewSocialLink, suspendAgent } from "../actions";
 import { Agent360 } from "@/components/admin/agent-360";
 import { GrantPanel } from "@/components/admin/grant-panel";
 
@@ -72,6 +72,7 @@ export default async function AgentDetailPage({
   const byStatus = new Map<string, number>();
   for (const l of portfolio ?? []) byStatus.set(l.status, (byStatus.get(l.status) ?? 0) + 1);
   const suspended = profile.agent_status === "suspended";
+  const banned = profile.agent_status === "banned";
 
   const { data: socialLinks } = await supabase
     .from("agent_social_links")
@@ -107,12 +108,12 @@ export default async function AgentDetailPage({
 
       {done && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
-          {done === "suspended" || done === "restored" ? t(`doneNotice.${done}`, { n: Number(n) || 0 }) : t(`doneNotice.${done}`)}
+          {done === "suspended" || done === "restored" || done === "banned" ? t(`doneNotice.${done}`, { n: Number(n) || 0 }) : t(`doneNotice.${done}`)}
         </p>
       )}
       {error && (
         <p role="alert" className="mb-6 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {t(`errors.${["notes_required", "self_invited", "reason_required", "already_suspended", "not_suspended", "self"].includes(error) ? error : "save_failed"}`)}
+          {t(`errors.${["notes_required", "self_invited", "reason_required", "already_suspended", "not_suspended", "self", "already_banned"].includes(error) ? error : "save_failed"}`)}
         </p>
       )}
 
@@ -284,7 +285,9 @@ export default async function AgentDetailPage({
 
           <div className="mt-8 border-t border-line pt-6" data-panel="account">
             <h2 className="mb-2 font-semibold">{t("a360.accountTitle")}</h2>
-            {suspended ? (
+            {banned ? (
+              <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm font-medium text-danger" data-banned="1">{t("a360.bannedNotice")}</p>
+            ) : suspended ? (
               <>
                 <p className="mb-3 rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger" data-suspended="1">
                   {t("a360.suspendedSince", { date: openSuspension?.suspended_at ? new Date(openSuspension.suspended_at).toISOString().slice(0, 10) : "—" })}
@@ -310,6 +313,20 @@ export default async function AgentDetailPage({
                 </label>
                 <button type="submit" className="w-full rounded-lg border border-danger px-4 py-2.5 font-semibold text-danger hover:bg-danger/10">{t("a360.suspend")}</button>
               </form>
+            )}
+            {!banned && (
+              <details className="mt-4 rounded-lg border border-danger/40 p-3" data-ban="1">
+                <summary className="cursor-pointer text-sm font-semibold text-danger">{t("a360.banTitle")}</summary>
+                <form action={banAgent} className="mt-3 space-y-3">
+                  <input type="hidden" name="userId" value={id} />
+                  <p className="text-xs text-muted">{t("a360.banHint")}</p>
+                  <label className="block text-sm">
+                    <span className="mb-1 block font-medium">{t("a360.suspendReason")}</span>
+                    <textarea name="reason" required minLength={3} maxLength={2000} rows={2} className={inputCls} />
+                  </label>
+                  <button type="submit" className="w-full rounded-lg bg-danger px-4 py-2.5 font-semibold text-white hover:opacity-90">{t("a360.ban")}</button>
+                </form>
+              </details>
             )}
           </div>
         </aside>

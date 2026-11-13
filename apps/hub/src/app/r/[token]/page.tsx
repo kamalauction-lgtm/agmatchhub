@@ -8,6 +8,7 @@ import { BrandLockup } from "@/components/layout/brand-lockup";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { unlockRequestLink } from "./actions";
+import { agentHasAccess } from "@/lib/agents/access";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-center font-mono text-lg tracking-widest uppercase outline-none focus:border-crimson";
@@ -122,9 +123,7 @@ export default async function RequestLinkPage({
   } = await supabase.auth.getUser();
   let verifiedAgent = false;
   if (user) {
-    const { data: p } = await supabase
-      .from("profiles").select("agent_status").eq("id", user.id).single();
-    verifiedAgent = p?.agent_status === "verified";
+    verifiedAgent = await agentHasAccess(supabase);
   }
 
   const tr = await getTranslations("requests");

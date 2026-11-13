@@ -144,10 +144,7 @@ export async function AgentShell({
           </span>
         </Link>
 
-        {/* Who you are, and whether you are cleared to work. Verification
-            status belongs here rather than only on the profile page: an
-            unverified agent cannot publish, and the reason should not be
-            somewhere they have to go looking for. */}
+        {/* Who you are, and your Verified Agent badge (voluntary, 00129). */}
         <div className="border-b border-line px-4 py-4 text-center">
           {/* `avatar_url` is a storage PATH in the public profile bucket, not a
               URL; resolve it, and fall back to the initial if the file is gone. */}
@@ -159,15 +156,20 @@ export async function AgentShell({
           />
           <p className="mt-2 truncate text-sm font-bold">{profile?.display_name ?? "—"}</p>
           <p className="text-xs text-muted">{t("agentRole")}</p>
-          <span
-            className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-              profile?.agent_status === "verified"
-                ? "bg-success-soft text-success"
-                : "bg-warning-soft text-warning"
-            }`}
-          >
-            {profile?.agent_status === "verified" ? t("verifiedBadge") : t("unverifiedBadge")}
-          </span>
+          {/* The Verified badge is voluntary since 00129: a quiet invitation
+              when it is missing, never a warning. */}
+          {profile?.agent_status === "verified" ? (
+            <span className="mt-2 inline-block rounded-full bg-success-soft px-2.5 py-0.5 text-[11px] font-semibold text-success">
+              ✓ {t("verifiedBadge")}
+            </span>
+          ) : (
+            <Link
+              href="/verification"
+              className="mt-2 inline-block rounded-full border border-line px-2.5 py-0.5 text-[11px] font-semibold text-muted transition-colors hover:border-crimson hover:text-crimson"
+            >
+              {t("unverifiedBadge")}
+            </Link>
+          )}
         </div>
 
         <RailNav groups={sections} />

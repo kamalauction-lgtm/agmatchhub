@@ -64,7 +64,7 @@
     "title": "Dasbor agen",
     "welcome": "Selamat datang, {name}",
     "statusLabel": "Status verifikasi",
-    "statusNote": "Lengkapi verifikasi agen Anda untuk membuat kebutuhan dan mengajukan properti.",
+    "statusNote": "Akun Anda belum aktif, atau sedang dijeda. Anda akan diberi tahu jika ada perubahan.",
     "status": {
       "draft": "Profil belum lengkap",
       "email_verification_pending": "Verifikasi email tertunda",
@@ -80,7 +80,7 @@
       "expired_licence": "Lisensi kedaluwarsa",
       "archived": "Diarsipkan"
     },
-    "startVerification": "Lengkapi verifikasi",
+    "startVerification": "Buka verifikasi",
     "adminConsole": "Konsol admin",
     "myRequests": "Kebutuhan saya",
     "modules": {
@@ -143,7 +143,7 @@
         "circuit_open": "Brief berbasis aturan — AI beristirahat sebentar setelah kesalahan.",
         "disabled": "Brief berbasis aturan — AI dimatikan oleh platform.",
         "feature_off": "Brief berbasis aturan — fitur AI belum diaktifkan untuk akun Anda.",
-        "unverified": "Brief berbasis aturan — AI terbuka setelah verifikasi.",
+        "unverified": "Ringkasan berbasis aturan — AI terbuka setelah akun Anda aktif.",
         "no_provider": "Brief berbasis aturan — belum ada penyedia AI yang terhubung.",
         "failed": "Brief berbasis aturan — AI tidak menjawab kali ini."
       },
@@ -205,15 +205,18 @@
       "expired": "Kedaluwarsa",
       "archived": "Diarsipkan",
       "paused": "Dijeda"
-    }
+    },
+    "badgeTitle": "Dapatkan lencana ✓ Agen Terverifikasi",
+    "badgeNote": "Opsional. Agen terverifikasi lebih dipercaya pembeli dan mendapat skor kualitas listing lebih tinggi.",
+    "badgeCta": "Ajukan"
   },
   "verification": {
-    "title": "Verifikasi agen",
-    "intro": "Berikan detail profesional dan dokumen Anda. Administrator akan meninjau pengajuan Anda sebelum Anda dapat membuat kebutuhan atau mengajukan properti.",
-    "submittedNotice": "Terkirim. Verifikasi Anda sedang ditinjau.",
+    "title": "Lencana Agen Terverifikasi",
+    "intro": "Opsional. Verifikasi lisensi dan identitas Anda untuk mendapatkan lencana ✓ Agen Terverifikasi di listing, kartu digital, dan profil Anda. Anda tetap dapat menggunakan platform selama administrator meninjaunya.",
+    "submittedNotice": "Terkirim. Administrator akan meninjaunya, dan lencana muncul setelah disetujui.",
     "adminNotes": "Catatan admin",
     "currentStatus": "Status saat ini",
-    "lockedNotice": "Pengajuan Anda sedang diproses. Anda akan diberi tahu setelah peninjauan selesai.",
+    "lockedNotice": "Pengajuan lencana Anda sedang ditinjau. Anda akan diberi tahu setelah selesai.",
     "fullLegalName": "Nama lengkap (sah)",
     "agencyName": "Nama agensi",
     "agencyRegistrationNumber": "No. registrasi agensi",
@@ -244,7 +247,7 @@
     "identityDocument": "Dokumen identitas",
     "agencyDocument": "Konfirmasi agensi (opsional)",
     "alreadyUploaded": "sudah diunggah",
-    "submit": "Kirim untuk ditinjau",
+    "submit": "Ajukan lencana",
     "errors": {
       "invalid_fields": "Periksa kolom yang ditandai lalu coba lagi.",
       "missing_documents": "Dokumen lisensi dan identitas wajib diunggah.",
@@ -338,7 +341,8 @@
       "reject": "Agen ditolak.",
       "request_info": "Informasi diminta dari agen.",
       "suspended": "Agen ditangguhkan. {n, plural, other {# listing tayang}} dijeda.",
-      "restored": "Agen dipulihkan. {n, plural, other {# listing}} ditayangkan kembali."
+      "restored": "Agen dipulihkan. {n, plural, other {# listing}} ditayangkan kembali.",
+      "banned": "Agen diblokir. {n} listing aktif dijeda."
     },
     "errors": {
       "notes_required": "Catatan wajib untuk keputusan ini.",
@@ -347,7 +351,8 @@
       "reason_required": "Berikan alasan minimal 3 karakter.",
       "already_suspended": "Agen ini sudah ditangguhkan.",
       "not_suspended": "Agen ini tidak sedang ditangguhkan.",
-      "self": "Anda tidak dapat menangguhkan atau memulihkan diri sendiri."
+      "self": "Anda tidak dapat menangguhkan atau memulihkan diri sendiri.",
+      "already_banned": "Agen ini sudah diblokir."
     },
     "overviewTitle": "Pusat kendali",
     "allClear": "Tidak ada antrean. Semua bersih.",
@@ -511,13 +516,22 @@
         "rented": "Tersewa",
         "withdrawn": "Ditarik",
         "archived": "Diarsipkan"
-      }
+      },
+      "bannedNotice": "Agen ini diblokir. Listing mereka dijeda dan mereka tidak dapat bekerja di platform.",
+      "banTitle": "Blokir agen ini",
+      "banHint": "Untuk penipuan. Menjeda listing aktif dan menghentikan semua aktivitas. Berbeda dengan penangguhan, ini tidak dapat dipulihkan di sini.",
+      "ban": "Blokir agen"
     },
     "agentQueue": {
       "search": "Cari berdasarkan nama",
       "country": "Negara",
       "allCountries": "Semua negara",
-      "apply": "Terapkan"
+      "apply": "Terapkan",
+      "newAgents": "Agen baru",
+      "window": "Bergabung dalam",
+      "hours": "{n} jam",
+      "newHint": "Agen baru langsung dapat menggunakan platform. Periksa di sini dan tangguhkan atau blokir yang terlihat seperti penipuan.",
+      "joined": "Bergabung"
     },
     "actionQueue": {
       "title": "Antrean tindakan",
@@ -611,8 +625,8 @@
     "importListings": "Impor listing",
     "growth": "Pertumbuhan",
     "agentRole": "Agen properti",
-    "verifiedBadge": "Terverifikasi",
-    "unverifiedBadge": "Belum terverifikasi",
+    "verifiedBadge": "Agen Terverifikasi",
+    "unverifiedBadge": "Dapatkan verifikasi",
     "aiWorkforce": "Tenaga Kerja AI",
     "tasks": "Tugas",
     "plan": "Paket & kredit"
@@ -708,7 +722,7 @@
     "detailTitle": "Detail kebutuhan",
     "edit": "Edit",
     "empty": "Belum ada kebutuhan. Buat yang pertama.",
-    "verifyFirst": "Hanya agen terverifikasi yang dapat membuat kebutuhan.",
+    "verifyFirst": "Kebutuhan dapat dibuat setelah akun Anda aktif.",
     "verifyLink": "Lengkapi verifikasi",
     "submittedNotice": "Dikirim untuk persetujuan admin. Tautan berbagi aman akan muncul di sini setelah disetujui.",
     "amendmentRequired": "Perlu perbaikan",
@@ -1875,7 +1889,7 @@
         "circuit_open": "Disusun tanpa AI — AI beristirahat sebentar setelah kesalahan.",
         "disabled": "Disusun tanpa AI — AI dimatikan oleh platform.",
         "feature_off": "Disusun tanpa AI — fitur AI belum diaktifkan untuk akun Anda.",
-        "unverified": "Disusun tanpa AI — AI terbuka setelah verifikasi.",
+        "unverified": "Disusun tanpa AI — AI terbuka setelah akun Anda aktif.",
         "no_provider": "Disusun tanpa AI — belum ada penyedia AI yang terhubung.",
         "failed": "Disusun tanpa AI — AI tidak menjawab kali ini."
       },
@@ -2125,7 +2139,7 @@
         "circuit_open": "Disusun tanpa AI — AI beristirahat sebentar setelah kesalahan.",
         "disabled": "Disusun tanpa AI — AI dimatikan oleh platform.",
         "feature_off": "Disusun tanpa AI — fitur AI belum diaktifkan untuk akun Anda.",
-        "unverified": "Disusun tanpa AI — AI terbuka setelah verifikasi.",
+        "unverified": "Disusun tanpa AI — AI terbuka setelah akun Anda aktif.",
         "no_provider": "Disusun tanpa AI — belum ada penyedia AI yang terhubung.",
         "failed": "Disusun tanpa AI — AI tidak menjawab kali ini."
       },
@@ -2490,7 +2504,7 @@
         "circuit_open": "Ditulis tanpa AI — AI beristirahat sebentar setelah kesalahan.",
         "disabled": "Ditulis tanpa AI — AI dimatikan oleh platform.",
         "feature_off": "Ditulis tanpa AI — fitur AI belum diaktifkan untuk akun Anda.",
-        "unverified": "Ditulis tanpa AI — AI terbuka setelah verifikasi.",
+        "unverified": "Ditulis tanpa AI — AI terbuka setelah akun Anda aktif.",
         "no_provider": "Ditulis tanpa AI — belum ada penyedia AI yang terhubung.",
         "failed": "Ditulis tanpa AI — AI tidak menjawab kali ini."
       }
@@ -3754,7 +3768,7 @@
     "intro": "Rekan kerja AI Anda. Masing-masing bekerja di layar yang sudah Anda pakai — ia menyusun draf, mengurutkan, dan mengingatkan; Anda yang memutuskan dan mengirim.",
     "liveCount": "{count, plural, =0 {Belum ada yang aktif} one {1 aktif} other {# aktif}}",
     "quota": "{remaining} dari {total} tugas AI tersisa bulan ini",
-    "verifyFirst": "Peran AI mulai bekerja setelah akun Anda terverifikasi.",
+    "verifyFirst": "Peran AI mulai bekerja setelah akun Anda aktif.",
     "verifyLink": "Selesaikan verifikasi",
     "status": {
       "live": "Aktif",
@@ -4398,7 +4412,7 @@
       "circuit_open": "Tanpa AI — AI beristirahat beberapa menit setelah terjadi gangguan.",
       "disabled": "Tanpa AI — AI dimatikan oleh platform.",
       "feature_off": "Tanpa AI — fitur AI belum diaktifkan untuk akun Anda.",
-      "unverified": "Tanpa AI — AI terbuka setelah verifikasi.",
+      "unverified": "Tanpa AI — AI terbuka setelah akun Anda aktif.",
       "no_provider": "Tanpa AI — belum ada penyedia AI yang terhubung.",
       "failed": "Tanpa AI — AI tidak menjawab kali ini."
     },
@@ -4597,7 +4611,7 @@
     "review": {
       "title": "Peninjau Kinerja",
       "intro": "Tujuh hari terakhir Anda dibanding tujuh hari sebelumnya — masa lalu Anda sendiri dulu. Rekan hanya muncul sebagai median anonim, dan hanya bila minimal lima orang aktif.",
-      "verifyFirst": "Tinjauan mingguan dimulai setelah akun Anda terverifikasi.",
+      "verifyFirst": "Tinjauan mingguan dimulai setelah akun Anda aktif.",
       "again": "Tulis ulang",
       "numbersOnly": "Angkanya ada di bawah. Ulasan tertulis memerlukan satu tugas AI.",
       "metric": "Metrik",
