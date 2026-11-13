@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { createClient } from "@/lib/supabase/server";
 import { PasswordInput } from "@/components/forms/password-input";
 import { signUp } from "../actions";
 
@@ -13,6 +14,9 @@ export default async function RegisterPage({
   const { error, ref } = await searchParams;
   const t = await getTranslations("auth");
   const tc = await getTranslations("common");
+  const supabase = await createClient();
+  const { data: countries } = await supabase
+    .from("countries").select("code, name").eq("active", true).order("name");
 
   return (
     <div>
@@ -39,6 +43,21 @@ export default async function RegisterPage({
             autoComplete="name"
             className="w-full rounded-lg border border-line bg-background px-3 py-2.5 outline-none focus:border-crimson"
           />
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-sm font-medium">{t("country")}</span>
+          <select
+            name="countryCode"
+            required
+            defaultValue=""
+            className="w-full rounded-lg border border-line bg-background px-3 py-2.5 outline-none focus:border-crimson"
+          >
+            <option value="" disabled>{t("countryChoose")}</option>
+            {(countries ?? []).map((c) => (
+              <option key={c.code} value={c.code}>{c.name}</option>
+            ))}
+          </select>
+          <span className="mt-1 block text-xs text-muted">{t("countryHint")}</span>
         </label>
         <label className="block">
           <span className="mb-1 block text-sm font-medium">{tc("email")}</span>

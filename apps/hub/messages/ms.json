@@ -55,7 +55,10 @@
     "activateBody": "Teruskan untuk memilih kata laluan. Anda akan log masuk sejurus selepas itu.",
     "activateCta": "Teruskan",
     "activateExpired": "Pautan pengaktifan ini telah tamat tempoh atau sudah digunakan. Minta pentadbir anda menghantar yang baharu.",
-    "welcomeTitle": "Pilih kata laluan anda"
+    "welcomeTitle": "Pilih kata laluan anda",
+    "country": "Negara tempat anda bekerja",
+    "countryChoose": "Pilih negara anda",
+    "countryHint": "Ini menentukan jenis lesen yang anda lihat dan pasukan yang menyokong anda."
   },
   "dashboard": {
     "title": "Papan pemuka ejen",
@@ -250,7 +253,8 @@
       "upload_failed": "Muat naik gagal. Sila cuba lagi.",
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
       "not_allowed": "Status semasa anda tidak membenarkan penyerahan."
-    }
+    },
+    "countryFixedHint": "Ditetapkan semasa anda mendaftar. Hubungi admin jika perlu ditukar."
   },
   "admin": {
     "badge": "Admin",
