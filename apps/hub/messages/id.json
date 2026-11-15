@@ -1776,7 +1776,27 @@
     "photoModeFull": "Seluruh badan",
     "photoNudge": "Geser atas / bawah",
     "photoAutoCropped": "Dipotong otomatis ke subjek. Data lokasi foto dihapus sebelum diunggah.",
-    "photoCropFailed": "Foto tidak bisa dipotong otomatis — file asli akan diunggah apa adanya."
+    "photoCropFailed": "Foto tidak bisa dipotong otomatis — file asli akan diunggah apa adanya.",
+    "companyTitle": "Perusahaan saya",
+    "companyIntro": "Cari agensi Anda di direktori. Jika belum ada, tambahkan — administrator akan mengonfirmasi entri baru.",
+    "companySaved": "Perusahaan disimpan.",
+    "companyCurrent": "Saat ini",
+    "companyUnconfirmed": "menunggu konfirmasi",
+    "companyNeedsCountry": "Pilih negara Anda di halaman Verifikasi terlebih dahulu, agar kami dapat menampilkan agensi di negara Anda.",
+    "companySearch": "Cari di direktori",
+    "companySearchCta": "Cari",
+    "companyPick": "Ini perusahaan saya",
+    "companyNone": "Belum ada agensi dengan nama itu.",
+    "companyAdd": "Tidak ada? Tambahkan perusahaan Anda",
+    "companyAddCta": "Tambah dan gunakan",
+    "companyErrors": {
+      "other_country": "Agensi itu berada di negara lain.",
+      "too_many": "Anda telah menambahkan 3 agensi yang masih menunggu konfirmasi. Mohon tunggu administrator.",
+      "invalid_name": "Masukkan nama perusahaan (2–160 karakter).",
+      "no_country": "Pilih negara Anda terlebih dahulu.",
+      "not_allowed": "Akun Anda tidak dapat melakukan ini saat ini.",
+      "failed": "Gagal. Silakan coba lagi."
+    }
   },
   "wanted": {
     "agentSignIn": "Masuk agen",
@@ -3400,7 +3420,12 @@
       "registration": "Nomor registrasi (opsional)",
       "country": "Negara",
       "chooseCountry": "Pilih negara"
-    }
+    },
+    "directory": "Direktori",
+    "unconfirmed": "Belum dikonfirmasi",
+    "confirm": "Konfirmasi",
+    "heroPartner": "Mitra AG Hero",
+    "makeHeroPartner": "Jadikan mitra AG Hero"
   },
   "commercial": {
     "title": "Kendali komersial",

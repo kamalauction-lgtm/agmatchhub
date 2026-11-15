@@ -13,6 +13,34 @@ const IMAGE_MIMES: Record<string, string> = {
 };
 const MAX_CARD_BYTES = 5 * 1024 * 1024;
 
+/**
+ * My company (00130): pick an agency from the directory, or add yours when it
+ * is not there. Both go through database functions that keep the agency in the
+ * agent's own country, refuse agents without access, and audit the change.
+ */
+export async function setMyAgency(formData: FormData) {
+  const id = z.string().uuid().safeParse(formData.get("agencyId"));
+  if (!id.success) redirect("/profile?company_error=invalid#company");
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("agent_set_agency", { p_agency: id.data });
+  const r = data as { ok?: boolean; error?: string } | null;
+  if (!r?.ok) redirect(`/profile?company_error=${r?.error ?? "failed"}#company`);
+  redirect("/profile?company_saved=1#company");
+}
+
+export async function addMyAgency(formData: FormData) {
+  const name = z.string().trim().min(2).max(160).safeParse(formData.get("agencyName"));
+  if (!name.success) redirect("/profile?company_error=invalid_name#company");
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("agent_add_agency", { p_name: name.data });
+  const r = data as { ok?: boolean; error?: string; agency?: string } | null;
+  if (!r?.ok || !r.agency) redirect(`/profile?company_error=${r?.error ?? "failed"}#company`);
+  const { data: set } = await supabase.rpc("agent_set_agency", { p_agency: r.agency });
+  const s = set as { ok?: boolean; error?: string } | null;
+  if (!s?.ok) redirect(`/profile?company_error=${s?.error ?? "failed"}#company`);
+  redirect("/profile?company_saved=1#company");
+}
+
 export async function updateTrustProfile(formData: FormData) {
   const supabase = await createClient();
   const {

@@ -1776,7 +1776,27 @@
     "photoModeFull": "Seluruh badan",
     "photoNudge": "Alih atas / bawah",
     "photoAutoCropped": "Dipotong automatik kepada subjek. Data lokasi dibuang sebelum dimuat naik.",
-    "photoCropFailed": "Foto ini tidak dapat dipotong automatik — fail asal akan dimuat naik seadanya."
+    "photoCropFailed": "Foto ini tidak dapat dipotong automatik — fail asal akan dimuat naik seadanya.",
+    "companyTitle": "Syarikat saya",
+    "companyIntro": "Cari agensi anda dalam direktori. Jika tiada, tambahkannya — pentadbir akan mengesahkan entri baharu.",
+    "companySaved": "Syarikat disimpan.",
+    "companyCurrent": "Semasa",
+    "companyUnconfirmed": "menunggu pengesahan",
+    "companyNeedsCountry": "Pilih negara anda di halaman Pengesahan dahulu, supaya kami boleh memaparkan agensi di negara anda.",
+    "companySearch": "Cari dalam direktori",
+    "companySearchCta": "Cari",
+    "companyPick": "Ini syarikat saya",
+    "companyNone": "Belum ada agensi dengan nama itu.",
+    "companyAdd": "Tiada? Tambah syarikat anda",
+    "companyAddCta": "Tambah dan guna",
+    "companyErrors": {
+      "other_country": "Agensi itu berada di negara lain.",
+      "too_many": "Anda telah menambah 3 agensi yang masih menunggu pengesahan. Sila tunggu pentadbir.",
+      "invalid_name": "Sila masukkan nama syarikat (2–160 aksara).",
+      "no_country": "Pilih negara anda dahulu.",
+      "not_allowed": "Akaun anda tidak boleh melakukan ini sekarang.",
+      "failed": "Tidak berjaya. Sila cuba lagi."
+    }
   },
   "wanted": {
     "agentSignIn": "Log masuk ejen",
@@ -3400,7 +3420,12 @@
       "registration": "Nombor pendaftaran (pilihan)",
       "country": "Negara",
       "chooseCountry": "Pilih negara"
-    }
+    },
+    "directory": "Direktori",
+    "unconfirmed": "Belum disahkan",
+    "confirm": "Sahkan",
+    "heroPartner": "Rakan AG Hero",
+    "makeHeroPartner": "Jadikan rakan AG Hero"
   },
   "commercial": {
     "title": "Kawalan komersial",

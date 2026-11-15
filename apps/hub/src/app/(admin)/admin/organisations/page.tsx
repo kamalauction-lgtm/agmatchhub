@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
-import { saveAgency } from "./actions";
+import { saveAgency, setAgencyFlag } from "./actions";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -32,7 +32,7 @@ export default async function OrganisationsPage({ searchParams }: { searchParams
   const { data: countryOptions } = await cq;
 
   const [{ data: agencies }, { data: profiles }, { data: policies }] = await Promise.all([
-    supabase.from("agencies").select("id, name, country_code, registration_number").order("name"),
+    supabase.from("agencies").select("id, name, country_code, registration_number, status, hero_partner").order("status", { ascending: false }).order("name"),
     supabase
       .from("agent_profiles")
       .select("agency_id, user_id, profiles:user_id(agent_status)"),
@@ -108,6 +108,7 @@ export default async function OrganisationsPage({ searchParams }: { searchParams
               <th className="px-4 py-3 text-right">{t("agents")}</th>
               <th className="px-4 py-3 text-right">{t("verified")}</th>
               <th className="px-4 py-3">{t("commercialPolicy")}</th>
+              <th className="px-4 py-3">{t("directory")}</th>
             </tr>
           </thead>
           <tbody>
@@ -142,12 +143,34 @@ export default async function OrganisationsPage({ searchParams }: { searchParams
                       <span className="text-xs text-muted">{t("standardPricing")}</span>
                     )}
                   </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-2" data-agency-flags={a.id}>
+                      {a.status === "unconfirmed" ? (
+                        <form action={setAgencyFlag}>
+                          <input type="hidden" name="agencyId" value={a.id} />
+                          <input type="hidden" name="field" value="confirm" />
+                          <span className="mr-2 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-semibold text-warning">{t("unconfirmed")}</span>
+                          <button type="submit" className="cursor-pointer text-xs font-semibold text-crimson hover:underline">{t("confirm")}</button>
+                        </form>
+                      ) : null}
+                      <form action={setAgencyFlag}>
+                        <input type="hidden" name="agencyId" value={a.id} />
+                        <input type="hidden" name="field" value={a.hero_partner ? "hero_off" : "hero_on"} />
+                        <button
+                          type="submit"
+                          className={`cursor-pointer rounded-full border px-2.5 py-0.5 text-xs font-semibold ${a.hero_partner ? "border-success bg-success/10 text-success" : "border-line text-muted hover:border-crimson hover:text-crimson"}`}
+                        >
+                          {a.hero_partner ? `✓ ${t("heroPartner")}` : t("makeHeroPartner")}
+                        </button>
+                      </form>
+                    </div>
+                  </td>
                 </tr>
               );
             })}
             {!(agencies ?? []).length && (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-muted">{t("empty")}</td>
+                <td colSpan={6} className="px-4 py-10 text-center text-muted">{t("empty")}</td>
               </tr>
             )}
           </tbody>
