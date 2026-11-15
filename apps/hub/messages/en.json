@@ -1776,7 +1776,27 @@
     "photoModeFull": "Full body",
     "photoNudge": "Move up / down",
     "photoAutoCropped": "Cropped automatically to the subject. Location data is stripped before upload.",
-    "photoCropFailed": "This photo could not be cropped automatically — the original will be uploaded as-is."
+    "photoCropFailed": "This photo could not be cropped automatically — the original will be uploaded as-is.",
+    "companyTitle": "My company",
+    "companyIntro": "Find your agency in the directory. If it is not there, add it — an administrator confirms new entries.",
+    "companySaved": "Company saved.",
+    "companyCurrent": "Current",
+    "companyUnconfirmed": "awaiting confirmation",
+    "companyNeedsCountry": "Choose your country on the Verification page first, so we can show the agencies in your country.",
+    "companySearch": "Search the directory",
+    "companySearchCta": "Search",
+    "companyPick": "This is my company",
+    "companyNone": "No agency with that name yet.",
+    "companyAdd": "Not listed? Add your company",
+    "companyAddCta": "Add and use",
+    "companyErrors": {
+      "other_country": "That agency is in another country.",
+      "too_many": "You have added 3 agencies that are still awaiting confirmation. Please wait for an administrator.",
+      "invalid_name": "Please enter the company name (2–160 characters).",
+      "no_country": "Choose your country first.",
+      "not_allowed": "Your account cannot do this right now.",
+      "failed": "That did not work. Please try again."
+    }
   },
   "wanted": {
     "agentSignIn": "Agent sign in",
@@ -3400,7 +3420,12 @@
       "registration": "Registration number (optional)",
       "country": "Country",
       "chooseCountry": "Choose a country"
-    }
+    },
+    "directory": "Directory",
+    "unconfirmed": "Unconfirmed",
+    "confirm": "Confirm",
+    "heroPartner": "AG Hero partner",
+    "makeHeroPartner": "Make AG Hero partner"
   },
   "commercial": {
     "title": "Commercial control",

@@ -34,7 +34,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
   const supabase = await createClient();
 
   const currency = await priceCurrencyFor(user.id);
-  const [plan, catalogue, aiCredits, boostCredits, aiUsage, aiLines, { data: hero }, { data: defs }, { data: flagOn }, { data: providerRows }] = await Promise.all([
+  const [plan, catalogue, aiCredits, boostCredits, aiUsage, aiLines, { data: hero }, { data: heroPartner }, { data: defs }, { data: flagOn }, { data: providerRows }] = await Promise.all([
     planFor(user.id),
     planCatalogue(currency),
     creditBalance(user.id, "ai"),
@@ -42,6 +42,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
     entitlementInt(user.id, ENTITLEMENT.aiMonthlyUsage),
     entitlementLines(user.id, ENTITLEMENT.aiMonthlyUsage),
     supabase.from("hero_links").select("status").eq("user_id", user.id).maybeSingle(),
+    supabase.rpc("agency_is_hero_partner"),
     supabase.from("entitlement_definitions").select("key, name, unit").in("key", [...SHOW]),
     supabase.rpc("is_feature_enabled", { p_key: "payments", p_user: user.id }),
     supabase.rpc("payment_provider_for", { p_user: user.id }),
@@ -102,12 +103,14 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
               <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted">{t("aiTasks")}</dt>
               <dd className="mt-0.5 text-lg font-bold tabular-nums">{aiUsage}</dd>
             </div>
+            {(heroPartner === true || (!!hero && hero.status !== "unlinked")) && (
             <div className="rounded-lg bg-surface px-3 py-2">
               <dt className="text-[11px] font-semibold uppercase tracking-wide text-muted">{t("heroLink")}</dt>
               <dd className="mt-0.5 text-sm font-semibold">
                 {hero?.status === "linked" ? t("heroLinked") : <Link href="/profile#hero" className="text-indigo hover:underline">{t("heroNotLinked")}</Link>}
               </dd>
             </div>
+            )}
           </dl>
           {aiLines.length > 1 && (
             <details className="mt-3 text-xs text-muted">

@@ -139,6 +139,33 @@ const agencySchema = z.object({
   countryCode: z.string().regex(/^[A-Z]{2}$/),
 });
 
+const flagSchema = z.object({
+  agencyId: z.string().uuid(),
+  field: z.enum(["confirm", "hero_on", "hero_off"]),
+});
+
+/**
+ * Confirm an agency an agent added, or mark it as an AG Hero partner (00130).
+ * Partner agencies are what make the AG Hero card appear for their agents;
+ * which agencies they are is data set here, never a name in code. The 00125
+ * policies decide who may: commercial.manage in the agency's country.
+ */
+export async function setAgencyFlag(formData: FormData): Promise<void> {
+  await requireCapability("commercial.manage");
+  const p = flagSchema.safeParse({ agencyId: formData.get("agencyId"), field: formData.get("field") });
+  if (!p.success) redirect("/admin/organisations?notice=agency_invalid");
+  const { agencyId, field } = p.data;
+  const supabase = await createClient();
+  const { data: before } = await supabase.from("agencies").select("status, hero_partner").eq("id", agencyId).maybeSingle();
+  if (!before) redirect("/admin/organisations?notice=not_found");
+  const next = field === "confirm" ? { status: "confirmed" } : { hero_partner: field === "hero_on" };
+  const { data, error } = await supabase.from("agencies").update(next).eq("id", agencyId).select("id");
+  if (error || !(data ?? []).length) redirect("/admin/organisations?notice=agency_not_permitted");
+  await logAudit({ action: field === "confirm" ? "agency.confirmed" : "agency.hero_partner_set", entityType: "agency", entityId: agencyId, previous: before, next });
+  revalidatePath("/admin/organisations");
+  redirect("/admin/organisations?notice=agency_saved");
+}
+
 /**
  * Create (no agencyId) or edit an agency. The 00125 policies decide: only
  * commercial.manage in the agency's country, and an agency always has a

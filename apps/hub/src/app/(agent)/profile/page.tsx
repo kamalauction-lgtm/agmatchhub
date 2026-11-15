@@ -4,7 +4,7 @@ import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { HeroCard } from "@/components/profile/hero-card";
 import { AvatarUpload } from "@/components/profile/avatar-upload";
-import { updateTrustProfile, addSocialLink, removeSocialLink } from "./actions";
+import { updateTrustProfile, addSocialLink, removeSocialLink, setMyAgency, addMyAgency } from "./actions";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -19,20 +19,37 @@ const KNOWN_ERRORS = ["invalid_fields", "invalid_file_type", "file_too_large",
 export default async function ProfilePage({
   searchParams,
 }: {
-  searchParams: Promise<{ saved?: string; error?: string; hero?: string }>;
+  searchParams: Promise<{ saved?: string; error?: string; hero?: string; company?: string; company_saved?: string; company_error?: string }>;
 }) {
-  const { saved, error, hero: heroNotice } = await searchParams;
+  const { saved, error, hero: heroNotice, company: companyQuery, company_saved: companySaved, company_error: companyError } = await searchParams;
   const user = await requireUser();
   const supabase = await createClient();
   const t = await getTranslations("trustProfile");
 
   const [{ data: profile }, { data: priv }, { data: ap }, { data: links }] =
     await Promise.all([
-      supabase.from("profiles").select("display_name, avatar_url, agent_status").eq("id", user.id).single(),
+      supabase.from("profiles").select("display_name, avatar_url, agent_status, country_code").eq("id", user.id).single(),
       supabase.from("users_private").select("mobile_number, whatsapp_number, email").eq("user_id", user.id).maybeSingle(),
-      supabase.from("agent_profiles").select("biography, agency_name, licence_type, licence_number, name_card_front_path, name_card_back_path").eq("user_id", user.id).maybeSingle(),
+      supabase.from("agent_profiles").select("biography, agency_id, agency_name, licence_type, licence_number, name_card_front_path, name_card_back_path").eq("user_id", user.id).maybeSingle(),
       supabase.from("agent_social_links").select("*").eq("user_id", user.id).order("created_at"),
     ]);
+
+  // My company (00130): the directory in the agent's own country, searched by
+  // name; pattern characters are stripped before use.
+  const cq = (companyQuery ?? "").replace(/[%_,()*\\]/g, " ").trim().slice(0, 80);
+  const country = profile?.country_code ?? null;
+  const [{ data: myAgency }, { data: matches }, { data: heroPartner }, { data: heroLink }] = await Promise.all([
+    ap?.agency_id
+      ? supabase.from("agencies").select("id, name, status").eq("id", ap.agency_id).maybeSingle()
+      : Promise.resolve({ data: null }),
+    country && cq
+      ? supabase.from("agencies").select("id, name, status").eq("country_code", country).ilike("name", `%${cq}%`).order("status", { ascending: false }).order("name").limit(10)
+      : Promise.resolve({ data: [] as { id: string; name: string; status: string }[] }),
+    supabase.rpc("agency_is_hero_partner"),
+    supabase.from("hero_links").select("status").eq("user_id", user.id).maybeSingle(),
+  ]);
+  // AG Hero only for agents of a partner agency, or anyone already linked.
+  const heroEligible = heroPartner === true || (!!heroLink && heroLink.status !== "unlinked");
 
   const photoUrl = profile?.avatar_url
     ? supabase.storage.from("agent-profile-public").getPublicUrl(profile.avatar_url).data.publicUrl
@@ -182,8 +199,60 @@ export default async function ProfilePage({
         </details>
       </section>
 
-      {/* AG Hero link + launch benefits (E8). */}
-      <HeroCard userId={user.id} notice={heroNotice} />
+      {/* My company (00130) ------------------------------------------------ */}
+      <section id="company" className="mt-8 rounded-xl border border-line p-5" data-company="1">
+        <h2 className="font-semibold">{t("companyTitle")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("companyIntro")}</p>
+        {companySaved && <p className="mt-3 rounded-lg bg-success/10 px-3 py-2 text-sm text-success">{t("companySaved")}</p>}
+        {companyError && <p role="alert" className="mt-3 rounded-lg bg-crimson-soft px-3 py-2 text-sm text-crimson">{t(`companyErrors.${["other_country", "too_many", "invalid_name", "no_country", "not_allowed"].includes(companyError) ? companyError : "failed"}` as never)}</p>}
+        <p className="mt-3 text-sm">
+          <span className="text-muted">{t("companyCurrent")}: </span>
+          <span className="font-semibold" data-current-agency={myAgency?.id ?? ""}>{myAgency?.name ?? ap?.agency_name ?? "—"}</span>
+          {myAgency?.status === "unconfirmed" && <span className="ml-2 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-semibold text-warning">{t("companyUnconfirmed")}</span>}
+        </p>
+        {!country ? (
+          <p className="mt-3 text-sm text-muted">{t("companyNeedsCountry")}</p>
+        ) : (
+          <>
+            <form method="get" action="/profile#company" className="mt-4 flex flex-wrap items-end gap-2">
+              <label className="block flex-1 text-sm">
+                <span className="mb-1 block font-medium">{t("companySearch")}</span>
+                <input name="company" defaultValue={cq} maxLength={80} className={inputCls} />
+              </label>
+              <button type="submit" className="min-h-11 cursor-pointer rounded-lg border border-line px-4 text-sm font-semibold hover:border-crimson hover:text-crimson">{t("companySearchCta")}</button>
+            </form>
+            {cq && (
+              <ul className="mt-3 divide-y divide-line rounded-lg border border-line" data-company-results="1">
+                {(matches ?? []).map((a) => (
+                  <li key={a.id} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
+                    <span>
+                      {a.name}
+                      {a.status === "unconfirmed" && <span className="ml-2 text-xs text-muted">({t("companyUnconfirmed")})</span>}
+                    </span>
+                    <form action={setMyAgency}>
+                      <input type="hidden" name="agencyId" value={a.id} />
+                      <button type="submit" className="cursor-pointer text-xs font-semibold text-crimson hover:underline">{t("companyPick")}</button>
+                    </form>
+                  </li>
+                ))}
+                {!(matches ?? []).length && <li className="px-3 py-2 text-sm text-muted">{t("companyNone")}</li>}
+              </ul>
+            )}
+            {cq && (
+              <form action={addMyAgency} className="mt-3 flex flex-wrap items-end gap-2" data-company-add="1">
+                <label className="block flex-1 text-sm">
+                  <span className="mb-1 block font-medium">{t("companyAdd")}</span>
+                  <input name="agencyName" required minLength={2} maxLength={160} defaultValue={cq} className={inputCls} />
+                </label>
+                <button type="submit" className="min-h-11 cursor-pointer rounded-lg border border-line px-4 text-sm font-semibold hover:border-crimson hover:text-crimson">{t("companyAddCta")}</button>
+              </form>
+            )}
+          </>
+        )}
+      </section>
+
+      {/* AG Hero link + launch benefits (E8) — partner agencies only (00130). */}
+      {heroEligible && <HeroCard userId={user.id} notice={heroNotice} />}
     </AgentShell>
   );
 }
