@@ -14,8 +14,10 @@
   // Kuala Lumpur and Jakarta: the AI Manager's daily brief.
   "triggers": { "crons": ["*/15 * * * *", "0 23 * * *"] },
   // Cloudflare Images binding for the photo processor (P0-e-2a, 00109).
-  // Images FREE plan: no purchase; transformations stop at 5,000 a month and
-  // the processor pauses itself at 4,500 (MEDIA_TRANSFORM_CAP).
+  // Images FREE plan: no purchase; transformations stop at 5,000 a month,
+  // shared by every Worker on the account. Production pauses itself at 4,000
+  // and staging at 500 (MEDIA_TRANSFORM_CAP in vars; owner decision D-8,
+  // 16 Nov 2026), leaving 500 spare under the free allowance.
   "images": { "binding": "IMAGES" },
   "assets": {
     "directory": ".open-next/assets",
@@ -42,6 +44,7 @@
     "NEXT_PUBLIC_VAPID_PUBLIC_KEY": "BAD35F_p_FfT7Mk7hI-1D6bCKStkk_75sMVPAEDGdBeywwuXpBGLhGSPDLm0k-5SNxHWfi1hXpVdsyxDb04OJJE",
     "NEXT_PUBLIC_APP_NAME": "IQI AG Agent Platform",
     "NEXT_PUBLIC_APP_SHORT_NAME": "Agent Platform",
-    "NEXT_PUBLIC_APP_TAGLINE": "One platform for your whole property business."
+    "NEXT_PUBLIC_APP_TAGLINE": "One platform for your whole property business.",
+    "MEDIA_TRANSFORM_CAP": "4000"
   }
 }
