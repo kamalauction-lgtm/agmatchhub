@@ -91,3 +91,45 @@
 - **Not yet verified:**
   - a real signup through the form, end to end (staging's auth email rate limit refused the confirmation email during testing);
   - the 8 profiles still without a country choose one on Verification.
+
+## Follow-up release, 13 Nov 2026: instant access for new agents; voluntary Verified badge; approval switch; ban
+
+**Approved by the owner in chat ("Yes, release it"), 13 Nov 2026.**
+
+- **Code:** PR #47, merged as `d0bbdc6`.
+  - The first CI run passed all 832 tests, but its cleanup check failed: the new test left 2 rows behind. Fixed in `a396559`; the re-run was green.
+- **Migration:** `00129_agent_instant_access.sql` applied to production at 02:28 UTC, after staging. Production is at **00129** (129 applied).
+- **Hub:** deployed as **`a34f4a28-aa24-491f-97ea-9cc93883af37`**; build target verified as `jokyyhvtahiypuzmfydp`. **Rollback target: `145de9f6`.** To roll back the migration, recreate the previous policies, views and functions named in the 00129 header.
+- **Production checks:**
+  - login and register return 200;
+  - `agent_approval_required` is **off**;
+  - all 12 profiles have `access_granted_at` and access; 5 hold the Verified badge;
+  - both guard triggers are present;
+  - anon cannot execute `agent_has_access` or `admin_ban_agent`;
+  - `public_agent_profiles` now returns 12 profiles (it returned the 5 verified before). The marketplace reads it by slug only (`getAgentBySlug`), so there is no new directory listing.
+- **Staging before release:**
+  - RLS `agent-instant-access` 7/7, including the negative tests;
+  - related suites 43/43;
+  - Hub end to end 12/12.
+- **Not yet verified on production:**
+  - a real new agent working straight away;
+  - a ban in use.
+
+## Follow-up release, 16 Nov 2026: agency directory; AG Hero card only for partner agencies
+
+**Approved by the owner in chat ("Yes, release it"; partners "Both IQI ID and MY"), 16 Nov 2026.**
+
+- **Code:** PR #48, merged as `beca05e`. CI (checks and the full RLS suite) passed.
+- **Migration:** `00130_agency_directory_hero_partner.sql` applied to production at 17:04 UTC, after staging. Production is at **00130** (130 applied).
+- **Hub:** deployed as **`46d4f3ff-b950-4441-8c18-ce6d9cb38b7c`**; build target verified as `jokyyhvtahiypuzmfydp`. **Rollback target: `a34f4a28`.** To roll back the migration, drop the three functions and the three agency columns.
+- **Data, after release** (one transaction; each change audited as `agency.hero_partner_set`, `agency.created` or `agent.agency_set`):
+  - IQI Indonesia (ID) confirmed and made an AG Hero partner;
+  - IQI Malaysia (MY) created as a confirmed partner;
+  - the 2 Malaysian profiles with "IQI Realty Sdn Bhd" (Test Agent One and Supply Sally, both test accounts) linked to it.
+- **Production checks:**
+  - login 200; `/profile` without a session redirects to login;
+  - all 4 agents linked to the two IQI agencies pass `agency_is_hero_partner`;
+  - anon cannot execute the three new functions.
+- **Staging before release:** RLS `agency-directory` 6/6, including the negative tests; Hub end to end 12/12.
+- **Noted, not changed:** Budi Santoso's profile country is MY, but the profile is linked to IQI Indonesia (agency text "IQI Bandung"). An admin should confirm which is right.
+- **Not yet verified on production:** an agent adding their own company through the profile page.
