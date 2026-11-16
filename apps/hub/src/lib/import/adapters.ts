@@ -277,7 +277,7 @@ function pushImage(draft: ImportedListingDraft, value: unknown): void {
  * badge burned across it. Importing one as the listing photo would put another
  * company's pricing graphic on our marketplace.
  */
-function isPropertyPhoto(url: string): boolean {
+export function isPropertyPhoto(url: string): boolean {
   return !/\/(image\/og|og\/ldp|share|watermark|logo|avatar)\b/i.test(url);
 }
 

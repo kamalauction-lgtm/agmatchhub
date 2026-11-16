@@ -7,6 +7,7 @@ import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
 import { WorkforceGallery, type WorkerItem, type WorkforceLabels } from "@/components/ai/workforce-gallery";
 import { aiQuotaFor } from "@/lib/ai/engine";
+import { agentHasAccess } from "@/lib/agents/access";
 
 /**
  * The AI Workforce directory: the 36 roles from `ai_roles`, grouped by what
@@ -59,7 +60,7 @@ export default async function AiWorkforcePage() {
   // Hero-hosted roles open for linked AG Hero agents only (E8).
   const heroLinked = heroLink?.status === "linked";
   const roles = (rolesRaw ?? []) as Role[];
-  const verified = profile?.agent_status === "verified";
+  const verified = await agentHasAccess(supabase); // access, not the badge (00129)
   const country = profile?.country_code ?? null;
   const pick = (m: Record<string, string>) => m[locale] ?? m.en ?? Object.values(m)[0] ?? "";
   const pickList = (m: Record<string, string[]> | null | undefined) => m?.[locale] ?? m?.en ?? [];

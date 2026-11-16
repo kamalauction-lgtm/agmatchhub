@@ -1,5 +1,9 @@
 # PropertiGuru — what already exists
 
+> **8 Nov 2026:** Stage B (E0–E13) is built on staging. For the current state,
+> gates and safety rules read `docs/session-handover-2026-11-08.md` first;
+> the inventory below describes the platform as it was before Stage B.
+
 **Handover reference, updated 26 Sep 2026.** Written to be pasted into another AI tool
 before it designs a new module, so it extends the platform instead of rebuilding
 it. Everything below is verified against the live repo and database, not

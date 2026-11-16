@@ -7,6 +7,7 @@ import { getAgentCard, getAgentCardListings, cardUrl } from "@/lib/card/data";
 import { CardView, type CardLabels } from "@/components/card/card-view";
 import { SharePanel } from "@/components/listings/share-panel";
 import { locales } from "@/i18n/request";
+import { agentHasAccess } from "@/lib/agents/access";
 
 /**
  * "My name card" — the agent's own view. The preview below is the SAME
@@ -35,9 +36,10 @@ export default async function MyCardPage() {
     .eq("id", user.id)
     .single();
 
-  // The public views only carry verified agents — same gate as the card page.
+  // The public views carry every agent with access (00129); the badge shows on
+  // the card only when they are verified.
   const card =
-    profile?.public_slug && profile.agent_status === "verified"
+    profile?.public_slug && (await agentHasAccess(supabase))
       ? await getAgentCard(profile.public_slug)
       : null;
 

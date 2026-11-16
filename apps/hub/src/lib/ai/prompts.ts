@@ -40,12 +40,14 @@ const DEFAULTS: Record<string, (locale: string) => PromptText> = {
     system: `${COMMON(l)} You write property listing copy the way good agents in this market write it: a clear title with location and the one fact that sells, a scannable description, honest selling points.`,
     template:
       `Listing fields: {{fields}}\n` +
+      `Sizes are in fields.size_unit (sqm = square metres, sqft = square feet) and prices in fields.currency; quote them in exactly that unit and currency, never converted.\n` +
       `Write {"titles": [3 strings ≤ 70 chars, each different in emphasis], "description": string (120–220 words, short paragraphs, no emojis), "selling_points": [3–6 short strings], "notes_for_agent": [strings naming any field that is missing and would help]}.`,
   }),
   studio_copy: (l) => ({
     system: `${COMMON(l)} You write social and messaging copy for ONE listing, matched to each platform's habits. Hashtags only from the input's location and property type.`,
     template:
       `Listing: {{listing}}\nPlatforms: {{platforms}}\n` +
+      `Sizes are in listing.size_unit (sqm = square metres, sqft = square feet) and prices in listing.currency; quote them in exactly that unit and currency, never converted.\n` +
       `Write {"facebook": string, "instagram": string, "tiktok_script": string (spoken, ≤ 45 seconds), "whatsapp_broadcast": string (≤ 600 chars, line breaks), "brochure_blurb": string (≤ 80 words)}. Omit keys for platforms not requested.`,
   }),
   secretary_reply: (l) => ({

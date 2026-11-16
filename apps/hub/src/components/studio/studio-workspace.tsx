@@ -47,6 +47,8 @@ export type StudioAccount = {
 };
 
 export type StudioLabels = {
+  /** Which language the drafts are in (P0-d-1c); says so plainly when it is not the listing's. */
+  copyNotice?: string;
   tabWhatsapp: string;
   tabCaption: string;
   tabFacebook: string;
@@ -251,6 +253,7 @@ export function StudioWorkspace({
           ) : (
             <p>{labels.rulesSource}</p>
           )}
+          {labels.copyNotice && <p className="mt-0.5" data-copy-language>{labels.copyNotice}</p>}
           {quota && labels.aiQuota && (
             <p className="mt-0.5 tabular-nums">
               {labels.aiQuota.replace("[remaining]", String(quota.remaining)).replace("[total]", String(quota.total))}

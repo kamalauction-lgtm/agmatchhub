@@ -68,6 +68,14 @@ export async function AgentShell({
       : Promise.resolve({ data: null }),
   ]);
 
+  // P1-d-1 (00121): a suspended or banned agent sees why, not the workspace.
+  // The database refuses their listing writes regardless.
+  const blocked = profile?.agent_status === "suspended" || profile?.agent_status === "banned";
+  const { data: suspension } = blocked && user
+    ? await supabase.from("agent_suspensions").select("reason, suspended_at").eq("agent_id", user.id).is("restored_at", null).maybeSingle()
+    : { data: null };
+  const ts = blocked ? await getTranslations("suspension") : null;
+
   const sections: RailGroup[] = [
     {
       title: null,
@@ -136,10 +144,7 @@ export async function AgentShell({
           </span>
         </Link>
 
-        {/* Who you are, and whether you are cleared to work. Verification
-            status belongs here rather than only on the profile page: an
-            unverified agent cannot publish, and the reason should not be
-            somewhere they have to go looking for. */}
+        {/* Who you are, and your Verified Agent badge (voluntary, 00129). */}
         <div className="border-b border-line px-4 py-4 text-center">
           {/* `avatar_url` is a storage PATH in the public profile bucket, not a
               URL; resolve it, and fall back to the initial if the file is gone. */}
@@ -151,15 +156,20 @@ export async function AgentShell({
           />
           <p className="mt-2 truncate text-sm font-bold">{profile?.display_name ?? "—"}</p>
           <p className="text-xs text-muted">{t("agentRole")}</p>
-          <span
-            className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-              profile?.agent_status === "verified"
-                ? "bg-success-soft text-success"
-                : "bg-warning-soft text-warning"
-            }`}
-          >
-            {profile?.agent_status === "verified" ? t("verifiedBadge") : t("unverifiedBadge")}
-          </span>
+          {/* The Verified badge is voluntary since 00129: a quiet invitation
+              when it is missing, never a warning. */}
+          {profile?.agent_status === "verified" ? (
+            <span className="mt-2 inline-block rounded-full bg-success-soft px-2.5 py-0.5 text-[11px] font-semibold text-success">
+              ✓ {t("verifiedBadge")}
+            </span>
+          ) : (
+            <Link
+              href="/verification"
+              className="mt-2 inline-block rounded-full border border-line px-2.5 py-0.5 text-[11px] font-semibold text-muted transition-colors hover:border-crimson hover:text-crimson"
+            >
+              {t("unverifiedBadge")}
+            </Link>
+          )}
         </div>
 
         <RailNav groups={sections} />
@@ -221,7 +231,18 @@ export async function AgentShell({
             wide === "full" ? "max-w-[1700px]" : wide ? "max-w-6xl" : "max-w-3xl"
           }`}
         >
-          {children}
+          {blocked && ts ? (
+            <div className="mx-auto max-w-xl rounded-xl border border-danger/40 bg-danger/5 p-6" role="alert" data-suspended-notice="1">
+              <h1 className="text-xl font-semibold text-danger">{ts("title")}</h1>
+              <p className="mt-2 text-sm">{ts("body")}</p>
+              {suspension?.reason && (
+                <p className="mt-3 rounded-lg bg-surface px-3 py-2 text-sm"><span className="block text-xs text-muted">{ts("reason")}</span>{suspension.reason}</p>
+              )}
+              <p className="mt-3 text-xs text-muted">{ts("listings")}</p>
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
 

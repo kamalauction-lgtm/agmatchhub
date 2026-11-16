@@ -8,6 +8,7 @@ import { ChatToRequirement } from "@/components/requests/chat-to-requirement";
 import { extractRequirementAction } from "@/app/(agent)/ai/actions";
 import { getCompanions } from "@/lib/ai/cast";
 import { AI_REASON_KEYS } from "@/components/ai/ai-status";
+import { agentHasAccess } from "@/lib/agents/access";
 
 export default async function NewRequestPage({
   searchParams,
@@ -15,11 +16,9 @@ export default async function NewRequestPage({
   searchParams: Promise<{ error?: string; fields?: string }>;
 }) {
   const { error, fields } = await searchParams;
-  const user = await requireUser();
+  await requireUser();
   const supabase = await createClient();
-  const { data: profile } = await supabase
-    .from("profiles").select("agent_status").eq("id", user.id).single();
-  if (profile?.agent_status !== "verified") redirect("/requests");
+  if (!(await agentHasAccess(supabase))) redirect("/requests");
 
   const t = await getTranslations("requests");
   const tb = await getTranslations("aiTools.profiler");

@@ -5,13 +5,8 @@ import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { ListingWizard, type WizardLabels } from "@/components/listings/listing-wizard";
 import { createListing } from "../actions";
-
-const PROPERTY_TYPES = [
-  "rumah", "apartemen", "ruko", "rukan", "kondominium", "villa", "kost",
-  "gudang", "pabrik", "kantor", "toko", "hotel", "tanah", "kavling", "lainnya",
-] as const;
-
-const OWNERSHIP = ["shm", "hgb", "hgu", "hp", "hbg", "girik", "strata", "ppjb", "adat", "lainnya"] as const;
+import { getAgentMarket } from "@/lib/listings/market";
+import { PLATFORM_TYPES, TENURES, WIZARD_LOCATION_LEVELS } from "@/lib/listings/vocabulary";
 
 /** Advice keys the wizard can render, flattened for the client component. */
 const ADVICE_KEYS = [
@@ -25,7 +20,7 @@ export default async function NewListingPage({
 }: {
   searchParams: Promise<{ error?: string; field?: string }>;
 }) {
-  await requireUser();
+  const user = await requireUser();
   const { error, field } = await searchParams;
   const supabase = await createClient();
 
@@ -35,12 +30,25 @@ export default async function NewListingPage({
   const to = await getTranslations("ownershipTypes");
   const ta = await getTranslations("listings.advisor");
 
+  // D8: the wizard is the agent's market, resolved from their own profile.
+  const market = await getAgentMarket(supabase, user.id);
+  if (!market) {
+    return (
+      <AgentShell wide>
+        <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
+        <p className="mt-4 rounded-lg bg-danger/10 px-4 py-3 text-sm font-medium text-danger" role="alert">
+          {t("errors.market_unavailable")}
+        </p>
+      </AgentShell>
+    );
+  }
+
   const { data: locations } = await supabase
     .from("locations")
     .select("id, name, level, path_names")
-    .eq("country_code", "ID")
+    .eq("country_code", market.country)
     .eq("is_active", true)
-    .in("level", ["province", "regency"])
+    .in("level", [...WIZARD_LOCATION_LEVELS[market.country]])
     .order("path_names")
     .limit(600);
 
@@ -65,8 +73,9 @@ export default async function NewListingPage({
     increase: tw("increase"),
     categoryQ: tw("categoryQ"),
     forQ: tw("forQ"),
-    catResidentialHint: tw("catResidentialHint"),
-    catCommercialHint: tw("catCommercialHint"),
+    // The examples name the market's own products (a Malaysian agent has no kost).
+    catResidentialHint: market.country === "MY" ? tw("catResidentialHintMY") : tw("catResidentialHint"),
+    catCommercialHint: market.country === "MY" ? tw("catCommercialHintMY") : tw("catCommercialHint"),
     writeSelf: tw("writeSelf"),
     writeSelfHint: tw("writeSelfHint"),
     writeAi: tw("writeAi"),
@@ -101,10 +110,10 @@ export default async function NewListingPage({
     bathrooms: t("bathrooms"),
     parking: t("parking"),
     floors: t("floors"),
-    landSize: t("landSize"),
-    buildingSize: t("buildingSize"),
+    landSize: t("landSize", { unit: market.unit === "sqft" ? "sq ft" : "m²" }),
+    buildingSize: t("buildingSize", { unit: market.unit === "sqft" ? "sq ft" : "m²" }),
     yearBuilt: t("yearBuilt"),
-    certificate: t("certificate"),
+    certificate: market.country === "MY" ? t("tenure") : t("certificate"),
     furnishing: t("furnishing"),
     unfurnished: t("unfurnished"),
     partially: t("partially"),
@@ -117,7 +126,7 @@ export default async function NewListingPage({
     condConstruction: t("condConstruction"),
     facilities: t("facilities"),
     facilitiesPlaceholder: t("facilitiesPlaceholder"),
-    price: t("price"),
+    price: t("price", { currency: market.currency }),
     priceHelp: t("priceHelp"),
     adTitle: t("adTitle"),
     adTitlePlaceholder: t("adTitlePlaceholder"),
@@ -131,6 +140,10 @@ export default async function NewListingPage({
     comparables: tw("comparables"),
     sellingPoints: tw("sellingPoints"),
     sellingPointsHint: tw("sellingPointsHint"),
+    // P0-d-1c: which language a generated draft is in.
+    copyEnglish: tw("copyLanguage.english"),
+    copyEnglishFallback: tw("copyLanguage.englishFallback"),
+    copyIndonesian: tw("copyLanguage.indonesian"),
   };
   for (const r of ["quota", "daily_cap", "platform_cap", "circuit_open", "disabled", "feature_off", "unverified", "no_provider", "failed"]) {
     labels[`aiReason_${r}`] = tw(`aiReason.${r}` as never);
@@ -142,8 +155,8 @@ export default async function NewListingPage({
     labels[`advice_${k}`] = ta(k, { min: 0, max: 0, n: 0, place: "" });
   }
 
-  const typeLabels = Object.fromEntries(PROPERTY_TYPES.map((p) => [p, tt(p)]));
-  const ownershipLabels = Object.fromEntries(OWNERSHIP.map((o) => [o, to(o)]));
+  const typeLabels = Object.fromEntries([...PLATFORM_TYPES[market.country]].map((p) => [p, tt(p as never)]));
+  const ownershipLabels = Object.fromEntries(TENURES[market.country].map((o) => [o, to(o as never)]));
 
   const cast = await getCompanions(["listing_copywriter"]);
   return (
@@ -165,6 +178,9 @@ export default async function NewListingPage({
         t={labels}
         typeLabels={typeLabels}
         ownershipLabels={ownershipLabels}
+        country={market.country}
+        currency={market.currency}
+        unit={market.unit}
       />
     </AgentShell>
   );

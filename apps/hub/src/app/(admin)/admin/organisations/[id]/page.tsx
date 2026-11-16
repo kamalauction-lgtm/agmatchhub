@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, capabilityCountries } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
-import { setOrganisationPolicy } from "../actions";
+import { setOrganisationPolicy, saveAgency } from "../actions";
 
 /**
  * Organisation 360.
@@ -20,8 +20,9 @@ import { setOrganisationPolicy } from "../actions";
 
 export const dynamic = "force-dynamic";
 
-const money = (n: number, currency = "IDR") =>
-  new Intl.NumberFormat("id-ID", { style: "currency", currency, maximumFractionDigits: 0 }).format(n);
+/* D8: always the currency of the agency's market; no assumed IDR. */
+const money = (n: number, currency: string) =>
+  new Intl.NumberFormat(currency === "IDR" ? "id-ID" : "en", { style: "currency", currency, maximumFractionDigits: currency === "IDR" ? 0 : 2 }).format(n);
 
 export default async function OrganisationDetail({
   params,
@@ -37,8 +38,13 @@ export default async function OrganisationDetail({
   const supabase = await createClient();
 
   const { data: agency } = await supabase
-    .from("agencies").select("id, name, country_code, registration_number").eq("id", id).maybeSingle();
+    .from("agencies").select("id, name, country_code, registration_number, countries(default_currency)").eq("id", id).maybeSingle();
   if (!agency) notFound();
+  // Screen 11: countries this admin may assign (00125 decides on save).
+  const scope = await capabilityCountries("commercial.manage");
+  let cq = supabase.from("countries").select("code, name").eq("active", true).order("name");
+  if (scope) cq = cq.in("code", scope);
+  const { data: countryOptions } = await cq;
 
   const [{ data: members }, { data: targets }, { data: plans }] = await Promise.all([
     supabase
@@ -72,7 +78,8 @@ export default async function OrganisationDetail({
   const basePrice = Number(
     (plans as unknown as { monthly_price?: string } | null)?.monthly_price ?? 0,
   );
-  const currency = (plans as unknown as { currency?: string } | null)?.currency ?? "IDR";
+  const marketCurrency = ((Array.isArray(agency.countries) ? agency.countries[0] : agency.countries) as { default_currency?: string | null } | null)?.default_currency ?? null;
+  const currency = (plans as unknown as { currency?: string } | null)?.currency ?? marketCurrency ?? "USD";
 
   /* What each treatment would cost, per agent per month, so the choice is made
      against numbers instead of adjectives. */
@@ -108,6 +115,23 @@ export default async function OrganisationDetail({
           {t(`notice.${notice}` as never)}
         </p>
       )}
+
+      <details className="mb-6 rounded-xl border border-line p-4" data-agency-edit="1">
+        <summary className="cursor-pointer text-sm font-semibold">{t("agencyForm.edit")}</summary>
+        <form action={saveAgency} className="mt-3 grid gap-3 sm:grid-cols-3">
+          <input type="hidden" name="agencyId" value={agency.id} />
+          <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.name")}</span>
+            <input name="name" required minLength={2} maxLength={160} defaultValue={agency.name} className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm" /></label>
+          <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.registration")}</span>
+            <input name="registrationNumber" maxLength={80} defaultValue={agency.registration_number ?? ""} className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm" /></label>
+          <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.country")}</span>
+            <select name="countryCode" required defaultValue={agency.country_code ?? ""} className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm">
+              <option value="" disabled>{t("agencyForm.chooseCountry")}</option>
+              {(countryOptions ?? []).map((c) => <option key={c.code} value={c.code}>{c.name} ({c.code})</option>)}
+            </select></label>
+          <div className="sm:col-span-3"><button type="submit" className="min-h-10 cursor-pointer rounded-lg border border-line px-4 text-sm font-semibold hover:border-crimson hover:text-crimson">{t("agencyForm.save")}</button></div>
+        </form>
+      </details>
 
       <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[

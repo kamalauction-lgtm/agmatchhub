@@ -8,6 +8,7 @@ import { requireUser } from "@/lib/authz";
 import { logAudit } from "@/lib/audit";
 import { adapterFor, AutomaticImportUnavailable, type ImportedListingDraft } from "@/lib/import/adapters";
 import { assertSafeUrl, UnsafeUrlError, sanitiseText } from "@/lib/import/safe-fetch";
+import { batchOwner, createImportBatch, forAgentFrom, importBase } from "@/lib/import/batches";
 
 /**
  * Agent-driven listing migration.
@@ -40,8 +41,13 @@ const startSchema = z.object({
  */
 export async function startImport(formData: FormData): Promise<void> {
   const user = await requireUser();
+  // An admin preparing a batch for an agent (00107) posts forAgentId; the
+  // database decides whether they may. Everything else is the same flow.
+  const forAgentId = forAgentFrom(formData);
+  if (forAgentId === "invalid") redirect("/admin/imports?error=invalid");
+  const base = importBase(forAgentId);
   const parsed = startSchema.safeParse(Object.fromEntries(formData.entries()));
-  if (!parsed.success) redirect("/listings/import?error=invalid");
+  if (!parsed.success) redirect(`${base}?error=invalid`);
   const { portal, mode, input } = parsed.data;
 
   const supabase = await createClient();
@@ -57,21 +63,16 @@ export async function startImport(formData: FormData): Promise<void> {
         if (!line.trim()) continue;
         urls.push(assertSafeUrl(line).toString());
       }
-      if (!urls.length) redirect("/listings/import?error=invalid_url");
+      if (!urls.length) redirect(`${base}?error=invalid_url`);
     }
 
-    const { data: batch, error } = await supabase
-      .from("import_batches")
-      .insert({
-        agent_id: user.id,
-        source_kind: mode === "profile" ? "profile_url" : "portal_url",
-        source_portal: portal,
-        source_label: mode === "profile" ? input.slice(0, 200) : `${urls.length} link(s)`,
-        status: "processing",
-      })
-      .select("id")
-      .single();
-    if (error || !batch) redirect("/listings/import?error=save_failed");
+    const batch = await createImportBatch(supabase, user.id, forAgentId, {
+      source_kind: mode === "profile" ? "profile_url" : "portal_url",
+      source_portal: portal,
+      source_label: mode === "profile" ? input.slice(0, 200) : `${urls.length} link(s)`,
+      status: "processing",
+    });
+    if (!batch) redirect(`${base}?error=${forAgentId ? "not_permitted" : "save_failed"}`);
     batchId = batch.id;
 
     if (mode === "profile") {
@@ -95,10 +96,10 @@ export async function startImport(formData: FormData): Promise<void> {
       .eq("id", batchId);
 
     await logAudit({
-      action: "listing_import.batch_started",
+      action: forAgentId ? "listing_import.assisted_items_added" : "listing_import.batch_started",
       entityType: "import_batch",
       entityId: batch.id,
-      next: { portal, mode, found: urls.length },
+      next: { portal, mode, found: urls.length, ...(forAgentId ? { agent_id: forAgentId } : {}) },
     });
   } catch (e) {
     const code =
@@ -108,13 +109,13 @@ export async function startImport(formData: FormData): Promise<void> {
     if (batchId) {
       await supabase.from("import_batches")
         .update({ status: "failed", error: String(code) }).eq("id", batchId);
-      redirect(`/listings/import/${batchId}?error=${code}`);
+      redirect(`${base}/${batchId}?error=${code}`);
     }
-    redirect(`/listings/import?error=${code}`);
+    redirect(`${base}?error=${code}`);
   }
 
-  revalidatePath("/listings/import");
-  redirect(`/listings/import/${batchId}`);
+  revalidatePath(base);
+  redirect(`${base}/${batchId}`);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -163,7 +164,8 @@ export async function processItem(formData: FormData): Promise<void> {
     if (!merged.propertyType) warnings.push("property_type_missing");
     if (!merged.city && !merged.province && !merged.addressText) warnings.push("location_missing");
 
-    const dup = await findDuplicate(supabase, user.id, draft);
+    const owner = await batchOwner(supabase, item.batch_id, user.id);
+    const dup = await findDuplicate(supabase, owner?.agentId ?? user.id, draft);
 
     await supabase.from("import_items").update({
       status: dup ? "duplicate" : warnings.length ? "needs_review" : "ready",
@@ -187,6 +189,7 @@ export async function processItem(formData: FormData): Promise<void> {
   }
 
   revalidatePath(`/listings/import/${item.batch_id}`);
+  revalidatePath(`/admin/imports/${item.batch_id}`);
 }
 
 /**
@@ -239,7 +242,7 @@ const overrideSchema = z.object({
 });
 
 export async function saveItemOverrides(formData: FormData): Promise<void> {
-  await requireUser();
+  const user = await requireUser();
   const parsed = overrideSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!parsed.success) return;
   const { itemId, ...fields } = parsed.data;
@@ -266,11 +269,21 @@ export async function saveItemOverrides(formData: FormData): Promise<void> {
     warnings: stillMissing.map((f) => `${f}_missing`),
   }).eq("id", itemId);
 
+  const owner = await batchOwner(supabase, item.batch_id, user.id);
+  if (owner?.assisted) {
+    await logAudit({
+      action: "listing_import.assisted_item_edited",
+      entityType: "import_item",
+      entityId: itemId,
+      next: { batch_id: item.batch_id, agent_id: owner.agentId, fields: Object.keys(overrides) },
+    });
+  }
   revalidatePath(`/listings/import/${item.batch_id}`);
+  revalidatePath(`/admin/imports/${item.batch_id}`);
 }
 
 export async function setItemStatus(formData: FormData): Promise<void> {
-  await requireUser();
+  const user = await requireUser();
   const itemId = String(formData.get("itemId") ?? "");
   const status = String(formData.get("status") ?? "");
   if (!["skipped", "ready", "found"].includes(status)) return;
@@ -280,5 +293,15 @@ export async function setItemStatus(formData: FormData): Promise<void> {
     .from("import_items").select("batch_id").eq("id", itemId).maybeSingle();
   if (!item) return;
   await supabase.from("import_items").update({ status }).eq("id", itemId);
+  const owner = await batchOwner(supabase, item.batch_id, user.id);
+  if (owner?.assisted) {
+    await logAudit({
+      action: "listing_import.assisted_item_edited",
+      entityType: "import_item",
+      entityId: itemId,
+      next: { batch_id: item.batch_id, agent_id: owner.agentId, status },
+    });
+  }
   revalidatePath(`/listings/import/${item.batch_id}`);
+  revalidatePath(`/admin/imports/${item.batch_id}`);
 }

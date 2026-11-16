@@ -9,6 +9,7 @@
     "status:staging": "node scripts/db-migrate.mjs --status --env=staging",
     "seed:test-users:staging": "node scripts/seed-test-users.mjs --env=staging",
     "seed:scenario:staging": "node scripts/seed-staging-scenario.mjs --env=staging",
+    "correct:vocabulary:staging": "node scripts/correct-listing-vocabulary.mjs --env=staging",
     "seed:locations:staging": "node scripts/seed-locations-id.mjs --env=staging && node scripts/seed-locations-my.mjs --env=staging",
     "migrate:production": "node scripts/db-migrate.mjs --env=production",
     "status:production": "node scripts/db-migrate.mjs --status --env=production",

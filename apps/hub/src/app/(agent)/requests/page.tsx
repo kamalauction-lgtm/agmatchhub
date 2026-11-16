@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonClass } from "@/components/ui/button";
 import { StageStrip } from "@/components/collab/stage-strip";
 import { STAGE_KEYS, TABS, isTabKey, stageIndex, stageOf, type TabKey } from "@/lib/requests/stages";
+import { agentHasAccess } from "@/lib/agents/access";
 
 /**
  * The requesting agent's requirements (MatchHub 2.0 list). Same query and
@@ -30,16 +31,17 @@ export default async function RequestsPage({
   const t = await getTranslations("requests");
   const tc = await getTranslations("common");
 
-  const [{ data: rows }, { data: profile }] = await Promise.all([
+  const [{ data: rows }, hasAccess] = await Promise.all([
     supabase
       .from("property_requests")
       .select("id, human_readable_id, title, city, country_code, transaction_type, status, created_at")
       .eq("requesting_agent_id", user.id)
       .order("created_at", { ascending: false }),
-    supabase.from("profiles").select("agent_status").eq("id", user.id).single(),
+    agentHasAccess(supabase),
   ]);
 
-  const verified = profile?.agent_status === "verified";
+  // Named for its history: since 00129 this is "may use MatchHub", not the badge.
+  const verified = hasAccess;
   const all = rows ?? [];
   const tab: TabKey = isTabKey(sp.tab) ? sp.tab : "all";
   const stages = TABS[tab];

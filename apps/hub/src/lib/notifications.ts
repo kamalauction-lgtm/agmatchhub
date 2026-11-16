@@ -2,7 +2,7 @@ import "server-only";
 import { createServiceClient } from "@/lib/supabase/service";
 import { sendEmail } from "@/lib/email";
 import { sendPushToUser } from "@/lib/webpush";
-import { notificationTitle } from "@/lib/notification-titles";
+import { notificationOpenLabel, notificationTitle } from "@/lib/notification-titles";
 
 /** High-frequency kinds that stay in-app + push only (no inbox flooding). */
 const NO_EMAIL_KINDS = new Set(["message.new"]);
@@ -18,15 +18,19 @@ export async function notify(opts: {
   kind: string;               // e.g. "message.new", "offer.received"
   payload?: Record<string, string | number>;
   href?: string;
+  /** false when the database already wrote the in-app row (e.g. 00121); push and email still go out. */
+  inApp?: boolean;
 }): Promise<void> {
   const service = createServiceClient();
-  const { error } = await service.from("notifications").insert({
-    user_id: opts.userId,
-    kind: opts.kind,
-    payload: opts.payload ?? {},
-    href: opts.href ?? null,
-  });
-  if (error) console.error("[notify] failed:", opts.kind, error.message);
+  if (opts.inApp !== false) {
+    const { error } = await service.from("notifications").insert({
+      user_id: opts.userId,
+      kind: opts.kind,
+      payload: opts.payload ?? {},
+      href: opts.href ?? null,
+    });
+    if (error) console.error("[notify] failed:", opts.kind, error.message);
+  }
 
   // Delivery channels are best-effort; never break the triggering action.
   try {
@@ -47,11 +51,12 @@ export async function notify(opts: {
     if (priv?.email && !NO_EMAIL_KINDS.has(opts.kind)) {
       await sendEmail({
         to: priv.email,
-        subject: `MatchHub: ${title}`,
+        // D10: the brand comes from brand_settings via the email template, never from code.
+        subject: title,
         heading: title,
         body: ref ? `Reference: ${ref}` : undefined,
         ctaUrl: opts.href ?? "/notifications",
-        ctaLabel: "Open MatchHub",
+        ctaLabel: notificationOpenLabel(locale),
       });
     }
   } catch (e) {

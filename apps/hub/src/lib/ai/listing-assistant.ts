@@ -2,8 +2,10 @@ import "server-only";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { runAi, type DeniedReason } from "./engine";
-import { writeDescription, writeTitles, type WriterInput } from "./listing-writer";
+import { type WriterInput } from "./listing-writer";
 import { adviseListing, type Advice } from "./listing-advisor";
+import { type CopyLanguage } from "./copy-language";
+import { buildListingCopyRequest } from "./listing-copy-request";
 
 /**
  * The AI Listing Assistant.
@@ -32,6 +34,8 @@ export type ListingDraft = {
   reason?: DeniedReason | "failed";
   model?: string;
   comparables: Comparables;
+  /** The language the draft is written in, and whether that differs from the listing's (P0-d-1c). */
+  copy: CopyLanguage;
 };
 
 const schema = z.object({
@@ -43,10 +47,8 @@ const schema = z.object({
 
 export async function draftListing(
   input: WriterInput & { propertyTypeSlug?: string | null; countryCode?: string },
-  ctx: { userId: string; locale: string },
+  ctx: { userId: string },
 ): Promise<ListingDraft> {
-  const titles = writeTitles(input);
-  const description = writeDescription(input);
   const adviceFor = (title: string, desc: string) =>
     adviseListing({ title, description: desc, bedrooms: input.bedrooms, regency: input.regency, district: input.area, listingType: input.listingType });
 
@@ -69,25 +71,16 @@ export async function draftListing(
     }
   }
 
+  // P0-d-1c: the request (language, currency, unit, floor draft) is built in
+  // one pure function, so tests see exactly what the model is asked for.
+  const req = buildListingCopyRequest(input, comparables);
+  const { copy, titles, description } = req;
+
   const res = await runAi(
     "listing_copy",
-    {
-      fields: {
-        listing_type: input.listingType,
-        property_type: input.propertyTypeLabel,
-        province: input.province, regency: input.regency, area: input.area, building: input.buildingName,
-        bedrooms: input.bedrooms, bathrooms: input.bathrooms, parking: input.parking, floors: input.floors,
-        land_size_sqm: input.landSize, building_size_sqm: input.buildingSize, year_built: input.yearBuilt,
-        furnishing: input.furnishing, condition: input.condition, ownership: input.ownership,
-        facilities: input.facilities ?? [], price: input.price, rent_period: input.rentPeriod, negotiable: input.negotiable ?? false,
-      },
-      comparables: comparables
-        ? { count: comparables.n, median_price: comparables.medianPrice, median_price_per_sqm: comparables.medianPerSqm, note: "published listings of the same kind in the same regency; quote only if useful, never invent others" }
-        : "none available",
-      deterministic_draft: { titles, description },
-    },
+    req.payload,
     schema,
-    { userId: ctx.userId, locale: ctx.locale, refType: "listing_draft", redactInput: false },
+    { userId: ctx.userId, locale: req.locale, refType: "listing_draft", redactInput: false },
   );
 
   if (res.ok) {
@@ -101,6 +94,7 @@ export async function draftListing(
       source: "ai",
       model: `${res.provider}/${res.model}`,
       comparables,
+      copy,
     };
   }
   return {
@@ -112,5 +106,6 @@ export async function draftListing(
     source: "rules",
     reason: res.kind === "denied" ? res.reason : "failed",
     comparables,
+    copy,
   };
 }

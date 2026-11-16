@@ -1,4 +1,7 @@
 import "server-only";
+// Relative, not `@/`: unit tests import this module without the hub alias.
+import { unitSuffix, type SizeUnit } from "../listings/vocabulary";
+import { copyLanguage } from "./copy-language";
 
 /**
  * Writes listing copy from the structured fields the agent already entered.
@@ -40,6 +43,24 @@ export type WriterInput = {
   price?: number | null;
   rentPeriod?: "monthly" | "yearly" | null;
   negotiable?: boolean;
+  /** The listing's market (D8). Absent means Indonesia, as before. */
+  currency?: string | null;
+  sizeUnit?: SizeUnit | null;
+  /**
+   * The listing's stored language (P0-d-1c). The copy follows it: `id` keeps
+   * the Indonesian writer exactly as it was, `en` writes English, and `ms`
+   * writes English until reviewed Malay phrases exist (see copy-language.ts).
+   * Absent means Indonesian, as before.
+   */
+  language?: string | null;
+};
+
+/** English names for the tenures, for English copy. Legal terms, not translated freely. */
+const OWNERSHIP_EN: Record<string, string> = {
+  shm: "SHM (freehold title)", hgb: "HGB (right to build)", hgu: "HGU", hp: "Right of use", hbg: "HGB over HPL",
+  girik: "Girik", strata: "Strata title", ppjb: "PPJB", adat: "Customary land",
+  freehold: "Freehold", leasehold_99: "Leasehold (99 years)", leasehold_60: "Leasehold (60 years)",
+  leasehold_other: "Leasehold", malay_reserve: "Malay reserve land", bumi_lot: "Bumi lot",
 };
 
 const FURNISHING: Record<string, string> = {
@@ -68,6 +89,17 @@ const OWNERSHIP: Record<string, string> = {
   adat: "Tanah Adat",
 };
 
+/**
+ * Tenure label for Studio copy. Indonesian titles keep their existing short
+ * labels in both languages (unchanged output). In English copy, Malaysian
+ * tenures, which have no Indonesian label, use their English names; Indonesian
+ * copy is left exactly as it was.
+ */
+function tenureLabel(slug: string | null | undefined, lang: Lang): string | null {
+  if (!slug) return null;
+  return OWNERSHIP[slug] ?? (lang === "en" ? OWNERSHIP_EN[slug] : undefined) ?? null;
+}
+
 function place(i: WriterInput): string {
   return [i.area, i.regency].filter(Boolean).join(", ") || i.province || "";
 }
@@ -89,8 +121,21 @@ function rupiah(v: number): string {
   return `Rp${v.toLocaleString("id-ID")}`;
 }
 
+/** Price in the listing's own currency: rupiah keeps its "miliar/juta" form. */
+function priceText(v: number, currency: string | null | undefined): string {
+  const c = currency ?? "IDR";
+  if (c === "IDR") return rupiah(v);
+  return new Intl.NumberFormat(c === "MYR" ? "en-MY" : "en-US", { style: "currency", currency: c, minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(v);
+}
+
+/** Size suffix in the listing's own unit. */
+function withUnit(text: string, unit: SizeUnit | null | undefined): string {
+  return unit === "sqft" ? text.replace(/ m²/g, ` ${unitSuffix("sqft")}`) : text;
+}
+
 /** Three title options, so the agent picks rather than accepts. */
 export function writeTitles(i: WriterInput): string[] {
+  if (copyLanguage(i.language).lang === "en") return writeTitlesEn(i);
   const p = i.area || i.regency || i.province || "";
   const beds = i.bedrooms ? `${i.bedrooms}KT ` : "";
   const type = i.propertyTypeLabel;
@@ -131,14 +176,13 @@ export type StudioInput = WriterInput & {
   url: string | null;
   /** Raw DB value (rumah, apartemen…), used for hashtags. */
   propertyTypeSlug?: string | null;
-  language?: string | null;
 };
 
 type Lang = "id" | "en";
 
-/** Indonesian market: listings are `id` or `en`; anything else reads as `id`. */
+/** The listing's language, narrowed to a phrase set (Malay: English for now). */
 function langOf(language?: string | null): Lang {
-  return language === "en" ? "en" : "id";
+  return copyLanguage(language).lang;
 }
 
 const T: Record<
@@ -227,7 +271,7 @@ function specLine(i: WriterInput, L: (typeof T)[Lang]): string {
   if (i.landSize && i.buildingSize) parts.push(`📐 ${L.landBuild(i.landSize, i.buildingSize)}`);
   else if (i.buildingSize) parts.push(`📐 ${L.build(i.buildingSize)}`);
   else if (i.landSize) parts.push(`📐 ${L.land(i.landSize)}`);
-  return parts.join(" · ");
+  return withUnit(parts.join(" · "), i.sizeUnit);
 }
 
 function priceLine(i: WriterInput, L: (typeof T)[Lang], long: boolean): string {
@@ -235,7 +279,7 @@ function priceLine(i: WriterInput, L: (typeof T)[Lang], long: boolean): string {
   const period =
     i.listingType === "rent" ? (i.rentPeriod === "yearly" ? L.perYear : L.perMonth) : "";
   const nego = i.negotiable === false ? "" : long ? L.negoLong : L.nego;
-  return `💰 ${rupiah(i.price)}${period}${nego}`;
+  return `💰 ${priceText(i.price, i.currency)}${period}${nego}`;
 }
 
 /** True by construction: only claimed when the agent's own fields say so. */
@@ -293,7 +337,8 @@ export function writeWhatsappBroadcast(i: StudioInput): string {
   const specs = specLine(i, L);
   if (specs) facts.push(specs);
   const cert: string[] = [];
-  if (i.ownership && OWNERSHIP[i.ownership]) cert.push(`📜 ${OWNERSHIP[i.ownership]}`);
+  const certLabel = tenureLabel(i.ownership, langOf(i.language));
+  if (certLabel) cert.push(`📜 ${certLabel}`);
   if (i.furnishing === "fully") cert.push("🛋️ Full furnished");
   if (cert.length) facts.push(cert.join(" · "));
   const price = priceLine(i, L, false);
@@ -328,7 +373,8 @@ export function writeSocialCaption(i: StudioInput): string {
   if (specs) for (const s of specs.split(" · ")) details.push(`• ${s}`);
   if (i.parking) details.push(`• 🚗 Carport ${i.parking}`);
   if (i.floors && i.floors > 1) details.push(`• 🏢 ${L.floors(i.floors)}`);
-  if (i.ownership && OWNERSHIP[i.ownership]) details.push(`• 📜 ${OWNERSHIP[i.ownership]}`);
+  const tenure = tenureLabel(i.ownership, langOf(i.language));
+  if (tenure) details.push(`• 📜 ${tenure}`);
   if (i.furnishing && L.furn[i.furnishing]) details.push(`• 🛋️ ${L.furn[i.furnishing]}`);
   if (details.length) blocks.push(`${L.details}\n${details.join("\n")}`);
 
@@ -359,6 +405,7 @@ export function writeSocialCaption(i: StudioInput): string {
  * reason to act → contact.
  */
 export function writeDescription(i: WriterInput): string {
+  if (copyLanguage(i.language).lang === "en") return writeDescriptionEn(i);
   const blocks: string[] = [];
   const p = place(i);
   const type = i.propertyTypeLabel;
@@ -382,11 +429,11 @@ export function writeDescription(i: WriterInput): string {
   if (i.parking) specs.push(`🚗 Carport ${i.parking} mobil`);
   if (i.floors && i.floors > 1) specs.push(`🏢 ${i.floors} Lantai`);
   if (i.landSize && i.buildingSize) {
-    specs.push(`📐 LT ${i.landSize} m² / LB ${i.buildingSize} m²`);
+    specs.push(withUnit(`📐 LT ${i.landSize} m² / LB ${i.buildingSize} m²`, i.sizeUnit));
   } else if (i.buildingSize) {
-    specs.push(`📐 Luas bangunan ${i.buildingSize} m²`);
+    specs.push(withUnit(`📐 Luas bangunan ${i.buildingSize} m²`, i.sizeUnit));
   } else if (i.landSize) {
-    specs.push(`📐 Luas tanah ${i.landSize} m²`);
+    specs.push(withUnit(`📐 Luas tanah ${i.landSize} m²`, i.sizeUnit));
   }
   if (i.ownership && OWNERSHIP[i.ownership]) specs.push(`📜 Sertifikat ${OWNERSHIP[i.ownership]}`);
   if (i.furnishing && FURNISHING[i.furnishing]) specs.push(`🛋️ ${FURNISHING[i.furnishing]}`);
@@ -408,7 +455,7 @@ export function writeDescription(i: WriterInput): string {
     const period =
       i.listingType === "rent" ? (i.rentPeriod === "yearly" ? " / tahun" : " / bulan") : "";
     const nego = i.negotiable === false ? "" : " (nego untuk penawaran serius)";
-    blocks.push(`💰 HARGA\n• ${rupiah(i.price)}${period}${nego}`);
+    blocks.push(`💰 HARGA\n• ${priceText(i.price, i.currency)}${period}${nego}`);
   }
 
   // --- location --------------------------------------------------------------
@@ -433,6 +480,90 @@ export function writeDescription(i: WriterInput): string {
   blocks.push(
     "📱 HUBUNGI SAYA\nKlik tombol WhatsApp di listing ini untuk tanya detail, minta foto tambahan, atau atur jadwal survey. Saya balas cepat."
   );
+
+  return blocks.join("\n\n");
+}
+
+/* -------------------------------------------------------------------------- */
+/* English (P0-d-1c): same structure and the same rule — only the agent's own */
+/* fields, no invented urgency. "Move-in ready" is claimed only when the      */
+/* condition or furnishing says so.                                           */
+/* -------------------------------------------------------------------------- */
+
+function sizeEn(n: number): string {
+  return n.toLocaleString("en-US");
+}
+
+function writeTitlesEn(i: WriterInput): string[] {
+  const p = i.area || i.regency || i.province || "";
+  const beds = i.bedrooms ? `${i.bedrooms}BR ` : "";
+  const type = i.propertyTypeLabel;
+  const furn = i.furnishing === "fully" ? ", fully furnished" : "";
+  const ready = i.condition === "new" || i.condition === "excellent" || i.furnishing === "fully";
+  const verb = i.listingType === "rent" ? "For rent" : "For sale";
+  const tenure = i.ownership ? OWNERSHIP_EN[i.ownership] : undefined;
+
+  const options = [
+    `${verb}: ${type} ${beds}in ${p}${furn}${ready ? ", move-in ready" : ""}`,
+    i.buildingName ? `${type} ${beds}at ${i.buildingName}, ${p}` : `${type} ${beds}in ${p}, close to amenities`,
+    i.condition === "new" ? `New ${type} ${beds}in ${p}, never occupied` : `${type} ${beds}${p}${tenure ? ` — ${tenure}` : ""}`,
+  ];
+
+  return options
+    .map((s) => s.replace(/\s+/g, " ").replace(/\s,/g, ",").replace(/ in ,/g, ",").replace(/ — $/, "").trim())
+    .filter((s, idx, arr) => s.length > 15 && arr.indexOf(s) === idx);
+}
+
+function writeDescriptionEn(i: WriterInput): string {
+  const L = T.en;
+  const blocks: string[] = [];
+  const p = place(i);
+  const type = i.propertyTypeLabel;
+  const verb = i.listingType === "rent" ? "FOR RENT" : "FOR SALE";
+  const beds = i.bedrooms ? ` ${i.bedrooms}BR` : "";
+  const unit = unitSuffix(i.sizeUnit ?? "sqm");
+
+  blocks.push(`🏡 ${verb}: ${type.toUpperCase()}${beds}${p ? ` IN ${p.toUpperCase()}` : ""}`);
+
+  const hook: string[] = [];
+  if (i.buildingName) hook.push(`Located at ${i.buildingName}${p ? `, ${p}` : ""}.`);
+  else if (p) hook.push(`Located in ${p}.`);
+  if (i.condition && L.cond[i.condition]) hook.push(`${L.cond[i.condition]}.`);
+  if (i.furnishing === "fully") hook.push("Fully furnished — just bring your suitcase.");
+  if (hook.length) blocks.push(hook.join(" "));
+
+  const specs: string[] = [];
+  if (i.bedrooms) specs.push(`🛏️ ${i.bedrooms} bedroom${i.bedrooms === 1 ? "" : "s"}`);
+  if (i.bathrooms) specs.push(`🚿 ${i.bathrooms} bathroom${i.bathrooms === 1 ? "" : "s"}`);
+  if (i.parking) specs.push(`🚗 Parking for ${i.parking} car${i.parking === 1 ? "" : "s"}`);
+  if (i.floors && i.floors > 1) specs.push(`🏢 ${i.floors} floors`);
+  if (i.landSize && i.buildingSize) specs.push(`📐 Land ${sizeEn(i.landSize)} ${unit} / built-up ${sizeEn(i.buildingSize)} ${unit}`);
+  else if (i.buildingSize) specs.push(`📐 Built-up ${sizeEn(i.buildingSize)} ${unit}`);
+  else if (i.landSize) specs.push(`📐 Land ${sizeEn(i.landSize)} ${unit}`);
+  if (i.ownership && OWNERSHIP_EN[i.ownership]) specs.push(`📜 ${OWNERSHIP_EN[i.ownership]}`);
+  if (i.furnishing && L.furn[i.furnishing]) specs.push(`🛋️ ${L.furn[i.furnishing]}`);
+  if (i.yearBuilt) specs.push(`📅 Built ${i.yearBuilt}`);
+  if (specs.length) blocks.push(`📋 SPECIFICATIONS\n${specs.map((s) => `• ${s}`).join("\n")}`);
+
+  if (i.facilities?.length) {
+    const f = i.facilities.slice(0, 10).map((x) => `• ✅ ${x.charAt(0).toUpperCase()}${x.slice(1)}`).join("\n");
+    blocks.push(`${L.facilities}\n${f}`);
+  }
+
+  if (i.price) {
+    const period = i.listingType === "rent" ? (i.rentPeriod === "yearly" ? L.perYear : L.perMonth) : "";
+    const nego = i.negotiable === false ? "" : L.negoLong;
+    blocks.push(`💰 PRICE\n• ${priceText(i.price, i.currency)}${period}${nego}`);
+  }
+
+  if (p) blocks.push(`📍 LOCATION\n• ${p}\n• Add the nearest landmarks here (station, highway, school, mall)`);
+
+  const now: string[] = [];
+  if (i.condition === "new" || i.condition === "excellent" || i.furnishing === "fully") now.push("Move-in ready — no renovation needed.");
+  now.push(i.listingType === "rent" ? L.surveySlot : L.docsReady);
+  blocks.push(`⚡ ${now.join(" ")}`);
+
+  blocks.push("📱 CONTACT ME\nTap the WhatsApp button on this listing to ask for details, request more photos or book a viewing. I reply quickly.");
 
   return blocks.join("\n\n");
 }

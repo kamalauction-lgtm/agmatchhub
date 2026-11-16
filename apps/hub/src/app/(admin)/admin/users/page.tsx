@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { requireCapability } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
-import { grantRole, revokeRole } from "./actions";
+import { grantRole, registerPerson, revokeRole } from "./actions";
 
 /**
  * Who can do what.
@@ -31,6 +31,12 @@ const NOTICE_TONE: Record<string, "ok" | "warn"> = {
   invalid: "warn",
   not_found: "warn",
   unknown_role: "warn",
+  registered: "ok",
+  activation_resent: "ok",
+  registered_email_failed: "warn",
+  registered_role_failed: "warn",
+  email_registered: "warn",
+  register_failed: "warn",
 };
 
 export default async function AdminUsersPage({
@@ -166,6 +172,58 @@ export default async function AdminUsersPage({
             </tbody>
           </table>
         </div>
+      </section>
+
+      {/* Register ---------------------------------------------------------- */}
+      <section className="mb-10 rounded-xl border border-line p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">
+          {t("registerTitle")}
+        </h2>
+        <p className="mt-1 max-w-2xl text-sm text-muted">{t("registerIntro")}</p>
+
+        <form action={registerPerson} className="mt-5 grid gap-4 sm:grid-cols-3">
+          <label className="block text-sm">
+            <span className="font-medium">{t("registerName")}</span>
+            <input name="fullName" required minLength={2} maxLength={80} className={input} />
+          </label>
+          <label className="block text-sm">
+            <span className="font-medium">{t("registerEmailField")}</span>
+            <input name="email" type="email" required maxLength={200} autoComplete="off" className={input} />
+          </label>
+          <label className="block text-sm">
+            <span className="font-medium">{t("registerLanguage")}</span>
+            <select name="language" defaultValue="id" className={input}>
+              <option value="id">Bahasa Indonesia</option>
+              <option value="ms">Bahasa Melayu</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+          <label className="block text-sm">
+            <span className="font-medium">{t("role")}</span>
+            <select name="roleKey" required defaultValue="country_admin" className={input}>
+              <option value="none">{t("registerNoRole")}</option>
+              {ROLE_KEYS.map((k) => (
+                <option key={k} value={k}>
+                  {(roles ?? []).find((r) => r.key === k)?.name ?? k}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block text-sm sm:col-span-2">
+            <span className="font-medium">{t("scope")}</span>
+            <input name="countryCodes" placeholder="ID, MY" className={input} />
+            <span className="mt-1 block text-xs text-muted">{t("scopeHint")}</span>
+          </label>
+          <div className="sm:col-span-3">
+            <button
+              type="submit"
+              className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-crimson-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+            >
+              {t("registerCta")}
+            </button>
+            <span className="mt-2 block text-xs text-muted">{t("registerAgentsHint")}</span>
+          </div>
+        </form>
       </section>
 
       {/* Grant ------------------------------------------------------------ */}

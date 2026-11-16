@@ -1,6 +1,7 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ZodType } from "zod";
+import { agentHasAccess } from "@/lib/agents/access";
 import {
   generate,
   redact,
@@ -90,8 +91,8 @@ export async function runAi<T>(
   if (flagOn !== true) return { ok: false, kind: "denied", reason: "feature_off", jobId: await record({ status: "denied", denied_reason: "feature_off" }) };
 
   if (!ctx.allowUnverified) {
-    const { data: profile } = await service.from("profiles").select("agent_status").eq("id", ctx.userId).maybeSingle();
-    if (profile?.agent_status !== "verified") {
+    // Access, not the Verified badge (00129): a new agent may use AI at once.
+    if (!(await agentHasAccess(service, ctx.userId))) {
       return { ok: false, kind: "denied", reason: "unverified", jobId: await record({ status: "denied", denied_reason: "unverified" }) };
     }
   }

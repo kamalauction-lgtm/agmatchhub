@@ -9,6 +9,7 @@ import { notify } from "@/lib/notifications";
 import { embedPendingListings } from "@/lib/ai/embeddings";
 import { linkHeroFor } from "@/lib/hero/link";
 import { heroConfigured } from "@/lib/hero/client";
+import { processIntakeMedia } from "@/lib/media/process";
 
 /**
  * The scheduler's single entry point.
@@ -32,6 +33,21 @@ type TaskResult = Record<string, unknown>;
 type Task = { name: string; every: "15m" | "daily"; run: () => Promise<TaskResult> };
 
 const TASKS: Task[] = [
+  {
+    /** Screen 2 (00126): prospects past their owner-set retention period are deleted; only the count is audited. */
+    name: "prospect_retention",
+    every: "daily",
+    run: async () => {
+      const { data, error } = await createServiceClient().rpc("purge_expired_prospects");
+      return error ? { error: error.message } : { deleted: data ?? 0 };
+    },
+  },
+  {
+    /** P0-e-2a (00109): private intake originals → clean WebP derivatives, capped. */
+    name: "photo_processing",
+    every: "15m",
+    run: () => processIntakeMedia(10),
+  },
   {
     name: "social_publish_due",
     every: "15m",

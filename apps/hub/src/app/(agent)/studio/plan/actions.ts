@@ -7,7 +7,8 @@ import { requireUser } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
 import { getStudioListings, publicMediaUrl } from "@/lib/studio/listings";
-import { buildStudioInput, copyLocaleFor } from "@/lib/studio/input";
+import { buildStudioInput } from "@/lib/studio/input";
+import { copyLanguage } from "@/lib/ai/copy-language";
 import { writeSocialCaption } from "@/lib/ai/listing-writer";
 import { planWeek, type PlanPlatform, type PlanSlot } from "@/lib/ai/social-plan-rules";
 import { improveWeek, type PlannedWeek } from "@/lib/ai/social-plan";
@@ -32,10 +33,11 @@ export async function planWeekAction(input: { weekStart: string; withAi: boolean
   const facts: Record<string, unknown> = {};
   const images: Record<string, string | null> = {};
   const planListings = await Promise.all(published.map(async (l) => {
-    const copyLocale = copyLocaleFor(l);
+    // P0-d-1c: labels in the copy language (Malay listings: English for now).
+    const copyLocale = copyLanguage(l.language).lang;
     const tt = await getTranslations({ locale: copyLocale, namespace: "propertyTypes" });
     const inp = buildStudioInput(l, (slug) => (tt.has(slug as never) ? tt(slug as never) : slug));
-    facts[l.id] = { title: inp.title, type: inp.propertyTypeLabel, listing_type: inp.listingType, area: inp.area, regency: inp.regency, bedrooms: inp.bedrooms, bathrooms: inp.bathrooms, building_size_sqm: inp.buildingSize, land_size_sqm: inp.landSize, price: inp.price, currency: l.currency, rent_period: inp.rentPeriod, facilities: inp.facilities, furnishing: inp.furnishing, link: inp.url, language: l.language };
+    facts[l.id] = { title: inp.title, type: inp.propertyTypeLabel, listing_type: inp.listingType, area: inp.area, regency: inp.regency, bedrooms: inp.bedrooms, bathrooms: inp.bathrooms, building_size: inp.buildingSize, land_size: inp.landSize, size_unit: l.measurement_unit, price: inp.price, currency: l.currency, rent_period: inp.rentPeriod, facilities: inp.facilities, furnishing: inp.furnishing, link: inp.url, language: l.language };
     images[l.id] = publicMediaUrl(l.cover_image_path);
     return { id: l.id, title: l.title, hasPhoto: !!l.cover_image_path, publishedAt: l.published_at, caption: writeSocialCaption(inp) };
   }));

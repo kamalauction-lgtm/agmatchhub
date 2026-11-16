@@ -4,8 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { submitVerification } from "./actions";
+import { CountryLicenceFields } from "@/components/forms/country-licence-fields";
+import { licenceTypesFor } from "@/lib/countries/licence";
 
-const LICENCE_TYPES = ["REN", "REA", "PEA", "AGEN_PROPERTI", "BROKER", "OTHER"] as const;
 const CATEGORIES = ["residential", "commercial", "industrial", "land"] as const;
 const KNOWN_ERRORS = [
   "invalid_fields", "missing_documents", "invalid_file_type", "file_too_large",
@@ -25,9 +26,9 @@ export default async function VerificationPage({
   const supabase = await createClient();
 
   const [{ data: profile }, { data: ap }, { data: countries }] = await Promise.all([
-    supabase.from("profiles").select("agent_status").eq("id", user.id).single(),
+    supabase.from("profiles").select("agent_status, country_code").eq("id", user.id).single(),
     supabase.from("agent_profiles").select("*").eq("user_id", user.id).maybeSingle(),
-    supabase.from("countries").select("code, name").eq("active", true).order("name"),
+    supabase.from("countries").select("code, name, terminology").eq("active", true).order("name"),
   ]);
   if (!profile) redirect("/login");
 
@@ -35,6 +36,16 @@ export default async function VerificationPage({
   const td = await getTranslations("dashboard");
 
   const status = profile.agent_status;
+  // Licence labels: a type without a translation shows its code rather than
+  // breaking the page, so a new country's list works before it is translated.
+  const licenceLabel = (v: string) => (t.has(`licenceTypes.${v}`) ? t(`licenceTypes.${v}` as never) : v);
+  const countryOptions = (countries ?? []).map((c) => ({
+    code: c.code,
+    name: c.name,
+    licences: licenceTypesFor(c.terminology).map((v) => ({ value: v, label: licenceLabel(v) })),
+  }));
+  const fixedCountry = profile.country_code ?? null;
+  const defaultCountry = fixedCountry ?? ap?.country_code ?? countryOptions[0]?.code ?? "";
   const editable = [
     "draft", "email_verification_pending", "documents_pending",
     "additional_information_required", "rejected",
@@ -88,32 +99,24 @@ export default async function VerificationPage({
             </div>
 
             <div className="grid gap-5 sm:grid-cols-3">
-              <label className="block">
-                <span className="mb-1 block text-sm font-medium">{t("licenceType")}</span>
-                <select name="licenceType" required defaultValue={ap?.licence_type ?? "REN"} className={inputCls}>
-                  {LICENCE_TYPES.map((v) => (
-                    <option key={v} value={v}>{t(`licenceTypes.${v}`)}</option>
-                  ))}
-                </select>
-              </label>
+              <CountryLicenceFields
+                countries={countryOptions}
+                fixedCountry={fixedCountry}
+                defaultCountry={defaultCountry}
+                defaultLicence={ap?.licence_type ?? null}
+                labels={{ country: t("country"), licenceType: t("licenceType"), fixedHint: t("countryFixedHint") }}
+                className={inputCls}
+              />
               <label className="block">
                 <span className="mb-1 block text-sm font-medium">{t("licenceNumber")}</span>
                 <input name="licenceNumber" required minLength={2} defaultValue={ap?.licence_number ?? ""} className={inputCls} />
-              </label>
-              <label className="block">
-                <span className="mb-1 block text-sm font-medium">{t("licenceExpiry")}</span>
-                <input type="date" name="licenceExpiry" defaultValue={ap?.licence_expiry ?? ""} className={inputCls} />
               </label>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-3">
               <label className="block">
-                <span className="mb-1 block text-sm font-medium">{t("country")}</span>
-                <select name="countryCode" required defaultValue={ap?.country_code ?? "MY"} className={inputCls}>
-                  {(countries ?? []).map((c) => (
-                    <option key={c.code} value={c.code}>{c.name}</option>
-                  ))}
-                </select>
+                <span className="mb-1 block text-sm font-medium">{t("licenceExpiry")}</span>
+                <input type="date" name="licenceExpiry" defaultValue={ap?.licence_expiry ?? ""} className={inputCls} />
               </label>
               <label className="block">
                 <span className="mb-1 block text-sm font-medium">{t("stateRegion")}</span>

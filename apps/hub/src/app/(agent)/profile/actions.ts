@@ -4,14 +4,42 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { removeOldAvatar, storeCleanAvatar } from "@/lib/media/avatar";
 
 const IMAGE_MIMES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
 };
-const MAX_PHOTO_BYTES = 3 * 1024 * 1024;
 const MAX_CARD_BYTES = 5 * 1024 * 1024;
+
+/**
+ * My company (00130): pick an agency from the directory, or add yours when it
+ * is not there. Both go through database functions that keep the agency in the
+ * agent's own country, refuse agents without access, and audit the change.
+ */
+export async function setMyAgency(formData: FormData) {
+  const id = z.string().uuid().safeParse(formData.get("agencyId"));
+  if (!id.success) redirect("/profile?company_error=invalid#company");
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("agent_set_agency", { p_agency: id.data });
+  const r = data as { ok?: boolean; error?: string } | null;
+  if (!r?.ok) redirect(`/profile?company_error=${r?.error ?? "failed"}#company`);
+  redirect("/profile?company_saved=1#company");
+}
+
+export async function addMyAgency(formData: FormData) {
+  const name = z.string().trim().min(2).max(160).safeParse(formData.get("agencyName"));
+  if (!name.success) redirect("/profile?company_error=invalid_name#company");
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("agent_add_agency", { p_name: name.data });
+  const r = data as { ok?: boolean; error?: string; agency?: string } | null;
+  if (!r?.ok || !r.agency) redirect(`/profile?company_error=${r?.error ?? "failed"}#company`);
+  const { data: set } = await supabase.rpc("agent_set_agency", { p_agency: r.agency });
+  const s = set as { ok?: boolean; error?: string } | null;
+  if (!s?.ok) redirect(`/profile?company_error=${s?.error ?? "failed"}#company`);
+  redirect("/profile?company_saved=1#company");
+}
 
 export async function updateTrustProfile(formData: FormData) {
   const supabase = await createClient();
@@ -36,18 +64,19 @@ export async function updateTrustProfile(formData: FormData) {
   if (!parsed.success) redirect("/profile?error=invalid_fields");
   const d = parsed.data;
 
-  // Profile photo → public bucket (client-facing per §71 visibility rules)
+  // Profile photo → public bucket (client-facing per §71 visibility rules),
+  // but never the agent's original (P1-b-4, 00118): it is re-encoded to one
+  // metadata-free WebP and only that is stored, by the service client.
   const photo = formData.get("photo") as File | null;
   let photoPath: string | null = null;
+  let previousPhoto: string | null = null;
   if (photo && photo.size > 0) {
-    const ext = IMAGE_MIMES[photo.type];
-    if (!ext) redirect("/profile?error=invalid_file_type");
-    if (photo.size > MAX_PHOTO_BYTES) redirect("/profile?error=file_too_large");
-    photoPath = `${user.id}/photo-${Date.now()}.${ext}`;
-    const { error } = await supabase.storage
-      .from("agent-profile-public")
-      .upload(photoPath, photo, { contentType: photo.type });
-    if (error) redirect("/profile?error=upload_failed");
+    if (!IMAGE_MIMES[photo.type]) redirect("/profile?error=invalid_file_type");
+    const stored = await storeCleanAvatar(user.id, new Uint8Array(await photo.arrayBuffer()));
+    if (!stored.ok) redirect(`/profile?error=${stored.error}`);
+    photoPath = stored.path;
+    const { data: before } = await supabase.from("profiles").select("avatar_url").eq("id", user.id).single();
+    previousPhoto = before?.avatar_url ?? null;
   }
 
   // Name card images → private bucket (§71: controlled, never public)
@@ -75,6 +104,16 @@ export async function updateTrustProfile(formData: FormData) {
     })
     .eq("id", user.id);
   if (profErr) redirect("/profile?error=save_failed");
+  if (photoPath) {
+    await removeOldAvatar(user.id, previousPhoto, photoPath);
+    await logAudit({
+      action: "profile.avatar_updated",
+      entityType: "profile",
+      entityId: user.id,
+      previous: { avatar_url: previousPhoto },
+      next: { avatar_url: photoPath, format: "webp", cleaned: true },
+    });
+  }
 
   await supabase
     .from("users_private")

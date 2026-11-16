@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, capabilityCountries } from "@/lib/authz";
 
 const FILTERS = ["pending_admin_approval", "resubmitted", "amendment_required", "link_active", "all"] as const;
 
@@ -22,6 +22,8 @@ export default async function AdminRequestsPage({
     .order("created_at", { ascending: false })
     .limit(100);
   if (status !== "all") query = query.eq("status", status);
+  const scope = await capabilityCountries("request.manage");
+  if (scope) query = query.in("country_code", scope);
   const { data: rows } = await query;
 
   return (

@@ -6,6 +6,7 @@ import { ToolHeader } from "@/components/ai/tool-header";
 import { AiStatus, AI_REASON_KEYS } from "@/components/ai/ai-status";
 import { getWeeklyReview } from "@/lib/ai/weekly-review";
 import { regenerateWeeklyReview } from "../actions";
+import { agentHasAccess } from "@/lib/agents/access";
 
 /** Performance Reviewer — the last seven days against the seven before; peers only as anonymised medians. */
 function Row({ label, a, b, unit = "", invert = false }: { label: string; a: number | null; b: number | null; unit?: string; invert?: boolean }) {
@@ -28,7 +29,7 @@ export default async function ReviewPage() {
   const tr = await getTranslations("aiTools");
   const supabase = await createClient();
   const { data: profile } = await supabase.from("profiles").select("display_name, agent_status").eq("id", user.id).maybeSingle();
-  const verified = profile?.agent_status === "verified";
+  const verified = await agentHasAccess(supabase); // access, not the badge (00129)
   const r = verified ? await getWeeklyReview({ userId: user.id, locale, firstName: (profile?.display_name ?? "").split(" ")[0] }) : null;
   const m = r?.metrics;
   return (

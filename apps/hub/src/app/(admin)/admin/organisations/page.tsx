@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { requireCapability } from "@/lib/authz";
+import { requireCapability, capabilityCountries } from "@/lib/authz";
+import { saveAgency, setAgencyFlag } from "./actions";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -18,13 +19,20 @@ import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
-export default async function OrganisationsPage() {
+export default async function OrganisationsPage({ searchParams }: { searchParams: Promise<{ notice?: string }> }) {
   await requireCapability("commercial.manage");
+  const { notice } = await searchParams;
   const t = await getTranslations("organisations");
   const supabase = await createClient();
 
+  // Screen 11: the countries this admin may create organisations in (00125).
+  const scope = await capabilityCountries("commercial.manage");
+  let cq = supabase.from("countries").select("code, name").eq("active", true).order("name");
+  if (scope) cq = cq.in("code", scope);
+  const { data: countryOptions } = await cq;
+
   const [{ data: agencies }, { data: profiles }, { data: policies }] = await Promise.all([
-    supabase.from("agencies").select("id, name, country_code, registration_number").order("name"),
+    supabase.from("agencies").select("id, name, country_code, registration_number, status, hero_partner").order("status", { ascending: false }).order("name"),
     supabase
       .from("agent_profiles")
       .select("agency_id, user_id, profiles:user_id(agent_status)"),
@@ -63,6 +71,24 @@ export default async function OrganisationsPage() {
     <>
       <h1 className="text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-6 mt-1 max-w-2xl text-sm text-muted">{t("intro")}</p>
+      {notice && (
+        <p className="mb-6 rounded-lg bg-surface px-4 py-3 text-sm font-medium" role="status">{t(`notice.${notice}` as never)}</p>
+      )}
+      <details className="mb-6 rounded-xl border border-line p-4" data-agency-create="1">
+        <summary className="cursor-pointer text-sm font-semibold">{t("agencyForm.create")}</summary>
+        <form action={saveAgency} className="mt-3 grid gap-3 sm:grid-cols-3">
+          <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.name")}</span>
+            <input name="name" required minLength={2} maxLength={160} defaultValue="" className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm" /></label>
+          <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.registration")}</span>
+            <input name="registrationNumber" maxLength={80} defaultValue="" className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm" /></label>
+          <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.country")}</span>
+            <select name="countryCode" required defaultValue="" className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm">
+              <option value="" disabled>{t("agencyForm.chooseCountry")}</option>
+              {(countryOptions ?? []).map((c) => <option key={c.code} value={c.code}>{c.name} ({c.code})</option>)}
+            </select></label>
+          <div className="sm:col-span-3"><button type="submit" className="min-h-10 cursor-pointer rounded-lg bg-crimson px-4 text-sm font-semibold text-white hover:bg-crimson-strong">{t("agencyForm.createButton")}</button></div>
+        </form>
+      </details>
 
       {unlinked > 0 && (
         /* Said plainly: an organisation policy only reaches agents whose
@@ -82,6 +108,7 @@ export default async function OrganisationsPage() {
               <th className="px-4 py-3 text-right">{t("agents")}</th>
               <th className="px-4 py-3 text-right">{t("verified")}</th>
               <th className="px-4 py-3">{t("commercialPolicy")}</th>
+              <th className="px-4 py-3">{t("directory")}</th>
             </tr>
           </thead>
           <tbody>
@@ -116,12 +143,34 @@ export default async function OrganisationsPage() {
                       <span className="text-xs text-muted">{t("standardPricing")}</span>
                     )}
                   </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-2" data-agency-flags={a.id}>
+                      {a.status === "unconfirmed" ? (
+                        <form action={setAgencyFlag}>
+                          <input type="hidden" name="agencyId" value={a.id} />
+                          <input type="hidden" name="field" value="confirm" />
+                          <span className="mr-2 rounded-full bg-warning-soft px-2 py-0.5 text-xs font-semibold text-warning">{t("unconfirmed")}</span>
+                          <button type="submit" className="cursor-pointer text-xs font-semibold text-crimson hover:underline">{t("confirm")}</button>
+                        </form>
+                      ) : null}
+                      <form action={setAgencyFlag}>
+                        <input type="hidden" name="agencyId" value={a.id} />
+                        <input type="hidden" name="field" value={a.hero_partner ? "hero_off" : "hero_on"} />
+                        <button
+                          type="submit"
+                          className={`cursor-pointer rounded-full border px-2.5 py-0.5 text-xs font-semibold ${a.hero_partner ? "border-success bg-success/10 text-success" : "border-line text-muted hover:border-crimson hover:text-crimson"}`}
+                        >
+                          {a.hero_partner ? `✓ ${t("heroPartner")}` : t("makeHeroPartner")}
+                        </button>
+                      </form>
+                    </div>
+                  </td>
                 </tr>
               );
             })}
             {!(agencies ?? []).length && (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-muted">{t("empty")}</td>
+                <td colSpan={6} className="px-4 py-10 text-center text-muted">{t("empty")}</td>
               </tr>
             )}
           </tbody>

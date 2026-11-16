@@ -7,10 +7,24 @@
  * or a rent period changed.
  */
 
-/** `Rp 3.200.000.000` or `Rp 25.000.000/bln`. Indonesian digit grouping. */
+/**
+ * `IDR 3.200.000.000` or `IDR 25.000.000/bln` — rupiah keep their Indonesian
+ * grouping exactly as before. Any other currency (P1-a) uses its own
+ * convention: `RM 880,000` or `RM 4,500/mo`, never `MYR 880.000`.
+ */
 export function money(currency: string, price: number, rentPeriod: string | null) {
-  const suffix = rentPeriod ? (rentPeriod === "monthly" ? "/bln" : "/thn") : "";
-  return `${currency} ${Number(price).toLocaleString("id-ID")}${suffix}`;
+  if (currency === "IDR") {
+    const suffix = rentPeriod ? (rentPeriod === "monthly" ? "/bln" : "/thn") : "";
+    return `${currency} ${Number(price).toLocaleString("id-ID")}${suffix}`;
+  }
+  const suffix = rentPeriod ? (rentPeriod === "monthly" ? "/mo" : "/yr") : "";
+  let text: string;
+  try {
+    text = new Intl.NumberFormat(currency === "MYR" ? "en-MY" : "en-US", { style: "currency", currency, minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(Number(price));
+  } catch {
+    text = `${currency} ${Number(price).toLocaleString("en-US")}`;
+  }
+  return `${text}${suffix}`;
 }
 
 /** `Jakarta Selatan, DKI Jakarta`. Falls back to an em dash, never blank. */

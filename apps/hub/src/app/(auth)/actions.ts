@@ -11,6 +11,8 @@ const credentialsSchema = z.object({
 
 const registerSchema = credentialsSchema.extend({
   displayName: z.string().trim().min(2).max(80),
+  // Checked again by handle_new_user (00128): only an active country is kept.
+  countryCode: z.string().regex(/^[A-Z]{2}$/),
   confirmPassword: z.string(),
 });
 
@@ -32,6 +34,7 @@ export async function signIn(formData: FormData) {
 export async function signUp(formData: FormData) {
   const parsed = registerSchema.safeParse({
     displayName: formData.get("displayName"),
+    countryCode: formData.get("countryCode"),
     email: formData.get("email"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
@@ -53,7 +56,7 @@ export async function signUp(formData: FormData) {
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      data: { display_name: parsed.data.displayName },
+      data: { display_name: parsed.data.displayName, country_code: parsed.data.countryCode },
       emailRedirectTo: process.env.AUTH_CALLBACK_URL,
     },
   });
@@ -107,4 +110,31 @@ export async function resetPassword(formData: FormData) {
   const { error } = await supabase.auth.updateUser({ password: parsed.data });
   if (error) redirect("/reset-password?error=generic");
   redirect("/dashboard");
+}
+
+/**
+ * Activation of an account a super admin registered (/activate). The link's
+ * one-time token is used only here, on a button press, never on the GET that
+ * opens the page, so a mail scanner fetching the link does not spend it.
+ * Success signs the person in; they then choose their password.
+ */
+const activateSchema = z.object({
+  tokenHash: z.string().min(10).max(200),
+  type: z.enum(["invite", "recovery"]),
+});
+
+export async function activateAccount(formData: FormData) {
+  const parsed = activateSchema.safeParse({
+    tokenHash: formData.get("tokenHash"),
+    type: formData.get("type"),
+  });
+  if (!parsed.success) redirect("/activate?error=expired");
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({
+    type: parsed.data.type,
+    token_hash: parsed.data.tokenHash,
+  });
+  if (error) redirect("/activate?error=expired");
+  redirect("/reset-password?welcome=1");
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ActionQueue } from "@/components/admin/action-queue";
 import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, myCapabilities } from "@/lib/authz";
@@ -130,6 +131,7 @@ export default async function AdminHome({
     { data: snapshotRows },
     { data: healthRows },
     { data: audit },
+    { data: canAudit },
   ] = await Promise.all([
     supabase.rpc("admin_growth_metrics"),
     supabase.rpc("admin_action_queues"),
@@ -146,6 +148,8 @@ export default async function AdminHome({
       .select("action, entity_type, created_at, profiles:actor_id(display_name)")
       .order("created_at", { ascending: false })
       .limit(6),
+    // 00123: the audit trail is audit.view only; others get no link to it.
+    supabase.rpc("has_capability", { p_capability: "audit.view" }),
   ]);
 
   const metrics = ((m ?? []) as Metrics[])[0];
@@ -249,6 +253,9 @@ export default async function AdminHome({
           {t("deniedCapability", { capability: denied })}
         </p>
       )}
+
+      {/* Action queue (screen 1): everything waiting, by risk and age ------ */}
+      <ActionQueue />
 
       {/* Headline numbers ------------------------------------------------- */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -571,11 +578,11 @@ export default async function AdminHome({
 
         <Panel
           title={t("recentActivity")}
-          action={
+          action={canAudit ? (
             <Link href="/admin/audit" className="text-xs font-semibold text-blue hover:underline">
               {t("openAudit")}
             </Link>
-          }
+          ) : undefined}
           bodyClassName="p-0 sm:p-0"
         >
           {!(audit ?? []).length ? (

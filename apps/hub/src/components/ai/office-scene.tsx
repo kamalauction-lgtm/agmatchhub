@@ -54,12 +54,15 @@ export function OfficeScene({
   locale,
   demoAllowed,
   header,
+  refreshAction,
 }: {
   initial: OfficeData;
   labels: OfficeLabels;
   locale: string;
   demoAllowed: boolean;
-  header: { eyebrow: string; title: string; subtitle: string; badge: string; back: string };
+  header: { eyebrow: string; title: string; subtitle: string; badge: string; back: string; backHref?: string };
+  /** Screen 12: the admin platform view passes its own refresh; the agent page uses its own office. */
+  refreshAction?: () => Promise<OfficeData | null>;
 }) {
   const [data, setData] = useState<OfficeData>(initial);
   const isPhone = useIsPhone();
@@ -77,12 +80,12 @@ export function OfficeScene({
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      const next = await refreshOffice();
+      const next = await (refreshAction ?? refreshOffice)();
       if (next) setData(next);
     } finally {
       setRefreshing(false);
     }
-  }, []);
+  }, [refreshAction]);
   useEffect(() => {
     timer.current = window.setInterval(() => {
       if (document.visibilityState === "visible") void refresh();
@@ -217,7 +220,7 @@ export function OfficeScene({
           <Kpi label={labels.kpi.departments} value={kpi.departments} icon="⬡" />
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-          <Link href="/ai" className="command-link font-semibold hover:underline">{header.back}</Link>
+          <Link href={header.backHref ?? "/ai"} className="command-link font-semibold hover:underline">{header.back}</Link>
           <span className="inline-flex items-center gap-2 text-white/70">
             {labels.updated} {relTime(data.generatedAt, locale, "")}
             <button type="button" onClick={() => void refresh()} disabled={refreshing} className="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 font-semibold text-white hover:bg-white/20 disabled:opacity-50">

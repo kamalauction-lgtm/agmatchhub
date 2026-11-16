@@ -50,13 +50,21 @@
       "weak_password": "Password must be at least 8 characters.",
       "email_in_use": "An account with this email may already exist.",
       "generic": "Something went wrong. Please try again."
-    }
+    },
+    "activateTitle": "Activate your account",
+    "activateBody": "Continue to choose your password. You will be signed in straight after.",
+    "activateCta": "Continue",
+    "activateExpired": "This activation link has expired or was already used. Ask your administrator to send a new one.",
+    "welcomeTitle": "Choose your password",
+    "country": "Country where you work",
+    "countryChoose": "Choose your country",
+    "countryHint": "This decides which licence types you see and which team supports you."
   },
   "dashboard": {
     "title": "Agent dashboard",
     "welcome": "Welcome, {name}",
     "statusLabel": "Verification status",
-    "statusNote": "Complete your agent verification to create requirements and submit properties.",
+    "statusNote": "Your account is not active yet, or it has been paused. You will be notified when this changes.",
     "status": {
       "draft": "Profile incomplete",
       "email_verification_pending": "Email verification pending",
@@ -72,7 +80,7 @@
       "expired_licence": "Licence expired",
       "archived": "Archived"
     },
-    "startVerification": "Complete verification",
+    "startVerification": "Open verification",
     "adminConsole": "Admin console",
     "myRequests": "My requests",
     "modules": {
@@ -135,7 +143,7 @@
         "circuit_open": "Rules-only brief — AI is resting for a few minutes after errors.",
         "disabled": "Rules-only brief — AI is switched off by the platform.",
         "feature_off": "Rules-only brief — AI features are not enabled for your account yet.",
-        "unverified": "Rules-only brief — AI opens after verification.",
+        "unverified": "Rules-only brief — AI opens once your account is active.",
         "no_provider": "Rules-only brief — no AI provider is connected yet.",
         "failed": "Rules-only brief — the AI did not answer this time."
       },
@@ -197,15 +205,18 @@
       "expired": "Expired",
       "archived": "Archived",
       "paused": "Paused"
-    }
+    },
+    "badgeTitle": "Get your ✓ Verified Agent badge",
+    "badgeNote": "Optional. Verified agents earn more trust from buyers and rank higher in listing quality.",
+    "badgeCta": "Apply"
   },
   "verification": {
-    "title": "Agent verification",
-    "intro": "Provide your professional details and documents. An administrator will review your submission before you can create requirements or submit properties.",
-    "submittedNotice": "Submitted. Your verification is now under review.",
+    "title": "Verified Agent badge",
+    "intro": "Optional. Verify your licence and identity to get the ✓ Verified Agent badge on your listings, digital card and profile. You can keep using the platform while an administrator reviews it.",
+    "submittedNotice": "Submitted. An administrator will review it, and the badge appears once approved.",
     "adminNotes": "Admin notes",
     "currentStatus": "Current status",
-    "lockedNotice": "Your submission is being processed. You will be notified when the review is complete.",
+    "lockedNotice": "Your badge application is being reviewed. You will be notified when it is done.",
     "fullLegalName": "Full legal name",
     "agencyName": "Agency name",
     "agencyRegistrationNumber": "Agency registration no.",
@@ -236,7 +247,7 @@
     "identityDocument": "Identity document",
     "agencyDocument": "Agency confirmation (optional)",
     "alreadyUploaded": "already uploaded",
-    "submit": "Submit for review",
+    "submit": "Apply for the badge",
     "errors": {
       "invalid_fields": "Please check the highlighted fields and try again.",
       "missing_documents": "Licence and identity documents are required.",
@@ -245,7 +256,8 @@
       "upload_failed": "Upload failed. Please try again.",
       "save_failed": "Could not save. Please try again.",
       "not_allowed": "Your current status does not allow submission."
-    }
+    },
+    "countryFixedHint": "Set when you registered. Ask an admin if it needs to change."
   },
   "admin": {
     "badge": "Admin",
@@ -272,7 +284,14 @@
       "ai": "AI console",
       "hero": "AG Hero",
       "payments": "Payments",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "invitations": "Invitations",
+      "imports": "Assisted import",
+      "media": "Photo quality",
+      "handover": "Handover",
+      "leads": "Lead response",
+      "pipeline": "Recruiting pipeline",
+      "sources": "Sources"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -320,11 +339,20 @@
     "doneNotice": {
       "approve": "Agent approved and verified.",
       "reject": "Agent rejected.",
-      "request_info": "Information requested from the agent."
+      "request_info": "Information requested from the agent.",
+      "suspended": "Agent suspended. {n, plural, one {# live listing was} other {# live listings were}} paused.",
+      "restored": "Agent restored. {n, plural, one {# listing was} other {# listings were}} republished.",
+      "banned": "Agent banned. {n, plural, one {# live listing was} other {# live listings were}} paused."
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
-      "save_failed": "Could not save the decision."
+      "save_failed": "Could not save the decision.",
+      "self_invited": "You invited this agent, so another admin must approve their verification.",
+      "reason_required": "Give a reason of at least 3 characters.",
+      "already_suspended": "This agent is already suspended.",
+      "not_suspended": "This agent is not suspended.",
+      "self": "You cannot suspend or restore yourself.",
+      "already_banned": "This agent is already banned."
     },
     "overviewTitle": "Command Center",
     "allClear": "Nothing is waiting. All queues are clear.",
@@ -407,8 +435,15 @@
     "navGroup": {
       "work": "Queues",
       "grow": "Growth",
-      "commerce": "Commercial",
-      "platform": "Platform"
+      "commerce": "Commercial and growth",
+      "platform": "Platform",
+      "agents": "Agents",
+      "listings": "Listings and import",
+      "demand": "Demand and reports",
+      "ai": "AI Workforce",
+      "comms": "Communications",
+      "markets": "Markets and content",
+      "security": "Security and audit"
     },
     "bucketLabel": "each column = {count} days",
     "noQueues": "You have no queues assigned.",
@@ -456,6 +491,67 @@
       "media": "{count} published without a photo",
       "trust": "oldest open {count}h",
       "rewards": "{count} awaiting a decision"
+    },
+    "a360": {
+      "portfolioTitle": "Portfolio",
+      "noListings": "No listings yet.",
+      "consentTitle": "Consents and declarations",
+      "noConsent": "No consent records.",
+      "accountTitle": "Account",
+      "suspendHint": "Suspending pauses this agent's {n, plural, one {# live listing} other {# live listings}} and stops them editing listings until restored. They are told why.",
+      "suspendReason": "Reason (the agent sees it)",
+      "suspend": "Suspend agent",
+      "suspendedSince": "Suspended since {date}.",
+      "restoreNote": "Note (optional)",
+      "restoreHint": "Restoring returns the previous status and republishes the {n, plural, one {# listing} other {# listings}} the suspension paused, if they are still approved.",
+      "restore": "Restore agent",
+      "listingStatus": {
+        "draft": "Draft",
+        "pending_review": "Awaiting review",
+        "published": "Live",
+        "rejected": "Rejected",
+        "paused": "Paused",
+        "expired": "Expired",
+        "sold": "Sold",
+        "rented": "Rented",
+        "withdrawn": "Withdrawn",
+        "archived": "Archived"
+      },
+      "bannedNotice": "This agent is banned. Their listings are paused and they cannot work on the platform.",
+      "banTitle": "Ban this agent",
+      "banHint": "For scams. Pauses their live listings and stops all work. Unlike a suspension, it cannot be restored here.",
+      "ban": "Ban agent"
+    },
+    "agentQueue": {
+      "search": "Search by name",
+      "country": "Country",
+      "allCountries": "All countries",
+      "apply": "Apply",
+      "newAgents": "New agents",
+      "window": "Joined in the last",
+      "hours": "{n} h",
+      "newHint": "New agents can use the platform straight away. Check them here and suspend or ban any that look like a scam.",
+      "joined": "Joined"
+    },
+    "actionQueue": {
+      "title": "Action queue",
+      "hint": "Everything waiting on you, the most urgent and oldest first.",
+      "empty": "Nothing is waiting. Well done.",
+      "more": "Show {n} more",
+      "lessThanHour": "just now",
+      "hours": "{n} h",
+      "days": "{n} d",
+      "kind": {
+        "report_scam": "Scam report",
+        "report": "Buyer report",
+        "lead_overdue": "Lead overdue",
+        "listing_review": "Listing to review",
+        "agent_review": "Agent to verify",
+        "change_answered": "Agent replied",
+        "request_review": "Request to approve",
+        "photo_failed": "Photo failed",
+        "invite_expiring": "Invitation expiring"
+      }
     }
   },
   "adminLegal": {
@@ -490,12 +586,23 @@
       "language": "Default language",
       "currency": "Currency",
       "unit": "Unit",
-      "ingestAgent": "Ingest agent"
+      "ingestAgent": "Ingest agent",
+      "local": "Timezone and terms"
     },
     "save": "Save",
     "ingestAgentNone": "— none —",
     "ingestAgentHint": "The verified company profile that server-to-server drafts (Hero → ingest) belong to in this country.",
-    "ingestAgentInvalid": "The ingest agent must be a verified agent of that country."
+    "ingestAgentInvalid": "The ingest agent must be a verified agent of that country.",
+    "ingestAgreementPlaceholder": "Partner agreement reference",
+    "ingestAgreementHint": "The written agreement partner-feed photos are used under. It is recorded with every partner photo. Leave empty and partner photos are not stored.",
+    "timezone": "Timezone (IANA, e.g. Asia/Jakarta)",
+    "term": {
+      "agent": "Term for an agent",
+      "owner": "Term for an owner",
+      "tenant": "Term for a tenant"
+    },
+    "invalidFields": "Check the values: the timezone must be a valid IANA name and terms at most 60 characters.",
+    "prospectRetention": "Prospect retention (days, 30–730)"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -518,8 +625,8 @@
     "importListings": "Import listings",
     "growth": "My growth",
     "agentRole": "Property agent",
-    "verifiedBadge": "Verified",
-    "unverifiedBadge": "Not yet verified",
+    "verifiedBadge": "Verified Agent",
+    "unverifiedBadge": "Get verified",
     "aiWorkforce": "AI Workforce",
     "tasks": "Tasks",
     "plan": "Plan & credits"
@@ -615,7 +722,7 @@
     "detailTitle": "Requirement details",
     "edit": "Edit",
     "empty": "No requirements yet. Create your first one.",
-    "verifyFirst": "Only verified agents can create requirements.",
+    "verifyFirst": "Requirements open once your account is active.",
     "verifyLink": "Complete verification",
     "submittedNotice": "Submitted for admin approval. You will see the secure share link here once approved.",
     "amendmentRequired": "Amendment required",
@@ -815,23 +922,14 @@
       "approve": "Approved. Secure link generated and active.",
       "amendment": "Amendment requested from the agent.",
       "cancel": "Request cancelled.",
-      "added": "Property added on behalf of the agent.",
-      "added_new_agent": "Agent account created and property added."
+      "added": "Property added on behalf of the agent."
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
       "wrong_status": "This request is not awaiting review.",
       "save_failed": "Could not save the decision."
     },
-    "addPropertyForAgent": "Add property for an agent",
-    "cred": {
-      "title": "Agent account created",
-      "body": "Share these login details with {name} (e.g. via WhatsApp). They can sign in now and complete verification later.",
-      "email": "Email",
-      "password": "Password",
-      "link": "Login link",
-      "note": "This is shown only once. It was also emailed to the agent."
-    }
+    "addPropertyForAgent": "Add property for an agent"
   },
   "requestLink": {
     "invalidTitle": "Link unavailable",
@@ -1392,11 +1490,24 @@
       "lead_overdue": "A lead is waiting past the response deadline",
       "task_due": "A task is due",
       "viewing_soon": "A viewing starts soon",
-      "whatsapp_received": "A WhatsApp message arrived on one of your leads"
+      "whatsapp_received": "A WhatsApp message arrived on one of your leads",
+      "listing_import_prepared": "Listings are ready for you to review",
+      "listing_change_requested": "A moderator asked for a change to your listing",
+      "listing_photo_original_requested": "A moderator asked for an original photo",
+      "listing_change_answered": "An agent answered your change request",
+      "listing_change_resolved": "Your change request was resolved",
+      "generic": "Notification",
+      "listing_import_handover_complete": "You are now in control of your prepared listings",
+      "agent_suspended": "Your account has been suspended",
+      "agent_restored": "Your account has been restored",
+      "agent_verification_approved": "Your verification was approved",
+      "agent_verification_rejected": "Your verification was not approved",
+      "agent_verification_info_requested": "More information is needed for your verification"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
-    "pushDenied": "Notifications blocked in browser settings"
+    "pushDenied": "Notifications blocked in browser settings",
+    "emailOpen": "Open"
   },
   "commission": {
     "title": "Commission & co-broke agreement",
@@ -1514,7 +1625,19 @@
       "entity": "Entity",
       "result": "Result"
     },
-    "appendOnlyNote": "Append-only: audit records cannot be edited or deleted, including by administrators."
+    "appendOnlyNote": "Append-only: audit records cannot be edited or deleted, including by administrators.",
+    "export": "Export CSV",
+    "showing": "{n, plural, one {# record} other {# records}} (newest first, up to 200 shown; the export holds up to 5,000)",
+    "filters": {
+      "action": "Action contains",
+      "entity": "Entity type",
+      "role": "Actor role",
+      "anyRole": "Any role",
+      "result": "Result",
+      "anyResult": "Any result",
+      "from": "From",
+      "to": "To"
+    }
   },
   "disclosures": {
     "title": "Legal & material disclosures",
@@ -1593,7 +1716,7 @@
     "intro": "Your professional identity shown to collaborating agents. Clients only ever see what you approve on your own presentations.",
     "savedNotice": "Profile saved.",
     "photo": "Professional photo",
-    "photoHint": "JPG/PNG/WebP, max 3 MB. Visible to collaborating agents.",
+    "photoHint": "JPG/PNG/WebP, max 3 MB. Visible to collaborating agents and on your public listings. It is resized and its hidden data (location, camera, editing app) is removed before it is shown.",
     "displayName": "Display name",
     "agency": "Agency & licence (from verification)",
     "mobile": "Mobile",
@@ -1644,7 +1767,8 @@
       "file_too_large": "File exceeds the size limit.",
       "upload_failed": "Upload failed. Please try again.",
       "save_failed": "Could not save. Please try again.",
-      "invalid_url": "Enter a valid http(s) link."
+      "invalid_url": "Enter a valid http(s) link.",
+      "photo_paused": "Photo uploads are paused for now. Your other changes were not saved; try again later."
     },
     "photoChoose": "Choose a photo",
     "photoChange": "Change photo",
@@ -1652,7 +1776,27 @@
     "photoModeFull": "Full body",
     "photoNudge": "Move up / down",
     "photoAutoCropped": "Cropped automatically to the subject. Location data is stripped before upload.",
-    "photoCropFailed": "This photo could not be cropped automatically — the original will be uploaded as-is."
+    "photoCropFailed": "This photo could not be cropped automatically — the original will be uploaded as-is.",
+    "companyTitle": "My company",
+    "companyIntro": "Find your agency in the directory. If it is not there, add it — an administrator confirms new entries.",
+    "companySaved": "Company saved.",
+    "companyCurrent": "Current",
+    "companyUnconfirmed": "awaiting confirmation",
+    "companyNeedsCountry": "Choose your country on the Verification page first, so we can show the agencies in your country.",
+    "companySearch": "Search the directory",
+    "companySearchCta": "Search",
+    "companyPick": "This is my company",
+    "companyNone": "No agency with that name yet.",
+    "companyAdd": "Not listed? Add your company",
+    "companyAddCta": "Add and use",
+    "companyErrors": {
+      "other_country": "That agency is in another country.",
+      "too_many": "You have added 3 agencies that are still awaiting confirmation. Please wait for an administrator.",
+      "invalid_name": "Please enter the company name (2–160 characters).",
+      "no_country": "Choose your country first.",
+      "not_allowed": "Your account cannot do this right now.",
+      "failed": "That did not work. Please try again."
+    }
   },
   "wanted": {
     "agentSignIn": "Agent sign in",
@@ -1684,27 +1828,19 @@
     "agentSection": "Which agent is this property from?",
     "existingAgent": "Choose an existing agent",
     "chooseAgent": "— select an agent —",
-    "newAgent": "Create a new agent account",
-    "newAgentHint": "The agent gets a login (shown to you + emailed) and can verify their profile later. Only name and email are required.",
-    "na_name": "Full name",
-    "na_email": "Email",
-    "na_phone": "Phone",
-    "na_whatsapp": "WhatsApp",
-    "na_agency": "Agency",
-    "na_licenceNumber": "Licence no.",
     "declarationNote": "By adding this property you accept the supply-agent co-broke declaration on the agent's behalf. The agent is notified and can review it.",
     "submit": "Add property for this agent",
     "errors": {
       "invalid_fields": "Please check the highlighted fields.",
       "agent_required": "Please choose an agent.",
-      "agent_invalid": "Please enter the new agent's name and a valid email.",
-      "email_in_use": "That email already has an account — pick them from the existing list instead.",
-      "agent_failed": "Could not create the agent account. Please try again.",
       "invalid_file_type": "Unsupported image type.",
       "file_too_large": "An image is too large (max 10MB).",
       "upload_failed": "Image upload failed. Please try again.",
-      "save_failed": "Could not save. Please try again."
-    }
+      "save_failed": "Could not save. Please try again.",
+      "invite_first": "New agents are invited first. Send an invitation, and once they have accepted, choose them here."
+    },
+    "notOnPlatform": "Agent not on the platform yet?",
+    "inviteCta": "Invite them first"
   },
   "leads": {
     "title": "Leads",
@@ -1773,7 +1909,7 @@
         "circuit_open": "Drafted without AI — AI is resting for a few minutes after errors.",
         "disabled": "Drafted without AI — AI is switched off by the platform.",
         "feature_off": "Drafted without AI — AI features are not enabled for your account yet.",
-        "unverified": "Drafted without AI — AI opens after verification.",
+        "unverified": "Drafted without AI — AI opens once your account is active.",
         "no_provider": "Drafted without AI — no AI provider is connected yet.",
         "failed": "Drafted without AI — the AI did not answer this time."
       },
@@ -1883,7 +2019,7 @@
       "adTitle": "Listing title",
       "adTitlePlaceholder": "e.g. 2BR apartment in Jakarta Selatan, 5 min to MRT",
       "description": "Description",
-      "price": "Price (IDR)",
+      "price": "Price ({currency})",
       "priceHelp": "Numbers only, without dots. For rent: price per period.",
       "certificate": "Certificate",
       "area": "Area",
@@ -1892,8 +2028,8 @@
       "generalAddressHelp": "Public - never the exact unit address.",
       "buildingName": "Building / complex name",
       "postalCode": "Postal code",
-      "landSize": "Land (m2)",
-      "buildingSize": "Building (m2)",
+      "landSize": "Land ({unit})",
+      "buildingSize": "Building ({unit})",
       "bedrooms": "Bedrooms",
       "bathrooms": "Bathrooms",
       "floors": "Floors",
@@ -1911,7 +2047,7 @@
       "condConstruction": "Under construction",
       "facilities": "Facilities",
       "facilitiesPlaceholder": "swimming pool, gym, 24h security (comma-separated)",
-      "photosHelp": "Up to 15 photos, JPG/PNG/WebP, max 10 MB each. The first photo becomes the cover.",
+      "photosHelp": "Up to 15 photos, JPG/PNG/WebP, max 10 MB each. The first photo becomes the cover. Photos stay private while they are processed (location and camera data removed) and go live when a moderator approves the listing.",
       "submit": "Submit for review",
       "submitHelp": "A moderator reviews every listing before it goes live.",
       "draftRestored": "Your unsaved draft was restored.",
@@ -1920,8 +2056,10 @@
         "save_failed": "Could not save the listing. Please try again.",
         "too_many_photos": "Maximum 15 photos.",
         "bad_photo_type": "Photos must be JPG, PNG or WebP.",
-        "photo_too_large": "Each photo must be under 10 MB."
-      }
+        "photo_too_large": "Each photo must be under 10 MB.",
+        "market_unavailable": "Listings can only be created in an active market, and your profile has no active market. Contact support."
+      },
+      "tenure": "Tenure"
     },
     "sectionOwn": "My own listings",
     "sectionBorrowed": "Borrowed via co-marketing",
@@ -2021,9 +2159,16 @@
         "circuit_open": "Drafted without AI — AI is resting for a few minutes after errors.",
         "disabled": "Drafted without AI — AI is switched off by the platform.",
         "feature_off": "Drafted without AI — AI features are not enabled for your account yet.",
-        "unverified": "Drafted without AI — AI opens after verification.",
+        "unverified": "Drafted without AI — AI opens once your account is active.",
         "no_provider": "Drafted without AI — no AI provider is connected yet.",
         "failed": "Drafted without AI — the AI did not answer this time."
+      },
+      "catResidentialHintMY": "Terrace, semi-D, condo, serviced residence",
+      "catCommercialHintMY": "Shoplot, office, factory, land",
+      "copyLanguage": {
+        "english": "This draft is in English. Review and edit it before saving.",
+        "englishFallback": "This draft is in English: reviewed Malay wording is not available yet. Your listing stays in Malay. Review and edit the draft before saving.",
+        "indonesian": "This draft is in Indonesian. Review and edit it before saving."
       }
     },
     "offer": {
@@ -2091,6 +2236,35 @@
       "errors": {
         "invalid": "Please check the highlighted fields.",
         "save_failed": "That did not save. Please try again."
+      },
+      "gallery": {
+        "title": "Photos",
+        "hint": "Choose the cover, change the order or remove a photo. Changes apply straight away and do not send a published listing back for review. To add photos, use the listing wizard or import.",
+        "empty": "No photos yet.",
+        "cover": "Cover",
+        "makeCover": "Make cover",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "remove": "Remove",
+        "removeImportedNote": "Removes it from this listing. The original you imported is kept privately as a record of where it came from.",
+        "state": {
+          "pending": "Waiting to be processed",
+          "processing": "Being processed",
+          "processed": "Processed, awaiting approval",
+          "ready": "Live",
+          "failed": "Could not be processed",
+          "quarantined": "Kept out by a moderator"
+        },
+        "notice": {
+          "cover_set": "Cover updated.",
+          "moved": "Order updated.",
+          "removed": "Photo removed.",
+          "not_eligible": "That photo cannot be the cover.",
+          "not_public_yet": "On a published listing the cover must be a live photo.",
+          "bad_order": "The order could not be saved. Please try again.",
+          "not_found": "That photo was not found.",
+          "failed": "Something went wrong. Please try again."
+        }
       }
     },
     "importCta": "Import my listings",
@@ -2131,7 +2305,69 @@
         "other": "the missing detail"
       }
     },
-    "ownerReport": "Owner report"
+    "ownerReport": "Owner report",
+    "rejection": {
+      "incomplete_details": "Details incomplete",
+      "photos_quality": "Photos not usable",
+      "photos_rights": "Photo rights unclear",
+      "price_unrealistic": "Price looks wrong",
+      "wrong_location": "Wrong location",
+      "duplicate": "Duplicate listing",
+      "prohibited_content": "Not allowed on the marketplace",
+      "other": "Other (see note)",
+      "resubmitHint": "Edit the listing to fix this; saving sends it back for review."
+    },
+    "changes": {
+      "title": "Changes requested",
+      "hint": "Moderation asked for these before the listing can go live, or to keep it live. Reply here; fix the listing below and save.",
+      "kind": {
+        "correction": "Correction",
+        "photo_original": "Original photo"
+      },
+      "field": {
+        "title": "Title",
+        "description": "Description",
+        "price": "Price",
+        "location": "Location",
+        "property_details": "Property details",
+        "photos": "Photos",
+        "other": "Other"
+      },
+      "status": {
+        "open": "Waiting for the agent",
+        "answered": "Agent answered",
+        "resolved": "Resolved",
+        "withdrawn": "Withdrawn"
+      },
+      "yourAnswer": "Your answer",
+      "placeholder": "Your reply to the moderator",
+      "send": "Send reply",
+      "update": "Update reply",
+      "badge": "{n, plural, one {# change requested} other {# changes requested}}",
+      "notice": {
+        "answered": "Reply sent to the moderator.",
+        "invalid": "Write a reply first.",
+        "closed": "This request was already closed.",
+        "answer_required": "Write a reply first.",
+        "not_found": "Request not found.",
+        "failed": "That did not work. Try again.",
+        "photo_supplied": "Photo uploaded. It stays private until a moderator approves it.",
+        "photo_already": "This photo was already supplied.",
+        "photo_required": "Choose a photo first.",
+        "photo_too_large": "That file is larger than 10 MB.",
+        "not_image": "That file is not a JPEG, PNG or WebP photo.",
+        "save_failed": "The photo could not be saved. Try again.",
+        "not_photo_request": "This request does not ask for a photo.",
+        "bad_path": "The photo could not be saved. Try again.",
+        "bad_hash": "The photo could not be saved. Try again."
+      },
+      "photo": {
+        "label": "Upload the photo",
+        "note": "Optional note to the moderator",
+        "hint": "JPEG, PNG or WebP, up to 10 MB. It stays private: it is processed (location and camera data removed) and goes live only when a moderator approves it.",
+        "send": "Upload photo"
+      }
+    }
   },
   "studio": {
     "title": "Content studio",
@@ -2288,7 +2524,7 @@
         "circuit_open": "Written without AI — AI is resting for a few minutes after errors.",
         "disabled": "Written without AI — AI is switched off by the platform.",
         "feature_off": "Written without AI — AI features are not enabled for your account yet.",
-        "unverified": "Written without AI — AI opens after verification.",
+        "unverified": "Written without AI — AI opens once your account is active.",
         "no_provider": "Written without AI — no AI provider is connected yet.",
         "failed": "Written without AI — the AI did not answer this time."
       }
@@ -2305,7 +2541,12 @@
       "shotList": "Shot list",
       "seconds": "{n}s"
     },
-    "planLink": "Plan a week"
+    "planLink": "Plan a week",
+    "copyLanguage": {
+      "english": "This draft is in English. Review and edit it before saving.",
+      "englishFallback": "This draft is in English: reviewed Malay wording is not available yet. Your listing stays in Malay. Review and edit the draft before saving.",
+      "indonesian": "This draft is in Indonesian. Review and edit it before saving."
+    }
   },
   "listingStatus": {
     "draft": "Draft",
@@ -2334,7 +2575,27 @@
     "hotel": "Hotel",
     "tanah": "Land",
     "kavling": "Plot",
-    "lainnya": "Other"
+    "lainnya": "Other",
+    "terrace": "Terrace house",
+    "semi_detached": "Semi-detached",
+    "bungalow": "Bungalow",
+    "townhouse": "Townhouse",
+    "cluster_home": "Cluster home",
+    "condominium": "Condominium",
+    "serviced_residence": "Serviced residence",
+    "apartment": "Apartment",
+    "flat": "Flat",
+    "soho": "SOHO",
+    "penthouse": "Penthouse",
+    "shoplot": "Shoplot",
+    "shop_office": "Shop office",
+    "retail_space": "Retail space",
+    "office_space": "Office space",
+    "factory": "Factory",
+    "warehouse": "Warehouse",
+    "agricultural_land": "Agricultural land",
+    "residential_land": "Residential land",
+    "commercial_land": "Commercial land"
   },
   "ownershipTypes": {
     "shm": "SHM (freehold)",
@@ -2346,7 +2607,13 @@
     "strata": "Strata title",
     "ppjb": "PPJB",
     "adat": "Customary",
-    "lainnya": "Other"
+    "lainnya": "Other",
+    "freehold": "Freehold",
+    "leasehold_99": "Leasehold (99 years)",
+    "leasehold_60": "Leasehold (60 years)",
+    "leasehold_other": "Leasehold",
+    "malay_reserve": "Malay reserve land",
+    "bumi_lot": "Bumi lot"
   },
   "adminListings": {
     "title": "Listing moderation",
@@ -2365,7 +2632,125 @@
       "reason_required": "Rejection needs a reason the agent will see.",
       "not_found": "Listing not found.",
       "not_moderatable": "This listing is not awaiting review.",
-      "update_failed": "Update failed. Try again."
+      "update_failed": "Update failed. Try again.",
+      "self_prepared": "You prepared this listing's import, so another admin must approve it.",
+      "bulk_empty": "Select at least one listing.",
+      "change_invalid": "Write a short message for the agent.",
+      "body_required": "Write a short message for the agent.",
+      "not_open": "This listing cannot take requests now.",
+      "closed": "This request is already closed."
+    },
+    "photos": {
+      "title": "Imported photos (private until you approve)",
+      "quarantine": "Keep out",
+      "note": "Approving copies the processed photos to the listing. Originals are never published.",
+      "state": {
+        "pending": "Waiting to process",
+        "processing": "Processing",
+        "processed": "Ready to publish",
+        "failed": "Could not be processed",
+        "quarantined": "Kept out"
+      },
+      "willPublish": "Approving publishes {publish} of {total} photos. The rest stay private: still processing, paused, failed, kept out or without a rights record.",
+      "openCentre": "Open in the Photo Quality Centre"
+    },
+    "quarantined": "The photo will not be published.",
+    "tabs": {
+      "label": "Moderation queues",
+      "pending_review": "Awaiting review",
+      "rejected": "Rejected",
+      "published": "Live",
+      "reported": "Reported ({n})"
+    },
+    "count": {
+      "pending_review": "{count, plural, one {# listing} other {# listings}} awaiting review",
+      "rejected": "{count, plural, one {# rejected listing} other {# rejected listings}}",
+      "published": "{count, plural, one {# live listing} other {# live listings}}"
+    },
+    "emptyTab": {
+      "pending_review": "Queue clear - nothing awaiting review.",
+      "rejected": "No rejected listings.",
+      "published": "No live listings in your countries."
+    },
+    "bulk": {
+      "title": "Decide several at once",
+      "hint": "Tick listings below, then approve or reject them together. Each listing still goes through every check on its own: your countries, separation of duties and its status. A rejection needs a reason code.",
+      "approve": "Approve selected",
+      "reject": "Reject selected",
+      "select": "Select {id}",
+      "done": "{ok} done, {skipped} skipped."
+    },
+    "reasonCode": "Reason (needed to reject)",
+    "note": "Note to the agent (needed for Other)",
+    "takeDown": "Take down",
+    "codes": {
+      "incomplete_details": "Details incomplete",
+      "photos_quality": "Photos not usable",
+      "photos_rights": "Photo rights unclear",
+      "price_unrealistic": "Price looks wrong",
+      "wrong_location": "Wrong location",
+      "duplicate": "Duplicate listing",
+      "prohibited_content": "Not allowed on the marketplace",
+      "other": "Other (see note)"
+    },
+    "quality": {
+      "score": "Quality {score}/100",
+      "parts": "Complete {complete} · photos {photos}",
+      "rec": {
+        "add_field": "Fields missing",
+        "add_photos": "Few photos",
+        "describe_more": "Short description",
+        "possible_duplicate": "Possible duplicate",
+        "price_above_comparables": "Price above similar",
+        "price_below_comparables": "Price below similar",
+        "refine_location": "Location vague",
+        "remove_phone": "Phone in text",
+        "title_location": "No place in title"
+      }
+    },
+    "photoStatus": {
+      "live": "Live",
+      "awaiting_approval": "Processed, awaiting approval",
+      "processing": "Processing",
+      "queued": "Waiting to process",
+      "paused_quota": "Paused: image quota reached",
+      "paused_cap": "Paused: monthly cap reached",
+      "failed": "Could not be processed",
+      "kept_out": "Kept out",
+      "removed": "Removed by the agent"
+    },
+    "rights": {
+      "missing": "{n, plural, one {# photo has} other {# photos have}} no rights record — will not be published",
+      "missingOne": "No rights record"
+    },
+    "pager": {
+      "label": "Pages",
+      "prev": "Previous",
+      "next": "Next",
+      "of": "Page {page} of {pages}"
+    },
+    "changes": {
+      "request": "Request a change instead",
+      "kind": "What you need",
+      "field": "Which part",
+      "message": "Message to the agent",
+      "placeholder": "e.g. please confirm the land size; the price looks one zero short",
+      "send": "Send request",
+      "sent": "Request sent to the agent. The listing stays in this queue.",
+      "count": "{open} open, {answered} answered change request(s)",
+      "kinds": {
+        "correction": "Correction",
+        "photo_original": "Original photo"
+      },
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "price": "Price",
+        "location": "Location",
+        "property_details": "Property details",
+        "photos": "Photos",
+        "other": "Other"
+      }
     }
   },
   "plans": {
@@ -2679,9 +3064,39 @@
       "columns_missing": "No Title and Price columns were found, so nothing was imported. These are the columns that were read:",
       "blocked_by_site": "That site blocks automated reading (it asks for browser verification). We do not work around that protection. Use the Excel/CSV upload, or add it manually.",
       "no_listing_data": "The page loaded, but it carried no readable property data.",
-      "import_failed": "Could not be saved as a listing. Check the required fields and try again."
+      "import_failed": "Could not be saved as a listing. Check the required fields and try again.",
+      "not_owner": "Only the agent this import belongs to can import it."
     },
-    "refetch": "Re-fetch"
+    "refetch": "Re-fetch",
+    "preparedByTeam": "Prepared by the platform team",
+    "preparedNotice": "The platform team prepared these listings for you. Check each one, then accept the declaration and import the ones that are right. Nothing is published until you import it and it passes review.",
+    "photos": {
+      "title": "Photos from the source",
+      "intro": "Photos found on your listing pages can be copied for you. They are kept privately and are not shown on the marketplace until processing is available.",
+      "disabled": "Copying photos from listing pages is not available on your account yet. Upload your own photos to each listing.",
+      "attachAll": "Copy photos",
+      "attaching": "Copying…",
+      "retry": "Retry photos",
+      "waiting": "{total} photos waiting to be copied",
+      "savedOf": "{saved} of {total} photos saved",
+      "privateNote": "Saved photos are kept privately until they can be processed.",
+      "exhausted": "Some photos could not be copied after three tries. Upload your own photos for this listing.",
+      "reason_blocked": "The website blocks automated copying. It was not tried another way.",
+      "reason_not_image": "The link did not lead to a JPEG, PNG or WebP photo.",
+      "reason_too_large": "A photo is larger than 10 MB.",
+      "reason_timeout": "The website took too long to respond.",
+      "reason_source_error": "The website returned an error for a photo.",
+      "reason_not_property": "A picture looked like a share card or logo, not a property photo, so it was skipped.",
+      "reason_unsafe_url": "A photo link was not a public web address.",
+      "reason_save_failed": "A photo could not be saved. Try again.",
+      "processingFailed": "{n} photo(s) could not be processed. Upload a replacement for this listing."
+    },
+    "inControl": {
+      "title": "You are now in control",
+      "body": "You have handled every listing the team prepared. From now on only you can edit them; the team only moderates, as for any listing.",
+      "studio": "Open Studio",
+      "leads": "Go to Leads"
+    }
   },
   "adminUsers": {
     "title": "People and access",
@@ -2715,8 +3130,28 @@
       "denied": "That change was refused.",
       "invalid": "Something in that form was not valid.",
       "not_found": "That grant no longer exists.",
-      "unknown_role": "That role does not exist."
-    }
+      "unknown_role": "That role does not exist.",
+      "registered": "Account created and activation email sent.",
+      "activation_resent": "They had not activated yet. A new activation email has been sent.",
+      "registered_email_failed": "Account created, but the email could not be sent. Submit the same email again to retry.",
+      "registered_role_failed": "Account created and email sent, but the role was not granted. Grant it below.",
+      "email_registered": "That email already has an active account. Grant them a role below instead.",
+      "register_failed": "The account could not be created. Nothing was changed."
+    },
+    "registerTitle": "Register a person",
+    "registerIntro": "Creates the account now, so they do not have to sign up first, and can give them a role in the same step. They receive an email to activate the account by choosing their own password; until then they cannot sign in. Submitting the same email again re-sends the email if they have not activated yet.",
+    "registerName": "Full name",
+    "registerEmail": {
+      "subject": "Your account is ready: set your password",
+      "heading": "Welcome, {name}",
+      "body": "An administrator has created an account for you. Choose your password to activate it. If the link has expired, ask your administrator to send it again.",
+      "cta": "Activate my account"
+    },
+    "registerLanguage": "Email language",
+    "registerNoRole": "No role yet",
+    "registerCta": "Register and send email",
+    "registerAgentsHint": "Agents are invited from Agents → Invitations, not registered here.",
+    "registerEmailField": "Email"
   },
   "growth": {
     "title": "My Growth",
@@ -2969,8 +3404,28 @@
       "invalid": "Invalid input.",
       "not_found": "Organisation not found.",
       "needs_percent": "Enter a percentage between 0 and 100.",
-      "needs_amount": "Enter a price amount."
-    }
+      "needs_amount": "Enter a price amount.",
+      "needs_country": "This organisation has no country, so a fixed price has no currency. Set its country first.",
+      "agency_invalid": "Check the name (2–160 characters) and choose a country.",
+      "agency_not_permitted": "You can manage organisations only in your own countries.",
+      "agency_saved": "Organisation saved.",
+      "agency_created": "Organisation created."
+    },
+    "agencyForm": {
+      "create": "New organisation",
+      "createButton": "Create organisation",
+      "edit": "Edit organisation",
+      "save": "Save changes",
+      "name": "Name",
+      "registration": "Registration number (optional)",
+      "country": "Country",
+      "chooseCountry": "Choose a country"
+    },
+    "directory": "Directory",
+    "unconfirmed": "Unconfirmed",
+    "confirm": "Confirm",
+    "heroPartner": "AG Hero partner",
+    "makeHeroPartner": "Make AG Hero partner"
   },
   "commercial": {
     "title": "Commercial control",
@@ -3327,7 +3782,10 @@
       "draft": "Draft",
       "verified": "Verified",
       "retired": "Retired"
-    }
+    },
+    "costUnavailable": "Not yet available",
+    "costUnavailableHint": "No model pricing is configured yet",
+    "openOffice": "Open the Office view →"
   },
   "aiWorkforce": {
     "watchOffice": "Watch my AI team working",
@@ -3335,7 +3793,7 @@
     "intro": "Your AI colleagues. Each one works inside a screen you already use — it drafts, ranks and reminds; you decide and send.",
     "liveCount": "{count, plural, =0 {None live yet} one {1 live} other {# live}}",
     "quota": "{remaining} of {total} AI tasks left this month",
-    "verifyFirst": "AI roles start working once your account is verified.",
+    "verifyFirst": "AI roles start working once your account is active.",
     "verifyLink": "Complete verification",
     "status": {
       "live": "Live",
@@ -3979,7 +4437,7 @@
       "circuit_open": "Without AI — AI is resting for a few minutes after errors.",
       "disabled": "Without AI — AI is switched off by the platform.",
       "feature_off": "Without AI — AI features are not enabled for your account yet.",
-      "unverified": "Without AI — AI opens after verification.",
+      "unverified": "Without AI — AI opens once your account is active.",
       "no_provider": "Without AI — no AI provider is connected yet.",
       "failed": "Without AI — the AI did not answer this time."
     },
@@ -4178,7 +4636,7 @@
     "review": {
       "title": "Performance Reviewer",
       "intro": "Your last seven days against the seven before — your own past first. Peers appear only as anonymised medians, and only when at least five were active.",
-      "verifyFirst": "The weekly review starts once your account is verified.",
+      "verifyFirst": "The weekly review starts once your account is active.",
       "again": "Write it again",
       "numbersOnly": "The numbers are below. The written insight needs an AI task.",
       "metric": "Metric",
@@ -4375,6 +4833,487 @@
       "nextStep": "Next step",
       "copy": "Copy",
       "copied": "Copied"
+    }
+  },
+  "adminInvitations": {
+    "title": "Agent invitations",
+    "intro": "Invite an agent by e-mail. They register with their own password and accept the link; no admin ever sets or sees a password. You see invitations only for countries you may invite in.",
+    "createTitle": "New invitation",
+    "fullName": "Full name",
+    "email": "E-mail",
+    "phone": "Mobile (WhatsApp)",
+    "country": "Country",
+    "language": "Preferred language",
+    "agency": "Agency (optional)",
+    "createHint": "The link is valid for 7 days and is shown to you once. Send it to the agent yourself, for example by WhatsApp.",
+    "createCta": "Create invitation",
+    "noCountries": "You cannot invite agents in any active country.",
+    "linkTitle": "Invitation link",
+    "linkHint": "Copy it now. It is shown only once; resend creates a new link and the old one stops working.",
+    "listTitle": "Invitations",
+    "person": "Agent",
+    "state": "Status",
+    "expires": "Expires",
+    "sent": "Times sent",
+    "action": "Action",
+    "resend": "Resend",
+    "revoke": "Revoke",
+    "empty": "No invitations yet.",
+    "stateLabel": {
+      "pending": "Waiting",
+      "expired": "Expired",
+      "redeemed": "Accepted",
+      "revoked": "Revoked"
+    },
+    "notice": {
+      "created": "Invitation created. Copy the link below.",
+      "resent": "New link created. The previous link no longer works.",
+      "revoked": "Invitation revoked.",
+      "denied": "You cannot manage invitations for that country.",
+      "invalid": "Check the details and try again.",
+      "email_registered": "That e-mail already has an account. Ask the agent to sign in instead.",
+      "already_invited": "That e-mail already has an open invitation. Resend it instead.",
+      "country_inactive": "That country is not active.",
+      "not_pending": "Only waiting invitations can be changed.",
+      "failed": "Could not save. Try again."
+    }
+  },
+  "invite": {
+    "title": "Accept your invitation",
+    "intro": "You were invited to join the agent platform. Accept to link this invitation to the account you are signed in with.",
+    "accept": "Accept invitation",
+    "wrongAccount": "Signed in with the wrong account?",
+    "checkAccount": "Check your account",
+    "error": {
+      "invalid": "This invitation link is not valid. It may have expired, been replaced or already been used. Ask the person who invited you for a new link.",
+      "email_mismatch": "This invitation is for a different e-mail address. Sign in with the address it was sent to.",
+      "rate_limited": "Too many attempts. Wait an hour and try again.",
+      "sign_in_required": "Sign in to accept the invitation.",
+      "failed": "Could not accept the invitation. Try again."
+    }
+  },
+  "adminImports": {
+    "title": "Assisted import",
+    "intro": "Prepare a listing import for an agent. The batch belongs to the agent: they review it, accept the import declaration themselves and import it. You cannot import it for them.",
+    "agent": "Agent",
+    "chooseAgent": "Choose an agent",
+    "noAgents": "There are no agents in your countries to prepare imports for.",
+    "fileTitle": "From a spreadsheet",
+    "fileHint": "Use the import template. Each row becomes an item for the agent to review.",
+    "file": "File",
+    "linksTitle": "From listing links",
+    "linksHint": "Paste the agent's own listing links, one per line. Pages that block automated reading are skipped, never bypassed.",
+    "portal": "Portal",
+    "links": "Links",
+    "startCta": "Prepare batch",
+    "listTitle": "Prepared batches",
+    "source": "Source",
+    "items": "Imported / found",
+    "state": "Status",
+    "created": "Created",
+    "empty": "No prepared batches yet.",
+    "stateLabel": {
+      "preparing": "Being prepared",
+      "handed_over": "With the agent",
+      "committed": "Imported by the agent"
+    },
+    "batchTitle": "Batch for {agent}",
+    "agentCommits": "You can fetch, correct and skip items. Only the agent can accept the declaration and import them.",
+    "handOver": "Send to the agent ({n} ready)",
+    "handOverAgain": "Notify the agent again ({n} ready)",
+    "nothingReady": "No items are ready yet.",
+    "handedOver": "The agent has been told the batch is ready for them.",
+    "errors": {
+      "invalid": "Check the details and try again.",
+      "not_permitted": "You cannot prepare imports for that agent.",
+      "failed": "Could not complete that. Try again.",
+      "nothing_selected": "Select at least one item.",
+      "agent_in_control": "The agent is in control of this batch, so it can no longer be edited.",
+      "nothing_to_set": "Choose a type or sale/rent to apply.",
+      "type_not_in_market": "That property type is not offered in this agent's market."
+    },
+    "review": {
+      "title": "Batch review",
+      "hint": "Quality, photos and every edit at a glance. Tick items to skip or restore them together, or set their type or sale/rent in one go; imported items cannot change.",
+      "skipSelected": "Skip selected",
+      "restoreSelected": "Restore selected",
+      "select": "Select",
+      "selectOne": "Select {title}",
+      "item": "Item",
+      "status": "Status",
+      "quality": "Quality",
+      "photos": "Photos",
+      "changes": "Changed from source",
+      "listingScore": "The listing's quality score",
+      "scoreListing": "Listing {score}/100",
+      "scoreItem": "Fields {score}%",
+      "missing": "Missing",
+      "field": {
+        "title": "title",
+        "price": "price",
+        "listingType": "sale or rent",
+        "propertyType": "type",
+        "location": "location",
+        "size": "size",
+        "bedrooms": "bedrooms",
+        "description": "description",
+        "photos": "photos"
+      },
+      "photosState": "{saved} of {total} saved",
+      "noChanges": "As imported",
+      "bulkDone": "{n, plural, one {# item} other {# items}} updated.",
+      "itemStatus": {
+        "found": "Found",
+        "processing": "Fetching",
+        "ready": "Ready",
+        "needs_review": "Needs review",
+        "duplicate": "Duplicate",
+        "imported": "Imported",
+        "failed": "Failed",
+        "skipped": "Skipped"
+      },
+      "setType": "Set type…",
+      "setListingType": "Sale or rent…",
+      "sale": "For sale",
+      "rent": "For rent",
+      "applySelected": "Apply to selected"
+    },
+    "inControl": "The agent has handled every item and is now in control. The team can no longer edit this batch or the listings it produced; moderation continues as usual."
+  },
+  "adminMedia": {
+    "title": "Photo Quality Centre",
+    "intro": "Every imported and partner photo in your countries, as the processor sees it: waiting, processing, paused, failed, awaiting approval, live or kept out, with its rights record. Nothing here makes a photo public; that is the listing's approval.",
+    "usage": {
+      "title": "Image processing this month",
+      "value": "{used} of {cap} transformations",
+      "note": "Free plan, $0: the processor pauses at the cap and never spends."
+    },
+    "checks": {
+      "title": "Checks that run here",
+      "rules": "Rules only: under {w}×{h} pixels, or under {kb} KB, is flagged.",
+      "noAi": "No AI model reviews photos on this screen."
+    },
+    "views": {
+      "label": "Views",
+      "attention": "Needs attention",
+      "processing": "Processing",
+      "awaiting": "Awaiting approval",
+      "kept_out": "Kept out",
+      "all": "All"
+    },
+    "clearListing": "All listings",
+    "done": {
+      "released": "Released. The photo can be published with its listing again.",
+      "retried": "Queued for a fresh processing run.",
+      "quarantined": "Kept out. It will not be published.",
+      "ok": "Done."
+    },
+    "errors": {
+      "invalid": "Invalid request.",
+      "update_failed": "That did not work. Try again.",
+      "not_found": "Photo not found.",
+      "not_moderatable": "This photo cannot be kept out now.",
+      "not_quarantined": "This photo is not kept out.",
+      "self_prepared": "You prepared this listing's import, so another reviewer must release it.",
+      "not_retryable": "Only failed or paused photos can be retried."
+    },
+    "count": "{count, plural, one {# photo} other {# photos}}",
+    "empty": {
+      "attention": "Nothing needs attention.",
+      "processing": "Nothing is processing.",
+      "awaiting": "No processed photos are waiting.",
+      "kept_out": "No photos are kept out.",
+      "all": "No imported or partner photos yet."
+    },
+    "noPreview": "No preview",
+    "rights": {
+      "import_authority": "Agent's import authority",
+      "partner_agreement": "Partner agreement",
+      "agent_upload": "Agent upload",
+      "missing": "No rights record",
+      "missingNote": "Without a rights record this photo is never published.",
+      "agent_supplied": "Supplied by the agent on request"
+    },
+    "rule": {
+      "low_res": "Low resolution",
+      "tiny_file": "Very small file"
+    },
+    "failedWhy": "Failed after {n} attempts: {why}",
+    "paused": {
+      "paused_quota": "Paused: the Images quota was reached. Retry when it resets.",
+      "paused_cap": "Paused: the monthly cap was reached. It resumes next month, or retry after the cap is raised."
+    },
+    "retryAt": "Attempt {n} failed; next try {at} UTC",
+    "release": "Release",
+    "retry": "Retry"
+  },
+  "adminHandover": {
+    "title": "Handover",
+    "intro": "What moderation has asked agents to change or supply, their answers, and the batches prepared for agents with how far each has got.",
+    "requests": {
+      "title": "Change requests",
+      "view": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "empty": {
+        "open": "No open change requests.",
+        "closed": "No closed change requests yet."
+      }
+    },
+    "status": {
+      "open": "Waiting for the agent",
+      "answered": "Agent answered",
+      "resolved": "Resolved",
+      "withdrawn": "Withdrawn"
+    },
+    "kind": {
+      "correction": "Correction",
+      "photo_original": "Original photo"
+    },
+    "field": {
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "location": "Location",
+      "property_details": "Property details",
+      "photos": "Photos",
+      "other": "Other"
+    },
+    "age": "{days, plural, one {# day ago} other {# days ago}}",
+    "asked": "Asked",
+    "answered": "Answer",
+    "resolve": "Resolve",
+    "withdraw": "Withdraw",
+    "openListing": "Open in moderation",
+    "batches": {
+      "title": "Prepared batches",
+      "hint": "Assisted imports handed to agents. Committing stays the agent's act.",
+      "empty": "No batches handed over yet.",
+      "agent": "Agent",
+      "handedOver": "Handed over",
+      "progress": "Progress",
+      "counts": "{waiting} waiting · {imported} imported · {skipped} skipped",
+      "done": "Agent finished",
+      "open": "Open batch",
+      "inControl": "Agent in control"
+    },
+    "done": {
+      "change_requested": "Request sent to the agent.",
+      "change_resolved": "Marked resolved. The agent has been told.",
+      "change_withdrawn": "Request withdrawn.",
+      "ok": "Done.",
+      "change_resolved_published": "Resolved, and the agent's processed photo is now live."
+    },
+    "errors": {
+      "update_failed": "That did not work. Try again.",
+      "not_found": "Not found.",
+      "closed": "This request is already closed.",
+      "invalid": "Invalid request.",
+      "change_invalid": "Write a short message for the agent.",
+      "body_required": "Write a short message for the agent.",
+      "not_open": "This listing cannot take requests now."
+    },
+    "supplied": "Photo supplied by the agent (private)",
+    "suppliedNote": "Resolving this request on a live listing publishes the processed photo; one still processing stays private.",
+    "openCentre": "Open in the Photo Quality Centre",
+    "openReport": "Handover report →"
+  },
+  "adminListingReports": {
+    "back": "Moderation",
+    "title": "Buyer reports",
+    "hint": "Reports buyers sent from the marketplace about listings in your countries. Reporters are anonymous. Deal with the listing in moderation (reject or request a change), then close the report.",
+    "empty": "No open reports.",
+    "count": "{n, plural, one {# report} other {# reports}}",
+    "openModeration": "Open in moderation",
+    "note": "Note (optional)",
+    "actioned": "Mark actioned",
+    "dismiss": "Dismiss",
+    "recent": "Recently closed",
+    "status": {
+      "dismissed": "Dismissed",
+      "actioned": "Actioned"
+    },
+    "done": {
+      "dismissed": "Report dismissed.",
+      "actioned": "Report marked as actioned."
+    },
+    "errors": {
+      "invalid": "Check the details and try again.",
+      "not_found": "That report is not in your countries.",
+      "closed": "That report is already closed.",
+      "invalid_outcome": "Choose an outcome.",
+      "note_too_long": "The note can be at most 1,000 characters.",
+      "failed": "Could not complete that. Try again."
+    },
+    "reasons": {
+      "wrong_info": "Inaccurate information",
+      "already_sold": "Already sold or rented",
+      "duplicate": "Duplicate listing",
+      "wrong_photos": "Photos do not match",
+      "scam_or_fraud": "Suspected scam",
+      "offensive": "Inappropriate content",
+      "other": "Other"
+    }
+  },
+  "adminLeads": {
+    "title": "Lead response times",
+    "hint": "How fast agents answer buyer inquiries in your countries. A lead is on time when it is answered before its due time. No buyer contact details are shown here.",
+    "period": "Period",
+    "lastDays": "Last {n} days",
+    "minutes": "{n} min",
+    "hours": "{n} h",
+    "days": "{n} d",
+    "kpi": {
+      "leads": "Leads",
+      "onTime": "Answered on time",
+      "median": "Median first answer",
+      "overdue": "Overdue now"
+    },
+    "byAgent": "By agent",
+    "empty": "No leads in this period.",
+    "cols": {
+      "agent": "Agent",
+      "leads": "Leads",
+      "answered": "Answered",
+      "onTime": "On time",
+      "median": "Median",
+      "overdue": "Overdue"
+    },
+    "overdueTitle": "Waiting past their due time",
+    "overdueHint": "Unanswered leads, the longest overdue first.",
+    "noOverdue": "Nothing is overdue.",
+    "lateBy": "{time} late"
+  },
+  "suspension": {
+    "title": "Your account is suspended",
+    "body": "While your account is suspended you cannot create or edit listings, and your live listings are paused. Contact the platform team if you have questions.",
+    "reason": "Reason given",
+    "listings": "Your listings come back automatically when your account is restored, if they are still approved."
+  },
+  "adminAiOffice": {
+    "eyebrow": "Platform view",
+    "title": "AI Workforce Office",
+    "subtitle": "Every AI role across all agents over the last seven days, from job metadata only. Roles that need an AI provider show as unavailable until one is configured.",
+    "badge": "Read-only",
+    "back": "← AI Workforce"
+  },
+  "adminPipeline": {
+    "back": "Agents",
+    "title": "Agent acquisition pipeline",
+    "hint": "Agents the team wants to recruit, from first contact to invitation. Prospects have not agreed to anything yet, so each country keeps them only for the retention period the owner sets, and each card shows when it will be deleted.",
+    "retentionDays": "kept {n} days",
+    "retentionNotSet": "retention not set",
+    "locked": "No country you manage has a prospect retention period yet. It is set per country on Countries (owner decision 5); until then no prospect can be stored.",
+    "add": "Add a prospect",
+    "addButton": "Add prospect",
+    "moveTo": "Move to stage",
+    "move": "Move",
+    "delete": "Delete now",
+    "deletesOn": "Deleted on {date} unless contacted again",
+    "fields": {
+      "country": "Country",
+      "name": "Full name",
+      "agency": "Agency (optional)",
+      "phone": "Phone (+country code)",
+      "email": "Email",
+      "source": "Source",
+      "sourceNote": "Source detail (optional)",
+      "purpose": "Why the team is contacting them"
+    },
+    "stage": {
+      "new": "New",
+      "contacted": "Contacted",
+      "interested": "Interested",
+      "invited": "Invited",
+      "declined": "Declined",
+      "converted": "Converted"
+    },
+    "source": {
+      "referral": "Referral",
+      "event": "Event",
+      "portal_listing": "Seen on a portal",
+      "social": "Social media",
+      "inbound": "Contacted us",
+      "other": "Other"
+    },
+    "done": {
+      "added": "Prospect added.",
+      "stage": "Stage updated.",
+      "deleted": "Prospect deleted."
+    },
+    "errors": {
+      "invalid": "Check the fields and try again.",
+      "contact_required": "Give a phone number or an email.",
+      "retention_not_set": "That country has no prospect retention period yet.",
+      "not_permitted": "You can manage prospects only in your own countries.",
+      "not_found": "That prospect was not found."
+    }
+  },
+  "adminHandoverReport": {
+    "back": "Handover",
+    "title": "Handover report",
+    "hint": "How assisted onboarding performs in your countries over the last 90 days: how long the team takes to prepare a portfolio, how long agents take to take control, how many invited agents activate within 14 days, and how fast change requests and moderation are answered.",
+    "days": "days",
+    "week": "Week of",
+    "count": "Count",
+    "medianHours": "Median (hours)",
+    "kpi": {
+      "batches": "Prepared batches",
+      "batchesSub": "{handed} handed over · {complete} complete",
+      "prep": "Median preparation time",
+      "review": "Median agent review",
+      "within14": "{pct} completed within 14 days of handover",
+      "activation": "14-day activation",
+      "activationSub": "{activated} of {decided} invited agents activated within 14 days"
+    },
+    "answerTrend": "Change requests: time to the agent's answer",
+    "moderationTrend": "Moderation: time from listing to decision",
+    "effortTitle": "Admin effort per live listing",
+    "effortLine": "{per} admin actions per live listing ({actions} actions on {live} live listings, from the audit trail).",
+    "effortNeedsAudit": "Shown to admins who hold audit.view."
+  },
+  "adminSources": {
+    "title": "Sources and mapping",
+    "hint": "Where imported listings come from, whether each source's terms allow reuse (a legal review), and how its fields map to ours. Sources seen in imports but not yet registered are listed first.",
+    "resyncBlocked": "Re-sync is not available yet: it needs access to each external source and a legal review of its terms (decision D-7). Until then, sources are recorded and mapped only; nothing is fetched or overwritten.",
+    "seenTitle": "Seen in imports, not yet registered",
+    "seenCount": "{n, plural, one {# batch} other {# batches}}",
+    "registryTitle": "Registered sources",
+    "empty": "No source is registered yet.",
+    "displayName": "Name",
+    "kind": "Kind",
+    "country": "Country (optional)",
+    "register": "Register",
+    "termsReview": "Terms review",
+    "termsNote": "Review note",
+    "saveTerms": "Save review",
+    "mapping": "Field mapping (JSON: source field → platform field)",
+    "saveMapping": "Save mapping",
+    "terms": {
+      "unreviewed": "Terms not reviewed",
+      "allowed": "Reuse allowed",
+      "agent_supplied_only": "Agent-supplied only",
+      "forbidden": "Reuse forbidden"
+    },
+    "kinds": {
+      "portal": "Portal",
+      "partner_feed": "Partner feed",
+      "agent_file": "Agent's own file",
+      "other": "Other"
+    },
+    "done": {
+      "registered": "Source registered.",
+      "mapping": "Mapping saved.",
+      "terms": "Terms review saved."
+    },
+    "errors": {
+      "invalid": "Check the fields and try again.",
+      "exists": "That source is already registered.",
+      "not_permitted": "You need a global platform.configure grant to do that.",
+      "needs_legal": "Only a legal reviewer (global legal.publish) can change the terms status.",
+      "mapping_json": "The mapping is not valid JSON.",
+      "mapping_shape": "Use pairs of short identifiers, for example luas_tanah → landSize."
     }
   }
 }

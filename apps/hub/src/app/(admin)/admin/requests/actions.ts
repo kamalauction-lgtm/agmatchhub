@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { generateLinkToken, generateLinkPassword } from "@/lib/request-links";
 import { logAudit } from "@/lib/audit";
+import { requireCapabilityIn } from "@/lib/authz";
 
 const schema = z.object({
   requestId: z.string().uuid(),
@@ -33,10 +34,11 @@ export async function reviewRequest(formData: FormData) {
 
   const { data: request } = await supabase
     .from("property_requests")
-    .select("status, expiry_date, human_readable_id")
+    .select("status, expiry_date, human_readable_id, country_code")
     .eq("id", requestId)
     .single();
   if (!request) redirect("/admin/requests?error=not_found");
+  await requireCapabilityIn("request.manage", request.country_code, "/admin/requests");
   if (!["pending_admin_approval", "resubmitted", "under_admin_review"].includes(request.status)) {
     redirect(`/admin/requests/${requestId}?error=wrong_status`);
   }

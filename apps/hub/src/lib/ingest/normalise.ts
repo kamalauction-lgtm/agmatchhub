@@ -10,17 +10,16 @@
  * sqm before sending); the property is stored in the country's unit.
  */
 
-export type IngestCountry = "ID" | "MY";
-export type SizeUnit = "sqm" | "sqft";
+// Relative, not `@/`: the unit tests import this module without the hub alias.
+import { PLATFORM_TYPES, CATEGORY_OF, type MarketCountry, type SizeUnit } from "../listings/vocabulary";
+
+export type IngestCountry = MarketCountry;
+export type { SizeUnit };
 
 const SQFT_PER_SQM = 10.7639104;
 
-/** Platform keys per country (mirror of properties_property_type_check, 00075). */
-export const PLATFORM_TYPES: Record<IngestCountry, ReadonlySet<string>> = {
-  ID: new Set(["rumah", "apartemen", "ruko", "rukan", "kondominium", "villa", "kost", "gudang", "pabrik", "kantor", "toko", "hotel", "tanah", "kavling", "lainnya"]),
-  MY: new Set(["terrace", "semi_detached", "bungalow", "townhouse", "cluster_home", "condominium", "serviced_residence", "apartment", "flat", "soho", "penthouse",
-    "shoplot", "shop_office", "retail_space", "office_space", "factory", "warehouse", "agricultural_land", "residential_land", "commercial_land", "lainnya"]),
-};
+/** Platform keys per country: the shared list in lib/listings/vocabulary.ts (00075). */
+export { PLATFORM_TYPES };
 
 /** Sender vocabulary (Hero's) → platform key, per country. */
 const FROM_SENDER: Record<IngestCountry, Record<string, string>> = {
@@ -38,18 +37,6 @@ const FROM_SENDER: Record<IngestCountry, Record<string, string>> = {
     factory: "factory", warehouse: "warehouse", residential_land: "residential_land", commercial_land: "commercial_land", industrial_land: "commercial_land",
     agricultural_land: "agricultural_land", hotel: "lainnya", other: "lainnya",
   },
-};
-
-const CATEGORY_OF: Record<string, string> = {
-  // ID
-  rumah: "residential", apartemen: "residential", kondominium: "residential", villa: "residential", kost: "residential",
-  ruko: "commercial", rukan: "commercial", kantor: "commercial", toko: "commercial", hotel: "commercial",
-  gudang: "industrial", pabrik: "industrial", tanah: "land", kavling: "land",
-  // MY
-  terrace: "residential", semi_detached: "residential", bungalow: "residential", townhouse: "residential", cluster_home: "residential",
-  condominium: "residential", serviced_residence: "residential", apartment: "residential", flat: "residential", soho: "residential", penthouse: "residential",
-  shoplot: "commercial", shop_office: "commercial", retail_space: "commercial", office_space: "commercial",
-  factory: "industrial", warehouse: "industrial", agricultural_land: "land", residential_land: "land", commercial_land: "land",
 };
 
 export function normalisePropertyType(country: IngestCountry, sent: string): { propertyType: string; category: string } {

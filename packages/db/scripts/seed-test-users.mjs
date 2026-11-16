@@ -10,6 +10,8 @@
  *   TEST_LA_*     listing agent     (verified agent, co-marketing lender)
  *   TEST_MA_*     marketing agent   (verified agent, co-marketing borrower)
  *   TEST_ADMIN_*  super_admin
+ *   TEST_CA_*     country_admin scoped to MY (P0-a country-scope checks)
+ *   TEST_MYA_*    MY agent awaiting verification (the in-scope record for CA)
  *
  * Passwords: if a TEST_*_PASSWORD line is empty the script generates one and
  * WRITES IT BACK into the env file, so the file and Supabase Auth agree and
@@ -52,6 +54,10 @@ const USERS = [
   { key: "LA", name: "Listing Agent (staging)", kind: "agent" },
   { key: "MA", name: "Marketing Agent (staging)", kind: "agent" },
   { key: "ADMIN", name: "Test Admin (staging)", kind: "admin" },
+  // Country scope (00060/00103): an admin confined to MY, and an MY agent for
+  // them to act on. Optional — skipped when their TEST_* lines are absent.
+  { key: "CA", name: "Country Admin MY (staging)", kind: "admin", role: "country_admin", countries: ["MY"], country: "MY", language: "en", optional: true },
+  { key: "MYA", name: "MY Agent Under Review (staging)", kind: "agent", country: "MY", language: "en", status: "under_review", optional: true },
 ];
 
 const envPath = join(root, fileName);
@@ -66,11 +72,16 @@ const { data: list, error: listErr } = await admin.auth.admin.listUsers({ perPag
 if (listErr) throw listErr;
 const byEmail = new Map(list.users.map((u) => [u.email?.toLowerCase(), u]));
 
-const { data: superRole } = await admin.from("roles").select("id").eq("key", "super_admin").single();
+const { data: roleRows } = await admin.from("roles").select("id, key");
+const roleId = (key) => roleRows.find((r) => r.key === key)?.id;
 
 let written = 0;
 for (const u of USERS) {
   const email = envLine(`TEST_${u.key}_EMAIL`);
+  if (!email && u.optional) {
+    console.log(`skipped   ${u.key.padEnd(5)} (no TEST_${u.key}_EMAIL line)`);
+    continue;
+  }
   if (!email) {
     console.error(`TEST_${u.key}_EMAIL is empty in ${fileName}; add it and re-run.`);
     process.exit(1);
@@ -103,8 +114,8 @@ for (const u of USERS) {
   // Profile row is auto-provisioned by trigger on user creation; upsert covers
   // both the fresh and the re-run case.
   const { error: pErr } = await admin.from("profiles").upsert({
-    id: user.id, display_name: u.name, agent_status: "verified",
-    country_code: "ID", preferred_language: "id",
+    id: user.id, display_name: u.name, agent_status: u.status ?? "verified",
+    country_code: u.country ?? "ID", preferred_language: u.language ?? "id",
   });
   if (pErr) throw new Error(`profile ${email}: ${pErr.message}`);
 
@@ -113,13 +124,16 @@ for (const u of USERS) {
 
   if (u.kind === "agent") {
     const { error: aErr } = await admin.from("agent_profiles").upsert({
-      user_id: user.id, full_legal_name: u.name, country_code: "ID", submitted_at: new Date().toISOString(),
+      user_id: user.id, full_legal_name: u.name, country_code: u.country ?? "ID", submitted_at: new Date().toISOString(),
     });
     if (aErr) throw new Error(`agent_profile ${email}: ${aErr.message}`);
   } else {
     const { error: rErr } = await admin
       .from("user_roles")
-      .upsert({ user_id: user.id, role_id: superRole.id }, { onConflict: "user_id,role_id" });
+      .upsert(
+        { user_id: user.id, role_id: roleId(u.role ?? "super_admin"), country_codes: u.countries ?? [] },
+        { onConflict: "user_id,role_id" },
+      );
     if (rErr) throw new Error(`role ${email}: ${rErr.message}`);
   }
 }
