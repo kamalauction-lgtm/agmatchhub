@@ -11,8 +11,10 @@
   "compatibility_flags": ["nodejs_compat"],
   "triggers": { "crons": ["*/15 * * * *", "0 23 * * *"] },
   // Cloudflare Images binding for the photo processor (P0-e-2a, 00109).
-  // Images FREE plan: no purchase; transformations stop at 5,000 a month and
-  // the processor pauses itself at 4,500 (MEDIA_TRANSFORM_CAP).
+  // Images FREE plan: no purchase; transformations stop at 5,000 a month,
+  // shared by every Worker on the account. Staging pauses itself at 500
+  // (MEDIA_TRANSFORM_CAP below, owner decision D-8, 16 Nov 2026) so testing
+  // cannot use up production's allowance.
   "images": { "binding": "IMAGES" },
   "assets": {
     "directory": ".open-next/assets",
@@ -42,6 +44,7 @@
     "NEXT_PUBLIC_APP_NAME": "IQI AG Agent Platform",
     "NEXT_PUBLIC_APP_SHORT_NAME": "Agent Platform",
     "NEXT_PUBLIC_APP_TAGLINE": "One platform for your whole property business.",
-    "PG_TARGET_LABEL": "staging"
+    "PG_TARGET_LABEL": "staging",
+    "MEDIA_TRANSFORM_CAP": "500"
   }
 }
