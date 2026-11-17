@@ -389,7 +389,8 @@
   "agentPage": {
     "verified": "Terverifikasi",
     "inventory": "{count} properti",
-    "empty": "Belum ada properti yang ditampilkan."
+    "empty": "Belum ada properti yang ditampilkan.",
+    "certified": "Bersertifikat"
   },
   "report": {
     "open": "Laporkan listing ini",

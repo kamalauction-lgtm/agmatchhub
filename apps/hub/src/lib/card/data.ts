@@ -25,6 +25,9 @@ export type AgentCard = {
   avatar_url: string | null;
   preferred_language: string | null;
   is_verified: boolean;
+  /** 00131: an approved, unexpired certificate. */
+  is_certified: boolean;
+  certificate_number: string | null;
   agency_name: string | null;
   city: string | null;
   state_region: string | null;
@@ -111,7 +114,7 @@ export async function getAgentCard(slug: string): Promise<AgentCard | null> {
   const { data: agent, error } = await supabase
     .from("public_agent_profiles")
     .select(
-      "id, public_slug, display_name, avatar_url, preferred_language, is_verified, agency_name, city, state_region, biography, profile_photo_path, published_listing_count"
+      "id, public_slug, display_name, avatar_url, preferred_language, is_verified, is_certified, certificate_number, agency_name, city, state_region, biography, profile_photo_path, published_listing_count"
     )
     .eq("public_slug", slug)
     .maybeSingle();

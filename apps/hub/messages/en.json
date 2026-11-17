@@ -352,7 +352,9 @@
       "request_info": "Information requested from the agent.",
       "suspended": "Agent suspended. {n, plural, one {# live listing was} other {# live listings were}} paused.",
       "restored": "Agent restored. {n, plural, one {# listing was} other {# listings were}} republished.",
-      "banned": "Agent banned. {n, plural, one {# live listing was} other {# live listings were}} paused."
+      "banned": "Agent banned. {n, plural, one {# live listing was} other {# live listings were}} paused.",
+      "certificate_approved": "Certificate approved. The agent's public profile now shows Certified.",
+      "certificate_rejected": "Certificate rejected. The agent has been told why."
     },
     "errors": {
       "notes_required": "Notes are required for this decision.",
@@ -560,7 +562,25 @@
         "change_answered": "Agent replied",
         "request_review": "Request to approve",
         "photo_failed": "Photo failed",
-        "invite_expiring": "Invitation expiring"
+        "invite_expiring": "Invitation expiring",
+        "certificate_review": "Certificate to review"
+      }
+    },
+    "cert": {
+      "title": "Certificate",
+      "none": "No certificate submitted.",
+      "expires": "valid until {date}",
+      "viewProof": "Open the proof",
+      "proofMissing": "The proof file could not be opened.",
+      "duplicate": "Warning: {n, plural, one {# other agent uses} other {# other agents use}} this number.",
+      "notePlaceholder": "Reason (required to reject)",
+      "approve": "Approve",
+      "reject": "Reject",
+      "status": {
+        "pending": "awaiting review",
+        "approved": "approved",
+        "rejected": "rejected",
+        "superseded": "replaced"
       }
     }
   },
@@ -722,7 +742,8 @@
     },
     "recentListings": "Recent listings",
     "scanToSave": "Scan to save this contact",
-    "activeListings": "Active listings"
+    "activeListings": "Active listings",
+    "certified": "Certified"
   },
   "requests": {
     "title": "My requests",
@@ -1512,7 +1533,11 @@
       "agent_restored": "Your account has been restored",
       "agent_verification_approved": "Your verification was approved",
       "agent_verification_rejected": "Your verification was not approved",
-      "agent_verification_info_requested": "More information is needed for your verification"
+      "agent_verification_info_requested": "More information is needed for your verification",
+      "agent_certificate_approved": "Your certificate is approved",
+      "agent_certificate_rejected": "Your certificate was not approved",
+      "agent_certificate_expiring": "Your certificate expires within 30 days",
+      "admin_certificate_submitted": "A certificate is waiting for review"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -1805,6 +1830,39 @@
       "invalid_name": "Please enter the company name (2–160 characters).",
       "no_country": "Choose your country first.",
       "not_allowed": "Your account cannot do this right now.",
+      "failed": "That did not work. Please try again."
+    },
+    "certTitle": "Certificate (optional)",
+    "certIntro": "Add your government agent certificate. An administrator checks your proof; once approved, your public profile shows ✓ Certified with the number.",
+    "certSaved": "Submitted. An administrator will review your certificate.",
+    "certCertified": "Certified",
+    "certValidUntil": "valid until {date}",
+    "certStatus": {
+      "pending": "Awaiting review",
+      "rejected": "Rejected",
+      "expired": "Expired",
+      "superseded": "Replaced"
+    },
+    "certType": "Certificate",
+    "certNumber": "Certificate number",
+    "certExpires": "Valid until",
+    "certProof": "Proof (photo or PDF of the certificate)",
+    "certProofHint": "Up to 5 MB. Only administrators can see it; it is never public.",
+    "certPublicNote": "Once approved, your certificate number appears on your public profile. It disappears automatically when the certificate expires; we remind you 30 days before.",
+    "certSubmit": "Submit for review",
+    "certReplace": "Submit a new certificate",
+    "certTypes": {
+      "SERTIFIKAT_KOMPETENSI": "Certificate of competency (Sertifikat Kompetensi)"
+    },
+    "certErrors": {
+      "proof_required": "Please attach the proof of your certificate.",
+      "invalid_file_type": "The proof must be a PDF, JPG, PNG or WebP file.",
+      "file_too_large": "The proof is larger than 5 MB.",
+      "invalid_number": "Please check the certificate number (letters, digits, / . - only).",
+      "invalid_expiry": "The validity date must be in the future.",
+      "type_not_offered": "This certificate is not offered for your country.",
+      "not_allowed": "Your account cannot do this right now.",
+      "no_country": "Choose your country first.",
       "failed": "That did not work. Please try again."
     }
   },

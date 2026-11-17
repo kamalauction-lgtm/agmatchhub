@@ -51,6 +51,11 @@ export async function loadActionQueue(nowIso: string) {
         items.push({ kind: "agent_review", id: p.id, title: p.display_name ?? "", href: `/admin/agents/${p.id}`, since: ap?.submitted_at ?? p.created_at });
       }
     })());
+    tasks.push((async () => {
+      // RLS scopes these to the countries this admin may review (00131).
+      const { data } = await supabase.from("agent_certificates").select("id, user_id, cert_number, created_at").eq("status", "pending").order("created_at").limit(LIMIT);
+      for (const c of data ?? []) items.push({ kind: "certificate_review", id: c.id, title: c.cert_number, href: `/admin/agents/${c.user_id}#certificate`, since: c.created_at });
+    })());
   }
   if (held["media.review"]) {
     tasks.push((async () => {

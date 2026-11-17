@@ -352,7 +352,9 @@
       "request_info": "Maklumat diminta daripada ejen.",
       "suspended": "Ejen digantung. {n, plural, other {# penyenaraian aktif}} dijeda.",
       "restored": "Ejen dipulihkan. {n, plural, other {# penyenaraian}} diterbitkan semula.",
-      "banned": "Ejen disekat. {n} iklan aktif dijeda."
+      "banned": "Ejen disekat. {n} iklan aktif dijeda.",
+      "certificate_approved": "Sijil diluluskan. Profil awam ejen kini memaparkan Bersijil.",
+      "certificate_rejected": "Sijil ditolak. Ejen telah dimaklumkan sebabnya."
     },
     "errors": {
       "notes_required": "Nota diperlukan untuk keputusan ini.",
@@ -560,7 +562,25 @@
         "change_answered": "Ejen membalas",
         "request_review": "Keperluan perlu diluluskan",
         "photo_failed": "Foto gagal",
-        "invite_expiring": "Jemputan hampir tamat"
+        "invite_expiring": "Jemputan hampir tamat",
+        "certificate_review": "Sijil untuk disemak"
+      }
+    },
+    "cert": {
+      "title": "Sijil",
+      "none": "Tiada sijil dihantar.",
+      "expires": "sah sehingga {date}",
+      "viewProof": "Buka bukti",
+      "proofMissing": "Fail bukti tidak dapat dibuka.",
+      "duplicate": "Amaran: {n} ejen lain menggunakan nombor ini.",
+      "notePlaceholder": "Sebab (wajib untuk menolak)",
+      "approve": "Luluskan",
+      "reject": "Tolak",
+      "status": {
+        "pending": "menunggu",
+        "approved": "diluluskan",
+        "rejected": "ditolak",
+        "superseded": "diganti"
       }
     }
   },
@@ -722,7 +742,8 @@
     },
     "recentListings": "Senarai terkini",
     "scanToSave": "Imbas untuk simpan kenalan",
-    "activeListings": "Senarai aktif"
+    "activeListings": "Senarai aktif",
+    "certified": "Bersijil"
   },
   "requests": {
     "title": "Keperluan saya",
@@ -1512,7 +1533,11 @@
       "agent_restored": "Akaun anda telah dipulihkan",
       "agent_verification_approved": "Pengesahan anda diluluskan",
       "agent_verification_rejected": "Pengesahan anda tidak diluluskan",
-      "agent_verification_info_requested": "Pengesahan anda memerlukan maklumat tambahan"
+      "agent_verification_info_requested": "Pengesahan anda memerlukan maklumat tambahan",
+      "agent_certificate_approved": "Sijil anda diluluskan",
+      "agent_certificate_rejected": "Sijil anda tidak diluluskan",
+      "agent_certificate_expiring": "Sijil anda tamat tempoh dalam 30 hari",
+      "admin_certificate_submitted": "Ada sijil menunggu semakan"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -1805,6 +1830,39 @@
       "invalid_name": "Sila masukkan nama syarikat (2–160 aksara).",
       "no_country": "Pilih negara anda dahulu.",
       "not_allowed": "Akaun anda tidak boleh melakukan ini sekarang.",
+      "failed": "Tidak berjaya. Sila cuba lagi."
+    },
+    "certTitle": "Sijil (pilihan)",
+    "certIntro": "Tambah sijil ejen kerajaan anda. Pentadbir akan menyemak bukti anda; selepas diluluskan, profil awam anda memaparkan ✓ Bersijil bersama nombornya.",
+    "certSaved": "Dihantar. Pentadbir akan menyemak sijil anda.",
+    "certCertified": "Bersijil",
+    "certValidUntil": "sah sehingga {date}",
+    "certStatus": {
+      "pending": "Menunggu semakan",
+      "rejected": "Ditolak",
+      "expired": "Tamat tempoh",
+      "superseded": "Diganti"
+    },
+    "certType": "Sijil",
+    "certNumber": "Nombor sijil",
+    "certExpires": "Sah sehingga",
+    "certProof": "Bukti (foto atau PDF sijil)",
+    "certProofHint": "Sehingga 5 MB. Hanya pentadbir boleh melihatnya; ia tidak pernah dipaparkan kepada umum.",
+    "certPublicNote": "Selepas diluluskan, nombor sijil anda dipaparkan pada profil awam. Ia hilang secara automatik apabila sijil tamat tempoh; kami akan mengingatkan anda 30 hari sebelumnya.",
+    "certSubmit": "Hantar untuk semakan",
+    "certReplace": "Hantar sijil baharu",
+    "certTypes": {
+      "SERTIFIKAT_KOMPETENSI": "Sijil kompetensi (Sertifikat Kompetensi)"
+    },
+    "certErrors": {
+      "proof_required": "Sila lampirkan bukti sijil anda.",
+      "invalid_file_type": "Bukti mestilah fail PDF, JPG, PNG atau WebP.",
+      "file_too_large": "Saiz bukti melebihi 5 MB.",
+      "invalid_number": "Sila semak nombor sijil (huruf, digit, / . - sahaja).",
+      "invalid_expiry": "Tarikh sah mestilah pada masa hadapan.",
+      "type_not_offered": "Sijil ini tidak ditawarkan untuk negara anda.",
+      "not_allowed": "Akaun anda tidak boleh melakukan ini sekarang.",
+      "no_country": "Pilih negara anda dahulu.",
       "failed": "Tidak berjaya. Sila cuba lagi."
     }
   },

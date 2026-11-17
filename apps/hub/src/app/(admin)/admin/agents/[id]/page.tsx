@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability, requireCapabilityIn } from "@/lib/authz";
-import { banAgent, restoreAgent, reviewAgent, reviewSocialLink, suspendAgent } from "../actions";
+import { banAgent, restoreAgent, reviewAgent, reviewCertificate, reviewSocialLink, suspendAgent } from "../actions";
 import { Agent360 } from "@/components/admin/agent-360";
 import { GrantPanel } from "@/components/admin/grant-panel";
 
@@ -74,6 +74,20 @@ export default async function AgentDetailPage({
   const suspended = profile.agent_status === "suspended";
   const banned = profile.agent_status === "banned";
 
+  // Certificates (00131): history, the proof of the one waiting, and whether
+  // another agent has used the same number.
+  const { data: certs } = await supabase
+    .from("agent_certificates")
+    .select("id, cert_type, cert_number, expires_on, status, review_note, reviewed_at, created_at, document_path, country_code")
+    .eq("user_id", id).order("created_at", { ascending: false }).limit(10);
+  const pendingCert = (certs ?? []).find((c) => c.status === "pending") ?? null;
+  const pendingProofUrl = pendingCert
+    ? (await supabase.storage.from("agent-certificates-private").createSignedUrl(pendingCert.document_path, 60 * 10)).data?.signedUrl ?? null
+    : null;
+  const { data: sameNumber } = pendingCert
+    ? await supabase.from("agent_certificates").select("user_id").eq("country_code", pendingCert.country_code).ilike("cert_number", pendingCert.cert_number).neq("user_id", id).in("status", ["approved", "pending"]).limit(5)
+    : { data: [] as { user_id: string }[] };
+
   const { data: socialLinks } = await supabase
     .from("agent_social_links")
     .select("id, platform, url, display_label, verification_status, visibility")
@@ -108,7 +122,7 @@ export default async function AgentDetailPage({
 
       {done && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">
-          {done === "suspended" || done === "restored" || done === "banned" ? t(`doneNotice.${done}`, { n: Number(n) || 0 }) : t(`doneNotice.${done}`)}
+          {done === "suspended" || done === "restored" || done === "banned" ? t(`doneNotice.${done}`, { n: Number(n) || 0 }) : t(`doneNotice.${done}` as never)}
         </p>
       )}
       {error && (
@@ -282,6 +296,35 @@ export default async function AgentDetailPage({
               </button>
             </div>
           </form>
+
+          <div id="certificate" className="mt-8 border-t border-line pt-6" data-panel="certificate">
+            <h2 className="mb-2 font-semibold">{t("cert.title")}</h2>
+            {!(certs ?? []).length && <p className="text-sm text-muted">{t("cert.none")}</p>}
+            {pendingCert && (
+              <div className="mb-4 rounded-lg border border-warning/40 bg-warning/5 p-3 text-sm" data-cert-pending={pendingCert.id}>
+                <p className="font-medium">{pendingCert.cert_type} · {pendingCert.cert_number}</p>
+                <p className="text-xs text-muted">{t("cert.expires", { date: pendingCert.expires_on })}</p>
+                {pendingProofUrl ? (
+                  <a href={pendingProofUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block text-xs font-semibold text-crimson underline">{t("cert.viewProof")}</a>
+                ) : <p className="mt-1 text-xs text-danger">{t("cert.proofMissing")}</p>}
+                {(sameNumber ?? []).length > 0 && <p className="mt-2 rounded bg-danger/10 px-2 py-1 text-xs font-medium text-danger" data-cert-duplicate="1">{t("cert.duplicate", { n: (sameNumber ?? []).length })}</p>}
+                <form action={reviewCertificate} className="mt-3 space-y-2">
+                  <input type="hidden" name="certId" value={pendingCert.id} />
+                  <input type="hidden" name="userId" value={id} />
+                  <textarea name="note" rows={2} maxLength={2000} placeholder={t("cert.notePlaceholder")} className={inputCls} />
+                  <div className="flex gap-2">
+                    <button name="decision" value="approve" type="submit" className="flex-1 rounded-lg bg-success px-3 py-2 text-sm font-semibold text-white hover:opacity-90">{t("cert.approve")}</button>
+                    <button name="decision" value="reject" type="submit" className="flex-1 rounded-lg border border-danger px-3 py-2 text-sm font-semibold text-danger hover:bg-danger/10">{t("cert.reject")}</button>
+                  </div>
+                </form>
+              </div>
+            )}
+            <ul className="space-y-1 text-xs text-muted">
+              {(certs ?? []).filter((c) => c.id !== pendingCert?.id).map((c) => (
+                <li key={c.id}>{c.cert_number} · {t(`cert.status.${c.status}` as never)}{c.status === "approved" ? ` · ${t("cert.expires", { date: c.expires_on })}` : ""}{c.review_note ? ` · ${c.review_note}` : ""}</li>
+              ))}
+            </ul>
+          </div>
 
           <div className="mt-8 border-t border-line pt-6" data-panel="account">
             <h2 className="mb-2 font-semibold">{t("a360.accountTitle")}</h2>

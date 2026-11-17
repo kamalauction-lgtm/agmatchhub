@@ -34,6 +34,20 @@ type Task = { name: string; every: "15m" | "daily"; run: () => Promise<TaskResul
 
 const TASKS: Task[] = [
   {
+    /** 00131: an approved certificate expires within 30 days; remind the agent once (in-app, push, email). */
+    name: "certificate_expiry",
+    every: "daily",
+    run: async () => {
+      const { data, error } = await createServiceClient().rpc("certificates_due_reminder");
+      if (error) return { error: error.message };
+      const rows = (data ?? []) as { user_id: string; cert_number: string; expires_on: string }[];
+      for (const r of rows) {
+        await notify({ userId: r.user_id, kind: "agent.certificate_expiring", payload: { ref: `${r.cert_number} · ${r.expires_on}` }, href: "/profile#certificate" });
+      }
+      return { reminded: rows.length };
+    },
+  },
+  {
     /** Screen 2 (00126): prospects past their owner-set retention period are deleted; only the count is audited. */
     name: "prospect_retention",
     every: "daily",

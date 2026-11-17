@@ -389,7 +389,8 @@
   "agentPage": {
     "verified": "Disahkan",
     "inventory": "{count} hartanah",
-    "empty": "Ejen ini belum mempunyai hartanah yang disiarkan."
+    "empty": "Ejen ini belum mempunyai hartanah yang disiarkan.",
+    "certified": "Bersijil"
   },
   "report": {
     "open": "Laporkan penyenaraian ini",

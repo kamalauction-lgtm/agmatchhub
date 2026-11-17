@@ -56,6 +56,7 @@ export default async function PublicCardPage({
 
   const labels: CardLabels = {
     verified: t("verified"),
+    certified: t("certified"),
     listings: t("listings"),
     viewListings: t("viewListings"),
     saveContact: t("saveContact"),

@@ -389,7 +389,8 @@
   "agentPage": {
     "verified": "Verified",
     "inventory": "{count} properties",
-    "empty": "No properties listed yet."
+    "empty": "No properties listed yet.",
+    "certified": "Certified"
   },
   "report": {
     "open": "Report this listing",

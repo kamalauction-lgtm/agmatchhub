@@ -352,7 +352,9 @@
       "request_info": "Informasi diminta dari agen.",
       "suspended": "Agen ditangguhkan. {n, plural, other {# listing tayang}} dijeda.",
       "restored": "Agen dipulihkan. {n, plural, other {# listing}} ditayangkan kembali.",
-      "banned": "Agen diblokir. {n} listing aktif dijeda."
+      "banned": "Agen diblokir. {n} listing aktif dijeda.",
+      "certificate_approved": "Sertifikat disetujui. Profil publik agen kini menampilkan Bersertifikat.",
+      "certificate_rejected": "Sertifikat ditolak. Agen telah diberi tahu alasannya."
     },
     "errors": {
       "notes_required": "Catatan wajib untuk keputusan ini.",
@@ -560,7 +562,25 @@
         "change_answered": "Agen membalas",
         "request_review": "Kebutuhan perlu disetujui",
         "photo_failed": "Foto gagal",
-        "invite_expiring": "Undangan hampir kedaluwarsa"
+        "invite_expiring": "Undangan hampir kedaluwarsa",
+        "certificate_review": "Sertifikat untuk ditinjau"
+      }
+    },
+    "cert": {
+      "title": "Sertifikat",
+      "none": "Belum ada sertifikat.",
+      "expires": "berlaku hingga {date}",
+      "viewProof": "Buka bukti",
+      "proofMissing": "File bukti tidak dapat dibuka.",
+      "duplicate": "Peringatan: {n} agen lain menggunakan nomor ini.",
+      "notePlaceholder": "Alasan (wajib untuk menolak)",
+      "approve": "Setujui",
+      "reject": "Tolak",
+      "status": {
+        "pending": "menunggu",
+        "approved": "disetujui",
+        "rejected": "ditolak",
+        "superseded": "diganti"
       }
     }
   },
@@ -722,7 +742,8 @@
     },
     "recentListings": "Listing terbaru",
     "scanToSave": "Pindai untuk menyimpan kontak",
-    "activeListings": "Listing aktif"
+    "activeListings": "Listing aktif",
+    "certified": "Bersertifikat"
   },
   "requests": {
     "title": "Kebutuhan saya",
@@ -1512,7 +1533,11 @@
       "agent_restored": "Akun Anda telah dipulihkan",
       "agent_verification_approved": "Verifikasi Anda disetujui",
       "agent_verification_rejected": "Verifikasi Anda tidak disetujui",
-      "agent_verification_info_requested": "Verifikasi Anda memerlukan informasi tambahan"
+      "agent_verification_info_requested": "Verifikasi Anda memerlukan informasi tambahan",
+      "agent_certificate_approved": "Sertifikat Anda disetujui",
+      "agent_certificate_rejected": "Sertifikat Anda tidak disetujui",
+      "agent_certificate_expiring": "Sertifikat Anda kedaluwarsa dalam 30 hari",
+      "admin_certificate_submitted": "Ada sertifikat yang menunggu peninjauan"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -1805,6 +1830,39 @@
       "invalid_name": "Masukkan nama perusahaan (2–160 karakter).",
       "no_country": "Pilih negara Anda terlebih dahulu.",
       "not_allowed": "Akun Anda tidak dapat melakukan ini saat ini.",
+      "failed": "Gagal. Silakan coba lagi."
+    },
+    "certTitle": "Sertifikat (opsional)",
+    "certIntro": "Tambahkan sertifikat agen dari pemerintah. Administrator akan memeriksa bukti Anda; setelah disetujui, profil publik Anda menampilkan ✓ Bersertifikat beserta nomornya.",
+    "certSaved": "Terkirim. Administrator akan meninjau sertifikat Anda.",
+    "certCertified": "Bersertifikat",
+    "certValidUntil": "berlaku hingga {date}",
+    "certStatus": {
+      "pending": "Menunggu peninjauan",
+      "rejected": "Ditolak",
+      "expired": "Kedaluwarsa",
+      "superseded": "Diganti"
+    },
+    "certType": "Sertifikat",
+    "certNumber": "Nomor sertifikat",
+    "certExpires": "Berlaku hingga",
+    "certProof": "Bukti (foto atau PDF sertifikat)",
+    "certProofHint": "Maksimal 5 MB. Hanya administrator yang dapat melihatnya; tidak pernah dipublikasikan.",
+    "certPublicNote": "Setelah disetujui, nomor sertifikat Anda tampil di profil publik. Nomor akan hilang otomatis saat sertifikat kedaluwarsa; kami mengingatkan Anda 30 hari sebelumnya.",
+    "certSubmit": "Kirim untuk ditinjau",
+    "certReplace": "Kirim sertifikat baru",
+    "certTypes": {
+      "SERTIFIKAT_KOMPETENSI": "Sertifikat Kompetensi"
+    },
+    "certErrors": {
+      "proof_required": "Lampirkan bukti sertifikat Anda.",
+      "invalid_file_type": "Bukti harus berupa file PDF, JPG, PNG, atau WebP.",
+      "file_too_large": "Ukuran bukti lebih dari 5 MB.",
+      "invalid_number": "Periksa nomor sertifikat (hanya huruf, angka, / . -).",
+      "invalid_expiry": "Tanggal berlaku harus di masa depan.",
+      "type_not_offered": "Sertifikat ini tidak tersedia untuk negara Anda.",
+      "not_allowed": "Akun Anda tidak dapat melakukan ini saat ini.",
+      "no_country": "Pilih negara Anda terlebih dahulu.",
       "failed": "Gagal. Silakan coba lagi."
     }
   },

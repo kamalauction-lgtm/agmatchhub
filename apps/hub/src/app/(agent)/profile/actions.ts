@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { notifyAdmins } from "@/lib/notifications";
 import { removeOldAvatar, storeCleanAvatar } from "@/lib/media/avatar";
 
 const IMAGE_MIMES: Record<string, string> = {
@@ -39,6 +40,44 @@ export async function addMyAgency(formData: FormData) {
   const s = set as { ok?: boolean; error?: string } | null;
   if (!s?.ok) redirect(`/profile?company_error=${s?.error ?? "failed"}#company`);
   redirect("/profile?company_saved=1#company");
+}
+
+const CERT_MIMES: Record<string, string> = {
+  "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "application/pdf": "pdf",
+};
+
+/**
+ * Certificate (00131): optional; if entered, the proof is required. The file
+ * goes to the private bucket in the agent's own folder (RLS: add only, never
+ * overwrite), then agent_submit_certificate checks the country's certificate
+ * types, the number, the expiry and that the proof is there, and records a
+ * pending submission for an admin to review.
+ */
+export async function submitCertificate(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+  const p = z.object({
+    certType: z.string().regex(/^[A-Z][A-Z_]{1,39}$/),
+    certNumber: z.string().trim().min(3).max(60),
+    expiresOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  }).safeParse({ certType: formData.get("certType"), certNumber: formData.get("certNumber"), expiresOn: formData.get("expiresOn") });
+  if (!p.success) redirect("/profile?cert_error=invalid#certificate");
+  const proof = formData.get("proof") as File | null;
+  if (!proof || proof.size === 0) redirect("/profile?cert_error=proof_required#certificate");
+  const ext = CERT_MIMES[proof.type];
+  if (!ext) redirect("/profile?cert_error=invalid_file_type#certificate");
+  if (proof.size > MAX_CARD_BYTES) redirect("/profile?cert_error=file_too_large#certificate");
+  const path = `${user.id}/certificate-${Date.now()}.${ext}`;
+  const { error: upErr } = await supabase.storage.from("agent-certificates-private").upload(path, proof, { contentType: proof.type, upsert: false });
+  if (upErr) redirect("/profile?cert_error=upload_failed#certificate");
+  const { data } = await supabase.rpc("agent_submit_certificate", {
+    p_type: p.data.certType, p_number: p.data.certNumber, p_expires: p.data.expiresOn, p_document_path: path,
+  });
+  const r = data as { ok?: boolean; error?: string } | null;
+  if (!r?.ok) redirect(`/profile?cert_error=${r?.error ?? "failed"}#certificate`);
+  await notifyAdmins({ kind: "admin.certificate_submitted", href: `/admin/agents/${user.id}` });
+  redirect("/profile?cert_saved=1#certificate");
 }
 
 export async function updateTrustProfile(formData: FormData) {
