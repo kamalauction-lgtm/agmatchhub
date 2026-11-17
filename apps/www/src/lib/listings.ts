@@ -568,6 +568,9 @@ export type PublicAgent = {
      so the agent page could not use them even though every query selects *. */
   markets_served: string[] | null;
   property_categories: string[] | null;
+  /* 00131: an approved, unexpired certificate; blank otherwise. */
+  is_certified: boolean;
+  certificate_number: string | null;
 };
 
 export async function getAgentBySlug(slug: string): Promise<PublicAgent | null> {

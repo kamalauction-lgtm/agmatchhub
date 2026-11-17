@@ -123,6 +123,12 @@ export default async function AgentPage({
                   {t("verified")}
                 </span>
               )}
+              {agent.is_certified && agent.certificate_number && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-xs font-semibold text-white" data-certified="1">
+                  <CheckBadgeIcon className="h-3.5 w-3.5" />
+                  {t("certified")} · {agent.certificate_number}
+                </span>
+              )}
             </div>
 
             {agent.agency_name && (

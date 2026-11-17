@@ -4,7 +4,7 @@ import { requireUser } from "@/lib/authz";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { HeroCard } from "@/components/profile/hero-card";
 import { AvatarUpload } from "@/components/profile/avatar-upload";
-import { updateTrustProfile, addSocialLink, removeSocialLink, setMyAgency, addMyAgency } from "./actions";
+import { updateTrustProfile, addSocialLink, removeSocialLink, setMyAgency, addMyAgency, submitCertificate } from "./actions";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -19,9 +19,9 @@ const KNOWN_ERRORS = ["invalid_fields", "invalid_file_type", "file_too_large",
 export default async function ProfilePage({
   searchParams,
 }: {
-  searchParams: Promise<{ saved?: string; error?: string; hero?: string; company?: string; company_saved?: string; company_error?: string }>;
+  searchParams: Promise<{ saved?: string; error?: string; hero?: string; company?: string; company_saved?: string; company_error?: string; cert_saved?: string; cert_error?: string }>;
 }) {
-  const { saved, error, hero: heroNotice, company: companyQuery, company_saved: companySaved, company_error: companyError } = await searchParams;
+  const { saved, error, hero: heroNotice, company: companyQuery, company_saved: companySaved, company_error: companyError, cert_saved: certSaved, cert_error: certError } = await searchParams;
   const user = await requireUser();
   const supabase = await createClient();
   const t = await getTranslations("trustProfile");
@@ -48,6 +48,17 @@ export default async function ProfilePage({
     supabase.rpc("agency_is_hero_partner"),
     supabase.from("hero_links").select("status").eq("user_id", user.id).maybeSingle(),
   ]);
+  // Certificate (00131): offered only where the country has certificate types.
+  const [{ data: countryRow }, { data: certs }] = await Promise.all([
+    country ? supabase.from("countries").select("terminology").eq("code", country).maybeSingle() : Promise.resolve({ data: null }),
+    supabase.from("agent_certificates").select("id, cert_type, cert_number, expires_on, status, review_note, created_at").eq("user_id", user.id).neq("status", "superseded").order("created_at", { ascending: false }).limit(5),
+  ]);
+  const certTypes = ((countryRow?.terminology as { certificate_types?: unknown } | null)?.certificate_types ?? []) as string[];
+  const today = new Date().toISOString().slice(0, 10);
+  const approvedCert = (certs ?? []).find((c) => c.status === "approved" && c.expires_on >= today) ?? null;
+  const latestCert = (certs ?? [])[0] ?? null;
+  const certLabel = (k: string) => (t.has(`certTypes.${k}`) ? t(`certTypes.${k}` as never) : k);
+
   // AG Hero only for agents of a partner agency, or anyone already linked.
   const heroEligible = heroPartner === true || (!!heroLink && heroLink.status !== "unlinked");
 
@@ -250,6 +261,56 @@ export default async function ProfilePage({
           </>
         )}
       </section>
+
+      {/* Certificate (00131) — optional; proof required; admin approves -------- */}
+      {certTypes.length > 0 && (
+        <section id="certificate" className="mt-8 rounded-xl border border-line p-5" data-certificate="1">
+          <h2 className="font-semibold">{t("certTitle")}</h2>
+          <p className="mt-1 text-sm text-muted">{t("certIntro")}</p>
+          {certSaved && <p className="mt-3 rounded-lg bg-success/10 px-3 py-2 text-sm text-success">{t("certSaved")}</p>}
+          {certError && <p role="alert" className="mt-3 rounded-lg bg-crimson-soft px-3 py-2 text-sm text-crimson">{t(`certErrors.${["proof_required", "invalid_file_type", "file_too_large", "invalid_number", "invalid_expiry", "type_not_offered", "not_allowed", "no_country"].includes(certError) ? certError : "failed"}` as never)}</p>}
+          {approvedCert && (
+            <p className="mt-3 text-sm" data-cert-status="approved">
+              <span className="rounded-full bg-success/10 px-2 py-0.5 text-xs font-semibold text-success">✓ {t("certCertified")}</span>
+              <span className="ml-2">{certLabel(approvedCert.cert_type)} · {approvedCert.cert_number} · {t("certValidUntil", { date: approvedCert.expires_on })}</span>
+            </p>
+          )}
+          {latestCert && latestCert.id !== approvedCert?.id && (
+            <p className="mt-3 text-sm" data-cert-status={latestCert.status}>
+              <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${latestCert.status === "pending" ? "bg-warning-soft text-warning" : latestCert.status === "rejected" ? "bg-crimson-soft text-crimson" : "bg-surface text-muted"}`}>
+                {t(`certStatus.${latestCert.status === "approved" ? "expired" : latestCert.status}` as never)}
+              </span>
+              <span className="ml-2">{latestCert.cert_number}</span>
+              {latestCert.status === "rejected" && latestCert.review_note && <span className="mt-1 block text-xs text-muted">{latestCert.review_note}</span>}
+            </p>
+          )}
+          <form action={submitCertificate} className="mt-4 grid gap-3 sm:grid-cols-2">
+            <label className="block text-sm">
+              <span className="mb-1 block font-medium">{t("certType")}</span>
+              <select name="certType" required className={inputCls} defaultValue={certTypes[0]}>
+                {certTypes.map((k) => <option key={k} value={k}>{certLabel(k)}</option>)}
+              </select>
+            </label>
+            <label className="block text-sm">
+              <span className="mb-1 block font-medium">{t("certNumber")}</span>
+              <input name="certNumber" required minLength={3} maxLength={60} className={inputCls} />
+            </label>
+            <label className="block text-sm">
+              <span className="mb-1 block font-medium">{t("certExpires")}</span>
+              <input name="expiresOn" type="date" required min={today} className={inputCls} />
+            </label>
+            <label className="block text-sm">
+              <span className="mb-1 block font-medium">{t("certProof")}</span>
+              <input name="proof" type="file" required accept=".pdf,.jpg,.jpeg,.png,.webp" className="block w-full text-sm" />
+              <span className="mt-1 block text-xs text-muted">{t("certProofHint")}</span>
+            </label>
+            <div className="sm:col-span-2">
+              <p className="mb-2 text-xs text-muted">{t("certPublicNote")}</p>
+              <button type="submit" className={btnPri}>{approvedCert || latestCert ? t("certReplace") : t("certSubmit")}</button>
+            </div>
+          </form>
+        </section>
+      )}
 
       {/* AG Hero link + launch benefits (E8) — partner agencies only (00130). */}
       {heroEligible && <HeroCard userId={user.id} notice={heroNotice} />}

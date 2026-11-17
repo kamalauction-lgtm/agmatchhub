@@ -59,6 +59,7 @@ export default async function MyCardPage() {
 
   const labels: CardLabels = {
     verified: tc("verified"),
+    certified: tc("certified"),
     listings: tc("listings"),
     viewListings: tc("viewListings"),
     saveContact: tc("saveContact"),

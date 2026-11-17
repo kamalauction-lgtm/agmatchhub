@@ -198,6 +198,27 @@ export async function banAgent(formData: FormData) {
   redirect(`/admin/agents/${p.data.userId}?done=banned&n=${r?.listings_paused ?? 0}`);
 }
 
+/**
+ * Approve or reject a certificate (00131). admin_review_certificate checks
+ * agent.verify in the agent's country, refuses your own, needs a reason to
+ * reject, audits, and writes the agent's in-app notice; push and email here.
+ */
+export async function reviewCertificate(formData: FormData) {
+  const p = z.object({
+    certId: z.string().uuid(),
+    userId: z.string().uuid(),
+    decision: z.enum(["approve", "reject"]),
+    note: z.string().trim().max(2000).optional().or(z.literal("")),
+  }).safeParse({ certId: formData.get("certId"), userId: formData.get("userId"), decision: formData.get("decision"), note: formData.get("note") ?? "" });
+  if (!p.success) redirect(`/admin/agents/${String(formData.get("userId") ?? "")}?error=save_failed`);
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_review_certificate", { p_id: p.data.certId, p_decision: p.data.decision, p_note: p.data.note || null });
+  const r = data as { ok?: boolean; error?: string; status?: string } | null;
+  if (error || !r?.ok) redirect(`/admin/agents/${p.data.userId}?error=${r?.error === "note_required" ? "notes_required" : r?.error ?? "save_failed"}#certificate`);
+  await pushCopy(p.data.userId, `agent.certificate_${r!.status}`);
+  redirect(`/admin/agents/${p.data.userId}?done=certificate_${r!.status}#certificate`);
+}
+
 export async function restoreAgent(formData: FormData) {
   const p = restoreSchema.safeParse({ userId: formData.get("userId"), note: formData.get("note") ?? "" });
   if (!p.success) redirect(`/admin/agents/${String(formData.get("userId") ?? "")}?error=save_failed`);

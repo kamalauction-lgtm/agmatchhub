@@ -55,6 +55,7 @@ function shortPrice(value: number | null, currency: string | null): string | nul
 
 export type CardLabels = {
   verified: string;
+  certified: string;
   listings: string;
   viewListings: string;
   saveContact: string;
@@ -128,6 +129,11 @@ export function CardView({
             <span className="inline-flex items-center gap-1 rounded-full bg-success/10 px-2.5 py-0.5 text-xs font-semibold text-success">
               <CheckBadgeIcon className="h-3.5 w-3.5" />
               {labels.verified}
+            </span>
+          )}
+          {card.is_certified && card.certificate_number && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-indigo/10 px-2.5 py-0.5 text-xs font-semibold text-indigo" data-certified="1">
+              ✓ {labels.certified} · {card.certificate_number}
             </span>
           )}
           {card.agency_name && <span>{card.agency_name}</span>}

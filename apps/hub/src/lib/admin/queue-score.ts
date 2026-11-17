@@ -10,7 +10,7 @@
 
 export type QueueKind =
   | "report_scam" | "report" | "lead_overdue" | "listing_review" | "agent_review"
-  | "change_answered" | "request_review" | "photo_failed" | "invite_expiring";
+  | "change_answered" | "request_review" | "photo_failed" | "invite_expiring" | "certificate_review";
 
 export const QUEUE_WEIGHT: Record<QueueKind, number> = {
   report_scam: 8,      // a buyer says this listing is a scam
@@ -18,6 +18,7 @@ export const QUEUE_WEIGHT: Record<QueueKind, number> = {
   report: 4,           // other buyer reports
   listing_review: 3,   // an agent is waiting to go live
   agent_review: 3,     // an agent is waiting to be verified
+  certificate_review: 2, // an agent's certificate is waiting for approval (00131)
   change_answered: 3,  // an agent answered a moderator; the moderator owes a reply
   request_review: 2,   // a client requirement is waiting for approval
   photo_failed: 2,     // a photo could not be processed
