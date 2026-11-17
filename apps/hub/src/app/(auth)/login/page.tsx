@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PasswordInput } from "@/components/forms/password-input";
 import { signIn } from "../actions";
+import { ResendConfirmation } from "@/components/forms/resend-confirmation";
 
 export default async function LoginPage({
   searchParams,
@@ -17,7 +18,7 @@ export default async function LoginPage({
       <h1 className="mb-6 text-2xl font-semibold">{t("loginTitle")}</h1>
       {error && (
         <p role="alert" className="mb-4 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
-          {t(`errors.${["invalid_credentials", "generic"].includes(error) ? error : "generic"}`)}
+          {t(`errors.${["invalid_credentials", "email_not_confirmed", "generic"].includes(error) ? error : "generic"}`)}
         </p>
       )}
       <form action={signIn} className="space-y-4">
@@ -49,6 +50,7 @@ export default async function LoginPage({
           {tc("signIn")}
         </button>
       </form>
+      {error === "email_not_confirmed" && <ResendConfirmation className="mt-6 rounded-xl border border-line p-4" />}
       <div className="mt-6 flex items-center justify-between text-sm">
         <Link href="/forgot-password" className="text-muted hover:text-foreground">
           {t("forgotPassword")}
@@ -60,6 +62,9 @@ export default async function LoginPage({
           </Link>
         </span>
       </div>
+      <p className="mt-3 text-center text-xs">
+        <Link href="/verify-email" className="text-muted hover:text-foreground">{t("resendLink")}</Link>
+      </p>
     </div>
   );
 }

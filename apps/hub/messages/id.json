@@ -41,7 +41,7 @@
     "resetSubmit": "Setel kata sandi baru",
     "resetSent": "Jika akun dengan email tersebut ada, tautan reset telah dikirim.",
     "verifyTitle": "Verifikasi email Anda",
-    "verifyBody": "Kami telah mengirim tautan konfirmasi ke alamat email Anda. Klik tautan dalam email untuk mengaktifkan akun Anda, lalu masuk.",
+    "verifyBody": "Kami telah mengirim tautan konfirmasi ke email Anda. Klik tautan di email tersebut (berlaku 24 jam) untuk mengaktifkan akun Anda, lalu masuk. Periksa folder spam jika tidak menemukannya.",
     "noAccount": "Belum punya akun?",
     "haveAccount": "Sudah punya akun?",
     "errors": {
@@ -49,7 +49,8 @@
       "password_mismatch": "Kata sandi tidak cocok.",
       "weak_password": "Kata sandi minimal 8 karakter.",
       "email_in_use": "Akun dengan email ini mungkin sudah ada.",
-      "generic": "Terjadi kesalahan. Silakan coba lagi."
+      "generic": "Terjadi kesalahan. Silakan coba lagi.",
+      "email_not_confirmed": "Konfirmasikan email Anda terlebih dahulu. Periksa kotak masuk dan spam, atau kirim tautan baru di bawah."
     },
     "activateTitle": "Aktifkan akun Anda",
     "activateBody": "Lanjutkan untuk memilih kata sandi. Anda akan langsung masuk setelahnya.",
@@ -58,7 +59,16 @@
     "welcomeTitle": "Pilih kata sandi Anda",
     "country": "Negara tempat Anda bekerja",
     "countryChoose": "Pilih negara Anda",
-    "countryHint": "Ini menentukan jenis lisensi yang Anda lihat dan tim yang mendukung Anda."
+    "countryHint": "Ini menentukan jenis lisensi yang Anda lihat dan tim yang mendukung Anda.",
+    "resendTitle": "Tidak menerima email, atau tautannya kedaluwarsa?",
+    "resendBody": "Masukkan email yang Anda daftarkan dan kami akan mengirim tautan konfirmasi baru.",
+    "resendCta": "Kirim tautan baru",
+    "resendLink": "Tidak menerima email konfirmasi?",
+    "resent": {
+      "sent": "Jika email tersebut sedang menunggu konfirmasi, tautan baru sedang dikirim. Berlaku selama 24 jam.",
+      "wait": "Tautan baru saja dikirim. Mohon tunggu satu menit sebelum meminta lagi.",
+      "invalid": "Masukkan alamat email yang valid."
+    }
   },
   "dashboard": {
     "title": "Dasbor agen",

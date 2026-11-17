@@ -25,6 +25,8 @@ export async function signIn(formData: FormData) {
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
+  // Only reachable with the right password, so it reveals nothing new.
+  if (error?.code === "email_not_confirmed") redirect("/login?error=email_not_confirmed");
   if (error) redirect("/login?error=invalid_credentials");
 
   const next = String(formData.get("next") ?? "");
@@ -77,6 +79,25 @@ export async function signUp(formData: FormData) {
   }
 
   redirect("/verify-email");
+}
+
+/**
+ * Send a fresh signup confirmation link (17 Nov 2026). The same answer
+ * whether or not the address has an unconfirmed account (no enumeration);
+ * Supabase's own per-address rate limit is reported as "wait".
+ */
+export async function resendConfirmation(formData: FormData) {
+  const email = z.string().trim().email().safeParse(formData.get("email"));
+  if (!email.success) redirect("/verify-email?resent=invalid");
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email: email.data,
+    options: { emailRedirectTo: process.env.AUTH_CALLBACK_URL },
+  });
+  if (error && (error.status === 429 || /rate|seconds/i.test(error.message))) redirect("/verify-email?resent=wait");
+  if (error) console.error("resendConfirmation", error.code, error.message);
+  redirect("/verify-email?resent=1");
 }
 
 export async function signOut() {

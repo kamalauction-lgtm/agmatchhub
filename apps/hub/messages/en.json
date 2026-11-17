@@ -41,7 +41,7 @@
     "resetSubmit": "Set new password",
     "resetSent": "If an account exists for that email, a reset link has been sent.",
     "verifyTitle": "Verify your email",
-    "verifyBody": "We have sent a confirmation link to your email address. Click the link in the email to activate your account, then sign in.",
+    "verifyBody": "We have sent a confirmation link to your email address. Click the link in the email (it works for 24 hours) to activate your account, then sign in. Check your spam folder if you cannot find it.",
     "noAccount": "No account yet?",
     "haveAccount": "Already have an account?",
     "errors": {
@@ -49,7 +49,8 @@
       "password_mismatch": "Passwords do not match.",
       "weak_password": "Password must be at least 8 characters.",
       "email_in_use": "An account with this email may already exist.",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "email_not_confirmed": "Please confirm your email first. Check your inbox and spam, or send a new link below."
     },
     "activateTitle": "Activate your account",
     "activateBody": "Continue to choose your password. You will be signed in straight after.",
@@ -58,7 +59,16 @@
     "welcomeTitle": "Choose your password",
     "country": "Country where you work",
     "countryChoose": "Choose your country",
-    "countryHint": "This decides which licence types you see and which team supports you."
+    "countryHint": "This decides which licence types you see and which team supports you.",
+    "resendTitle": "Didn't get the email, or the link has expired?",
+    "resendBody": "Enter the email you registered with and we will send a new confirmation link.",
+    "resendCta": "Send a new link",
+    "resendLink": "Didn't get the confirmation email?",
+    "resent": {
+      "sent": "If that email is waiting for confirmation, a new link is on its way. It works for 24 hours.",
+      "wait": "A link was sent very recently. Please wait a minute before asking again.",
+      "invalid": "Please enter a valid email address."
+    }
   },
   "dashboard": {
     "title": "Agent dashboard",
