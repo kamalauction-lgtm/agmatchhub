@@ -41,7 +41,7 @@
     "resetSubmit": "Tetapkan kata laluan baharu",
     "resetSent": "Jika akaun wujud untuk e-mel tersebut, pautan set semula telah dihantar.",
     "verifyTitle": "Sahkan e-mel anda",
-    "verifyBody": "Kami telah menghantar pautan pengesahan ke alamat e-mel anda. Klik pautan dalam e-mel untuk mengaktifkan akaun anda, kemudian log masuk.",
+    "verifyBody": "Kami telah menghantar pautan pengesahan ke e-mel anda. Klik pautan dalam e-mel tersebut (sah selama 24 jam) untuk mengaktifkan akaun anda, kemudian log masuk. Semak folder spam jika anda tidak menjumpainya.",
     "noAccount": "Belum ada akaun?",
     "haveAccount": "Sudah ada akaun?",
     "errors": {
@@ -49,7 +49,8 @@
       "password_mismatch": "Kata laluan tidak sepadan.",
       "weak_password": "Kata laluan mestilah sekurang-kurangnya 8 aksara.",
       "email_in_use": "Akaun dengan e-mel ini mungkin sudah wujud.",
-      "generic": "Berlaku ralat. Sila cuba lagi."
+      "generic": "Berlaku ralat. Sila cuba lagi.",
+      "email_not_confirmed": "Sila sahkan e-mel anda dahulu. Semak peti masuk dan spam, atau hantar pautan baharu di bawah."
     },
     "activateTitle": "Aktifkan akaun anda",
     "activateBody": "Teruskan untuk memilih kata laluan. Anda akan log masuk sejurus selepas itu.",
@@ -58,7 +59,16 @@
     "welcomeTitle": "Pilih kata laluan anda",
     "country": "Negara tempat anda bekerja",
     "countryChoose": "Pilih negara anda",
-    "countryHint": "Ini menentukan jenis lesen yang anda lihat dan pasukan yang menyokong anda."
+    "countryHint": "Ini menentukan jenis lesen yang anda lihat dan pasukan yang menyokong anda.",
+    "resendTitle": "Tidak menerima e-mel, atau pautan telah tamat tempoh?",
+    "resendBody": "Masukkan e-mel yang anda daftarkan dan kami akan menghantar pautan pengesahan baharu.",
+    "resendCta": "Hantar pautan baharu",
+    "resendLink": "Tidak menerima e-mel pengesahan?",
+    "resent": {
+      "sent": "Jika e-mel tersebut sedang menunggu pengesahan, pautan baharu sedang dihantar. Sah selama 24 jam.",
+      "wait": "Pautan baru sahaja dihantar. Sila tunggu seminit sebelum meminta lagi.",
+      "invalid": "Sila masukkan alamat e-mel yang sah."
+    }
   },
   "dashboard": {
     "title": "Papan pemuka ejen",
