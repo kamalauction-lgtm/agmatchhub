@@ -133,3 +133,30 @@
 - **Staging before release:** RLS `agency-directory` 6/6, including the negative tests; Hub end to end 12/12.
 - **Noted, not changed:** Budi Santoso's profile country is MY, but the profile is linked to IQI Indonesia (agency text "IQI Bandung"). An admin should confirm which is right.
 - **Not yet verified on production:** an agent adding their own company through the profile page.
+
+## Follow-up releases, 17 Nov 2026
+
+**Signup confirmation** (owner: "fix the link expiry and add resend button"; "Yes, release it")
+- **Supabase Auth setting:** Email OTP expiration changed from 3600 to **86400 s** on staging and production, in the dashboard (production re-read after saving). Supabase shows an advisory recommending under an hour.
+- **PR #52** merged as `d2a166e`. Hub deployed as **`c6deb779`** (rollback `867ee226`).
+  - Sign-in on an unconfirmed account says "confirm your email" and offers a resend form.
+  - "Didn't get the confirmation email?" appears under the login form and on `/verify-email`.
+  - Verified on production: the form shows on the login page and on `/verify-email`.
+- **One account fixed by hand:** the owner's test signup ("Nury") was confirmed by an admin, audited as `user.email_confirmed_by_admin`.
+
+**Agent certificates** (owner: Indonesian government requirement; "Yes, release it")
+- **PR #53** merged as `48956ff`. CI (checks and the full RLS suite) passed.
+- **Migration:** `00131_agent_certificates.sql` applied to production at 14:44 UTC, after staging. Production is at **00131**.
+- **Deploys:**
+  - Hub **`addccbdf`** (rollback `c6deb779`);
+  - ID marketplace **`d0af661e`** (rollback `9e88defd`);
+  - MY marketplace not redeployed (Malaysia offers no certificate yet).
+- **Production checks:**
+  - `public_agent_profiles` has the new columns (16 profiles, 0 certified);
+  - ID `certificate_types` is `[SERTIFIKAT_KOMPETENSI]`;
+  - the bucket `agent-certificates-private` is private;
+  - anon cannot execute the submit and review functions, and authenticated cannot run the reminder;
+  - the `certificate_expiry` cron runs (0 reminded);
+  - the hub card, the www agent page, www `/` and `/en`, and Hub login all return 200.
+- **Staging before release:** RLS `agent-certificates` 6/6, including the negative tests; Hub end to end 15/15.
+- **Not yet verified on production:** a real certificate submitted and approved.
