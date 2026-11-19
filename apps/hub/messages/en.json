@@ -68,7 +68,8 @@
       "sent": "If that email is waiting for confirmation, a new link is on its way. It works for 24 hours.",
       "wait": "A link was sent very recently. Please wait a minute before asking again.",
       "invalid": "Please enter a valid email address."
-    }
+    },
+    "firstLoginNote": "You signed in with a temporary password. Choose your own password to continue."
   },
   "dashboard": {
     "title": "Agent dashboard",
@@ -301,7 +302,8 @@
       "handover": "Handover",
       "leads": "Lead response",
       "pipeline": "Recruiting pipeline",
-      "sources": "Sources"
+      "sources": "Sources",
+      "onboard": "Open an account"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -5382,6 +5384,64 @@
       "needs_legal": "Only a legal reviewer (global legal.publish) can change the terms status.",
       "mapping_json": "The mapping is not valid JSON.",
       "mapping_shape": "Use pairs of short identifiers, for example luas_tanah → landSize."
+    }
+  },
+  "onboard": {
+    "title": "Open an account for an agent",
+    "intro": "For agents you have called on another platform who agreed to join. Record their permission, and the system creates the account, emails them a temporary password, and gives you a WhatsApp message to send. They must choose their own password at first sign-in.",
+    "notice": {
+      "created": "Account opened. The agent has been emailed a temporary password. Send the WhatsApp message below as well.",
+      "reissued": "A new temporary password has been emailed. Send the WhatsApp message below as well.",
+      "created_email_failed": "Done, but the email could not be sent. Send the WhatsApp message below.",
+      "email_registered": "That email already has an account. Search for the agent in Agents instead.",
+      "invalid": "Something in the form was not valid. Please check it, including the confirmation box.",
+      "failed": "The account could not be opened. Nothing was changed.",
+      "already_active": "This agent has already chosen their own password.",
+      "denied": "You cannot open accounts for that country."
+    },
+    "messageTitle": "WhatsApp message for the agent (shown once)",
+    "messageHint": "Copy it into WhatsApp now. It contains the temporary password and disappears in 5 minutes.",
+    "formTitle": "Agent details",
+    "fullName": "Full name",
+    "emailField": "Email (their username)",
+    "country": "Country",
+    "sourcePlatform": "Where they list now",
+    "sourcePlatformHint": "e.g. Rumah123 profile link",
+    "consentTitle": "The agent's permission",
+    "method": "How they agreed",
+    "methods": {
+      "phone_call": "Phone call",
+      "whatsapp": "WhatsApp",
+      "in_person": "In person",
+      "email": "Email"
+    },
+    "consentedAt": "When (local time)",
+    "scopesTitle": "They agreed that we may:",
+    "scope": {
+      "open_account": "open an account for them",
+      "import_listings": "copy their listings from the platform they use now",
+      "publish_on_behalf": "publish those listings on their behalf"
+    },
+    "note": "Note (optional)",
+    "noteHint": "e.g. who you spoke to, anything they asked for",
+    "confirm": "I confirm the agent gave this permission themselves, as recorded above.",
+    "language": "Language of the email and message",
+    "submit": "Open the account",
+    "recentTitle": "Accounts opened for agents",
+    "recentNone": "None yet.",
+    "status": "Status",
+    "statusWaiting": "Has not signed in yet",
+    "statusActive": "Active (own password)",
+    "reissue": "New temporary password",
+    "consentWording": "The agent agreed that the platform may: {scopes}.",
+    "email": {
+      "subject": "Your agent account is ready",
+      "heading": "Welcome, {name}",
+      "body": "As agreed with our team, we have opened your account. Sign in with your email {email} and the temporary password {password}. You will be asked to choose your own password straight away. If you did not agree to this, reply to this email and we will close the account.",
+      "cta": "Sign in"
+    },
+    "whatsapp": {
+      "message": "Hi {name}, as agreed, your agent account is ready.\nSign in: {url}\nEmail: {email}\nTemporary password: {password}\nYou will choose your own password at first sign-in."
     }
   }
 }

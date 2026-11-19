@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 
 const credentialsSchema = z.object({
   email: z.string().trim().email(),
@@ -128,8 +129,14 @@ export async function resetPassword(formData: FormData) {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.updateUser({ password: parsed.data });
+  const { data: updated, error } = await supabase.auth.updateUser({ password: parsed.data });
   if (error) redirect("/reset-password?error=generic");
+  // The temporary password an admin issued is gone now (00132).
+  if (updated.user?.app_metadata?.must_change_password) {
+    const svc = createServiceClient();
+    await svc.auth.admin.updateUserById(updated.user.id, { app_metadata: { must_change_password: false } });
+    await svc.from("profiles").update({ must_change_password: false }).eq("id", updated.user.id);
+  }
   redirect("/dashboard");
 }
 

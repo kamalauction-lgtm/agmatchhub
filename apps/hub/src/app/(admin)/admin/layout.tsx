@@ -31,6 +31,7 @@ const NAV: { key: string; href: string; capability: string | null; icon: string;
 
   { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "agents" },
   { key: "pipeline", href: "/admin/agents/pipeline", capability: "agent.invite", icon: "⇢", group: "agents" },
+  { key: "onboard", href: "/admin/agents/onboard", capability: "agent.invite", icon: "＋", group: "agents" },
   { key: "invitations", href: "/admin/agents/invitations", capability: "agent.invite", icon: "✉", group: "agents" },
   { key: "organisations", href: "/admin/organisations", capability: "commercial.manage", icon: "▣", group: "agents" },
 

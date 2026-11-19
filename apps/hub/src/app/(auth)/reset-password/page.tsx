@@ -7,9 +7,9 @@ const KNOWN_ERRORS = ["password_mismatch", "weak_password", "generic"];
 export default async function ResetPasswordPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; welcome?: string }>;
+  searchParams: Promise<{ error?: string; welcome?: string; first?: string }>;
 }) {
-  const { error, welcome } = await searchParams;
+  const { error, welcome, first } = await searchParams;
   const t = await getTranslations("auth");
   const tc = await getTranslations("common");
 
@@ -18,6 +18,7 @@ export default async function ResetPasswordPage({
       <h1 className="mb-6 text-2xl font-semibold">
         {welcome ? t("welcomeTitle") : t("resetTitle")}
       </h1>
+      {first && <p className="-mt-3 mb-6 text-sm text-muted" data-first-login="1">{t("firstLoginNote")}</p>}
       {error && (
         <p role="alert" className="mb-4 rounded-lg bg-crimson-soft px-4 py-3 text-sm text-crimson">
           {t(`errors.${KNOWN_ERRORS.includes(error) ? error : "generic"}`)}

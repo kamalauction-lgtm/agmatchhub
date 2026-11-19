@@ -68,7 +68,8 @@
       "sent": "Jika e-mel tersebut sedang menunggu pengesahan, pautan baharu sedang dihantar. Sah selama 24 jam.",
       "wait": "Pautan baru sahaja dihantar. Sila tunggu seminit sebelum meminta lagi.",
       "invalid": "Sila masukkan alamat e-mel yang sah."
-    }
+    },
+    "firstLoginNote": "Anda log masuk dengan kata laluan sementara. Pilih kata laluan anda sendiri untuk meneruskan."
   },
   "dashboard": {
     "title": "Papan pemuka ejen",
@@ -301,7 +302,8 @@
       "handover": "Serahan",
       "leads": "Respons prospek",
       "pipeline": "Saluran pengambilan",
-      "sources": "Sumber"
+      "sources": "Sumber",
+      "onboard": "Buka akaun ejen"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -5382,6 +5384,64 @@
       "needs_legal": "Hanya penyemak undang-undang (legal.publish global) boleh mengubah status terma.",
       "mapping_json": "Pemetaan bukan JSON yang sah.",
       "mapping_shape": "Gunakan pasangan pengecam pendek, contohnya luas_tanah → landSize."
+    }
+  },
+  "onboard": {
+    "title": "Buka akaun untuk ejen",
+    "intro": "Untuk ejen dari platform lain yang telah anda hubungi dan bersetuju menyertai. Rekod kebenaran mereka, kemudian sistem mencipta akaun, menghantar kata laluan sementara melalui e-mel dan menyediakan mesej WhatsApp untuk anda hantar. Ejen mesti memilih kata laluan sendiri semasa log masuk pertama.",
+    "notice": {
+      "created": "Akaun dibuka. Kata laluan sementara telah dihantar ke e-mel ejen. Hantar juga mesej WhatsApp di bawah.",
+      "reissued": "Kata laluan sementara baharu telah dihantar melalui e-mel. Hantar juga mesej WhatsApp di bawah.",
+      "created_email_failed": "Selesai, tetapi e-mel gagal dihantar. Hantar mesej WhatsApp di bawah.",
+      "email_registered": "E-mel itu sudah mempunyai akaun. Cari ejen tersebut di menu Ejen.",
+      "invalid": "Ada maklumat yang tidak sah. Sila semak semula, termasuk kotak pengesahan.",
+      "failed": "Akaun tidak dapat dibuka. Tiada apa-apa diubah.",
+      "already_active": "Ejen ini sudah memilih kata laluan sendiri.",
+      "denied": "Anda tidak boleh membuka akaun untuk negara tersebut."
+    },
+    "messageTitle": "Mesej WhatsApp untuk ejen (dipaparkan sekali sahaja)",
+    "messageHint": "Salin ke WhatsApp sekarang. Ia mengandungi kata laluan sementara dan hilang dalam 5 minit.",
+    "formTitle": "Butiran ejen",
+    "fullName": "Nama penuh",
+    "emailField": "E-mel (nama pengguna)",
+    "country": "Negara",
+    "sourcePlatform": "Platform asal",
+    "sourcePlatformHint": "cth. pautan profil di platform lain",
+    "consentTitle": "Kebenaran ejen",
+    "method": "Cara persetujuan",
+    "methods": {
+      "phone_call": "Panggilan telefon",
+      "whatsapp": "WhatsApp",
+      "in_person": "Bersemuka",
+      "email": "E-mel"
+    },
+    "consentedAt": "Bila (waktu tempatan)",
+    "scopesTitle": "Ejen bersetuju bahawa kami boleh:",
+    "scope": {
+      "open_account": "membuka akaun untuknya",
+      "import_listings": "menyalin iklannya dari platform yang digunakan sekarang",
+      "publish_on_behalf": "menerbitkan iklan tersebut bagi pihaknya"
+    },
+    "note": "Nota (pilihan)",
+    "noteHint": "cth. siapa yang anda hubungi, permintaan khas",
+    "confirm": "Saya mengesahkan ejen memberi kebenaran ini sendiri, seperti yang direkodkan di atas.",
+    "language": "Bahasa e-mel dan mesej",
+    "submit": "Buka akaun",
+    "recentTitle": "Akaun yang dibuka untuk ejen",
+    "recentNone": "Belum ada.",
+    "status": "Status",
+    "statusWaiting": "Belum log masuk",
+    "statusActive": "Aktif (kata laluan sendiri)",
+    "reissue": "Kata laluan sementara baharu",
+    "consentWording": "Ejen bersetuju bahawa platform boleh: {scopes}.",
+    "email": {
+      "subject": "Akaun ejen anda sudah sedia",
+      "heading": "Selamat datang, {name}",
+      "body": "Seperti yang dipersetujui dengan pasukan kami, akaun anda telah dibuka. Log masuk dengan e-mel {email} dan kata laluan sementara {password}. Anda akan diminta memilih kata laluan sendiri serta-merta. Jika anda tidak bersetuju, balas e-mel ini dan kami akan menutup akaun tersebut.",
+      "cta": "Log masuk"
+    },
+    "whatsapp": {
+      "message": "Hai {name}, seperti yang dipersetujui, akaun ejen anda sudah sedia.\nLog masuk: {url}\nE-mel: {email}\nKata laluan sementara: {password}\nAnda akan memilih kata laluan sendiri semasa log masuk pertama."
     }
   }
 }
