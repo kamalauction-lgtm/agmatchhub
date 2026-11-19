@@ -68,7 +68,8 @@
       "sent": "Jika email tersebut sedang menunggu konfirmasi, tautan baru sedang dikirim. Berlaku selama 24 jam.",
       "wait": "Tautan baru saja dikirim. Mohon tunggu satu menit sebelum meminta lagi.",
       "invalid": "Masukkan alamat email yang valid."
-    }
+    },
+    "firstLoginNote": "Anda masuk dengan kata sandi sementara. Pilih kata sandi Anda sendiri untuk melanjutkan."
   },
   "dashboard": {
     "title": "Dasbor agen",
@@ -301,7 +302,9 @@
       "handover": "Serah terima",
       "leads": "Respons prospek",
       "pipeline": "Pipeline rekrutmen",
-      "sources": "Sumber"
+      "sources": "Sumber",
+      "onboard": "Buka akun agen",
+      "help": "Bantuan & panduan"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -659,7 +662,8 @@
     "unverifiedBadge": "Dapatkan verifikasi",
     "aiWorkforce": "Tenaga Kerja AI",
     "tasks": "Tugas",
-    "plan": "Paket & kredit"
+    "plan": "Paket & kredit",
+    "help": "Bantuan & panduan"
   },
   "training": {
     "title": "Pelatihan & panduan",
@@ -1537,7 +1541,8 @@
       "agent_certificate_approved": "Sertifikat Anda disetujui",
       "agent_certificate_rejected": "Sertifikat Anda tidak disetujui",
       "agent_certificate_expiring": "Sertifikat Anda kedaluwarsa dalam 30 hari",
-      "admin_certificate_submitted": "Ada sertifikat yang menunggu peninjauan"
+      "admin_certificate_submitted": "Ada sertifikat yang menunggu peninjauan",
+      "listing_import_committed_on_behalf": "Listing Anda telah diterbitkan untuk Anda dan sedang ditinjau"
     },
     "pushEnable": "Aktifkan notifikasi ponsel",
     "pushEnabled": "Notifikasi ponsel aktif",
@@ -2435,6 +2440,10 @@
         "hint": "JPEG, PNG, atau WebP, hingga 10 MB. Foto tetap privat: diproses (data lokasi dan kamera dihapus) dan baru tayang setelah disetujui moderator.",
         "send": "Unggah foto"
       }
+    },
+    "statusActions": {
+      "submit": "Kirim untuk ditinjau",
+      "withdraw": "Tarik kembali"
     }
   },
   "studio": {
@@ -4998,7 +5007,11 @@
       "nothing_selected": "Pilih setidaknya satu item.",
       "agent_in_control": "Agen memegang kendali atas batch ini, sehingga batch tidak dapat diubah lagi.",
       "nothing_to_set": "Pilih tipe atau jual/sewa untuk diterapkan.",
-      "type_not_in_market": "Tipe properti itu tidak tersedia di pasar agen ini."
+      "type_not_in_market": "Tipe properti itu tidak tersedia di pasar agen ini.",
+      "no_consent": "Agen belum menyetujui penerbitan atas namanya.",
+      "already_committed": "Batch ini sudah diterbitkan untuk agen.",
+      "nothing_ready": "Belum ada listing yang siap di batch ini.",
+      "not_assisted": "Hanya batch yang disiapkan admin yang dapat diterbitkan untuk agen."
     },
     "review": {
       "title": "Tinjauan batch",
@@ -5046,7 +5059,19 @@
       "rent": "Disewa",
       "applySelected": "Terapkan ke yang dipilih"
     },
-    "inControl": "Agen telah menangani semua item dan kini memegang kendali. Tim tidak dapat lagi mengubah batch ini atau listing yang dihasilkannya; moderasi tetap berjalan seperti biasa."
+    "inControl": "Agen telah menangani semua item dan kini memegang kendali. Tim tidak dapat lagi mengubah batch ini atau listing yang dihasilkannya; moderasi tetap berjalan seperti biasa.",
+    "onBehalf": {
+      "allowed": "Agen telah setuju ({method}, {date}) bahwa kami boleh menerbitkan listing ini atas namanya.",
+      "cta": "Terbitkan {n} untuk agen",
+      "noConsent": "Agen belum menyetujui penerbitan atas namanya, jadi serahkan batch ini dan agen yang menerbitkan. Untuk mencatat persetujuan, gunakan Agen → Buka akun agen.",
+      "done": "{n} listing telah diterbitkan untuk agen dan menunggu di Listing → Moderasi. Anda boleh menyetujuinya sendiri.",
+      "methods": {
+        "phone_call": "telepon",
+        "whatsapp": "WhatsApp",
+        "in_person": "bertemu langsung",
+        "email": "email"
+      }
+    }
   },
   "adminMedia": {
     "title": "Pusat Kualitas Foto",
@@ -5383,5 +5408,73 @@
       "mapping_json": "Pemetaan bukan JSON yang valid.",
       "mapping_shape": "Gunakan pasangan pengenal pendek, misalnya luas_tanah → landSize."
     }
+  },
+  "onboard": {
+    "title": "Buka akun untuk agen",
+    "intro": "Untuk agen dari platform lain yang sudah Anda telepon dan setuju bergabung. Catat izin mereka, lalu sistem membuat akun, mengirim kata sandi sementara melalui email, dan menyiapkan pesan WhatsApp untuk Anda kirim. Agen wajib memilih kata sandi sendiri saat pertama kali masuk.",
+    "notice": {
+      "created": "Akun dibuat. Kata sandi sementara telah dikirim ke email agen. Kirim juga pesan WhatsApp di bawah.",
+      "reissued": "Kata sandi sementara baru telah dikirim melalui email. Kirim juga pesan WhatsApp di bawah.",
+      "created_email_failed": "Selesai, tetapi email gagal dikirim. Kirim pesan WhatsApp di bawah.",
+      "email_registered": "Email itu sudah memiliki akun. Cari agen tersebut di menu Agen.",
+      "invalid": "Ada isian yang tidak valid. Periksa kembali, termasuk kotak konfirmasi.",
+      "failed": "Akun tidak dapat dibuat. Tidak ada yang diubah.",
+      "already_active": "Agen ini sudah memilih kata sandi sendiri.",
+      "denied": "Anda tidak dapat membuka akun untuk negara tersebut."
+    },
+    "messageTitle": "Pesan WhatsApp untuk agen (hanya tampil sekali)",
+    "messageHint": "Salin ke WhatsApp sekarang. Pesan ini berisi kata sandi sementara dan hilang dalam 5 menit.",
+    "formTitle": "Data agen",
+    "fullName": "Nama lengkap",
+    "emailField": "Email (nama pengguna)",
+    "country": "Negara",
+    "sourcePlatform": "Platform asal",
+    "sourcePlatformHint": "mis. tautan profil Rumah123",
+    "consentTitle": "Izin dari agen",
+    "method": "Cara persetujuan",
+    "methods": {
+      "phone_call": "Telepon",
+      "whatsapp": "WhatsApp",
+      "in_person": "Bertemu langsung",
+      "email": "Email"
+    },
+    "consentedAt": "Kapan (waktu setempat)",
+    "scopesTitle": "Agen setuju bahwa kami boleh:",
+    "scope": {
+      "open_account": "membuatkan akun untuknya",
+      "import_listings": "menyalin listingnya dari platform yang ia gunakan saat ini",
+      "publish_on_behalf": "menerbitkan listing tersebut atas namanya"
+    },
+    "note": "Catatan (opsional)",
+    "noteHint": "mis. siapa yang Anda ajak bicara, permintaan khususnya",
+    "confirm": "Saya menyatakan bahwa agen memberikan izin ini sendiri, sesuai catatan di atas.",
+    "language": "Bahasa email dan pesan",
+    "submit": "Buat akun",
+    "recentTitle": "Akun yang dibuatkan untuk agen",
+    "recentNone": "Belum ada.",
+    "status": "Status",
+    "statusWaiting": "Belum masuk",
+    "statusActive": "Aktif (kata sandi sendiri)",
+    "reissue": "Kata sandi sementara baru",
+    "consentWording": "Agen menyetujui bahwa platform boleh: {scopes}.",
+    "email": {
+      "subject": "Akun agen Anda sudah siap",
+      "heading": "Selamat datang, {name}",
+      "body": "Sesuai kesepakatan dengan tim kami, akun Anda telah dibuat. Masuk dengan email {email} dan kata sandi sementara {password}. Anda akan diminta memilih kata sandi sendiri saat itu juga. Jika Anda tidak menyetujui ini, balas email ini dan kami akan menutup akunnya.",
+      "cta": "Masuk"
+    },
+    "whatsapp": {
+      "message": "Halo {name}, sesuai kesepakatan, akun agen Anda sudah siap.\nMasuk: {url}\nEmail: {email}\nKata sandi sementara: {password}\nAnda akan memilih kata sandi sendiri saat pertama kali masuk."
+    }
+  },
+  "help": {
+    "agentTitle": "Bantuan & panduan",
+    "agentIntro": "Panduan langkah demi langkah untuk semua yang Anda lakukan di platform.",
+    "adminTitle": "Panduan admin",
+    "adminIntro": "Panduan langkah demi langkah untuk tim admin. Diperbarui setiap ada perubahan pada platform.",
+    "updated": "Diperbarui",
+    "back": "Semua panduan",
+    "open": "Buka halaman ini",
+    "langNote": "Panduan tersedia dalam bahasa Inggris dan Indonesia; bahasa Melayu menyusul."
   }
 }

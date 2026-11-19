@@ -68,7 +68,8 @@
       "sent": "Jika e-mel tersebut sedang menunggu pengesahan, pautan baharu sedang dihantar. Sah selama 24 jam.",
       "wait": "Pautan baru sahaja dihantar. Sila tunggu seminit sebelum meminta lagi.",
       "invalid": "Sila masukkan alamat e-mel yang sah."
-    }
+    },
+    "firstLoginNote": "Anda log masuk dengan kata laluan sementara. Pilih kata laluan anda sendiri untuk meneruskan."
   },
   "dashboard": {
     "title": "Papan pemuka ejen",
@@ -301,7 +302,9 @@
       "handover": "Serahan",
       "leads": "Respons prospek",
       "pipeline": "Saluran pengambilan",
-      "sources": "Sumber"
+      "sources": "Sumber",
+      "onboard": "Buka akaun ejen",
+      "help": "Bantuan & panduan"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -659,7 +662,8 @@
     "unverifiedBadge": "Dapatkan pengesahan",
     "aiWorkforce": "Tenaga Kerja AI",
     "tasks": "Tugas",
-    "plan": "Pelan & kredit"
+    "plan": "Pelan & kredit",
+    "help": "Bantuan & panduan"
   },
   "training": {
     "title": "Latihan & panduan",
@@ -1537,7 +1541,8 @@
       "agent_certificate_approved": "Sijil anda diluluskan",
       "agent_certificate_rejected": "Sijil anda tidak diluluskan",
       "agent_certificate_expiring": "Sijil anda tamat tempoh dalam 30 hari",
-      "admin_certificate_submitted": "Ada sijil menunggu semakan"
+      "admin_certificate_submitted": "Ada sijil menunggu semakan",
+      "listing_import_committed_on_behalf": "Iklan anda telah diterbitkan untuk anda dan sedang disemak"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -2435,6 +2440,10 @@
         "hint": "JPEG, PNG atau WebP, sehingga 10 MB. Ia kekal peribadi: diproses (data lokasi dan kamera dibuang) dan hanya diterbitkan selepas moderator meluluskannya.",
         "send": "Muat naik foto"
       }
+    },
+    "statusActions": {
+      "submit": "Hantar untuk semakan",
+      "withdraw": "Tarik balik"
     }
   },
   "studio": {
@@ -4998,7 +5007,11 @@
       "nothing_selected": "Pilih sekurang-kurangnya satu item.",
       "agent_in_control": "Ejen mengawal kelompok ini, jadi ia tidak boleh diubah lagi.",
       "nothing_to_set": "Pilih jenis atau jual/sewa untuk digunakan.",
-      "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini."
+      "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini.",
+      "no_consent": "Ejen belum bersetuju dengan penerbitan bagi pihaknya.",
+      "already_committed": "Kumpulan ini sudah diterbitkan untuk ejen.",
+      "nothing_ready": "Belum ada iklan yang sedia dalam kumpulan ini.",
+      "not_assisted": "Hanya kumpulan yang disediakan oleh pentadbir boleh diterbitkan untuk ejen."
     },
     "review": {
       "title": "Semakan kelompok",
@@ -5046,7 +5059,19 @@
       "rent": "Untuk disewa",
       "applySelected": "Guna pada yang dipilih"
     },
-    "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa."
+    "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa.",
+    "onBehalf": {
+      "allowed": "Ejen telah bersetuju ({method}, {date}) bahawa kami boleh menerbitkan iklan ini bagi pihaknya.",
+      "cta": "Terbitkan {n} untuk ejen",
+      "noConsent": "Ejen belum bersetuju dengan penerbitan bagi pihaknya, jadi serahkan kumpulan ini dan ejen yang menerbitkan. Untuk merekod persetujuan, gunakan Ejen → Buka akaun ejen.",
+      "done": "{n} iklan telah diterbitkan untuk ejen dan menunggu di Iklan → Moderasi. Anda boleh meluluskannya sendiri.",
+      "methods": {
+        "phone_call": "panggilan telefon",
+        "whatsapp": "WhatsApp",
+        "in_person": "bersemuka",
+        "email": "e-mel"
+      }
+    }
   },
   "adminMedia": {
     "title": "Pusat Kualiti Foto",
@@ -5383,5 +5408,73 @@
       "mapping_json": "Pemetaan bukan JSON yang sah.",
       "mapping_shape": "Gunakan pasangan pengecam pendek, contohnya luas_tanah → landSize."
     }
+  },
+  "onboard": {
+    "title": "Buka akaun untuk ejen",
+    "intro": "Untuk ejen dari platform lain yang telah anda hubungi dan bersetuju menyertai. Rekod kebenaran mereka, kemudian sistem mencipta akaun, menghantar kata laluan sementara melalui e-mel dan menyediakan mesej WhatsApp untuk anda hantar. Ejen mesti memilih kata laluan sendiri semasa log masuk pertama.",
+    "notice": {
+      "created": "Akaun dibuka. Kata laluan sementara telah dihantar ke e-mel ejen. Hantar juga mesej WhatsApp di bawah.",
+      "reissued": "Kata laluan sementara baharu telah dihantar melalui e-mel. Hantar juga mesej WhatsApp di bawah.",
+      "created_email_failed": "Selesai, tetapi e-mel gagal dihantar. Hantar mesej WhatsApp di bawah.",
+      "email_registered": "E-mel itu sudah mempunyai akaun. Cari ejen tersebut di menu Ejen.",
+      "invalid": "Ada maklumat yang tidak sah. Sila semak semula, termasuk kotak pengesahan.",
+      "failed": "Akaun tidak dapat dibuka. Tiada apa-apa diubah.",
+      "already_active": "Ejen ini sudah memilih kata laluan sendiri.",
+      "denied": "Anda tidak boleh membuka akaun untuk negara tersebut."
+    },
+    "messageTitle": "Mesej WhatsApp untuk ejen (dipaparkan sekali sahaja)",
+    "messageHint": "Salin ke WhatsApp sekarang. Ia mengandungi kata laluan sementara dan hilang dalam 5 minit.",
+    "formTitle": "Butiran ejen",
+    "fullName": "Nama penuh",
+    "emailField": "E-mel (nama pengguna)",
+    "country": "Negara",
+    "sourcePlatform": "Platform asal",
+    "sourcePlatformHint": "cth. pautan profil di platform lain",
+    "consentTitle": "Kebenaran ejen",
+    "method": "Cara persetujuan",
+    "methods": {
+      "phone_call": "Panggilan telefon",
+      "whatsapp": "WhatsApp",
+      "in_person": "Bersemuka",
+      "email": "E-mel"
+    },
+    "consentedAt": "Bila (waktu tempatan)",
+    "scopesTitle": "Ejen bersetuju bahawa kami boleh:",
+    "scope": {
+      "open_account": "membuka akaun untuknya",
+      "import_listings": "menyalin iklannya dari platform yang digunakan sekarang",
+      "publish_on_behalf": "menerbitkan iklan tersebut bagi pihaknya"
+    },
+    "note": "Nota (pilihan)",
+    "noteHint": "cth. siapa yang anda hubungi, permintaan khas",
+    "confirm": "Saya mengesahkan ejen memberi kebenaran ini sendiri, seperti yang direkodkan di atas.",
+    "language": "Bahasa e-mel dan mesej",
+    "submit": "Buka akaun",
+    "recentTitle": "Akaun yang dibuka untuk ejen",
+    "recentNone": "Belum ada.",
+    "status": "Status",
+    "statusWaiting": "Belum log masuk",
+    "statusActive": "Aktif (kata laluan sendiri)",
+    "reissue": "Kata laluan sementara baharu",
+    "consentWording": "Ejen bersetuju bahawa platform boleh: {scopes}.",
+    "email": {
+      "subject": "Akaun ejen anda sudah sedia",
+      "heading": "Selamat datang, {name}",
+      "body": "Seperti yang dipersetujui dengan pasukan kami, akaun anda telah dibuka. Log masuk dengan e-mel {email} dan kata laluan sementara {password}. Anda akan diminta memilih kata laluan sendiri serta-merta. Jika anda tidak bersetuju, balas e-mel ini dan kami akan menutup akaun tersebut.",
+      "cta": "Log masuk"
+    },
+    "whatsapp": {
+      "message": "Hai {name}, seperti yang dipersetujui, akaun ejen anda sudah sedia.\nLog masuk: {url}\nE-mel: {email}\nKata laluan sementara: {password}\nAnda akan memilih kata laluan sendiri semasa log masuk pertama."
+    }
+  },
+  "help": {
+    "agentTitle": "Bantuan & panduan",
+    "agentIntro": "Panduan langkah demi langkah untuk semua yang anda lakukan di platform.",
+    "adminTitle": "Panduan pentadbir",
+    "adminIntro": "Panduan langkah demi langkah untuk pasukan pentadbir. Dikemas kini setiap kali platform berubah.",
+    "updated": "Dikemas kini",
+    "back": "Semua panduan",
+    "open": "Buka halaman ini",
+    "langNote": "Panduan tersedia dalam bahasa Inggeris dan Indonesia; bahasa Melayu akan menyusul."
   }
 }

@@ -112,6 +112,7 @@ export async function AgentShell({
         { href: "/profile", icon: "👤", label: t("profile") },
         { href: "/plan", icon: "🧾", label: t("plan") },
         { href: "/card", icon: "💳", label: t("card") },
+        { href: "/help", icon: "❓", label: t("help") },
       ],
     },
   ];

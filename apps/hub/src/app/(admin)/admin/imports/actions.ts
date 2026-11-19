@@ -1,4 +1,6 @@
 "use server";
+import { commitReadyItems } from "@/lib/import/commit";
+import { createServiceClient } from "@/lib/supabase/service";
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -153,4 +155,39 @@ export async function bulkItemFields(formData: FormData): Promise<void> {
   });
   revalidatePath(`/admin/imports/${batchId}`);
   redirect(`/admin/imports/${batchId}?done=bulk_edit&n=${changed}`);
+}
+
+/**
+ * Publish an agent's prepared batch on their behalf (00133, owner decision
+ * 19 Nov 2026; lifts D-2). Allowed only while the agent's latest onboarding
+ * consent includes publish_on_behalf: admin_import_batch_commit_authorise
+ * checks that, the country scope and the handover lock, records the consent
+ * and the admin, audits and notifies the agent. The listings are then written
+ * for the agent with the service role, straight into the moderation queue
+ * (pending_review), where this admin may approve them (00133).
+ */
+export async function commitBatchForAgent(formData: FormData): Promise<void> {
+  await requireCapability("listing.import_assisted");
+  const batchId = String(formData.get("batchId") ?? "");
+  if (!/^[0-9a-f-]{36}$/.test(batchId)) redirect("/admin/imports?error=not_found");
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_import_batch_commit_authorise", { p_batch: batchId });
+  const r = data as { ok?: boolean; error?: string; agent?: string } | null;
+  if (error || !r?.ok || !r.agent) redirect(`/admin/imports/${batchId}?error=${r?.error ?? "save_failed"}`);
+  const { data: { user } } = await supabase.auth.getUser();
+  const svc = createServiceClient();
+  const { data: batch } = await svc.from("import_batches").select("source_portal").eq("id", batchId).maybeSingle();
+  const { imported, failed } = await commitReadyItems(svc, {
+    batchId, agentId: r.agent, createdBy: user!.id, sourcePortal: batch?.source_portal ?? null, status: "pending_review",
+  });
+  await logAudit({
+    action: "listing_import.committed",
+    entityType: "import_batch",
+    entityId: batchId,
+    next: { imported, failed, on_behalf: true, agent_id: r.agent },
+  });
+  await notify({ userId: r.agent, kind: "listing_import.committed_on_behalf", payload: { ref: imported }, href: "/listings", inApp: false });
+  revalidatePath(`/admin/imports/${batchId}`);
+  revalidatePath("/admin/listings");
+  redirect(`/admin/imports/${batchId}?done=committed&n=${imported}`);
 }

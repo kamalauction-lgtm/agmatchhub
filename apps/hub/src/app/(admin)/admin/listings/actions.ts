@@ -59,7 +59,11 @@ async function decideOne(
   // not approve it. The database refuses it regardless.
   if (decision === "approve") {
     const { data: preparedByMe } = await supabase.rpc("prepared_by_me", { p_listing: listingId });
-    if (preparedByMe) return "self_prepared";
+    if (preparedByMe) {
+      // 00133: allowed when the agent consented to publishing on their behalf.
+      const { data: onBehalf } = await supabase.rpc("listing_committed_on_behalf", { p_listing: listingId });
+      if (!onBehalf) return "self_prepared";
+    }
   }
   if (!["pending_review", "published"].includes(listing.status)) return "not_moderatable";
 
