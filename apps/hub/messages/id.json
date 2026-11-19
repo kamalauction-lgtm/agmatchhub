@@ -303,7 +303,8 @@
       "leads": "Respons prospek",
       "pipeline": "Pipeline rekrutmen",
       "sources": "Sumber",
-      "onboard": "Buka akun agen"
+      "onboard": "Buka akun agen",
+      "help": "Bantuan & panduan"
     },
     "agentsTitle": "Verifikasi agen",
     "filterAll": "Semua",
@@ -661,7 +662,8 @@
     "unverifiedBadge": "Dapatkan verifikasi",
     "aiWorkforce": "Tenaga Kerja AI",
     "tasks": "Tugas",
-    "plan": "Paket & kredit"
+    "plan": "Paket & kredit",
+    "help": "Bantuan & panduan"
   },
   "training": {
     "title": "Pelatihan & panduan",
@@ -5464,5 +5466,15 @@
     "whatsapp": {
       "message": "Halo {name}, sesuai kesepakatan, akun agen Anda sudah siap.\nMasuk: {url}\nEmail: {email}\nKata sandi sementara: {password}\nAnda akan memilih kata sandi sendiri saat pertama kali masuk."
     }
+  },
+  "help": {
+    "agentTitle": "Bantuan & panduan",
+    "agentIntro": "Panduan langkah demi langkah untuk semua yang Anda lakukan di platform.",
+    "adminTitle": "Panduan admin",
+    "adminIntro": "Panduan langkah demi langkah untuk tim admin. Diperbarui setiap ada perubahan pada platform.",
+    "updated": "Diperbarui",
+    "back": "Semua panduan",
+    "open": "Buka halaman ini",
+    "langNote": "Panduan tersedia dalam bahasa Inggris dan Indonesia; bahasa Melayu menyusul."
   }
 }

@@ -303,7 +303,8 @@
       "leads": "Respons prospek",
       "pipeline": "Saluran pengambilan",
       "sources": "Sumber",
-      "onboard": "Buka akaun ejen"
+      "onboard": "Buka akaun ejen",
+      "help": "Bantuan & panduan"
     },
     "agentsTitle": "Pengesahan ejen",
     "filterAll": "Semua",
@@ -661,7 +662,8 @@
     "unverifiedBadge": "Dapatkan pengesahan",
     "aiWorkforce": "Tenaga Kerja AI",
     "tasks": "Tugas",
-    "plan": "Pelan & kredit"
+    "plan": "Pelan & kredit",
+    "help": "Bantuan & panduan"
   },
   "training": {
     "title": "Latihan & panduan",
@@ -5464,5 +5466,15 @@
     "whatsapp": {
       "message": "Hai {name}, seperti yang dipersetujui, akaun ejen anda sudah sedia.\nLog masuk: {url}\nE-mel: {email}\nKata laluan sementara: {password}\nAnda akan memilih kata laluan sendiri semasa log masuk pertama."
     }
+  },
+  "help": {
+    "agentTitle": "Bantuan & panduan",
+    "agentIntro": "Panduan langkah demi langkah untuk semua yang anda lakukan di platform.",
+    "adminTitle": "Panduan pentadbir",
+    "adminIntro": "Panduan langkah demi langkah untuk pasukan pentadbir. Dikemas kini setiap kali platform berubah.",
+    "updated": "Dikemas kini",
+    "back": "Semua panduan",
+    "open": "Buka halaman ini",
+    "langNote": "Panduan tersedia dalam bahasa Inggeris dan Indonesia; bahasa Melayu akan menyusul."
   }
 }
