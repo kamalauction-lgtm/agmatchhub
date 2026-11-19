@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
 import { saveAgency, setAgencyFlag } from "./actions";
 import { createClient } from "@/lib/supabase/server";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Organisations.
@@ -69,7 +70,7 @@ export default async function OrganisationsPage({ searchParams }: { searchParams
 
   return (
     <>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="companies" /></h1>
       <p className="mb-6 mt-1 max-w-2xl text-sm text-muted">{t("intro")}</p>
       {notice && (
         <p className="mb-6 rounded-lg bg-surface px-4 py-3 text-sm font-medium" role="status">{t(`notice.${notice}` as never)}</p>

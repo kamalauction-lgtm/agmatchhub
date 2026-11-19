@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { requireAdmin, myCapabilities } from "@/lib/authz";
 import { Panel, StatCard } from "@/components/admin/panel";
 import { BarChart, Funnel, type Series } from "@/components/admin/charts";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Command Center.
@@ -233,7 +234,7 @@ export default async function AdminHome({
       {/* Header ---------------------------------------------------------- */}
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1>{t("overviewTitle")}</h1>
+          <h1>{t("overviewTitle")} <GuideLink slug="daily-routine" /></h1>
           <p className="mt-1 text-sm text-muted">
             {waiting === 0 ? t("allClear") : t("waitingCount", { count: waiting })}
           </p>

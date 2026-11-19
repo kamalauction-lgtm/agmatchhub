@@ -6,6 +6,7 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { portalChoices } from "@/lib/import/adapters";
 import { ImportStarter } from "@/components/import/import-starter";
 import { FileUpload } from "@/components/import/file-upload";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * "I already have listings elsewhere. Bring them here without entering
@@ -42,7 +43,7 @@ export default async function ImportPage({
 
   return (
     <AgentShell wide>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="import-listings" /></h1>
       <p className="mt-1 max-w-2xl text-sm text-muted">{t("subtitle")}</p>
 
       {error && (

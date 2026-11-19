@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
 import { CONSENT_METHODS, CONSENT_SCOPES, ONBOARD_MESSAGE_COOKIE } from "@/lib/agents/onboard";
 import { newTemporaryPassword, onboardAgent } from "./actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Open an account for an agent (00132). The admin has phoned the agent and has
@@ -58,7 +59,7 @@ export default async function OnboardAgentPage({ searchParams }: { searchParams:
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="open-agent-account" step={4} /></h1>
       <p className="mb-6 mt-1 max-w-2xl text-sm text-muted">{t("intro")}</p>
 
       {notice && NOTICES[notice] && (

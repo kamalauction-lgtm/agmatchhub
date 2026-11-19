@@ -139,4 +139,7 @@ exist in every locale the app ships (hub: id/en/ms, www: id/en — enforced by
 `packages/db/tests/unit/i18n-parity.test.ts`); the in-app Help playbook
 (`apps/hub/src/lib/help/content-*.ts`, English and Indonesian) is updated in the
 same change as any admin- or agent-facing flow it describes, with `updated`
-bumped; and you report honestly what was tested versus what was not.
+bumped — and if the screen changed, its walkthrough pictures are re-taken on
+staging with `node apps/hub/scripts/capture-help-shots.mjs <shot-id>` and
+looked at before committing; and you report honestly what was tested versus
+what was not.
