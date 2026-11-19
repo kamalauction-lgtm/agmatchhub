@@ -173,3 +173,30 @@
   - Security: RLS is on all 137 public tables (310 policies); anonymous users see the 30 public listings and are refused on leads.
 - **Note:** a passphrase was typed at the shell prompt by mistake and pasted into chat before this backup. It was never used to encrypt this file, and the owner removed it from the PowerShell history.
 - **Old backup removed:** the 11 Nov backup (`…2026-11-11T14-11-47-338Z.pgbk`) was encrypted with the passphrase later exposed in chat. The owner approved its deletion, and it was deleted permanently on 19 Nov after the new backup passed. No other copy was found under the user folder. The 19 Nov backup is now the only production backup.
+
+## Follow-up release, 19 Nov 2026: admin-led agent onboarding, publish on behalf (D-2 lifted), Help playbook
+
+**Approved by the owner in chat ("Yes, release all three"), 19 Nov 2026.**
+
+- **Code:** PRs #56, #57 and #58, merged as a stack into main as `29f103a`. CI passed on each PR and again on the combined code before it entered main.
+- **Migrations** (after staging), applied to production at 04:51 UTC. Production is at **00133**.
+  - `00132_admin_onboard_agent.sql`: `must_change_password`, `agent_onboarding_consents`, `agent_allows`.
+  - `00133_admin_publish_on_behalf.sql`:
+    - on-behalf commit (lifts **D-2**);
+    - the same admin may approve on-behalf listings while the consent stands;
+    - **fix:** `guard_listing_comarketing_notice` is now SECURITY DEFINER. Before this, agents could not change the status or price of any live listing (they got "permission denied for function notify_comarketing_agents").
+- **Hub:** deployed as **`b06b6009`**; build target verified as `jokyyhvtahiypuzmfydp`. **Rollback target: `addccbdf`.** To roll back the migrations, use the rollback notes in each file header.
+- **Production checks:**
+  - login 200;
+  - `/help`, `/admin/help` and `/admin/agents/onboard` exist and require sign-in;
+  - the notice trigger is SECURITY DEFINER;
+  - both guard triggers are present;
+  - anon cannot execute `admin_import_batch_commit_authorise` or `agent_allows`;
+  - 0 consents recorded so far.
+- **Staging before release:**
+  - onboarding end to end 18/18;
+  - publish on behalf end to end 10/10;
+  - RLS: `admin-onboard-agent` 4/4, `publish-on-behalf` 5/5, related suites 44/44;
+  - Help 8/8.
+- **Declined:** watermark removal on imported portal photos, for copyright reasons. Agents supply original photos.
+- **Not yet verified on production:** a real admin-opened account (email delivery, first-login password change), and a real on-behalf publish.
