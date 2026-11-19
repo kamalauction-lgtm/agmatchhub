@@ -303,7 +303,8 @@
       "leads": "Lead response",
       "pipeline": "Recruiting pipeline",
       "sources": "Sources",
-      "onboard": "Open an account"
+      "onboard": "Open an account",
+      "help": "Help & guides"
     },
     "agentsTitle": "Agent verification",
     "filterAll": "All",
@@ -661,7 +662,8 @@
     "unverifiedBadge": "Get verified",
     "aiWorkforce": "AI Workforce",
     "tasks": "Tasks",
-    "plan": "Plan & credits"
+    "plan": "Plan & credits",
+    "help": "Help & guides"
   },
   "training": {
     "title": "Training & guides",
@@ -5464,5 +5466,15 @@
     "whatsapp": {
       "message": "Hi {name}, as agreed, your agent account is ready.\nSign in: {url}\nEmail: {email}\nTemporary password: {password}\nYou will choose your own password at first sign-in."
     }
+  },
+  "help": {
+    "agentTitle": "Help & guides",
+    "agentIntro": "Step-by-step guides for everything you do on the platform.",
+    "adminTitle": "Admin playbook",
+    "adminIntro": "Step-by-step guides for the admin team. Updated with every change to the platform.",
+    "updated": "Updated",
+    "back": "All guides",
+    "open": "Open this page",
+    "langNote": "Guides are in English and Bahasa Indonesia; Malay is coming."
   }
 }

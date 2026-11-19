@@ -28,6 +28,7 @@ import { signOut } from "@/app/(auth)/actions";
 /** Each section, the capability that makes it usable, and its group. */
 const NAV: { key: string; href: string; capability: string | null; icon: string; group: string }[] = [
   { key: "overview", href: "/admin", capability: null, icon: "◈", group: "main" },
+  { key: "help", href: "/admin/help", capability: null, icon: "?", group: "main" },
 
   { key: "agents", href: "/admin/agents", capability: "agent.verify", icon: "✓", group: "agents" },
   { key: "pipeline", href: "/admin/agents/pipeline", capability: "agent.invite", icon: "⇢", group: "agents" },
