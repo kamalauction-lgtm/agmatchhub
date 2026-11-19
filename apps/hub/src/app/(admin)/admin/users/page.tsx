@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { requireCapability } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { grantRole, registerPerson, revokeRole } from "./actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Who can do what.
@@ -87,7 +88,7 @@ export default async function AdminUsersPage({
 
   return (
     <>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="people-and-settings" /></h1>
       <p className="mb-6 mt-1 max-w-2xl text-sm text-muted">{t("intro")}</p>
 
       {notice && (

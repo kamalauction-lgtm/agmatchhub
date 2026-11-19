@@ -14,6 +14,7 @@ import { IntelPanel } from "@/components/leads/intel-panel";
 import { aiQuotaFor } from "@/lib/ai/engine";
 import { getCompanions } from "@/lib/ai/cast";
 import { translateReply } from "@/app/(agent)/ai/actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * The agent's lead inbox — marketplace inquiries land here (§28 steps 11–16).
@@ -190,7 +191,7 @@ export default async function LeadsPage({
     <AgentShell wide>
       {/* Command band: fixed colours so the text stays legible in dark mode. */}
       <CommandHeader className="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+        <h1 className="text-2xl font-semibold text-white">{t("title")} <GuideLink slug="daily-work" /></h1>
         <div className="flex items-center gap-3 text-sm text-[#c8d6f2]">
           <p>{t("summary", { open: open.length, overdue: overdue.length })}</p>
           <nav className="flex rounded-lg bg-white/10 p-0.5 text-xs font-semibold" aria-label={ti("sortLabel")}>

@@ -12,6 +12,7 @@ import { buttonClass } from "@/components/ui/button";
 import { StageStrip } from "@/components/collab/stage-strip";
 import { STAGE_KEYS, TABS, isTabKey, stageIndex, stageOf, type TabKey } from "@/lib/requests/stages";
 import { agentHasAccess } from "@/lib/agents/access";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * The requesting agent's requirements (MatchHub 2.0 list). Same query and
@@ -54,7 +55,7 @@ export default async function RequestsPage({
     <AgentShell wide>
       <CommandHeader className="mb-4 flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 max-w-2xl">
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
+          <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="matchhub" /></h1>
           <p className="command-muted mt-1 text-sm">{t("intro")}</p>
         </div>
         <StatCluster

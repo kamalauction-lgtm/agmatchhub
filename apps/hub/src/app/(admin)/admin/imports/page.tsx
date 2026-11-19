@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { portalChoices } from "@/lib/import/adapters";
 import { startImport } from "@/app/(agent)/listings/import/actions";
 import { uploadSpreadsheet } from "@/app/(agent)/listings/import/upload-actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Assisted listing import (P0-d-1, 00107).
@@ -69,7 +70,7 @@ export default async function AdminImportsPage({
 
   return (
     <>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="open-agent-account" step={9} /></h1>
       <p className="mb-6 mt-1 max-w-2xl text-sm text-muted">{t("intro")}</p>
 
       {error && (

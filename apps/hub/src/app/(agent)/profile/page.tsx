@@ -5,6 +5,7 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { HeroCard } from "@/components/profile/hero-card";
 import { AvatarUpload } from "@/components/profile/avatar-upload";
 import { updateTrustProfile, addSocialLink, removeSocialLink, setMyAgency, addMyAgency, submitCertificate } from "./actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
@@ -68,7 +69,7 @@ export default async function ProfilePage({
 
   return (
     <AgentShell>
-      <h1 className="mb-2 text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="mb-2 text-2xl font-semibold">{t("title")} <GuideLink slug="profile-and-company" /></h1>
       <p className="mb-6 text-sm text-muted">{t("intro")}</p>
 
       {saved && (

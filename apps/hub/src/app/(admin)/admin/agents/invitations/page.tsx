@@ -4,6 +4,7 @@ import { requireCapability, capabilityCountries } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { INVITE_LINK_COOKIE } from "@/lib/agents/invitations";
 import { createInvitation, resendInvitation, revokeInvitation } from "./actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Agent invitations (P0-b, 00106).
@@ -89,7 +90,7 @@ export default async function AdminInvitationsPage({
 
   return (
     <>
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="text-2xl font-semibold">{t("title")} <GuideLink slug="invitations" /></h1>
       <p className="mb-6 mt-1 max-w-2xl text-sm text-muted">{t("intro")}</p>
 
       {notice && NOTICE_TONE[notice] && (

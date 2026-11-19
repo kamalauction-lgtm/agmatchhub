@@ -6,6 +6,7 @@ import { AgentShell } from "@/components/layout/agent-shell";
 import { submitVerification } from "./actions";
 import { CountryLicenceFields } from "@/components/forms/country-licence-fields";
 import { licenceTypesFor } from "@/lib/countries/licence";
+import { GuideLink } from "@/components/help/guide-link";
 
 const CATEGORIES = ["residential", "commercial", "industrial", "land"] as const;
 const KNOWN_ERRORS = [
@@ -53,7 +54,7 @@ export default async function VerificationPage({
 
   return (
     <AgentShell>
-      <h1 className="mb-2 text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="mb-2 text-2xl font-semibold">{t("title")} <GuideLink slug="badges" /></h1>
         <p className="mb-6 text-sm text-muted">{t("intro")}</p>
 
         {submitted && (

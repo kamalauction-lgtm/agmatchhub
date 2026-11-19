@@ -9,6 +9,7 @@ import { REJECTION_CODES, photoStatus, summarisePhotos, type PhotoRow } from "@/
 import { rightsBasis, type ProvenanceFacts } from "@/lib/media/rights";
 import { moderateBulk, moderateListing, quarantinePhoto } from "./actions";
 import { requestChange } from "../handover/actions";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * Marketplace listing moderation (§28 step 7; P1-a, storyboard screen 9).
@@ -160,7 +161,7 @@ export default async function ListingModerationPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="mb-1 text-2xl font-semibold">{t("title")} <GuideLink slug="moderation" /></h1>
       <nav className="mb-4 mt-3 flex flex-wrap gap-2" aria-label={t("tabs.label")}>
         {TABS.map((s) => (
           <Link key={s} href={`/admin/listings?status=${s}`} aria-current={s === tab ? "page" : undefined}

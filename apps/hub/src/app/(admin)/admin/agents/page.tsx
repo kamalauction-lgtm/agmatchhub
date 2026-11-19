@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireCapability, capabilityCountries } from "@/lib/authz";
+import { GuideLink } from "@/components/help/guide-link";
 
 const FILTERS = ["new", "under_review", "additional_information_required", "verified", "rejected", "suspended", "banned", "all"] as const;
 /** Review window for new agents, in hours (owner: 24 by default, longer when needed). */
@@ -54,7 +55,7 @@ export default async function AgentQueuePage({
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-semibold">{t("agentsTitle")}</h1>
+      <h1 className="mb-6 text-2xl font-semibold">{t("agentsTitle")} <GuideLink slug="new-agents" /></h1>
 
       <div className="mb-6 flex flex-wrap gap-2 text-sm">
         {FILTERS.map((f) => (

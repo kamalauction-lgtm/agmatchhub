@@ -15,6 +15,7 @@ import { money, place } from "@/lib/listings/format";
 import { OfferToPool } from "@/components/listings/offer-to-pool";
 import { boostListing } from "./boost-actions";
 import { RefreshPlanner } from "@/components/listings/refresh-planner";
+import { GuideLink } from "@/components/help/guide-link";
 
 /**
  * The agent's inventory, in two parts: listings they hold the mandate for, and
@@ -209,7 +210,7 @@ export default async function MyListingsPage({
       {/* Command band: fixed colours so the text stays legible in dark mode. */}
       <CommandHeader className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold text-white">{t("title")}</h1>
+          <h1 className="text-2xl font-semibold text-white">{t("title")} <GuideLink slug="listings" /></h1>
           <p className="mt-1 text-sm text-[#c8d6f2]">
             {t("quota", { active, max: activeLimit })}
             {borrowedRows.length > 0 && ` · ${t("borrowedCount", { count: borrowedRows.length })}`}
