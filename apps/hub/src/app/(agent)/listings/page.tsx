@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations, getFormatter } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/authz";
+import { submitForReview, withdrawListing } from "./status-actions";
 import { AgentShell } from "@/components/layout/agent-shell";
 import { CommandHeader } from "@/components/ui/command-header";
 import { Badge } from "@/components/ui/badge";
@@ -323,6 +324,22 @@ export default async function MyListingsPage({
                   >
                     {t("edit.cta")}
                   </Link>
+                  {["draft", "rejected", "withdrawn"].includes(l.status) && (
+                    <form action={submitForReview} data-submit-review={l.id}>
+                      <input type="hidden" name="listingId" value={l.id} />
+                      <button type="submit" className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong">
+                        {t("statusActions.submit")}
+                      </button>
+                    </form>
+                  )}
+                  {["pending_review", "published"].includes(l.status) && (
+                    <form action={withdrawListing} data-withdraw={l.id}>
+                      <input type="hidden" name="listingId" value={l.id} />
+                      <button type="submit" className="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold text-muted hover:border-danger hover:text-danger">
+                        {t("statusActions.withdraw")}
+                      </button>
+                    </form>
+                  )}
                   {isLive && (
                     <Link
                       href={`/listings/${l.id}/report`}

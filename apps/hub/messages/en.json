@@ -1539,7 +1539,8 @@
       "agent_certificate_approved": "Your certificate is approved",
       "agent_certificate_rejected": "Your certificate was not approved",
       "agent_certificate_expiring": "Your certificate expires within 30 days",
-      "admin_certificate_submitted": "A certificate is waiting for review"
+      "admin_certificate_submitted": "A certificate is waiting for review",
+      "listing_import_committed_on_behalf": "Your listings were published for you and are being reviewed"
     },
     "pushEnable": "Enable phone notifications",
     "pushEnabled": "Phone notifications on",
@@ -2437,6 +2438,10 @@
         "hint": "JPEG, PNG or WebP, up to 10 MB. It stays private: it is processed (location and camera data removed) and goes live only when a moderator approves it.",
         "send": "Upload photo"
       }
+    },
+    "statusActions": {
+      "submit": "Submit for review",
+      "withdraw": "Withdraw"
     }
   },
   "studio": {
@@ -5000,7 +5005,11 @@
       "nothing_selected": "Select at least one item.",
       "agent_in_control": "The agent is in control of this batch, so it can no longer be edited.",
       "nothing_to_set": "Choose a type or sale/rent to apply.",
-      "type_not_in_market": "That property type is not offered in this agent's market."
+      "type_not_in_market": "That property type is not offered in this agent's market.",
+      "no_consent": "The agent has not agreed to publishing on their behalf.",
+      "already_committed": "This batch has already been published for the agent.",
+      "nothing_ready": "No listing in this batch is ready yet.",
+      "not_assisted": "Only batches prepared by an admin can be published for the agent."
     },
     "review": {
       "title": "Batch review",
@@ -5048,7 +5057,19 @@
       "rent": "For rent",
       "applySelected": "Apply to selected"
     },
-    "inControl": "The agent has handled every item and is now in control. The team can no longer edit this batch or the listings it produced; moderation continues as usual."
+    "inControl": "The agent has handled every item and is now in control. The team can no longer edit this batch or the listings it produced; moderation continues as usual.",
+    "onBehalf": {
+      "allowed": "The agent agreed ({method}, {date}) that we may publish these listings for them.",
+      "cta": "Publish {n} for the agent",
+      "noConsent": "The agent has not agreed to publishing on their behalf, so hand the batch over and the agent publishes it. To record their agreement, use Agents → Open an account.",
+      "done": "{n, plural, one {# listing was} other {# listings were}} published for the agent and are waiting in Listings → Moderation. You may approve them yourself.",
+      "methods": {
+        "phone_call": "phone call",
+        "whatsapp": "WhatsApp",
+        "in_person": "in person",
+        "email": "email"
+      }
+    }
   },
   "adminMedia": {
     "title": "Photo Quality Centre",

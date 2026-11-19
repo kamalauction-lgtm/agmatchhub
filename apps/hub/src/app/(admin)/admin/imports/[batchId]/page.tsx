@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { requireCapability } from "@/lib/authz";
 import { createClient } from "@/lib/supabase/server";
 import { ImportReview } from "@/components/import/import-review";
-import { bulkItemFields, bulkItemStatus, handoverBatch } from "../actions";
+import { bulkItemFields, bulkItemStatus, handoverBatch, commitBatchForAgent } from "../actions";
 import { asMarketCountry, TYPES_BY_CATEGORY } from "@/lib/listings/vocabulary";
 import { itemChanges, itemQuality } from "@/lib/import/quality";
 
@@ -92,6 +92,18 @@ export default async function AdminImportBatchPage({
     ITEM_ERROR_CODES.filter((c) => ti.has(`errors.${c}`)).map((c) => [c, ti(`errors.${c}`)]),
   );
 
+  // On-behalf publishing (00133): does this admin hold it, and on what consent?
+  const { data: canCommitForAgent } = await supabase.rpc("admin_can_commit_for_batch", { p_batch: batch.id });
+  const { data: onBehalfConsent } = await supabase
+    .from("agent_onboarding_consents")
+    .select("method, consented_at")
+    .eq("user_id", batch.agent_id)
+    .contains("scopes", ["publish_on_behalf"])
+    .eq("status", "given")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   return (
     <>
       <Link href="/admin/imports" className="text-sm text-muted hover:text-foreground">← {t("title")}</Link>
@@ -102,6 +114,9 @@ export default async function AdminImportBatchPage({
 
       {done?.startsWith("bulk_") && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success" role="status">{t("review.bulkDone", { n: Number(n) || 0 })}</p>
+      )}
+      {done === "committed" && (
+        <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success" data-committed="1">{t("onBehalf.done", { n: Number(n) || 0 })}</p>
       )}
       {done === "handed_over" && (
         <p className="mb-6 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success">{t("handedOver")}</p>
@@ -116,6 +131,23 @@ export default async function AdminImportBatchPage({
 
       {inControl && (
         <p className="mb-6 max-w-2xl rounded-lg bg-success/10 px-4 py-3 text-sm text-success-ink" data-in-control="1">{t("inControl")}</p>
+      )}
+
+      {/* Publish on the agent's behalf (00133): only with their recorded consent. */}
+      {canWrite && batch.acting_admin_id && !inControl && (
+        <div className="mb-6 rounded-xl border border-line p-4 text-sm" data-on-behalf={canCommitForAgent ? "allowed" : "no-consent"}>
+          {canCommitForAgent ? (
+            <form action={commitBatchForAgent} className="flex flex-wrap items-center gap-3">
+              <input type="hidden" name="batchId" value={batch.id} />
+              <span className="text-muted">{t("onBehalf.allowed", { method: onBehalfConsent?.method ? t(`onBehalf.methods.${onBehalfConsent.method}` as never) : "—", date: onBehalfConsent?.consented_at ? String(onBehalfConsent.consented_at).slice(0, 10) : "—" })}</span>
+              <button type="submit" disabled={ready === 0} className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:cursor-not-allowed disabled:opacity-50">
+                {t("onBehalf.cta", { n: ready })}
+              </button>
+            </form>
+          ) : (
+            <p className="text-muted">{t("onBehalf.noConsent")}</p>
+          )}
+        </div>
       )}
 
       {canWrite && batch.acting_admin_id && batch.imported_count === 0 && (

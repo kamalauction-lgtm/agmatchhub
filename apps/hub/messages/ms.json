@@ -1539,7 +1539,8 @@
       "agent_certificate_approved": "Sijil anda diluluskan",
       "agent_certificate_rejected": "Sijil anda tidak diluluskan",
       "agent_certificate_expiring": "Sijil anda tamat tempoh dalam 30 hari",
-      "admin_certificate_submitted": "Ada sijil menunggu semakan"
+      "admin_certificate_submitted": "Ada sijil menunggu semakan",
+      "listing_import_committed_on_behalf": "Iklan anda telah diterbitkan untuk anda dan sedang disemak"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -2437,6 +2438,10 @@
         "hint": "JPEG, PNG atau WebP, sehingga 10 MB. Ia kekal peribadi: diproses (data lokasi dan kamera dibuang) dan hanya diterbitkan selepas moderator meluluskannya.",
         "send": "Muat naik foto"
       }
+    },
+    "statusActions": {
+      "submit": "Hantar untuk semakan",
+      "withdraw": "Tarik balik"
     }
   },
   "studio": {
@@ -5000,7 +5005,11 @@
       "nothing_selected": "Pilih sekurang-kurangnya satu item.",
       "agent_in_control": "Ejen mengawal kelompok ini, jadi ia tidak boleh diubah lagi.",
       "nothing_to_set": "Pilih jenis atau jual/sewa untuk digunakan.",
-      "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini."
+      "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini.",
+      "no_consent": "Ejen belum bersetuju dengan penerbitan bagi pihaknya.",
+      "already_committed": "Kumpulan ini sudah diterbitkan untuk ejen.",
+      "nothing_ready": "Belum ada iklan yang sedia dalam kumpulan ini.",
+      "not_assisted": "Hanya kumpulan yang disediakan oleh pentadbir boleh diterbitkan untuk ejen."
     },
     "review": {
       "title": "Semakan kelompok",
@@ -5048,7 +5057,19 @@
       "rent": "Untuk disewa",
       "applySelected": "Guna pada yang dipilih"
     },
-    "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa."
+    "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa.",
+    "onBehalf": {
+      "allowed": "Ejen telah bersetuju ({method}, {date}) bahawa kami boleh menerbitkan iklan ini bagi pihaknya.",
+      "cta": "Terbitkan {n} untuk ejen",
+      "noConsent": "Ejen belum bersetuju dengan penerbitan bagi pihaknya, jadi serahkan kumpulan ini dan ejen yang menerbitkan. Untuk merekod persetujuan, gunakan Ejen → Buka akaun ejen.",
+      "done": "{n} iklan telah diterbitkan untuk ejen dan menunggu di Iklan → Moderasi. Anda boleh meluluskannya sendiri.",
+      "methods": {
+        "phone_call": "panggilan telefon",
+        "whatsapp": "WhatsApp",
+        "in_person": "bersemuka",
+        "email": "e-mel"
+      }
+    }
   },
   "adminMedia": {
     "title": "Pusat Kualiti Foto",
