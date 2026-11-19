@@ -160,3 +160,16 @@
   - the hub card, the www agent page, www `/` and `/en`, and Hub login all return 200.
 - **Staging before release:** RLS `agent-certificates` 6/6, including the negative tests; Hub end to end 15/15.
 - **Not yet verified on production:** a real certificate submitted and approved.
+
+## Encrypted backup, 19 Nov 2026
+
+- **File:** `full-jokyyhvtahiypuzmfydp-2026-11-19T01-58-47-332Z.pgbk`, 2.0 MB, sha256 `37acda142d22515a…`. It is in the owner's encrypted backups folder, made with a new passphrase that the owner holds.
+- **Encryption:** the file has the PGBK1 header, and a search found no readable SQL or email addresses inside. No unencrypted files were left behind.
+- **`verify-restore`: PASS.**
+  - Decryption: AES-256-GCM, authentication tag verified.
+  - Backup content: 143 tables, 9,800 rows, 16 accounts and 18 files.
+  - Schema: at 00131, with 0 migrations missing from the repo.
+  - Integrity: 290 foreign keys with 0 broken; 18 of 18 files matched (size and sha256).
+  - Security: RLS is on all 137 public tables (310 policies); anonymous users see the 30 public listings and are refused on leads.
+- **Note:** a passphrase was typed at the shell prompt by mistake and pasted into chat before this backup. It was never used to encrypt this file, and the owner removed it from the PowerShell history.
+- **Old backup removed:** the 11 Nov backup (`…2026-11-11T14-11-47-338Z.pgbk`) was encrypted with the passphrase later exposed in chat. The owner approved its deletion, and it was deleted permanently on 19 Nov after the new backup passed. No other copy was found under the user folder. The 19 Nov backup is now the only production backup.
