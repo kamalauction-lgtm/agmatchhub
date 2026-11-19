@@ -22,6 +22,7 @@ export const ADMIN_TOPICS: HelpTopic[] = [
         ],
         notes: [
           { en: "You only see the countries you are responsible for. Every action you take is recorded in the audit trail with your name.", id: "Anda hanya melihat negara yang menjadi tanggung jawab Anda. Setiap tindakan tercatat di jejak audit dengan nama Anda." },
+          { en: "The menu on the left: type in “Find a page” to jump anywhere, press a group title to fold it, and use the button at the top to shrink the menu to icons. On a phone or tablet, press Menu.", id: "Menu di sebelah kiri: ketik di “Cari halaman” untuk langsung menuju halaman mana pun, tekan judul grup untuk melipatnya, dan gunakan tombol di atas untuk mengecilkan menu menjadi ikon. Di ponsel atau tablet, tekan Menu." },
         ],
       },
     ],

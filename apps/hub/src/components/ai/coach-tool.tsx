@@ -57,7 +57,7 @@ export function CoachTool({ mode, scenarios, objectionAction, practiceAction, he
         </p>
       )}
 
-      <div className="grid gap-5 lg:grid-cols-[24rem_1fr]">
+      <div className="grid gap-5 grid-cols-1 lg:grid-cols-[24rem_minmax(0,1fr)]">
         <div className="space-y-4 rounded-xl border border-line bg-card p-4">
           {tab === "objection" ? (
             <>

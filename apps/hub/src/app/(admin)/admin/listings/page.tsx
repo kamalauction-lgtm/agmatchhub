@@ -160,7 +160,7 @@ export default async function ListingModerationPage({
   const why = (sp.why ?? "").split(",").filter(Boolean).map((x) => x.split(":")).filter(([k]) => t.has(`errors.${k}` as never));
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div>
       <h1 className="mb-1 text-2xl font-semibold">{t("title")} <GuideLink slug="moderation" /></h1>
       <nav className="mb-4 mt-3 flex flex-wrap gap-2" aria-label={t("tabs.label")}>
         {TABS.map((s) => (

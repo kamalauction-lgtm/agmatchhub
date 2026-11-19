@@ -261,7 +261,7 @@ export default async function AdminHome({
       {/* Headline numbers ------------------------------------------------- */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
-          icon="👥"
+          icon="users"
           tone="indigo"
           value={format.number(metrics?.agents_total ?? 0)}
           label={t("kpi.registered")}
@@ -270,7 +270,7 @@ export default async function AdminHome({
           series={points.map((p) => p.signups)}
         />
         <StatCard
-          icon="🛡"
+          icon="shield-check"
           tone="green"
           value={format.number(metrics?.agents_verified ?? 0)}
           label={t("kpi.verified")}
@@ -279,7 +279,7 @@ export default async function AdminHome({
           href="/admin/agents"
         />
         <StatCard
-          icon="🚀"
+          icon="trending-up"
           tone="orange"
           value={format.number(metrics?.agents_activated ?? 0)}
           label={t("kpi.activated")}
@@ -289,7 +289,7 @@ export default async function AdminHome({
           href="/admin/agents"
         />
         <StatCard
-          icon="🏠"
+          icon="home"
           tone="blue"
           value={format.number(metrics?.listings_published ?? 0)}
           label={t("kpi.published")}
@@ -311,7 +311,7 @@ export default async function AdminHome({
       </Panel>
 
       {/* Action centre + growth partners ---------------------------------- */}
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Panel
           title={t("needsAttention")}
           action={
@@ -407,7 +407,7 @@ export default async function AdminHome({
       </div>
 
       {/* Funnel + breakdown ----------------------------------------------- */}
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Panel title={t("funnelTitle")} hint={t("funnelHint")}>
           <Funnel
             stages={funnelData.map((f) => ({
@@ -470,7 +470,7 @@ export default async function AdminHome({
       </div>
 
       {/* Commercial + health ---------------------------------------------- */}
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Panel
           title={t("commercialTitle")}
           hint={t("commercialHint")}
@@ -552,7 +552,7 @@ export default async function AdminHome({
       </div>
 
       {/* Top agents + activity -------------------------------------------- */}
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Panel title={t("topAgentsTitle")} hint={t("topAgentsHint")} bodyClassName="p-0 sm:p-0">
           {topAgents.length === 0 ? (
             <p className="px-5 py-10 text-center text-sm text-muted">{t("noData")}</p>

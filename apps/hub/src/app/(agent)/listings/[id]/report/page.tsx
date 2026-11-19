@@ -59,7 +59,7 @@ export default async function OwnerReportPage({ params, searchParams }: { params
         <Link href={q({ ai: "1" })} className="ml-auto rounded-lg bg-crimson px-4 py-2 text-xs font-semibold text-white hover:bg-crimson-strong">✦ {sp.ai ? t("writeAgain") : t("writeAi")}</Link>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
+      <div className="grid gap-5 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <section className="rounded-xl border border-line bg-card p-5">
           <AiStatus source={r.source} reason={r.reason} model={r.model} labels={{ sourceAi: tr.raw("sourceAi") as string, sourceRules: tr("sourceRules"), reasons: Object.fromEntries(AI_REASON_KEYS.map((x) => [x, tr(`reason.${x}`)])) }} className="mb-3" />
           <p className="text-sm font-semibold">{r.subject}</p>

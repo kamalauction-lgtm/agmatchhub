@@ -50,7 +50,7 @@ export default async function AdminHeroPage({ searchParams }: { searchParams: Pr
 
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard value={linked} label={t("kpi.linked")} icon="⬢" tone="green" />
-        <StatCard value={stale} label={t("kpi.stale")} icon="⚠" tone="orange" invert />
+        <StatCard value={stale} label={t("kpi.stale")} icon="flag" tone="orange" invert />
         <StatCard value={heroConfigured() ? t("kpi.keyOn") : t("kpi.keyOff")} label={t("kpi.key")} icon="⚿" tone={heroConfigured() ? "blue" : "red"} />
       </div>
 

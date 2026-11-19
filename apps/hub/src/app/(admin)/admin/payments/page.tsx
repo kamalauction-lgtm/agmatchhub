@@ -51,7 +51,7 @@ export default async function AdminPaymentsPage({ searchParams }: { searchParams
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <StatCard value={t(`billing.${billing}` as never)} label={t("kpi.billing")} icon="₪" tone={billing === "LIVE_BILLING" ? "red" : "blue"} />
         <StatCard value={paid} label={t("kpi.paid")} icon="✓" tone="green" />
-        <StatCard value={bad} label={t("kpi.badSignatures")} icon="⚠" tone={bad ? "red" : "green"} invert />
+        <StatCard value={bad} label={t("kpi.badSignatures")} icon="flag" tone={bad ? "red" : "green"} invert />
       </div>
 
       {/* Providers --------------------------------------------------------- */}

@@ -34,7 +34,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
   const field = "min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div>
       <Link href="/admin/agents" className="text-sm text-muted hover:text-foreground">← {t("back")}</Link>
       <h1 className="mb-1 mt-2 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-6 max-w-3xl text-sm text-muted">{t("hint")}</p>

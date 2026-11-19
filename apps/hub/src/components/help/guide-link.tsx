@@ -18,7 +18,7 @@ export async function GuideLink({ slug, step }: { slug: string; step?: number })
   }
   // Sits inside a page's <h1>, so it resets the heading's type and colour.
   return (
-    <span className="ml-3 inline-block align-middle text-base font-normal text-foreground">
+    <span className="mt-2 block align-middle text-base font-normal text-foreground sm:ml-3 sm:mt-0 sm:inline-block">
       <HelpHint href={`${admin ? "/admin/help" : "/help"}/${slug}`} step={step} label={t("hint")} />
     </span>
   );

@@ -116,7 +116,7 @@ export default async function GrowthPage() {
         </section>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_20rem]">
         {/* How it works + history ---------------------------------------- */}
         <div>
           <section className="rounded-xl border border-line p-5">
