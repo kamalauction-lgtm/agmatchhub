@@ -200,3 +200,20 @@
   - Help 8/8.
 - **Declined:** watermark removal on imported portal photos, for copyright reasons. Agents supply original photos.
 - **Not yet verified on production:** a real admin-opened account (email delivery, first-login password change), and a real on-behalf publish.
+
+## Follow-up release, 19 Nov 2026 (evening): picture walkthroughs for Help
+
+- **What:** PR #60 (merge `36268de`). Every Help guide is now an interactive walkthrough:
+  - a screenshot of the real screen with the thing to press highlighted;
+  - Back / Next and arrow keys, a progress bar, tick-off saved per device, and a step list;
+  - an English / Indonesia switch.
+  - Links both ways: "Open this screen" from a guide, and "? Guide" on 14 key admin and agent screens (`?step=N`).
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `5e0d0fa4` (rollback `b06b6009`); staging `1e3023f4`.
+- **Screenshots:**
+  - 55 × 2 languages (4.3 MB), captured on staging only (demo data) by `apps/hub/scripts/capture-help-shots.mjs`;
+  - emails and phone numbers masked;
+  - staff names on the staging access list blurred.
+- **Checks on staging:** 31/32 browser checks as admin and agent. The one failure was test timing on the language switch, re-checked by hand. Typecheck, lint and i18n parity pass. CI: checks and rls green.
+- **Checks on production:** pictures are served (`image/webp`, 200); `/help`, `/admin/help` and deep links redirect to sign-in, so the routes exist.
+- **Not yet verified on production:** walking a guide while signed in (no production test account is used, by design).
