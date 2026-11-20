@@ -293,3 +293,18 @@
 - **Not checked on production:** dark mode itself (the session's browser was in light mode), and the moderation buttons and action-queue links (nothing was pending there).
 - **Not changed:** white text on the crimson primary buttons is about 3.4:1 in dark mode; fixing it changes the primary button colour, which is the owner's brand decision. Lead titles in the admin action queue are still cut short on a phone.
 - **Not checked at all:** a real phone, tablet widths, Malay.
+
+## Follow-up release, 20 Nov 2026 (last): red buttons in dark mode, full lead titles on phones
+
+- **What:** PR #72 (merge `88dbf2d`).
+  - Red buttons with white text use `--crimson-btn`: the brand red `#e53935` in light mode (unchanged), `#c62828` in dark mode (5.6:1; it was 3.4:1 on the lifted `#f05a56`). 115 buttons, plus 3 that used `bg-danger`. The shared primary button uses `--crimson-fill`, so it is `#c62828` in dark mode too (was 4.2:1).
+  - Admin action queue: on a phone the title drops to its own line and wraps instead of being cut off; desktop keeps one line.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `52496441` (rollback `b36407cc`); staging `64ef62ec`.
+- **Help:** pictures not re-taken; they are taken in light mode on desktop, which looks the same.
+- **Checks on staging** (390px): red buttons measured on 17 pages in dark and light (5.6:1 in dark everywhere, light unchanged at 4.2:1); the 20 queue titles show in full, links 36px tall, no sideways scroll. Typecheck and lint pass. CI: checks and rls green.
+- **Checks on production:** signed in through the owner's browser session, read-only, in light mode: the stylesheet carries both values of `--crimson-btn`; the red button on Listings is still `#e53935`; Listings, Dashboard, Command Center and Legal content load.
+- **Seen during release:** the first load of `/listings`, seconds after the deploy finished, showed the app's "This page couldn't load" screen with the previous build's stylesheet. A reload a few seconds later was fine, and four further page loads were fine. Read as the version switchover; not reproduced.
+- **Not checked on production:** dark mode itself (the session's browser was in light mode), and the action queue on a phone (nothing was pending).
+- **Not changed:** in light mode the inline red buttons stay at 4.2:1, just under 4.5:1; moving them to `#c62828` darkens the brand red and is the owner's call.
+- **Not checked at all:** a real phone, tablet widths, Malay.
