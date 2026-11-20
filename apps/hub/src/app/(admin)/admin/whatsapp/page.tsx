@@ -106,7 +106,7 @@ export default async function AdminWhatsappPage({ searchParams }: { searchParams
             </tbody>
           </table>
         </div>
-        <form action={upsertWaTemplate} className="mt-4 grid gap-3 rounded-xl border border-line p-4 sm:grid-cols-3">
+        <form action={upsertWaTemplate} className="mt-4 grid max-w-4xl gap-3 rounded-xl border border-line p-4 sm:grid-cols-3">
           <input type="hidden" name="id" value="" />
           <label className="text-xs text-muted">{t("f.account")}
             <select name="account_id" className={`${input} mt-1 w-full`}>{(accounts ?? []).map((a) => <option key={a.id} value={a.id}>{a.country_code}</option>)}</select>

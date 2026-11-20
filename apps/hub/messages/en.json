@@ -601,7 +601,10 @@
     "types": {
       "supply_agent_submission": "Supply Agent submission declaration",
       "requesting_agent_presentation": "Requesting Agent presentation declaration",
-      "client_disclaimer": "Client disclaimer"
+      "client_disclaimer": "Client disclaimer",
+      "supply_agent_disclosure": "Supply Agent legal disclosure declaration",
+      "buyer_inquiry": "Buyer inquiry privacy and contact consent",
+      "listing_import_authority": "Listing import authority and accuracy"
     },
     "noVersion": "none",
     "viewText": "View text",

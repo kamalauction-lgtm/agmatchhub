@@ -43,7 +43,7 @@ export default async function LegalContentPage({
           const versions = d.declaration_versions ?? [];
           return (
             <section key={d.id} className="rounded-xl border border-line p-6">
-              <h2 className="mb-1 font-semibold">{t(`types.${d.key}`)}</h2>
+              <h2 className="mb-1 font-semibold">{t.has(`types.${d.key}` as never) ? t(`types.${d.key}` as never) : d.name}</h2>
               <p className="mb-4 text-xs text-muted">{d.key}</p>
 
               <div className="mb-6 grid gap-4 lg:grid-cols-3">
@@ -78,7 +78,7 @@ export default async function LegalContentPage({
                 <summary className="cursor-pointer text-sm font-medium">
                   {t("publishNew")}
                 </summary>
-                <form action={publishDeclarationVersion} className="mt-4 space-y-3">
+                <form action={publishDeclarationVersion} className="mt-4 max-w-3xl space-y-3">
                   <input type="hidden" name="declarationId" value={d.id} />
                   <label className="block text-sm">
                     <span className="mb-1 block font-medium">{t("locale")}</span>

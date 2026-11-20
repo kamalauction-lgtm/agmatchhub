@@ -52,18 +52,18 @@ export default async function LoginPage({
       </form>
       {error === "email_not_confirmed" && <ResendConfirmation className="mt-6 rounded-xl border border-line p-4" />}
       <div className="mt-6 flex items-center justify-between text-sm">
-        <Link href="/forgot-password" className="text-muted hover:text-foreground">
+        <Link href="/forgot-password" className="inline-flex min-h-11 items-center text-muted hover:text-foreground">
           {t("forgotPassword")}
         </Link>
         <span>
           <span className="text-muted">{t("noAccount")} </span>
-          <Link href="/register" className="font-medium text-crimson">
+          <Link href="/register" className="inline-flex min-h-11 items-center font-medium text-crimson">
             {tc("register")}
           </Link>
         </span>
       </div>
-      <p className="mt-3 text-center text-xs">
-        <Link href="/verify-email" className="text-muted hover:text-foreground">{t("resendLink")}</Link>
+      <p className="mt-1 text-center text-xs">
+        <Link href="/verify-email" className="inline-flex min-h-11 items-center text-muted hover:text-foreground">{t("resendLink")}</Link>
       </p>
     </div>
   );

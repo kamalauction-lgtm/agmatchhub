@@ -601,7 +601,10 @@
     "types": {
       "supply_agent_submission": "Deklarasi penyerahan Supply Agent",
       "requesting_agent_presentation": "Deklarasi pembentangan Requesting Agent",
-      "client_disclaimer": "Penafian pelanggan"
+      "client_disclaimer": "Penafian pelanggan",
+      "supply_agent_disclosure": "Deklarasi pendedahan undang-undang Supply Agent",
+      "buyer_inquiry": "Persetujuan privasi dan hubungan pertanyaan pembeli",
+      "listing_import_authority": "Kuasa dan ketepatan import listing"
     },
     "noVersion": "tiada",
     "viewText": "Lihat teks",

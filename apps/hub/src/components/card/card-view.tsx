@@ -97,7 +97,7 @@ export function CardView({
         />
       </div>
 
-      <div className="-mt-12 px-5 pb-6 text-center">
+      <div className="relative -mt-12 px-5 pb-6 text-center">
         {photo ? (
           /* `object-top`, not the default centre. Profile photos are portrait
              far more often than square — Kamal's is 1024×1536 — and centring a

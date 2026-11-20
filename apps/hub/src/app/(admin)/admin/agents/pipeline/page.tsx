@@ -55,7 +55,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
       ) : (
         <details className="mb-8 rounded-xl border border-line p-4" data-prospect-add="1">
           <summary className="cursor-pointer text-sm font-semibold">{t("add")}</summary>
-          <form action={addProspect} className="mt-3 grid gap-3 sm:grid-cols-3">
+          <form action={addProspect} className="mt-3 grid max-w-4xl gap-3 sm:grid-cols-3">
             <select name="countryCode" required defaultValue="" className={field} aria-label={t("fields.country")}>
               <option value="" disabled>{t("fields.country")}</option>
               {ready.map((c) => <option key={c.code} value={c.code}>{c.name} ({c.code})</option>)}
@@ -75,7 +75,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
         </details>
       )}
 
-      <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6" data-pipeline={prospects.length}>
+      <div className="grid gap-4 md:grid-cols-3 2xl:grid-cols-6" data-pipeline={prospects.length}>
         {STAGES.map((stage) => (
           <section key={stage} className="rounded-xl border border-line" data-stage={stage}>
             <h2 className="border-b border-line px-3 py-2 text-sm font-semibold">{t(`stage.${stage}`)} <span className="text-muted">{prospects.filter((p) => p.stage === stage).length}</span></h2>
