@@ -217,3 +217,20 @@
 - **Checks on staging:** 31/32 browser checks as admin and agent. The one failure was test timing on the language switch, re-checked by hand. Typecheck, lint and i18n parity pass. CI: checks and rls green.
 - **Checks on production:** pictures are served (`image/webp`, 200); `/help`, `/admin/help` and deep links redirect to sign-in, so the routes exist.
 - **Not yet verified on production:** walking a guide while signed in (no production test account is used, by design).
+
+## Follow-up release, 20 Nov 2026: larger sidebar, phone menu, wider pages, fuller Content studio
+
+- **What:** PR #62 (merge `8f128a9`). The shell shared by agents and admins was rebuilt:
+  - sidebar 288px wide with 44px rows, 15px labels and outline icons; it folds to an icon strip, groups fold, and both are remembered per device;
+  - admins get a "Find a page" box over their 30 destinations; only one item is ever marked current;
+  - phones and tablets get a Menu drawer with every page, and the agent bottom tabs mark the current page;
+  - pages are wider (agents 1024px / 1400px, admins up to 1600px) and double padding was removed from 8 admin pages;
+  - Content studio has real buttons, four stat tiles from live counts, and a three-step empty state with a sample post;
+  - stat cards use icons instead of emoji.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `d084778a` (rollback `5e0d0fa4`); staging `dbd4c8b9`.
+- **Help:** all 110 walkthrough pictures re-taken on staging with the new menu; a note about the menu added to the admin and agent daily guides (EN and ID).
+- **Checks on staging:** 35/35 targeted browser checks as admin and agent; a sweep of 50 pages at 3 screen sizes found no load or console errors (the sideways-scroll and header findings it raised were fixed, and the full sweep was not repeated afterwards). An independent design review raised 15 points, all addressed. Typecheck and lint pass. CI: checks and rls green on the branch after it was brought up to date with main.
+- **Checks on production:** signed in through the owner's browser session, read-only: `/studio` and `/admin` show the 288px sidebar, 44px rows, one current item, the stat tiles and empty state, the admin find box with 30 items, and no sideways scroll at 1920px.
+- **Not checked:** dark mode, Malay, the country-admin role, and phone widths on production.
+- **Known follow-ups:** `/wanted` shows the public layout to signed-in agents; two document-type labels are missing under Legal content; the name-card avatar sits behind its banner; some forms stretch on very large monitors; small links on the sign-in page are under 24px tall.
