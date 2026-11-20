@@ -208,7 +208,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
                         <input type="hidden" name="planVersionId" value={p.plan_version_id} />
                         <input type="hidden" name="cadence" value={cadence} />
                         <input type="hidden" name="label" value={p.product_name ?? p.name} />
-                        <button type="submit" className={`${payBtn} ${cadence === "monthly" ? "bg-crimson text-white hover:bg-crimson/90" : "border border-line hover:border-crimson hover:text-crimson"}`}>
+                        <button type="submit" className={`${payBtn} ${cadence === "monthly" ? "bg-crimson-btn text-white hover:bg-crimson/90" : "border border-line hover:border-crimson hover:text-crimson"}`}>
                           {t(`choose.${cadence}`)}
                         </button>
                       </form>

@@ -98,7 +98,7 @@ export default async function BrochurePage({
       {/* The sheet -------------------------------------------------------- */}
       <article className="rounded-xl border border-line p-8 print:rounded-none print:border-0 print:p-0">
         <header className="flex items-start justify-between gap-3">
-          <span className="rounded-lg bg-crimson px-3 py-1 text-sm font-bold uppercase tracking-wide text-white">
+          <span className="rounded-lg bg-crimson-btn px-3 py-1 text-sm font-bold uppercase tracking-wide text-white">
             {listing.listing_type === "rent" ? tB("badgeRent") : tB("badgeSale")}
           </span>
           <span className="font-mono text-xs text-muted">{listing.human_readable_id}</span>
@@ -192,7 +192,7 @@ export default async function BrochurePage({
         <section className="mt-6 flex items-center gap-4 rounded-xl border border-line bg-surface p-4 print:bg-transparent">
           <span
             aria-hidden
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-crimson text-lg font-bold text-white"
+            className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-crimson-btn text-lg font-bold text-white"
           >
             {(listing.agent_display_name ?? "?").charAt(0).toUpperCase()}
           </span>

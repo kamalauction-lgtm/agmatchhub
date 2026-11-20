@@ -170,7 +170,7 @@ export function HelpWalkthrough({
                   >
                     <span
                       aria-hidden
-                      className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${isDone ? "bg-success-fill text-white" : current ? "bg-crimson text-white" : "border border-line-strong text-muted-strong"}`}
+                      className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${isDone ? "bg-success-fill text-white" : current ? "bg-crimson-btn text-white" : "border border-line-strong text-muted-strong"}`}
                     >
                       {isDone ? <CheckIcon /> : n + 1}
                     </span>
@@ -229,7 +229,7 @@ export function HelpWalkthrough({
                 <button type="button" onClick={() => go(0)} className="min-h-11 cursor-pointer rounded-lg border border-line px-4 text-sm font-semibold transition-colors hover:border-crimson focus-visible:outline-2 focus-visible:outline-crimson">
                   {labels.restart}
                 </button>
-                <Link href={base} className="inline-flex min-h-11 items-center rounded-lg bg-crimson px-4 text-sm font-semibold text-white transition-colors hover:bg-crimson-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson">
+                <Link href={base} className="inline-flex min-h-11 items-center rounded-lg bg-crimson-btn px-4 text-sm font-semibold text-white transition-colors hover:bg-crimson-btn-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson">
                   {labels.allGuides}
                 </Link>
               </div>
@@ -257,7 +257,7 @@ export function HelpWalkthrough({
                         style={{ left: `${step.box.x}%`, top: `${step.box.y}%`, width: `${step.box.w}%`, height: `${step.box.h}%` }}
                       >
                         <span className="absolute -inset-1.5 rounded-xl border-2 border-crimson/60 motion-safe:animate-pulse" />
-                        <span className="absolute -left-3 -top-3 flex h-7 w-7 items-center justify-center rounded-full bg-crimson text-xs font-bold text-white shadow">
+                        <span className="absolute -left-3 -top-3 flex h-7 w-7 items-center justify-center rounded-full bg-crimson-btn text-xs font-bold text-white shadow">
                           {i + 1}
                         </span>
                       </div>
@@ -315,7 +315,7 @@ export function HelpWalkthrough({
                   type="button"
                   onClick={next}
                   data-help-next="1"
-                  className="ml-auto min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white transition-colors hover:bg-crimson-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                  className="ml-auto min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white transition-colors hover:bg-crimson-btn-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
                 >
                   {i === total - 1 ? labels.finish : `${labels.next} →`}
                 </button>

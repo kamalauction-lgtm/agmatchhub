@@ -168,7 +168,7 @@ export default async function VerificationPage({
               </label>
             </div>
 
-            <button type="submit" className="w-full rounded-lg bg-crimson px-4 py-2.5 font-semibold text-white hover:bg-crimson-strong">
+            <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 font-semibold text-white hover:bg-crimson-btn-strong">
               {t("submit")}
             </button>
           </form>

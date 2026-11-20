@@ -138,7 +138,7 @@ export function PresentationBoard({
             </a>
           )}
           <a href={`/p/${token}/compare/export?ids=${idsParam}`}
-            className="rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong">
+            className="rounded-lg bg-crimson-btn px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
             ⬇ {labels.download} ({chosen.length})
           </a>
         </div>

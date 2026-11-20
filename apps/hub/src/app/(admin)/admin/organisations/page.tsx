@@ -87,7 +87,7 @@ export default async function OrganisationsPage({ searchParams }: { searchParams
               <option value="" disabled>{t("agencyForm.chooseCountry")}</option>
               {(countryOptions ?? []).map((c) => <option key={c.code} value={c.code}>{c.name} ({c.code})</option>)}
             </select></label>
-          <div className="sm:col-span-3"><button type="submit" className="min-h-10 cursor-pointer rounded-lg bg-crimson px-4 text-sm font-semibold text-white hover:bg-crimson-strong">{t("agencyForm.createButton")}</button></div>
+          <div className="sm:col-span-3"><button type="submit" className="min-h-10 cursor-pointer rounded-lg bg-crimson-btn px-4 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{t("agencyForm.createButton")}</button></div>
         </form>
       </details>
 

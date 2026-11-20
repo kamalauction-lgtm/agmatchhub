@@ -5,7 +5,7 @@ import { proposeCommission, acceptCommission } from "@/app/(agent)/collab/commis
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
 const btnPri =
-  "rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong";
+  "rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong";
 
 /**
  * Commission & co-broke agreement panel (§72–78, §84). Agent-to-agent only —

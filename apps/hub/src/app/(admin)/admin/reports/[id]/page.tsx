@@ -118,7 +118,7 @@ export default async function ReportDetailPage({
               <span className="mb-1 block font-medium">{t("internalNotes")}</span>
               <textarea name="internalNotes" rows={3} defaultValue={adminRow?.internal_notes ?? ""} className={inputCls} />
             </label>
-            <button type="submit" className="w-full rounded-lg bg-crimson px-4 py-2.5 font-semibold text-white hover:bg-crimson-strong">
+            <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 font-semibold text-white hover:bg-crimson-btn-strong">
               {t("save")}
             </button>
           </form>

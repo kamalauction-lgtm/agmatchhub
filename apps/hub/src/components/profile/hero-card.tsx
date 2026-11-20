@@ -91,7 +91,7 @@ export async function HeroCard({ userId, notice }: { userId: string; notice?: st
         ) : (
           <>
             <form action={linkHero}>
-              <button type="submit" className={`${btn} bg-crimson text-white hover:bg-crimson-strong`}>
+              <button type="submit" className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong`}>
                 {linked ? t("recheck") : t("link")}
               </button>
             </form>

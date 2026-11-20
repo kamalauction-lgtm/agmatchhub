@@ -135,7 +135,7 @@ export default async function RequestDetailPage({
             </h2>
             {submissions!.some((s) => ["shortlisted", "suitable", "approved_for_client"].includes(s.status)) && (
               <Link href={`/requests/${id}/presentation`}
-                className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">
+                className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
                 {presentation ? tp("manageCta") : tp("createCta")}
               </Link>
             )}

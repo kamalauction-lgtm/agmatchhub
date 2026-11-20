@@ -80,7 +80,7 @@ export default async function ClientPresentationPage({
                   className={`${inputCls} text-center font-mono text-lg tracking-widest uppercase`} />
               </label>
               <button type="submit"
-                className="w-full rounded-lg bg-crimson px-4 py-2.5 font-semibold text-white hover:bg-crimson-strong">
+                className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 font-semibold text-white hover:bg-crimson-btn-strong">
                 {t("unlock")}
               </button>
             </form>
@@ -324,7 +324,7 @@ function QuickAction({
       <button
         className={`rounded-full px-4 py-1.5 text-xs font-semibold ${
           accent
-            ? "bg-crimson text-white hover:bg-crimson-strong"
+            ? "bg-crimson-btn text-white hover:bg-crimson-btn-strong"
             : "border border-line hover:border-crimson hover:text-crimson"
         }`}
       >

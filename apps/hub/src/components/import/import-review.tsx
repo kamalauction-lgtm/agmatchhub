@@ -112,7 +112,7 @@ export function ImportReview({
             type="button"
             onClick={processAll}
             disabled={running}
-            className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-60"
+            className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-60"
           >
             {running ? `${labels.processing} ${done}/${pending.length}` : `${labels.processAll} (${pending.length})`}
           </button>
@@ -274,7 +274,7 @@ export function ImportReview({
                       <textarea name="description" rows={4} maxLength={4000} defaultValue={String(value(i, "description") ?? "")} className={input} />
                     </label>
                   </div>
-                  <button type="submit" className="mt-3 rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong">
+                  <button type="submit" className="mt-3 rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
                     {labels.save}
                   </button>
                 </form>
@@ -306,7 +306,7 @@ export function ImportReview({
           <button
             type="submit"
             disabled={!accepted}
-            className="mt-4 w-full rounded-lg bg-crimson px-5 py-3 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50 sm:w-auto"
+            className="mt-4 w-full rounded-lg bg-crimson-btn px-5 py-3 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50 sm:w-auto"
           >
             {labels.importReady} ({readyCount})
           </button>

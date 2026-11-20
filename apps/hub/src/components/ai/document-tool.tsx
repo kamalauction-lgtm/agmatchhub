@@ -44,7 +44,7 @@ export function DocumentTool({ labels }: { labels: DocumentLabels }) {
         </label>
         <p className="text-center text-xs text-muted">{labels.orPaste}</p>
         <textarea value={text} onChange={(e) => setText(e.target.value)} rows={8} placeholder={labels.pasteHint} className="w-full rounded-lg border border-line bg-background px-3 py-2 text-sm" maxLength={60000} />
-        <button type="button" onClick={run} disabled={busy || (!file && text.trim().length < 20)} className="w-full rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">
+        <button type="button" onClick={run} disabled={busy || (!file && text.trim().length < 20)} className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">
           {busy ? labels.working : `✦ ${labels.run}`}
         </button>
         <p className="text-[11px] text-muted">{labels.transient}</p>

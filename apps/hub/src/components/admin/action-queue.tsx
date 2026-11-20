@@ -31,8 +31,8 @@ export async function ActionQueue() {
       <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${QUEUE_WEIGHT[i.kind] >= 5 ? "bg-danger/15 text-danger" : QUEUE_WEIGHT[i.kind] >= 3 ? "bg-warning/15 text-warning" : "bg-surface text-muted"}`}>
         {t(`kind.${i.kind}`)}
       </span>
-      <Link href={i.href} className="-my-2 min-w-0 flex-1 truncate py-2 font-medium hover:underline">{i.title || "—"}</Link>
-      <span className="text-xs text-muted">{age(i.since)}</span>
+      <Link href={i.href} className="order-last -my-2 min-w-0 flex-1 basis-full break-words py-2 font-medium hover:underline sm:order-none sm:basis-0 sm:truncate">{i.title || "—"}</Link>
+      <span className="ml-auto text-xs text-muted sm:ml-0">{age(i.since)}</span>
     </li>
   );
 

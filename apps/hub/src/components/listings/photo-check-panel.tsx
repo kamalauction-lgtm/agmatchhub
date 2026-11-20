@@ -41,7 +41,7 @@ export function PhotoCheckPanel({ listingId, initial, action, companion, labels 
           <div><h2 className="text-sm font-semibold">{labels.title}</h2><p className="text-xs text-muted">{labels.hint}</p></div>
         </div>
         {r.count > 0 && (
-          <button type="button" onClick={run} disabled={busy} className="rounded-lg bg-crimson px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">{busy ? labels.working : `✦ ${labels.check}`}</button>
+          <button type="button" onClick={run} disabled={busy} className="rounded-lg bg-crimson-btn px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">{busy ? labels.working : `✦ ${labels.check}`}</button>
         )}
       </header>
       <div className="px-5 py-3">

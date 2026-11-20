@@ -59,7 +59,7 @@ export default async function StudioAccountsPage({
       {configured ? (
         <a
           href="/api/social/oauth/start"
-          className="inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+          className="inline-block rounded-lg bg-crimson-btn px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
         >
           {t("connectCta")}
         </a>

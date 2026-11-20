@@ -54,7 +54,7 @@ export function FileUpload({ labels }: { labels: Record<string, string> }) {
       <button
         type="submit"
         disabled={busy || tooBig || !filename}
-        className="w-full rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50"
+        className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50"
       >
         {busy ? "…" : labels.cta}
       </button>

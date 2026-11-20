@@ -227,7 +227,7 @@ export default async function MyListingsPage({
           </Link>
           <Link
             href="/listings/new"
-            className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+            className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
           >
             {t("new")}
           </Link>
@@ -328,7 +328,7 @@ export default async function MyListingsPage({
                   {["draft", "rejected", "withdrawn"].includes(l.status) && (
                     <form action={submitForReview} data-submit-review={l.id}>
                       <input type="hidden" name="listingId" value={l.id} />
-                      <button type="submit" className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong">
+                      <button type="submit" className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
                         {t("statusActions.submit")}
                       </button>
                     </form>

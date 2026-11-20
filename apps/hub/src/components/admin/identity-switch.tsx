@@ -39,7 +39,7 @@ export function IdentitySwitch({
         className={`rounded-lg px-5 py-3 text-sm font-semibold ${
           isPublic
             ? "border border-line hover:border-danger hover:text-danger"
-            : "bg-crimson text-white hover:bg-crimson-strong"
+            : "bg-crimson-btn text-white hover:bg-crimson-btn-strong"
         }`}
       >
         {isPublic ? labels.hide : labels.activate}

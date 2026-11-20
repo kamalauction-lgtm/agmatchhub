@@ -107,7 +107,7 @@ export default async function AdminRequestDetail({
         <aside className="h-fit space-y-4">
           {canAddProperty && (
             <Link href={`/admin/requests/${id}/add-property`}
-              className="block rounded-lg bg-crimson px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-crimson-strong">
+              className="block rounded-lg bg-crimson-btn px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-crimson-btn-strong">
               + {t("addPropertyForAgent")}
             </Link>
           )}

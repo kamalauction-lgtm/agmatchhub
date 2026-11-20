@@ -21,7 +21,7 @@ const REPORT_CATEGORIES = [
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
 const btnPri =
-  "rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong";
+  "rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong";
 const btnSec =
   "rounded-lg border border-line px-4 py-2 text-sm font-semibold hover:border-crimson hover:text-crimson";
 
@@ -143,7 +143,7 @@ export async function CollabPanels({
             return (
               <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[80%] rounded-xl px-4 py-2.5 text-sm ${
-                  mine ? "bg-crimson text-white" : "bg-surface"
+                  mine ? "bg-crimson-btn text-white" : "bg-surface"
                 }`}>
                   {!mine && (
                     <p className="mb-0.5 text-xs font-semibold opacity-80">{sender?.display_name}</p>

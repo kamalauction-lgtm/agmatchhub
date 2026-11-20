@@ -9,7 +9,7 @@ import type { ButtonHTMLAttributes } from "react";
  */
 const VARIANTS = {
   primary:
-    "bg-crimson-strong text-white hover:opacity-90 disabled:opacity-50",
+    "bg-crimson-fill text-white hover:opacity-90 disabled:opacity-50",
   accent:
     "bg-accent text-white hover:opacity-90 disabled:opacity-50",
   secondary:

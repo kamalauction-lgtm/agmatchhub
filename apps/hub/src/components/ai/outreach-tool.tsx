@@ -55,7 +55,7 @@ export function OutreachTool({ action, labels }: { action: (input: unknown) => P
           <input value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} placeholder={labels.phoneHint} className={input} inputMode="tel" maxLength={20} />
         </label>
         <p className="text-[11px] text-muted">{labels.notStored}</p>
-        <button type="button" onClick={run} disabled={busy || f.property.trim().length < 5} className="w-full rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">
+        <button type="button" onClick={run} disabled={busy || f.property.trim().length < 5} className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">
           {busy ? labels.working : `✦ ${labels.run}`}
         </button>
         {err && <p className="text-xs text-danger">{labels.reasons.failed}</p>}

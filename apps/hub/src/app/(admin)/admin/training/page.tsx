@@ -72,7 +72,7 @@ export default async function AdminTrainingPage({
           </label>
           <button
             type="submit"
-            className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+            className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
           >
             {t("create")}
           </button>
@@ -160,7 +160,7 @@ export default async function AdminTrainingPage({
                         />
                         <button
                           type="submit"
-                          className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong"
+                          className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
                         >
                           {t("save")}
                         </button>

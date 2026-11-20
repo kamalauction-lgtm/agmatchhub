@@ -87,7 +87,7 @@ export function CoachTool({ mode, scenarios, objectionAction, practiceAction, he
               </label>
             </>
           )}
-          <button type="button" onClick={run} disabled={busy || (tab === "objection" ? text.trim().length < 3 : reply.trim().length < 3)} className="w-full rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">
+          <button type="button" onClick={run} disabled={busy || (tab === "objection" ? text.trim().length < 3 : reply.trim().length < 3)} className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">
             {busy ? labels.working : `✦ ${labels.run}`}
           </button>
           {err && <p className="text-xs text-danger">{labels.reasons.failed}</p>}

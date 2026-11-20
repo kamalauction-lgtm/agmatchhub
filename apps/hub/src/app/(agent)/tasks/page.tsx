@@ -179,7 +179,7 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
               ))}
             </select>
             <input type="hidden" name="leadId" value={lead?.id ?? ""} />
-            <button type="submit" className={`${btn} bg-crimson text-white hover:bg-crimson-strong sm:col-span-2`}>{t("add")}</button>
+            <button type="submit" className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong sm:col-span-2`}>{t("add")}</button>
           </form>
         </Panel>
       </div>
@@ -201,7 +201,7 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
               <option value="virtual">{t("virtual")}</option>
             </select>
             <input name="meetingPoint" placeholder={t("meetingPoint")} maxLength={200} className={input} />
-            <button type="submit" className={`${btn} bg-crimson text-white hover:bg-crimson-strong`}>{t("bookViewing")}</button>
+            <button type="submit" className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong`}>{t("bookViewing")}</button>
           </form>
         )}
         {viewings.length === 0 ? (

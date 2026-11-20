@@ -367,7 +367,7 @@ export default async function AgentDetailPage({
                     <span className="mb-1 block font-medium">{t("a360.suspendReason")}</span>
                     <textarea name="reason" required minLength={3} maxLength={2000} rows={2} className={inputCls} />
                   </label>
-                  <button type="submit" className="w-full rounded-lg bg-danger px-4 py-2.5 font-semibold text-white hover:opacity-90">{t("a360.ban")}</button>
+                  <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 font-semibold text-white hover:opacity-90">{t("a360.ban")}</button>
                 </form>
               </details>
             )}

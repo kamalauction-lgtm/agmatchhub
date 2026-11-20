@@ -268,7 +268,7 @@ export default async function AdminAddPropertyPage({
 
         <p className="rounded-lg bg-surface px-4 py-3 text-xs text-muted">{ta("declarationNote")}</p>
 
-        <button type="submit" className="w-full rounded-lg bg-crimson px-4 py-3 font-semibold text-white hover:bg-crimson-strong">
+        <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-3 font-semibold text-white hover:bg-crimson-btn-strong">
           {ta("submit")}
         </button>
       </form>

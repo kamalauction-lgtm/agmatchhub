@@ -31,7 +31,7 @@ export async function OnboardingGuide() {
           <CompanionBadge c={c} size="sm" />
           <div><h2 className="text-sm font-semibold">{t("title")}</h2><p className="text-xs text-muted">{t("progress", { done, total: steps.length })}</p></div>
         </div>
-        {next && <Link href={HREF[next.step] ?? "/dashboard"} className="rounded-lg bg-crimson px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-strong">{t("next")}: {t(`steps.${next.step}` as never)} →</Link>}
+        {next && <Link href={HREF[next.step] ?? "/dashboard"} className="rounded-lg bg-crimson-btn px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-btn-strong">{t("next")}: {t(`steps.${next.step}` as never)} →</Link>}
       </header>
       <ol className="grid gap-x-6 px-5 py-3 sm:grid-cols-2">
         {steps.map((s) => (

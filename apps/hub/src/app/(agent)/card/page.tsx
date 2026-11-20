@@ -81,7 +81,7 @@ export default async function MyCardPage() {
           <p className="text-sm text-muted">{t("notVerified")}</p>
           <Link
             href="/verification"
-            className="mt-4 inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+            className="mt-4 inline-block rounded-lg bg-crimson-btn px-5 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
           >
             {t("verifyCta")}
           </Link>

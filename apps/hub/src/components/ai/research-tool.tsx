@@ -57,7 +57,7 @@ export function ResearchTool({ action, countries, propertyTypes, regencies, mark
           <option value="">{labels.anyBedrooms}</option>
           {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{n}</option>)}
         </select>
-        <button type="button" onClick={run} disabled={busy || !f.propertyType} className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50 lg:col-span-5">
+        <button type="button" onClick={run} disabled={busy || !f.propertyType} className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50 lg:col-span-5">
           {busy ? labels.working : `✦ ${labels.run}`}
         </button>
       </div>

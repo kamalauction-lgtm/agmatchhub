@@ -70,7 +70,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
             </select>
             <input name="sourceNote" maxLength={300} placeholder={t("fields.sourceNote")} aria-label={t("fields.sourceNote")} className={`${field} sm:col-span-3`} />
             <textarea name="purposeNote" required minLength={3} maxLength={500} rows={2} placeholder={t("fields.purpose")} aria-label={t("fields.purpose")} className="w-full rounded-lg border border-line bg-background px-3 py-2 text-sm sm:col-span-3" />
-            <div className="sm:col-span-3"><button type="submit" className="min-h-10 cursor-pointer rounded-lg bg-crimson px-4 text-sm font-semibold text-white hover:bg-crimson-strong">{t("addButton")}</button></div>
+            <div className="sm:col-span-3"><button type="submit" className="min-h-10 cursor-pointer rounded-lg bg-crimson-btn px-4 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{t("addButton")}</button></div>
           </form>
         </details>
       )}

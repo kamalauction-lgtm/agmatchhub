@@ -35,7 +35,7 @@ export function BannerManager({
         <button
           type="button"
           onClick={() => setCreating(true)}
-          className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+          className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
         >
           {labels.create}
         </button>

@@ -152,7 +152,7 @@ export default async function EditListingPage({
                   <input type="hidden" name="listingId" value={listing.id} />
                   <input type="hidden" name="requestId" value={r.id} />
                   <input name="answer" required maxLength={2000} placeholder={tc("placeholder")} className="min-w-0 flex-1 rounded-lg border border-line bg-background px-3 py-2 text-sm" />
-                  <button className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">{r.answer ? tc("update") : tc("send")}</button>
+                  <button className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{r.answer ? tc("update") : tc("send")}</button>
                 </form>
                 {r.kind === "photo_original" && (
                   // P1-b-2 (owner decision): the photo goes private, through the processor, and is published by moderation.
@@ -273,7 +273,7 @@ export default async function EditListingPage({
         <div className="flex gap-3">
           <button
             type="submit"
-            className="rounded-lg bg-crimson px-5 py-3 text-sm font-semibold text-white hover:bg-crimson-strong"
+            className="rounded-lg bg-crimson-btn px-5 py-3 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
           >
             {t("edit.save")}
           </button>

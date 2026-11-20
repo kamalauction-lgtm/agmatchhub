@@ -57,7 +57,7 @@ export function GalleryEditor({
                   <img src={it.thumbUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
                 ) : null}
                 {it.isCover && (
-                  <span className="absolute left-1 top-1 rounded bg-crimson px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                  <span className="absolute left-1 top-1 rounded bg-crimson-btn px-1.5 py-0.5 text-[10px] font-semibold text-white">
                     {labels.cover}
                   </span>
                 )}
