@@ -90,7 +90,7 @@ export default async function RequestLinkPage({
               placeholder="········"
               className={inputCls}
             />
-            <button type="submit" className="w-full rounded-lg bg-crimson px-4 py-2.5 font-semibold text-white hover:bg-crimson-strong">
+            <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 font-semibold text-white hover:bg-crimson-btn-strong">
               {t("unlock")}
             </button>
           </form>
@@ -172,7 +172,7 @@ export default async function RequestLinkPage({
             <>
               <p className="mb-3">{t("loginToSubmit")}</p>
               <div className="flex gap-3">
-                <Link href={`/login?next=/r/${token}`} className="rounded-lg bg-crimson px-4 py-2 font-semibold text-white hover:bg-crimson-strong">
+                <Link href={`/login?next=/r/${token}`} className="rounded-lg bg-crimson-btn px-4 py-2 font-semibold text-white hover:bg-crimson-btn-strong">
                   {t("signIn")}
                 </Link>
                 <Link href="/register" className="rounded-lg border border-line px-4 py-2 font-semibold hover:border-crimson hover:text-crimson">
@@ -190,7 +190,7 @@ export default async function RequestLinkPage({
               <p className="mb-3 font-medium">{t("submitCta")}</p>
               <Link
                 href={`/r/${token}/submit`}
-                className="inline-block rounded-lg bg-crimson px-5 py-2.5 font-semibold text-white hover:bg-crimson-strong"
+                className="inline-block rounded-lg bg-crimson-btn px-5 py-2.5 font-semibold text-white hover:bg-crimson-btn-strong"
               >
                 {t("submitButton")}
               </Link>

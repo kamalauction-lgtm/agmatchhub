@@ -145,7 +145,7 @@ export default async function OnboardAgentPage({ searchParams }: { searchParams:
           </select>
         </label>
         <div className="flex items-end sm:col-span-1">
-          <button type="submit" className="min-h-11 w-full cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong">
+          <button type="submit" className="min-h-11 w-full cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
             {t("submit")}
           </button>
         </div>

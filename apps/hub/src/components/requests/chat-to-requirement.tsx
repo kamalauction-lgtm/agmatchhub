@@ -61,7 +61,7 @@ export function ChatToRequirement({ action, companion, labels }: {
           <p className="text-xs text-muted">{labels.hint}</p>
           <textarea value={chat} onChange={(e) => setChat(e.target.value)} rows={5} placeholder={labels.placeholder} maxLength={8000} className="mt-3 w-full rounded-lg border border-line bg-background px-3 py-2 text-sm" />
           <div className="mt-2 flex flex-wrap items-center gap-3">
-            <button type="button" onClick={run} disabled={busy || chat.trim().length < 10} className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">{busy ? labels.working : `✦ ${labels.run}`}</button>
+            <button type="button" onClick={run} disabled={busy || chat.trim().length < 10} className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">{busy ? labels.working : `✦ ${labels.run}`}</button>
             {r && <span className="text-xs text-success">{labels.filled.replace("{count}", String(filled))}</span>}
             {err && <span className="text-xs text-danger">{labels.reasons.failed}</span>}
           </div>

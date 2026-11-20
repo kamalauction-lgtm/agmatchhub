@@ -47,7 +47,7 @@ export function WeekPlanner({ planAction, scheduleAction, hasAccounts, defaultWe
         <label className="text-xs font-medium text-muted">{labels.weekStart}
           <input type="date" value={weekStart} onChange={(e) => setWeekStart(e.target.value)} className="mt-1 block rounded-lg border border-line bg-background px-3 py-2 text-sm" />
         </label>
-        <button type="button" onClick={run} disabled={busy} className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">{busy ? labels.working : `✦ ${labels.plan}`}</button>
+        <button type="button" onClick={run} disabled={busy} className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">{busy ? labels.working : `✦ ${labels.plan}`}</button>
         {!anyAccount && <p className="text-xs text-muted">{labels.noAccounts} <Link href="/studio/accounts" className="font-semibold text-crimson hover:underline">{labels.connect}</Link></p>}
         {err && <p className="text-xs text-danger">{labels.reasons.failed}</p>}
       </div>
@@ -82,7 +82,7 @@ export function WeekPlanner({ planAction, scheduleAction, hasAccounts, defaultWe
           {anyAccount && (
             <form action={scheduleAction} className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-surface p-4">
               <input type="hidden" name="slots" value={payload} />
-              <button type="submit" disabled={!kept.length} className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">{labels.scheduleAll.replace("{count}", String(kept.length))}</button>
+              <button type="submit" disabled={!kept.length} className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">{labels.scheduleAll.replace("{count}", String(kept.length))}</button>
               <p className="text-xs text-muted">{labels.scheduledHint}</p>
             </form>
           )}

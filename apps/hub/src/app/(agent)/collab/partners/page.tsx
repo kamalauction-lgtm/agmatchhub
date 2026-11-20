@@ -55,7 +55,7 @@ export default async function PartnersPage() {
               )}
               <p className="mt-3 text-xs text-muted">{t("listings", { count: a.published_listing_count })} · {t("poolOffers", { count: a.pool_offers })}</p>
               <div className="mt-3 flex gap-2">
-                {a.public_slug && <Link href={`/c/${a.public_slug}`} className="rounded-lg bg-crimson px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-strong">{t("viewCard")}</Link>}
+                {a.public_slug && <Link href={`/c/${a.public_slug}`} className="rounded-lg bg-crimson-btn px-3 py-1.5 text-xs font-semibold text-white hover:bg-crimson-btn-strong">{t("viewCard")}</Link>}
                 {a.pool_offers > 0 && <Link href="/collab/pool" className="rounded-lg border border-line px-3 py-1.5 text-xs font-semibold hover:bg-surface">{t("seePool")}</Link>}
               </div>
             </article>

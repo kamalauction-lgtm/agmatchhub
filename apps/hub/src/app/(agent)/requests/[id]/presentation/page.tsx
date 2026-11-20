@@ -152,7 +152,7 @@ export default async function PresentationBuilderPage({
         </section>
 
         <button type="submit"
-          className="w-full rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong">
+          className="w-full rounded-lg bg-crimson-btn px-5 py-3 font-semibold text-white hover:bg-crimson-btn-strong">
           {isEdit ? t("update") : t("create")}
         </button>
       </form>

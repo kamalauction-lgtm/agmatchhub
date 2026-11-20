@@ -343,7 +343,7 @@ export default async function SubmitPropertyPage({
             </label>
           </section>
 
-          <button type="submit" className="w-full rounded-lg bg-crimson px-4 py-3 font-semibold text-white hover:bg-crimson-strong">
+          <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-3 font-semibold text-white hover:bg-crimson-btn-strong">
             {t("submitButton")}
           </button>
         </form>

@@ -183,7 +183,7 @@ export function ReplyPanel({
               <form action={sendWhatsappAction}>
                 <input type="hidden" name="leadId" value={leadId} />
                 <input type="hidden" name="body" value={text} />
-                <button type="submit" disabled={!text.trim()} className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-50`}>
+                <button type="submit" disabled={!text.trim()} className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong disabled:opacity-50`}>
                   {labels.platform.send}{platform.mode === "test" ? ` · ${labels.platform.testMode}` : ""}
                 </button>
               </form>
@@ -198,7 +198,7 @@ export function ReplyPanel({
                 <input type="hidden" name="leadId" value={leadId} />
                 <input type="hidden" name="subject" value={subject} />
                 <input type="hidden" name="body" value={text} />
-                <button type="submit" disabled={!text.trim() || !subject.trim()} className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-50`}>
+                <button type="submit" disabled={!text.trim() || !subject.trim()} className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong disabled:opacity-50`}>
                   {labels.sendEmail}
                 </button>
               </form>
@@ -231,7 +231,7 @@ export function ReplyPanel({
                       {Array.from({ length: tpl.variables }, (_, i) => (
                         <input key={i} name={`v${i + 1}`} required maxLength={200} placeholder={labels.platform.variable.replace("{n}", String(i + 1))} className="w-full rounded-lg border border-line bg-background px-2 py-1.5 text-xs" />
                       ))}
-                      <button type="submit" className={`${btn} bg-crimson text-white hover:bg-crimson-strong`}>
+                      <button type="submit" className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong`}>
                         {labels.platform.sendTemplate}{platform.mode === "test" ? ` · ${labels.platform.testMode}` : ""}
                       </button>
                     </>

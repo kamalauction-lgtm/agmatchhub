@@ -222,7 +222,7 @@ export function AvatarUpload({
                   onClick={() => { setMode(m); recrop(m, nudge); }}
                   aria-pressed={mode === m}
                   className={`min-h-9 flex-1 cursor-pointer rounded-md px-3 font-semibold transition-colors duration-200 ${
-                    mode === m ? "bg-crimson text-white" : "text-muted hover:text-foreground"
+                    mode === m ? "bg-crimson-btn text-white" : "text-muted hover:text-foreground"
                   }`}
                 >
                   {m === "head" ? labels.modeHead : labels.modeFull}

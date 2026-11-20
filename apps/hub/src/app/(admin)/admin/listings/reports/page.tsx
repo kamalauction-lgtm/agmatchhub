@@ -83,7 +83,7 @@ export default async function ListingReportsPage({ searchParams }: { searchParam
                       <input type="hidden" name="reportId" value={r.id} />
                       <label className="sr-only" htmlFor={`note-${r.id}`}>{t("note")}</label>
                       <input id={`note-${r.id}`} name="note" maxLength={1000} placeholder={t("note")} className="min-h-10 min-w-0 flex-1 rounded-lg border border-line bg-background px-3 text-sm" />
-                      <button type="submit" name="outcome" value="actioned" className="min-h-10 cursor-pointer rounded-lg bg-crimson px-3 text-sm font-semibold text-white hover:bg-crimson-strong">{t("actioned")}</button>
+                      <button type="submit" name="outcome" value="actioned" className="min-h-10 cursor-pointer rounded-lg bg-crimson-btn px-3 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{t("actioned")}</button>
                       <button type="submit" name="outcome" value="dismissed" className="min-h-10 cursor-pointer rounded-lg border border-line px-3 text-sm font-medium hover:border-crimson hover:text-crimson">{t("dismiss")}</button>
                     </form>
                   </li>

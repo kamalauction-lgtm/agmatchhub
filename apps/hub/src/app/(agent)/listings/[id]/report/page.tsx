@@ -56,7 +56,7 @@ export default async function OwnerReportPage({ params, searchParams }: { params
           <input name="owner" defaultValue={owner ?? ""} placeholder={t("ownerName")} maxLength={80} className="rounded-lg border border-line bg-background px-3 py-1.5 text-xs" />
           <button type="submit" className="rounded-lg border border-line px-3 py-1.5 text-xs font-semibold hover:bg-surface">{t("apply")}</button>
         </form>
-        <Link href={q({ ai: "1" })} className="ml-auto rounded-lg bg-crimson px-4 py-2 text-xs font-semibold text-white hover:bg-crimson-strong">✦ {sp.ai ? t("writeAgain") : t("writeAi")}</Link>
+        <Link href={q({ ai: "1" })} className="ml-auto rounded-lg bg-crimson-btn px-4 py-2 text-xs font-semibold text-white hover:bg-crimson-btn-strong">✦ {sp.ai ? t("writeAgain") : t("writeAi")}</Link>
       </div>
 
       <div className="grid gap-5 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_20rem]">

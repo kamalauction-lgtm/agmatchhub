@@ -116,7 +116,7 @@ export function CardView({
         ) : (
           <span
             aria-hidden
-            className="mx-auto grid h-24 w-24 place-items-center rounded-full border-4 border-surface bg-crimson text-3xl font-bold text-white shadow-sm"
+            className="mx-auto grid h-24 w-24 place-items-center rounded-full border-4 border-surface bg-crimson-btn text-3xl font-bold text-white shadow-sm"
           >
             {initialsOf(card.display_name)}
           </span>

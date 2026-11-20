@@ -264,7 +264,7 @@ export function StudioWorkspace({
           type="button"
           onClick={writeWithAi}
           disabled={ai.busy}
-          className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-60`}
+          className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong disabled:opacity-60`}
         >
           {ai.busy ? labels.aiWorking : `✦ ${labels.aiCta}`}
         </button>
@@ -306,7 +306,7 @@ export function StudioWorkspace({
         {tab === "video" && (
           <div className="mt-3 space-y-3">
             <div className="flex flex-wrap items-center gap-3">
-              <button type="button" onClick={writeVideo} disabled={videoBusy} className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-60`}>
+              <button type="button" onClick={writeVideo} disabled={videoBusy} className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong disabled:opacity-60`}>
                 {videoBusy ? labels.videoWorking : `✦ ${labels.videoCta}`}
               </button>
               {video && (
@@ -367,7 +367,7 @@ export function StudioWorkspace({
               href={`/studio/${listingId}/brochure`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+              className="inline-block rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
             >
               {labels.openBrochure}
             </a>
@@ -550,7 +550,7 @@ export function StudioWorkspace({
                   className={`mt-3 ${btn} ${
                     !accountId || !when || igWithoutImage
                       ? "cursor-not-allowed border border-line text-muted"
-                      : "bg-crimson text-white hover:bg-crimson-strong"
+                      : "bg-crimson-btn text-white hover:bg-crimson-btn-strong"
                   }`}
                 >
                   {labels.scheduleCta}

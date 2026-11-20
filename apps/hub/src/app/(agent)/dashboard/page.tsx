@@ -249,7 +249,7 @@ export default async function DashboardPage({
             <p className="mt-2 text-sm leading-6 text-muted-strong">{t("statusNote")}</p>
             <Link
               href="/verification"
-              className="mt-4 inline-block rounded-lg bg-crimson px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-crimson-strong"
+              className="mt-4 inline-block rounded-lg bg-crimson-btn px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-crimson-btn-strong"
             >
               {t("startVerification")}
             </Link>
@@ -414,7 +414,7 @@ export default async function DashboardPage({
                 {plan.canUpgrade && (
                   <Link
                     href="/verification"
-                    className="mt-4 block rounded-lg bg-crimson px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors duration-150 hover:bg-crimson-strong"
+                    className="mt-4 block rounded-lg bg-crimson-btn px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors duration-150 hover:bg-crimson-btn-strong"
                   >
                     {tp("upgradeCta")}
                   </Link>
@@ -662,7 +662,7 @@ function ModuleCard({
       <div className="flex items-start justify-between gap-2">
         <span aria-hidden className="text-2xl text-blue">{/^[a-z-]+$/.test(icon) ? <Icon name={icon} size={26} /> : icon}</span>
         {badge ? (
-          <span className="rounded-full bg-crimson px-2 py-0.5 text-[11px] font-bold text-white">
+          <span className="rounded-full bg-crimson-btn px-2 py-0.5 text-[11px] font-bold text-white">
             {badge}
           </span>
         ) : meta ? (

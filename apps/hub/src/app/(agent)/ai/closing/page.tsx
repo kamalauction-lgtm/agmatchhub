@@ -63,7 +63,7 @@ export default async function ClosingPage({ searchParams }: { searchParams: Prom
                 return <option key={l.id} value={l.id}>{l.human_readable_id} · {ct?.full_name ?? ""}</option>;
               })}
             </select>
-            <button type="submit" className="w-full rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">{t("create")}</button>
+            <button type="submit" className="w-full rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{t("create")}</button>
           </form>
 
           <div className="rounded-xl border border-line bg-card">

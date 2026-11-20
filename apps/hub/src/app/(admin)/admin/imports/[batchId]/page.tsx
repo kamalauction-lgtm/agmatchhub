@@ -140,7 +140,7 @@ export default async function AdminImportBatchPage({
             <form action={commitBatchForAgent} className="flex flex-wrap items-center gap-3">
               <input type="hidden" name="batchId" value={batch.id} />
               <span className="text-muted">{t("onBehalf.allowed", { method: onBehalfConsent?.method ? t(`onBehalf.methods.${onBehalfConsent.method}` as never) : "—", date: onBehalfConsent?.consented_at ? String(onBehalfConsent.consented_at).slice(0, 10) : "—" })}</span>
-              <button type="submit" disabled={ready === 0} className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:cursor-not-allowed disabled:opacity-50">
+              <button type="submit" disabled={ready === 0} className="min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:cursor-not-allowed disabled:opacity-50">
                 {t("onBehalf.cta", { n: ready })}
               </button>
             </form>
@@ -156,7 +156,7 @@ export default async function AdminImportBatchPage({
           <button
             type="submit"
             disabled={ready === 0}
-            className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:cursor-not-allowed disabled:opacity-50"
           >
             {batch.handed_over_at ? t("handOverAgain", { n: ready }) : t("handOver", { n: ready })}
           </button>
@@ -187,7 +187,7 @@ export default async function AdminImportBatchPage({
                       <option value="sale">{t("review.sale")}</option>
                       <option value="rent">{t("review.rent")}</option>
                     </select>
-                    <button type="submit" formAction={bulkItemFields} className="min-h-10 cursor-pointer rounded-lg bg-crimson px-3 text-sm font-semibold text-white hover:bg-crimson-strong">{t("review.applySelected")}</button>
+                    <button type="submit" formAction={bulkItemFields} className="min-h-10 cursor-pointer rounded-lg bg-crimson-btn px-3 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{t("review.applySelected")}</button>
                   </span>
                 )}
               </>

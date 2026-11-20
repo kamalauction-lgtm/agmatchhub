@@ -96,7 +96,7 @@ export function TaskSuggestions({
             <input type="hidden" name="source" value="task_extract" />
             <input type="hidden" name="leadId" value={leadId ?? ""} />
             <input type="hidden" name="tasks" value={JSON.stringify(selected.map((t) => ({ title: t.title, kind: t.kind, dueAt: t.dueAt })))} />
-            <button type="submit" disabled={selected.length === 0} className={`${btn} bg-crimson text-white hover:bg-crimson-strong disabled:opacity-50`}>
+            <button type="submit" disabled={selected.length === 0} className={`${btn} bg-crimson-btn text-white hover:bg-crimson-btn-strong disabled:opacity-50`}>
               {labels.addSelected} ({selected.length})
             </button>
           </form>

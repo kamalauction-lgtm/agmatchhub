@@ -312,7 +312,7 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
       onClick={() => setPreset(key)}
       aria-pressed={preset === key}
       className={`rounded-lg px-3 py-2 text-sm font-semibold ${
-        preset === key ? "bg-crimson text-white" : "border border-line hover:bg-surface"
+        preset === key ? "bg-crimson-btn text-white" : "border border-line hover:bg-surface"
       }`}
     >
       {label}
@@ -356,7 +356,7 @@ export function PosterCanvas({ data, labels }: { data: PosterData; labels: Poste
         <button
           type="button"
           onClick={download}
-          className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+          className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
         >
           {labels.download}
         </button>

@@ -28,7 +28,7 @@ export function ImportStarter({
       type="button"
       onClick={() => setMode(id)}
       className={`flex-1 rounded-lg px-3 py-2 text-sm font-semibold transition ${
-        mode === id ? "bg-crimson text-white" : "border border-line hover:border-crimson hover:text-crimson"
+        mode === id ? "bg-crimson-btn text-white" : "border border-line hover:border-crimson hover:text-crimson"
       }`}
     >
       {text}
@@ -87,7 +87,7 @@ export function ImportStarter({
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-lg bg-crimson px-5 py-3 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-60 sm:w-auto"
+        className="w-full rounded-lg bg-crimson-btn px-5 py-3 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-60 sm:w-auto"
       >
         {busy ? "…" : mode === "urls" ? labels.urlsCta : labels.profileCta}
       </button>

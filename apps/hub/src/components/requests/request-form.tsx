@@ -214,7 +214,7 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
           // Live requirement (§9 edit-anytime): plain save, status unchanged,
           // every change lands in the edit log.
           <button name="intent" value="draft" type="submit"
-            className="flex-1 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong sm:flex-none">
+            className="flex-1 rounded-lg bg-crimson-btn px-5 py-3 font-semibold text-white hover:bg-crimson-btn-strong sm:flex-none">
             {t("saveChanges")}
           </button>
         ) : (
@@ -224,7 +224,7 @@ export async function RequestForm({ existing }: { existing?: RequestRow }) {
               {t("saveDraft")}
             </button>
             <button name="intent" value="submit" type="submit"
-              className="flex-1 rounded-lg bg-crimson px-5 py-3 font-semibold text-white hover:bg-crimson-strong sm:flex-none">
+              className="flex-1 rounded-lg bg-crimson-btn px-5 py-3 font-semibold text-white hover:bg-crimson-btn-strong sm:flex-none">
               {t("submitForApproval")}
             </button>
           </>

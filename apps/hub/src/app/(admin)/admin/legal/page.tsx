@@ -93,7 +93,7 @@ export default async function LegalContentPage({
                     <textarea name="body" rows={8} required minLength={50} className={inputCls} />
                   </label>
                   <p className="text-xs text-muted">{t("publishHint")}</p>
-                  <button type="submit" className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong">
+                  <button type="submit" className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
                     {t("publish")}
                   </button>
                 </form>

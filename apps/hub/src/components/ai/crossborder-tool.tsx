@@ -51,7 +51,7 @@ export function CrossborderTool({ action, countries, listings, initialListingCou
             {mine.map((l) => <option key={l.id} value={l.id}>{l.title}</option>)}
           </select>
         </label>
-        <button type="button" onClick={run} disabled={busy} className="self-end rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50">
+        <button type="button" onClick={run} disabled={busy} className="self-end rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50">
           {busy ? labels.working : `✦ ${labels.run}`}
         </button>
       </div>

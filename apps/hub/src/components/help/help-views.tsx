@@ -13,7 +13,7 @@ function LangSwitch({ lang, href, label }: { lang: HelpLang; href: string; label
           key={l}
           href={`${href}?lang=${l}`}
           aria-current={l === lang ? "true" : undefined}
-          className={`min-h-8 rounded-full px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-crimson ${l === lang ? "bg-crimson text-white" : "text-muted-strong hover:text-foreground"}`}
+          className={`min-h-8 rounded-full px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-crimson ${l === lang ? "bg-crimson-btn text-white" : "text-muted-strong hover:text-foreground"}`}
         >
           {l === "en" ? "English" : "Indonesia"}
         </Link>
@@ -66,7 +66,7 @@ export function HelpIndex({
                   {cover && (
                     <Image src={cover} alt="" fill sizes="(min-width: 1280px) 30vw, (min-width: 640px) 45vw, 100vw" className="object-cover object-left-top" />
                   )}
-                  <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-crimson text-sm font-bold text-white shadow">
+                  <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-crimson-btn text-sm font-bold text-white shadow">
                     {i + 1}
                   </span>
                 </div>
@@ -148,7 +148,7 @@ export function HelpHint({ href, step, label }: { href: string; step?: number; l
       data-help-hint="1"
       className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-line bg-card px-3 text-xs font-semibold text-muted-strong transition-colors hover:border-crimson hover:text-crimson focus-visible:outline-2 focus-visible:outline-crimson"
     >
-      <span aria-hidden className="flex h-4 w-4 items-center justify-center rounded-full bg-crimson text-[10px] font-bold text-white">?</span>
+      <span aria-hidden className="flex h-4 w-4 items-center justify-center rounded-full bg-crimson-btn text-[10px] font-bold text-white">?</span>
       {label}
     </Link>
   );

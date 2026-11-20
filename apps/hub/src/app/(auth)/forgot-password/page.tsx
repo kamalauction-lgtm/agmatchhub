@@ -30,7 +30,7 @@ export default async function ForgotPasswordPage({
           </label>
           <button
             type="submit"
-            className="w-full rounded-lg bg-crimson px-4 py-2.5 font-semibold text-white transition-colors hover:bg-crimson-strong"
+            className="w-full rounded-lg bg-crimson-btn px-4 py-2.5 font-semibold text-white transition-colors hover:bg-crimson-btn-strong"
           >
             {t("sendReset")}
           </button>

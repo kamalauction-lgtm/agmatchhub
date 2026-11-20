@@ -210,7 +210,7 @@ export default async function ListingModerationPage({
               {tab === "pending_review" && (
                 <button type="submit" name="decision" value="approve" className="rounded-lg bg-success-fill px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("bulk.approve")}</button>
               )}
-              <button type="submit" name="decision" value="reject" className="rounded-lg bg-danger px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("bulk.reject")}</button>
+              <button type="submit" name="decision" value="reject" className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("bulk.reject")}</button>
             </div>
           </div>
         </form>
@@ -378,7 +378,7 @@ export default async function ListingModerationPage({
                         {tab === "pending_review" && (
                           <button type="submit" name="decision" value="approve" className="rounded-lg bg-success-fill px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("approve")}</button>
                         )}
-                        <button type="submit" name="decision" value="reject" className="rounded-lg bg-danger px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">
+                        <button type="submit" name="decision" value="reject" className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">
                           {tab === "published" ? t("takeDown") : t("reject")}
                         </button>
                       </div>

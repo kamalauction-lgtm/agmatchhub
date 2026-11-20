@@ -29,7 +29,7 @@ export function ProfileAvatar({
       <span
         aria-hidden
         style={{ width: size, height: size, fontSize: Math.round(size * 0.34) }}
-        className={`grid place-items-center rounded-full bg-crimson font-bold text-white ${className}`}
+        className={`grid place-items-center rounded-full bg-crimson-btn font-bold text-white ${className}`}
       >
         {initial}
       </span>

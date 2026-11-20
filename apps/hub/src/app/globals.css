@@ -48,6 +48,10 @@
   --crimson-fill: #c62828;
   /* Green that carries white text at 5.0:1 in both modes. `--success` turns
      bright in dark mode, where white on it is 1.7:1. */
+  /* Fill for red buttons that carry white text. Light mode keeps the brand red;
+     dark mode swaps the lifted #f05a56 (white 3.4:1) for #c62828 (5.6:1). */
+  --crimson-btn: var(--crimson);
+  --crimson-btn-strong: var(--crimson-strong);
   --success-fill: #15803d;
   --blue-fill: #2563eb;      /* white text 5.2:1 in both modes */
   --navy: #0d182a;
@@ -122,6 +126,8 @@
     --crimson: #f05a56;
     --crimson-strong: #e53935;
     --crimson-soft: #2a1618;
+    --crimson-btn: #c62828;
+    --crimson-btn-strong: #b71c1c;
     --navy: #f1f5f9;
     --navy-soft: #1c2536;
 
@@ -165,6 +171,8 @@
   --color-crimson-strong: var(--crimson-strong);
   --color-crimson-soft: var(--crimson-soft);
   --color-crimson-fill: var(--crimson-fill);
+  --color-crimson-btn: var(--crimson-btn);
+  --color-crimson-btn-strong: var(--crimson-btn-strong);
   --color-success-fill: var(--success-fill);
   --color-blue-fill: var(--blue-fill);
   --color-navy: var(--navy);

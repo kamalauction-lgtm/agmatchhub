@@ -62,7 +62,7 @@ export function PhotoAttach({
           type="button"
           disabled={busy}
           onClick={() => run(runnable.map((i) => i.id))}
-          className="mt-4 min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-50"
+          className="mt-4 min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-50"
         >
           {busy ? labels.attaching : `${labels.attachAll} (${runnable.length})`}
         </button>

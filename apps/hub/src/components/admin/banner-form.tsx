@@ -264,7 +264,7 @@ export function BannerForm({
       <div className="mt-5 flex gap-2">
         <button
           type="submit"
-          className="rounded-lg bg-crimson px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong"
+          className="rounded-lg bg-crimson-btn px-4 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
         >
           {editing ? labels.save : labels.create}
         </button>

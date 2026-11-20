@@ -55,7 +55,7 @@ export default async function SourcesPage({ searchParams }: { searchParams: Prom
                     <input name="displayName" required minLength={2} maxLength={120} defaultValue={k} aria-label={t("displayName")} className={field} />
                     <select name="kind" defaultValue="portal" aria-label={t("kind")} className={field}>{KINDS.map((x) => <option key={x} value={x}>{t(`kinds.${x}`)}</option>)}</select>
                     <input name="countryCode" maxLength={2} placeholder="ID" aria-label={t("country")} className={`${field} w-20`} />
-                    <button type="submit" className="min-h-9 cursor-pointer rounded-lg bg-crimson px-3 text-sm font-semibold text-white hover:bg-crimson-strong">{t("register")}</button>
+                    <button type="submit" className="min-h-9 cursor-pointer rounded-lg bg-crimson-btn px-3 text-sm font-semibold text-white hover:bg-crimson-btn-strong">{t("register")}</button>
                   </form>
                 )}
               </li>

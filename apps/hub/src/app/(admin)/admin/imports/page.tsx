@@ -92,7 +92,7 @@ export default async function AdminImportsPage({
                 <span className="font-medium">{t("file")}</span>
                 <input type="file" name="file" required accept=".xlsx,.csv" className="mt-1 block w-full text-sm" />
               </label>
-              <button type="submit" className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong">
+              <button type="submit" className="min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
                 {t("startCta")}
               </button>
             </form>
@@ -116,7 +116,7 @@ export default async function AdminImportsPage({
                 <span className="font-medium">{t("links")}</span>
                 <textarea name="input" required rows={4} className={input} placeholder="https://…" />
               </label>
-              <button type="submit" className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white hover:bg-crimson-strong">
+              <button type="submit" className="min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white hover:bg-crimson-btn-strong">
                 {t("startCta")}
               </button>
             </form>

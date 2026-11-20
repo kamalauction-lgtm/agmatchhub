@@ -398,7 +398,7 @@ export function ListingWizard({
               <button
                 type="button"
                 onClick={() => setRestored(null)}
-                className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong"
+                className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong"
               >
                 {t.draftContinue}
               </button>
@@ -754,7 +754,7 @@ export function ListingWizard({
                   </button>
                   {descMode === "self" && (
                     <button type="button" onClick={askAi} disabled={aiBusy}
-                      className="rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-60">
+                      className="rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-60">
                       {t.writeAi}
                     </button>
                   )}
@@ -830,12 +830,12 @@ export function ListingWizard({
           {step !== "review" ? (
             <button type="button" disabled={!canAdvance[step]}
               onClick={() => goTo(STEPS[idx + 1])}
-              className="rounded-lg bg-crimson px-6 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-40">
+              className="rounded-lg bg-crimson-btn px-6 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-40">
               {t.next}
             </button>
           ) : (
             <button type="button" onClick={submit} disabled={pending}
-              className="rounded-lg bg-crimson px-6 py-2.5 text-sm font-semibold text-white hover:bg-crimson-strong disabled:opacity-60">
+              className="rounded-lg bg-crimson-btn px-6 py-2.5 text-sm font-semibold text-white hover:bg-crimson-btn-strong disabled:opacity-60">
               {pending ? t.submitting : t.submit}
             </button>
           )}

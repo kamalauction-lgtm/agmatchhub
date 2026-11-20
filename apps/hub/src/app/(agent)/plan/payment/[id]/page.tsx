@@ -54,7 +54,7 @@ export default async function PaymentReturnPage({ params }: { params: Promise<{ 
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/plan" className="min-h-10 rounded-lg border border-line px-4 py-2 text-sm font-semibold hover:border-crimson hover:text-crimson">{t("backToPlan")}</Link>
           {open && p.checkout_url && (
-            <a href={p.checkout_url} className="min-h-10 rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white">{t("continuePayment")}</a>
+            <a href={p.checkout_url} className="min-h-10 rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white">{t("continuePayment")}</a>
           )}
           {p.status === "pending" && (
             <Link href={`/plan/payment/${p.id}`} className="min-h-10 rounded-lg border border-line px-4 py-2 text-sm font-semibold">{t("refresh")}</Link>

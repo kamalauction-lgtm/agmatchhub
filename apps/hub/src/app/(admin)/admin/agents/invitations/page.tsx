@@ -157,7 +157,7 @@ export default async function AdminInvitationsPage({
               <p className="mb-3 text-xs text-muted">{t("createHint")}</p>
               <button
                 type="submit"
-                className="min-h-11 cursor-pointer rounded-lg bg-crimson px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-crimson-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
+                className="min-h-11 cursor-pointer rounded-lg bg-crimson-btn px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-crimson-btn-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson"
               >
                 {t("createCta")}
               </button>

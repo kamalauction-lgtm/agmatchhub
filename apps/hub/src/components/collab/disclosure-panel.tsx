@@ -6,7 +6,7 @@ import { addDisclosure, acknowledgeDisclosure } from "@/app/(agent)/collab/discl
 const inputCls =
   "w-full rounded-lg border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-crimson";
 const btnPri =
-  "rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-strong";
+  "rounded-lg bg-crimson-btn px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-btn-strong";
 
 const CATEGORIES = [
   "ownership_status", "authority_to_sell", "title_status", "tenure", "encumbrances",
