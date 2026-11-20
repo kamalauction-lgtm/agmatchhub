@@ -48,9 +48,9 @@
   --crimson-fill: #c62828;
   /* Green that carries white text at 5.0:1 in both modes. `--success` turns
      bright in dark mode, where white on it is 1.7:1. */
-  /* Fill for red buttons that carry white text. Light mode keeps the brand red;
+  /* Fill for red buttons that carry white text. Light mode is a shade under the brand red so white text passes 4.5:1;
      dark mode swaps the lifted #f05a56 (white 3.4:1) for #c62828 (5.6:1). */
-  --crimson-btn: var(--crimson);
+  --crimson-btn: #d32f2f;        /* white 5.0:1; the brand #e53935 gives 4.2:1 */
   --crimson-btn-strong: var(--crimson-strong);
   --success-fill: #15803d;
   --blue-fill: #2563eb;      /* white text 5.2:1 in both modes */

@@ -26,7 +26,10 @@ export default defineConfig({
     // a failure here must mean a policy regression, never a flaky login.
     fileParallelism: false,
     testTimeout: 20_000,
-    hookTimeout: 20_000,
+    // Setup hooks sign in and seed fixtures on staging, which is a small
+    // instance: on 19 and 20 Nov 2026 a slow moment there timed a hook out at
+    // 20s while every test passed. Hooks get longer; tests keep 20s.
+    hookTimeout: 60_000,
     // The suite runs against the live database. Announce it, and sweep any
     // fixture that outlived its own test — see tests/teardown.ts.
     globalSetup: ["./tests/global.ts"],
