@@ -368,7 +368,7 @@ export default async function AdminHome({
           hint={t("topPartnersHint")}
           action={
             caps.has("growth.manage") ? (
-              <Link href="/admin/growth" className="text-xs font-semibold text-blue hover:underline">
+              <Link href="/admin/growth" className="tap text-xs font-semibold text-blue hover:underline">
                 {t("seeLeaderboard")}
               </Link>
             ) : null
@@ -476,7 +476,7 @@ export default async function AdminHome({
           hint={t("commercialHint")}
           action={
             caps.has("commercial.manage") ? (
-              <Link href="/admin/commercial" className="text-xs font-semibold text-blue hover:underline">
+              <Link href="/admin/commercial" className="tap text-xs font-semibold text-blue hover:underline">
                 {t("seeDetail")}
               </Link>
             ) : null
@@ -580,7 +580,7 @@ export default async function AdminHome({
         <Panel
           title={t("recentActivity")}
           action={canAudit ? (
-            <Link href="/admin/audit" className="text-xs font-semibold text-blue hover:underline">
+            <Link href="/admin/audit" className="tap text-xs font-semibold text-blue hover:underline">
               {t("openAudit")}
             </Link>
           ) : undefined}

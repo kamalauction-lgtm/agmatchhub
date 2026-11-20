@@ -110,7 +110,7 @@ export default async function SubmissionReviewPage({
 
   return (
     <AgentShell wide>
-      <Link href={`/requests/${id}`} className="text-sm text-muted hover:text-foreground">
+      <Link href={`/requests/${id}`} className="tap text-sm text-muted hover:text-foreground">
         ← {t("backToRequest")}
       </Link>
       <div className="mt-2 mb-1 flex items-center justify-between gap-4">
@@ -207,7 +207,7 @@ export default async function SubmissionReviewPage({
                 </label>
                 <div className="space-y-2">
                   <button name="decision" value="shortlisted" type="submit"
-                    className="w-full rounded-lg bg-success px-4 py-2.5 font-semibold text-white hover:opacity-90">
+                    className="w-full rounded-lg bg-success-fill px-4 py-2.5 font-semibold text-white hover:opacity-90">
                     {t("shortlist")}
                   </button>
                   <button name="decision" value="more_information_required" type="submit"
@@ -253,7 +253,7 @@ export default async function SubmissionReviewPage({
               <p className="mt-2 flex flex-wrap gap-3 text-xs">
                 {saLinks.map((l, i) => (
                   <a key={i} href={l.url} target="_blank" rel="noreferrer nofollow"
-                    className="font-medium text-crimson hover:underline">
+                    className="tap font-medium text-crimson hover:underline">
                     {l.display_label || l.platform}
                   </a>
                 ))}

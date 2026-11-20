@@ -94,7 +94,7 @@ export default async function RequestDetailPage({
   return (
     <AgentShell wide>
       <ClearFormDraft storageKeys={["draft:req:new", `draft:req:${id}`]} />
-      <Link href="/requests" className="text-sm text-muted hover:text-foreground">
+      <Link href="/requests" className="tap text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>
       {/* Command band: title, ID and the exact status; the strip below groups it into a stage. */}
@@ -173,7 +173,7 @@ export default async function RequestDetailPage({
                         </span>
                       </td>
                       <td className="py-2.5 text-right">
-                        <Link href={`/requests/${id}/s/${s.id}`} className="font-medium text-crimson hover:underline">
+                        <Link href={`/requests/${id}/s/${s.id}`} className="tap font-medium text-crimson hover:underline">
                           {trv("open")}
                         </Link>
                       </td>

@@ -132,7 +132,7 @@ export default async function ImportPage({
               {batches.map((b) => (
                 <tr key={b.id} className="border-t border-line hover:bg-surface">
                   <td className="px-4 py-3">
-                    <Link href={`/listings/import/${b.id}`} className="font-medium text-crimson hover:underline">
+                    <Link href={`/listings/import/${b.id}`} className="tap font-medium text-crimson hover:underline">
                       {b.source_portal ?? b.source_kind}
                     </Link>
                     <span className="block truncate text-xs text-muted">{b.source_label}</span>

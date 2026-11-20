@@ -208,7 +208,7 @@ export default async function ListingModerationPage({
             </label>
             <div className="flex gap-2">
               {tab === "pending_review" && (
-                <button type="submit" name="decision" value="approve" className="rounded-lg bg-success px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("bulk.approve")}</button>
+                <button type="submit" name="decision" value="approve" className="rounded-lg bg-success-fill px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("bulk.approve")}</button>
               )}
               <button type="submit" name="decision" value="reject" className="rounded-lg bg-danger px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("bulk.reject")}</button>
             </div>
@@ -293,7 +293,7 @@ export default async function ListingModerationPage({
                     )}
                     {reqCount.has(l.id) && (
                       <p className="mt-2 text-xs" data-change-requests={reqCount.get(l.id)!.open + reqCount.get(l.id)!.answered}>
-                        <Link href="/admin/handover" className="font-medium text-crimson hover:underline">
+                        <Link href="/admin/handover" className="tap font-medium text-crimson hover:underline">
                           {t("changes.count", { open: reqCount.get(l.id)!.open, answered: reqCount.get(l.id)!.answered })}
                         </Link>
                       </p>
@@ -335,11 +335,11 @@ export default async function ListingModerationPage({
                         })}
                       </ul>
                       <p className="mt-1 text-xs text-muted">{t("photos.note")}</p>
-                      <Link href={`/admin/media?listing=${l.id}`} className="mt-1 inline-block text-xs font-medium text-crimson hover:underline">{t("photos.openCentre")}</Link>
+                      <Link href={`/admin/media?listing=${l.id}`} className="tap mt-1 inline-block text-xs font-medium text-crimson hover:underline">{t("photos.openCentre")}</Link>
                     </div>
                   )}
                   <details className="rounded-lg border border-line bg-background p-3" data-request-change={l.id}>
-                    <summary className="cursor-pointer text-sm font-medium">{t("changes.request")}</summary>
+                    <summary className="tap cursor-pointer text-sm font-medium">{t("changes.request")}</summary>
                     <form action={requestChange} className="mt-3 grid gap-2 sm:grid-cols-[auto_auto_1fr_auto] sm:items-end">
                       <input type="hidden" name="listingId" value={l.id} />
                       <input type="hidden" name="back" value={here} />
@@ -376,7 +376,7 @@ export default async function ListingModerationPage({
                       </label>
                       <div className="flex gap-2">
                         {tab === "pending_review" && (
-                          <button type="submit" name="decision" value="approve" className="rounded-lg bg-success px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("approve")}</button>
+                          <button type="submit" name="decision" value="approve" className="rounded-lg bg-success-fill px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">{t("approve")}</button>
                         )}
                         <button type="submit" name="decision" value="reject" className="rounded-lg bg-danger px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">
                           {tab === "published" ? t("takeDown") : t("reject")}

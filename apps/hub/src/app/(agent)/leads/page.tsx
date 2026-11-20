@@ -313,7 +313,7 @@ export default async function LeadsPage({
                         href={`https://wa.me/${waPhone}?text=${waText}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-lg bg-success px-4 py-2.5 text-center text-sm font-semibold text-white hover:opacity-90"
+                        className="rounded-lg bg-success-fill px-4 py-2.5 text-center text-sm font-semibold text-white hover:opacity-90"
                       >
                         {t("openWhatsApp")}
                       </a>

@@ -76,7 +76,7 @@ export default async function OrganisationsPage({ searchParams }: { searchParams
         <p className="mb-6 rounded-lg bg-surface px-4 py-3 text-sm font-medium" role="status">{t(`notice.${notice}` as never)}</p>
       )}
       <details className="mb-6 rounded-xl border border-line p-4" data-agency-create="1">
-        <summary className="cursor-pointer text-sm font-semibold">{t("agencyForm.create")}</summary>
+        <summary className="tap cursor-pointer text-sm font-semibold">{t("agencyForm.create")}</summary>
         <form action={saveAgency} className="mt-3 grid gap-3 sm:grid-cols-3">
           <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.name")}</span>
             <input name="name" required minLength={2} maxLength={160} defaultValue="" className="min-h-10 w-full rounded-lg border border-line bg-background px-3 text-sm" /></label>

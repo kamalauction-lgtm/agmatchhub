@@ -90,7 +90,7 @@ export default async function HandoverPage({ searchParams }: { searchParams: Pro
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>
-        <Link href="/admin/handover/report" className="text-sm font-semibold text-crimson hover:underline" data-report-link="1">{t("openReport")}</Link>
+        <Link href="/admin/handover/report" className="tap text-sm font-semibold text-crimson hover:underline" data-report-link="1">{t("openReport")}</Link>
       </div>
       <p className="mt-1 max-w-3xl text-sm text-muted">{t("intro")}</p>
 
@@ -138,7 +138,7 @@ export default async function HandoverPage({ searchParams }: { searchParams: Pro
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-1 text-xs text-muted">{t("suppliedNote")} <Link href={`/admin/media?listing=${r.listing_id}&view=all`} className="font-medium text-crimson hover:underline">{t("openCentre")}</Link></p>
+                    <p className="mt-1 text-xs text-muted">{t("suppliedNote")} <Link href={`/admin/media?listing=${r.listing_id}&view=all`} className="tap font-medium text-crimson hover:underline">{t("openCentre")}</Link></p>
                   </div>
                 )}
                 {view === "open" && (

@@ -144,7 +144,7 @@ export default async function AdminImportsPage({
                 return (
                   <tr key={b.id} className="border-t border-line">
                     <td className="px-4 py-3">
-                      <Link href={`/admin/imports/${b.id}`} className="font-medium hover:text-crimson">
+                      <Link href={`/admin/imports/${b.id}`} className="tap font-medium hover:text-crimson">
                         {agent?.display_name ?? b.agent_id.slice(0, 8)}
                       </Link>
                     </td>

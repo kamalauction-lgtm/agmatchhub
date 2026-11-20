@@ -38,7 +38,7 @@ export function SharePanel({
       key: "whatsapp",
       label: labels.whatsapp,
       href: `https://wa.me/?text=${encodedCaption}`,
-      className: "bg-success text-white",
+      className: "bg-success-fill text-white",
     },
     {
       key: "telegram",
@@ -94,7 +94,7 @@ export function SharePanel({
       </div>
 
       <details className="mt-3">
-        <summary className="cursor-pointer text-xs font-medium text-muted">
+        <summary className="tap cursor-pointer text-xs font-medium text-muted">
           {labels.caption}
         </summary>
         <textarea

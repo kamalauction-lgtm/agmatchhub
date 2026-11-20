@@ -98,7 +98,7 @@ export default async function ClosingPage({ searchParams }: { searchParams: Prom
                 <div className="flex gap-2">
                   {current.status === "open" && (
                     <form action={setChecklistStatus}><input type="hidden" name="checklistId" value={current.id} /><input type="hidden" name="status" value="completed" />
-                      <button type="submit" className="rounded-lg bg-success px-3 py-1.5 text-xs font-semibold text-white">{t("markCompleted")}</button></form>
+                      <button type="submit" className="rounded-lg bg-success-fill px-3 py-1.5 text-xs font-semibold text-white">{t("markCompleted")}</button></form>
                   )}
                   {current.status !== "archived" && (
                     <form action={setChecklistStatus}><input type="hidden" name="checklistId" value={current.id} /><input type="hidden" name="status" value="archived" />
@@ -117,7 +117,7 @@ export default async function ClosingPage({ searchParams }: { searchParams: Prom
                     <li key={s.id} className="flex items-start gap-3 px-5 py-3">
                       <form action={toggleStep}>
                         <input type="hidden" name="checklistId" value={current.id} /><input type="hidden" name="stepId" value={s.id} /><input type="hidden" name="done" value={isDone ? "0" : "1"} />
-                        <button type="submit" aria-pressed={isDone} className={`mt-0.5 grid h-6 w-6 place-items-center rounded-full border text-xs font-bold ${isDone ? "border-success bg-success text-white" : "border-line text-muted hover:border-crimson"}`}>{isDone ? "✓" : ""}</button>
+                        <button type="submit" aria-pressed={isDone} className={`mt-0.5 grid h-6 w-6 place-items-center rounded-full border text-xs font-bold ${isDone ? "border-success bg-success-fill text-white" : "border-line text-muted hover:border-crimson"}`}>{isDone ? "✓" : ""}</button>
                       </form>
                       <div className="min-w-0 flex-1">
                         <p className={`text-sm font-medium ${isDone ? "text-muted line-through" : ""}`}>{pick(s.title)}</p>

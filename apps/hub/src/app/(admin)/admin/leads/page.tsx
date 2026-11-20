@@ -102,7 +102,7 @@ export default async function LeadsResponsePage({ searchParams }: { searchParams
               <tbody>
                 {stats.byAgent.map((a) => (
                   <tr key={a.agentId} className="border-t border-line" data-agent={a.agentId} data-overdue={a.overdueNow}>
-                    <td className="px-3 py-2"><Link href={`/admin/agents/${a.agentId}`} className="hover:underline">{names.get(a.agentId)}</Link></td>
+                    <td className="px-3 py-2"><Link href={`/admin/agents/${a.agentId}`} className="tap hover:underline">{names.get(a.agentId)}</Link></td>
                     <td className="px-3 py-2 text-right">{a.total}</td>
                     <td className="px-3 py-2 text-right">{a.responded}</td>
                     <td className="px-3 py-2 text-right">{pct(a.onTimeRate)}</td>

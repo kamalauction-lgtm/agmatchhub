@@ -128,7 +128,7 @@ export async function DisclosurePanel({
 
       {role === "sa" && declaration && (
         <details className="rounded-lg border border-line p-4">
-          <summary className="cursor-pointer text-sm font-semibold">{t("addNew")}</summary>
+          <summary className="tap cursor-pointer text-sm font-semibold">{t("addNew")}</summary>
           <form action={addDisclosure} className="mt-3 space-y-3 text-sm">
             <input type="hidden" name="submissionId" value={submissionId} />
             <div className="grid gap-3 sm:grid-cols-2">

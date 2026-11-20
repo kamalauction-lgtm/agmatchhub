@@ -177,7 +177,7 @@ export default async function ProfilePage({
         </ul>
 
         <details className="rounded-lg border border-line p-4">
-          <summary className="cursor-pointer text-sm font-semibold">{t("addLink")}</summary>
+          <summary className="tap cursor-pointer text-sm font-semibold">{t("addLink")}</summary>
           <form action={addSocialLink} className="mt-3 grid gap-3 sm:grid-cols-2">
             <label className="block text-sm">
               <span className="mb-1 block font-medium">{t("platform")}</span>

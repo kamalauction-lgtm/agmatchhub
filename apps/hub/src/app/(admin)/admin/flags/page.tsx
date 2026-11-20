@@ -63,7 +63,7 @@ export default async function FlagsPage({
           {rows.map((f) => (
             <li key={f!.key} className="flex flex-wrap items-center justify-between gap-4 px-4 py-3.5">
               <div className="min-w-0 flex-1">
-                <Link href={`/admin/flags/${f!.key}`} className="font-medium hover:text-crimson">
+                <Link href={`/admin/flags/${f!.key}`} className="tap font-medium hover:text-crimson">
                   {f!.name}
                 </Link>
                 <p className="text-xs text-muted">{f!.description}</p>
@@ -77,7 +77,7 @@ export default async function FlagsPage({
                 {f!.targeted && (
                   <Link
                     href={`/admin/flags/${f!.key}`}
-                    className="rounded-full bg-crimson-soft px-2.5 py-0.5 text-xs font-semibold text-crimson"
+                    className="tap rounded-full bg-crimson-soft px-2.5 py-0.5 text-xs font-semibold text-crimson"
                   >
                     {t("limited")}
                   </Link>

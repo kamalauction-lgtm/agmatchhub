@@ -106,7 +106,7 @@ export default async function AdminImportBatchPage({
 
   return (
     <>
-      <Link href="/admin/imports" className="text-sm text-muted hover:text-foreground">← {t("title")}</Link>
+      <Link href="/admin/imports" className="tap text-sm text-muted hover:text-foreground">← {t("title")}</Link>
       <h1 className="mt-2 text-2xl font-semibold">{t("batchTitle", { agent: agent?.display_name ?? batch.agent_id.slice(0, 8) })}</h1>
       <p className="mb-4 mt-1 text-sm text-muted">{batch.source_portal} · {batch.source_label}</p>
 

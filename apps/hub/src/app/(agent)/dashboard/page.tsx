@@ -408,7 +408,7 @@ export default async function DashboardPage({
                   </div>
                 </dl>
 
-                <Link href="/plan" className="mt-4 block text-center text-xs font-semibold text-indigo hover:underline">
+                <Link href="/plan" className="tap mt-4 block text-center text-xs font-semibold text-indigo hover:underline">
                   {t("plan.viewPlans")} →
                 </Link>
                 {plan.canUpgrade && (
@@ -427,7 +427,7 @@ export default async function DashboardPage({
               <Panel
                 title={t("growth.title")}
                 action={
-                  <Link href="/growth" className="text-xs font-semibold text-blue hover:underline">
+                  <Link href="/growth" className="tap text-xs font-semibold text-blue hover:underline">
                     {t("growth.seeAll")}
                   </Link>
                 }
@@ -487,7 +487,7 @@ export default async function DashboardPage({
             <Panel
               title={t("pipeline.label")}
               action={
-                <Link href="/listings" className="text-xs font-semibold text-blue hover:underline">
+                <Link href="/listings" className="tap text-xs font-semibold text-blue hover:underline">
                   {t("growth.seeAll")}
                 </Link>
               }

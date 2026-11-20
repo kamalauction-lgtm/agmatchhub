@@ -102,7 +102,7 @@ export default async function AiAdminPage({
     <>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>
-        <a href="/admin/ai/office" className="text-sm font-semibold text-crimson hover:underline" data-office-link="1">{t("openOffice")}</a>
+        <a href="/admin/ai/office" className="tap text-sm font-semibold text-crimson hover:underline" data-office-link="1">{t("openOffice")}</a>
       </div>
       <p className="mb-6 mt-1 max-w-3xl text-sm text-muted">{t("intro")}</p>
 

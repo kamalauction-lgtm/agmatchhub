@@ -170,7 +170,7 @@ export function HelpWalkthrough({
                   >
                     <span
                       aria-hidden
-                      className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${isDone ? "bg-success text-white" : current ? "bg-crimson text-white" : "border border-line-strong text-muted-strong"}`}
+                      className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${isDone ? "bg-success-fill text-white" : current ? "bg-crimson text-white" : "border border-line-strong text-muted-strong"}`}
                     >
                       {isDone ? <CheckIcon /> : n + 1}
                     </span>
@@ -209,7 +209,7 @@ export function HelpWalkthrough({
         {/* Step list: sidebar on wide screens, folded on phones */}
         <aside className="order-2 lg:order-1">
           <details className="rounded-xl border border-line bg-card p-3 lg:hidden">
-            <summary className="cursor-pointer text-sm font-semibold">{labels.steps}</summary>
+            <summary className="tap cursor-pointer text-sm font-semibold">{labels.steps}</summary>
             <div className="mt-3">{stepList}</div>
           </details>
           <div className="sticky top-4 hidden max-h-[calc(100vh-2rem)] overflow-y-auto rounded-xl border border-line bg-card p-3 lg:block">

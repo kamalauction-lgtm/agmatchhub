@@ -226,11 +226,11 @@ export function WorkforceGallery({
               <div className="flex flex-wrap items-center gap-3 border-t border-line pt-5">
                 {active.actionHref ? (
                   active.actionExternal ? (
-                    <a href={active.actionHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center rounded-xl bg-blue px-5 text-sm font-semibold text-white">
+                    <a href={active.actionHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center rounded-xl bg-blue-fill px-5 text-sm font-semibold text-white">
                       {active.actionLabel} ↗
                     </a>
                   ) : (
-                    <Link href={active.actionHref} className="inline-flex min-h-11 items-center rounded-xl bg-blue px-5 text-sm font-semibold text-white">
+                    <Link href={active.actionHref} className="inline-flex min-h-11 items-center rounded-xl bg-blue-fill px-5 text-sm font-semibold text-white">
                       {active.actionLabel} →
                     </Link>
                   )
@@ -259,7 +259,7 @@ function CategoryChip({ label, pressed, onClick }: { label: string; pressed: boo
       aria-pressed={pressed}
       onClick={onClick}
       className={`min-h-11 shrink-0 whitespace-nowrap rounded-full border px-4 text-sm font-semibold transition-colors ${
-        pressed ? "border-blue bg-blue text-white" : "border-line-strong bg-card text-muted-strong hover:border-blue"
+        pressed ? "border-blue bg-blue-fill text-white" : "border-line-strong bg-card text-muted-strong hover:border-blue"
       }`}
     >
       {label}

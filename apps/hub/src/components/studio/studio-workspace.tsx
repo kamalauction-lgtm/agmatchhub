@@ -408,7 +408,7 @@ export function StudioWorkspace({
               href={`https://wa.me/?text=${encodeURIComponent(current)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${btn} bg-success text-white hover:opacity-90`}
+              className={`${btn} bg-success-fill text-white hover:opacity-90`}
             >
               {labels.sendWhatsapp}
             </a>

@@ -44,7 +44,7 @@ export default async function OwnerReportPage({ params, searchParams }: { params
   return (
     <AgentShell wide>
       <ToolHeader roleKey="owner_report_writer" title={t("title")} intro={t("intro")} userId={user.id} />
-      <p className="mb-4 text-sm text-muted"><Link href={`/listings/${id}/edit`} className="font-medium text-crimson hover:underline">{r.listing.human_readable_id}</Link> · {r.listing.title} · {r.listing.price}</p>
+      <p className="mb-4 text-sm text-muted"><Link href={`/listings/${id}/edit`} className="tap font-medium text-crimson hover:underline">{r.listing.human_readable_id}</Link> · {r.listing.title} · {r.listing.price}</p>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <nav className="flex rounded-lg bg-surface p-0.5 text-xs font-semibold">
@@ -69,7 +69,7 @@ export default async function OwnerReportPage({ params, searchParams }: { params
           {r.askOwner && <p className="mt-3 rounded-lg bg-indigo-soft px-3 py-2 text-sm text-indigo">{r.askOwner}</p>}
           <div className="mt-4 flex gap-2">
             <CopyButton text={full} label={t("copy")} copiedLabel={t("copied")} />
-            <a href={`https://wa.me/?text=${encodeURIComponent(full)}`} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-success px-3 py-2 text-xs font-semibold text-white hover:opacity-90">{t("sendWhatsapp")}</a>
+            <a href={`https://wa.me/?text=${encodeURIComponent(full)}`} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-success-fill px-3 py-2 text-xs font-semibold text-white hover:opacity-90">{t("sendWhatsapp")}</a>
           </div>
           <p className="mt-3 text-[11px] text-muted">{t("sendNote")}</p>
         </section>

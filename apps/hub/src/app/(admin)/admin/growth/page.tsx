@@ -258,7 +258,7 @@ export default async function AdminGrowthPage({
         </div>
 
         <details className="mt-3 rounded-xl border border-line p-4">
-          <summary className="cursor-pointer text-sm font-semibold">{t("addRuleTitle")}</summary>
+          <summary className="tap cursor-pointer text-sm font-semibold">{t("addRuleTitle")}</summary>
           <form action={addRewardRule} className="mt-3 grid gap-3 sm:grid-cols-4">
             <label className="block text-xs font-semibold">
               {t("campaigns")}

@@ -76,7 +76,7 @@ export default async function AdminAddPropertyPage({
 
   return (
     <div>
-      <Link href={`/admin/requests/${id}`} className="text-sm text-muted hover:text-foreground">
+      <Link href={`/admin/requests/${id}`} className="tap text-sm text-muted hover:text-foreground">
         ← {request.human_readable_id}
       </Link>
       <h1 className="mt-2 mb-1 text-2xl font-semibold">{ta("title")}</h1>

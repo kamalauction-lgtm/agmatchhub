@@ -70,7 +70,7 @@ export default async function ComparePage({
   return (
     <div className="min-h-screen bg-surface px-4 py-10">
       <div className="mx-auto max-w-5xl">
-        <Link href={`/p/${token}`} className="text-sm text-muted hover:text-foreground">
+        <Link href={`/p/${token}`} className="tap text-sm text-muted hover:text-foreground">
           ← {p.title}
         </Link>
         <div className="mt-2 mb-6 flex flex-wrap items-center justify-between gap-3">

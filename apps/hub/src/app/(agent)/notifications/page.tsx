@@ -82,7 +82,7 @@ export default async function NotificationsPage() {
                 </span>
               </div>
               {n.href && (
-                <Link href={n.href} className="mt-1 inline-block text-xs font-medium text-crimson hover:underline">
+                <Link href={n.href} className="tap mt-1 inline-block text-xs font-medium text-crimson hover:underline">
                   {t("open")}
                 </Link>
               )}

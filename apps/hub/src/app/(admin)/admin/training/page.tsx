@@ -56,7 +56,7 @@ export default async function AdminTrainingPage({
 
       {/* New guide ------------------------------------------------------- */}
       <details className="mb-8 rounded-xl border border-line p-4">
-        <summary className="cursor-pointer text-sm font-semibold">{t("newGuide")}</summary>
+        <summary className="tap cursor-pointer text-sm font-semibold">{t("newGuide")}</summary>
         <form action={createGuide} className="mt-4 flex flex-wrap items-end gap-3">
           <label className="block text-sm">
             <span className="mb-1 block font-medium">{t("category")}</span>
