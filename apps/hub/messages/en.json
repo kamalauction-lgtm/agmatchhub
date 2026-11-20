@@ -5465,7 +5465,7 @@
     "emailField": "Email (their username)",
     "country": "Country",
     "sourcePlatform": "Where they list now",
-    "sourcePlatformHint": "e.g. Rumah123 profile link",
+    "sourcePlatformHint": "e.g. a link to their profile on another portal",
     "consentTitle": "The agent's permission",
     "method": "How they agreed",
     "methods": {

@@ -5465,7 +5465,7 @@
     "emailField": "Email (nama pengguna)",
     "country": "Negara",
     "sourcePlatform": "Platform asal",
-    "sourcePlatformHint": "mis. tautan profil Rumah123",
+    "sourcePlatformHint": "mis. tautan profil mereka di portal lain",
     "consentTitle": "Izin dari agen",
     "method": "Cara persetujuan",
     "methods": {

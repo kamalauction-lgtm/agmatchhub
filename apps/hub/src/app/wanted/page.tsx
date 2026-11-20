@@ -107,7 +107,7 @@ export default async function WantedBoardPage({
       {/* Filter bar overlapping the hero */}
       <div className={`mx-auto -mt-14 w-full max-w-6xl px-4 ${user ? "" : "sm:px-6"}`}>
         <form action="/wanted"
-          className="grid gap-3 rounded-2xl border border-line bg-card p-4 shadow-raised sm:grid-cols-2 lg:grid-cols-6">
+          className="grid gap-3 rounded-2xl border border-line bg-card p-4 shadow-raised sm:grid-cols-2 lg:grid-cols-7">
           <input name="q" defaultValue={q} placeholder={t("searchHint")}
             className={`${inputCls} lg:col-span-2`} />
           <select name="country" defaultValue={country} className={inputCls}>
@@ -127,9 +127,9 @@ export default async function WantedBoardPage({
               <option key={c} value={c}>{tr(`form.categories.${c}`)}</option>
             ))}
           </select>
-          <div className="flex gap-2">
+          <div className="flex gap-2 lg:col-span-2">
             <input name="max" defaultValue={max} type="number" min="0"
-              placeholder={t("maxBudget")} className={inputCls} />
+              placeholder={t("maxBudget")} aria-label={t("maxBudget")} className={`${inputCls} min-w-0`} />
             <button type="submit" className={buttonClass("primary", "whitespace-nowrap px-5")}>
               {t("search")}
             </button>
