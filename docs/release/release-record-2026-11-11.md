@@ -234,3 +234,20 @@
 - **Checks on production:** signed in through the owner's browser session, read-only: `/studio` and `/admin` show the 288px sidebar, 44px rows, one current item, the stat tiles and empty state, the admin find box with 30 items, and no sideways scroll at 1920px.
 - **Not checked:** dark mode, Malay, the country-admin role, and phone widths on production.
 - **Known follow-ups:** `/wanted` shows the public layout to signed-in agents; two document-type labels are missing under Legal content; the name-card avatar sits behind its banner; some forms stretch on very large monitors; small links on the sign-in page are under 24px tall.
+
+## Follow-up release, 20 Nov 2026 (later): shell follow-ups
+
+- **What:** PR #64 (merge `f05db95`). Closes the follow-ups listed in the section above:
+  - `/wanted` keeps the agent sidebar for a signed-in user; the public page is unchanged for everybody else;
+  - Legal content: labels for `supply_agent_disclosure`, `buyer_inquiry` and `listing_import_authority` (en/id/ms), and an unknown declaration falls back to its own name;
+  - the name-card avatar sits above its banner;
+  - forms are capped on very wide screens (open an account, announcements, WhatsApp templates, add prospect, publish legal text, ready-made caption);
+  - the recruiting pipeline shows three columns until 1536px, six beyond;
+  - sign-in page links are 44px tall.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `f9dc74c9` (rollback `d084778a`); staging `1d6c2c0d`.
+- **Help:** all pictures re-taken on staging; 28 changed.
+- **Checks on staging:** Playwright at 1920px and 1440px as agent and admin, with before and after pictures: sidebar on `/wanted` with one current item, no raw keys on Legal, widest field 896px (was 1502px), sign-in links 44px, public `/wanted` without the sidebar. Typecheck and lint pass. CI: checks and rls green.
+- **Checks on production:** signed in through the owner's browser session, read-only, at 1920px: `/wanted` has the sidebar with "Wanted board" current; Legal content shows six named documents and no raw keys; the open-an-account form's widest field is 846px; the name-card avatar is in front of the banner.
+- **Not checked:** dark mode, Malay, phone widths for these pages. The Indonesian and Malay wording of the three new Legal labels is a translation of the database names and awaits the owner's review.
+- **Seen, not changed:** the open-an-account form's placeholder names a competitor portal as its example (a hard-coded brand name); the budget box on `/wanted` is narrow inside the agent menu.
