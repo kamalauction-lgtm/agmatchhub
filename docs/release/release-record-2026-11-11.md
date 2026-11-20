@@ -276,3 +276,20 @@
 - **Checks on staging:** the re-taken import picture shows the new placeholder. Typecheck passes. CI: checks and rls green.
 - **Checks on production:** signed in through the owner's browser session, read-only, in English: the import placeholder shows the `example.com` links; Legal content shows six named documents.
 - **Not checked:** the reworded Indonesian and Malay Legal labels were not viewed on production (the session was in English). They remain the author's translation, not a native-speaker or legal review.
+
+## Follow-up release, 20 Nov 2026 (late night): dark-mode button contrast, taller tap areas
+
+- **Why:** a check of dark mode and phone width on staging (51 pages × phone light, phone dark, desktop dark) found no sideways scroll and no console errors, but white text on the bright dark-mode green was 1.7:1, and many small text links were 15–20px tall.
+- **What:** PR #70 (merge `295bb05`).
+  - White on green: 20 buttons use `--success-fill` (#15803d, 5.0:1 in both modes). Light mode is slightly darker too (it was 3.3:1).
+  - White on blue: 6 buttons and chips use `--blue-fill` (#2563eb, 5.2:1). Light mode looks the same.
+  - The hint under the wanted-board QR code is dark grey on its white panel.
+  - A `tap` utility gives 67 small text links and disclosure titles a 36px invisible hit area without moving the layout; the admin action-queue links get the same height by padding.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `b36407cc` (rollback `aea94fd3`); staging `f3ff8d3f`.
+- **Help:** all pictures re-taken on staging; 56 changed.
+- **Checks on staging:** the three-mode sweep repeated with the contrast warnings gone; a hit test on 10 pages showed the tap areas receive taps above and below the text and cover no other control; the 20 action-queue links are 36px tall in light and dark. Typecheck and lint pass. CI: checks and rls green.
+- **Checks on production:** signed in through the owner's browser session, read-only, in light mode: both tokens are present; the WhatsApp button on the name card is the new green with white text; the 24 disclosure titles on Legal content carry the 36px tap area.
+- **Not checked on production:** dark mode itself (the session's browser was in light mode), and the moderation buttons and action-queue links (nothing was pending there).
+- **Not changed:** white text on the crimson primary buttons is about 3.4:1 in dark mode; fixing it changes the primary button colour, which is the owner's brand decision. Lead titles in the admin action queue are still cut short on a phone.
+- **Not checked at all:** a real phone, tablet widths, Malay.
