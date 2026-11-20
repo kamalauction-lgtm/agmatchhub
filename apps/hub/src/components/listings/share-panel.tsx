@@ -102,7 +102,7 @@ export function SharePanel({
           value={caption}
           rows={7}
           onFocus={(e) => e.currentTarget.select()}
-          className="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2 text-xs"
+          className="mt-2 block w-full max-w-3xl rounded-lg border border-line bg-surface px-3 py-2 text-xs"
         />
         <button
           type="button"

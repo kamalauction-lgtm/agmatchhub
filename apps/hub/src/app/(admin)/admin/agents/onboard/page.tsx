@@ -76,7 +76,7 @@ export default async function OnboardAgentPage({ searchParams }: { searchParams:
         </section>
       )}
 
-      <form action={onboardAgent} className="mb-10 grid gap-4 rounded-xl border border-line p-6 sm:grid-cols-2">
+      <form action={onboardAgent} className="mb-10 grid max-w-4xl gap-4 rounded-xl border border-line p-6 sm:grid-cols-2">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted sm:col-span-2">{t("formTitle")}</h2>
         <label className="block text-sm">
           <span className="font-medium">{t("fullName")}</span>

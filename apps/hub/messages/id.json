@@ -601,7 +601,10 @@
     "types": {
       "supply_agent_submission": "Pernyataan pengajuan Supply Agent",
       "requesting_agent_presentation": "Pernyataan presentasi Requesting Agent",
-      "client_disclaimer": "Disclaimer klien"
+      "client_disclaimer": "Disclaimer klien",
+      "supply_agent_disclosure": "Pernyataan pengungkapan hukum Supply Agent",
+      "buyer_inquiry": "Persetujuan privasi dan kontak pertanyaan pembeli",
+      "listing_import_authority": "Wewenang dan keakuratan impor listing"
     },
     "noVersion": "tidak ada",
     "viewText": "Lihat teks",

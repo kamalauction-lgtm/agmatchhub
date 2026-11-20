@@ -10,6 +10,8 @@ import { buttonClass } from "@/components/ui/button";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { brand } from "@/config/brand";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { AgentShell } from "@/components/layout/agent-shell";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * Public "Wanted Properties" board — a listing portal in reverse (§13
@@ -34,6 +36,10 @@ export default async function WantedBoardPage({
   const t = await getTranslations("wanted");
   const tr = await getTranslations("requests");
   const service = createServiceClient();
+  // A signed-in agent reaches this board from their own menu, so it keeps the
+  // menu around it; everybody else gets the public page. Same teaser data.
+  const { data: { user } } = await (await createClient()).auth.getUser();
+  const Results = user ? "div" : "main";
 
   const { data: countries } = await service
     .from("countries").select("code, name").order("name");
@@ -86,21 +92,10 @@ export default async function WantedBoardPage({
   const countryName = (code: string) =>
     countries?.find((c) => c.code === code)?.name ?? code;
 
-  return (
-    <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between border-b border-line px-4 py-4 sm:px-6">
-        <Link href="/" aria-label={partnerIdentityPublic ? brand.appName : brand.appNameNeutral}><BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} /></Link>
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher />
-          <Link href="/login"
-            className={buttonClass("secondary", "min-h-10")}>
-            {t("agentSignIn")}
-          </Link>
-        </div>
-      </header>
-
+  const board = (
+    <>
       {/* Hero */}
-      <section className="command-band px-4 pt-12 pb-24 text-center">
+      <section className={`command-band px-4 pt-12 pb-24 text-center ${user ? "rounded-2xl" : ""}`}>
         <h1 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
           {t("heroTitle")}
         </h1>
@@ -110,7 +105,7 @@ export default async function WantedBoardPage({
       </section>
 
       {/* Filter bar overlapping the hero */}
-      <div className="mx-auto -mt-14 w-full max-w-6xl px-4 sm:px-6">
+      <div className={`mx-auto -mt-14 w-full max-w-6xl px-4 ${user ? "" : "sm:px-6"}`}>
         <form action="/wanted"
           className="grid gap-3 rounded-2xl border border-line bg-card p-4 shadow-raised sm:grid-cols-2 lg:grid-cols-6">
           <input name="q" defaultValue={q} placeholder={t("searchHint")}
@@ -143,7 +138,7 @@ export default async function WantedBoardPage({
       </div>
 
       {/* Results */}
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
+      <Results className={`mx-auto w-full max-w-6xl flex-1 py-10 ${user ? "" : "px-4 sm:px-6"}`}>
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold">
             {t("resultsTitle", { count: cards.length })}
@@ -239,8 +234,25 @@ export default async function WantedBoardPage({
             })}
           </div>
         )}
-      </main>
+      </Results>
+    </>
+  );
 
+  if (user) return <AgentShell wide>{board}</AgentShell>;
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <header className="flex items-center justify-between border-b border-line px-4 py-4 sm:px-6">
+        <Link href="/" aria-label={partnerIdentityPublic ? brand.appName : brand.appNameNeutral}><BrandLockup size={28} partnerIdentityPublic={partnerIdentityPublic} /></Link>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <Link href="/login"
+            className={buttonClass("secondary", "min-h-10")}>
+            {t("agentSignIn")}
+          </Link>
+        </div>
+      </header>
+      {board}
       <footer className="border-t border-line px-6 py-6 text-center text-xs text-muted">
         {partnerIdentityPublic ? brand.appName : brand.appNameNeutral} — {t(partnerIdentityPublic ? "footerNote" : "footerNoteNeutral")}
       </footer>

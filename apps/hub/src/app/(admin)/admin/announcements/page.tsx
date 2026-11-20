@@ -85,7 +85,7 @@ export default async function AnnouncementsPage({
         <h2 className="font-semibold">{t("composeTitle")}</h2>
         <p className="mb-4 mt-1 text-sm text-muted">{t("composeHint")}</p>
 
-        <form action={createAnnouncement} className="grid gap-3 sm:grid-cols-3">
+        <form action={createAnnouncement} className="grid max-w-4xl gap-3 sm:grid-cols-3">
           <label className="block text-xs font-semibold sm:col-span-2">
             {t("titleLabel")}
             <input name="title" required maxLength={140} className={input} />
