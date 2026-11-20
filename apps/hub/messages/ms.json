@@ -603,7 +603,7 @@
       "requesting_agent_presentation": "Deklarasi pembentangan Requesting Agent",
       "client_disclaimer": "Penafian pelanggan",
       "supply_agent_disclosure": "Deklarasi pendedahan undang-undang Supply Agent",
-      "buyer_inquiry": "Persetujuan privasi dan hubungan pertanyaan pembeli",
+      "buyer_inquiry": "Persetujuan privasi dan untuk dihubungi bagi pertanyaan pembeli",
       "listing_import_authority": "Kuasa dan ketepatan import listing"
     },
     "noVersion": "tiada",
@@ -3069,10 +3069,10 @@
       "tabUrls": "Tampal pautan listing",
       "tabProfile": "Pautan halaman ejen",
       "urlsHelp": "Tampal satu pautan setiap baris",
-      "urlsPlaceholder": "https://www.rumah123.com/properti/...\nhttps://www.99.co/id/properti/...",
+      "urlsPlaceholder": "https://www.example.com/listing/...\nhttps://www.example.com/listing/...",
       "urlsCta": "Import listing",
       "profileHelp": "Tampal pautan profil atau halaman ejen anda",
-      "profilePlaceholder": "https://www.rumah123.com/agen-properti/...",
+      "profilePlaceholder": "https://www.example.com/agent/...",
       "profileCta": "Cari listing saya",
       "note": "Sesetengah portal menyekat pembacaan automatik. Jika itu berlaku, gunakan pautan listing satu persatu atau fail Excel. Kami tidak pernah meminta kata laluan portal lain."
     },
