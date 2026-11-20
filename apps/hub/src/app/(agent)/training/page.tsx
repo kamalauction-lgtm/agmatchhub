@@ -102,7 +102,7 @@ export default async function TrainingPage() {
                       <span
                         aria-hidden
                         className={`grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-bold ${
-                          isDone ? "bg-success text-white" : "border border-line text-muted"
+                          isDone ? "bg-success-fill text-white" : "border border-line text-muted"
                         }`}
                       >
                         {isDone ? "✓" : ""}

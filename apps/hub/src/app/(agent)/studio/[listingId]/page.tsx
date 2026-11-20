@@ -238,11 +238,11 @@ export default async function StudioWorkspacePage({
       />
 
       <p className="mt-4 text-sm text-muted">
-        <Link href="/studio/scheduled" className="font-medium text-crimson hover:underline">
+        <Link href="/studio/scheduled" className="tap font-medium text-crimson hover:underline">
           {t("queueLink")}
         </Link>
         {" · "}
-        <Link href="/studio/accounts" className="font-medium text-crimson hover:underline">
+        <Link href="/studio/accounts" className="tap font-medium text-crimson hover:underline">
           {t("accountsLink")}
         </Link>
       </p>

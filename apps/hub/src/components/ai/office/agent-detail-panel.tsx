@@ -133,9 +133,9 @@ export function AgentDetailPanel({
             <div className="flex flex-wrap gap-2 border-t border-line p-4">
               {worker.href && (
                 worker.external ? (
-                  <a href={worker.href} target="_blank" rel="noreferrer" className="rounded-lg bg-blue px-4 py-2 text-sm font-semibold text-white hover:bg-indigo">{labels.panel.open}</a>
+                  <a href={worker.href} target="_blank" rel="noreferrer" className="rounded-lg bg-blue-fill px-4 py-2 text-sm font-semibold text-white hover:bg-indigo">{labels.panel.open}</a>
                 ) : (
-                  <Link href={worker.href} className="rounded-lg bg-blue px-4 py-2 text-sm font-semibold text-white hover:bg-indigo">{labels.panel.open}</Link>
+                  <Link href={worker.href} className="rounded-lg bg-blue-fill px-4 py-2 text-sm font-semibold text-white hover:bg-indigo">{labels.panel.open}</Link>
                 )
               )}
               {worker.pending.length > 0 && (

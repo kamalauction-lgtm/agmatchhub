@@ -68,7 +68,7 @@ export function FileUpload({ labels }: { labels: Record<string, string> }) {
       <a
         href="/listings/import/template"
         download
-        className="text-xs font-semibold text-crimson hover:underline"
+        className="tap text-xs font-semibold text-crimson hover:underline"
       >
         {labels.template}
       </a>

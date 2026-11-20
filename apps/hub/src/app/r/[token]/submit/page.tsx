@@ -111,7 +111,7 @@ export default async function SubmitPropertyPage({
         <LanguageSwitcher />
       </header>
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
-        <Link href={`/r/${token}`} className="text-sm text-muted hover:text-foreground">
+        <Link href={`/r/${token}`} className="tap text-sm text-muted hover:text-foreground">
           ← {t("backToRequirement")}
         </Link>
         <h1 className="mt-2 mb-1 text-2xl font-semibold">{t("title")}</h1>

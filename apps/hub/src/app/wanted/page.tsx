@@ -225,7 +225,7 @@ export default async function WantedBoardPage({
                       </summary>
                       <div className="absolute right-0 bottom-12 z-10 rounded-xl border border-line bg-white p-3 shadow-raised">
                         <Image src={qr} alt="QR" width={150} height={150} unoptimized />
-                        <p className="mt-1 max-w-[150px] text-center text-[10px] text-muted">{t("qrHint")}</p>
+                        <p className="mt-1 max-w-[150px] text-center text-[10px] text-slate-600">{t("qrHint")}</p>
                       </div>
                     </details>
                   </div>

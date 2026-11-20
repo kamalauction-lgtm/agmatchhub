@@ -113,7 +113,7 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
           <input type="hidden" name="taskId" value={x.id} />
           <input type="hidden" name="status" value={x.status === "open" ? "done" : "open"} />
           <button type="submit" aria-label={x.status === "open" ? t("markDone") : t("reopen")}
-            className={`grid h-6 w-6 place-items-center rounded-full border text-xs ${x.status === "done" ? "border-success bg-success text-white" : "border-line hover:border-success"}`}>
+            className={`grid h-6 w-6 place-items-center rounded-full border text-xs ${x.status === "done" ? "border-success bg-success-fill text-white" : "border-line hover:border-success"}`}>
             {x.status === "done" ? "✓" : ""}
           </button>
         </form>
@@ -130,7 +130,7 @@ export default async function TasksPage({ searchParams }: { searchParams: Promis
           <form action={setTaskStatus}>
             <input type="hidden" name="taskId" value={x.id} />
             <input type="hidden" name="status" value="dismissed" />
-            <button type="submit" className="text-xs text-muted hover:text-danger">{t("dismiss")}</button>
+            <button type="submit" className="tap text-xs text-muted hover:text-danger">{t("dismiss")}</button>
           </form>
         )}
       </li>

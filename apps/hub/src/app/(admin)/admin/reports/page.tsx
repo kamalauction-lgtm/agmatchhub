@@ -76,7 +76,7 @@ export default async function ReportsQueuePage({
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <Link href={`/admin/reports/${r.id}`} className="font-medium text-crimson hover:underline">
+                    <Link href={`/admin/reports/${r.id}`} className="tap font-medium text-crimson hover:underline">
                       {t("review")}
                     </Link>
                   </td>

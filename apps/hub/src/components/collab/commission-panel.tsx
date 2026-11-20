@@ -167,7 +167,7 @@ export async function CommissionPanel({
       )}
 
       <details className="rounded-lg border border-line p-4">
-        <summary className="cursor-pointer text-sm font-semibold">
+        <summary className="tap cursor-pointer text-sm font-semibold">
           {agreement ? (isLocked ? t("proposeAmendment") : t("proposeCounter")) : t("proposeFirst")}
         </summary>
         <form action={proposeCommission} className="mt-3 space-y-3">

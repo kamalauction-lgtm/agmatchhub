@@ -139,7 +139,7 @@ export default async function AgentQueuePage({
                     </td>
                     <td className="px-4 py-3 text-muted">{r.created_at ? joined.format(new Date(r.created_at)) : "—"}</td>
                     <td className="px-4 py-3 text-right">
-                      <Link href={`/admin/agents/${r.id}`} className="font-medium text-crimson hover:underline">
+                      <Link href={`/admin/agents/${r.id}`} className="tap font-medium text-crimson hover:underline">
                         {t("review")}
                       </Link>
                     </td>

@@ -110,7 +110,7 @@ export default async function AgentDetailPage({
 
   return (
     <div>
-      <Link href="/admin/agents" className="text-sm text-muted hover:text-foreground">
+      <Link href="/admin/agents" className="tap text-sm text-muted hover:text-foreground">
         ← {t("agentsTitle")}
       </Link>
       <div className="mt-2 mb-6 flex items-center justify-between">
@@ -156,7 +156,7 @@ export default async function AgentDetailPage({
                 <li key={label as string} className="flex items-center justify-between rounded-lg bg-surface px-4 py-3">
                   <span>{label}</span>
                   {url ? (
-                    <a href={url as string} target="_blank" rel="noreferrer" className="font-medium text-crimson hover:underline">
+                    <a href={url as string} target="_blank" rel="noreferrer" className="tap font-medium text-crimson hover:underline">
                       {t("detail.view")}
                     </a>
                   ) : (
@@ -205,9 +205,9 @@ export default async function AgentDetailPage({
             {(cardFrontUrl || cardBackUrl) && (
               <p className="mt-3 text-sm">
                 {t("detail.nameCards")}:{" "}
-                {cardFrontUrl && <a href={cardFrontUrl} target="_blank" rel="noreferrer" className="font-medium text-crimson hover:underline">{t("detail.front")}</a>}
+                {cardFrontUrl && <a href={cardFrontUrl} target="_blank" rel="noreferrer" className="tap font-medium text-crimson hover:underline">{t("detail.front")}</a>}
                 {cardFrontUrl && cardBackUrl && " · "}
-                {cardBackUrl && <a href={cardBackUrl} target="_blank" rel="noreferrer" className="font-medium text-crimson hover:underline">{t("detail.back")}</a>}
+                {cardBackUrl && <a href={cardBackUrl} target="_blank" rel="noreferrer" className="tap font-medium text-crimson hover:underline">{t("detail.back")}</a>}
               </p>
             )}
           </section>
@@ -283,7 +283,7 @@ export default async function AgentDetailPage({
             </label>
             <div className="space-y-2">
               <button name="decision" value="approve" type="submit"
-                className="w-full rounded-lg bg-success px-4 py-2.5 font-semibold text-white hover:opacity-90">
+                className="w-full rounded-lg bg-success-fill px-4 py-2.5 font-semibold text-white hover:opacity-90">
                 {t("decision.approve")}
               </button>
               <button name="decision" value="request_info" type="submit"
@@ -313,7 +313,7 @@ export default async function AgentDetailPage({
                   <input type="hidden" name="userId" value={id} />
                   <textarea name="note" rows={2} maxLength={2000} placeholder={t("cert.notePlaceholder")} className={inputCls} />
                   <div className="flex gap-2">
-                    <button name="decision" value="approve" type="submit" className="flex-1 rounded-lg bg-success px-3 py-2 text-sm font-semibold text-white hover:opacity-90">{t("cert.approve")}</button>
+                    <button name="decision" value="approve" type="submit" className="flex-1 rounded-lg bg-success-fill px-3 py-2 text-sm font-semibold text-white hover:opacity-90">{t("cert.approve")}</button>
                     <button name="decision" value="reject" type="submit" className="flex-1 rounded-lg border border-danger px-3 py-2 text-sm font-semibold text-danger hover:bg-danger/10">{t("cert.reject")}</button>
                   </div>
                 </form>
@@ -343,7 +343,7 @@ export default async function AgentDetailPage({
                     <textarea name="note" rows={2} maxLength={2000} className={inputCls} />
                   </label>
                   <p className="text-xs text-muted">{t("a360.restoreHint", { n: openSuspension?.paused_listing_ids?.length ?? 0 })}</p>
-                  <button type="submit" className="w-full rounded-lg bg-success px-4 py-2.5 font-semibold text-white hover:opacity-90">{t("a360.restore")}</button>
+                  <button type="submit" className="w-full rounded-lg bg-success-fill px-4 py-2.5 font-semibold text-white hover:opacity-90">{t("a360.restore")}</button>
                 </form>
               </>
             ) : (

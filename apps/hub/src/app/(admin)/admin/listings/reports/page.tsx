@@ -48,7 +48,7 @@ export default async function ListingReportsPage({ searchParams }: { searchParam
 
   return (
     <div>
-      <Link href="/admin/listings" className="text-sm text-muted hover:text-foreground">← {t("back")}</Link>
+      <Link href="/admin/listings" className="tap text-sm text-muted hover:text-foreground">← {t("back")}</Link>
       <h1 className="mb-1 mt-2 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-6 text-sm text-muted" data-open={cards.length}>{t("hint")}</p>
 
@@ -72,7 +72,7 @@ export default async function ListingReportsPage({ searchParams }: { searchParam
                 <span className="rounded-full bg-warning/15 px-2 py-0.5 text-[11px] font-semibold text-warning">{t("count", { n: reports.length })}</span>
               </div>
               <p className="mt-1 text-xs">
-                <Link href={`/admin/listings?status=${listing.status === "published" ? "published" : listing.status}`} className="font-medium text-crimson hover:underline">{t("openModeration")}</Link>
+                <Link href={`/admin/listings?status=${listing.status === "published" ? "published" : listing.status}`} className="tap font-medium text-crimson hover:underline">{t("openModeration")}</Link>
               </p>
               <ul className="mt-3 space-y-3">
                 {reports.map((r) => (

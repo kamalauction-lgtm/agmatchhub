@@ -36,7 +36,7 @@ export default async function SASubmissionPage({
 
   return (
     <AgentShell wide>
-      <Link href="/submissions" className="text-sm text-muted hover:text-foreground">
+      <Link href="/submissions" className="tap text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>
       {/* Command band: ID, title and the exact status. Collaboration panels below are unchanged. */}

@@ -214,7 +214,7 @@ export async function Agent360({ userId }: { userId: string }) {
               {referredBy?.referrer ? (
                 <Link
                   href={`/admin/agents/${(referredBy.referrer as unknown as { id: string }).id}`}
-                  className="font-medium text-crimson hover:underline"
+                  className="tap font-medium text-crimson hover:underline"
                 >
                   {nameOf(referredBy.referrer)}
                 </Link>

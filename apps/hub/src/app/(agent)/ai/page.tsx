@@ -150,7 +150,7 @@ export default async function AiWorkforcePage() {
             <Link
               href="/ai/office"
               className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold text-white transition-colors"
-              style={{ background: "var(--blue)" }}
+              style={{ background: "var(--blue-fill)" }}
             >
               ✦ {t("watchOffice")}
             </Link>

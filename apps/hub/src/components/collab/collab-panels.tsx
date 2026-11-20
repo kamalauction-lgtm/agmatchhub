@@ -227,7 +227,7 @@ export async function CollabPanels({
         </div>
         {role === "ra" && (
           <details className="rounded-lg border border-line p-4">
-            <summary className="cursor-pointer text-sm font-semibold">{t("offers.newOffer")}</summary>
+            <summary className="tap cursor-pointer text-sm font-semibold">{t("offers.newOffer")}</summary>
             <form action={submitOffer} className="mt-3 space-y-3">
               <input type="hidden" name="submissionId" value={submissionId} />
               <input type="hidden" name="offerType" value={offerType} />
@@ -288,7 +288,7 @@ export async function CollabPanels({
           ))}
         </div>
         <details className="rounded-lg border border-line p-4">
-          <summary className="cursor-pointer text-sm font-semibold">{t("viewings.propose")}</summary>
+          <summary className="tap cursor-pointer text-sm font-semibold">{t("viewings.propose")}</summary>
           <form action={requestViewing} className="mt-3 space-y-3">
             <input type="hidden" name="submissionId" value={submissionId} />
             <div className="grid gap-3 sm:grid-cols-3">

@@ -35,7 +35,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
 
   return (
     <div>
-      <Link href="/admin/agents" className="text-sm text-muted hover:text-foreground">← {t("back")}</Link>
+      <Link href="/admin/agents" className="tap text-sm text-muted hover:text-foreground">← {t("back")}</Link>
       <h1 className="mb-1 mt-2 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-6 max-w-3xl text-sm text-muted">{t("hint")}</p>
       {sp.done && <p className="mb-4 rounded-lg bg-success/10 px-4 py-3 text-sm font-medium text-success" role="status">{t(`done.${sp.done}` as never)}</p>}
@@ -54,7 +54,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
         <p className="mb-8 rounded-xl border border-warning/40 bg-warning/5 p-4 text-sm" data-pipeline-locked="1">{t("locked")}</p>
       ) : (
         <details className="mb-8 rounded-xl border border-line p-4" data-prospect-add="1">
-          <summary className="cursor-pointer text-sm font-semibold">{t("add")}</summary>
+          <summary className="tap cursor-pointer text-sm font-semibold">{t("add")}</summary>
           <form action={addProspect} className="mt-3 grid max-w-4xl gap-3 sm:grid-cols-3">
             <select name="countryCode" required defaultValue="" className={field} aria-label={t("fields.country")}>
               <option value="" disabled>{t("fields.country")}</option>
@@ -96,7 +96,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
                   </form>
                   <form action={deleteProspect}>
                     <input type="hidden" name="prospectId" value={p.id} />
-                    <button type="submit" className="cursor-pointer text-[11px] text-danger hover:underline">{t("delete")}</button>
+                    <button type="submit" className="tap cursor-pointer text-[11px] text-danger hover:underline">{t("delete")}</button>
                   </form>
                 </li>
               ))}

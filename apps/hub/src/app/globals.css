@@ -46,6 +46,10 @@
      stays #c62828 in dark mode too — 5.6:1 with white, where --crimson is
      4.2:1 in light and 3.3:1 in dark. */
   --crimson-fill: #c62828;
+  /* Green that carries white text at 5.0:1 in both modes. `--success` turns
+     bright in dark mode, where white on it is 1.7:1. */
+  --success-fill: #15803d;
+  --blue-fill: #2563eb;      /* white text 5.2:1 in both modes */
   --navy: #0d182a;
   --navy-soft: #f1f5f9;
 
@@ -161,6 +165,8 @@
   --color-crimson-strong: var(--crimson-strong);
   --color-crimson-soft: var(--crimson-soft);
   --color-crimson-fill: var(--crimson-fill);
+  --color-success-fill: var(--success-fill);
+  --color-blue-fill: var(--blue-fill);
   --color-navy: var(--navy);
   --color-navy-soft: var(--navy-soft);
   --color-blue: var(--blue);
@@ -341,4 +347,20 @@ h3 { font-size: 1.25rem; line-height: 1.4; font-weight: 600; }
   .office3d-plate-state { display: none; }
   .office3d-sign { font-size: 8px; padding: 2px 6px; letter-spacing: 0.04em; }
   .office3d-hint { font-size: 10px; max-width: calc(100% - 24px); }
+}
+
+/* A text link or disclosure that is only a line of small type gets a taller
+   invisible hit area (36px, at least 44px wide) without moving the layout.
+   WCAG 2.5.8 asks for 24px; fingers want more. */
+@utility tap {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: 36px;
+    transform: translate(-50%, -50%);
+  }
 }

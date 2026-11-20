@@ -68,7 +68,7 @@ export default async function AdminRequestDetail({
 
   return (
     <div>
-      <Link href="/admin/requests" className="text-sm text-muted hover:text-foreground">
+      <Link href="/admin/requests" className="tap text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>
       <div className="mt-2 mb-1 flex items-center justify-between gap-4">
@@ -126,7 +126,7 @@ export default async function AdminRequestDetail({
                 </label>
                 <div className="space-y-2">
                   <button name="decision" value="approve" type="submit"
-                    className="w-full rounded-lg bg-success px-4 py-2.5 font-semibold text-white hover:opacity-90">
+                    className="w-full rounded-lg bg-success-fill px-4 py-2.5 font-semibold text-white hover:opacity-90">
                     {t("decision.approve")}
                   </button>
                   <button name="decision" value="amendment" type="submit"

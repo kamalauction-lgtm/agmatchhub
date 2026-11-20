@@ -36,8 +36,8 @@ export async function OnboardingGuide() {
       <ol className="grid gap-x-6 px-5 py-3 sm:grid-cols-2">
         {steps.map((s) => (
           <li key={s.step} className="flex items-center gap-3 py-1.5 text-sm">
-            <span aria-hidden className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[11px] font-bold ${s.done ? "bg-success text-white" : "border border-line text-muted"}`}>{s.done ? "✓" : ""}</span>
-            {s.done ? <span className="text-muted line-through">{t(`steps.${s.step}` as never)}</span> : <Link href={HREF[s.step] ?? "/dashboard"} className="font-medium hover:text-crimson">{t(`steps.${s.step}` as never)}</Link>}
+            <span aria-hidden className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[11px] font-bold ${s.done ? "bg-success-fill text-white" : "border border-line text-muted"}`}>{s.done ? "✓" : ""}</span>
+            {s.done ? <span className="text-muted line-through">{t(`steps.${s.step}` as never)}</span> : <Link href={HREF[s.step] ?? "/dashboard"} className="tap font-medium hover:text-crimson">{t(`steps.${s.step}` as never)}</Link>}
           </li>
         ))}
       </ol>

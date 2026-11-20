@@ -72,7 +72,7 @@ export function OutreachTool({ action, labels }: { action: (input: unknown) => P
               <div className="mt-3 flex flex-wrap gap-2">
                 <CopyButton text={text} label={labels.copy} copiedLabel={labels.copied} />
                 {f.channel === "whatsapp" && wa && (
-                  <a href={`https://wa.me/${wa}?text=${encodeURIComponent(text)}`} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-success px-3 py-2 text-xs font-semibold text-white hover:opacity-90">{labels.openWhatsapp}</a>
+                  <a href={`https://wa.me/${wa}?text=${encodeURIComponent(text)}`} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-success-fill px-3 py-2 text-xs font-semibold text-white hover:opacity-90">{labels.openWhatsapp}</a>
                 )}
               </div>
             </div>

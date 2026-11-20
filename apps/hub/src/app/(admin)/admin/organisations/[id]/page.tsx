@@ -117,7 +117,7 @@ export default async function OrganisationDetail({
       )}
 
       <details className="mb-6 rounded-xl border border-line p-4" data-agency-edit="1">
-        <summary className="cursor-pointer text-sm font-semibold">{t("agencyForm.edit")}</summary>
+        <summary className="tap cursor-pointer text-sm font-semibold">{t("agencyForm.edit")}</summary>
         <form action={saveAgency} className="mt-3 grid gap-3 sm:grid-cols-3">
           <input type="hidden" name="agencyId" value={agency.id} />
           <label className="block text-sm"><span className="mb-1 block text-xs text-muted">{t("agencyForm.name")}</span>

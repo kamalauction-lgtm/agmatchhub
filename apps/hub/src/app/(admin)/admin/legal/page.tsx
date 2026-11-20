@@ -61,7 +61,7 @@ export default async function LegalContentPage({
                       </div>
                       {active && (
                         <details>
-                          <summary className="cursor-pointer text-xs font-medium text-crimson">
+                          <summary className="tap cursor-pointer text-xs font-medium text-crimson">
                             {t("viewText")}
                           </summary>
                           <p className="mt-2 text-xs leading-5 whitespace-pre-line text-muted">
@@ -75,7 +75,7 @@ export default async function LegalContentPage({
               </div>
 
               <details className="rounded-lg border border-line p-4">
-                <summary className="cursor-pointer text-sm font-medium">
+                <summary className="tap cursor-pointer text-sm font-medium">
                   {t("publishNew")}
                 </summary>
                 <form action={publishDeclarationVersion} className="mt-4 max-w-3xl space-y-3">

@@ -78,7 +78,7 @@ export default async function AdminRequestsPage({
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <Link href={`/admin/requests/${r.id}`} className="font-medium text-crimson hover:underline">
+                      <Link href={`/admin/requests/${r.id}`} className="tap font-medium text-crimson hover:underline">
                         {t("review")}
                       </Link>
                     </td>

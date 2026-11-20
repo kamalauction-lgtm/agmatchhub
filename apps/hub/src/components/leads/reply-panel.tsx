@@ -189,7 +189,7 @@ export function ReplyPanel({
               </form>
             )}
             {channel === "whatsapp" && waHref && (
-              <a href={waHref} target="_blank" rel="noopener noreferrer" className={`${btn} bg-success text-white hover:opacity-90`}>
+              <a href={waHref} target="_blank" rel="noopener noreferrer" className={`${btn} bg-success-fill text-white hover:opacity-90`}>
                 {labels.openWhatsapp}
               </a>
             )}

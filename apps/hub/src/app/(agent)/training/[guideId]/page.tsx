@@ -90,7 +90,7 @@ export default async function GuidePage({
             <input type="hidden" name="guideId" value={row.id} />
             <button
               type="submit"
-              className="rounded-lg bg-success px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
+              className="rounded-lg bg-success-fill px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
             >
               {t("markComplete")}
             </button>

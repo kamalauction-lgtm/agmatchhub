@@ -68,7 +68,7 @@ export default async function PresentationBuilderPage({
 
   return (
     <AgentShell>
-      <Link href={`/requests/${id}`} className="text-sm text-muted hover:text-foreground">
+      <Link href={`/requests/${id}`} className="tap text-sm text-muted hover:text-foreground">
         ← {request.title}
       </Link>
       <h1 className="mt-2 mb-2 text-2xl font-semibold">{isEdit ? t("editTitle") : t("builderTitle")}</h1>

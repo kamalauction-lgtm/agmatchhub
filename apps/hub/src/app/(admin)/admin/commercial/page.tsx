@@ -196,7 +196,7 @@ export default async function CommercialPage({
 
                 {history.length > 0 && (
                   <details className="mt-3">
-                    <summary className="cursor-pointer text-xs font-semibold text-muted">
+                    <summary className="tap cursor-pointer text-xs font-semibold text-muted">
                       {t("priceHistory", { count: history.length })}
                     </summary>
                     <ul className="mt-2 space-y-1 text-xs text-muted">
@@ -287,7 +287,7 @@ export default async function CommercialPage({
                   <tr key={g.id} className="border-b border-line last:border-0">
                     <td className="px-4 py-3">
                       {who ? (
-                        <Link href={`/admin/agents/${who.id}`} className="font-medium text-crimson hover:underline">
+                        <Link href={`/admin/agents/${who.id}`} className="tap font-medium text-crimson hover:underline">
                           {who.display_name}
                         </Link>
                       ) : "—"}

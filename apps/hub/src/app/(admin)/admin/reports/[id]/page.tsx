@@ -43,7 +43,7 @@ export default async function ReportDetailPage({
 
   return (
     <div>
-      <Link href="/admin/reports" className="text-sm text-muted hover:text-foreground">
+      <Link href="/admin/reports" className="tap text-sm text-muted hover:text-foreground">
         ← {t("title")}
       </Link>
       <div className="mt-2 mb-1 flex items-center justify-between">
