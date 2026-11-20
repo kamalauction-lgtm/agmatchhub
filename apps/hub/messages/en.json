@@ -3069,10 +3069,10 @@
       "tabUrls": "Paste listing links",
       "tabProfile": "Agent page link",
       "urlsHelp": "Paste one link per line",
-      "urlsPlaceholder": "https://www.rumah123.com/properti/...\nhttps://www.99.co/id/properti/...",
+      "urlsPlaceholder": "https://www.example.com/listing/...\nhttps://www.example.com/listing/...",
       "urlsCta": "Import listings",
       "profileHelp": "Paste your agent or profile page link",
-      "profilePlaceholder": "https://www.rumah123.com/agen-properti/...",
+      "profilePlaceholder": "https://www.example.com/agent/...",
       "profileCta": "Find my listings",
       "note": "Some portals block automated reading. When that happens, use individual listing links or an Excel file. We never ask for another portal's password."
     },
