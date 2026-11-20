@@ -264,3 +264,15 @@
 - **Checks on production:** signed in through the owner's browser session, read-only, at 1920px: the budget box is 206px wide with its hint in full; the open-an-account placeholder reads "e.g. a link to their profile on another portal".
 - **Not checked:** phone widths, dark mode, Malay.
 - **Still open:** the Indonesian and Malay wording of the three Legal labels awaits the owner's review; the listing-import placeholders still show example URLs from portals the importer supports.
+
+## Follow-up release, 20 Nov 2026 (night): neutral import examples, Legal label wording
+
+- **What:** PR #68 (merge `76a3a95`).
+  - The listing-import placeholders use `example.com` links instead of naming portals (en, id, ms). The Portal dropdown still lists the portals the importer supports.
+  - Legal content labels (admin-facing titles, not the legal text): `Kewenangan` (id) matches the term used elsewhere; the buyer-inquiry label is reworded in id and ms.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `aea94fd3` (rollback `36918eab`); staging `730f78bf`.
+- **Help:** the portal import picture re-taken on staging (2 files).
+- **Checks on staging:** the re-taken import picture shows the new placeholder. Typecheck passes. CI: checks and rls green.
+- **Checks on production:** signed in through the owner's browser session, read-only, in English: the import placeholder shows the `example.com` links; Legal content shows six named documents.
+- **Not checked:** the reworded Indonesian and Malay Legal labels were not viewed on production (the session was in English). They remain the author's translation, not a native-speaker or legal review.
