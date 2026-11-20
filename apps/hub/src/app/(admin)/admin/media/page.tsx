@@ -135,7 +135,7 @@ export default async function PhotoQualityCentre({
   const btn = "cursor-pointer rounded-md border border-line px-2 py-1 text-xs font-medium hover:border-crimson hover:text-crimson";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div>
       <h1 className="text-2xl font-semibold">{t("title")}</h1>
       <p className="mt-1 max-w-3xl text-sm text-muted">{t("intro")}</p>
 

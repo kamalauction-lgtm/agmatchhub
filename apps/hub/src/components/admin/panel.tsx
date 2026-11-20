@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { Sparkline } from "./charts";
 
@@ -113,7 +114,8 @@ export function StatCard({
           aria-hidden
           className={`grid h-11 w-11 shrink-0 place-items-center rounded-full text-lg ${TONES[tone]}`}
         >
-          {icon}
+          {/* A name from ui/icon.tsx draws the outline icon; a legacy glyph is shown as given. */}
+          {/^[a-z-]+$/.test(icon) ? <Icon name={icon} size={22} /> : icon}
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium leading-snug text-muted">{label}</p>

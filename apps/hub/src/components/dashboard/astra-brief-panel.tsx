@@ -106,9 +106,9 @@ export function AstraBriefPanel(p: AstraBriefPanelProps) {
           ) : (
             <div className="px-5 py-4">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted">{p.labels.priorities}</p>
-              <ol className="grid gap-2 md:grid-cols-2">
+              <ol className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 {p.actions.map((a, i) => (
-                  <li key={a.key}>
+                  <li key={a.key} className="min-w-0">
                     <Link
                       href={a.href}
                       className={buttonClass("secondary", "w-full justify-between text-left")}

@@ -87,7 +87,7 @@ export default async function MyCardPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-[24rem_1fr]">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-[24rem_minmax(0,1fr)]">
           <div>
             <CardView card={card} labels={labels} listings={previewListings} />
           </div>

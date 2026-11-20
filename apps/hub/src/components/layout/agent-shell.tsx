@@ -6,7 +6,9 @@ import { createClient } from "@/lib/supabase/server";
 import { brand } from "@/config/brand";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
-import { RailNav, type RailGroup } from "@/components/layout/rail-nav";
+import { BottomTabs, type RailGroup } from "@/components/layout/rail-nav";
+import { MobileNav, Sidebar, type SidebarLabels } from "@/components/layout/sidebar";
+import { Icon } from "@/components/ui/icon";
 import { signOut } from "@/app/(auth)/actions";
 
 /**
@@ -20,24 +22,24 @@ import { signOut } from "@/app/(auth)/actions";
  *
  * Desktop uses a left rail, the shape every benchmarked agent platform
  * converges on because it scales past six destinations. Phones keep a
- * five-tab bottom bar, and the tabs changed too: Leads and Listings replace
- * the MatchHub-specific ones.
+ * five-tab bottom bar for the daily destinations, plus a Menu drawer with
+ * everything else (19 Nov 2026: before it, thirteen pages were unreachable
+ * on a phone without typing the address). The rail starts at lg: at tablet
+ * widths 18rem of menu left too little room for the page.
+ *
+ * 19 Nov 2026 (owner: "side bar too small, too much empty space"): the rail
+ * is wider with larger rows and can fold to icons; pages use more of the
+ * screen — 64rem by default, 87.5rem when `wide`.
  */
 
-type NavItem = {
-  href: string;
-  icon: string;
-  label: string;
-  badge?: number;
-  accent?: boolean;
-};
+type NavItem = { href: string; icon: string; label: string };
 
 export async function AgentShell({
   children,
   wide = false,
 }: {
   children: React.ReactNode;
-  /** `true` widens to 6xl; "full" lets a page such as the Live Office use the whole viewport. */
+  /** `true` widens to 1400px; "full" lets a page such as the Live Office use the whole viewport. */
   wide?: boolean | "full";
 }) {
   const partnerIdentityPublic = await isPartnerIdentityPublic();
@@ -78,148 +80,173 @@ export async function AgentShell({
 
   const sections: RailGroup[] = [
     {
+      id: "main",
       title: null,
-      items: [{ href: "/dashboard", icon: "🏠", label: t("dashboard") }],
+      items: [{ href: "/dashboard", icon: "home", label: t("dashboard") }],
     },
     {
+      id: "work",
       title: t("sectionWork"),
       items: [
-        { href: "/leads", icon: "📥", label: t("leads") },
-        { href: "/tasks", icon: "☑️", label: t("tasks") },
-        { href: "/listings", icon: "🏘️", label: t("listings") },
-        // Not 📥 — that is Leads, one row up, and two identical icons in one
-        // section is how a nav item becomes invisible.
-        { href: "/listings/import", icon: "📦", label: t("importListings") },
-        { href: "/growth", icon: "📈", label: t("growth") },
-        { href: "/studio", icon: "✨", label: t("studio") },
-        { href: "/ai", icon: "✦", label: t("aiWorkforce") },
-        { href: "/training", icon: "🎓", label: t("training") },
+        { href: "/leads", icon: "inbox", label: t("leads") },
+        { href: "/tasks", icon: "check-square", label: t("tasks") },
+        { href: "/listings", icon: "building", label: t("listings") },
+        { href: "/listings/import", icon: "package", label: t("importListings") },
+        { href: "/growth", icon: "trending-up", label: t("growth") },
+        { href: "/studio", icon: "sparkles", label: t("studio") },
+        { href: "/ai", icon: "bot", label: t("aiWorkforce") },
+        { href: "/training", icon: "graduation-cap", label: t("training") },
       ],
     },
     {
+      id: "collab",
       title: t("sectionCollaboration"),
       items: [
-        { href: "/collab/pool", icon: "🔁", label: t("pool") },
-        { href: "/requests", icon: "📋", label: t("requests") },
-        { href: "/submissions", icon: "🏢", label: t("submissions") },
-        { href: "/wanted", icon: "📣", label: t("wanted"), accent: true },
+        { href: "/collab/pool", icon: "repeat", label: t("pool") },
+        { href: "/requests", icon: "clipboard", label: t("requests") },
+        { href: "/submissions", icon: "send", label: t("submissions") },
+        { href: "/wanted", icon: "megaphone", label: t("wanted"), accent: true },
       ],
     },
     {
+      id: "account",
       title: t("sectionAccount"),
       items: [
-        { href: "/notifications", icon: "🔔", label: t("notifications"), badge: unread ?? 0 },
-        { href: "/profile", icon: "👤", label: t("profile") },
-        { href: "/plan", icon: "🧾", label: t("plan") },
-        { href: "/card", icon: "💳", label: t("card") },
-        { href: "/help", icon: "❓", label: t("help") },
+        { href: "/notifications", icon: "bell", label: t("notifications"), badge: unread ?? 0 },
+        { href: "/profile", icon: "user", label: t("profile") },
+        { href: "/plan", icon: "receipt", label: t("plan") },
+        { href: "/card", icon: "id-card", label: t("card") },
+        { href: "/help", icon: "help", label: t("help") },
       ],
     },
   ];
 
   const bottomTabs: NavItem[] = [
-    { href: "/dashboard", icon: "🏠", label: t("dashboard") },
-    { href: "/leads", icon: "📥", label: t("leads") },
-    { href: "/listings", icon: "🏘️", label: t("listings") },
-    { href: "/requests", icon: "🤝", label: t("matchhub") },
-    { href: "/profile", icon: "👤", label: t("profile") },
+    { href: "/dashboard", icon: "home", label: t("dashboard") },
+    { href: "/leads", icon: "inbox", label: t("leads") },
+    { href: "/listings", icon: "building", label: t("listings") },
+    { href: "/requests", icon: "handshake", label: t("matchhub") },
+    { href: "/profile", icon: "user", label: t("profile") },
   ];
 
-  return (
-    <div className="min-h-screen sm:flex">
-      {/* Desktop rail ---------------------------------------------------- */}
-      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-line bg-card sm:flex">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-2 border-b border-line px-5 py-4"
-          aria-label={partnerIdentityPublic ? brand.appName : brand.appNameNeutral}
-        >
-          <span
-            aria-hidden
-            className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-crimson text-sm font-black text-white"
-          >
-            {brand.appShortName.charAt(0)}
-          </span>
-          <span className="truncate text-sm font-bold tracking-tight">
-            {brand.appShortName}
-          </span>
-        </Link>
+  const labels: SidebarLabels = {
+    collapse: tc("collapseMenu"),
+    expand: tc("expandMenu"),
+    menu: tc("menu"),
+    close: tc("closeMenu"),
+    find: tc("findPage"),
+    noMatch: tc("noPageMatch"),
+  };
 
-        {/* Who you are, and your Verified Agent badge (voluntary, 00129). */}
-        <div className="border-b border-line px-4 py-4 text-center">
-          {/* `avatar_url` is a storage PATH in the public profile bucket, not a
-              URL; resolve it, and fall back to the initial if the file is gone. */}
-          <ProfileAvatar
-            src={profilePhotoUrl(profile?.avatar_url ?? null)}
-            name={profile?.display_name}
-            size={64}
-            className="mx-auto"
-          />
-          <p className="mt-2 truncate text-sm font-bold">{profile?.display_name ?? "—"}</p>
-          <p className="text-xs text-muted">{t("agentRole")}</p>
-          {/* The Verified badge is voluntary since 00129: a quiet invitation
-              when it is missing, never a warning. */}
+  const appName = partnerIdentityPublic ? brand.appName : brand.appNameNeutral;
+  const mark = (
+    <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-crimson-fill text-base font-black text-white">
+      {brand.appShortName.charAt(0)}
+    </span>
+  );
+  const brandLink = (
+    <Link href="/dashboard" className="flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
+      {mark}
+      <span className="truncate text-base font-bold tracking-tight">{brand.appShortName}</span>
+    </Link>
+  );
+
+  /* Who you are, and your Verified Agent badge (voluntary, 00129): a quiet
+     invitation when it is missing, never a warning. One row instead of the
+     old centred card, which spent 150px before the first menu item.
+     `avatar_url` is a storage PATH in the public profile bucket, not a URL. */
+  const profileCard = (
+    <div className="border-b border-line p-3" data-rail-profile="1">
+      <div className="flex items-center gap-3 rounded-xl bg-surface p-3">
+        <ProfileAvatar src={profilePhotoUrl(profile?.avatar_url ?? null)} name={profile?.display_name} size={44} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[15px] font-bold leading-5">{profile?.display_name ?? "—"}</p>
+          <p className="truncate text-xs text-muted-strong">{t("agentRole")}</p>
           {profile?.agent_status === "verified" ? (
-            <span className="mt-2 inline-block rounded-full bg-success-soft px-2.5 py-0.5 text-[11px] font-semibold text-success">
-              ✓ {t("verifiedBadge")}
+            <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-xs font-semibold text-success-ink">
+              <Icon name="check" size={12} />
+              {t("verifiedBadge")}
             </span>
           ) : (
             <Link
               href="/verification"
-              className="mt-2 inline-block rounded-full border border-line px-2.5 py-0.5 text-[11px] font-semibold text-muted transition-colors hover:border-crimson hover:text-crimson"
+              className="mt-1 inline-flex min-h-8 items-center gap-1 rounded-full border border-line bg-card px-3 text-xs font-semibold text-muted-strong transition-colors duration-150 hover:border-crimson hover:text-crimson-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
             >
               {t("unverifiedBadge")}
+              <Icon name="arrow-right" size={12} />
             </Link>
           )}
         </div>
+      </div>
+    </div>
+  );
 
-        <RailNav groups={sections} />
+  const signOutFull = (
+    <form action={signOut}>
+      <button
+        type="submit"
+        className="flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium text-muted-strong transition-colors duration-150 hover:bg-surface hover:text-danger focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+      >
+        <Icon name="log-out" size={20} />
+        {tc("signOut")}
+      </button>
+    </form>
+  );
+  const signOutCompact = (
+    <form action={signOut}>
+      <button
+        type="submit"
+        aria-label={tc("signOut")}
+        title={tc("signOut")}
+        className="grid min-h-11 w-full cursor-pointer place-items-center rounded-xl text-muted-strong transition-colors duration-150 hover:bg-surface hover:text-danger focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+      >
+        <Icon name="log-out" size={20} />
+      </button>
+    </form>
+  );
 
-        <div className="border-t border-line p-3">
-          <form action={signOut}>
-            <button
-              type="submit"
-              className="w-full cursor-pointer rounded-lg px-3 py-2 text-left text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface hover:text-danger"
-            >
-              {tc("signOut")}
-            </button>
-          </form>
-        </div>
-      </aside>
+  return (
+    <div className="min-h-screen lg:flex">
+      {/* Desktop rail ---------------------------------------------------- */}
+      <Sidebar
+        groups={sections}
+        storageKey="agent-rail"
+        labels={labels}
+        header={brandLink}
+        headerCompact={<Link href="/dashboard" aria-label={appName}>{mark}</Link>}
+        top={profileCard}
+        footer={signOutFull}
+        footerCompact={signOutCompact}
+      />
 
       {/* Content column --------------------------------------------------- */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-line bg-card/95 px-4 py-3 backdrop-blur sm:px-6">
-          {/* Brand shows on phones, where the rail is hidden */}
-          <Link href="/dashboard" className="flex items-center gap-2 sm:hidden">
-            <span
-              aria-hidden
-              className="grid h-8 w-8 place-items-center rounded-lg bg-crimson text-sm font-black text-white"
-            >
-              {brand.appShortName.charAt(0)}
-            </span>
-            <span className="text-sm font-bold">{brand.appShortName}</span>
-          </Link>
-          <span className="hidden sm:block" />
+        <header className="sticky top-0 z-20 flex min-h-[4.25rem] items-center justify-between gap-3 border-b border-line bg-card/95 px-4 py-3 backdrop-blur sm:px-6">
+          {/* Menu + brand show on phones, where the rail is hidden */}
+          <div className="flex min-w-0 items-center gap-3 lg:hidden">
+            <MobileNav groups={sections} storageKey="agent-rail" labels={labels} header={brandLink} footer={signOutFull} />
+            <Link href="/dashboard" className="truncate text-base font-bold">{brand.appShortName}</Link>
+          </div>
+          <span className="hidden lg:block" />
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/notifications"
               aria-label={t("notifications")}
-              className="relative rounded-lg border border-line px-3 py-2 text-sm hover:border-crimson"
+              className="relative grid h-11 w-11 place-items-center rounded-lg border border-line text-muted-strong transition-colors duration-150 hover:border-crimson hover:text-crimson focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
             >
-              🔔
+              <Icon name="bell" size={20} />
               {(unread ?? 0) > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-crimson px-1 text-[10px] font-bold text-white">
-                  {unread}
+                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-crimson-fill px-1 text-[11px] font-bold text-white">
+                  {(unread ?? 0) > 99 ? "99+" : unread}
                 </span>
               )}
             </Link>
             <LanguageSwitcher />
-            <form action={signOut} className="hidden sm:block">
+            <form action={signOut} className="hidden lg:block">
               <button
                 type="submit"
-                className="rounded-lg border border-line px-3 py-2 text-sm font-medium hover:border-crimson hover:text-crimson"
+                className="min-h-11 cursor-pointer rounded-lg border border-line px-4 text-sm font-medium transition-colors duration-150 hover:border-crimson hover:text-crimson focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
               >
                 {tc("signOut")}
               </button>
@@ -228,8 +255,8 @@ export async function AgentShell({
         </header>
 
         <main
-          className={`mx-auto w-full flex-1 px-4 py-6 pb-24 sm:px-6 sm:py-8 sm:pb-10 ${
-            wide === "full" ? "max-w-[1700px]" : wide ? "max-w-6xl" : "max-w-3xl"
+          className={`mx-auto w-full flex-1 px-4 py-6 pb-24 sm:px-8 sm:py-8 lg:pb-10 ${
+            wide === "full" ? "max-w-[1700px]" : wide ? "max-w-[1400px]" : "max-w-5xl"
           }`}
         >
           {blocked && ts ? (
@@ -248,18 +275,7 @@ export async function AgentShell({
       </div>
 
       {/* Phone bottom bar (§37 mobile-first) ------------------------------- */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex border-t border-line bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden">
-        {bottomTabs.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="relative flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium text-muted active:text-crimson"
-          >
-            <span className="text-xl leading-none">{item.icon}</span>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
+      <BottomTabs items={bottomTabs} label={tc("quickNav")} className="lg:hidden" />
     </div>
   );
 }

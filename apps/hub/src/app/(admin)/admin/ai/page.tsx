@@ -132,7 +132,7 @@ export default async function AiAdminPage({
       </div>
 
       {/* Chart + by feature ----------------------------------------------- */}
-      <div className="mb-6 grid gap-6 xl:grid-cols-5">
+      <div className="mb-6 grid grid-cols-1 gap-6 xl:grid-cols-5">
         <Panel title={t("chartTitle")} className="xl:col-span-3">
           <BarChart
             labels={days.map((d) => d.day.slice(5))}

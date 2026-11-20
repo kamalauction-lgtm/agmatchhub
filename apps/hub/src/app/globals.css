@@ -42,6 +42,10 @@
   --crimson: #e53935;        /* Red — primary */
   --crimson-strong: #c62828;
   --crimson-soft: #fef2f2;
+  /* Fill behind WHITE text (badges, marks, primary buttons in the shells):
+     stays #c62828 in dark mode too — 5.6:1 with white, where --crimson is
+     4.2:1 in light and 3.3:1 in dark. */
+  --crimson-fill: #c62828;
   --navy: #0d182a;
   --navy-soft: #f1f5f9;
 
@@ -156,6 +160,7 @@
   --color-crimson: var(--crimson);
   --color-crimson-strong: var(--crimson-strong);
   --color-crimson-soft: var(--crimson-soft);
+  --color-crimson-fill: var(--crimson-fill);
   --color-navy: var(--navy);
   --color-navy-soft: var(--navy-soft);
   --color-blue: var(--blue);

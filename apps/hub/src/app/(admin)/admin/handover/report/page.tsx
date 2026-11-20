@@ -54,7 +54,7 @@ export default async function HandoverReportPage() {
   );
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8" data-handover-report="1">
+    <div data-handover-report="1">
       <Link href="/admin/handover" className="text-sm text-muted hover:text-foreground">← {t("back")}</Link>
       <h1 className="mb-1 mt-2 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-6 max-w-3xl text-sm text-muted">{t("hint")}</p>

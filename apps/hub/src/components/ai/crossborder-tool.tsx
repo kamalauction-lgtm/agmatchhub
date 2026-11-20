@@ -58,7 +58,7 @@ export function CrossborderTool({ action, countries, listings, initialListingCou
       {err && <p className="text-sm text-danger">{labels.reasons.failed}</p>}
 
       {r && (
-        <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
+        <div className="grid gap-5 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <section className="rounded-xl border border-line bg-card p-4">
             {!r.allVerified && <p className="mb-3 rounded-lg bg-warning/10 px-3 py-2 text-xs font-medium text-warning">{labels.draftBanner}</p>}
             <AiStatus source={r.source} reason={r.reason} model={r.model} labels={labels} className="mb-2" />

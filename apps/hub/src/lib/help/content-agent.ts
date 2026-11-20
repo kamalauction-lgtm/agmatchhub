@@ -232,6 +232,9 @@ export const AGENT_TOPICS: HelpTopic[] = [
           { en: "Notifications (bell): approvals, questions from moderators, certificate decisions and reminders.", id: "Notifikasi (ikon lonceng): persetujuan, pertanyaan moderator, keputusan sertifikat, dan pengingat.", shot: "g-nav-notifications" },
           { en: "My name card: your public digital card with your listings and badges. Share its link on WhatsApp.", id: "Kartu nama saya: kartu digital publik berisi listing dan lencana Anda. Bagikan tautannya lewat WhatsApp.", shot: "g-nav-card" },
         ],
+        notes: [
+          { en: "The menu on the left: press a group title to fold it, and use the button at the top to shrink the menu to icons. On a phone, the bar at the bottom has your daily pages and Menu (top left) has everything else.", id: "Menu di sebelah kiri: tekan judul grup untuk melipatnya, dan gunakan tombol di atas untuk mengecilkan menu menjadi ikon. Di ponsel, bilah di bawah berisi halaman harian Anda dan Menu (kiri atas) berisi semua halaman lainnya." },
+        ],
       },
     ],
   },

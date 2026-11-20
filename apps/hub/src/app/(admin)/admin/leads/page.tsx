@@ -63,7 +63,7 @@ export default async function LeadsResponsePage({ searchParams }: { searchParams
   const card = "rounded-xl border border-line p-4";
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div>
       <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-4 text-sm text-muted">{t("hint")}</p>
       <nav className="mb-6 flex flex-wrap gap-2" aria-label={t("period")}>

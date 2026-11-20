@@ -35,7 +35,7 @@ export default async function SourcesPage({ searchParams }: { searchParams: Prom
   const tone = (s: string) => (s === "allowed" ? "bg-success/15 text-success" : s === "forbidden" ? "bg-danger/15 text-danger" : s === "agent_supplied_only" ? "bg-warning/15 text-warning" : "bg-surface text-muted");
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div>
       <h1 className="mb-1 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-4 max-w-3xl text-sm text-muted">{t("hint")}</p>
       <p className="mb-6 rounded-lg border border-warning/40 bg-warning/5 px-4 py-3 text-sm" data-resync-blocked="1">{t("resyncBlocked")}</p>

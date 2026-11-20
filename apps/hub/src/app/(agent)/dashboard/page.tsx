@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -276,7 +277,7 @@ export default async function DashboardPage({
             {/* Headline numbers ------------------------------------------ */}
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               <AgentKpi
-                icon="🏠"
+                icon="home"
                 tone="blue"
                 value={format.number(summary.listings_published)}
                 label={t("kpi.liveListings")}
@@ -285,7 +286,7 @@ export default async function DashboardPage({
                 href="/listings"
               />
               <AgentKpi
-                icon="📥"
+                icon="inbox"
                 tone="indigo"
                 value={format.number(summary.leads_total)}
                 label={t("kpi.leads")}
@@ -294,7 +295,7 @@ export default async function DashboardPage({
                 href="/leads"
               />
               <AgentKpi
-                icon="⏱"
+                icon="clock"
                 tone={summary.response_rate >= 80 ? "green" : "orange"}
                 value={`${summary.response_rate}%`}
                 label={t("kpi.responseRate")}
@@ -302,7 +303,7 @@ export default async function DashboardPage({
                 href="/leads"
               />
               <AgentKpi
-                icon="⚠"
+                icon="flag"
                 tone={summary.leads_overdue > 0 ? "red" : "green"}
                 value={format.number(summary.leads_overdue)}
                 label={t("kpi.overdue")}
@@ -336,7 +337,7 @@ export default async function DashboardPage({
             />
 
             {/* Performance + plan ---------------------------------------- */}
-            <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
+            <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_20rem]">
               <Panel title={t("perf.title", { count: days })} hint={t("perf.hint")}>
                 {series.every((s) => s.values.every((v) => v === 0)) ? (
                   /* Dashboard-only premium empty state. The shared BarChart is
@@ -557,21 +558,21 @@ export default async function DashboardPage({
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <ModuleCard
                   href="/leads"
-                  icon="📥"
+                  icon="inbox"
                   title={t("modules.leads")}
                   desc={t("modules.leadsDesc")}
                   badge={counts.leadsUnanswered || undefined}
                 />
                 <ModuleCard
                   href="/listings"
-                  icon="🏠"
+                  icon="home"
                   title={t("modules.listings")}
                   desc={t("modules.listingsDesc", { inReview: counts.listingsInReview })}
                   meta={`${counts.listingsActive}/${plan.maxListings}`}
                 />
                 <ModuleCard
                   href="/requests"
-                  icon="🤝"
+                  icon="handshake"
                   title={t("modules.matchhub")}
                   desc={t("modules.matchhubDesc")}
                   meta={t("modules.matchhubCounts", {
@@ -579,10 +580,10 @@ export default async function DashboardPage({
                     submissions: counts.mhSubmissions,
                   })}
                 />
-                <ModuleCard href="/profile" icon="👤" title={t("modules.profile")} desc={t("modules.profileDesc")} />
+                <ModuleCard href="/profile" icon="user" title={t("modules.profile")} desc={t("modules.profileDesc")} />
                 <ModuleCard
                   href="/collab/pool"
-                  icon="🔁"
+                  icon="repeat"
                   title={t("modules.coMarketing")}
                   desc={t("modules.coMarketingDesc")}
                 />
@@ -601,25 +602,25 @@ export default async function DashboardPage({
                     <p className="mt-2 truncate text-xs text-blue">/agent/{profile.public_slug}</p>
                   </a>
                 ) : (
-                  <SoonCard icon="🌐" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
+                  <SoonCard icon="globe" title={t("modules.landingPage")} desc={t("modules.landingPageDesc")} />
                 )}
                 <ModuleCard
                   href="/studio"
-                  icon="✨"
+                  icon="sparkles"
                   title={t("modules.contentStudio")}
                   desc={t("modules.contentStudioDesc")}
                 />
                 <ModuleCard
                   href="/tasks"
-                  icon="☑️"
+                  icon="check-square"
                   title={t("modules.tasks")}
                   desc={t("modules.tasksDesc")}
                   badge={counts.tasksOverdue || undefined}
                   meta={t("modules.tasksMeta", { today: counts.tasksDueToday })}
                 />
-                <ModuleCard href="/ai" icon="✦" title={t("modules.aiWorkforce")} desc={t("modules.aiWorkforceDesc")} />
-                <ModuleCard href="/card" icon="💳" title={t("modules.digitalCard")} desc={t("modules.digitalCardDesc")} />
-                <ModuleCard href="/training" icon="🎓" title={t("modules.training")} desc={t("modules.trainingDesc")} />
+                <ModuleCard href="/ai" icon="bot" title={t("modules.aiWorkforce")} desc={t("modules.aiWorkforceDesc")} />
+                <ModuleCard href="/card" icon="id-card" title={t("modules.digitalCard")} desc={t("modules.digitalCardDesc")} />
+                <ModuleCard href="/training" icon="graduation-cap" title={t("modules.training")} desc={t("modules.trainingDesc")} />
               </div>
             </section>
           </>
@@ -659,7 +660,7 @@ function ModuleCard({
       className="rounded-xl border border-line bg-card p-5 shadow-card transition-colors duration-150 hover:border-blue"
     >
       <div className="flex items-start justify-between gap-2">
-        <span aria-hidden className="text-2xl">{icon}</span>
+        <span aria-hidden className="text-2xl text-blue">{/^[a-z-]+$/.test(icon) ? <Icon name={icon} size={26} /> : icon}</span>
         {badge ? (
           <span className="rounded-full bg-crimson px-2 py-0.5 text-[11px] font-bold text-white">
             {badge}
@@ -677,7 +678,7 @@ function ModuleCard({
 function SoonCard({ icon, title, desc }: { icon: string; title: string; desc: string }) {
   return (
     <div className="rounded-xl border border-dashed border-line p-5 opacity-60">
-      <span aria-hidden className="text-2xl">{icon}</span>
+      <span aria-hidden className="text-2xl text-blue">{/^[a-z-]+$/.test(icon) ? <Icon name={icon} size={26} /> : icon}</span>
       <h3 className="mt-3 text-base font-semibold">{title}</h3>
       <p className="mt-1 text-sm leading-snug text-muted">{desc}</p>
     </div>
@@ -702,7 +703,7 @@ function AgentKpi({ icon, tone, value, label, delta, caption, href, invert = fal
   return (
     <Link href={href} className="group rounded-2xl border border-line bg-card p-5 shadow-card transition-colors duration-150 hover:border-blue">
       <div className="flex items-start justify-between gap-3">
-        <span aria-hidden className={`grid h-11 w-11 place-items-center rounded-xl text-xl ${KPI_TONES[tone] ?? KPI_TONES.blue}`}>{icon}</span>
+        <span aria-hidden className={`grid h-11 w-11 place-items-center rounded-xl text-xl ${KPI_TONES[tone] ?? KPI_TONES.blue}`}>{/^[a-z-]+$/.test(icon) ? <Icon name={icon} size={22} /> : icon}</span>
         {delta != null && delta !== 0 && (
           <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${good ? "bg-success-soft text-success-ink" : "bg-danger-soft text-danger"}`}>
             {up ? "▲" : "▼"} {Math.abs(delta)}

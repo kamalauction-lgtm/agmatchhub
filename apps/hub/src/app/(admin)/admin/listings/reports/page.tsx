@@ -47,7 +47,7 @@ export default async function ListingReportsPage({ searchParams }: { searchParam
   const day = (iso: string) => iso.slice(0, 10);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div>
       <Link href="/admin/listings" className="text-sm text-muted hover:text-foreground">← {t("back")}</Link>
       <h1 className="mb-1 mt-2 text-2xl font-semibold">{t("title")}</h1>
       <p className="mb-6 text-sm text-muted" data-open={cards.length}>{t("hint")}</p>
