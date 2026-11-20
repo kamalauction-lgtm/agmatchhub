@@ -251,3 +251,16 @@
 - **Checks on production:** signed in through the owner's browser session, read-only, at 1920px: `/wanted` has the sidebar with "Wanted board" current; Legal content shows six named documents and no raw keys; the open-an-account form's widest field is 846px; the name-card avatar is in front of the banner.
 - **Not checked:** dark mode, Malay, phone widths for these pages. The Indonesian and Malay wording of the three new Legal labels is a translation of the database names and awaits the owner's review.
 - **Seen, not changed:** the open-an-account form's placeholder names a competitor portal as its example (a hard-coded brand name); the budget box on `/wanted` is narrow inside the agent menu.
+
+## Follow-up release, 20 Nov 2026 (evening): neutral placeholder, wider budget box
+
+- **What:** PR #66 (merge `6b8cdac`).
+  - The "where they list now" placeholder on Open an account no longer names a competitor portal (en, id; ms was already neutral).
+  - The budget box on `/wanted` spans two columns, so its hint is no longer cut off, and it has an accessible name.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `36918eab` (rollback `f9dc74c9`); staging `78d5e1aa`.
+- **Help:** 12 pictures re-taken on staging (open-an-account guide, wanted board).
+- **Checks on staging:** Playwright at 1920px as agent and admin, with a picture of `/wanted`. Typecheck and lint pass. CI: checks and rls green.
+- **Checks on production:** signed in through the owner's browser session, read-only, at 1920px: the budget box is 206px wide with its hint in full; the open-an-account placeholder reads "e.g. a link to their profile on another portal".
+- **Not checked:** phone widths, dark mode, Malay.
+- **Still open:** the Indonesian and Malay wording of the three Legal labels awaits the owner's review; the listing-import placeholders still show example URLs from portals the importer supports.
