@@ -1,14 +1,15 @@
 import { getTranslations } from "next-intl/server";
 import type { ArticleLabels, IndexLabels } from "@/components/help/help-views";
 
-/** Interface strings for the guide pages (the guide text itself is EN/ID content). */
-export async function indexLabels(kind: "agent" | "admin", locale: string): Promise<IndexLabels> {
+/** Interface strings for the guide pages (the guide text itself is EN/ID/MS content). */
+export async function indexLabels(kind: "agent" | "admin"): Promise<IndexLabels> {
   const t = await getTranslations("help");
   return {
     title: t(kind === "admin" ? "adminTitle" : "agentTitle"),
     intro: t(kind === "admin" ? "adminIntro" : "agentIntro"),
     updated: t("updated"),
-    langNote: locale === "ms" ? t("langNote") : null,
+    // Malay guides exist since 21 Nov 2026, so nobody needs the "Malay is coming" note.
+    langNote: null,
     language: t("language"),
     stepsCount: t("stepsCount", { n: "{n}" }),
     doneOf: t("doneOf", { n: "{n}", total: "{total}" }),

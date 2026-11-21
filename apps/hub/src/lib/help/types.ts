@@ -1,8 +1,12 @@
 /**
  * The in-app playbook (owner decision 19 Nov 2026): step-by-step guides for
- * agents and admins, in English and Bahasa Indonesia, kept in the repository
- * and updated in the same change as the feature they describe. Malay readers
- * see English until a Malay reviewer is in place (D-9).
+ * agents and admins, in English, Bahasa Indonesia and Bahasa Melayu, kept in
+ * the repository and updated in the same change as the feature they describe.
+ *
+ * Malay was added on 21 Nov 2026 at the owner's request. The text follows the
+ * words the Malay interface uses, but it has not been through the Malay
+ * reviewer that hold D-9 asks for; the pictures in Malay guides are the
+ * English ones, because the capture accounts cannot use Malay.
  *
  * Each guide is shown as an interactive walkthrough: one step at a time, with
  * a screenshot of the real screen and the thing to press highlighted.
@@ -13,7 +17,8 @@
  */
 import shots from "./shots.json";
 
-export type HelpLang = "en" | "id";
+export type HelpLang = "en" | "id" | "ms";
+export const HELP_LANGS: readonly HelpLang[] = ["en", "id", "ms"];
 export type Localised = Record<HelpLang, string>;
 
 /**
@@ -48,10 +53,10 @@ export function pick(l: Localised, lang: HelpLang): string {
   return l[lang] ?? l.en;
 }
 
-/** `?lang=` on a guide overrides the interface language (the EN/ID switch). */
+/** `?lang=` on a guide overrides the interface language (the language switch). */
 export function helpLang(locale: string, override?: string | null): HelpLang {
-  if (override === "en" || override === "id") return override;
-  return locale === "id" ? "id" : "en";
+  if (override === "en" || override === "id" || override === "ms") return override;
+  return locale === "id" || locale === "ms" ? locale : "en";
 }
 
 export type ShotBox = { x: number; y: number; w: number; h: number };

@@ -1,21 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { HelpLang, HelpTopic } from "@/lib/help/types";
-import { pick, topicCover, walkSteps } from "@/lib/help/types";
+import { HELP_LANGS, pick, topicCover, walkSteps } from "@/lib/help/types";
 import { HelpCardProgress, HelpWalkthrough, type WalkLabels } from "./help-walkthrough";
 
 /** EN | ID switch for the guides; keeps the reader on the same page. */
 function LangSwitch({ lang, href, label }: { lang: HelpLang; href: string; label: string }) {
   return (
     <div className="inline-flex items-center gap-1 rounded-full border border-line bg-card p-1" role="group" aria-label={label} data-help-lang={lang}>
-      {(["en", "id"] as const).map((l) => (
+      {HELP_LANGS.map((l) => (
         <Link
           key={l}
           href={`${href}?lang=${l}`}
           aria-current={l === lang ? "true" : undefined}
           className={`min-h-8 rounded-full px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-crimson ${l === lang ? "bg-crimson-btn text-white" : "text-muted-strong hover:text-foreground"}`}
         >
-          {l === "en" ? "English" : "Indonesia"}
+          {l === "en" ? "English" : l === "id" ? "Indonesia" : "Melayu"}
         </Link>
       ))}
     </div>
