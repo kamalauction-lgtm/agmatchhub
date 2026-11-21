@@ -94,10 +94,11 @@ const COUNTRY_CODES = (() => {
   const map = new Map();
   for (let a = 65; a <= 90; a++) for (let b = 65; b <= 90; b++) {
     const code = String.fromCharCode(a, b);
-    try { const n = names.of(code); if (n && n !== code) map.set(n.toLowerCase(), code); } catch { /* not a region */ }
+    // First code wins: reserved aliases ("UK", "EL") share a name with the real code that sorts before them.
+    try { const n = names.of(code)?.toLowerCase(); if (n && n !== code.toLowerCase() && !map.has(n)) map.set(n, code); } catch { /* not a region */ }
   }
   // Spellings the source uses that the standard names do not.
-  for (const [n, c] of [["united states of america", "US"], ["usa", "US"], ["uk", "GB"], ["turkey", "TR"], ["bahrian", "BH"],
+  for (const [n, c] of [["united states of america", "US"], ["usa", "US"], ["uk", "GB"], ["united kingdom", "GB"], ["greece", "GR"], ["turkey", "TR"], ["bahrian", "BH"],
     ["hong kong", "HK"], ["palestine", "PS"], ["russia", "RU"], ["south korea", "KR"], ["syria", "SY"], ["vietnam", "VN"],
     ["myanmar", "MM"], ["taiwan", "TW"], ["uae", "AE"]]) map.set(n, c);
   return map;
