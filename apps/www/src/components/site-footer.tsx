@@ -26,6 +26,7 @@ export async function SiteFooter({ locale }: { locale: string }) {
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link href={`${publicPath(locale, "search")}?type=sale`} className="text-command-muted hover:text-white">{tn("buy")}</Link></li>
               <li><Link href={`${publicPath(locale, "search")}?type=rent`} className="text-command-muted hover:text-white">{tn("rent")}</Link></li>
+              <li><Link href={publicPath(locale, "international")} className="text-command-muted hover:text-white">{tn("international")}</Link></li>
               <li><Link href={publicPath(locale, "assistant")} className="text-command-muted hover:text-white">{tn("assistant")}</Link></li>
               <li><Link href={publicPath(locale, "compare")} className="text-command-muted hover:text-white">{tn("compare")}</Link></li>
             </ul>

@@ -47,6 +47,9 @@ export const routing = defineRouting({
     // PropertiGuru 2.0 tools: the rule-based concierge and side-by-side compare.
     "/asisten": localisedPath("/asisten", market.segments.assistant),
     "/bandingkan": localisedPath("/bandingkan", market.segments.compare),
+    // International listings (migration 00134): the list and a project page.
+    "/internasional": localisedPath("/internasional", market.segments.international),
+    "/internasional/[slug]": localisedPath("/internasional/[slug]", market.segments.international),
     // Agents keep `/agent` in both markets: it is already English, and the
     // Malay "ejen" would gain nothing an English-first site wants.
     "/agent/[slug]": "/agent/[slug]",
@@ -64,7 +67,7 @@ export type Locale = (typeof routing.locales)[number];
  */
 export function publicPath(
   locale: string,
-  internal: "search" | "listing" | "assistant" | "compare",
+  internal: "search" | "listing" | "assistant" | "compare" | "international",
   rest = ""
 ): string {
   const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;

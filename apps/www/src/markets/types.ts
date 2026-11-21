@@ -4,6 +4,7 @@ import type {
   LocationFacet,
   SiteBanner,
 } from "@/lib/listings";
+import type { InternationalHome } from "@/lib/international";
 
 /**
  * Everything a market's homepage is given.
@@ -36,4 +37,6 @@ export type HomeData = {
   topBanners: SiteBanner[];
   middleBanners: SiteBanner[];
   adLabel: string;
+  /** International strip (migration 00134). Empty listings render no section. */
+  international: InternationalHome;
 };

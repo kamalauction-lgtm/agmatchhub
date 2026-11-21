@@ -92,6 +92,7 @@ export async function AgentShell({
         { href: "/tasks", icon: "check-square", label: t("tasks") },
         { href: "/listings", icon: "building", label: t("listings") },
         { href: "/listings/import", icon: "package", label: t("importListings") },
+        { href: "/international", icon: "globe", label: t("international") },
         { href: "/growth", icon: "trending-up", label: t("growth") },
         { href: "/studio", icon: "sparkles", label: t("studio") },
         { href: "/ai", icon: "bot", label: t("aiWorkforce") },
