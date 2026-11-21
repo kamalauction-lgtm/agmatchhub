@@ -238,4 +238,46 @@ export const AGENT_TOPICS: HelpTopic[] = [
       },
     ],
   },
+  {
+    slug: "international-listings",
+    audience: "agent",
+    updated: "2026-11-21",
+    title: { en: "Find an international listing and send it to a buyer", id: "Mencari listing internasional dan mengirimkannya ke pembeli" },
+    summary: {
+      en: "Browse overseas projects by country, read the price correctly, ask the person in charge, and share the public link.",
+      id: "Telusuri proyek luar negeri per negara, baca harganya dengan benar, tanyakan ke penanggung jawab, dan bagikan tautan publiknya.",
+    },
+    path: "/international",
+    sections: [
+      {
+        heading: { en: "Find a listing", id: "Mencari listing" },
+        steps: [
+          { en: "Open International in the menu. It opens on Indonesia.", id: "Buka Internasional di menu. Halaman terbuka di Indonesia." },
+          { en: "Press another country, or All countries, to change what is shown. The number beside each country is how many listings it has.", id: "Tekan negara lain, atau Semua negara, untuk mengganti tampilan. Angka di samping tiap negara menunjukkan jumlah listingnya." },
+          { en: "To look for something specific, type a project name or a city and press Search.", id: "Untuk mencari yang spesifik, ketik nama proyek atau kota lalu tekan Cari." },
+          { en: "Press a card to open the listing: photos, key facts, description, highlights and price.", id: "Tekan kartu untuk membuka listing: foto, info utama, deskripsi, keunggulan, dan harga." },
+        ],
+        notes: [
+          { en: "Reading the price: the first figure is in rupiah, then the listed price in the project's own currency, then US dollars. Figures marked Estimate are converted at the exchange rate of the date shown. The listed price is the one that applies, so quote that one to your buyer.", id: "Membaca harga: angka pertama dalam rupiah, lalu harga resmi dalam mata uang proyek itu sendiri, lalu dolar AS. Angka bertanda Perkiraan dikonversi dengan kurs pada tanggal yang tertera. Yang berlaku adalah harga resmi, jadi sampaikan harga itu kepada pembeli." },
+        ],
+      },
+      {
+        heading: { en: "Ask the person in charge", id: "Bertanya ke penanggung jawab" },
+        steps: [
+          { en: "On the listing, find the Person in charge card. It shows who answers for that country.", id: "Di halaman listing, cari kartu Penanggung jawab (PIC). Di situ tertera siapa yang menjawab untuk negara tersebut." },
+          { en: "Press the green WhatsApp button. WhatsApp opens with a message that already names the listing; add your question and send.", id: "Tekan tombol WhatsApp berwarna hijau. WhatsApp terbuka dengan pesan yang sudah menyebut nama listing; tambahkan pertanyaan Anda lalu kirim." },
+        ],
+        notes: [
+          { en: "Check availability and the latest price list with the person in charge before you promise anything to a buyer.", id: "Pastikan ketersediaan unit dan daftar harga terbaru ke penanggung jawab sebelum menjanjikan apa pun kepada pembeli." },
+        ],
+      },
+      {
+        heading: { en: "Send it to your buyer", id: "Mengirim ke pembeli" },
+        steps: [
+          { en: "In “Send to a buyer”, press Copy public link and paste it into your chat, or press Send on WhatsApp to open WhatsApp with the link in a ready message.", id: "Di “Kirim ke pembeli”, tekan Salin tautan publik lalu tempel di chat Anda, atau tekan Kirim lewat WhatsApp untuk membuka WhatsApp dengan tautan di dalam pesan siap kirim." },
+          { en: "Your buyer opens the public page without an account and can send an enquiry from there. It goes to the person in charge for that country.", id: "Pembeli membuka halaman publik tanpa akun dan bisa mengirim pertanyaan dari sana. Pertanyaan itu sampai ke penanggung jawab negara tersebut." },
+        ],
+      },
+    ],
+  },
 ];

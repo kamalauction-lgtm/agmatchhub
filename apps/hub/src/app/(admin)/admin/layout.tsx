@@ -43,6 +43,7 @@ const NAV: { key: string; href: string; capability: string | null; icon: string;
   { key: "imports", href: "/admin/imports", capability: "listing.import_assisted", icon: "upload", group: "listings" },
   { key: "media", href: "/admin/media", capability: "media.review", icon: "image", group: "listings" },
   { key: "sources", href: "/admin/sources", capability: null, icon: "shuffle", group: "listings" },
+  { key: "international", href: "/admin/international", capability: "platform.configure", icon: "plane", group: "listings" },
 
   { key: "requests", href: "/admin/requests", capability: "request.manage", icon: "list", group: "demand" },
   { key: "leads", href: "/admin/leads", capability: "request.manage", icon: "clock", group: "demand" },

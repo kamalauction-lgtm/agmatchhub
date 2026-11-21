@@ -214,3 +214,42 @@ export function ChevronRightIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+/* International section ---------------------------------------------------- */
+
+export function GlobeIcon({ className }: IconProps) {
+  return (
+    <svg {...base(className)}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" />
+    </svg>
+  );
+}
+
+export function CalendarIcon({ className }: IconProps) {
+  return (
+    <svg {...base(className)}>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4" />
+    </svg>
+  );
+}
+
+/** A generic chat bubble — deliberately not any messaging brand's mark. */
+export function ChatIcon({ className }: IconProps) {
+  return (
+    <svg {...base(className)}>
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5Z" />
+    </svg>
+  );
+}
+
+export function DocumentIcon({ className }: IconProps) {
+  return (
+    <svg {...base(className)}>
+      <path d="M6 3h8l4 4v14H6V3Z" />
+      <path d="M14 3v4h4M9 12h6M9 16h6" />
+    </svg>
+  );
+}

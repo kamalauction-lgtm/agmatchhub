@@ -5,6 +5,7 @@ import { SearchBar } from "@/components/search-bar";
 import { KprCalculator } from "@/components/kpr-calculator";
 import { PromoBanner } from "@/components/promo-banner";
 import { SectionHeading } from "@/components/section-heading";
+import { InternationalStrip } from "@/components/international-strip";
 import {
   ArrowRightIcon, BoltIcon, BuildingIcon, HomeIcon, KeyIcon, LockIcon,
   ShieldIcon, TreeIcon,
@@ -63,7 +64,7 @@ const TYPE_ICONS: Record<string, (p: { className?: string }) => React.JSX.Elemen
 export async function MalaysiaHome(data: HomeData) {
   const {
     locale, country, searchHref, hubUrl, total, latest, promoted,
-    typeFacets, cityFacets, topBanners, middleBanners, adLabel,
+    typeFacets, cityFacets, topBanners, middleBanners, adLabel, international,
   } = data;
 
   const t = await getTranslations("home");
@@ -224,6 +225,9 @@ export async function MalaysiaHome(data: HomeData) {
           </div>
         </section>
       )}
+
+      {/* Renders nothing at all when there are no international listings. */}
+      <InternationalStrip data={international} locale={locale} className="mx-auto max-w-6xl px-4 pb-12" />
 
       {middleBanners.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-4">

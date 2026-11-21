@@ -7,6 +7,7 @@ import {
   getProvinceFacets,
   getBanners,
 } from "@/lib/listings";
+import { getInternationalForHome } from "@/lib/international";
 import { withBuildFallback } from "@/lib/build-fallback";
 import { routing } from "@/i18n/routing";
 import { market } from "@/config/market";
@@ -44,9 +45,10 @@ type HomeData = [
   Awaited<ReturnType<typeof getProvinceFacets>>,
   Awaited<ReturnType<typeof getBanners>>,
   Awaited<ReturnType<typeof getBanners>>,
+  Awaited<ReturnType<typeof getInternationalForHome>>,
 ];
 
-const EMPTY_HOME: HomeData = [{ listings: [], total: 0, page: 1, pageCount: 1 }, [], [], [], [], [], []];
+const EMPTY_HOME: HomeData = [{ listings: [], total: 0, page: 1, pageCount: 1 }, [], [], [], [], [], [], { listings: [], rates: {} }];
 
 export default async function HomePage({
   params,
@@ -77,6 +79,7 @@ export default async function HomePage({
     provinces,
     topBanners,
     middleBanners,
+    international,
   ] = await withBuildFallback(
     Promise.all([
       searchListings({ sort: "newest", page: 1 }),
@@ -86,6 +89,8 @@ export default async function HomePage({
       getProvinceFacets(),
       getBanners("home_top"),
       getBanners("home_middle"),
+      // Fails soft inside the loader: an extra must not take the homepage down.
+      getInternationalForHome(6),
     ]) as Promise<HomeData>,
     EMPTY_HOME,
     { NEXT_PHASE: process.env.NEXT_PHASE, WWW_CI_PLACEHOLDER_BUILD: process.env.WWW_CI_PLACEHOLDER_BUILD },
@@ -108,6 +113,7 @@ export default async function HomePage({
       topBanners={topBanners}
       middleBanners={middleBanners}
       adLabel={t("adLabel")}
+      international={international}
     />
   );
 }

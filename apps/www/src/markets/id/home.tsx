@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { ConciergeForm } from "@/components/concierge-form";
 import { RuleBasedNotice } from "@/components/rule-based-notice";
 import { CompareTray } from "@/components/compare-tray";
+import { InternationalStrip } from "@/components/international-strip";
 import {
   ArrowRightIcon, BoltIcon, BuildingIcon, HomeIcon, KeyIcon, LockIcon,
   ShieldIcon, SparkIcon, TreeIcon,
@@ -44,7 +45,7 @@ const TYPE_ICONS: Record<string, (p: { className?: string }) => React.JSX.Elemen
 export async function IndonesiaHome(data: HomeData) {
   const {
     locale, country, searchHref, hubUrl, total, latest, promoted,
-    typeFacets, cityFacets, provinces, topBanners, middleBanners, adLabel,
+    typeFacets, cityFacets, provinces, topBanners, middleBanners, adLabel, international,
   } = data;
 
   const t = await getTranslations("home");
@@ -213,6 +214,10 @@ export async function IndonesiaHome(data: HomeData) {
           </div>
         )}
       </section>
+
+      {/* International ------------------------------------------------------
+          Renders nothing at all when there are no international listings. */}
+      <InternationalStrip data={international} locale={locale} className="mx-auto max-w-7xl px-4 pb-14" />
 
       {/* Concierge band ----------------------------------------------------- */}
       <section className="command-band relative overflow-hidden">

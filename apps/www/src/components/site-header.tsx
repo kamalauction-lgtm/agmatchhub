@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { hasInternationalListings } from "@/lib/international";
 import { getTranslations } from "next-intl/server";
 import { brand } from "@/config/brand";
 import { routing, publicPath } from "@/i18n/routing";
 import { market } from "@/config/market";
-import { SparkIcon } from "./icons";
+import { GlobeIcon, SparkIcon } from "./icons";
 
 function href(locale: string, path: string) {
   return locale === routing.defaultLocale ? path : `/${locale}${path}`;
@@ -20,6 +21,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
   const t = await getTranslations("nav");
   const other = routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
   const isStaging = process.env.NEXT_PUBLIC_ENVIRONMENT === "staging";
+  const showInternational = await hasInternationalListings();
 
   const navLink =
     "rounded-lg px-3 py-2 text-sm font-medium text-muted-strong transition-colors duration-200 hover:bg-surface hover:text-foreground";
@@ -31,7 +33,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
           {t("stagingBanner")}
         </div>
       )}
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 lg:gap-3">
         <Link href={href(locale, "/")} className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
           <span aria-hidden className="grid h-8 w-8 place-items-center rounded-lg bg-brand text-sm font-black text-white">
             P
@@ -42,9 +44,14 @@ export async function SiteHeader({ locale }: { locale: string }) {
           </span>
         </Link>
 
-        <nav className="ml-4 hidden items-center gap-0.5 md:flex" aria-label={t("primary")}>
+        <nav className="ml-1 hidden items-center gap-0.5 md:flex lg:ml-4" aria-label={t("primary")}>
           <Link href={`${publicPath(locale, "search")}?type=sale`} className={navLink}>{t("buy")}</Link>
           <Link href={`${publicPath(locale, "search")}?type=rent`} className={navLink}>{t("rent")}</Link>
+          {/* From lg up only: at 768 the row is already full, so below that the
+              globe button on the right is the way in. */}
+          {showInternational && (
+            <Link href={publicPath(locale, "international")} className={`${navLink} hidden lg:inline-block`}>{t("international")}</Link>
+          )}
           <Link href={publicPath(locale, "compare")} className={navLink}>{t("compare")}</Link>
           <Link
             href={publicPath(locale, "assistant")}
@@ -56,6 +63,16 @@ export async function SiteHeader({ locale }: { locale: string }) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          {/* The text link only fits from lg up, so phones and tablets get this. */}
+          {showInternational && (
+            <Link
+              href={publicPath(locale, "international")}
+              aria-label={t("international")}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-line text-muted-strong transition-colors duration-200 hover:bg-surface lg:hidden"
+            >
+              <GlobeIcon className="h-4 w-4" />
+            </Link>
+          )}
           <Link
             href={publicPath(locale, "assistant")}
             aria-label={t("assistant")}

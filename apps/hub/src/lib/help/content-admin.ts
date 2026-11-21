@@ -247,4 +247,53 @@ export const ADMIN_TOPICS: HelpTopic[] = [
       },
     ],
   },
+  {
+    slug: "international-admin",
+    audience: "admin",
+    updated: "2026-11-21",
+    title: { en: "International listings: people in charge, publishing and enquiries", id: "Listing internasional: penanggung jawab, penerbitan, dan pertanyaan" },
+    summary: {
+      en: "For super admins: set who answers for each country, decide which overseas listings are on show, and follow up buyer enquiries.",
+      id: "Untuk super admin: tentukan siapa yang menjawab untuk tiap negara, pilih listing luar negeri yang ditampilkan, dan tindak lanjuti pertanyaan pembeli.",
+    },
+    path: "/admin/international",
+    sections: [
+      {
+        heading: { en: "People in charge", id: "Penanggung jawab" },
+        steps: [
+          { en: "Open International in the menu. It opens on People in charge.", id: "Buka Internasional di menu. Halaman terbuka di Penanggung jawab." },
+          { en: "Read “Who buyers reach, by country” first. Every country with published listings is listed with the person a buyer is sent to. A country marked “No person in charge” needs someone.", id: "Baca dulu “Siapa yang dihubungi pembeli, per negara”. Setiap negara yang punya listing terbit ditampilkan bersama orang yang dituju pembeli. Negara bertanda “Belum ada penanggung jawab” perlu diisi." },
+          { en: "To add a person, fill in “Add a person in charge”: display name, WhatsApp number in international format (+ and the country code), and optionally an email and a role label.", id: "Untuk menambah orang, isi “Tambah penanggung jawab”: nama tampilan, nomor WhatsApp dalam format internasional (+ dan kode negara), serta email dan label jabatan bila perlu." },
+          { en: "Choose the countries: tick “Covers all countries”, or tick the countries one by one. A country that is not on the list can be typed as a two-letter code. Press Add person in charge.", id: "Pilih negaranya: centang “Mencakup semua negara”, atau centang negara satu per satu. Negara yang belum ada di daftar bisa diketik sebagai kode dua huruf. Tekan Tambah penanggung jawab." },
+          { en: "To change someone, press Edit on their card. Deactivate stops buyers being sent to them without losing the record; Delete removes them for good.", id: "Untuk mengubah seseorang, tekan Ubah pada kartunya. Nonaktifkan menghentikan pengarahan pembeli tanpa menghapus datanya; Hapus menghapusnya secara permanen." },
+        ],
+        notes: [
+          { en: "A person named for a country comes before a person who covers all countries. When two people cover the same country, the lower order number wins.", id: "Orang yang ditunjuk untuk suatu negara didahulukan dari orang yang mencakup semua negara. Bila dua orang mencakup negara yang sama, nomor urut yang lebih kecil yang dipakai." },
+          { en: "The name and WhatsApp number are shown publicly on the listings. Only enter a number the person has agreed to publish. Messages are WhatsApp only, never SMS.", id: "Nama dan nomor WhatsApp ditampilkan untuk umum pada listing. Masukkan hanya nomor yang sudah disetujui pemiliknya untuk dipublikasikan. Pesan hanya lewat WhatsApp, tidak pernah SMS." },
+        ],
+      },
+      {
+        heading: { en: "Publish or withdraw a listing", id: "Menerbitkan atau menarik listing" },
+        steps: [
+          { en: "Open the Listings tab. Listings arrive from the partner catalogue every week; their content is not edited here.", id: "Buka tab Listing. Listing masuk dari katalog mitra setiap minggu; isinya tidak diubah di sini." },
+          { en: "Filter by country or status to find what you need, then press Apply.", id: "Saring berdasarkan negara atau status untuk menemukan yang dicari, lalu tekan Terapkan." },
+          { en: "Press Publish to show a listing on the marketplace and to agents. Press Withdraw to hide it again.", id: "Tekan Terbitkan untuk menampilkan listing di marketplace dan kepada agen. Tekan Tarik untuk menyembunyikannya kembali." },
+        ],
+        notes: [
+          { en: "Before you publish listings in a new country, check that the country has a person in charge. Every publish and withdraw is recorded in the audit trail with your name.", id: "Sebelum menerbitkan listing di negara baru, pastikan negara itu sudah punya penanggung jawab. Setiap penerbitan dan penarikan tercatat di jejak audit dengan nama Anda." },
+        ],
+      },
+      {
+        heading: { en: "Read the enquiries", id: "Membaca pertanyaan" },
+        steps: [
+          { en: "Open the Enquiries tab. The newest is on top, with the buyer, the listing, the country and the person in charge it went to. The number on the tab counts new enquiries.", id: "Buka tab Pertanyaan. Yang terbaru di atas, lengkap dengan pembeli, listing, negara, dan penanggung jawab yang dituju. Angka pada tab menunjukkan jumlah pertanyaan baru." },
+          { en: "Press the phone number to open a WhatsApp chat with the buyer.", id: "Tekan nomor telepon untuk membuka chat WhatsApp dengan pembeli." },
+          { en: "Press Mark contacted once someone has replied to the buyer, and Close when nothing more is needed.", id: "Tekan Tandai dihubungi setelah pembeli dibalas, dan Tutup bila tidak ada lagi yang perlu dilakukan." },
+        ],
+        notes: [
+          { en: "Exchange rates tab: the IDR and USD figures on listings are estimates calculated from these rates. The price in the listing's own currency is the real one.", id: "Tab Kurs: angka IDR dan USD pada listing adalah perkiraan yang dihitung dari kurs ini. Harga dalam mata uang asli listing adalah harga yang sebenarnya." },
+        ],
+      },
+    ],
+  },
 ];

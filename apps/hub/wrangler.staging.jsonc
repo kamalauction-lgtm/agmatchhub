@@ -45,6 +45,9 @@
     "NEXT_PUBLIC_APP_SHORT_NAME": "Agent Platform",
     "NEXT_PUBLIC_APP_TAGLINE": "One platform for your whole property business.",
     "PG_TARGET_LABEL": "staging",
-    "MEDIA_TRANSFORM_CAP": "500"
+    "MEDIA_TRANSFORM_CAP": "500",
+    // Daily exchange rates for international listings (public market data, CC0).
+    "FX_RATES_URL": "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json",
+    "FX_RATES_FALLBACK_URL": "https://latest.currency-api.pages.dev/v1/currencies/usd.json"
   }
 }
