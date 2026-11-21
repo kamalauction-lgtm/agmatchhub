@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { hasInternationalListings } from "@/lib/international";
 import { getTranslations } from "next-intl/server";
 import { brand } from "@/config/brand";
 import { publicPath } from "@/i18n/routing";
@@ -8,6 +9,7 @@ export async function SiteFooter({ locale }: { locale: string }) {
   const t = await getTranslations("footer");
   const tn = await getTranslations("nav");
   const year = new Date().getFullYear();
+  const showInternational = await hasInternationalListings();
 
   return (
     <footer className="command-band mt-16">
@@ -26,7 +28,9 @@ export async function SiteFooter({ locale }: { locale: string }) {
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link href={`${publicPath(locale, "search")}?type=sale`} className="text-command-muted hover:text-white">{tn("buy")}</Link></li>
               <li><Link href={`${publicPath(locale, "search")}?type=rent`} className="text-command-muted hover:text-white">{tn("rent")}</Link></li>
-              <li><Link href={publicPath(locale, "international")} className="text-command-muted hover:text-white">{tn("international")}</Link></li>
+              {showInternational && (
+                <li><Link href={publicPath(locale, "international")} className="text-command-muted hover:text-white">{tn("international")}</Link></li>
+              )}
               <li><Link href={publicPath(locale, "assistant")} className="text-command-muted hover:text-white">{tn("assistant")}</Link></li>
               <li><Link href={publicPath(locale, "compare")} className="text-command-muted hover:text-white">{tn("compare")}</Link></li>
             </ul>

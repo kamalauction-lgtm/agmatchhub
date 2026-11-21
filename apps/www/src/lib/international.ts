@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { market } from "@/config/market";
 import { publicDb } from "./supabase/public";
 import { numberLocaleFor } from "./format";
@@ -159,6 +160,27 @@ export async function getFxRates(): Promise<FxRates> {
   }
   return rates;
 }
+
+/**
+ * Is there anything to show? The header, the footer and the sitemap ask before
+ * linking to the section, so an empty catalogue never sends a visitor to a
+ * blank page. The link appears by itself when the first listing is published.
+ *
+ * One HEAD count per request (`cache`), and it fails CLOSED: if the read
+ * fails, the link is hidden rather than the page broken.
+ */
+export const hasInternationalListings = cache(async (): Promise<boolean> => {
+  try {
+    const { count, error } = await publicDb().from(VIEW).select("id", { count: "exact", head: true });
+    if (error) {
+      console.error(`international presence check failed: ${error.message}`);
+      return false;
+    }
+    return (count ?? 0) > 0;
+  } catch {
+    return false;
+  }
+});
 
 export type CountryCount = { code: string; count: number };
 

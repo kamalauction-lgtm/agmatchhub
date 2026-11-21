@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { hasInternationalListings } from "@/lib/international";
 import { getTranslations } from "next-intl/server";
 import { brand } from "@/config/brand";
 import { routing, publicPath } from "@/i18n/routing";
@@ -20,6 +21,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
   const t = await getTranslations("nav");
   const other = routing.locales.find((l) => l !== locale) ?? routing.defaultLocale;
   const isStaging = process.env.NEXT_PUBLIC_ENVIRONMENT === "staging";
+  const showInternational = await hasInternationalListings();
 
   const navLink =
     "rounded-lg px-3 py-2 text-sm font-medium text-muted-strong transition-colors duration-200 hover:bg-surface hover:text-foreground";
@@ -47,7 +49,9 @@ export async function SiteHeader({ locale }: { locale: string }) {
           <Link href={`${publicPath(locale, "search")}?type=rent`} className={navLink}>{t("rent")}</Link>
           {/* From lg up only: at 768 the row is already full, so below that the
               globe button on the right is the way in. */}
-          <Link href={publicPath(locale, "international")} className={`${navLink} hidden lg:inline-block`}>{t("international")}</Link>
+          {showInternational && (
+            <Link href={publicPath(locale, "international")} className={`${navLink} hidden lg:inline-block`}>{t("international")}</Link>
+          )}
           <Link href={publicPath(locale, "compare")} className={navLink}>{t("compare")}</Link>
           <Link
             href={publicPath(locale, "assistant")}
@@ -60,13 +64,15 @@ export async function SiteHeader({ locale }: { locale: string }) {
 
         <div className="ml-auto flex items-center gap-2">
           {/* The text link only fits from lg up, so phones and tablets get this. */}
-          <Link
-            href={publicPath(locale, "international")}
-            aria-label={t("international")}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-line text-muted-strong transition-colors duration-200 hover:bg-surface lg:hidden"
-          >
-            <GlobeIcon className="h-4 w-4" />
-          </Link>
+          {showInternational && (
+            <Link
+              href={publicPath(locale, "international")}
+              aria-label={t("international")}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-line text-muted-strong transition-colors duration-200 hover:bg-surface lg:hidden"
+            >
+              <GlobeIcon className="h-4 w-4" />
+            </Link>
+          )}
           <Link
             href={publicPath(locale, "assistant")}
             aria-label={t("assistant")}
