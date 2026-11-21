@@ -356,3 +356,16 @@
 - **Checks on production:** the server sets `data-theme` for `theme=dark` and `theme=light`, sets nothing with no cookie, and ignores an invalid value. Signed in through the owner's browser session, read-only: Content studio and Command Center load with no error screen and each shows one switch with the right icon. The switch was not pressed there, so as not to change the owner's own setting.
 - **During release:** the laptop slept while the release script was waiting for CI, so the merge and deploy happened about six hours after approval, when it woke. A second script started in the meantime found the PR already merged and stopped without deploying; there was one deploy. PR #78 was confirmed still open before the merge, so it is not in this release.
 - **Not checked:** a real phone; pressing the switch on production. Public pages other than sign-in have no switch and still follow the device.
+
+## Follow-up release, 21 Nov 2026 (night): plan entitlement names in the reader's language
+
+- **What:** PR #81 (merge `b9b66c1`). The plan page printed entitlement names straight from the database, where they are stored in English ("Active listing capacity"), so Indonesian and Malay readers saw English. The page now looks the name up in the message file (en/id/ms, 15 names) and falls back to the database name for any it does not know.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `f76dadf7` (rollback `5765a1ee`); staging `7fa8c585`.
+- **Help:** pictures unchanged (no guide shows the plan page).
+- **Admin side in Malay, checked with nothing to change:** the existing Malaysian country-admin test account can use Malay. On staging at 1440px and 390px: 13 admin pages reachable by that role, no raw keys, no clipped labels, no sideways scroll, no page errors. The other 17 admin pages redirect for a country admin and have still never been seen in Malay.
+- **Checks on staging:** the plan page in Malay shows the translated names and no English sentences. Typecheck and lint pass. CI: checks and rls green on the first run.
+- **Checks on production,** 45 seconds after the deploy: signed in through the owner's browser session, read-only, in Indonesian: the plan page shows "Kapasitas listing aktif", "Kuota AI" and seven more translated names, no raw keys, no error screen; the dashboard loads.
+- **Not checked on production:** the Malay names (the session was in Indonesian).
+- **Still English for a Malay reader:** Help & guides (the playbook exists in English and Indonesian only); and on the plan page the plan and tier names, the tier values "basic" / "advanced" and the launch label, all from the database.
+- **Staging:** this session's staging deploys on 21 Nov replaced the Hub preview of PR #78 (international listings) that another session had put there. PR #78 and the staging database were not touched; the preview needs redeploying from its branch to be seen again.
