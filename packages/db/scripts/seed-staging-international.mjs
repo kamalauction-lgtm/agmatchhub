@@ -34,12 +34,12 @@ const L = (country, city, region, title, type, dev, currency, min, max, beds, si
 });
 
 const LISTINGS = [
-  L("ID", "Jakarta Selatan", "DKI Jakarta", "Senopati Sky Residences", "Apartment", "Demo Land Group", "IDR", 3_200_000_000, 9_800_000_000, [1, 3], [48, 162], { featured: true, completion: "Q4 2027", tenure: "Strata title" }),
+  L("ID", "Jakarta Selatan", "DKI Jakarta", "Senopati Sky Residences", "Apartment", "Demo Land Group", "IDR", 3_200_000_000, 9_800_000_000, [1, 3], [48, 162], { featured: true, completion: "Q4 2027", tenure: "Strata title", units: 286, address: "[DEMO] Jl. Contoh No. 1, Senopati" }),
   L("ID", "Badung", "Bali", "Canggu Rice Terrace Villas", "Villa", "Demo Island Homes", "IDR", 5_400_000_000, 12_500_000_000, [2, 4], [140, 320], { featured: true, completion: "Ready", tenure: "Leasehold 30 years" }),
   L("ID", "Tangerang Selatan", "Banten", "BSD Garden Townhouses", "Townhouse", "Demo Land Group", "IDR", 2_100_000_000, 4_600_000_000, [3, 4], [96, 180], { completion: "Q2 2027", tenure: "Freehold (SHM)" }),
   L("MY", "Kuala Lumpur", "Wilayah Persekutuan", "KLCC Park View Suites", "Serviced apartment", "Demo Capital Bhd", "MYR", 980_000, 3_400_000, [1, 3], [52, 148], { completion: "Q1 2028", tenure: "Freehold" }),
   L("MY", "Johor Bahru", "Johor", "Straits Waterfront Residences", "Condominium", "Demo Capital Bhd", "MYR", 620_000, 1_850_000, [2, 4], [78, 165], { completion: "Ready", tenure: "Freehold" }),
-  L("AU", "Melbourne", "Victoria", "Southbank Riverside Tower", "Apartment", "Demo Pacific Developments", "AUD", 520_000, 1_950_000, [1, 3], [50, 140], { featured: true, completion: "Q3 2027", tenure: "Freehold" }),
+  L("AU", "Melbourne", "Victoria", "Southbank Riverside Tower", "Apartment", "Demo Pacific Developments", "AUD", 520_000, 1_950_000, [1, 3], [50, 140], { featured: true, completion: "Q3 2027", tenure: "Freehold", units: 412, bedsLabel: "1 - 3+1", address: "[DEMO] 1 Example Quay, Southbank", position: [-37.8226, 144.9648] }),
   L("AU", "Sydney", "New South Wales", "Parramatta Square Residences", "Apartment", "Demo Pacific Developments", "AUD", 690_000, 2_400_000, [1, 3], [52, 132], { completion: "Q4 2026", tenure: "Freehold" }),
   L("GB", "London", "England", "Canary Wharf Quay Apartments", "Apartment", "Demo Thames Estates", "GBP", 495_000, 1_650_000, [1, 3], [45, 118], { completion: "Q2 2027", tenure: "Leasehold 999 years" }),
   L("GB", "Manchester", "England", "Northern Quarter Lofts", "Apartment", "Demo Thames Estates", "GBP", 235_000, 620_000, [1, 2], [42, 88], { completion: "Ready", tenure: "Leasehold 250 years" }),
@@ -62,7 +62,9 @@ try {
   for (const [currency, perUsd] of Object.entries(RATES)) {
     await client.query(
       `insert into public.fx_rates (currency, per_usd, as_of, source) values ($1, $2, $3, 'demo-seed')
-       on conflict (currency) do update set per_usd = excluded.per_usd, as_of = excluded.as_of, source = excluded.source`,
+       on conflict (currency) do update set per_usd = excluded.per_usd, as_of = excluded.as_of, source = excluded.source
+       -- Never replace a real rate from the daily refresh with an illustrative one.
+       where public.fx_rates.source = 'demo-seed'`,
       [currency, perUsd, today],
     );
   }
@@ -102,6 +104,12 @@ try {
         l.tenure ?? null, l.completion ?? null, l.beds[0], l.beds[1], l.size[0], l.size[1], l.currency,
         l.min, l.max, ["Illustrative demo record", `${l.beds[0]}–${l.beds[1]} bedrooms`, l.completion ?? "Ready"],
         !!l.featured, String(i)],
+    );
+    // 00135 details, only on the rows that state them.
+    await client.query(
+      `update public.international_listings set total_units = $2, bedrooms_label = $3, address = $4,
+         latitude = $5, longitude = $6 where id = $1`,
+      [rows[0].id, l.units ?? null, l.bedsLabel ?? null, l.address ?? null, l.position?.[0] ?? null, l.position?.[1] ?? null],
     );
     await client.query(
       `insert into public.international_listing_private (listing_id, source_url, commission_note, raw)

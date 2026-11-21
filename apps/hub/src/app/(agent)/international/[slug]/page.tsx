@@ -51,8 +51,9 @@ export default async function InternationalListingPage({
     .filter((p): p is { id: string; src: string; alt: string } => p.src !== null);
   const [hero, ...thumbs] = photos;
 
-  const beds = rangeText(listing.bedrooms_min, listing.bedrooms_max, locale);
-  const baths = rangeText(listing.bathrooms_min, listing.bathrooms_max, locale);
+  const beds = listing.bedrooms_label ?? rangeText(listing.bedrooms_min, listing.bedrooms_max, locale);
+  const baths = listing.bathrooms_label ?? rangeText(listing.bathrooms_min, listing.bathrooms_max, locale);
+  const units = rangeText(listing.total_units, listing.total_units, locale);
   const size = rangeText(listing.size_min, listing.size_max, locale);
   const facts: { key: string; icon: string; label: string; value: string }[] = [
     listing.property_type_label && { key: "type", icon: "building", label: t("factType"), value: listing.property_type_label },
@@ -61,6 +62,7 @@ export default async function InternationalListingPage({
     beds && { key: "beds", icon: "bed", label: t("factBedrooms"), value: beds },
     baths && { key: "baths", icon: "home", label: t("factBathrooms"), value: baths },
     size && { key: "size", icon: "maximize", label: t("factSize"), value: t(listing.size_unit === "sqft" ? "sizeSqft" : "sizeSqm", { range: size }) },
+    units && { key: "units", icon: "grid", label: t("factUnits"), value: units },
     listing.developer_name && { key: "developer", icon: "users", label: t("factDeveloper"), value: listing.developer_name },
     listing.tenure_label && { key: "tenure", icon: "scale", label: t("factTenure"), value: listing.tenure_label },
     listing.completion_label && { key: "completion", icon: "calendar", label: t("factCompletion"), value: listing.completion_label },

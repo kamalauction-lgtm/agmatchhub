@@ -78,6 +78,7 @@ describe.skipIf(!hasEnv || !SERVICE)("international listings", () => {
       source_url: "https://source.invalid/secret",
       commission_note: "SECRET 3%",
       raw: { secret: true },
+      review_flags: ["SECRET_flag"],
     });
     if (pErr) throw new Error(pErr.message);
 
@@ -122,10 +123,14 @@ describe.skipIf(!hasEnv || !SERVICE)("international listings", () => {
   it("the public view carries no source, raw record or commission", async () => {
     const { data } = await anon.from("public_international_listings").select("*").eq("slug", slugPub);
     const keys = Object.keys(data![0]);
-    for (const banned of ["source", "external_id", "source_url", "commission_note", "internal_note", "raw"]) {
+    for (const banned of ["source", "external_id", "source_url", "commission_note", "internal_note", "raw", "review_flags"]) {
       expect(keys).not.toContain(banned);
     }
     expect(JSON.stringify(data)).not.toContain("SECRET");
+    // 00135: what the project itself advertises is public; why a row was held is not.
+    for (const added of ["address", "latitude", "longitude", "total_units", "bedrooms_label"]) {
+      expect(keys).toContain(added);
+    }
   });
 
   it("a draft is invisible to the public", async () => {

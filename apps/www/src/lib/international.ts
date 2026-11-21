@@ -52,6 +52,15 @@ export type InternationalListing = {
   /** "<bucket>/<path>" of the first photo, ready for `mediaUrl`. */
   cover_path: string | null;
   photo_count: number;
+  /** Added by 00135. */
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  total_units: number | null;
+  land_size: number | null;
+  /** The source's own wording ("2 - 6+2"); shown instead of the figures when present. */
+  bedrooms_label: string | null;
+  bathrooms_label: string | null;
 };
 
 /** Mirrors `public_international_media`. */
@@ -110,6 +119,10 @@ function normalise(row: Record<string, unknown>): InternationalListing {
     size_min: num(row.size_min),
     size_max: num(row.size_max),
     photo_count: num(row.photo_count) ?? 0,
+    latitude: num(row.latitude),
+    longitude: num(row.longitude),
+    total_units: num(row.total_units),
+    land_size: num(row.land_size),
     highlights: Array.isArray(row.highlights) ? (row.highlights as string[]) : [],
   };
 }
@@ -351,14 +364,14 @@ export function sizeLabel(
 
 /** "1–3", "2", or "Studio–2": a studio is stored as zero bedrooms. */
 export function bedroomsLabel(
-  l: Pick<InternationalListing, "bedrooms_min" | "bedrooms_max">,
+  l: Pick<InternationalListing, "bedrooms_min" | "bedrooms_max" | "bedrooms_label">,
   studioWord: string
 ): string | null {
-  return formatRange(l.bedrooms_min, l.bedrooms_max, (n) => (n === 0 ? studioWord : String(n)));
+  return l.bedrooms_label ?? formatRange(l.bedrooms_min, l.bedrooms_max, (n) => (n === 0 ? studioWord : String(n)));
 }
 
 export function bathroomsLabel(
-  l: Pick<InternationalListing, "bathrooms_min" | "bathrooms_max">
+  l: Pick<InternationalListing, "bathrooms_min" | "bathrooms_max" | "bathrooms_label">
 ): string | null {
-  return formatRange(l.bathrooms_min, l.bathrooms_max, String);
+  return l.bathrooms_label ?? formatRange(l.bathrooms_min, l.bathrooms_max, String);
 }

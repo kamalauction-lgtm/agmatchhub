@@ -468,6 +468,7 @@
     "factSize": "Unit size",
     "factTenure": "Tenure",
     "factCompletion": "Completion",
+    "factUnits": "Units in the project",
     "factDeveloper": "Developer",
     "descriptionTitle": "About this project",
     "highlightsTitle": "Highlights",

@@ -42,6 +42,15 @@ export type IntlListing = {
   /** `bucket/path` of the first photo, or null. */
   cover_path: string | null;
   photo_count: number;
+  /** Added by 00135. */
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  total_units: number | null;
+  land_size: number | null;
+  /** The source's own wording ("2 - 6+2"); shown instead of the figures when present. */
+  bedrooms_label: string | null;
+  bathrooms_label: string | null;
 };
 
 export type IntlMedia = {
@@ -65,4 +74,5 @@ export const INTL_LISTING_COLUMNS =
   "id, slug, country_code, region, city, area, title, summary, description, listing_type, category, " +
   "property_type_label, developer_name, tenure_label, completion_label, bedrooms_min, bedrooms_max, " +
   "bathrooms_min, bathrooms_max, size_min, size_max, size_unit, currency, price_min, price_max, " +
-  "highlights, is_featured, published_at, contact_name, contact_role, contact_whatsapp, cover_path, photo_count";
+  "highlights, is_featured, published_at, contact_name, contact_role, contact_whatsapp, cover_path, photo_count, " +
+  "address, latitude, longitude, total_units, land_size, bedrooms_label, bathrooms_label";

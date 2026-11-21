@@ -5711,6 +5711,7 @@
     "factBedrooms": "Bedrooms",
     "factBathrooms": "Bathrooms",
     "factSize": "Size",
+    "factUnits": "Units in the project",
     "factDeveloper": "Developer",
     "factTenure": "Tenure",
     "factCompletion": "Completion",

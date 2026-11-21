@@ -121,6 +121,9 @@ export default async function InternationalListingPage({
     beds ? { key: "bed", icon: "bed", label: t("factBedrooms"), value: beds } : null,
     baths ? { key: "bath", icon: "bath", label: t("factBathrooms"), value: baths } : null,
     size ? { key: "size", icon: "area", label: t("factSize"), value: size } : null,
+    listing.total_units
+      ? { key: "units", icon: "developer", label: t("factUnits"), value: listing.total_units.toLocaleString(locale === "en" ? "en-US" : "id-ID") }
+      : null,
     listing.tenure_label
       ? { key: "tenure", icon: "tenure", label: t("factTenure"), value: listing.tenure_label }
       : null,
