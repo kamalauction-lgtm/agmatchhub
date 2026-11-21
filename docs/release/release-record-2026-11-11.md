@@ -308,3 +308,20 @@
 - **Not checked on production:** dark mode itself (the session's browser was in light mode), and the action queue on a phone (nothing was pending).
 - **Not changed:** in light mode the inline red buttons stay at 4.2:1, just under 4.5:1; moving them to `#c62828` darkens the brand red and is the owner's call.
 - **Not checked at all:** a real phone, tablet widths, Malay.
+
+## Follow-up release, 21 Nov 2026: light-mode red contrast, self-recovering error screen, longer RLS setup limit
+
+- **What:** PR #74 (merge `a56bb4b`).
+  - Red buttons in light mode: `--crimson-btn` is `#d32f2f` (white 5.0:1; the brand `#e53935` gives 4.2:1). It is the nearest red that passes. Dark mode is unchanged.
+  - `error.tsx` and `global-error.tsx` replace Next's bare "This page couldn't load" screen. A failed page reloads itself once (at most once a minute, so a broken page cannot loop), then shows a message in en/id/ms with a Reload button and the error digest.
+  - `packages/db` vitest `hookTimeout` 20s → 60s. Twice on 19–20 Nov a setup hook timed out on a slow staging while every test passed. The per-test limit stays 20s.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `f08d17df` (rollback `52496441`); staging `ddc2ed3c`.
+- **Help:** all pictures re-taken on staging; 75 changed (button colour).
+- **Checks on staging:**
+  - red buttons measured on three pages: 5.0:1 in light, 5.6:1 in dark;
+  - a temporary, uncommitted page that always throws was deployed to staging. In en, id and ms the page was requested exactly twice (original + one reload), did not loop over a further 6 seconds, and showed the message in the page's language. A first attempt had shown English on id and ms pages (the server renders the screen without knowing the language); that was fixed before this release. The temporary page was removed and staging redeployed clean.
+  - Typecheck and lint pass. CI: checks and rls green on the first run, with the new 60s hook limit.
+- **Checks on production,** 45 seconds after the deploy finished: signed in through the owner's browser session, read-only: Listings, Dashboard, Command Center and Content studio load with no error screen; the red button on Listings is `#d32f2f`; the temporary test route returns 404.
+- **About the cause:** not proven. On staging, the old and the new build both answered requests for a few seconds after each deploy, which fits what was seen on production on 20 Nov. The new screen makes that moment recover by itself; it does not remove it.
+- **Not checked:** `global-error.tsx` (a failure in the root layout) was never triggered; the error screen was not triggered on production; dark mode and phone width on production; Malay beyond the error screen.
