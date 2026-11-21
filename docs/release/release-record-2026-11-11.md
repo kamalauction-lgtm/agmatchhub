@@ -325,3 +325,18 @@
 - **Checks on production,** 45 seconds after the deploy finished: signed in through the owner's browser session, read-only: Listings, Dashboard, Command Center and Content studio load with no error screen; the red button on Listings is `#d32f2f`; the temporary test route returns 404.
 - **About the cause:** not proven. On staging, the old and the new build both answered requests for a few seconds after each deploy, which fits what was seen on production on 20 Nov. The new screen makes that moment recover by itself; it does not remove it.
 - **Not checked:** `global-error.tsx` (a failure in the root layout) was never triggered; the error screen was not triggered on production; dark mode and phone width on production; Malay beyond the error screen.
+
+## Follow-up release, 21 Nov 2026 (later): consistent Malay terms, admin overview at tablet width
+
+- **Why:** a check of tablet widths (768px and 1024px) and of the Malay interface on staging, 51 pages each. Tablets were clean except for an 11px sideways scroll on the admin overview between 1024px and about 1100px. Malay was complete (all 4,542 texts, no raw keys, no Indonesian-only words) but used three words for "listing" and two each for "lead" and "client".
+- **What:** PR #76 (merge `d444643`).
+  - Malay: "listing" is **penyenaraian** everywhere (the owner's choice), "lead" is **prospek**, "client" is **pelanggan**. 156 texts in `messages/ms.json`. "Iklan" stays on the banner admin page (a paid advert); "pertanyaan" stays where it means a buyer's question.
+  - Admin overview: the two tables without a wrapper scroll inside their cards.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `71eb1392` (rollback `f08d17df`); staging `84894aea`.
+- **Help:** pictures unchanged (English and Indonesian are untouched).
+- **Checks on staging:** 19 agent pages in Malay at 390px and 1440px as a Malaysian agent: no sideways scroll, no clipped labels (the longer word fits the phone tab bar), no old words left in interface text; admin overview at 1024, 1060 and 1099px without sideways scroll. Typecheck passes. CI: checks and rls green on the first run.
+- **Checks on production,** 45 seconds after the deploy: signed in through the owner's browser session, read-only, in English: Command Center and Dashboard load with no error screen; both overview tables are inside their scroll wrappers. Public pages answer in Malay when asked and contain none of the old words.
+- **Not checked on production:** the new Malay words themselves, which appear only on signed-in pages and the session was in English; the 1024px width.
+- **Still English in Malay:** "Active listing capacity" on the plan page comes from the database, not the message file.
+- **Not checked at all:** the admin side in Malay (the staging admin account is Indonesian and Malay is offered only to Malaysian accounts); the quality of the Malay beyond consistency; real tablets.
