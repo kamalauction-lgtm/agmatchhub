@@ -46,6 +46,16 @@ jobs:
     # production. Without staging secrets configured it is skipped loudly rather
     # than silently passing — see docs/stage-a-audit-and-architecture.md §B.5 S4.
     runs-on: ubuntu-latest
+    # One run at a time. Every run of this suite creates and sweeps fixture rows
+    # in the same staging database, so two runs side by side delete each other's
+    # fixtures and fail with "Teardown removed N leftover fixture row(s)" while
+    # every test passed (21 Nov 2026: a main run, a PR run and a second branch
+    # overlapped). A later run now waits for the one in front.
+    # GitHub keeps one waiting run per group: if a third arrives, the one that
+    # was waiting is cancelled (shown as cancelled, not failed) and needs a re-run.
+    concurrency:
+      group: rls-staging
+      cancel-in-progress: false
     env:
       # Lifted to job env so the steps below can branch on presence: the
       # `secrets` context is not reliably available inside a step-level `if`.
