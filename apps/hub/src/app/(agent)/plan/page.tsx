@@ -62,6 +62,11 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
     .filter((p) => p.price !== null && Number(p.price) > 0);
 
   const defName = new Map((defs ?? []).map((d) => [d.key, d]));
+  // The database holds these names in English; show the reader's language when we have it.
+  const entName = (k: string) => {
+    const mk = `entitlementNames.${k.replace(/\./g, "_")}`;
+    return t.has(mk as never) ? t(mk as never) : (defName.get(k)?.name ?? k);
+  };
   const free = plan.effectivePrice === 0;
   const value = (v: number | boolean | string | null | undefined) =>
     v === true ? "✓" : v === false || v == null ? "—" : String(v);
@@ -195,7 +200,7 @@ export default async function PlanPage({ searchParams }: { searchParams: Promise
                 <ul className="mt-4 space-y-1 text-sm">
                   {SHOW.map((k) => (
                     <li key={k} className="flex justify-between gap-2">
-                      <span className="text-muted">{defName.get(k)?.name ?? k}</span>
+                      <span className="text-muted">{entName(k)}</span>
                       <span className="font-semibold tabular-nums">{value(p.entitlements[k])}</span>
                     </li>
                   ))}

@@ -4156,6 +4156,23 @@
     }
   },
   "plan": {
+    "entitlementNames": {
+      "listing_active_limit": "Active listing capacity",
+      "listing_import_limit": "Listing import allowance",
+      "boost_monthly_credits": "Monthly boost credits",
+      "featured_vouchers": "Featured property vouchers",
+      "ai_monthly_usage": "AI allowance",
+      "ai_poster_exports_monthly": "Poster exports",
+      "ai_credits_monthly": "Monthly AI credits",
+      "ai_roles": "AI Workforce access",
+      "website_enabled": "Agent website",
+      "website_custom_domain": "Custom domain",
+      "analytics_level": "Analytics level",
+      "content_studio_level": "Content Studio level",
+      "comarketing_enabled": "Co-marketing",
+      "matchhub_enabled": "MatchHub",
+      "support_level": "Support level"
+    },
     "title": "My plan & credits",
     "intro": "What you hold today, why, and what each plan costs in your currency. Nothing here charges you: billing stays off until it is switched on separately.",
     "current": "Your plan",
