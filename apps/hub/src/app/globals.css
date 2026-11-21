@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* The dark: utilities follow the same rule as the colour tokens below. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) { @slot; }
+  }
+  &:where([data-theme="dark"], [data-theme="dark"] *) { @slot; }
+}
+
 /* =============================================================================
    PropertiGuru Design System v1.0
    =============================================================================
@@ -107,8 +115,11 @@
 .command-band .command-muted { color: var(--command-muted); }
 .command-band .command-link { color: var(--command-link); }
 
+/* Dark values apply in two cases: the device asks for dark and the page has
+   not been switched to light, or the page has been switched to dark (the
+   theme switch writes <html data-theme>). Keep the two lists identical. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --page: #0b1220;
     --card: #131a29;
     --background: #131a29;
@@ -155,6 +166,62 @@
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.2);
     --shadow-raised: 0 4px 16px rgb(0 0 0 / 0.4);
   }
+}
+:root[data-theme="dark"] {
+  --page: #0b1220;
+  --card: #131a29;
+  --background: #131a29;
+  --foreground: #f1f5f9;
+
+  --surface: #1c2536;
+  --line: #263145;
+  --line-strong: #35415a;
+  --muted: #94a3b8;
+  --muted-strong: #cbd5e1;
+  --silver: #64748b;
+
+  /* Lifted for contrast on a dark ground; the hue is unchanged so the brand
+     still reads as the same red. */
+  --crimson: #f05a56;
+  --crimson-strong: #e53935;
+  --crimson-soft: #2a1618;
+  --crimson-btn: #c62828;
+  --crimson-btn-strong: #b71c1c;
+  --navy: #f1f5f9;
+  --navy-soft: #1c2536;
+
+  --blue: #60a5fa;
+  --blue-soft: #16243c;
+  --indigo: #818cf8;
+  --indigo-soft: #1b1f3a;
+  --teal: #2dd4bf;
+
+  --success: #4ade80;
+  --success-soft: #10261a;
+  --warning: #fb923c;
+  --warning-soft: #2a1c10;
+  --danger: #f05a56;
+  --danger-soft: #2a1618;
+
+  /* Accent stays deep gold in dark mode so white button text keeps 6:1. */
+  --accent: #7a5f1f;
+  --accent-soft: #2a2312;
+  --gold: #c9a64b;
+  --gold-light: #c9a64b;
+  --success-ink: #86efac;
+  --warning-ink: #fdba74;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.2);
+  --shadow-raised: 0 4px 16px rgb(0 0 0 / 0.4);
+}
+
+/* The theme switch shows a moon in light and a sun in dark. */
+.only-dark { display: none; }
+:root[data-theme="dark"] .only-dark { display: revert; }
+:root[data-theme="dark"] .only-light { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .only-dark { display: revert; }
+  :root:not([data-theme="light"]) .only-light { display: none; }
 }
 
 @theme inline {

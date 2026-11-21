@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { Icon } from "@/components/ui/icon";
 import { useStored } from "@/lib/use-stored";
 import { RailNav, type RailGroup, type RailLabels } from "./rail-nav";
+import { ThemeToggle } from "./theme-toggle";
 
 export type SidebarLabels = {
   collapse: string;
@@ -14,6 +15,8 @@ export type SidebarLabels = {
   close: string;
   find: string;
   noMatch: string;
+  /** Accessible name of the light/dark switch shown in the phone drawer. */
+  theme?: string;
 };
 
 /**
@@ -173,6 +176,7 @@ export function MobileNav({
             <div ref={panelRef} className="relative flex h-dvh w-[19rem] max-w-[86vw] flex-col bg-card shadow-xl">
               <div className="flex min-h-[4.25rem] items-center justify-between gap-2 border-b border-line pl-5 pr-2">
                 {header}
+                {labels.theme && <span className="ml-auto sm:hidden"><ThemeToggle label={labels.theme} /></span>}
                 <button
                   ref={closeRef}
                   type="button"

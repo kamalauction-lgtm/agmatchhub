@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { BrandLockup } from "@/components/layout/brand-lockup";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { type RailGroup } from "@/components/layout/rail-nav";
 import { MobileNav, Sidebar, type SidebarLabels } from "@/components/layout/sidebar";
 import { Icon } from "@/components/ui/icon";
@@ -114,6 +115,7 @@ export default async function AdminLayout({
     expand: tc("expandMenu"),
     menu: tc("menu"),
     close: tc("closeMenu"),
+    theme: tc("toggleTheme"),
     find: tc("findPage"),
     noMatch: tc("noPageMatch"),
   };
@@ -216,6 +218,7 @@ export default async function AdminLayout({
           </form>
 
           <div className="flex items-center gap-3">
+            <span className="hidden sm:block"><ThemeToggle label={tc("toggleTheme")} /></span>
             <LanguageSwitcher />
             <Link
               href="/dashboard"
