@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
+import { cookies } from "next/headers";
 import { brand } from "@/config/brand";
 import { isPartnerIdentityPublic } from "@/lib/platform-identity";
 import { PwaRegister } from "@/components/pwa-register";
@@ -42,9 +43,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
+  // The reader's own light/dark choice (see ThemeToggle). Absent: follow the device.
+  const chosen = (await cookies()).get("theme")?.value;
+  const theme = chosen === "light" || chosen === "dark" ? chosen : undefined;
   return (
     <html
       lang={locale}
+      data-theme={theme}
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

@@ -216,7 +216,7 @@ export const AGENT_TOPICS: HelpTopic[] = [
   {
     slug: "daily-work",
     audience: "agent",
-    updated: "2026-11-19",
+    updated: "2026-11-21",
     title: { en: "Leads, tasks, card and notifications", id: "Prospek, tugas, kartu, dan notifikasi" },
     summary: {
       en: "Answer buyers quickly, keep track of viewings, and share your digital name card.",
@@ -233,7 +233,7 @@ export const AGENT_TOPICS: HelpTopic[] = [
           { en: "My name card: your public digital card with your listings and badges. Share its link on WhatsApp.", id: "Kartu nama saya: kartu digital publik berisi listing dan lencana Anda. Bagikan tautannya lewat WhatsApp.", shot: "g-nav-card" },
         ],
         notes: [
-          { en: "The menu on the left: press a group title to fold it, and use the button at the top to shrink the menu to icons. On a phone, the bar at the bottom has your daily pages and Menu (top left) has everything else.", id: "Menu di sebelah kiri: tekan judul grup untuk melipatnya, dan gunakan tombol di atas untuk mengecilkan menu menjadi ikon. Di ponsel, bilah di bawah berisi halaman harian Anda dan Menu (kiri atas) berisi semua halaman lainnya." },
+          { en: "The menu on the left: press a group title to fold it, and use the button at the top to shrink the menu to icons. On a phone, the bar at the bottom has your daily pages and Menu (top left) has everything else. The moon or sun button at the top (inside Menu on a phone) switches between light and dark.", id: "Menu di sebelah kiri: tekan judul grup untuk melipatnya, dan gunakan tombol di atas untuk mengecilkan menu menjadi ikon. Di ponsel, bilah di bawah berisi halaman harian Anda dan Menu (kiri atas) berisi semua halaman lainnya. Tombol bulan atau matahari di atas (di dalam Menu pada ponsel) mengganti tampilan terang dan gelap." },
         ],
       },
     ],
