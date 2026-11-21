@@ -340,3 +340,19 @@
 - **Not checked on production:** the new Malay words themselves, which appear only on signed-in pages and the session was in English; the 1024px width.
 - **Still English in Malay:** "Active listing capacity" on the plan page comes from the database, not the message file.
 - **Not checked at all:** the admin side in Malay (the staging admin account is Indonesian and Malay is offered only to Malaysian accounts); the quality of the Malay beyond consistency; real tablets.
+
+## Follow-up release, 21 Nov 2026 (evening): light / dark switch
+
+- **Why:** the owner asked where to change between light and dark. Until now the Hub only followed the device.
+- **What:** PR #79 (merge `0bdd2bc`).
+  - A moon/sun button next to the language choice on the agent header, the admin header and the sign-in pages. On a phone it sits in the Menu drawer; one more button in the phone header cut the brand name short.
+  - With no choice made the app follows the device, as before. A press writes a `theme` cookie (one year); the root layout reads it and sets `<html data-theme>`, so the next page arrives in the chosen colours with no flash.
+  - `globals.css`: dark tokens apply when the device asks for dark and the page is not switched to light, or when the page is switched to dark. The `dark:` variant follows the same rule.
+  - Help: one sentence in the admin and agent daily guides (EN, ID), `updated` bumped.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `5765a1ee` (rollback `71eb1392`); staging `73956690` at the time of testing. Another session has since been previewing PR #78 (international listings) on staging, so staging may no longer match production.
+- **Help:** all pictures re-taken on staging (the header changed on every screen).
+- **Checks on staging:** as agent and admin, desktop and 390px phone, on a light device and a dark device: one press switches, the choice survives a reload, the next page is already in the chosen theme in the server's HTML, a second press goes back; no sideways scroll; the brand name is not cut on a phone. Dark reached by the switch matched dark from the device on every sampled element except the switch itself (still under the pointer). Typecheck and lint pass. CI: checks and rls green after the branch was brought up to date with main.
+- **Checks on production:** the server sets `data-theme` for `theme=dark` and `theme=light`, sets nothing with no cookie, and ignores an invalid value. Signed in through the owner's browser session, read-only: Content studio and Command Center load with no error screen and each shows one switch with the right icon. The switch was not pressed there, so as not to change the owner's own setting.
+- **During release:** the laptop slept while the release script was waiting for CI, so the merge and deploy happened about six hours after approval, when it woke. A second script started in the meantime found the PR already merged and stopped without deploying; there was one deploy. PR #78 was confirmed still open before the merge, so it is not in this release.
+- **Not checked:** a real phone; pressing the switch on production. Public pages other than sign-in have no switch and still follow the device.
