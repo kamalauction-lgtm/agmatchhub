@@ -2,7 +2,7 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { publicSiteUrl } from "@/lib/public-site-url";
 import { MARKETPLACE_LOCALES } from "./countries";
-import { INTL_LISTING_COLUMNS, type FxRate, type IntlListing, type IntlMedia, type RatesMap } from "./types";
+import { INTL_LISTING_COLUMNS, INTL_LIST_COLUMNS, type FxRate, type IntlListing, type IntlMedia, type RatesMap } from "./types";
 
 /**
  * Loaders for the agent-facing International pages. Everything is read with
@@ -15,6 +15,7 @@ function normalise(row: Record<string, unknown>): IntlListing {
   const n = (v: unknown) => (v === null || v === undefined ? null : Number(v));
   return {
     ...(row as unknown as IntlListing),
+    description: typeof row.description === "string" ? row.description : null,
     bedrooms_min: n(row.bedrooms_min),
     bedrooms_max: n(row.bedrooms_max),
     bathrooms_min: n(row.bathrooms_min),
@@ -28,20 +29,31 @@ function normalise(row: Record<string, unknown>): IntlListing {
   };
 }
 
-/** Every published listing: featured first, then newest. */
+/**
+ * Every published listing: featured first, then newest. Read a page at a time,
+ * because PostgREST caps one request at 1,000 rows and the catalogue is larger.
+ */
 export async function loadIntlListings(): Promise<IntlListing[]> {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("public_international_listings")
-    .select(INTL_LISTING_COLUMNS)
-    .order("is_featured", { ascending: false })
-    .order("published_at", { ascending: false, nullsFirst: false })
-    .limit(1000);
-  if (error) {
-    console.error("[international] list failed:", error.message);
-    return [];
+  const PAGE = 1000;
+  const rows: Record<string, unknown>[] = [];
+  for (let from = 0; from < 10_000; from += PAGE) {
+    const { data, error } = await supabase
+      .from("public_international_listings")
+      .select(INTL_LIST_COLUMNS())
+      .order("is_featured", { ascending: false })
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .order("id")
+      .range(from, from + PAGE - 1);
+    if (error) {
+      console.error("[international] list failed:", error.message);
+      break;
+    }
+    const page = (data ?? []) as unknown as Record<string, unknown>[];
+    rows.push(...page);
+    if (page.length < PAGE) break;
   }
-  return ((data ?? []) as unknown as Record<string, unknown>[]).map(normalise);
+  return rows.map(normalise);
 }
 
 export async function loadIntlListing(slug: string): Promise<IntlListing | null> {

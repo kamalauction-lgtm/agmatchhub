@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   bathroomsLabel,
   bedroomsLabel,
+  mapLink,
   countryName,
   getFxRates,
   getInternationalBySlug,
@@ -108,6 +109,7 @@ export default async function InternationalListingPage({
     })
     .filter((x): x is GalleryImage => x !== null);
 
+  const map = mapLink(listing.latitude, listing.longitude);
   const beds = bedroomsLabel(listing, t("studio"));
   const baths = bathroomsLabel(listing);
   const size = sizeLabel(listing, locale);
@@ -197,6 +199,16 @@ export default async function InternationalListingPage({
             <p className="mt-2 flex items-start gap-1.5 text-muted">
               <PinIcon className="mt-0.5 h-4 w-4 shrink-0" />
               <span>{place}</span>
+            </p>
+          )}
+          {(listing.address || map) && (
+            <p className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 pl-[1.375rem] text-sm text-muted">
+              {listing.address && <span className="break-words">{listing.address}</span>}
+              {map && (
+                <a href={map} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-semibold text-brand underline-offset-2 hover:underline sm:min-h-0">
+                  {t("viewMap")}
+                </a>
+              )}
             </p>
           )}
 

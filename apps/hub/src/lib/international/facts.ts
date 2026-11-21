@@ -26,3 +26,15 @@ export function matchesQuery(l: IntlListing, q: string): boolean {
   const hay = fold([l.title, l.city, l.region, l.area, l.developer_name, l.property_type_label].filter(Boolean).join(" "));
   return fold(q).split(/\s+/).filter(Boolean).every((word) => hay.includes(word));
 }
+
+/**
+ * A link to the project's position on a public map, or null without one.
+ * A plain link, not an embedded map: no key, no third-party script on our page.
+ */
+export function mapLink(latitude: number | null, longitude: number | null): string | null {
+  if (latitude === null || longitude === null) return null;
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  const lat = latitude.toFixed(6);
+  const lng = longitude.toFixed(6);
+  return `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=15/${lat}/${lng}`;
+}

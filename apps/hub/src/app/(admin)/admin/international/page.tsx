@@ -114,12 +114,22 @@ export default async function AdminInternationalPage({
 
   // Needed by every tab: which countries the catalogue holds (for pickers and
   // filters) and how many enquiries are waiting (for the tab's badge).
-  const [{ data: codeRows }, { count: newEnquiries }] = await Promise.all([
-    supabase.from("international_listings").select("country_code, status").limit(5000),
+  // A page at a time: one request returns at most 1,000 rows and the catalogue is larger.
+  const readCodes = async () => {
+    const rows: { country_code: string; status: string }[] = [];
+    for (let from = 0; from < 20_000; from += 1000) {
+      const { data } = await supabase.from("international_listings").select("country_code, status").order("id").range(from, from + 999);
+      rows.push(...((data ?? []) as { country_code: string; status: string }[]));
+      if ((data ?? []).length < 1000) break;
+    }
+    return rows;
+  };
+  const [codeRows, { count: newEnquiries }] = await Promise.all([
+    readCodes(),
     supabase.from("international_enquiries").select("id", { count: "exact", head: true }).eq("status", "new"),
   ]);
   const totals = new Map<string, { all: number; published: number }>();
-  for (const r of (codeRows ?? []) as { country_code: string; status: string }[]) {
+  for (const r of codeRows) {
     const e = totals.get(r.country_code) ?? { all: 0, published: 0 };
     e.all += 1;
     if (r.status === "published") e.published += 1;

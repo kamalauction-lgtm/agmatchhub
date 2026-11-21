@@ -35,6 +35,7 @@ describe("parseRooms", () => {
     expect(parseRooms("2 - N/A")).toEqual({ min: 2, max: 2, label: null });
     expect(parseRooms("N/A")).toEqual({ min: null, max: null, label: null });
     expect(parseRooms("many")).toEqual({ min: null, max: null, label: null });
+    expect(parseRooms("21 - N/A")).toEqual({ min: null, max: null, label: null });
   });
 });
 

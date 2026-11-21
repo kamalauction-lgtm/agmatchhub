@@ -95,8 +95,29 @@ export type InternationalResult = {
 
 export const INTERNATIONAL_PAGE_SIZE = 24;
 
-/** Upper bound on any single read here; nothing is ever unbounded. */
-const MAX_ROWS = 1000;
+/** PostgREST returns at most this many rows per request. */
+const PAGE_ROWS = 1000;
+/** Upper bound on any whole read here; nothing is ever unbounded. */
+const MAX_ROWS = 10_000;
+
+/**
+ * Read every row of a slim query, a page at a time. A catalogue larger than
+ * one PostgREST page would otherwise be silently cut off: countries would
+ * lose listings from their counts, and "cheapest first" would ignore the rest.
+ */
+async function readAll(
+  make: () => { range: (from: number, to: number) => PromiseLike<{ data: unknown; error: { message: string } | null }> }
+): Promise<Record<string, unknown>[]> {
+  const rows: Record<string, unknown>[] = [];
+  for (let from = 0; from < MAX_ROWS; from += PAGE_ROWS) {
+    const { data, error } = await make().range(from, from + PAGE_ROWS - 1);
+    if (error) throw new Error(error.message);
+    const page = (data ?? []) as Record<string, unknown>[];
+    rows.push(...page);
+    if (page.length < PAGE_ROWS) break;
+  }
+  return rows;
+}
 
 const VIEW = "public_international_listings";
 const SLUG = /^[a-z0-9][a-z0-9-]{2,160}$/;
@@ -186,11 +207,10 @@ export type CountryCount = { code: string; count: number };
 
 /** Published listings per country, most first, for the country tabs. */
 export async function getInternationalCountryCounts(): Promise<CountryCount[]> {
-  const { data, error } = await publicDb().from(VIEW).select("country_code").limit(MAX_ROWS);
-  if (error) throw new Error(`international country counts failed: ${error.message}`);
+  const data = await readAll(() => publicDb().from(VIEW).select("country_code").order("id"));
 
   const counts = new Map<string, number>();
-  for (const row of (data ?? []) as { country_code: string }[]) {
+  for (const row of data as { country_code: string }[]) {
     counts.set(row.country_code, (counts.get(row.country_code) ?? 0) + 1);
   }
   return [...counts.entries()]
@@ -213,14 +233,14 @@ export async function searchInternational(
        BY on the view. Read the three columns the comparison needs for every
        match (bounded), order by US-dollar equivalent here, then fetch only the
        page being shown. Listings with no price, or no rate, go last. */
-    let slim = publicDb().from(VIEW).select("id,currency,price_min,price_max").limit(MAX_ROWS);
-    if (country) slim = slim.eq("country_code", country);
-    if (search) slim = slim.or(search);
+    const data = await readAll(() => {
+      let slim = publicDb().from(VIEW).select("id,currency,price_min,price_max").order("id");
+      if (country) slim = slim.eq("country_code", country);
+      if (search) slim = slim.or(search);
+      return slim;
+    });
 
-    const { data, error } = await slim;
-    if (error) throw new Error(`international search failed: ${error.message}`);
-
-    const ordered = ((data ?? []) as Record<string, unknown>[])
+    const ordered = data
       .map((r) => ({
         id: String(r.id),
         usd: usdEquivalent(String(r.currency), num(r.price_min), num(r.price_max), rates),
@@ -396,4 +416,16 @@ export function bathroomsLabel(
   l: Pick<InternationalListing, "bathrooms_min" | "bathrooms_max" | "bathrooms_label">
 ): string | null {
   return l.bathrooms_label ?? formatRange(l.bathrooms_min, l.bathrooms_max, String);
+}
+
+/**
+ * A link to the project's position on a public map, or null without one.
+ * A plain link, not an embedded map: no key, no third-party script on our page.
+ */
+export function mapLink(latitude: number | null, longitude: number | null): string | null {
+  if (latitude === null || longitude === null) return null;
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  const lat = latitude.toFixed(6);
+  const lng = longitude.toFixed(6);
+  return `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=15/${lat}/${lng}`;
 }

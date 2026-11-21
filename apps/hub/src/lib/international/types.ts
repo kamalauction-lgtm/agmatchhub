@@ -70,6 +70,9 @@ export type FxRate = { currency: string; per_usd: number; as_of: string };
 /** Rates keyed by currency code. */
 export type RatesMap = Record<string, { perUsd: number; asOf: string }>;
 
+/** The list reads everything except the long description, which only the project page shows. */
+export const INTL_LIST_COLUMNS = () => INTL_LISTING_COLUMNS.replace(" description,", "");
+
 export const INTL_LISTING_COLUMNS =
   "id, slug, country_code, region, city, area, title, summary, description, listing_type, category, " +
   "property_type_label, developer_name, tenure_label, completion_label, bedrooms_min, bedrooms_max, " +

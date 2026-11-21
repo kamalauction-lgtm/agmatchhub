@@ -11,7 +11,7 @@ import { CountryTag, ListingVisual } from "@/components/international/listing-vi
 import { ShareActions } from "@/components/international/share-actions";
 import { countryName, waDigits } from "@/lib/international/countries";
 import { intlPhotoUrl, intlPublicUrl, loadIntlListing, loadIntlMedia, loadRates } from "@/lib/international/data";
-import { placeText, rangeText } from "@/lib/international/facts";
+import { mapLink, placeText, rangeText } from "@/lib/international/facts";
 import { priceFigures } from "@/lib/international/price";
 
 /**
@@ -51,6 +51,7 @@ export default async function InternationalListingPage({
     .filter((p): p is { id: string; src: string; alt: string } => p.src !== null);
   const [hero, ...thumbs] = photos;
 
+  const map = mapLink(listing.latitude === null ? null : Number(listing.latitude), listing.longitude === null ? null : Number(listing.longitude));
   const beds = listing.bedrooms_label ?? rangeText(listing.bedrooms_min, listing.bedrooms_max, locale);
   const baths = listing.bathrooms_label ?? rangeText(listing.bathrooms_min, listing.bathrooms_max, locale);
   const units = rangeText(listing.total_units, listing.total_units, locale);
@@ -97,6 +98,16 @@ export default async function InternationalListingPage({
           <p className="mt-2 flex items-start gap-1.5 text-base text-muted-strong">
             <Icon name="map-pin" size={18} className="mt-0.5" />
             {place}
+          </p>
+        )}
+        {(listing.address || map) && (
+          <p className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 pl-[1.625rem] text-sm text-muted-strong">
+            {listing.address && <span className="break-words">{listing.address}</span>}
+            {map && (
+              <a href={map} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue underline-offset-2 hover:underline">
+                {t("viewMap")}
+              </a>
+            )}
           </p>
         )}
       </header>

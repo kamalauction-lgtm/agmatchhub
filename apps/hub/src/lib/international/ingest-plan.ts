@@ -18,6 +18,9 @@ export type HoldReason =
 
 export type Rooms = { min: number | null; max: number | null; label: string | null };
 
+/** A room count above this is a typing slip in the source, not a fact. */
+const MAX_ROOMS = 20;
+
 const BLANK = /^(n\/?a|none|null|undefined|tbc|tba|-+|–+)?$/i;
 
 /** Source placeholders ("N/A", "-", "") become null; anything else is trimmed. */
@@ -39,7 +42,9 @@ export function parseRooms(v: unknown): Rooms {
     .split(/\s*(?:-|–|to)\s*/i)
     .map((part) => /^(\d{1,2})(?:\s*\+\s*\d{1,2})?$/.exec(part.trim()))
     .filter((m): m is RegExpExecArray => m !== null)
-    .map((m) => Number(m[1]));
+    .map((m) => Number(m[1]))
+    // "21" where "2 - 1" was meant has been seen; no project sells 21-bedroom units.
+    .filter((n) => n <= MAX_ROOMS);
   if (!ends.length) return { min: null, max: null, label: null };
   const min = Math.min(...ends);
   const max = Math.max(...ends);
