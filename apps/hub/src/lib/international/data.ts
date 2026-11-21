@@ -86,12 +86,15 @@ export function intlPhotoUrl(bucketAndPath: string | null): string | null {
 
 /**
  * The listing's page on the public marketplace, in the reader's language when
- * the marketplace ships it. Null when no marketplace URL is configured — the
+ * the marketplace ships it, otherwise in English. Null when no marketplace URL is configured — the
  * caller then hides the share-link control.
  */
 export function intlPublicUrl(slug: string, locale: string): string | null {
   const site = publicSiteUrl();
   if (!site) return null;
-  const lang = (MARKETPLACE_LOCALES as readonly string[]).includes(locale) ? locale : MARKETPLACE_LOCALES[0];
+  // A reader whose language the marketplace does not ship (Malay) gets the
+  // English page: a buyer abroad reads English more readily than Indonesian.
+  const shipped = MARKETPLACE_LOCALES as readonly string[];
+  const lang = shipped.includes(locale) ? locale : shipped.includes("en") ? "en" : shipped[0];
   return `${site}/${lang}/internasional/${slug}`;
 }
