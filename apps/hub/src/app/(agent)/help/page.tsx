@@ -13,7 +13,7 @@ export default async function AgentHelpPage({ searchParams }: { searchParams: Pr
   const { lang } = await searchParams;
   return (
     <AgentShell>
-      <HelpIndex topics={AGENT_TOPICS} lang={helpLang(locale, lang)} base="/help" labels={await indexLabels("agent", locale)} />
+      <HelpIndex topics={AGENT_TOPICS} lang={helpLang(locale, lang)} base="/help" labels={await indexLabels("agent")} />
     </AgentShell>
   );
 }

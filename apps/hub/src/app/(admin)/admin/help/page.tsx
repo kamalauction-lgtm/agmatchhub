@@ -10,5 +10,5 @@ export default async function AdminHelpPage({ searchParams }: { searchParams: Pr
   await requireUser();
   const locale = await getLocale();
   const { lang } = await searchParams;
-  return <HelpIndex topics={ADMIN_TOPICS} lang={helpLang(locale, lang)} base="/admin/help" labels={await indexLabels("admin", locale)} />;
+  return <HelpIndex topics={ADMIN_TOPICS} lang={helpLang(locale, lang)} base="/admin/help" labels={await indexLabels("admin")} />;
 }

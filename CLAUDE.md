@@ -137,7 +137,7 @@ Typecheck, lint and build pass; new tables have RLS policies **and** a negative
 test proving the wrong role is blocked; critical actions are audited; UI strings
 exist in every locale the app ships (hub: id/en/ms, www: id/en — enforced by
 `packages/db/tests/unit/i18n-parity.test.ts`); the in-app Help playbook
-(`apps/hub/src/lib/help/content-*.ts`, English and Indonesian) is updated in the
+(`apps/hub/src/lib/help/content-*.ts`, English, Indonesian and Malay) is updated in the
 same change as any admin- or agent-facing flow it describes, with `updated`
 bumped — and if the screen changed, its walkthrough pictures are re-taken on
 staging with `node apps/hub/scripts/capture-help-shots.mjs <shot-id>` and
