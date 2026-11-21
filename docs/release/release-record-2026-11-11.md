@@ -369,3 +369,18 @@
 - **Not checked on production:** the Malay names (the session was in Indonesian).
 - **Still English for a Malay reader:** Help & guides (the playbook exists in English and Indonesian only); and on the plan page the plan and tier names, the tier values "basic" / "advanced" and the launch label, all from the database.
 - **Staging:** this session's staging deploys on 21 Nov replaced the Hub preview of PR #78 (international listings) that another session had put there. PR #78 and the staging database were not touched; the preview needs redeploying from its branch to be seen again.
+
+## Follow-up release, 21 Nov 2026 (late night): Help guides in Malay
+
+- **Why:** the owner asked for the Help playbook in Malay. Until now a Malay reader got English.
+- **What:** PR #83 (merge `6bdb8fb`).
+  - All 15 guides (8 admin, 7 agent; 170 texts) carry Malay next to English and Indonesian. Button and menu names were looked up in the Malay interface, so a guide says what the screen says.
+  - The guide language switch offers English, Indonesia and Melayu. A reader whose interface is Malay gets Malay by default; `?lang=ms` gives it to anyone. The "Malay is coming" note is gone.
+  - `Localised` now requires `ms`, so a future guide cannot compile without Malay. `CLAUDE.md` says the playbook is kept in three languages.
+- **Database:** no changes (schema stays at 00133).
+- **Hub:** production `db4cbd62` (rollback `f76dadf7`); staging `fad0e5f6` at the time of testing.
+- **Help pictures:** unchanged. Malay guides show the English pictures, because the capture accounts are Indonesian and cannot use Malay.
+- **Checks on staging**, in Malay: as a Malaysian agent at 1440px and 390px (7 guides, 47 steps) and as the Malaysian country admin (8 guides, 44 steps): every step walked, none reads as English, pictures load, no sideways scroll. An Indonesian agent still gets Indonesian by default and `?lang=en` still gives English. Typecheck and lint pass. CI: checks and rls green (rls took 21 minutes on a slow staging).
+- **Checks on production,** 45 seconds after the deploy: signed in through the owner's browser session, read-only: `/help?lang=ms` lists seven guides in Malay with the three-language switch; step 2 of the admin daily guide shows Malay text over the English picture, which loads; `/help` with no parameter still opens in Indonesian for this account.
+- **Hold D-9 (Malay reviewer) is NOT lifted.** The Malay text is the author's translation, released at the owner's request without a native-speaker review. It was checked for completeness and for matching the interface's words, not for quality of language.
+- **Not checked on production:** the remaining guides and steps in Malay; phone width.
