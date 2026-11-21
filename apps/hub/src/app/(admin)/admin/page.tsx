@@ -378,7 +378,7 @@ export default async function AdminHome({
           {topReferrers.length === 0 ? (
             <p className="px-5 py-10 text-center text-sm text-muted">{t("noReferrers")}</p>
           ) : (
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto"><table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-[11px] uppercase tracking-wider text-muted">
                   <th scope="col" className="px-5 py-2 font-semibold">#</th>
@@ -401,7 +401,7 @@ export default async function AdminHome({
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </Panel>
       </div>
@@ -589,7 +589,7 @@ export default async function AdminHome({
           {!(audit ?? []).length ? (
             <p className="px-5 py-10 text-center text-sm text-muted">{t("noActivity")}</p>
           ) : (
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto"><table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-[11px] uppercase tracking-wider text-muted">
                   <th scope="col" className="px-5 py-2 font-semibold">{t("colWhen")}</th>
@@ -610,7 +610,7 @@ export default async function AdminHome({
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </Panel>
       </div>

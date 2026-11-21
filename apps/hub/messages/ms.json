@@ -105,8 +105,8 @@
       "label": "Modul anda",
       "leads": "Prospek & susulan",
       "leadsDesc": "Pertanyaan marketplace, SLA respons dan saluran jualan anda.",
-      "listings": "Iklan marketplace",
-      "listingsDesc": "Cipta, jejak dan perbaharui iklan awam. {inReview} dalam semakan.",
+      "listings": "Penyenaraian marketplace",
+      "listingsDesc": "Cipta, jejak dan perbaharui penyenaraian awam. {inReview} dalam semakan.",
       "matchhub": "MatchHub co-broke",
       "matchhubCounts": "{requests} keperluan · {submissions} serahan",
       "matchhubDesc": "Keperluan pelanggan persendirian, serahan hartanah dan kerjasama terlindung.",
@@ -114,12 +114,12 @@
       "profileDesc": "Profil kepercayaan, dokumen, kad nama dan pautan sosial.",
       "contentStudio": "Studio kandungan",
       "coMarketing": "Pemasaran bersama",
-      "coMarketingDesc": "Pinjam iklan ejen lain di bawah terma komisen yang dipersetujui.",
+      "coMarketingDesc": "Pinjam penyenaraian ejen lain di bawah terma komisen yang dipersetujui.",
       "landingPage": "Halaman saya",
       "landingPageDesc": "Halaman hartanah anda sendiri, dengan maklumat hubungan anda.",
       "digitalCard": "Kad nama digital",
-      "digitalCardDesc": "Kad boleh kongsi dengan profil dan iklan anda.",
-      "contentStudioDesc": "Tukar satu iklan kepada pos, kapsyen dan brosur.",
+      "digitalCardDesc": "Kad boleh kongsi dengan profil dan penyenaraian anda.",
+      "contentStudioDesc": "Tukar satu penyenaraian kepada pos, kapsyen dan brosur.",
       "training": "Latihan & panduan",
       "trainingDesc": "Pelajari platform dan tajamkan kemahiran jualan anda.",
       "aiWorkforce": "Tenaga Kerja AI",
@@ -130,7 +130,7 @@
     },
     "independentAgent": "Ejen hartanah bebas",
     "planLabel": "Pelan anda",
-    "quotaLabel": "Iklan aktif",
+    "quotaLabel": "Penyenaraian aktif",
     "brief": {
       "title": "Pengurus AI — taklimat hari ini",
       "greeting": {
@@ -138,14 +138,14 @@
         "afternoon": "Selamat tengah hari, {name}.",
         "evening": "Selamat petang, {name}."
       },
-      "allClear": "Tiada yang menunggu. Masa yang baik untuk tambah iklan atau susuli prospek lama.",
+      "allClear": "Tiada yang menunggu. Masa yang baik untuk tambah penyenaraian atau susuli prospek lama.",
       "actions": {
         "overdueLeads": "Balas {count} prospek yang sudah lewat tempoh respons",
         "newLeads": "{count} prospek baharu menunggu balasan pertama",
-        "expiringListings": "{count} iklan tamat dalam 7 hari — perbaharui sebelum hilang dari carian",
-        "rejectedListings": "Betulkan {count} iklan yang ditolak dan hantar semula",
-        "draftListings": "Siapkan {count} draf iklan",
-        "inReviewListings": "{count} iklan sedang menunggu moderasi",
+        "expiringListings": "{count} penyenaraian tamat dalam 7 hari — perbaharui sebelum hilang dari carian",
+        "rejectedListings": "Betulkan {count} penyenaraian yang ditolak dan hantar semula",
+        "draftListings": "Siapkan {count} draf penyenaraian",
+        "inReviewListings": "{count} penyenaraian sedang menunggu moderasi",
         "overdueTasks": "Selesaikan {count, plural, one {# tugas tertunggak} other {# tugas tertunggak}}",
         "dueTasks": "{count, plural, one {# tugas perlu} other {# tugas perlu}} hari ini"
       },
@@ -171,7 +171,7 @@
       "sourceRules": "Berasaskan peraturan"
     },
     "pipeline": {
-      "label": "Saluran iklan",
+      "label": "Saluran penyenaraian",
       "draft": "Draf",
       "inReview": "Dalam semakan",
       "live": "Disiarkan",
@@ -181,7 +181,7 @@
     "kpi": {
       "liveListings": "Penyenaraian aktif",
       "ofQuota": "{used} daripada {max} slot digunakan",
-      "leads": "Leads",
+      "leads": "Prospek",
       "newLeads": "{count} masih baharu",
       "responseRate": "Kadar respons",
       "responseRateHint": "Dijawab sebelum masa yang dijanjikan",
@@ -190,8 +190,8 @@
     },
     "perf": {
       "title": "{count} hari lepas",
-      "hint": "Leads masuk, balasan yang anda hantar, dan penyenaraian yang anda terbitkan.",
-      "leads": "Leads masuk",
+      "hint": "Prospek masuk, balasan yang anda hantar, dan penyenaraian yang anda terbitkan.",
+      "leads": "Prospek masuk",
       "responses": "Balasan pertama",
       "listings": "Penyenaraian terbit",
       "empty": "Tiada aktiviti dalam tempoh ini.",
@@ -225,12 +225,12 @@
       "paused": "Dijeda"
     },
     "badgeTitle": "Dapatkan lencana ✓ Ejen Disahkan",
-    "badgeNote": "Pilihan. Ejen disahkan lebih dipercayai pembeli dan mendapat skor kualiti iklan lebih tinggi.",
+    "badgeNote": "Pilihan. Ejen disahkan lebih dipercayai pembeli dan mendapat skor kualiti penyenaraian lebih tinggi.",
     "badgeCta": "Mohon"
   },
   "verification": {
     "title": "Lencana Ejen Disahkan",
-    "intro": "Pilihan. Sahkan lesen dan identiti anda untuk mendapatkan lencana ✓ Ejen Disahkan pada iklan, kad digital dan profil anda. Anda boleh terus menggunakan platform sementara pentadbir menyemaknya.",
+    "intro": "Pilihan. Sahkan lesen dan identiti anda untuk mendapatkan lencana ✓ Ejen Disahkan pada penyenaraian, kad digital dan profil anda. Anda boleh terus menggunakan platform sementara pentadbir menyemaknya.",
     "submittedNotice": "Dihantar. Pentadbir akan menyemaknya, dan lencana dipaparkan selepas diluluskan.",
     "adminNotes": "Nota admin",
     "currentStatus": "Status semasa",
@@ -288,7 +288,7 @@
       "requests": "Keperluan",
       "reports": "Laporan",
       "audit": "Audit",
-      "listings": "Iklan",
+      "listings": "Penyenaraian",
       "overview": "Gambaran",
       "banners": "Sepanduk",
       "identity": "Identiti",
@@ -362,7 +362,7 @@
       "request_info": "Maklumat diminta daripada ejen.",
       "suspended": "Ejen digantung. {n, plural, other {# penyenaraian aktif}} dijeda.",
       "restored": "Ejen dipulihkan. {n, plural, other {# penyenaraian}} diterbitkan semula.",
-      "banned": "Ejen disekat. {n} iklan aktif dijeda.",
+      "banned": "Ejen disekat. {n} penyenaraian aktif dijeda.",
       "certificate_approved": "Sijil diluluskan. Profil awam ejen kini memaparkan Bersijil.",
       "certificate_rejected": "Sijil ditolak. Ejen telah dimaklumkan sebabnya."
     },
@@ -539,9 +539,9 @@
         "withdrawn": "Ditarik balik",
         "archived": "Diarkibkan"
       },
-      "bannedNotice": "Ejen ini disekat. Iklan mereka dijeda dan mereka tidak boleh bekerja di platform.",
+      "bannedNotice": "Ejen ini disekat. Penyenaraian mereka dijeda dan mereka tidak boleh bekerja di platform.",
       "banTitle": "Sekat ejen ini",
-      "banHint": "Untuk penipuan. Menjeda iklan aktif dan menghentikan semua kerja. Tidak seperti penggantungan, ia tidak boleh dipulihkan di sini.",
+      "banHint": "Untuk penipuan. Menjeda penyenaraian aktif dan menghentikan semua kerja. Tidak seperti penggantungan, ia tidak boleh dipulihkan di sini.",
       "ban": "Sekat ejen"
     },
     "agentQueue": {
@@ -604,7 +604,7 @@
       "client_disclaimer": "Penafian pelanggan",
       "supply_agent_disclosure": "Deklarasi pendedahan undang-undang Supply Agent",
       "buyer_inquiry": "Persetujuan privasi dan untuk dihubungi bagi pertanyaan pembeli",
-      "listing_import_authority": "Kuasa dan ketepatan import listing"
+      "listing_import_authority": "Kuasa dan ketepatan import penyenaraian"
     },
     "noVersion": "tiada",
     "viewText": "Lihat teks",
@@ -649,13 +649,13 @@
   },
   "nav": {
     "dashboard": "Papan pemuka",
-    "requests": "Keperluan klien",
+    "requests": "Keperluan pelanggan",
     "submissions": "Serahan saya",
     "notifications": "Notifikasi",
     "profile": "Profil saya",
     "wanted": "Papan Dicari",
     "leads": "Prospek",
-    "listings": "Iklan",
+    "listings": "Penyenaraian",
     "sectionWork": "Kerja harian",
     "sectionCollaboration": "Kolaborasi",
     "sectionAccount": "Akaun",
@@ -665,7 +665,7 @@
     "card": "Kad nama saya",
     "training": "Latihan",
     "banners": "Sepanduk",
-    "importListings": "Import listing",
+    "importListings": "Import penyenaraian",
     "growth": "Pertumbuhan",
     "agentRole": "Ejen hartanah",
     "verifiedBadge": "Ejen Disahkan",
@@ -722,12 +722,12 @@
   },
   "card": {
     "myTitle": "Kad nama digital saya",
-    "myIntro": "Kad boleh kongsi dengan profil, pautan dan iklan anda. Pratonton ini adalah apa yang kenalan anda lihat.",
+    "myIntro": "Kad boleh kongsi dengan profil, pautan dan penyenaraian anda. Pratonton ini adalah apa yang kenalan anda lihat.",
     "notVerified": "Kad anda aktif selepas anda menjadi ejen yang disahkan dengan profil awam.",
     "verifyCta": "Lengkapkan pengesahan",
     "verified": "Ejen disahkan",
     "listings": "aktif",
-    "viewListings": "Lihat iklan saya",
+    "viewListings": "Lihat penyenaraian saya",
     "saveContact": "Simpan kenalan",
     "share": "Kongsi kad",
     "copied": "Disalin ✓",
@@ -736,7 +736,7 @@
     "shareTelegram": "Telegram",
     "shareFacebook": "Facebook",
     "copyLink": "Salin pautan",
-    "shareCaption": "{name} — ejen hartanah. Simpan kenalan saya dan lihat iklan saya: {url}",
+    "shareCaption": "{name} — ejen hartanah. Simpan kenalan saya dan lihat penyenaraian saya: {url}",
     "shareCaptionLabel": "Kapsyen",
     "tipTitle": "Apa yang dipaparkan pada kad",
     "tipBody": "Foto, nama dan bio datang daripada profil anda. Butang datang daripada pautan sosial — tetapkan keterlihatan pautan kepada \"Profil awam\" dan ia akan muncul di sini. Tambah pautan wa.me supaya orang boleh menyimpan nombor anda.",
@@ -918,19 +918,19 @@
     "editLog": {
       "title": "Sejarah suntingan"
     },
-    "intro": "Hantar keperluan klien anda. Admin meluluskannya, ejen pembekal menghantar, anda membuat senarai pendek, dan hanya hartanah yang diluluskan sampai kepada klien.",
+    "intro": "Hantar keperluan pelanggan anda. Admin meluluskannya, ejen pembekal menghantar, anda membuat senarai pendek, dan hanya hartanah yang diluluskan sampai kepada pelanggan.",
     "emptyTab": "Tiada apa-apa dalam kumpulan ini.",
     "band": {
       "open": "terbuka",
       "awaitingApproval": "menunggu kelulusan",
-      "withClient": "dengan klien"
+      "withClient": "dengan pelanggan"
     },
     "tabs": {
       "label": "Tapis mengikut peringkat",
       "all": "Semua",
       "open": "Terbuka",
       "approval": "Menunggu kelulusan",
-      "client": "Dengan klien",
+      "client": "Dengan pelanggan",
       "closed": "Ditutup"
     },
     "stages": {
@@ -938,7 +938,7 @@
       "approval": "Kelulusan",
       "receiving": "Menerima",
       "reviewing": "Menyemak",
-      "client": "Klien",
+      "client": "Pelanggan",
       "closed": "Ditutup"
     }
   },
@@ -1143,12 +1143,12 @@
       "status": "Status"
     },
     "forRequest": "untuk",
-    "intro": "Hartanah yang anda kemukakan kepada klien ejen lain. Status datang daripada semakan ejen pemohon; anda hanya melihat serahan anda sendiri.",
+    "intro": "Hartanah yang anda kemukakan kepada pelanggan ejen lain. Status datang daripada semakan ejen pemohon; anda hanya melihat serahan anda sendiri.",
     "openWanted": "Buka Papan Dicari",
     "band": {
       "submitted": "diserahkan",
       "shortlisted": "senarai pendek",
-      "withClient": "dengan klien"
+      "withClient": "dengan pelanggan"
     }
   },
   "submissionStatus": {
@@ -1279,11 +1279,11 @@
       }
     },
     "manageCta": "Urus persembahan",
-    "editTitle": "Urus persembahan klien",
-    "editIntro": "Tambah atau buang hartanah — pautan klien kekal sama dan dikemas kini secara langsung.",
+    "editTitle": "Urus persembahan pelanggan",
+    "editIntro": "Tambah atau buang hartanah — pautan pelanggan kekal sama dan dikemas kini secara langsung.",
     "update": "Simpan perubahan",
-    "liveLink": "Pautan klien langsung",
-    "liveLinkHint": "Pautan ini kekal sama. Sebarang perubahan yang anda simpan di sini muncul serta-merta untuk klien — tidak perlu hantar semula."
+    "liveLink": "Pautan pelanggan langsung",
+    "liveLinkHint": "Pautan ini kekal sama. Sebarang perubahan yang anda simpan di sini muncul serta-merta untuk pelanggan — tidak perlu hantar semula."
   },
   "clientView": {
     "unavailableTitle": "Pembentangan tidak tersedia",
@@ -1528,14 +1528,14 @@
       "requirement_updated": "Keperluan yang anda hantar hartanah telah dikemas kini",
       "submission_added_for_you": "Satu hartanah telah ditambah untuk anda",
       "lead_new": "Prospek pembeli baharu",
-      "listing_approved": "Iklan diluluskan - kini disiarkan",
-      "listing_rejected": "Iklan ditolak",
-      "comarketing_listing_unavailable": "Listing yang anda pasarkan tidak lagi tersedia",
-      "comarketing_price_changed": "Harga berubah pada listing yang anda pasarkan",
+      "listing_approved": "Penyenaraian diluluskan - kini disiarkan",
+      "listing_rejected": "Penyenaraian ditolak",
+      "comarketing_listing_unavailable": "Penyenaraian yang anda pasarkan tidak lagi tersedia",
+      "comarketing_price_changed": "Harga berubah pada penyenaraian yang anda pasarkan",
       "lead_overdue": "Ada petunjuk menunggu melepasi tarikh akhir respons",
       "task_due": "Satu tugas perlu dibuat",
       "viewing_soon": "Lawatan bermula tidak lama lagi",
-      "whatsapp_received": "Mesej WhatsApp tiba pada salah satu lead anda",
+      "whatsapp_received": "Mesej WhatsApp tiba pada salah satu prospek anda",
       "listing_import_prepared": "Penyenaraian sedia untuk anda semak",
       "listing_change_requested": "Moderator meminta perubahan pada penyenaraian anda",
       "listing_photo_original_requested": "Moderator meminta foto asal",
@@ -1552,7 +1552,7 @@
       "agent_certificate_rejected": "Sijil anda tidak diluluskan",
       "agent_certificate_expiring": "Sijil anda tamat tempoh dalam 30 hari",
       "admin_certificate_submitted": "Ada sijil menunggu semakan",
-      "listing_import_committed_on_behalf": "Iklan anda telah diterbitkan untuk anda dan sedang disemak"
+      "listing_import_committed_on_behalf": "Penyenaraian anda telah diterbitkan untuk anda dan sedang disemak"
     },
     "pushEnable": "Aktifkan notifikasi telefon",
     "pushEnabled": "Notifikasi telefon aktif",
@@ -1902,7 +1902,7 @@
     "qrHint": "Imbas untuk buka keperluan ini di telefon anda",
     "footerNote": "Platform co-broke persendirian oleh IQI AG. Ejen sahaja.",
     "perYear": "/tahun",
-    "heroBodyNeutral": "Setiap kad di bawah ialah keperluan klien sebenar daripada ejen yang disahkan. Ada hartanah yang sepadan? Hantar dan co-broke — terlindung, dijejaki dan diaudit.",
+    "heroBodyNeutral": "Setiap kad di bawah ialah keperluan pelanggan sebenar daripada ejen yang disahkan. Ada hartanah yang sepadan? Hantar dan co-broke — terlindung, dijejaki dan diaudit.",
     "footerNoteNeutral": "Platform co-broke persendirian. Khusus ejen."
   },
   "adminAddProperty": {
@@ -1952,8 +1952,8 @@
       "wa_network": "Tidak dapat menghubungi WhatsApp. Tiada yang dihantar.",
       "wa_no_phone": "Tiada nombor telefon pada pertanyaan ini.",
       "wa_check_failed": "Tidak dapat menyemak sama ada mesej ini boleh dihantar.",
-      "wa_not_your_lead": "Lead itu bukan milik anda.",
-      "wa_not_found": "Lead tidak dijumpai."
+      "wa_not_your_lead": "Prospek itu bukan milik anda.",
+      "wa_not_found": "Prospek tidak dijumpai."
     },
     "slaOverdue": "Respons lewat tempoh",
     "slaWaiting": "Menunggu respons pertama",
@@ -2067,21 +2067,21 @@
     "spam": "Spam"
   },
   "listings": {
-    "title": "Iklan marketplace saya",
-    "new": "+ Iklan baharu",
-    "quota": "{active} daripada {max} slot iklan aktif digunakan",
-    "quotaReached": "Anda telah mencapai had {max} iklan aktif. Arkibkan satu atau naik taraf untuk menambah.",
-    "submittedNotice": "Iklan {id} dihantar untuk semakan. Ia akan disiarkan selepas moderator meluluskannya.",
-    "empty": "Belum ada iklan marketplace. Cipta satu - ia sampai kepada pembeli di laman awam selepas moderasi.",
+    "title": "Penyenaraian marketplace saya",
+    "new": "+ Penyenaraian baharu",
+    "quota": "{active} daripada {max} slot penyenaraian aktif digunakan",
+    "quotaReached": "Anda telah mencapai had {max} penyenaraian aktif. Arkibkan satu atau naik taraf untuk menambah.",
+    "submittedNotice": "Penyenaraian {id} dihantar untuk semakan. Ia akan disiarkan selepas moderator meluluskannya.",
+    "empty": "Belum ada penyenaraian marketplace. Cipta satu - ia sampai kepada pembeli di laman awam selepas moderasi.",
     "cols": {
-      "listing": "Iklan",
+      "listing": "Penyenaraian",
       "location": "Lokasi",
       "price": "Harga",
       "status": "Status"
     },
     "form": {
-      "title": "Iklan marketplace baharu",
-      "intro": "Isikan apa yang ada - iklan lengkap mendapat kedudukan lebih tinggi. Foto dan keterangan jujur paling penting.",
+      "title": "Penyenaraian marketplace baharu",
+      "intro": "Isikan apa yang ada - penyenaraian lengkap mendapat kedudukan lebih tinggi. Foto dan keterangan jujur paling penting.",
       "sectionBasics": "Asas",
       "sectionLocation": "Lokasi",
       "sectionSpecs": "Spesifikasi",
@@ -2099,7 +2099,7 @@
       "catLand": "Tanah",
       "catOther": "Lain-lain",
       "propertyType": "Jenis hartanah",
-      "adTitle": "Tajuk iklan",
+      "adTitle": "Tajuk penyenaraian",
       "adTitlePlaceholder": "cth. Apartmen 2BK di Jakarta Selatan, 5 min ke MRT",
       "description": "Keterangan",
       "price": "Harga ({currency})",
@@ -2132,11 +2132,11 @@
       "facilitiesPlaceholder": "kolam renang, gim, keselamatan 24 jam (dipisahkan koma)",
       "photosHelp": "Sehingga 15 foto, JPG/PNG/WebP, maksimum 10 MB setiap satu. Foto pertama menjadi muka depan. Foto kekal peribadi semasa diproses (data lokasi dan kamera dibuang) dan diterbitkan apabila moderator meluluskan penyenaraian.",
       "submit": "Hantar untuk semakan",
-      "submitHelp": "Moderator menyemak setiap iklan sebelum disiarkan.",
+      "submitHelp": "Moderator menyemak setiap penyenaraian sebelum disiarkan.",
       "draftRestored": "Draf anda yang belum disimpan telah dipulihkan.",
       "errors": {
         "invalid": "Ada isian yang perlu dibetulkan.",
-        "save_failed": "Iklan gagal disimpan. Sila cuba lagi.",
+        "save_failed": "Penyenaraian gagal disimpan. Sila cuba lagi.",
         "too_many_photos": "Maksimum 15 foto.",
         "bad_photo_type": "Foto mesti JPG, PNG atau WebP.",
         "photo_too_large": "Setiap foto mesti bawah 10 MB.",
@@ -2144,37 +2144,37 @@
       },
       "tenure": "Pegangan"
     },
-    "sectionOwn": "Iklan saya sendiri",
+    "sectionOwn": "Penyenaraian saya sendiri",
     "sectionBorrowed": "Dipinjam melalui pemasaran bersama",
-    "borrowedHelp": "Iklan milik ejen lain yang boleh anda pasarkan sebagai stok sendiri, mengikut terma komisen yang anda terima.",
-    "borrowedEmpty": "Anda belum meminjam sebarang iklan. Kumpulan pemasaran bersama akan dibuka tidak lama lagi.",
+    "borrowedHelp": "Penyenaraian milik ejen lain yang boleh anda pasarkan sebagai stok sendiri, mengikut terma komisen yang anda terima.",
+    "borrowedEmpty": "Anda belum meminjam sebarang penyenaraian. Kumpulan pemasaran bersama akan dibuka tidak lama lagi.",
     "borrowedBadge": "Dipinjam",
     "borrowedCount": "{count} dipinjam",
     "listedBy": "Ejen penyenarai",
     "yourShare": "Bahagian komisen anda",
     "boost": {
       "cta": "Boost 3 hari",
-      "help": "Percuma buat masa ini. Naikkan iklan anda ke atas carian.",
+      "help": "Percuma buat masa ini. Naikkan penyenaraian anda ke atas carian.",
       "running": "Sedang di-boost",
       "willLapse": "Bila tamat, boost semula untuk kekal di atas.",
       "activeUntil": "di atas {when}",
-      "done": "Berjaya. Iklan anda di atas carian selama 3 hari.",
+      "done": "Berjaya. Penyenaraian anda di atas carian selama 3 hari.",
       "errors": {
-        "already_boosted": "Iklan itu sudah di-boost.",
+        "already_boosted": "Penyenaraian itu sudah di-boost.",
         "no_credits": "Kredit tidak mencukupi.",
-        "not_published": "Hanya listing yang telah diterbitkan boleh ditawarkan.",
-        "not_owner": "Hanya pemilik listing boleh menawarkan hartanah untuk pemasaran bersama.",
+        "not_published": "Hanya penyenaraian yang telah diterbitkan boleh ditawarkan.",
+        "not_owner": "Hanya pemilik penyenaraian boleh menawarkan hartanah untuk pemasaran bersama.",
         "product_gone": "Boost itu tiada lagi.",
-        "boost_failed": "Gagal boost iklan. Sila cuba lagi.",
+        "boost_failed": "Gagal boost penyenaraian. Sila cuba lagi.",
         "invalid": "Permintaan tidak sah.",
-        "quota": "Anda telah mencapai had iklan aktif.",
+        "quota": "Anda telah mencapai had penyenaraian aktif.",
         "no_authorisation": "Kebenaran pemilik belum direkodkan untuk hartanah ini. Pemasaran bersama memerlukannya — tambah dahulu di bawah dokumen hartanah.",
-        "already_offered": "Listing ini sudah ada dalam kolam.",
+        "already_offered": "Penyenaraian ini sudah ada dalam kolam.",
         "offer_failed": "Itu tidak berjaya. Sila cuba lagi."
       }
     },
     "share": {
-      "label": "Kongsi iklan ini",
+      "label": "Kongsi penyenaraian ini",
       "whatsapp": "WhatsApp",
       "telegram": "Telegram",
       "facebook": "Facebook",
@@ -2183,23 +2183,23 @@
       "caption": "Kapsyen siap pakai"
     },
     "advisor": {
-      "title": "Nasihat iklan",
+      "title": "Nasihat penyenaraian",
       "titleTooShort": "Tajuk terlalu pendek — sasarkan sekurang-kurangnya {min} aksara.",
       "titleTooLong": "Tajuk melebihi {max} aksara dan akan dipotong dalam hasil carian.",
       "titleAllCaps": "Semua huruf besar nampak seperti menjerit dan mengurangkan kepercayaan.",
-      "titleShouty": "Perkataan jualan begini menjadikan iklan nampak seperti spam.",
+      "titleShouty": "Perkataan jualan begini menjadikan penyenaraian nampak seperti spam.",
       "titleNoLocation": "Letakkan lokasi dalam tajuk — pembeli mencari ikut kawasan. Cuba tambah \"{place}\".",
       "titleNoBedrooms": "Tambah bilangan bilik ({n} KT) — itu penapis pertama pembeli.",
       "descTooShort": "Keterangan terlalu pendek — sekurang-kurangnya {min} aksara membantu pembeli membuat keputusan.",
       "descNoLandmark": "Sebut apa yang berdekatan: stesen, tol, sekolah atau mall.",
       "descNoCta": "Akhiri dengan pelawaan, cth. \"hubungi untuk jadual lawatan\".",
       "descHasPhone": "Buang nombor telefon — pertanyaan patut melalui platform supaya prospek direkod dan dijawab tepat masa.",
-      "looksGood": "Iklan ini nampak kemas. Penambahbaikan di bawah pilihan sahaja.",
+      "looksGood": "Penyenaraian ini nampak kemas. Penambahbaikan di bawah pilihan sahaja.",
       "suggestions": "Cadangan tajuk"
     },
     "wizard": {
       "progress": "Kemajuan anda",
-      "stepType": "Jenis iklan",
+      "stepType": "Jenis penyenaraian",
       "stepLocation": "Lokasi",
       "stepUnit": "Butiran unit",
       "stepPrice": "Harga",
@@ -2213,7 +2213,7 @@
       "select": "Pilih",
       "decrease": "Kurang",
       "increase": "Tambah",
-      "categoryQ": "Iklan ini untuk",
+      "categoryQ": "Penyenaraian ini untuk",
       "forQ": "Untuk",
       "catResidentialHint": "Rumah, apartmen, kondo, bilik sewa",
       "catCommercialHint": "Kedai, pejabat, gudang, tanah",
@@ -2256,7 +2256,7 @@
     },
     "offer": {
       "cta": "Benarkan ejen lain memasarkannya",
-      "heading": "Tawarkan listing ini untuk pemasaran bersama",
+      "heading": "Tawarkan penyenaraian ini untuk pemasaran bersama",
       "help": "Ejen lain yang disahkan boleh memasarkan hartanah ini sebagai inventori mereka sendiri, dengan maklumat hubungan mereka dipaparkan. Anda kekal memegang mandat dan bahagian komisen anda. Mereka tidak boleh menawarkannya semula kepada orang lain.",
       "totalCommission": "Jumlah komisen (%)",
       "totalCommissionHelp": "Daripada harga jualan atau sewa",
@@ -2286,17 +2286,17 @@
       "withdrawnDone": "Ditarik balik daripada kolam. Ejen yang sudah memasarkannya kekal dengan terma yang mereka terima.",
       "errors": {
         "no_authorisation": "Kebenaran pemilik belum direkodkan untuk hartanah ini. Pemasaran bersama memerlukannya — tambah dahulu di bawah dokumen hartanah.",
-        "not_owner": "Hanya pemilik listing boleh menawarkan hartanah untuk pemasaran bersama.",
-        "not_published": "Hanya listing yang telah diterbitkan boleh ditawarkan.",
-        "already_offered": "Listing ini sudah ada dalam kolam.",
+        "not_owner": "Hanya pemilik penyenaraian boleh menawarkan hartanah untuk pemasaran bersama.",
+        "not_published": "Hanya penyenaraian yang telah diterbitkan boleh ditawarkan.",
+        "already_offered": "Penyenaraian ini sudah ada dalam kolam.",
         "offer_failed": "Itu tidak berjaya. Sila cuba lagi."
       }
     },
     "edit": {
       "cta": "Sunting",
-      "title": "Sunting listing",
-      "back": "Kembali ke listing",
-      "listingTitle": "Tajuk listing",
+      "title": "Sunting penyenaraian",
+      "back": "Kembali ke penyenaraian",
+      "listingTitle": "Tajuk penyenaraian",
       "description": "Penerangan",
       "listingType": "Jual atau sewa",
       "forSale": "Untuk dijual",
@@ -2313,9 +2313,9 @@
       "landSize": "Luas tanah (m²)",
       "save": "Simpan perubahan",
       "cancel": "Batal",
-      "saved": "Listing dikemas kini.",
-      "savedToReview": "Listing dikemas kini dan dihantar semula untuk semakan — ia akan kembali ke pasaran setelah diluluskan.",
-      "willReturnToReview": "Listing ini disiarkan. Menyimpan perubahan akan menghantarnya semula untuk semakan sebelum ia dipaparkan semula.",
+      "saved": "Penyenaraian dikemas kini.",
+      "savedToReview": "Penyenaraian dikemas kini dan dihantar semula untuk semakan — ia akan kembali ke pasaran setelah diluluskan.",
+      "willReturnToReview": "Penyenaraian ini disiarkan. Menyimpan perubahan akan menghantarnya semula untuk semakan sebelum ia dipaparkan semula.",
       "errors": {
         "invalid": "Sila semak medan yang ditandakan.",
         "save_failed": "Tidak dapat disimpan. Sila cuba lagi."
@@ -2458,14 +2458,14 @@
   },
   "studio": {
     "title": "Studio kandungan",
-    "intro": "Tukar satu iklan kepada pos dan kapsyen sedia hantar. Draf dibina daripada data iklan itu sendiri — sunting, kemudian kongsi.",
-    "empty": "Tiada apa untuk dipromosikan lagi. Terbitkan iklan (atau pinjam dari pool co-marketing) dan ia akan muncul di sini.",
-    "emptyCta": "Cipta iklan",
-    "pick": "Pilih iklan",
+    "intro": "Tukar satu penyenaraian kepada pos dan kapsyen sedia hantar. Draf dibina daripada data penyenaraian itu sendiri — sunting, kemudian kongsi.",
+    "empty": "Tiada apa untuk dipromosikan lagi. Terbitkan penyenaraian (atau pinjam dari pool co-marketing) dan ia akan muncul di sini.",
+    "emptyCta": "Cipta penyenaraian",
+    "pick": "Pilih penyenaraian",
     "borrowedBadge": "Co-marketing",
     "open": "Cipta kandungan",
-    "backToList": "Semua iklan",
-    "workspaceIntro": "Draf hanya menggunakan data dalam iklan — tiada yang direka, dan tiada yang disiarkan secara automatik. Sunting dahulu sebelum menghantar.",
+    "backToList": "Semua penyenaraian",
+    "workspaceIntro": "Draf hanya menggunakan data dalam penyenaraian — tiada yang direka, dan tiada yang disiarkan secara automatik. Sunting dahulu sebelum menghantar.",
     "tabWhatsapp": "WhatsApp",
     "tabCaption": "Kapsyen",
     "whatsappHelp": "Siaran ringkas untuk sembang, kumpulan dan status. Pautan di hujung membawa pelanggan kepada anda.",
@@ -2489,11 +2489,11 @@
     "scheduleTime": "Masa",
     "scheduleCta": "Jadualkan",
     "scheduleNoAccounts": "Sambungkan Halaman Facebook atau akaun Instagram Business untuk menjadualkan siaran →",
-    "igNeedsImage": "Instagram memerlukan foto, dan iklan ini belum ada foto muka depan. Tambah foto pada iklan dahulu.",
+    "igNeedsImage": "Instagram memerlukan foto, dan penyenaraian ini belum ada foto muka depan. Tambah foto pada penyenaraian dahulu.",
     "queueLink": "Siaran berjadual",
     "accountsLink": "Akaun disambungkan",
     "statsLabel": "Ringkasan studio",
-    "statListings": "Iklan yang boleh dipromosikan",
+    "statListings": "Penyenaraian yang boleh dipromosikan",
     "statListingsHint": "Milik sendiri dan pinjaman",
     "statScheduled": "Siaran berjadual",
     "statScheduledHint": "Menunggu untuk disiarkan",
@@ -2502,8 +2502,8 @@
     "statPublished": "Siaran diterbitkan",
     "statPublishedHint": "Dihantar dari baris gilir anda",
     "stepsTitle": "Mula dalam 3 langkah",
-    "step1Title": "Terbitkan atau pinjam iklan",
-    "step1Body": "Cipta iklan sendiri, atau ambil satu dari pool co-marketing.",
+    "step1Title": "Terbitkan atau pinjam penyenaraian",
+    "step1Body": "Cipta penyenaraian sendiri, atau ambil satu dari pool co-marketing.",
     "step2Title": "Pilih gaya siaran dan platform",
     "step2Body": "Pilih mesej siaran, kapsyen, imej atau risalah.",
     "step3Title": "Sunting, kongsi atau jadualkan",
@@ -2511,7 +2511,7 @@
     "emptyPoolCta": "Pinjam dari pool co-marketing",
     "sampleTitle": "Rupa sesebuah siaran",
     "sampleBadge": "Contoh",
-    "samplePhoto": "Foto iklan anda dipaparkan di sini",
+    "samplePhoto": "Foto penyenaraian anda dipaparkan di sini",
     "sampleLine1": "Rumah keluarga tiga bilik tidur yang cerah, dekat dengan sekolah dan pengangkutan.",
     "sampleLine2": "Ruang tamu luas, tempat letak kereta berbumbung dan taman peribadi.",
     "sampleLine3": "Hantar mesej untuk butiran penuh dan masa lawatan.",
@@ -2519,7 +2519,7 @@
     "channelInstagram": "Instagram",
     "channelFacebook": "Facebook",
     "tabImages": "Imej",
-    "imagesHelp": "Imej sedia siar daripada foto dan data iklan — segi empat untuk feed, tinggi untuk story.",
+    "imagesHelp": "Imej sedia siar daripada foto dan data penyenaraian — segi empat untuk feed, tinggi untuk story.",
     "tabBrochure": "Brosur",
     "brochureHelp": "Brosur satu halaman dengan galeri, spesifikasi dan kenalan anda — buka dan gunakan Cetak / Simpan sebagai PDF.",
     "openBrochure": "Buka brosur",
@@ -2549,7 +2549,7 @@
       "presetStory": "Story 1080×1920",
       "download": "Muat turun PNG",
       "shareImage": "Kongsi imej…",
-      "noCoverNote": "Iklan ini belum ada foto muka depan, jadi imej menggunakan latar kosong. Tambah foto pada iklan untuk versi penuh.",
+      "noCoverNote": "Penyenaraian ini belum ada foto muka depan, jadi imej menggunakan latar kosong. Tambah foto pada penyenaraian untuk versi penuh.",
       "exportFailed": "Gagal mengeksport imej. Cuba lagi, atau tangkap skrin pratonton.",
       "styleDark": "Klasik",
       "styleLight": "Kad cerah",
@@ -2561,7 +2561,7 @@
       "too_far": "Siaran boleh dijadualkan sehingga 90 hari ke hadapan.",
       "account_not_found": "Akaun itu tidak lagi disambungkan.",
       "account_inactive": "Sambungan akaun itu telah tamat tempoh — sambung semula dahulu.",
-      "ig_needs_image": "Siaran Instagram perlukan foto. Iklan ini belum ada foto muka depan.",
+      "ig_needs_image": "Siaran Instagram perlukan foto. Penyenaraian ini belum ada foto muka depan.",
       "schedule_failed": "Penjadualan gagal. Sila cuba lagi."
     },
     "accounts": {
@@ -2601,7 +2601,7 @@
       "back": "Studio kandungan",
       "title": "Siaran berjadual",
       "intro": "Apa yang menunggu tersiar, apa yang sudah tersiar, dan apa yang gagal — dengan sebabnya.",
-      "empty": "Tiada jadual lagi. Buka iklan dalam studio dan jadualkan kapsyennya.",
+      "empty": "Tiada jadual lagi. Buka penyenaraian dalam studio dan jadualkan kapsyennya.",
       "scheduledNotice": "Dijadualkan. Ia akan tersiar secara automatik pada masa yang dipilih.",
       "canceledNotice": "Dibatalkan — ia tidak akan disiarkan.",
       "cancel": "Batalkan siaran ini",
@@ -2729,11 +2729,11 @@
     "bumi_lot": "Lot Bumiputera"
   },
   "adminListings": {
-    "title": "Moderasi iklan",
+    "title": "Moderasi penyenaraian",
     "pending": "{count} menunggu semakan",
     "empty": "Baris gilir kosong - tiada yang menunggu semakan.",
-    "approved": "Iklan diluluskan dan disiarkan.",
-    "rejected": "Iklan ditolak; ejen telah diberitahu sebabnya.",
+    "approved": "Penyenaraian diluluskan dan disiarkan.",
+    "rejected": "Penyenaraian ditolak; ejen telah diberitahu sebabnya.",
     "noPhoto": "Tiada foto",
     "byAgent": "Ejen",
     "reason": "Sebab (wajib untuk tolak, nota pilihan untuk lulus)",
@@ -2743,8 +2743,8 @@
     "errors": {
       "invalid": "Permintaan tidak sah.",
       "reason_required": "Penolakan perlukan sebab yang akan dilihat ejen.",
-      "not_found": "Iklan tidak dijumpai.",
-      "not_moderatable": "Iklan ini tidak menunggu semakan.",
+      "not_found": "Penyenaraian tidak dijumpai.",
+      "not_moderatable": "Penyenaraian ini tidak menunggu semakan.",
       "update_failed": "Kemas kini gagal. Cuba lagi.",
       "self_prepared": "Anda yang menyediakan import penyenaraian ini, jadi admin lain mesti meluluskannya.",
       "bulk_empty": "Pilih sekurang-kurangnya satu penyenaraian.",
@@ -2879,7 +2879,7 @@
     "allClear": "Tiada yang menunggu. Semua barisan kosong.",
     "queues": "Perlu perhatian anda",
     "queue": {
-      "listings": "Listing dalam semakan",
+      "listings": "Penyenaraian dalam semakan",
       "agents": "Ejen menunggu pengesahan",
       "requests": "Keperluan untuk diluluskan",
       "reports": "Laporan terbuka"
@@ -2892,7 +2892,7 @@
     },
     "snapshot": "Platform",
     "stat": {
-      "published": "Listing diterbitkan",
+      "published": "Penyenaraian diterbitkan",
       "verifiedAgents": "Ejen disahkan"
     },
     "recent": "Aktiviti admin terkini",
@@ -2902,12 +2902,12 @@
   },
   "pool": {
     "title": "Kolam pemasaran bersama",
-    "intro": "Listing yang dibuka oleh ejen lain dengan terma komisen yang dinyatakan. Ambil satu dan ia menjadi inventori anda — nama anda, hubungan anda, lead anda. Terma yang anda terima direkodkan dan tidak boleh diubah selepas itu.",
-    "offerMine": "Tawarkan listing saya",
-    "count": "{count} listing dalam kolam",
-    "empty": "Belum ada apa-apa dalam kolam. Jadilah yang pertama — tawarkan listing anda sendiri.",
-    "emptyFiltered": "Tiada listing sepadan dengan penapis ini. Cuba luaskan.",
-    "pickUp": "Pasarkan listing ini",
+    "intro": "Penyenaraian yang dibuka oleh ejen lain dengan terma komisen yang dinyatakan. Ambil satu dan ia menjadi inventori anda — nama anda, hubungan anda, prospek anda. Terma yang anda terima direkodkan dan tidak boleh diubah selepas itu.",
+    "offerMine": "Tawarkan penyenaraian saya",
+    "count": "{count} penyenaraian dalam kolam",
+    "empty": "Belum ada apa-apa dalam kolam. Jadilah yang pertama — tawarkan penyenaraian anda sendiri.",
+    "emptyFiltered": "Tiada penyenaraian sepadan dengan penapis ini. Cuba luaskan.",
+    "pickUp": "Pasarkan penyenaraian ini",
     "pickUpHelp": "Anda memperoleh {share}% daripada komisen",
     "drop": "Berhenti memasarkan",
     "filter": {
@@ -2945,19 +2945,19 @@
     "state": {
       "marketing": "✓ Anda sedang memasarkan ini",
       "pending": "⏳ Menunggu ejen penyenarai",
-      "yours": "Ini listing anda sendiri"
+      "yours": "Ini penyenaraian anda sendiri"
     },
     "notice": {
-      "picked": "Ditambah ke inventori anda. Ia ada di halaman listing anda sekarang.",
+      "picked": "Ditambah ke inventori anda. Ia ada di halaman penyenaraian anda sekarang.",
       "pickedPending": "Permohonan dihantar. Ejen penyenarai ini meluluskan setiap ejen pemasaran, jadi anda akan dimaklumkan tidak lama lagi.",
       "dropped": "Dikeluarkan daripada inventori anda."
     },
     "errors": {
-      "already_picked_up": "Anda sudah mengambil listing ini.",
-      "at_capacity": "Listing ini telah mencapai had ejen pemasaran.",
-      "gone": "Listing ini tidak lagi tersedia untuk pemasaran bersama.",
-      "changed_hands": "Listing ini telah bertukar tangan dan tawaran tidak lagi sah.",
-      "own_listing": "Ini listing anda sendiri.",
+      "already_picked_up": "Anda sudah mengambil penyenaraian ini.",
+      "at_capacity": "Penyenaraian ini telah mencapai had ejen pemasaran.",
+      "gone": "Penyenaraian ini tidak lagi tersedia untuk pemasaran bersama.",
+      "changed_hands": "Penyenaraian ini telah bertukar tangan dan tawaran tidak lagi sah.",
+      "own_listing": "Ini penyenaraian anda sendiri.",
       "pickup_failed": "Itu tidak berjaya. Sila cuba lagi.",
       "invalid": "Ada maklumat yang tertinggal dalam permintaan itu."
     },
@@ -2989,7 +2989,7 @@
     "slotTop": "Atas halaman utama",
     "slotMiddle": "Tengah halaman utama",
     "slotTopHelp": "Di atas senarai, bawah pautan pantas. Ruangan paling ketara.",
-    "slotMiddleHelp": "Antara listing terbaru dan grid bandar. Pemisah semula jadi halaman.",
+    "slotMiddleHelp": "Antara penyenaraian terbaru dan grid bandar. Pemisah semula jadi halaman.",
     "headline": "Tajuk",
     "subtitle": "Baris sokongan",
     "advertiser": "Pengiklan",
@@ -3032,7 +3032,7 @@
     "cacheNote": "Pasaran menyimpan cache halaman utamanya, jadi perubahan mungkin mengambil masa beberapa minit di sana. Aplikasi ejen berubah serta-merta.",
     "state": {
       "hiddenTitle": "Neutral — identiti kumpulan disembunyikan",
-      "hiddenBody": "Pelawat dan ejen melihat platform atas namanya sendiri. Tiada logo kumpulan, tiada nama agensi di sebelah ejen pada listing awam.",
+      "hiddenBody": "Pelawat dan ejen melihat platform atas namanya sendiri. Tiada logo kumpulan, tiada nama agensi di sebelah ejen pada penyenaraian awam.",
       "publicTitle": "Disiarkan — identiti kumpulan adalah awam",
       "publicBody": "Logo, nama agensi dan teks kumpulan dipaparkan di kedua-dua aplikasi.",
       "since": "Mula diaktifkan {when}"
@@ -3040,13 +3040,13 @@
     "affects": {
       "title": "Apa yang berubah",
       "logos": "Susun atur logo dalam aplikasi ejen, log masuk dan pautan dikongsi — tanda kata teks digunakan sebagai ganti.",
-      "agency": "Nama agensi yang dipaparkan di sebelah ejen pada listing awam dan halaman hartanah.",
+      "agency": "Nama agensi yang dipaparkan di sebelah ejen pada penyenaraian awam dan halaman hartanah.",
       "copy": "Teks dalam aplikasi ejen yang menyebut kumpulan, pada papan dikehendaki dan label pakej."
     },
     "unaffected": {
       "title": "Apa yang TIDAK berubah",
       "legal": "Kandungan undang-undang. Terma, privasi dan butiran syarikat kekal menyebut entiti pengendali — siapa yang mengendalikan perkhidmatan ialah kewajipan pendedahan, bukan pilihan pemasaran.",
-      "data": "Tiada apa-apa mengenai data. Tiada listing, rekod ejen atau terma komisen yang diubah atau disembunyikan.",
+      "data": "Tiada apa-apa mengenai data. Tiada penyenaraian, rekod ejen atau terma komisen yang diubah atau disembunyikan.",
       "agents": "Apa yang ejen boleh buat. Pengesahan, kebenaran dan setiap modul berfungsi sama sahaja."
     },
     "done": {
@@ -3059,22 +3059,22 @@
     }
   },
   "listingImport": {
-    "title": "Import Listing Saya",
-    "subtitle": "Sudah mengiklankan hartanah di tempat lain? Bawa listing sedia ada anda ke PropertiGuru tanpa menaip semula semuanya.",
+    "title": "Import Penyenaraian Saya",
+    "subtitle": "Sudah mengiklankan hartanah di tempat lain? Bawa penyenaraian sedia ada anda ke PropertiGuru tanpa menaip semula semuanya.",
     "backToImport": "Kembali ke import",
     "portal": {
       "title": "Import dari portal hartanah",
-      "help": "Pilih portal, kemudian tampal pautan listing anda atau pautan halaman ejen anda.",
+      "help": "Pilih portal, kemudian tampal pautan penyenaraian anda atau pautan halaman ejen anda.",
       "choose": "Portal",
-      "tabUrls": "Tampal pautan listing",
+      "tabUrls": "Tampal pautan penyenaraian",
       "tabProfile": "Pautan halaman ejen",
       "urlsHelp": "Tampal satu pautan setiap baris",
-      "urlsPlaceholder": "https://www.example.com/listing/...\nhttps://www.example.com/listing/...",
-      "urlsCta": "Import listing",
+      "urlsPlaceholder": "https://www.example.com/penyenaraian/...\nhttps://www.example.com/penyenaraian/...",
+      "urlsCta": "Import penyenaraian",
       "profileHelp": "Tampal pautan profil atau halaman ejen anda",
       "profilePlaceholder": "https://www.example.com/agent/...",
-      "profileCta": "Cari listing saya",
-      "note": "Sesetengah portal menyekat pembacaan automatik. Jika itu berlaku, gunakan pautan listing satu persatu atau fail Excel. Kami tidak pernah meminta kata laluan portal lain."
+      "profileCta": "Cari penyenaraian saya",
+      "note": "Sesetengah portal menyekat pembacaan automatik. Jika itu berlaku, gunakan pautan penyenaraian satu persatu atau fail Excel. Kami tidak pernah meminta kata laluan portal lain."
     },
     "file": {
       "title": "Muat naik fail senarai",
@@ -3087,8 +3087,8 @@
     },
     "manual": {
       "title": "Tambah secara manual",
-      "help": "Isi sendiri melalui borang listing biasa.",
-      "cta": "Cipta listing baharu"
+      "help": "Isi sendiri melalui borang penyenaraian biasa.",
+      "cta": "Cipta penyenaraian baharu"
     },
     "history": {
       "title": "Sejarah import",
@@ -3116,15 +3116,15 @@
       "imported": "Diimport",
       "failed": "Gagal"
     },
-    "reviewTitle": "Semak listing yang diimport",
-    "reviewSubtitle": "Diambil satu persatu, jadi satu listing rosak tidak menghentikan yang lain.",
+    "reviewTitle": "Semak penyenaraian yang diimport",
+    "reviewSubtitle": "Diambil satu persatu, jadi satu penyenaraian rosak tidak menghentikan yang lain.",
     "process": "Ambil data",
     "processAll": "Ambil semua data",
     "processing": "Mengambil",
     "selectAll": "Pilih semua",
-    "importReady": "Import listing yang sedia",
-    "importedNotice": "Listing berjaya diimport.",
-    "openExisting": "Buka listing sedia ada",
+    "importReady": "Import penyenaraian yang sedia",
+    "importedNotice": "Penyenaraian berjaya diimport.",
+    "openExisting": "Buka penyenaraian sedia ada",
     "importAnyway": "Import juga",
     "skip": "Langkau",
     "unskip": "Batal langkau",
@@ -3163,10 +3163,10 @@
       "too_many_redirects": "Terlalu banyak pengalihan.",
       "too_large": "Halaman itu terlalu besar.",
       "timeout": "Portal tidak menjawab tepat pada masanya.",
-      "unsupported_content": "Halaman itu bukan halaman listing.",
+      "unsupported_content": "Halaman itu bukan halaman penyenaraian.",
       "fetch_failed": "Halaman itu tidak dapat dibaca.",
-      "unavailable": "Import automatik tidak tersedia untuk portal ini. Guna pautan listing satu persatu atau fail Excel.",
-      "nothing_found": "Tiada pautan listing awam dijumpai di halaman itu.",
+      "unavailable": "Import automatik tidak tersedia untuk portal ini. Guna pautan penyenaraian satu persatu atau fail Excel.",
+      "nothing_found": "Tiada pautan penyenaraian awam dijumpai di halaman itu.",
       "authority_required": "Tandakan pengesahan kuasa dahulu.",
       "save_failed": "Tidak dapat disimpan. Sila cuba lagi.",
       "not_found": "Laman itu tidak dijumpai. Senarai mungkin telah dibuang.",
@@ -3208,7 +3208,7 @@
       "title": "Anda kini mengawal",
       "body": "Anda telah mengendalikan setiap penyenaraian yang disediakan oleh pasukan. Mulai sekarang hanya anda yang boleh mengubahnya; pasukan hanya membuat moderasi, seperti mana-mana penyenaraian.",
       "studio": "Buka Studio",
-      "leads": "Pergi ke Leads"
+      "leads": "Pergi ke Prospek"
     }
   },
   "adminUsers": {
@@ -3707,7 +3707,7 @@
   },
   "adminSearch": {
     "title": "Carian",
-    "intro": "Cari ejen, penyenaraian, organisasi, kod rujukan, keperluan klien atau kelompok import. Taip nama, nombor telefon atau nombor rujukan.",
+    "intro": "Cari ejen, penyenaraian, organisasi, kod rujukan, keperluan pelanggan atau kelompok import. Taip nama, nombor telefon atau nombor rujukan.",
     "placeholder": "Cari ejen, penyenaraian, organisasi…",
     "search": "Cari",
     "tooShort": "Taip sekurang-kurangnya dua aksara.",
@@ -3717,7 +3717,7 @@
       "agent": "Ejen",
       "organisation": "Organisasi",
       "listing": "Penyenaraian",
-      "request": "Keperluan klien",
+      "request": "Keperluan pelanggan",
       "referral_code": "Kod rujukan",
       "import_batch": "Kelompok import"
     }
@@ -3967,7 +3967,7 @@
         "what": "Mencari sehingga tiga hartanah lain untuk satu pertanyaan, daripada penyenaraian anda dan kolam pemasaran bersama terbuka di negara yang sama, dengan sebab ia sesuai.",
         "needs": "Satu pertanyaan tentang penyenaraian.",
         "gives": "Sehingga tiga padanan dengan harga, kawasan dan sebab.",
-        "limits": "Hanya mencadangkan. Menghantar kepada klien adalah keputusan anda.",
+        "limits": "Hanya mencadangkan. Menghantar kepada pelanggan adalah keputusan anda.",
         "engine": "Berasaskan peraturan dan diuji. Tiada model AI digunakan."
       },
       "reply_drafter": {
@@ -4646,7 +4646,7 @@
       "facts": "Fakta digunakan",
       "draft": "draf — perlu disahkan",
       "verified": "disahkan",
-      "draftBanner": "Sebahagian fakta ini belum disahkan. Anggap sebagai titik permulaan dan sahkan sebelum menyampaikannya kepada klien.",
+      "draftBanner": "Sebahagian fakta ini belum disahkan. Anggap sebagai titik permulaan dan sahkan sebelum menyampaikannya kepada pelanggan.",
       "headline": "Ringkasnya",
       "nextSteps": "Langkah seterusnya",
       "mustCheck": "Mesti disemak",
@@ -4668,10 +4668,10 @@
     },
     "coach": {
       "title": "Jurulatih",
-      "intro": "Latih perbualan sebelum ia berlaku. Bawa bantahan yang dibangkitkan klien, atau jawab satu senario dan dapatkan maklum balas jujur.",
+      "intro": "Latih perbualan sebelum ia berlaku. Bawa bantahan yang dibangkitkan pelanggan, atau jawab satu senario dan dapatkan maklum balas jujur.",
       "tabObjection": "Bantahan",
       "tabPractice": "Latihan",
-      "objection": "Apa yang klien kata",
+      "objection": "Apa yang pelanggan kata",
       "objectionHint": "cth. “Terlalu mahal untuk kawasan ini.”",
       "context": "Konteks (pilihan)",
       "contextHint": "cth. kondo 2 bilik, harga 650k, dilawati semalam",
@@ -4928,7 +4928,7 @@
     },
     "profiler": {
       "title": "Tampal chat, dapatkan keperluannya",
-      "hint": "Tampal apa yang klien tulis (WhatsApp, e-mel, nota). Medan di bawah diisi hanya dengan apa yang mereka benar-benar kata — semak setiap satu.",
+      "hint": "Tampal apa yang pelanggan tulis (WhatsApp, e-mel, nota). Medan di bawah diisi hanya dengan apa yang mereka benar-benar kata — semak setiap satu.",
       "placeholder": "cth. “Cari kondo 3 bilik untuk disewa di Mont Kiara, maks RM4,500, perabot penuh, masuk Januari.”",
       "run": "Isi borang",
       "working": "Membaca…",
@@ -5046,7 +5046,7 @@
       "type_not_in_market": "Jenis hartanah itu tidak ditawarkan dalam pasaran ejen ini.",
       "no_consent": "Ejen belum bersetuju dengan penerbitan bagi pihaknya.",
       "already_committed": "Kumpulan ini sudah diterbitkan untuk ejen.",
-      "nothing_ready": "Belum ada iklan yang sedia dalam kumpulan ini.",
+      "nothing_ready": "Belum ada penyenaraian yang sedia dalam kumpulan ini.",
       "not_assisted": "Hanya kumpulan yang disediakan oleh pentadbir boleh diterbitkan untuk ejen."
     },
     "review": {
@@ -5097,10 +5097,10 @@
     },
     "inControl": "Ejen telah mengendalikan setiap item dan kini mengawalnya. Pasukan tidak lagi boleh mengubah kelompok ini atau penyenaraian yang dihasilkannya; moderasi diteruskan seperti biasa.",
     "onBehalf": {
-      "allowed": "Ejen telah bersetuju ({method}, {date}) bahawa kami boleh menerbitkan iklan ini bagi pihaknya.",
+      "allowed": "Ejen telah bersetuju ({method}, {date}) bahawa kami boleh menerbitkan penyenaraian ini bagi pihaknya.",
       "cta": "Terbitkan {n} untuk ejen",
       "noConsent": "Ejen belum bersetuju dengan penerbitan bagi pihaknya, jadi serahkan kumpulan ini dan ejen yang menerbitkan. Untuk merekod persetujuan, gunakan Ejen → Buka akaun ejen.",
-      "done": "{n} iklan telah diterbitkan untuk ejen dan menunggu di Iklan → Moderasi. Anda boleh meluluskannya sendiri.",
+      "done": "{n} penyenaraian telah diterbitkan untuk ejen dan menunggu di Penyenaraian → Moderasi. Anda boleh meluluskannya sendiri.",
       "methods": {
         "phone_call": "panggilan telefon",
         "whatsapp": "WhatsApp",
@@ -5479,7 +5479,7 @@
     "scope": {
       "open_account": "membuka akaun untuknya",
       "import_listings": "menyalin iklannya dari platform yang digunakan sekarang",
-      "publish_on_behalf": "menerbitkan iklan tersebut bagi pihaknya"
+      "publish_on_behalf": "menerbitkan penyenaraian tersebut bagi pihaknya"
     },
     "note": "Nota (pilihan)",
     "noteHint": "cth. siapa yang anda hubungi, permintaan khas",
