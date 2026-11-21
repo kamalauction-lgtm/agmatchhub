@@ -4156,6 +4156,23 @@
     }
   },
   "plan": {
+    "entitlementNames": {
+      "listing_active_limit": "Kapasiti penyenaraian aktif",
+      "listing_import_limit": "Peruntukan import penyenaraian",
+      "boost_monthly_credits": "Kredit boost bulanan",
+      "featured_vouchers": "Baucar hartanah pilihan",
+      "ai_monthly_usage": "Peruntukan AI",
+      "ai_poster_exports_monthly": "Eksport poster",
+      "ai_credits_monthly": "Kredit AI bulanan",
+      "ai_roles": "Akses Tenaga Kerja AI",
+      "website_enabled": "Laman web ejen",
+      "website_custom_domain": "Domain tersuai",
+      "analytics_level": "Tahap analitik",
+      "content_studio_level": "Tahap Studio kandungan",
+      "comarketing_enabled": "Pemasaran bersama",
+      "matchhub_enabled": "MatchHub",
+      "support_level": "Tahap sokongan"
+    },
     "title": "Pelan & kredit saya",
     "intro": "Apa yang anda pegang hari ini, sebabnya, dan harga setiap pelan dalam mata wang anda. Tiada caj di sini: pengebilan kekal ditutup sehingga dihidupkan secara berasingan.",
     "current": "Pelan anda",

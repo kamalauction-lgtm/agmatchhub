@@ -4156,6 +4156,23 @@
     }
   },
   "plan": {
+    "entitlementNames": {
+      "listing_active_limit": "Kapasitas listing aktif",
+      "listing_import_limit": "Kuota impor listing",
+      "boost_monthly_credits": "Kredit boost bulanan",
+      "featured_vouchers": "Voucher properti unggulan",
+      "ai_monthly_usage": "Kuota AI",
+      "ai_poster_exports_monthly": "Ekspor poster",
+      "ai_credits_monthly": "Kredit AI bulanan",
+      "ai_roles": "Akses Tenaga Kerja AI",
+      "website_enabled": "Situs web agen",
+      "website_custom_domain": "Domain kustom",
+      "analytics_level": "Tingkat analitik",
+      "content_studio_level": "Tingkat Studio konten",
+      "comarketing_enabled": "Pemasaran bersama",
+      "matchhub_enabled": "MatchHub",
+      "support_level": "Tingkat dukungan"
+    },
     "title": "Paket & kredit saya",
     "intro": "Apa yang Anda pegang hari ini, alasannya, dan harga tiap paket dalam mata uang Anda. Tidak ada tagihan di sini: penagihan tetap nonaktif sampai diaktifkan terpisah.",
     "current": "Paket Anda",
