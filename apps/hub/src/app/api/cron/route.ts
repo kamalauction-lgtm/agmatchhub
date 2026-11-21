@@ -10,6 +10,7 @@ import { embedPendingListings } from "@/lib/ai/embeddings";
 import { linkHeroFor } from "@/lib/hero/link";
 import { heroConfigured } from "@/lib/hero/client";
 import { processIntakeMedia } from "@/lib/media/process";
+import { refreshFxRates } from "@/lib/international/fx";
 
 /**
  * The scheduler's single entry point.
@@ -33,6 +34,12 @@ type TaskResult = Record<string, unknown>;
 type Task = { name: string; every: "15m" | "daily"; run: () => Promise<TaskResult> };
 
 const TASKS: Task[] = [
+  {
+    /** 00134: rupiah and dollar estimates on international listings; held, never guessed, when the feed looks wrong. */
+    name: "fx_rates",
+    every: "daily",
+    run: () => refreshFxRates(),
+  },
   {
     /** 00131: an approved certificate expires within 30 days; remind the agent once (in-app, push, email). */
     name: "certificate_expiry",
