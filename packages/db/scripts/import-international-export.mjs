@@ -192,7 +192,9 @@ async function copyPhoto(listingId, src) {
 
 const records = Object.values(JSON.parse(readFileSync(file, "utf8")).items ?? {}).slice(0, limit);
 const pool = new pg.Pool({ connectionString: url, ssl: { rejectUnauthorized: false }, max: 6 });
-const { rows: rateRows } = await pool.query("select currency, per_usd from public.fx_rates where source <> 'demo-seed'");
+// Any rate will do here, even an illustrative one: it only has to tell a price
+// in the hundreds of dollars from one in the hundreds of thousands.
+const { rows: rateRows } = await pool.query("select currency, per_usd from public.fx_rates");
 const perUsd = new Map(rateRows.map((r) => [r.currency, Number(r.per_usd)]));
 
 const tally = { published: 0, draft: 0, withdrawn: 0, failed: 0, photos: 0, photoErrors: 0 };
